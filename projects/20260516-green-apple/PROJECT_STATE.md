@@ -19,12 +19,18 @@ Initial definition.
 - Main conversion action: submit a wholesale supply request.
 - Product line: fresh green apples plus processed apple products.
 - Business reality level: concept of a future business.
+- Processed product focus: apple juice plus dried apples.
+- Target geography / market: Ohio local market.
+
+## Workflow Operating Notes
+
+- GitHub write batching mode: accumulate approximately 3 logical changes before repository write, unless a change is critical for project state.
 
 ## Open Questions
 
-- Which processed products should be emphasized first?
-- What geography or market should the landing target?
 - What language should the landing page use?
+- Which visual style should the landing page use?
+- Should the landing page be written as realistic concept copy or as a neutral business proposal?
 
 ## Active Agents
 
@@ -49,8 +55,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Primary audience, main conversion action, product line, and business reality level confirmed.
+Primary audience, main conversion action, product line, business reality level, processed product focus, and target geography confirmed.
 
 ## Next Action
 
-Confirm which processed products should be emphasized first.
+Confirm the landing page language.
