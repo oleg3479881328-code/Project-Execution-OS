@@ -21,6 +21,9 @@ Initial definition.
 - Business reality level: concept of a future business.
 - Processed product focus: apple juice plus dried apples.
 - Target geography / market: Ohio local market.
+- Landing language: English.
+- Visual style: clean modern agro-premium.
+- Copy tone: businesslike and confident for B2B supply.
 
 ## Workflow Operating Notes
 
@@ -28,9 +31,9 @@ Initial definition.
 
 ## Open Questions
 
-- What language should the landing page use?
-- Which visual style should the landing page use?
 - Should the landing page be written as realistic concept copy or as a neutral business proposal?
+- What exact B2B trust points should be emphasized?
+- Should the next output be a landing page structure or full landing copy?
 
 ## Active Agents
 
@@ -55,8 +58,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Primary audience, main conversion action, product line, business reality level, processed product focus, and target geography confirmed.
+Primary audience, main conversion action, product line, business reality level, processed product focus, target geography, language, visual style, and copy tone confirmed.
 
 ## Next Action
 
-Confirm the landing page language.
+Confirm whether the landing should use realistic concept copy or neutral business proposal language.
