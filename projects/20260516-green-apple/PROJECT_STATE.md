@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Landing copy review.
+Working static landing MVP created.
 
 ## Current Workflow Run
 
@@ -26,35 +26,25 @@ Landing copy review.
 - Copy tone: businesslike and confident for B2B supply.
 - Landing copy mode: realistic concept copy using language such as building, preparing, and planning supply.
 - B2B trust points: stable local supply, product quality and freshness, apple-to-juice and dried-apple processing, and partnership with stores, restaurants, and wholesalers.
-- Next output: landing page structure with sections, order, and logic.
-- Landing structure length: medium B2B landing with 8 to 10 sections.
-- GitHub write batching mode: accumulate approximately 5 logical changes before repository write, unless a change is critical for project state.
-- Landing section logic: B2B problem, Green Apple solution, products, then wholesale supply request.
-- Ohio block: separate section about local supply for Ohio buyers.
-- Processing block: separate strong section about turning apples into value-added products such as juice and dried apples.
 - Final landing structure: Hero, Problem, Solution, Products, Processing, Quality, Ohio Supply, Partnership, CTA.
-- Next artifact: `LANDING_STRUCTURE.md`.
-- Artifact location: `projects/20260516-green-apple/artifacts/LANDING_STRUCTURE.md`.
-- Landing structure detail level: section name, purpose, key messages, visual ideas, and CTA.
-- Review location: `projects/20260516-green-apple/artifacts/reviews/LANDING_STRUCTURE_REVIEW.md`.
-- Review mode: combined strict B2B, UX, copy, marketing, CTA, trust, and risk review.
-- Structure review decision: `reviewed_with_required_improvements`.
-- Required structure improvements were applied in place to `LANDING_STRUCTURE.md`.
-- Landing copy artifact created at `projects/20260516-green-apple/artifacts/LANDING_COPY.md`.
-- Landing copy is full page-ready English copy with CTA variants and form microcopy.
-- Agents decision: still do not create agents yet; continue with human/assistant-led document workflow.
-- Next artifact: `projects/20260516-green-apple/artifacts/reviews/LANDING_COPY_REVIEW.md`.
+- Landing structure artifact: `projects/20260516-green-apple/artifacts/LANDING_STRUCTURE.md`.
+- Landing copy artifact: `projects/20260516-green-apple/artifacts/LANDING_COPY.md`.
+- Landing copy review artifact: `projects/20260516-green-apple/artifacts/reviews/LANDING_COPY_REVIEW.md`.
+- Design spec artifact: `projects/20260516-green-apple/artifacts/DESIGN_SPEC.md`.
+- Codex task artifact: `projects/20260516-green-apple/artifacts/CODEX_TASK.md`.
+- Working static site files created: `projects/20260516-green-apple/site/index.html` and `projects/20260516-green-apple/site/styles.css`.
+- GitHub write batching mode: accumulate approximately 5 logical changes before repository write, unless a change is critical for project state.
 
 ## Workflow Operating Notes
 
-- GitHub write batching mode: accumulate approximately 5 logical changes before repository write, unless a change is critical for project state.
 - User authorized assistant-led selection of obvious next decisions based on assistant recommendations.
+- Current priority is fast path to working landing page MVP, not over-polishing documentation.
 
 ## Open Questions
 
-- Should the landing copy pass review as-is or require improvements?
-- Should the next artifact after copy review be `DESIGN_SPEC.md` or `CODEX_TASK.md`?
-- Should external market research be added before design/code?
+- Should the landing be published through GitHub Pages?
+- Should the form remain static or later connect to a real backend/form service?
+- Should a visual QA pass be performed after opening the page in a browser?
 
 ## Active Agents
 
@@ -64,12 +54,10 @@ None.
 
 Possible later agents:
 
-- Agribusiness Research Agent
-- Landing Page Architect
-- Copywriting Agent
-- Market Research Agent
-- Visual Direction Agent
-- Reviewer
+- Visual QA Agent
+- Copy Refinement Agent
+- GitHub Pages Deployment Agent
+- Form Integration Agent
 
 No agents are active yet.
 
@@ -79,8 +67,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Landing copy was created and now needs review before design or code work.
+A working static landing page MVP was created.
 
 ## Next Action
 
-Create `artifacts/reviews/LANDING_COPY_REVIEW.md`.
+Open `projects/20260516-green-apple/site/index.html` locally or publish the site with GitHub Pages.
