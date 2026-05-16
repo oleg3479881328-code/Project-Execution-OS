@@ -17,11 +17,12 @@ Initial definition.
 - Project Execution OS is used as the project operating system.
 - Primary landing page audience: wholesalers, stores, and restaurants.
 - Main conversion action: submit a wholesale supply request.
+- Product line: fresh green apples plus processed apple products.
 
 ## Open Questions
 
 - Is this a real farm/business, a concept project, or a demo portfolio landing?
-- What products will be shown after processing: juice, jam, dried apples, cider, wholesale apples, or other products?
+- Which processed products should be emphasized first?
 - What geography or market should the landing target?
 - What language should the landing page use?
 
@@ -48,8 +49,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Primary audience and main conversion action confirmed.
+Primary audience, main conversion action, and product line confirmed.
 
 ## Next Action
 
-Confirm the product line for the B2B landing page.
+Confirm whether Green Apple is a real business, concept project, or demo portfolio landing.
