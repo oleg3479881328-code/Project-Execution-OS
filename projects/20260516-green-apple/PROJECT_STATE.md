@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Landing copy preparation.
+Landing copy review.
 
 ## Current Workflow Run
 
@@ -40,9 +40,10 @@ Landing copy preparation.
 - Review mode: combined strict B2B, UX, copy, marketing, CTA, trust, and risk review.
 - Structure review decision: `reviewed_with_required_improvements`.
 - Required structure improvements were applied in place to `LANDING_STRUCTURE.md`.
-- Revised landing structure is ready for landing copy drafting.
+- Landing copy artifact created at `projects/20260516-green-apple/artifacts/LANDING_COPY.md`.
+- Landing copy is full page-ready English copy with CTA variants and form microcopy.
 - Agents decision: still do not create agents yet; continue with human/assistant-led document workflow.
-- Next artifact: `projects/20260516-green-apple/artifacts/LANDING_COPY.md`.
+- Next artifact: `projects/20260516-green-apple/artifacts/reviews/LANDING_COPY_REVIEW.md`.
 
 ## Workflow Operating Notes
 
@@ -51,9 +52,9 @@ Landing copy preparation.
 
 ## Open Questions
 
-- Should external research be performed before final copywriting?
-- Should `LANDING_COPY.md` include short-form copy only or full page-ready copy?
-- Should `LANDING_COPY.md` include form microcopy and CTA variants?
+- Should the landing copy pass review as-is or require improvements?
+- Should the next artifact after copy review be `DESIGN_SPEC.md` or `CODEX_TASK.md`?
+- Should external market research be added before design/code?
 
 ## Active Agents
 
@@ -78,8 +79,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Landing structure was revised after review and is ready for landing copy drafting.
+Landing copy was created and now needs review before design or code work.
 
 ## Next Action
 
-Create `artifacts/LANDING_COPY.md` using the revised landing structure.
+Create `artifacts/reviews/LANDING_COPY_REVIEW.md`.
