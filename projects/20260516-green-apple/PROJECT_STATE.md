@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Initial definition.
+Landing structure review.
 
 ## Current Workflow Run
 
@@ -37,16 +37,22 @@ Initial definition.
 - Artifact location: `projects/20260516-green-apple/artifacts/LANDING_STRUCTURE.md`.
 - Landing structure detail level: section name, purpose, key messages, visual ideas, and CTA.
 - Next artifact after landing structure: review of the landing structure before copywriting, design, or code.
+- Review location: `projects/20260516-green-apple/artifacts/reviews/LANDING_STRUCTURE_REVIEW.md`.
+- Review mode: combined strict B2B, UX, copy, marketing, CTA, trust, and risk review.
+- Structure review decision: `reviewed_with_required_improvements`.
+- Agents decision: still do not create agents yet; continue with human/assistant-led document workflow.
+- Next artifact after structure review: `LANDING_COPY.md` after required structure improvements are applied.
 
 ## Workflow Operating Notes
 
 - GitHub write batching mode: accumulate approximately 5 logical changes before repository write, unless a change is critical for project state.
+- User authorized assistant-led selection of obvious next decisions based on assistant recommendations.
 
 ## Open Questions
 
 - Should external research be performed before final copywriting?
-- Should the next review artifact be stored in `artifacts/REVIEW.md` or inside the current workflow run?
-- Should agents be created after structure review or still delayed?
+- Should landing structure improvements be applied in-place or stored as a revised version?
+- Should `LANDING_COPY.md` be created only after improving the structure artifact?
 
 ## Active Agents
 
@@ -71,8 +77,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Final landing structure decisions confirmed and `LANDING_STRUCTURE.md` selected as the next artifact.
+Landing structure review path and next document workflow decisions confirmed.
 
 ## Next Action
 
-Create `artifacts/LANDING_STRUCTURE.md`, then review it before writing landing copy.
+Create `artifacts/reviews/LANDING_STRUCTURE_REVIEW.md`, then apply required structure improvements before writing landing copy.
