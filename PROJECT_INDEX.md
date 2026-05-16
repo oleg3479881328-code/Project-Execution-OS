@@ -28,6 +28,10 @@ Mode:
 
 `document-first`
 
+Status:
+
+`foundation_candidate`
+
 ## Core System Model
 
 ```text
@@ -132,22 +136,28 @@ Do not build yet:
 
 ## Current Status
 
-Foundation initialized.
+Foundation initialized as committed repository artifacts.
 
 Committed artifacts:
 
 - `README.md`
 - `START_HERE.md`
+- `PROJECT_INDEX.md`
+- `docs/WORKFLOW_CONTRACT.md`
+- `docs/GOVERNANCE.md`
+- `docs/AGENT_CREATION_STANDARD.md`
+- `docs/KNOWLEDGE_SYSTEM.md`
+- `docs/PROJECT_STRUCTURE_STANDARD.md`
+- `workflow-templates/universal-project-v1/`
+- `knowledge-library/README.md`
+- `logs/WORKFLOW_LOG.md`
 
 ## Next Required Action
 
-Create the core foundation documents:
+Create the first real project using this OS:
 
-1. `docs/WORKFLOW_CONTRACT.md`
-2. `docs/GOVERNANCE.md`
-3. `docs/AGENT_CREATION_STANDARD.md`
-4. `docs/KNOWLEDGE_SYSTEM.md`
-5. `docs/PROJECT_STRUCTURE_STANDARD.md`
-6. `workflow-templates/universal-project-v1/`
-7. `knowledge-library/README.md`
-8. `logs/WORKFLOW_LOG.md`
+`projects/0001-project-execution-os-foundation-review/`
+
+Purpose:
+
+Run Project Execution OS on itself and review the foundation through the universal workflow.
