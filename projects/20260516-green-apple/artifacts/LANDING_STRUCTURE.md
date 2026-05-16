@@ -28,7 +28,9 @@ Acceptable language direction:
 - preparing;
 - planning;
 - developing;
-- designed to support.
+- designed to support;
+- future supply conversations;
+- buyer interest list.
 
 ## Visual Style
 
@@ -44,23 +46,29 @@ Businesslike and confident for B2B supply.
 
 ## Purpose
 
-Immediately explain what Green Apple is and who it is for.
+Immediately position Green Apple as a future local Ohio B2B supply concept for fresh green apples and value-added apple products.
 
 ## Key Messages
 
-- Green Apple is a future-focused local supply concept for green apples and apple-based products.
-- Built for wholesalers, stores, and restaurants in Ohio.
-- Focused on fresh apples, apple juice, and dried apples.
+- Green Apple is preparing a local Ohio supply concept for wholesale buyers.
+- The planned product focus is fresh green apples, apple juice, and dried apples.
+- The project is designed for wholesalers, stores, restaurants, cafes, food-service buyers, and local retail partners.
+- The page should invite early B2B supply conversations, not claim existing production capacity.
 
 ## Visual Ideas
 
-- Clean hero with green apple orchard imagery.
-- White background with green accent.
-- Product-forward composition: fresh apples, juice bottle, dried apple pack.
+- Clean hero with premium green apple orchard imagery.
+- White background with controlled green accents.
+- Product-forward composition: fresh green apples, juice bottle concept, dried apple pack concept.
+- Small badge: Ohio local supply concept.
 
 ## CTA
 
-Submit a wholesale supply request.
+Submit a Wholesale Supply Request.
+
+## Secondary CTA
+
+Join the Ohio Buyer Interest List.
 
 ---
 
@@ -68,22 +76,27 @@ Submit a wholesale supply request.
 
 ## Purpose
 
-Show the buyer pain points before presenting Green Apple.
+Show the real buyer-side problems that Green Apple is being designed to solve.
 
 ## Key Messages
 
-- B2B buyers need stable local supply.
-- Stores and restaurants need quality, freshness, and predictable communication.
-- Supply uncertainty creates planning problems.
+- Stores, restaurants, and wholesalers need more than attractive produce; they need predictable sourcing.
+- Buyers often face inconsistent sourcing, unclear quality expectations, seasonal uncertainty, weak supplier communication, and limited local value-added apple options.
+- A stronger supply concept should connect product planning, buyer communication, and local-market focus.
 
 ## Visual Ideas
 
-- Simple problem cards.
-- Minimal icons for supply, quality, timing, communication.
+- Four or five clean problem cards:
+  - inconsistent sourcing;
+  - quality uncertainty;
+  - seasonal planning pressure;
+  - weak supplier communication;
+  - limited local processed apple products.
+- Minimal icons for supply, quality, timing, communication, and local sourcing.
 
 ## CTA
 
-Soft CTA: Plan future supply with Green Apple.
+Plan future supply with Green Apple.
 
 ---
 
@@ -91,18 +104,20 @@ Soft CTA: Plan future supply with Green Apple.
 
 ## Purpose
 
-Position Green Apple as the answer to the B2B supply problem.
+Position Green Apple as the practical answer to the B2B supply problem.
 
 ## Key Messages
 
 - Green Apple is being developed as a local supply concept for fresh and processed apple products.
-- The model connects growing, processing, and B2B distribution.
-- The goal is to support Ohio buyers with a clearer local supply path.
+- The model connects growing, value-added processing, and B2B distribution planning.
+- The goal is to support Ohio buyers with a clearer local supply path and early product-interest conversations.
+- The concept is built around buyer needs before final production assumptions are made.
 
 ## Visual Ideas
 
 - Three-step flow: grow → process → supply.
 - Clean horizontal process line.
+- Simple supply-chain visual from orchard to buyer.
 
 ## CTA
 
@@ -114,25 +129,27 @@ Discuss future wholesale supply.
 
 ## Purpose
 
-Show the product line clearly.
+Show the product line and connect each product to B2B use cases.
 
 ## Key Messages
 
-- Fresh green apples.
-- Apple juice.
-- Dried apples.
-- Product line designed for wholesale, retail shelves, and food-service use.
+- Fresh green apples: for produce sections, grocery shelves, restaurants, food service, and wholesale distribution.
+- Apple juice: for retail shelves, cafes, restaurants, hospitality, local beverage programs, and bundled product offerings.
+- Dried apples: for snack shelves, cafes, catering, ingredient use, packaged retail products, and shelf-stable inventory.
+- Product planning should be shaped around buyer type, volume expectations, packaging needs, and local demand.
 
 ## Visual Ideas
 
-- Product cards.
-- Fresh apples card.
-- Juice card.
-- Dried apples card.
+- Three product cards:
+  - fresh green apples;
+  - apple juice;
+  - dried apples.
+- Each card includes buyer use cases.
+- Premium, clean product imagery with no fake brand packaging unless marked as concept.
 
 ## CTA
 
-Request product availability details.
+Request product interest details.
 
 ---
 
@@ -140,18 +157,20 @@ Request product availability details.
 
 ## Purpose
 
-Explain the value-added processing logic.
+Explain the value-added processing logic and why it matters for B2B buyers.
 
 ## Key Messages
 
 - Apples can become more than fresh produce.
-- Processing supports apple juice and dried apple products.
-- Value-added products can help reduce waste and expand B2B opportunities.
+- Processing supports apple juice and dried apple products as value-added supply options.
+- Value-added products can help expand product variety, support shelf-stable options, and create more flexible B2B opportunities.
+- Processing should be presented as a planned value-chain concept, not as an existing facility or verified production capacity.
 
 ## Visual Ideas
 
 - Before/after flow: apples → juice → dried apples.
-- Clean production concept visuals, not fake factory claims.
+- Clean production concept visuals.
+- Avoid fake factory photos or unsupported processing claims.
 
 ## CTA
 
@@ -163,19 +182,25 @@ Explore value-added supply options.
 
 ## Purpose
 
-Build trust around quality, freshness, and practical B2B reliability.
+Build trust around planned product standards, freshness focus, packaging clarity, and buyer communication without making unsupported claims.
 
 ## Key Messages
 
-- Focus on freshness.
-- Clear product standards should be part of the future supply model.
-- Business buyers need consistency, packaging clarity, and dependable communication.
+- Green Apple should be designed around clear product standards, not vague quality promises.
+- Planned standards should include freshness focus, product consistency goals, packaging clarity, and buyer communication.
+- Business buyers need dependable expectations before placing wholesale interest.
+- Certifications, testing, harvest volume, production capacity, and facility details must not be claimed unless confirmed later.
 
 ## Visual Ideas
 
-- Quality checklist.
+- Planned quality framework checklist:
+  - freshness focus;
+  - product consistency goals;
+  - packaging clarity;
+  - buyer communication;
+  - local supply planning.
 - Clean premium cards.
-- Close-up product images.
+- Close-up product imagery.
 
 ## CTA
 
@@ -187,23 +212,25 @@ Ask about future quality and supply standards.
 
 ## Purpose
 
-Make the local market advantage explicit.
+Make the local Ohio market advantage explicit and useful for B2B buyers.
 
 ## Key Messages
 
-- Ohio buyers benefit from a local-first supply concept.
-- Local supply can support easier communication and stronger relationships.
-- Green Apple is positioned around the Ohio market first.
+- Ohio buyers benefit from a local-first supply concept built around regional relationships.
+- A local supply model can support easier communication, clearer planning, and stronger buyer-supplier relationships.
+- Green Apple is positioned around the Ohio market first, not as a generic national apple brand.
+- Local positioning should be framed as a future supply advantage, not as a current delivery network unless confirmed later.
 
 ## Visual Ideas
 
 - Ohio map outline.
 - Local supply radius concept.
 - Clean regional badge: Ohio local supply concept.
+- Subtle orchard-to-buyer route visual.
 
 ## CTA
 
-Join the Ohio buyer interest list.
+Join the Ohio Buyer Interest List.
 
 ---
 
@@ -211,18 +238,24 @@ Join the Ohio buyer interest list.
 
 ## Purpose
 
-Show that Green Apple is not just selling products, but building B2B relationships.
+Show that Green Apple is building B2B relationships, not just listing products.
 
 ## Key Messages
 
-- Designed for wholesalers, stores, and restaurants.
-- Future supply can be shaped around buyer needs.
-- Early B2B conversations help define volume, packaging, and product priorities.
+- Designed for wholesalers, stores, restaurants, cafes, and food-service buyers.
+- Early B2B conversations help define product priorities, expected volumes, packaging needs, and delivery expectations.
+- Green Apple can use buyer interest to shape the future product and supply model.
+- Partnership language must stay honest: early interest and planning, not guaranteed current supply.
 
 ## Visual Ideas
 
-- Partnership cards by buyer type: wholesaler, store, restaurant.
+- Partnership cards by buyer type:
+  - wholesaler;
+  - store;
+  - restaurant;
+  - cafe / food service.
 - Simple business handshake or supply-chain visual.
+- Clean B2B contact block.
 
 ## CTA
 
@@ -234,18 +267,33 @@ Start a partnership conversation.
 
 ## Purpose
 
-Convert the visitor into a lead.
+Convert the visitor into a qualified B2B lead.
 
 ## Key Messages
 
 - Submit a wholesale supply request.
-- Tell Green Apple what products and volumes you are interested in.
-- Join early conversations around local apple supply in Ohio.
+- Tell Green Apple which products and volumes you are interested in.
+- Join early conversations around future local apple supply in Ohio.
+- The form should qualify the buyer without pretending supply is immediately available.
 
 ## Visual Ideas
 
 - Clean form block.
-- Fields: name, company, buyer type, product interest, estimated volume, email, phone, message.
+- Strong headline: Submit a Wholesale Supply Request.
+- Short reassurance: This helps Green Apple understand buyer demand and future supply priorities.
+
+## Recommended Form Fields
+
+- Contact name.
+- Company name.
+- Buyer type: wholesaler, store, restaurant, cafe, food service, other.
+- Product interest: fresh apples, apple juice, dried apples, mixed supply.
+- Expected volume range.
+- Delivery location / Ohio region.
+- Desired timeline.
+- Email.
+- Phone.
+- Message / special requirements.
 
 ## CTA
 
@@ -261,7 +309,13 @@ Submit Wholesale Supply Request.
 - Do not claim real production capacity.
 - Do not invent certifications.
 - Do not invent farm acreage, harvest volume, partners, clients, or processing facility.
+- Do not use fake factory or farm imagery that implies existing operations.
+- Do not promise immediate supply unless confirmed later.
+
+## Copywriting Readiness
+
+This structure is ready for landing copy only after review confirms that the required improvements were applied.
 
 ## Next Required Artifact
 
-Create a review artifact for this landing structure before writing full landing copy.
+Create `LANDING_COPY.md` only after this revised structure is accepted for copywriting.
