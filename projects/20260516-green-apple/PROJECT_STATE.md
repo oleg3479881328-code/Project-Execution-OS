@@ -24,6 +24,9 @@ Initial definition.
 - Landing language: English.
 - Visual style: clean modern agro-premium.
 - Copy tone: businesslike and confident for B2B supply.
+- Landing copy mode: realistic concept copy using language such as building, preparing, and planning supply.
+- B2B trust points: stable local supply, product quality and freshness, apple-to-juice and dried-apple processing, and partnership with stores, restaurants, and wholesalers.
+- Next output: landing page structure with sections, order, and logic.
 
 ## Workflow Operating Notes
 
@@ -31,9 +34,9 @@ Initial definition.
 
 ## Open Questions
 
-- Should the landing page be written as realistic concept copy or as a neutral business proposal?
-- What exact B2B trust points should be emphasized?
-- Should the next output be a landing page structure or full landing copy?
+- Which exact landing page section order should be used?
+- Should the structure be short one-page MVP or longer full B2B landing page?
+- Should external research be performed before final copywriting?
 
 ## Active Agents
 
@@ -58,8 +61,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Primary audience, main conversion action, product line, business reality level, processed product focus, target geography, language, visual style, and copy tone confirmed.
+Primary audience, main conversion action, product line, business reality level, processed product focus, target geography, language, visual style, copy tone, copy mode, B2B trust points, and next output confirmed.
 
 ## Next Action
 
-Confirm whether the landing should use realistic concept copy or neutral business proposal language.
+Define the landing page section order.
