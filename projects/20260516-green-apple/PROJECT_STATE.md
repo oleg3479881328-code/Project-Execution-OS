@@ -27,16 +27,21 @@ Initial definition.
 - Landing copy mode: realistic concept copy using language such as building, preparing, and planning supply.
 - B2B trust points: stable local supply, product quality and freshness, apple-to-juice and dried-apple processing, and partnership with stores, restaurants, and wholesalers.
 - Next output: landing page structure with sections, order, and logic.
+- Landing structure length: medium B2B landing with 8 to 10 sections.
+- GitHub write batching mode: accumulate approximately 5 logical changes before repository write, unless a change is critical for project state.
+- Landing section logic: B2B problem, Green Apple solution, products, then wholesale supply request.
+- Ohio block: separate section about local supply for Ohio buyers.
+- Processing block: separate strong section about turning apples into value-added products such as juice and dried apples.
 
 ## Workflow Operating Notes
 
-- GitHub write batching mode: accumulate approximately 3 logical changes before repository write, unless a change is critical for project state.
+- GitHub write batching mode: accumulate approximately 5 logical changes before repository write, unless a change is critical for project state.
 
 ## Open Questions
 
-- Which exact landing page section order should be used?
-- Should the structure be short one-page MVP or longer full B2B landing page?
+- What exact final section list should be used for the landing page structure?
 - Should external research be performed before final copywriting?
+- Should the next artifact be a landing page structure file or an updated execution specification?
 
 ## Active Agents
 
@@ -61,8 +66,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Primary audience, main conversion action, product line, business reality level, processed product focus, target geography, language, visual style, copy tone, copy mode, B2B trust points, and next output confirmed.
+Primary audience, main conversion action, product line, business reality level, processed product focus, target geography, language, visual style, copy tone, copy mode, B2B trust points, next output, section length, section logic, Ohio block, and processing block confirmed.
 
 ## Next Action
 
-Define the landing page section order.
+Define the exact landing page section list.
