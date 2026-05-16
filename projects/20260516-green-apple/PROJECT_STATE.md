@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Landing structure review.
+Landing copy preparation.
 
 ## Current Workflow Run
 
@@ -36,12 +36,13 @@ Landing structure review.
 - Next artifact: `LANDING_STRUCTURE.md`.
 - Artifact location: `projects/20260516-green-apple/artifacts/LANDING_STRUCTURE.md`.
 - Landing structure detail level: section name, purpose, key messages, visual ideas, and CTA.
-- Next artifact after landing structure: review of the landing structure before copywriting, design, or code.
 - Review location: `projects/20260516-green-apple/artifacts/reviews/LANDING_STRUCTURE_REVIEW.md`.
 - Review mode: combined strict B2B, UX, copy, marketing, CTA, trust, and risk review.
 - Structure review decision: `reviewed_with_required_improvements`.
+- Required structure improvements were applied in place to `LANDING_STRUCTURE.md`.
+- Revised landing structure is ready for landing copy drafting.
 - Agents decision: still do not create agents yet; continue with human/assistant-led document workflow.
-- Next artifact after structure review: `LANDING_COPY.md` after required structure improvements are applied.
+- Next artifact: `projects/20260516-green-apple/artifacts/LANDING_COPY.md`.
 
 ## Workflow Operating Notes
 
@@ -51,8 +52,8 @@ Landing structure review.
 ## Open Questions
 
 - Should external research be performed before final copywriting?
-- Should landing structure improvements be applied in-place or stored as a revised version?
-- Should `LANDING_COPY.md` be created only after improving the structure artifact?
+- Should `LANDING_COPY.md` include short-form copy only or full page-ready copy?
+- Should `LANDING_COPY.md` include form microcopy and CTA variants?
 
 ## Active Agents
 
@@ -77,8 +78,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Landing structure review path and next document workflow decisions confirmed.
+Landing structure was revised after review and is ready for landing copy drafting.
 
 ## Next Action
 
-Create `artifacts/reviews/LANDING_STRUCTURE_REVIEW.md`, then apply required structure improvements before writing landing copy.
+Create `artifacts/LANDING_COPY.md` using the revised landing structure.
