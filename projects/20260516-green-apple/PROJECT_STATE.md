@@ -32,6 +32,11 @@ Initial definition.
 - Landing section logic: B2B problem, Green Apple solution, products, then wholesale supply request.
 - Ohio block: separate section about local supply for Ohio buyers.
 - Processing block: separate strong section about turning apples into value-added products such as juice and dried apples.
+- Final landing structure: Hero, Problem, Solution, Products, Processing, Quality, Ohio Supply, Partnership, CTA.
+- Next artifact: `LANDING_STRUCTURE.md`.
+- Artifact location: `projects/20260516-green-apple/artifacts/LANDING_STRUCTURE.md`.
+- Landing structure detail level: section name, purpose, key messages, visual ideas, and CTA.
+- Next artifact after landing structure: review of the landing structure before copywriting, design, or code.
 
 ## Workflow Operating Notes
 
@@ -39,9 +44,9 @@ Initial definition.
 
 ## Open Questions
 
-- What exact final section list should be used for the landing page structure?
 - Should external research be performed before final copywriting?
-- Should the next artifact be a landing page structure file or an updated execution specification?
+- Should the next review artifact be stored in `artifacts/REVIEW.md` or inside the current workflow run?
+- Should agents be created after structure review or still delayed?
 
 ## Active Agents
 
@@ -66,8 +71,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Primary audience, main conversion action, product line, business reality level, processed product focus, target geography, language, visual style, copy tone, copy mode, B2B trust points, next output, section length, section logic, Ohio block, and processing block confirmed.
+Final landing structure decisions confirmed and `LANDING_STRUCTURE.md` selected as the next artifact.
 
 ## Next Action
 
-Define the exact landing page section list.
+Create `artifacts/LANDING_STRUCTURE.md`, then review it before writing landing copy.
