@@ -18,10 +18,10 @@ Initial definition.
 - Primary landing page audience: wholesalers, stores, and restaurants.
 - Main conversion action: submit a wholesale supply request.
 - Product line: fresh green apples plus processed apple products.
+- Business reality level: concept of a future business.
 
 ## Open Questions
 
-- Is this a real farm/business, a concept project, or a demo portfolio landing?
 - Which processed products should be emphasized first?
 - What geography or market should the landing target?
 - What language should the landing page use?
@@ -49,8 +49,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Primary audience, main conversion action, and product line confirmed.
+Primary audience, main conversion action, product line, and business reality level confirmed.
 
 ## Next Action
 
-Confirm whether Green Apple is a real business, concept project, or demo portfolio landing.
+Confirm which processed products should be emphasized first.
