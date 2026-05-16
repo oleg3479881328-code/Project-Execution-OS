@@ -16,10 +16,10 @@ Initial definition.
 - Topic expansion: processing and selling the resulting products.
 - Project Execution OS is used as the project operating system.
 - Primary landing page audience: wholesalers, stores, and restaurants.
+- Main conversion action: submit a wholesale supply request.
 
 ## Open Questions
 
-- What is the main conversion action?
 - Is this a real farm/business, a concept project, or a demo portfolio landing?
 - What products will be shown after processing: juice, jam, dried apples, cider, wholesale apples, or other products?
 - What geography or market should the landing target?
@@ -48,8 +48,8 @@ Project library initialized as empty.
 
 ## Latest Result
 
-Primary audience confirmed as wholesalers, stores, and restaurants.
+Primary audience and main conversion action confirmed.
 
 ## Next Action
 
-Confirm the main conversion action for the B2B landing page.
+Confirm the product line for the B2B landing page.
