@@ -1,20 +1,19 @@
 # Start New Project
 
-## 0. Single Entrypoint Rule
+## BOOT MODE
 
-This is the only canonical entrypoint for starting a new project with Project Execution OS.
-
-Give this file to any AI system before starting a new project.
+This is a NEW PROJECT START.
 
 This is NOT a request to redesign, improve, refactor, or expand Project Execution OS.
 
-This is a request to START a new project using the existing workflow system.
+Do not:
+- design architecture yet;
+- write code yet;
+- create agents yet;
+- create backend/frontend/runtime/database systems yet;
+- create automation layers yet.
 
-There must be one source of truth for new project startup: this file.
-
-## 1. Quick Start Mode
-
-When an AI reads this file, it must first do only this:
+First ask only these two questions:
 
 ### Question 1
 
@@ -26,20 +25,28 @@ Where should this project live?
 
 Options:
 - A) create a new GitHub repository
-- B) use an existing GitHub repository
+- B) use an existing repository
 - C) create a folder inside Project Execution OS
 - D) I do not know yet
 - E) other
 
-Do not:
-- ask ten questions;
-- design architecture yet;
-- write code yet;
-- create agents yet;
-- create runtime, backend, frontend, automation, database, or orchestration engine;
-- treat this as a system-improvement task.
+After the two questions:
+- create repository artifacts;
+- use MVP-first workflow;
+- ask only necessary clarification;
+- avoid overengineering.
 
-Start with the two project-start questions.
+---
+
+# EXTENDED OPERATING REFERENCE
+
+## 1. Single Entrypoint Rule
+
+This is the only canonical entrypoint for starting a new project with Project Execution OS.
+
+Give this file to any AI system before starting a new project.
+
+There must be one source of truth for new project startup: this file.
 
 ## 2. Core Model
 
