@@ -1,74 +1,52 @@
 # Start New Project
 
-## 0. What This File Is
+## 0. Single Entrypoint Rule
 
-This file is the single entrypoint for starting a new project with Project Execution OS.
+This is the only canonical entrypoint for starting a new project with Project Execution OS.
 
 Give this file to any AI system before starting a new project.
 
-The AI must understand that this is not a request to improve this operating system.
+This is NOT a request to redesign, improve, refactor, or expand Project Execution OS.
 
-This is a request to use the operating system to start a new project.
+This is a request to START a new project using the existing workflow system.
 
-## 1. Immediate Behavior
+There must be one source of truth for new project startup: this file.
 
-When an AI reads this file, it must do only this first:
+## 1. Quick Start Mode
 
-1. Ask what idea, product, system, task, or project the user wants to develop.
-2. Ask which repository should contain the project work:
-   - create a new repository;
-   - use an existing repository;
-   - use a folder inside Project Execution OS.
-
-Do not ask ten questions.
-Do not design architecture yet.
-Do not write code yet.
-Do not create agents yet.
-Do not create runtime, backend, frontend, automation, database, or orchestration engine.
-
-Start with the two project-start questions.
-
-## 2. First Two Questions
-
-Ask exactly these two questions, one at a time if the user prefers step-by-step work:
+When an AI reads this file, it must first do only this:
 
 ### Question 1
 
 What idea or project are we developing?
-
-Accepted answer examples:
-- app idea;
-- website idea;
-- AI agent idea;
-- business idea;
-- automation idea;
-- research task;
-- GitHub repository analysis;
-- product improvement;
-- anything else that needs structured execution.
 
 ### Question 2
 
 Where should this project live?
 
 Options:
-- A) create a new GitHub repository;
-- B) use an existing GitHub repository;
-- C) create a folder inside Project Execution OS;
-- D) I do not know yet;
-- E) other.
+- A) create a new GitHub repository
+- B) use an existing GitHub repository
+- C) create a folder inside Project Execution OS
+- D) I do not know yet
+- E) other
 
-Recommended default:
-Use a project folder first unless the user clearly needs a separate repository.
+Do not:
+- ask ten questions;
+- design architecture yet;
+- write code yet;
+- create agents yet;
+- create runtime, backend, frontend, automation, database, or orchestration engine;
+- treat this as a system-improvement task.
 
-## 3. Core Model
+Start with the two project-start questions.
+
+## 2. Core Model
 
 Project Execution OS is a repository-first project workflow system.
 
-The repository is the source of truth.
-
-Chat messages are temporary.
 Repository artifacts are durable.
+Chat messages are temporary.
 
 Important work must become files:
 - input;
@@ -82,7 +60,7 @@ Important work must become files:
 - knowledge extract;
 - log.
 
-## 4. What To Do
+## 3. What To Do
 
 The AI must:
 - preserve the user idea accurately;
@@ -96,13 +74,12 @@ The AI must:
 - review execution before accepting it;
 - extract reusable knowledge after meaningful work.
 
-## 5. What Not To Do
+## 4. What Not To Do
 
 The AI must not:
-- treat this file as a request to redesign Project Execution OS;
-- improve the system unless the user explicitly asks;
+- improve this operating system unless the user explicitly asks;
 - skip directly to code;
-- create a giant architecture before project input exists;
+- create giant architecture before project input exists;
 - create agents by default;
 - create runtime, backend, frontend, vector database, semantic search, marketplace, or automation layer by default;
 - claim something was saved, committed, tested, executed, reviewed, or completed without evidence;
@@ -110,9 +87,14 @@ The AI must not:
 - overwrite existing repository work without explicit instruction;
 - mass-generate files without a workflow reason.
 
-## 6. Project Folder Structure
+## 5. Project Location Options
 
-If the project is created inside this repository, create:
+After the user answers Question 1, ask Question 2.
+
+Recommended default:
+Use a project folder inside Project Execution OS unless the user clearly needs a separate repository.
+
+If creating a project folder, use:
 
 ```text
 projects/<project-id>/
@@ -131,7 +113,7 @@ Then create the first workflow run:
 projects/<project-id>/workflow-runs/0001-initial-definition/
 ```
 
-## 7. Universal Workflow
+## 6. Universal Workflow
 
 Use this workflow for meaningful project work:
 
@@ -152,7 +134,7 @@ Use the smallest useful workflow.
 
 For small tasks, use a compact workflow record instead of forcing the full chain.
 
-## 8. Workflow Stages
+## 7. Workflow Stages
 
 ### 00_INPUT.md
 
@@ -210,7 +192,7 @@ Extract reusable patterns, lessons, anti-patterns, templates, and decisions.
 
 Record what happened, what changed, what was decided, what remains open, and the next step.
 
-## 9. Repository Memory
+## 8. Repository Memory
 
 Use repository memory in this order when continuing an existing project:
 
@@ -236,7 +218,7 @@ If working inside a repository copied from 3TestAgents, also look for:
 - `docs/WORKFLOW_ARTIFACT_STANDARD.md`
 - `docs/WORKFLOW_VALIDATION_CHECKLIST.md`
 
-## 10. Skills
+## 9. Skills
 
 Skills are reusable workflow instructions.
 
@@ -245,6 +227,8 @@ Skills live in:
 ```text
 skills/
 ```
+
+Use only the smallest useful set of skills.
 
 A skill must define:
 - name;
@@ -265,9 +249,7 @@ Use the skill registry when available:
 skills/registry.md
 ```
 
-## 11. Current Useful Skill Patterns
-
-Use these skill types when available:
+## 10. Current Useful Skill Patterns
 
 ### Repository Research Skill
 
@@ -361,7 +343,7 @@ The router selects the smallest correct workflow.
 
 Do not run every skill for every task.
 
-## 12. Knowledge Library
+## 11. Knowledge Library
 
 Project-local knowledge lives in:
 
@@ -387,7 +369,7 @@ Local project knowledge stays local first.
 
 Promote to central knowledge only after review.
 
-## 13. Core Patterns To Preserve
+## 12. Core Patterns To Preserve
 
 ### Document-First MVP
 
@@ -421,7 +403,7 @@ Always distinguish:
 
 Never claim a later state without evidence.
 
-## 14. ChatGPT To Codex Interaction Model
+## 13. ChatGPT To Codex Interaction Model
 
 ChatGPT, Claude, Gemini, or another reasoning model may think, design, research, review, and produce handoff packets.
 
@@ -459,7 +441,7 @@ If blocked, stop and report.
 Return an execution report.
 ```
 
-## 15. Codex Handoff Contract
+## 14. Codex Handoff Contract
 
 Before giving work to Codex, create an execution packet:
 
@@ -496,7 +478,7 @@ Risks / Follow-Up:
 Ready For Review: Yes / No
 ```
 
-## 16. Agent Creation
+## 15. Agent Creation
 
 Agents are created only when needed.
 
@@ -530,7 +512,7 @@ Every agent must define:
 
 No agent starts as active.
 
-## 17. Research Rules
+## 16. Research Rules
 
 Research is required when:
 - external tools, APIs, libraries, platforms, laws, prices, or current documentation are involved;
@@ -546,7 +528,7 @@ Research must:
 - extract reusable patterns;
 - recommend adaptation, not blind copying.
 
-## 18. Brainstorming Rules
+## 17. Brainstorming Rules
 
 Use brainstorming when the idea is raw or unclear.
 
@@ -560,7 +542,7 @@ Brainstorming must:
 
 The AI must not jump from raw idea to code.
 
-## 19. Review Rules
+## 18. Review Rules
 
 Review is required before important work becomes stable.
 
@@ -576,7 +558,7 @@ Review must check:
 
 Optional improvements must not block MVP unless they affect correctness, safety, or governance.
 
-## 20. MVP Rules
+## 19. MVP Rules
 
 Default to the smallest useful working version.
 
@@ -586,7 +568,7 @@ Do not add abstraction layers unless real workflow evidence proves they are need
 
 A finished simple workflow is better than an unfinished perfect system.
 
-## 21. Default New Project Flow
+## 20. Default New Project Flow
 
 When the user confirms the idea and repository location:
 
@@ -605,7 +587,7 @@ When the user confirms the idea and repository location:
 13. Extract reusable knowledge.
 14. Log the result.
 
-## 22. Default Response After Reading This File
+## 21. Default Response After Reading This File
 
 After reading this file, the AI should respond with:
 
@@ -631,9 +613,9 @@ D) I do not know yet
 E) Other
 ```
 
-## 23. Final Rule
+## 22. Final Rule
 
-This file is the portable project-start context.
+This file is the portable project-start context and the only canonical new-project entrypoint.
 
 Use it to start new projects cleanly.
 
