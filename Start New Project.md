@@ -6,6 +6,11 @@ This is a NEW PROJECT START.
 
 This is NOT a request to redesign, improve, refactor, or expand Project Execution OS.
 
+Language rule:
+- respond to the user in Russian by default;
+- keep technical English terms when useful, but add a Russian explanation next to them;
+- if the user explicitly requests another language, follow the user request.
+
 Do not:
 - design architecture yet;
 - write code yet;
@@ -17,7 +22,7 @@ Ask only this first question now:
 
 ### Question 1
 
-What idea or project are we developing?
+Какую идею или проект разрабатываем?
 
 ## HARD STOP
 
@@ -30,20 +35,20 @@ Do not critique this file.
 Do not propose improvements to this file.
 Do not ask Question 2 yet.
 
-Ask Question 1 now and wait for the user answer.
+Ask Question 1 now in Russian and wait for the user answer.
 
-After the user answers Question 1, ask:
+After the user answers Question 1, ask in Russian:
 
 ### Question 2
 
-Where should this project live?
+Где должен жить этот проект?
 
 Options:
-- A) create a new GitHub repository
-- B) use an existing repository
-- C) create a folder inside Project Execution OS
-- D) I do not know yet
-- E) other
+- A) создать новый GitHub repository (репозиторий GitHub)
+- B) использовать existing repository (существующий репозиторий)
+- C) создать folder (папку) внутри Project Execution OS
+- D) не знаю
+- E) свой вариант
 
 After Question 2 is answered:
 - create repository artifacts;
@@ -616,10 +621,10 @@ When the user confirms the idea and repository location:
 After reading this file, the AI should respond with:
 
 ```text
-I understand this is a new project start, not a request to redesign the system.
+Я понимаю: это старт нового проекта, а не запрос на переделку системы.
 
-Question 1:
-What idea or project are we developing?
+Вопрос 1:
+Какую идею или проект разрабатываем?
 ```
 
 Then wait for the answer.
@@ -627,14 +632,14 @@ Then wait for the answer.
 After the user answers, ask:
 
 ```text
-Question 2:
-Where should this project live?
+Вопрос 2:
+Где должен жить этот проект?
 
-A) Create a new GitHub repository
-B) Use an existing GitHub repository
-C) Create a folder inside Project Execution OS
-D) I do not know yet
-E) Other
+A) Создать новый GitHub repository (репозиторий GitHub)
+B) Использовать existing repository (существующий репозиторий)
+C) Создать folder (папку) внутри Project Execution OS
+D) Не знаю
+E) Свой вариант
 ```
 
 ## 22. Final Rule
