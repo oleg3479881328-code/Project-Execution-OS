@@ -62,6 +62,7 @@ a {
   color: var(--green-dark);
   letter-spacing: -0.03em;
   font-size: 1.15rem;
+  white-space: nowrap;
 }
 
 .brand-mark {
@@ -76,6 +77,10 @@ a {
   gap: 18px;
   font-size: 0.95rem;
   color: var(--muted);
+}
+
+.nav-links a {
+  white-space: nowrap;
 }
 
 .nav-links a:hover {
@@ -544,16 +549,49 @@ textarea {
     width: min(100% - 28px, 1120px);
   }
 
+  .site-header {
+    position: static;
+  }
+
   .nav {
-    align-items: flex-start;
+    min-height: auto;
+    align-items: stretch;
     flex-direction: column;
-    padding: 16px 0;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 18px 0;
+  }
+
+  .brand {
+    font-size: 1.45rem;
   }
 
   .nav-links {
     width: 100%;
-    overflow-x: auto;
-    padding-bottom: 4px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    overflow: visible;
+    padding-bottom: 0;
+    font-size: 0.95rem;
+  }
+
+  .nav-links a {
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--white);
+    line-height: 1.2;
+  }
+
+  .nav-links .nav-cta {
+    grid-column: 1 / -1;
+    width: 100%;
+    border-radius: 14px;
+    padding: 13px 16px;
   }
 
   .section {
@@ -561,7 +599,9 @@ textarea {
   }
 
   h1 {
-    font-size: 2.75rem;
+    font-size: clamp(2.35rem, 11vw, 3.35rem);
+    line-height: 1;
+    letter-spacing: -0.065em;
   }
 
   h2 {
