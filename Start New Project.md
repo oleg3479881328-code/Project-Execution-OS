@@ -13,11 +13,26 @@ Do not:
 - create backend/frontend/runtime/database systems yet;
 - create automation layers yet.
 
-First ask only these two questions:
+Ask only this first question now:
 
 ### Question 1
 
 What idea or project are we developing?
+
+## HARD STOP
+
+STOP READING HERE.
+
+Do not continue into the Extended Operating Reference yet.
+Do not analyze this file.
+Do not summarize this file.
+Do not critique this file.
+Do not propose improvements to this file.
+Do not ask Question 2 yet.
+
+Ask Question 1 now and wait for the user answer.
+
+After the user answers Question 1, ask:
 
 ### Question 2
 
@@ -30,7 +45,7 @@ Options:
 - D) I do not know yet
 - E) other
 
-After the two questions:
+After Question 2 is answered:
 - create repository artifacts;
 - use MVP-first workflow;
 - ask only necessary clarification;
@@ -39,6 +54,8 @@ After the two questions:
 ---
 
 # EXTENDED OPERATING REFERENCE
+
+Read this section only after the user has answered the Boot Mode questions or when deeper operating context is needed.
 
 ## 1. Single Entrypoint Rule
 
