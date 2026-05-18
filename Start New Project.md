@@ -44,11 +44,12 @@ After the user answers Question 1, ask in Russian:
 Где должен жить этот проект?
 
 Options:
-- A) создать новый GitHub repository (репозиторий GitHub)
+- A) создать новый private GitHub repository (приватный репозиторий GitHub)
 - B) использовать existing repository (существующий репозиторий)
-- C) создать folder (папку) внутри Project Execution OS
-- D) не знаю
-- E) свой вариант
+- C) создать folder (папку) внутри Project Execution OS только как исключение
+- D) brainstorm-only mode (режим брейншторма) без создания проекта
+- E) не знаю
+- F) свой вариант
 
 After Question 2 is answered:
 - create repository artifacts;
@@ -69,6 +70,10 @@ This is the only canonical entrypoint for starting a new project with Project Ex
 Give this file to any AI system before starting a new project.
 
 There must be one source of truth for new project startup: this file.
+
+If the user explicitly wants brainstorming only and does not want a project yet, use `brainstorm-only mode` instead of forcing project creation.
+
+If the user points to an older repository or folder that does not match the current standard, use `legacy-project-normalization mode` instead of pretending it is already standardized.
 
 ## 2. Core Model
 
@@ -121,9 +126,24 @@ The AI must not:
 After the user answers Question 1, ask Question 2.
 
 Recommended default:
-Use a project folder inside Project Execution OS unless the user clearly needs a separate repository.
+Create a separate private GitHub repository for each new project unless the user explicitly wants another location.
 
-If creating a project folder, use:
+Preferred model:
+
+- one project = one dedicated GitHub repository;
+- new repositories are private by default unless the user explicitly chooses public visibility;
+- the repository name should match the project topic as closely as practical;
+- the repository becomes the durable source of truth for that project;
+- Project Execution OS remains the central brain, not the storage place for all project execution history.
+
+Use a folder inside `Project Execution OS` only when:
+
+- the project is intentionally temporary;
+- the user explicitly requests an internal-only project;
+- the work is too small to justify a dedicated repository;
+- or the repository decision is intentionally deferred.
+
+If creating a project folder as an exception, use:
 
 ```text
 projects/<project-id>/
@@ -141,6 +161,12 @@ Then create the first workflow run:
 ```text
 projects/<project-id>/workflow-runs/0001-initial-definition/
 ```
+
+If the new repository already contains supported source or docs files and the project is broad enough to benefit from graph memory:
+
+- initialize Graphify;
+- build `graphify-out/GRAPH_REPORT.md`;
+- treat the graph as a navigation layer for future sessions.
 
 ## 6. Universal Workflow
 
@@ -163,6 +189,13 @@ Use the smallest useful workflow.
 
 For small tasks, use a compact workflow record instead of forcing the full chain.
 
+Compact mode keeps the same rules:
+- source of truth;
+- state separation;
+- review before stable acceptance;
+- knowledge extraction when reusable lessons appear;
+- logging of what changed and what happens next.
+
 ## 7. Workflow Stages
 
 ### 00_INPUT.md
@@ -179,7 +212,7 @@ Ask one question at a time when needed.
 
 ### 02_RESEARCH.md
 
-Search for reusable patterns, prior art, open-source examples, official documentation, existing project artifacts, and known risks.
+Search for reusable patterns, prior art, open-source examples, official documentation, publicly verifiable external sources, existing project artifacts, and known risks.
 
 Research must be evidence-backed when possible.
 
@@ -364,6 +397,17 @@ Update durable memory:
 - local project library;
 - central knowledge library candidates.
 
+### Graphify Skill
+
+Use for broad repositories, large doc corpora, architecture questions, repeated follow-up work, and legacy normalization when the repository is too large for direct reading.
+
+Core behavior:
+- estimate scope first;
+- skip Graphify for narrow tasks;
+- build Graphify when broad context is needed and graph outputs are missing;
+- read `graphify-out/GRAPH_REPORT.md` before broad exploration;
+- refresh after structural changes.
+
 ### Skill Runtime Router
 
 Use when the correct workflow path is unclear.
@@ -547,11 +591,13 @@ Research is required when:
 - external tools, APIs, libraries, platforms, laws, prices, or current documentation are involved;
 - the user asks to analyze a GitHub repository;
 - the user wants to borrow or adapt open-source patterns;
+- the project depends on domain knowledge that should be checked against publicly verifiable external sources;
 - there is a risk of reinventing existing solutions.
 
 Research must:
 - prefer official documentation when relevant;
 - use GitHub and open-source examples when useful;
+- use publicly verifiable external sources when code is not the relevant source format;
 - preserve source links or repository paths;
 - separate confirmed facts from assumptions;
 - extract reusable patterns;
@@ -602,19 +648,45 @@ A finished simple workflow is better than an unfinished perfect system.
 When the user confirms the idea and repository location:
 
 1. Create or identify the project location.
-2. Create project structure if needed.
-3. Create `00_INPUT.md` with the raw idea.
-4. Ask only the minimum next clarification.
-5. Create `01_CLARIFICATION.md`.
-6. Decide whether research is needed.
-7. Run research if needed.
-8. Create a practical MVP plan.
-9. Decide whether agents are needed.
-10. Create execution spec or handoff packet only after review.
-11. Review before execution.
-12. Verify execution before memory update.
-13. Extract reusable knowledge.
-14. Log the result.
+2. Default to a dedicated GitHub repository per project unless an exception is chosen explicitly.
+3. Create project structure if needed.
+4. Use full mode or compact mode depending on project size and risk.
+4A. If the repository already contains enough supported files and broad navigation will matter, initialize and build Graphify.
+5. Create `00_INPUT.md` with the raw idea.
+6. Ask only the minimum next clarification.
+7. Create `01_CLARIFICATION.md`.
+8. Decide whether research is needed.
+9. Run research if needed.
+10. Create a practical MVP plan.
+11. Decide whether agents are needed.
+12. Create execution spec or handoff packet only after review.
+13. Review before execution.
+14. Verify execution before memory update.
+15. Extract reusable knowledge.
+16. Log the result.
+
+## 20A. Brainstorm-Only Mode
+
+Use this mode when the user wants idea exploration without creating a project yet.
+
+Rules:
+- do not force repository creation;
+- do not force project artifacts;
+- use clarification, research, and reasoning only;
+- keep all outputs explicitly exploratory;
+- when the brainstorm stabilizes, ask whether it should be converted into a real project.
+
+## 20B. Legacy Project Normalization Mode
+
+Use this mode when the user provides an older repository or folder that does not follow the current standard.
+
+Rules:
+- inspect the current project evidence first;
+- run a structure and documentation gap analysis;
+- preserve history instead of overwriting it;
+- map the old project into the new operating model;
+- add missing entrypoint, state, rules, log, and workflow artifacts as needed;
+- use central skills to normalize the project carefully.
 
 ## 21. Default Response After Reading This File
 
@@ -637,7 +709,7 @@ After the user answers, ask:
 
 A) Создать новый GitHub repository (репозиторий GitHub)
 B) Использовать existing repository (существующий репозиторий)
-C) Создать folder (папку) внутри Project Execution OS
+C) Создать folder (папку) внутри Project Execution OS только как исключение
 D) Не знаю
 E) Свой вариант
 ```

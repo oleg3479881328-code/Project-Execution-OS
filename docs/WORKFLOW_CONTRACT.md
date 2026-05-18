@@ -26,6 +26,10 @@ Do not build giant architecture before the project has passed through a clear wo
 
 Execution quality is more important than architectural fantasy.
 
+Default project-location rule:
+
+Each project should use its own dedicated private GitHub repository unless there is an explicit reason to use compact or internal mode.
+
 ## 3. Universal Workflow Chain
 
 Every meaningful project run must use this chain:
@@ -59,7 +63,7 @@ Must avoid endless questioning.
 
 ### 02_RESEARCH.md
 
-Finds reusable patterns, open-source examples, documentation, prior project artifacts, known risks, and similar systems.
+Finds reusable patterns, open-source examples, official documentation, publicly verifiable external sources, prior project artifacts, known risks, and similar systems.
 
 Research must be reuse-first and evidence-backed when possible.
 
@@ -154,3 +158,16 @@ The workflow is acceptable only if it:
 - preserves reusable knowledge;
 - keeps project libraries and central knowledge separate;
 - produces one concrete next action per run.
+
+## 10. Compact Mode
+
+Compact mode is allowed for small or low-risk projects.
+
+Compact mode may use fewer files than the full workflow, but it must preserve:
+
+- source-of-truth repository artifacts;
+- explicit clarification when needed;
+- evidence-backed research when research is required;
+- review before stable acceptance;
+- logging of result and next action;
+- reusable knowledge extraction when relevant.

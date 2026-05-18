@@ -8,7 +8,11 @@ Any human or AI agent must be able to open a project folder and understand the g
 
 ## Project Root
 
-Every project must live under the root projects folder.
+Default rule:
+
+Every project should live in its own dedicated private GitHub repository by default.
+
+The root `projects/` folder inside `Project Execution OS` is for internal or compact exceptions, not the primary default.
 
 Recommended project id format:
 
@@ -20,7 +24,7 @@ projects/20260516-news-telegram-bot/
 
 ## Required Project Files And Folders
 
-Every project must contain:
+Every full-mode project must contain:
 
 - PROJECT_ENTRYPOINT.md
 - PROJECT_STATE.md
@@ -29,6 +33,30 @@ Every project must contain:
 - project-library/
 - workflow-runs/
 - logs/
+
+## Compact Project Mode
+
+Compact mode is allowed for small or low-risk projects.
+
+Compact mode may use a smaller structure, for example:
+
+```text
+PROJECT_ENTRYPOINT.md
+PROJECT_STATE.md
+workflow-runs/
+logs/
+```
+
+or another minimal structure that still preserves:
+
+- source of truth;
+- explicit current state;
+- explicit next action;
+- evidence-backed research when relevant;
+- review before stable acceptance;
+- durable log history.
+
+Compact mode must not be used as an excuse to hide important state in chat.
 
 ## PROJECT_ENTRYPOINT.md
 

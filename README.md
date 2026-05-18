@@ -4,6 +4,13 @@ Universal repository-first operating system for starting, running, reviewing, an
 
 This repository is the source of truth for a universal project workflow that can be used by humans, ChatGPT, Codex, Claude, local AI agents, research agents, coding agents, and future automation systems.
 
+It is also the central repository for:
+
+- reusable workflow and governance standards;
+- central reusable skills;
+- central reusable knowledge;
+- migration of validated ideas from incubator repositories.
+
 ## Start Here
 
 Every human or AI agent must start with:
@@ -21,6 +28,7 @@ First read the entrypoint, understand the project workflow, then create or conti
 
 Every new project should have:
 
+- one dedicated private GitHub repository by default;
 - one clear project entrypoint;
 - one local project memory;
 - one workflow run folder;
@@ -66,18 +74,32 @@ INPUT
 - `PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/GOVERNANCE.md`
+- `docs/REPOSITORY_MEMORY_STANDARD.md`
+- `docs/SKILL_SPEC.md`
+- `docs/SKILL_LIFECYCLE.md`
+- `docs/SKILL_REVIEW_STANDARD.md`
+- `docs/COMPATIBILITY_MODEL.md`
+- `docs/SKILL_UNIVERSE_INVENTORY.md`
+- `docs/GRAPHIFY_STANDARD.md`
 - `docs/AGENT_CREATION_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
+- `skills/PROJECT_INDEX.md`
+- `skills/registry.md`
 - `workflow-templates/universal-project-v1/README.md`
 - `knowledge-library/README.md`
+- `knowledge-library/PROJECT_INDEX.md`
 - `logs/WORKFLOW_LOG.md`
 
 ## First Operational Rule
 
-When a new project begins, create a folder under:
+When a new project begins, create a dedicated private GitHub repository by default.
+
+Internal project folders under:
 
 `projects/<project-id>/`
+
+are exceptions for compact or intentionally internal work.
 
 Then create the first workflow run from:
 

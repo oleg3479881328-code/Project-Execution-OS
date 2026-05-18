@@ -212,3 +212,531 @@ Create the first real project using this OS:
 Purpose:
 
 Run Project Execution OS on itself and review the foundation through the universal workflow.
+
+---
+
+# 3TestAgents Migration Decision
+
+## Summary
+
+Recorded the migration direction that treats `3TestAgents` as an experimental incubator and `Project-Execution-OS` as the canonical central system.
+
+## Executed Repository Actions
+
+### Action 1 — Migration map created
+
+Affected file:
+
+- `docs/THREETESTAGENTS_MIGRATION_MAP.md`
+
+Purpose:
+
+Define what should be migrated from `3TestAgents`, what should only be referenced, and what should be dropped when consolidating into the central operating system.
+
+## Key Decisions
+
+### Decision 1 — Canonical central system
+
+`Project-Execution-OS` is the central brain, central governance layer, central knowledge library, and central skill hub.
+
+### Decision 2 — 3TestAgents is an incubator
+
+`3TestAgents` is treated as a historical experimental repository whose best ideas should be curated into the canonical central system.
+
+### Decision 3 — Curated migration only
+
+Migration must preserve validated standards and reusable artifacts, not copy stale repository state blindly.
+
+## Resulting State
+
+The repository now contains an explicit migration map for consolidating `3TestAgents` into `Project-Execution-OS`.
+
+## Next Action
+
+Use `docs/THREETESTAGENTS_MIGRATION_MAP.md` to migrate memory standards, skill governance, and reusable knowledge into canonical central artifacts.
+
+---
+
+# 3TestAgents Migration Execution — Central Layer Transfer
+
+## Summary
+
+Transferred the first central memory, skill-governance, and reusable-knowledge layer from `3TestAgents` into `Project-Execution-OS`.
+
+## Executed Repository Actions
+
+### Action 1 — Central standards added
+
+Affected files:
+
+- `docs/REPOSITORY_MEMORY_STANDARD.md`
+- `docs/SKILL_SPEC.md`
+- `docs/SKILL_LIFECYCLE.md`
+- `docs/SKILL_REVIEW_STANDARD.md`
+- `docs/COMPATIBILITY_MODEL.md`
+
+Purpose:
+
+Create the central memory and skill-governance documents that were missing from the canonical system.
+
+### Action 2 — Central skill layer created
+
+Affected files:
+
+- `skills/PROJECT_INDEX.md`
+- `skills/registry.md`
+- migrated candidate skills under `skills/`
+
+Purpose:
+
+Create the central reusable skill layer and import the incubator skills as `candidate` artifacts rather than treating them as already active.
+
+### Action 3 — Central knowledge patterns imported
+
+Affected files:
+
+- `knowledge-library/PROJECT_INDEX.md`
+- `knowledge-library/patterns/document-first-mvp.md`
+- `knowledge-library/patterns/tool-neutral-core.md`
+- `knowledge-library/patterns/state-separation-in-ai-systems.md`
+
+Purpose:
+
+Import the strongest reusable incubator patterns into the central knowledge layer.
+
+### Action 4 — Entrypoints updated
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+
+Purpose:
+
+Make the central role of reusable skills and knowledge explicit in the repository entrypoints.
+
+## Key Decisions
+
+### Decision 1 — Incubator skills stay candidate
+
+Migrated skills are committed into the central system, but they remain `candidate` until re-reviewed inside `Project-Execution-OS`.
+
+### Decision 2 — Central knowledge imports also stay candidate
+
+Migrated patterns are now available in the central library, but they are marked as central candidates rather than active rules.
+
+### Decision 3 — Central system owns the reusable layer
+
+`Project-Execution-OS` now explicitly owns the central repository-memory standard, central skill layer, and central reusable knowledge layer.
+
+## Resulting State
+
+The canonical system now contains:
+
+- central memory standardization;
+- central skill standards;
+- a central skill registry and index;
+- migrated candidate skills;
+- migrated central knowledge patterns;
+- updated entrypoints that describe the central-brain role more accurately.
+
+## Next Action
+
+Run the first central review pass over the migrated candidate skills and decide which can move from `candidate` toward `reviewed` or `active`.
+
+---
+
+# Central Skill Review Pass 001
+
+## Summary
+
+Completed the first central review pass for `github-repository-research` and `repository-memory-update`.
+
+## Executed Repository Actions
+
+### Action 1 — Central review artifacts created
+
+Affected files:
+
+- `skills/research/github-repository-research/validation/CENTRAL_REVIEW.md`
+- `skills/memory/repository-memory-update/validation/REVIEW.md`
+
+Purpose:
+
+Record explicit central review results instead of relying on incubator review state.
+
+### Action 2 — Skill lifecycle statuses updated
+
+Affected files:
+
+- `skills/research/github-repository-research/SKILL.md`
+- `skills/memory/repository-memory-update/SKILL.md`
+- `skills/registry.md`
+- `skills/PROJECT_INDEX.md`
+
+Purpose:
+
+Promote both skills from `candidate` to `reviewed` after successful central review while intentionally stopping short of `active`.
+
+## Key Decisions
+
+### Decision 1 — Reviewed, not active
+
+Both skills passed central review, but neither is marked `active` yet because central operational use in `Project-Execution-OS` still needs to be proven by repeated practice.
+
+### Decision 2 — Incubator review is not enough
+
+Migration history is preserved for provenance, but central status is determined by central review artifacts created in this repository.
+
+## Resulting State
+
+The central skill layer now contains:
+
+- 2 reviewed skills:
+  - `github-repository-research`
+  - `repository-memory-update`
+- 6 remaining candidate skills awaiting central review
+
+## Next Action
+
+Run the next central review pass for `implementation-handoff-packet` and `codex-execution-review`.
+
+---
+
+# Central Operating Model Synchronization
+
+## Summary
+
+Synchronized the central operating model with three explicit decisions:
+
+- default location is one dedicated GitHub repository per project;
+- research may use any publicly verifiable external sources, not only open-source code;
+- compact project mode is allowed when the same governance rules are preserved with fewer files.
+
+## Executed Repository Actions
+
+### Action 1 — New-project entrypoint updated
+
+Affected file:
+
+- `Start New Project.md`
+
+Purpose:
+
+Make the startup flow match the intended central-brain operating model.
+
+### Action 2 — Core entrypoint documents updated
+
+Affected files:
+
+- `START_HERE.md`
+- `README.md`
+- `PROJECT_INDEX.md`
+
+Purpose:
+
+Align central repository messaging with the repository-per-project default and compact-mode exception.
+
+### Action 3 — Workflow and structure standards updated
+
+Affected files:
+
+- `docs/WORKFLOW_CONTRACT.md`
+- `docs/PROJECT_STRUCTURE_STANDARD.md`
+
+Purpose:
+
+Make compact mode and publicly verifiable research sources part of the written operating standard.
+
+## Key Decisions
+
+### Decision 1 — Repository per project by default
+
+Every new project should use its own dedicated GitHub repository unless an explicit exception is chosen.
+
+### Decision 2 — Publicly verifiable research is broader than open-source code
+
+Research may use official docs, GitHub, open-source examples, and other public evidence sources appropriate to the project domain.
+
+### Decision 3 — Compact mode is valid
+
+Small or low-risk projects may use fewer files as long as the same governance rules still hold.
+
+## Next Action
+
+Use the updated `Start New Project.md` as the canonical startup entrypoint in real project runs and continue hardening the central brain in practice.
+
+---
+
+# Skill Universe Inventory And Graphify Gap
+
+## Summary
+
+Recorded the broader external skill universe and explicitly documented that Graphify is not yet fully wired into `Project-Execution-OS`.
+
+## Executed Repository Actions
+
+### Action 1 — Skill universe inventory created
+
+Affected file:
+
+- `docs/SKILL_UNIVERSE_INVENTORY.md`
+
+Purpose:
+
+Give the central brain one inventory document that distinguishes central skills, migration candidates, adapter candidates, project-specific skills, and environment-specific skills.
+
+### Action 2 — Graphify standard created
+
+Affected file:
+
+- `docs/GRAPHIFY_STANDARD.md`
+
+Purpose:
+
+Record the intended role of Graphify as graph-memory and repository cognition, while stating honestly that it is not yet fully installed in this repository.
+
+### Action 3 — Canonical indexes updated
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+- `skills/PROJECT_INDEX.md`
+- `docs/REPOSITORY_MEMORY_STANDARD.md`
+
+Purpose:
+
+Make the wider skill-universe inventory and Graphify standard visible from the central documentation layer.
+
+## Key Decisions
+
+### Decision 1 — The central brain should know the whole universe
+
+`Project-Execution-OS` should not only store currently migrated central skills. It should also document the wider known skill universe.
+
+### Decision 2 — Knowing the universe is not the same as activating everything
+
+The central inventory may list many external skills, but the central active registry must remain curated and reviewed.
+
+### Decision 3 — Graphify is a target standard, not yet a completed installation here
+
+Graphify is now documented as part of the intended central-brain model, but local graph outputs and local Graphify setup have not yet been installed into this repository.
+
+## Next Action
+
+Run the next migration wave for:
+
+- `graphify`
+- `project-experience-memory`
+- `project-knowledge-sync`
+- `project-documentation-architect`
+- `logic-deconstruction`
+
+---
+
+# Migration Wave 002 And Entry-Mode Expansion
+
+## Summary
+
+Migrated the next central skill wave from local skill stores and expanded the operating model to cover brainstorm-only work and legacy-project normalization.
+
+## Executed Repository Actions
+
+### Action 1 — New central candidate skills added
+
+Affected paths:
+
+- `skills/graph/graphify/`
+- `skills/memory/project-experience-memory/`
+- `skills/knowledge/project-knowledge-sync/`
+- `skills/documentation/project-documentation-architect/`
+- `skills/analysis/logic-deconstruction/`
+
+Purpose:
+
+Move the next high-value universal skills from local skill stores into the central system as curated central candidates.
+
+### Action 2 — Skill indexes and universe inventory updated
+
+Affected files:
+
+- `skills/registry.md`
+- `skills/PROJECT_INDEX.md`
+- `docs/SKILL_UNIVERSE_INVENTORY.md`
+
+Purpose:
+
+Reflect the new migration state in the central inventory and central registry.
+
+### Action 3 — New entry modes documented
+
+Affected files:
+
+- `Start New Project.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+
+Purpose:
+
+Make the central brain explicitly support:
+- brainstorm-only mode
+- legacy-project-normalization mode
+
+## Key Decisions
+
+### Decision 1 — Brainstorming can be valid without project creation
+
+The operating system must allow exploratory work without forcing repository creation too early.
+
+### Decision 2 — Old projects must be normalizable
+
+The operating system must be able to take older repositories that do not match the current standard and migrate them carefully into the new mode.
+
+### Decision 3 — Graphify is now part of the central candidate layer
+
+Graphify is no longer only a documented external candidate. It now exists as a central candidate skill and remains pending central review and full local installation.
+
+## Next Action
+
+Run central review passes for:
+
+- `graphify`
+- `project-experience-memory`
+- `project-knowledge-sync`
+
+---
+
+# Central Review Pass 002 And Graphify Build Rule
+
+## Summary
+
+Completed central review for `graphify`, `project-experience-memory`, and `project-knowledge-sync`, and strengthened the operating rules so a new AI should build Graphify when the project justifies it.
+
+## Executed Repository Actions
+
+### Action 1 — Central review artifacts created
+
+Affected files:
+
+- `skills/graph/graphify/validation/CENTRAL_REVIEW.md`
+- `skills/memory/project-experience-memory/validation/CENTRAL_REVIEW.md`
+- `skills/knowledge/project-knowledge-sync/validation/CENTRAL_REVIEW.md`
+
+Purpose:
+
+Record explicit central review results for the next three migrated universal skills.
+
+### Action 2 — Lifecycle states updated
+
+Affected files:
+
+- `skills/graph/graphify/SKILL.md`
+- `skills/memory/project-experience-memory/SKILL.md`
+- `skills/knowledge/project-knowledge-sync/SKILL.md`
+- `skills/registry.md`
+- `skills/PROJECT_INDEX.md`
+
+Purpose:
+
+Promote the three skills from `candidate` to `reviewed` while keeping them below `active`.
+
+### Action 3 — Graphify build behavior strengthened
+
+Affected files:
+
+- `docs/GRAPHIFY_STANDARD.md`
+- `docs/REPOSITORY_MEMORY_STANDARD.md`
+- `Start New Project.md`
+- `START_HERE.md`
+
+Purpose:
+
+Make it explicit that a new AI should build Graphify when a project is broad enough and supported files exist, rather than merely knowing that Graphify exists.
+
+## Key Decisions
+
+### Decision 1 — Reviewed, not active
+
+`graphify`, `project-experience-memory`, and `project-knowledge-sync` are now centrally reviewed, but not yet `active`.
+
+### Decision 2 — Graphify should be built, not only referenced
+
+For broad projects with supported files, the expected behavior is to build Graphify when graph outputs are missing and then use the resulting graph-memory layer.
+
+## Next Action
+
+Run central review passes for:
+
+- `project-documentation-architect`
+- `logic-deconstruction`
+- `implementation-handoff-packet`
+
+---
+
+# Central Review Pass 003 And Private Repository Default
+
+## Summary
+
+Completed central review for `project-documentation-architect` and `logic-deconstruction`, and made private-by-default repository creation part of the canonical startup policy.
+
+## Executed Repository Actions
+
+### Action 1 — Central review artifacts created
+
+Affected files:
+
+- `skills/documentation/project-documentation-architect/validation/CENTRAL_REVIEW.md`
+- `skills/analysis/logic-deconstruction/validation/CENTRAL_REVIEW.md`
+
+Purpose:
+
+Record explicit central review results for the next two migrated universal skills.
+
+### Action 2 — Lifecycle states updated
+
+Affected files:
+
+- `skills/documentation/project-documentation-architect/SKILL.md`
+- `skills/analysis/logic-deconstruction/SKILL.md`
+- `skills/registry.md`
+- `skills/PROJECT_INDEX.md`
+
+Purpose:
+
+Promote the two skills from `candidate` to `reviewed` while keeping them below `active`.
+
+### Action 3 — Private repository default documented
+
+Affected files:
+
+- `Start New Project.md`
+- `START_HERE.md`
+- `README.md`
+- `PROJECT_INDEX.md`
+- `docs/WORKFLOW_CONTRACT.md`
+- `docs/PROJECT_STRUCTURE_STANDARD.md`
+
+Purpose:
+
+Make it explicit that new project repositories should be private by default unless the user intentionally chooses a public repository.
+
+## Key Decisions
+
+### Decision 1 — Reviewed, not active
+
+`project-documentation-architect` and `logic-deconstruction` are now centrally reviewed, but not yet `active`.
+
+### Decision 2 — Privacy is the default, not an afterthought
+
+New project repositories should default to private visibility. Public repositories require an explicit user decision.
+
+## Next Action
+
+Run central review passes for:
+
+- `implementation-handoff-packet`
+- `codex-execution-review`
+- `pre-architecture-brainstorming`

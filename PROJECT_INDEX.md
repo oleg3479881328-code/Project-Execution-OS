@@ -14,6 +14,11 @@ Create a universal repository-first operating system for starting, running, revi
 
 The system must support humans, ChatGPT, Codex, Claude, local models, specialized agents, and future automation systems through one entrypoint and one stable project workflow.
 
+It must also support:
+
+- brainstorm-only work without forcing project creation;
+- normalization of older repositories into the current standard.
+
 ## Primary Entrypoint
 
 `START_HERE.md`
@@ -44,6 +49,7 @@ Project Execution OS
   ├── Governance Layer
   ├── Review Layer
   ├── Logging Layer
+  ├── Central Skill Layer
   ├── Central Knowledge Library
   └── Project Libraries
 ```
@@ -55,11 +61,21 @@ Project Execution OS
 - `PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/GOVERNANCE.md`
+- `docs/REPOSITORY_MEMORY_STANDARD.md`
+- `docs/SKILL_SPEC.md`
+- `docs/SKILL_LIFECYCLE.md`
+- `docs/SKILL_REVIEW_STANDARD.md`
+- `docs/COMPATIBILITY_MODEL.md`
+- `docs/SKILL_UNIVERSE_INVENTORY.md`
+- `docs/GRAPHIFY_STANDARD.md`
 - `docs/AGENT_CREATION_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
+- `skills/PROJECT_INDEX.md`
+- `skills/registry.md`
 - `workflow-templates/universal-project-v1/README.md`
 - `knowledge-library/README.md`
+- `knowledge-library/PROJECT_INDEX.md`
 - `logs/WORKFLOW_LOG.md`
 
 ## Universal Workflow Chain
@@ -79,11 +95,19 @@ Project Execution OS
 
 ## Project Folder Standard
 
-Every project must live under:
+Default model:
+
+Every project should live in its own dedicated private GitHub repository by default.
+
+Internal project folders under:
 
 `projects/<project-id>/`
 
-Each project must contain:
+are allowed as an exception for compact or intentionally internal work.
+
+Public repositories should be treated as an explicit user choice, not the default.
+
+Internal full-mode projects must contain:
 
 ```text
 PROJECT_ENTRYPOINT.md
@@ -109,6 +133,8 @@ Promotion rule:
 
 Project knowledge becomes central knowledge only after review.
 
+Research and design work should prefer publicly verifiable external sources, including official documentation, GitHub repositories, open-source examples, and other public evidence sources appropriate to the domain.
+
 ## Agent Architecture
 
 Agents are created per project when needed.
@@ -118,6 +144,10 @@ Agents are task-specific modules, not the root system.
 Required agent artifact:
 
 `projects/<project-id>/agents/<agent-name>/AGENT.md`
+
+Central reusable skills live under:
+
+`skills/<category>/<skill-name>/`
 
 ## Current Forbidden Priorities
 
@@ -145,16 +175,26 @@ Committed artifacts:
 - `PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/GOVERNANCE.md`
+- `docs/REPOSITORY_MEMORY_STANDARD.md`
+- `docs/SKILL_SPEC.md`
+- `docs/SKILL_LIFECYCLE.md`
+- `docs/SKILL_REVIEW_STANDARD.md`
+- `docs/COMPATIBILITY_MODEL.md`
+- `docs/SKILL_UNIVERSE_INVENTORY.md`
+- `docs/GRAPHIFY_STANDARD.md`
 - `docs/AGENT_CREATION_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
+- `skills/PROJECT_INDEX.md`
+- `skills/registry.md`
 - `workflow-templates/universal-project-v1/`
 - `knowledge-library/README.md`
+- `knowledge-library/PROJECT_INDEX.md`
 - `logs/WORKFLOW_LOG.md`
 
 ## Next Required Action
 
-Create the first real project using this OS:
+Run the first real project using this OS with the default repository-per-project model:
 
 `projects/0001-project-execution-os-foundation-review/`
 

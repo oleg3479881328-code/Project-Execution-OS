@@ -25,6 +25,7 @@ Instead:
 - projects become repository folders;
 - decisions become artifacts;
 - agents become task-specific modules;
+- central reusable skills live in the central system;
 - reviews become governance;
 - knowledge becomes reusable library entries;
 - central knowledge accumulates across projects.
@@ -57,11 +58,21 @@ Start by identifying whether you are:
 2. continuing an existing project;
 3. reviewing a project;
 4. extracting reusable knowledge;
-5. updating the operating system itself.
+5. brainstorming without creating a project yet;
+6. normalizing an older project into the current standard;
+7. updating the operating system itself.
 
 ## 5. If Starting A New Project
 
-Create a new project folder:
+Default rule:
+
+Create a dedicated private GitHub repository for the new project.
+
+Use an internal folder inside `Project Execution OS` only as an explicit exception for compact or temporary work.
+
+New repositories should be private by default unless the user explicitly chooses public visibility.
+
+If using an internal folder, create:
 
 `projects/<project-id>/`
 
@@ -89,6 +100,16 @@ Start with:
 
 `00_INPUT.md`
 
+If the project is small, low-risk, or intentionally compact, use compact mode with fewer files but the same core rules:
+
+- repository artifacts are the source of truth;
+- research is evidence-backed;
+- review happens before stable acceptance;
+- reusable knowledge is extracted when it appears;
+- the next action is logged explicitly.
+
+If the repository is broad enough that future navigation or architecture understanding will matter, build Graphify and use `graphify-out/GRAPH_REPORT.md` as a graph-memory layer for later sessions.
+
 ## 6. If Continuing An Existing Project
 
 Read in this order:
@@ -100,6 +121,11 @@ Read in this order:
 5. latest workflow run in `projects/<project-id>/workflow-runs/`
 6. relevant entries in `projects/<project-id>/project-library/`
 7. relevant entries in root `knowledge-library/`
+
+If central reusable skills are relevant to the task, also read:
+
+8. `skills/PROJECT_INDEX.md`
+9. `skills/registry.md`
 
 ## 7. Universal Project Workflow
 
@@ -147,9 +173,19 @@ The root repository has a central knowledge library:
 
 `knowledge-library/`
 
+The root repository also has a central reusable skill layer:
+
+`skills/`
+
+The wider external skill universe is inventoried in:
+
+`docs/SKILL_UNIVERSE_INVENTORY.md`
+
 Local project knowledge stays inside the project first.
 
 Reusable knowledge may be promoted into the central knowledge library only after review.
+
+Reusable skills may be promoted into the central skill layer only after review.
 
 ## 10. State Separation
 
