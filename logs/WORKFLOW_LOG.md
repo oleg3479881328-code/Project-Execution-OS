@@ -740,3 +740,50 @@ Run central review passes for:
 - `implementation-handoff-packet`
 - `codex-execution-review`
 - `pre-architecture-brainstorming`
+
+---
+
+# GitHub Coordination Protocol Added
+
+## Summary
+
+Added one canonical protocol document for `ChatGPT -> GitHub -> Codex -> review -> repository memory` so the collaboration model no longer lives only as scattered notes across startup docs and skills.
+
+## Executed Repository Actions
+
+### Action 1 — Canonical protocol created
+
+Affected file:
+
+- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+
+Purpose:
+
+Define one durable operating standard for reasoning-model handoff, GitHub coordination, Codex execution, PR comment loops, and review evidence.
+
+### Action 2 — Entrypoints linked to the protocol
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+- `Start New Project.md`
+
+Purpose:
+
+Make the protocol visible from the main operating entrypoints so a new AI can discover it early.
+
+## Key Decisions
+
+### Decision 1 — GitHub is a coordination layer, not the source of truth by itself
+
+GitHub PRs, issues, comments, and checks are durable communication surfaces, but they do not replace repository workflow artifacts and memory files.
+
+### Decision 2 — ChatGPT to Codex should be packet-driven
+
+The default collaboration model is deterministic handoff packet -> bounded Codex execution -> structured execution report -> review.
+
+## Next Action
+
+Run live tests with clean chats and observe where the startup flow or GitHub collaboration protocol still causes ambiguity.

@@ -14,6 +14,10 @@ Create a universal repository-first operating system for starting, running, revi
 
 The system must support humans, ChatGPT, Codex, Claude, local models, specialized agents, and future automation systems through one entrypoint and one stable project workflow.
 
+For the canonical GitHub-based coordination loop between reasoning models and Codex, use:
+
+`docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+
 It must also support:
 
 - brainstorm-only work without forcing project creation;
@@ -66,6 +70,7 @@ Project Execution OS
 - `docs/SKILL_LIFECYCLE.md`
 - `docs/SKILL_REVIEW_STANDARD.md`
 - `docs/COMPATIBILITY_MODEL.md`
+- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
 - `docs/SKILL_UNIVERSE_INVENTORY.md`
 - `docs/GRAPHIFY_STANDARD.md`
 - `docs/AGENT_CREATION_STANDARD.md`

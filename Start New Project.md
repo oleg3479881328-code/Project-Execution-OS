@@ -551,6 +551,10 @@ Risks / Follow-Up:
 Ready For Review: Yes / No
 ```
 
+For the full GitHub-based collaboration protocol between reasoning models and Codex, including issues, PRs, comments, and review loops, use:
+
+`docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+
 ## 15. Agent Creation
 
 Agents are created only when needed.

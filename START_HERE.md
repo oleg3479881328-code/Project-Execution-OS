@@ -187,6 +187,10 @@ Reusable knowledge may be promoted into the central knowledge library only after
 
 Reusable skills may be promoted into the central skill layer only after review.
 
+For the canonical GitHub-based collaboration loop between reasoning models and Codex, read:
+
+`docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+
 ## 10. State Separation
 
 Always distinguish:
