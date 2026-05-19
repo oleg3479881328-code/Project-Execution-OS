@@ -75,6 +75,12 @@ If the user explicitly wants brainstorming only and does not want a project yet,
 
 If the user points to an older repository or folder that does not match the current standard, use `legacy-project-normalization mode` instead of pretending it is already standardized.
 
+If a valuable `Project Execution OS` improvement idea appears during the work but is intentionally not being built now, preserve it in:
+
+`docs/DEFERRED_SYSTEM_IDEAS.md`
+
+Do not leave central-system future ideas only in chat text.
+
 ## 2. Core Model
 
 Project Execution OS is a repository-first project workflow system.

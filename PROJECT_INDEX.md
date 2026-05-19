@@ -22,6 +22,7 @@ It must also support:
 
 - brainstorm-only work without forcing project creation;
 - normalization of older repositories into the current standard.
+- durable ChatGPT to Codex communication through GitHub.
 
 ## Primary Entrypoint
 
@@ -73,6 +74,7 @@ Project Execution OS
 - `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
 - `docs/SKILL_UNIVERSE_INVENTORY.md`
 - `docs/GRAPHIFY_STANDARD.md`
+- `docs/DEFERRED_SYSTEM_IDEAS.md`
 - `docs/AGENT_CREATION_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
@@ -154,6 +156,10 @@ Central reusable skills live under:
 
 `skills/<category>/<skill-name>/`
 
+Key coordination skill:
+
+`skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+
 ## Current Forbidden Priorities
 
 Do not build yet:
@@ -168,6 +174,10 @@ Do not build yet:
 - marketplace;
 - mass agent creation;
 - autonomous execution layer.
+
+Deferred future-system ideas that are worth preserving without building yet belong in:
+
+`docs/DEFERRED_SYSTEM_IDEAS.md`
 
 ## Current Status
 

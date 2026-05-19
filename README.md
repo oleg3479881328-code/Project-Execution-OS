@@ -62,6 +62,10 @@ No vector database.
 No automation layer.
 No mass agent creation.
 
+Important future-system ideas that are intentionally deferred belong in:
+
+`docs/DEFERRED_SYSTEM_IDEAS.md`
+
 ## Universal Workflow
 
 INPUT
@@ -88,6 +92,7 @@ INPUT
 - `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
 - `docs/SKILL_UNIVERSE_INVENTORY.md`
 - `docs/GRAPHIFY_STANDARD.md`
+- `docs/DEFERRED_SYSTEM_IDEAS.md`
 - `docs/AGENT_CREATION_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/PROJECT_STRUCTURE_STANDARD.md`

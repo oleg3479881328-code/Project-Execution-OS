@@ -973,3 +973,49 @@ The single entrypoint now explicitly teaches that GitHub comments and threads ar
 ## Next Action
 
 Run the same clean-chat test again and verify that the new chat now explains both the handoff packet and the GitHub transport layer without extra prompting.
+
+---
+
+# Deferred System Ideas Added
+
+## Summary
+
+Added a durable central place for "not now, but important" `Project Execution OS` ideas so they survive chat resets and do not get lost between live tests.
+
+## Executed Repository Actions
+
+### Action 1 - Central deferred-ideas document created
+
+Affected file:
+
+- `docs/DEFERRED_SYSTEM_IDEAS.md`
+
+Purpose:
+
+Preserve future-system ideas that should not be built yet but should remain part of the central brain roadmap.
+
+### Action 2 - Canonical docs linked to the deferred-ideas layer
+
+Affected files:
+
+- `README.md`
+- `PROJECT_INDEX.md`
+- `Start New Project.md`
+
+Purpose:
+
+Teach humans and future AI sessions where to place important deferred system ideas instead of losing them in chat.
+
+## Key Decisions
+
+### Decision 1 - Central deferred ideas need their own memory artifact
+
+System-level future ideas should not live only in transient chat text and should not be mixed into active workflow runs prematurely.
+
+### Decision 2 - Runtime bridge is the first deferred system idea
+
+The direct execution bridge between reasoning models and Codex is valuable, but it stays deferred until live operational evidence shows that GitHub transport is no longer enough.
+
+## Next Action
+
+Continue live testing and add future central-brain "not now" ideas to `docs/DEFERRED_SYSTEM_IDEAS.md` whenever they are real, reusable, and intentionally postponed.
