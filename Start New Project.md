@@ -495,6 +495,84 @@ Reviewer verifies.
 Repository memory persists.
 ```
 
+Operational communication rule:
+
+If there is no direct runtime bridge to Codex, but the project already has a defined GitHub coordination surface such as an issue, PR, or review thread, treat that GitHub surface as the official way to write to Codex.
+
+Do not tell the user:
+
+```text
+I cannot write to Codex.
+```
+
+if a GitHub coordination channel already exists for the project.
+
+Instead:
+
+- use the existing GitHub issue, PR, or review thread as the communication channel;
+- write the message there in explicit task language;
+- treat GitHub comments as the practical communication bridge between the reasoning model and Codex;
+- mention lack of direct runtime access only if no GitHub coordination surface exists.
+
+### Ready Scheme: How To Talk To Codex
+
+Use this exact mental model:
+
+```text
+1. Source of truth
+GitHub main = committed project truth
+
+2. Payload
+Implementation handoff packet = what to tell Codex
+
+3. Transport
+GitHub issue / PR comments / review thread = where to tell Codex
+
+4. Execution
+Codex changes the repository inside explicit scope
+
+5. Verification
+Reviewer checks result against the original packet
+
+6. Persistence
+Accepted state lives in repository artifacts and GitHub history
+```
+
+Short form:
+
+```text
+packet = payload
+GitHub channel = transport
+Codex = executor
+review = acceptance gate
+repository = durable memory
+```
+
+Default rule for a new chat:
+
+- if a direct Codex runtime bridge exists, use it with a proper handoff packet;
+- if no direct bridge exists but a GitHub issue, PR, or review thread exists, use that GitHub surface as the bridge;
+- if neither exists, create or request one durable coordination surface before claiming work cannot be handed off.
+
+Never stop at:
+
+```text
+I know how to prepare a handoff packet.
+```
+
+The AI must also decide:
+
+- where the packet will be posted;
+- who is expected to execute it;
+- where the execution report must return.
+
+When a GitHub coordination surface already exists, the expected behavior is:
+
+1. read the existing issue, PR, or review thread;
+2. write the handoff packet or task message there;
+3. wait for Codex execution or review response there;
+4. continue the loop in that same durable channel.
+
 Do not send Codex vague prompts.
 
 Bad Codex prompt:
@@ -554,6 +632,10 @@ Ready For Review: Yes / No
 For the full GitHub-based collaboration protocol between reasoning models and Codex, including issues, PRs, comments, and review loops, use:
 
 `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+
+And use the dedicated central skill:
+
+`skills/coordination/chatgpt-codex-github-communication/SKILL.md`
 
 ## 15. Agent Creation
 

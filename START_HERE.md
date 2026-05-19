@@ -127,6 +127,13 @@ If central reusable skills are relevant to the task, also read:
 8. `skills/PROJECT_INDEX.md`
 9. `skills/registry.md`
 
+If the work will move from a reasoning model to Codex through GitHub, also read:
+
+10. `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+11. `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+
+In that mode, treat `GitHub main` as the source of truth and the local Codex folder as an execution workspace only.
+
 ## 7. Universal Project Workflow
 
 Every meaningful project run follows this chain:

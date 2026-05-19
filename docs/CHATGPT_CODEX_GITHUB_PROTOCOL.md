@@ -6,6 +6,10 @@ This document defines the canonical collaboration loop between a reasoning model
 
 The goal is to prevent vague handoffs, hidden state, and fake completion claims.
 
+This protocol is also operationalized as a central reusable skill:
+
+- `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+
 ## Core Model
 
 Use this sequence:
@@ -84,6 +88,31 @@ GitHub may carry the collaboration through:
 - GitHub Actions checks for validation evidence.
 
 Chat messages are not durable coordination state.
+
+## Sync Discipline
+
+For GitHub-coordinated work:
+
+- GitHub `main` is the only source of truth for committed project state.
+- The local Codex folder is an execution workspace, not the source of truth.
+- Google Drive and other mirrors are inspection channels only, not execution or sync authorities.
+
+Before any local execution:
+
+1. Run `git status`.
+2. If local changes exist, report them in the GitHub coordination surface before pulling.
+3. Do not commit local changes unless they are explicitly part of the current task.
+4. Pull latest `main` before validation:
+   - `git pull --ff-only origin main`
+
+After any local fix:
+
+1. Report exact changed files.
+2. Run validation.
+3. Commit only the minimal intended files.
+4. Do not commit `.venv`, logs, `.env`, `desktop.ini`, cache files, or local junk.
+5. Push only after the fix is validated.
+6. Post the commit SHA and validation report in the coordination surface.
 
 ## Preferred Interaction Modes
 
@@ -213,6 +242,8 @@ GitHub evidence should support the actual state:
 - PR exists;
 - checks passed or failed;
 - comments are open or resolved.
+- latest `main` was pulled before local validation when required;
+- the reported commit SHA exists when a fix was pushed.
 
 If GitHub evidence is missing, do not claim that the state exists.
 
@@ -224,6 +255,8 @@ Do not:
 - use GitHub comments as a substitute for a real execution packet;
 - allow Codex to broaden scope silently;
 - accept a PR because it sounds plausible without checking the diff and validations;
+- treat stale local workspace state as authoritative when `main` has moved ahead;
+- treat Google Drive or other mirrors as execution authority;
 - claim that GitHub history replaces repository memory artifacts inside the project;
 - treat chat-only decisions as committed project state.
 

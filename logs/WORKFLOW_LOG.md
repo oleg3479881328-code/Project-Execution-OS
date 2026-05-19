@@ -787,3 +787,189 @@ The default collaboration model is deterministic handoff packet -> bounded Codex
 ## Next Action
 
 Run live tests with clean chats and observe where the startup flow or GitHub collaboration protocol still causes ambiguity.
+
+---
+
+# ChatGPT Codex Communication Skill Added
+
+## Summary
+
+Promoted `ChatGPT <-> Codex` communication through GitHub from a protocol-only concept into a dedicated central reviewed skill and linked it across the main operating documents.
+
+## Executed Repository Actions
+
+### Action 1 — Central coordination skill created
+
+Affected files:
+
+- `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+- `skills/coordination/chatgpt-codex-github-communication/references.md`
+- `skills/coordination/chatgpt-codex-github-communication/validation/CENTRAL_REVIEW.md`
+
+Purpose:
+
+Make durable reasoning-model to Codex communication a first-class reusable skill instead of only a prose protocol.
+
+### Action 2 — Registry and inventory updated
+
+Affected files:
+
+- `skills/registry.md`
+- `skills/PROJECT_INDEX.md`
+- `docs/SKILL_UNIVERSE_INVENTORY.md`
+
+Purpose:
+
+Register the new coordination skill and align the wider skill map with the current reviewed state.
+
+### Action 3 — Canonical docs strengthened
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+- `Start New Project.md`
+- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+
+Purpose:
+
+Make the `ChatGPT 5 <-> Codex` communication pattern visible from the main entrypoints and protocol docs.
+
+## Key Decisions
+
+### Decision 1 — Communication is a skill, not only a note
+
+Durable GitHub-mediated collaboration between a reasoning model and Codex is important enough to exist as its own central reusable skill.
+
+### Decision 2 — Protocol and skill must coexist
+
+The protocol document explains the model. The skill gives a reusable workflow unit that new AI sessions can invoke directly.
+
+## Next Action
+
+Use clean chats to verify that new reasoning sessions can discover and follow this coordination skill without extra explanation.
+
+---
+
+# Coordination Sync Discipline Added
+
+## Summary
+
+Expanded the central `ChatGPT <-> Codex <-> GitHub` coordination skill and protocol to include explicit sync discipline so future sessions do not need to renegotiate source-of-truth and local-workspace rules.
+
+## Executed Repository Actions
+
+### Action 1 — Coordination skill expanded
+
+Affected files:
+
+- `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+- `skills/coordination/chatgpt-codex-github-communication/references.md`
+
+Purpose:
+
+Add mandatory preflight sync checks, post-fix reporting rules, and source-of-truth discipline directly into the reusable skill.
+
+### Action 2 — Protocol strengthened
+
+Affected file:
+
+- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+
+Purpose:
+
+Make `GitHub main` source-of-truth rules and anti-desync behavior part of the canonical protocol, not just a situational lesson.
+
+### Action 3 — Entrypoints clarified
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+
+Purpose:
+
+Expose the sync discipline early so new AI sessions understand the committed-state model before they execute locally.
+
+## Key Decisions
+
+### Decision 1 — Sync discipline is part of the skill itself
+
+The coordination skill now includes mandatory `git status`, `pull --ff-only`, minimal-commit, and commit-SHA reporting behavior.
+
+### Decision 2 — Local folders are execution workspaces only
+
+This rule is now explicitly written into the reusable operating model so future chats do not drift back into treating local state or mirrors as authority.
+
+## Next Action
+
+Continue live testing and only expand the coordination skill further if repeated real-world failures reveal another missing invariant.
+
+---
+
+# Entrypoint Anti-Failure Rule Added
+
+## Summary
+
+Strengthened `Start New Project.md` so a new chat fed only that file understands that an existing GitHub issue or PR is already a valid way to write to Codex, instead of incorrectly saying that no direct communication path exists.
+
+## Executed Repository Actions
+
+### Action 1 - Start file strengthened
+
+Affected file:
+
+- `Start New Project.md`
+
+Purpose:
+
+Add an explicit anti-failure rule for the common case where the reasoning model has no direct runtime bridge but does have an existing GitHub coordination surface.
+
+## Key Decisions
+
+### Decision 1 - GitHub issue or PR is a valid practical bridge
+
+If a project already defines a GitHub coordination channel, the reasoning model must use it as the practical way to write to Codex.
+
+### Decision 2 - "I cannot write to Codex" is now explicitly disallowed in that case
+
+That answer is treated as incorrect when a GitHub issue, PR, or review thread already exists for the project.
+
+## Next Action
+
+Test the revised `Start New Project.md` again in a clean chat and verify that the new chat proposes GitHub issue or PR comments as the communication path automatically.
+
+---
+
+# Ready Scheme Added To Single Entrypoint
+
+## Summary
+
+Added a direct ready-to-use scheme into `Start New Project.md` so a new chat fed only that file can understand not just the Codex handoff model, but also the transport model through GitHub.
+
+## Executed Repository Actions
+
+### Action 1 - Single-file scheme added
+
+Affected file:
+
+- `Start New Project.md`
+
+Purpose:
+
+Turn the one-file entrypoint into a complete operational model: source of truth, payload, transport, execution, verification, and persistence.
+
+## Key Decisions
+
+### Decision 1 - One file must explain both payload and transport
+
+`Implementation handoff packet` alone is not enough. The same entrypoint must also explain where that packet goes when the chat has no direct runtime bridge.
+
+### Decision 2 - GitHub issue or PR is now part of the ready scheme
+
+The single entrypoint now explicitly teaches that GitHub comments and threads are the practical transport layer for Codex communication when direct bridge access is absent.
+
+## Next Action
+
+Run the same clean-chat test again and verify that the new chat now explains both the handoff packet and the GitHub transport layer without extra prompting.

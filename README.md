@@ -11,6 +11,12 @@ It is also the central repository for:
 - central reusable knowledge;
 - migration of validated ideas from incubator repositories.
 
+Important coordination rule:
+
+Use the central `ChatGPT <-> Codex <-> GitHub` collaboration protocol and skill whenever reasoning-model work must be handed to Codex through a durable reviewable surface.
+
+For that workflow, `GitHub main` is the committed source of truth. Local folders are execution workspaces only.
+
 ## Start Here
 
 Every human or AI agent must start with:
