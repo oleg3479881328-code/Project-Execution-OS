@@ -557,7 +557,7 @@ repository = durable memory
 Default rule for a new chat:
 
 - if a direct Codex runtime bridge exists, use it with a proper handoff packet;
-- if no direct bridge exists but a GitHub issue, PR, or review thread exists, use that GitHub surface as the bridge;
+- if no direct bridge exists but a GitHub issue, PR, or review thread already exists, use that existing GitHub surface as the bridge first;
 - if neither exists, create or request one durable coordination surface before claiming work cannot be handed off.
 
 Never stop at:
@@ -578,6 +578,14 @@ When a GitHub coordination surface already exists, the expected behavior is:
 2. write the handoff packet or task message there;
 3. wait for Codex execution or review response there;
 4. continue the loop in that same durable channel.
+
+Do not create a new issue or PR if a suitable existing coordination surface already covers the work.
+
+Prefer continuity over unnecessary channel proliferation.
+
+If the next practical step is already clear from the repository state and the existing coordination channel, do not turn it into an artificial multiple-choice question.
+
+Ask a follow-up question only when the next step is genuinely ambiguous, risky, or requires a real user decision.
 
 Do not send Codex vague prompts.
 

@@ -1019,3 +1019,37 @@ The direct execution bridge between reasoning models and Codex is valuable, but 
 ## Next Action
 
 Continue live testing and add future central-brain "not now" ideas to `docs/DEFERRED_SYSTEM_IDEAS.md` whenever they are real, reusable, and intentionally postponed.
+
+---
+
+# Existing Channel Preference Added
+
+## Summary
+
+Strengthened `Start New Project.md` so new chats prefer an already existing GitHub coordination surface and avoid turning obvious next actions into unnecessary multiple-choice prompts.
+
+## Executed Repository Actions
+
+### Action 1 - Existing-channel rule tightened
+
+Affected file:
+
+- `Start New Project.md`
+
+Purpose:
+
+Make the single entrypoint teach operational continuity, not just the abstract transport model.
+
+## Key Decisions
+
+### Decision 1 - Existing GitHub channel comes first
+
+If a suitable issue, PR, or review thread already exists for the work, the reasoning model should continue there instead of proposing a new coordination surface by default.
+
+### Decision 2 - Obvious next steps should not become fake choice menus
+
+When repository state and channel context already imply the next safe action, the AI should act through that channel or propose the concrete next step directly instead of manufacturing A/B/C/D prompts.
+
+## Next Action
+
+Re-test the entrypoint with clean chats and verify that they now prefer the existing GitHub channel and ask fewer artificial choice questions.
