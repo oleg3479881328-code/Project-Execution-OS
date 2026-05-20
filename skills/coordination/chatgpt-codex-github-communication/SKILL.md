@@ -57,6 +57,7 @@ For GitHub-coordinated work:
 6. Use GitHub comments, PR threads, or issues only as durable follow-up surfaces.
 7. Review execution against the original packet before accepting state.
 8. Persist accepted knowledge back into repository memory.
+9. Label each AI-to-AI GitHub message with explicit speaker and recipient identity.
 
 # Sync Preflight
 
@@ -89,6 +90,7 @@ After any local fix:
 # Constraints
 
 Do not:
+- leave the speaker identity implicit in mixed GitHub threads;
 - send Codex vague prompts;
 - treat GitHub comments as a substitute for a real handoff packet;
 - allow silent scope expansion;
@@ -120,6 +122,7 @@ Before finalizing:
 - the coordination mode is explicit;
 - GitHub surface is identified;
 - a handoff packet exists or is required;
+- AI-to-AI GitHub comments identify `FROM`, `TO`, and message `TYPE`;
 - Codex scope is bounded;
 - execution report requirements are explicit;
 - review loop is defined;

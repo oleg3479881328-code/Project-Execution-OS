@@ -167,7 +167,12 @@ Compact mode may use fewer files than the full workflow, but it must preserve:
 
 - source-of-truth repository artifacts;
 - explicit clarification when needed;
+- bundled clarification when several answers belong to one package;
 - evidence-backed research when research is required;
 - review before stable acceptance;
 - logging of result and next action;
 - reusable knowledge extraction when relevant.
+
+Clarification rule:
+
+When multiple user answers are needed to complete one coherent artifact such as an AI-ready package, gather those answers in chat first and then write one repository update for the completed package unless the user explicitly asks for per-answer persistence.

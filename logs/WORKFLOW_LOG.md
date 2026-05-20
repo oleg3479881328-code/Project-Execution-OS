@@ -1053,3 +1053,163 @@ When repository state and channel context already imply the next safe action, th
 ## Next Action
 
 Re-test the entrypoint with clean chats and verify that they now prefer the existing GitHub channel and ask fewer artificial choice questions.
+
+---
+
+# Codex Usage Threshold Added
+
+## Summary
+
+Added an explicit system rule that `Codex` should be used only when executor access is actually needed, while small safe reasoning and drafting work should stay in the reasoning chat.
+
+## Executed Repository Actions
+
+### Action 1 - Entry and protocol docs updated
+
+Affected files:
+
+- `Start New Project.md`
+- `START_HERE.md`
+- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+
+Purpose:
+
+Prevent unnecessary Codex handoffs on small tasks and preserve executor capacity for real repository work.
+
+## Key Decisions
+
+### Decision 1 - Small safe tasks stay in chat
+
+If a task only requires reasoning, drafting, summarizing, planning, or text preparation, the reasoning model should do it directly.
+
+### Decision 2 - Codex is for true executor work
+
+Use Codex only when the work needs repository edits, local commands, validation, integration checks, or other executor-only access.
+
+## Next Action
+
+Continue live testing and verify that new chats stop proposing Codex for trivial doc-first or planning-only steps.
+
+---
+
+# Bundled Clarification Rule Added
+
+## Summary
+
+Added a general rule that several clarification answers for one AI-ready package may be gathered in chat first and then written into the repository as one coherent update.
+
+## Executed Repository Actions
+
+### Action 1 - Entry and workflow docs updated
+
+Affected files:
+
+- `Start New Project.md`
+- `START_HERE.md`
+- `docs/WORKFLOW_CONTRACT.md`
+
+Purpose:
+
+Prevent noisy per-answer repository updates and make clarification flow more practical for real use.
+
+## Key Decisions
+
+### Decision 1 - Clarification can be bundled
+
+If five answers belong to one package, the AI may collect all five in chat before writing the repository artifact.
+
+### Decision 2 - Repository updates should follow coherent package boundaries
+
+The default is one meaningful repository update per completed clarification package, not one update per button click.
+
+## Next Action
+
+Continue live testing and verify that new chats stop proposing unnecessary per-answer repository writes during clarification-heavy startup flows.
+
+---
+
+# AI Message Identity Rule Added
+
+## Summary
+
+Added a rule that GitHub messages between AI participants should explicitly label the speaker and recipient so mixed threads do not become ambiguous.
+
+## Executed Repository Actions
+
+### Action 1 - Coordination docs updated
+
+Affected files:
+
+- `Start New Project.md`
+- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+- `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+
+Purpose:
+
+Make `ChatGPT`, `Codex`, and other AI participants identify themselves clearly in GitHub issues, PR comments, and review threads.
+
+## Key Decisions
+
+### Decision 1 - AI-to-AI GitHub messages need explicit headers
+
+The default lightweight header is:
+
+`FROM: <sender>`
+`TO: <recipient>`
+`TYPE: <message kind>`
+
+### Decision 2 - Thread context alone is not enough
+
+Mixed human and AI threads should not rely on inference to determine who is speaking or who should act next.
+
+## Next Action
+
+Use the new identity header format in live GitHub coordination and verify that it reduces ambiguity in shared issue threads.
+
+---
+
+# AI Coordination Hub Created
+
+## Summary
+
+Created a dedicated private GitHub repository to serve as the default durable hub for `ChatGPT <-> Codex` coordination across projects and linked it back into the central standards.
+
+## Executed Repository Actions
+
+### Action 1 - New private coordination hub established
+
+Repository:
+
+- `oleg3479881328-code/AI-Coordination-Hub`
+
+Purpose:
+
+Keep cross-project AI coordination in one stable GitHub home instead of scattering it across unrelated repositories.
+
+### Action 2 - Central standards linked to the hub
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `Start New Project.md`
+- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+- `docs/AI_COORDINATION_HUB_STANDARD.md`
+
+Purpose:
+
+Define when to use the hub versus when to keep the thread inside the target project repository.
+
+## Key Decisions
+
+### Decision 1 - Use a hub for cross-project AI coordination
+
+Meta-level, protocol-level, and reusable coordination threads should have one durable home.
+
+### Decision 2 - Keep project-bound execution near the target repository
+
+The hub does not replace project-local source of truth or repository-bound execution history.
+
+## Next Action
+
+Push both the new coordination hub repository and the central `Project-Execution-OS` doc updates, then use the hub for future cross-project AI communication.

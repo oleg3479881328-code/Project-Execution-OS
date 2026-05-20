@@ -6,6 +6,8 @@ This document defines the canonical collaboration loop between a reasoning model
 
 The goal is to prevent vague handoffs, hidden state, and fake completion claims.
 
+Codex is not the default answer for every task. Use this protocol only when repository execution, local commands, validation, or other executor-only actions are actually needed.
+
 This protocol is also operationalized as a central reusable skill:
 
 - `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
@@ -50,6 +52,8 @@ ChatGPT, Claude, Gemini, or another reasoning-oriented AI may:
 
 The reasoning model must not pretend it already executed repository changes if Codex or another executor has not done so.
 
+The reasoning model should handle small safe tasks itself when they only require thinking, drafting, summarizing, planning, or producing text artifacts that do not require executor access.
+
 ### Codex
 
 Codex may:
@@ -88,6 +92,14 @@ GitHub may carry the collaboration through:
 - GitHub Actions checks for validation evidence.
 
 Chat messages are not durable coordination state.
+
+Default cross-project coordination hub:
+
+`oleg3479881328-code/AI-Coordination-Hub`
+
+Use that hub for reusable or cross-project AI coordination threads.
+
+Use the target project repository when the work is tightly bound to one repository's execution scope or review history.
 
 ## Sync Discipline
 
@@ -152,6 +164,37 @@ Flow:
 3. GitHub PR becomes the visible review surface.
 4. Review comments and threads drive follow-up work.
 5. Reviewer confirms acceptance or requests more changes.
+
+## Message Identity Rule
+
+When GitHub comments or issue updates are used as the communication bridge, each AI-to-AI message should identify the speaker and intended recipient explicitly.
+
+Minimum header:
+
+```text
+FROM: ChatGPT
+TO: Codex
+TYPE: Handoff
+```
+
+and for the return direction:
+
+```text
+FROM: Codex
+TO: ChatGPT
+TYPE: Execution Report
+```
+
+Allowed `TYPE` examples:
+
+- `Handoff`
+- `Clarification`
+- `Status`
+- `Execution Report`
+- `Review Request`
+- `Blocker`
+
+This avoids ambiguity when issues or PRs contain messages from the user, ChatGPT, Codex, and reviewers in the same thread.
 
 ## Required Handoff Packet
 
@@ -265,9 +308,10 @@ Do not:
 For software work, the safest default loop is:
 
 1. clarify and research;
-2. create repository artifact or execution spec;
-3. create implementation handoff packet;
-4. let Codex execute within explicit scope;
-5. publish to a private branch and draft PR when GitHub review is needed;
-6. review against the original packet;
-7. update repository memory after acceptance.
+2. if no executor access is needed, complete the small safe step directly;
+3. if executor access is needed, create repository artifact or execution spec;
+4. create implementation handoff packet;
+5. let Codex execute within explicit scope;
+6. publish to a private branch and draft PR when GitHub review is needed;
+7. review against the original packet;
+8. update repository memory after acceptance.

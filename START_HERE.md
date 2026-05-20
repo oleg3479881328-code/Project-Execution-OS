@@ -131,6 +131,7 @@ If the work will move from a reasoning model to Codex through GitHub, also read:
 
 10. `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
 11. `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+12. `docs/AI_COORDINATION_HUB_STANDARD.md`
 
 In that mode, treat `GitHub main` as the source of truth and the local Codex folder as an execution workspace only.
 
@@ -214,6 +215,12 @@ Do not claim that something is saved, applied, executed, reviewed, active, or co
 If the user says they want to start a new project, create the project folder structure and begin `00_INPUT.md`.
 
 If the user only gives a project idea, preserve it in `00_INPUT.md` and ask only the minimum clarification needed for the first useful run.
+
+Use Codex only when executor access is actually needed for repository edits, local commands, validation, or other tool-only work.
+
+If the task is small, safe, and can be completed through reasoning and drafting alone, do it directly instead of handing it off.
+
+If one AI-ready package needs several clarification answers, collect them in chat first and then commit one repository update after the package is complete instead of updating the repository after every answer.
 
 ## 12. Current Foundation Boundary
 

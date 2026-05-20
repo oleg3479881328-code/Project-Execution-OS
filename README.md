@@ -11,6 +11,10 @@ It is also the central repository for:
 - central reusable knowledge;
 - migration of validated ideas from incubator repositories.
 
+Default private AI coordination hub:
+
+`oleg3479881328-code/AI-Coordination-Hub`
+
 Important coordination rule:
 
 Use the central `ChatGPT <-> Codex <-> GitHub` collaboration protocol and skill whenever reasoning-model work must be handed to Codex through a durable reviewable surface.
@@ -90,6 +94,7 @@ INPUT
 - `docs/SKILL_REVIEW_STANDARD.md`
 - `docs/COMPATIBILITY_MODEL.md`
 - `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+- `docs/AI_COORDINATION_HUB_STANDARD.md`
 - `docs/SKILL_UNIVERSE_INVENTORY.md`
 - `docs/GRAPHIFY_STANDARD.md`
 - `docs/DEFERRED_SYSTEM_IDEAS.md`

@@ -81,6 +81,10 @@ If a valuable `Project Execution OS` improvement idea appears during the work bu
 
 Do not leave central-system future ideas only in chat text.
 
+For cross-project `ChatGPT <-> Codex` GitHub coordination that should live in one stable place, use the private coordination hub:
+
+`oleg3479881328-code/AI-Coordination-Hub`
+
 ## 2. Core Model
 
 Project Execution OS is a repository-first project workflow system.
@@ -109,6 +113,7 @@ The AI must:
 - use repository artifacts instead of chat-only memory;
 - separate facts, assumptions, recommendations, and open questions;
 - prefer reuse before building from scratch;
+- do small safe reasoning, drafting, planning, and documentation work directly when executor access is not needed;
 - create agents only when needed;
 - create implementation handoff packets before Codex execution;
 - review execution before accepting it;
@@ -556,9 +561,16 @@ repository = durable memory
 
 Default rule for a new chat:
 
+- if the work is small, low-risk, and does not require repository edits, local commands, validation runs, or tool-only access, do it directly in chat instead of handing it to Codex;
 - if a direct Codex runtime bridge exists, use it with a proper handoff packet;
 - if no direct bridge exists but a GitHub issue, PR, or review thread already exists, use that existing GitHub surface as the bridge first;
 - if neither exists, create or request one durable coordination surface before claiming work cannot be handed off.
+
+Use Codex only when executor access is actually needed.
+
+If an AI-ready package or clarification bundle needs several user answers, collect those answers in chat first and then write one repository update after the package is complete.
+
+Do not force a GitHub or repository update after every single clarification answer unless the user explicitly wants step-by-step persistence.
 
 Never stop at:
 
@@ -582,6 +594,26 @@ When a GitHub coordination surface already exists, the expected behavior is:
 Do not create a new issue or PR if a suitable existing coordination surface already covers the work.
 
 Prefer continuity over unnecessary channel proliferation.
+
+When AI systems talk to each other in GitHub, label the sides explicitly at the top of the message.
+
+Preferred lightweight format:
+
+```text
+FROM: ChatGPT
+TO: Codex
+TYPE: Handoff / Review / Clarification / Status
+```
+
+or:
+
+```text
+FROM: Codex
+TO: ChatGPT
+TYPE: Execution Report / Blocker / Status
+```
+
+Do not assume the other side can infer who is speaking from context alone.
 
 If the next practical step is already clear from the repository state and the existing coordination channel, do not turn it into an artificial multiple-choice question.
 
@@ -754,16 +786,17 @@ When the user confirms the idea and repository location:
 4A. If the repository already contains enough supported files and broad navigation will matter, initialize and build Graphify.
 5. Create `00_INPUT.md` with the raw idea.
 6. Ask only the minimum next clarification.
-7. Create `01_CLARIFICATION.md`.
-8. Decide whether research is needed.
-9. Run research if needed.
-10. Create a practical MVP plan.
-11. Decide whether agents are needed.
-12. Create execution spec or handoff packet only after review.
-13. Review before execution.
-14. Verify execution before memory update.
-15. Extract reusable knowledge.
-16. Log the result.
+7. If several clarification answers are needed for one package, gather them in chat first and then write one clarification update.
+8. Create `01_CLARIFICATION.md`.
+9. Decide whether research is needed.
+10. Run research if needed.
+11. Create a practical MVP plan.
+12. Decide whether agents are needed.
+13. Create execution spec or handoff packet only after review.
+14. Review before execution.
+15. Verify execution before memory update.
+16. Extract reusable knowledge.
+17. Log the result.
 
 ## 20A. Brainstorm-Only Mode
 
