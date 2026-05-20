@@ -54,3 +54,22 @@ FROM: <sender>
 TO: <recipient>
 TYPE: <message type>
 ```
+
+The sender and recipient may be:
+
+- `ChatGPT`
+- `Codex`
+- `Reviewer`
+- `Research-Agent`
+- `Architecture-Agent`
+- `Documentation-Agent`
+- another explicitly named agent
+
+The important rule is that the identity must be explicit and stable within the thread.
+
+## Local Shorthand Rule
+
+For this operating workflow:
+
+- `0` = write to the GitHub coordination channel
+- `00` = check the GitHub coordination thread and report what is new

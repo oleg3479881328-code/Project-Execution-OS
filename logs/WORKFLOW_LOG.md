@@ -1168,6 +1168,112 @@ Use the new identity header format in live GitHub coordination and verify that i
 
 ---
 
+# Commit Evidence Rule Added
+
+## Summary
+
+Added an explicit evidence rule: `commit SHA` proves that repository files changed, but it does not replace validation or review.
+
+## Executed Repository Actions
+
+### Action 1 - Evidence language tightened
+
+Affected files:
+
+- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+- `Start New Project.md`
+- `START_HERE.md`
+
+Purpose:
+
+Prevent overclaiming correctness from commit history alone.
+
+## Key Decisions
+
+### Decision 1 - Commit proves change, not full correctness
+
+A commit is strong evidence of repository state change, but not a complete proof that the resulting behavior is correct.
+
+### Decision 2 - Validation and review remain separate gates
+
+Behavioral confidence still requires validation evidence and review, even when the commit SHA is known.
+
+## Next Action
+
+Use this evidence rule in future GitHub coordination so commits, validation, and review are reported as distinct signals.
+
+---
+
+# Multi-Agent GitHub Identity Expanded
+
+## Summary
+
+Expanded the GitHub identity model so the same coordination format supports not only `ChatGPT` and `Codex`, but also other explicitly named agents.
+
+## Executed Repository Actions
+
+### Action 1 - Multi-agent identity docs updated
+
+Affected files:
+
+- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+- `docs/AI_COORDINATION_HUB_STANDARD.md`
+
+Purpose:
+
+Make the GitHub coordination model reusable for broader multi-agent collaboration without losing traceability.
+
+## Key Decisions
+
+### Decision 1 - Named agents are first-class participants
+
+Agents such as `Reviewer`, `Research-Agent`, `Architecture-Agent`, and `Documentation-Agent` may participate in the same durable GitHub coordination pattern.
+
+### Decision 2 - Identity must stay explicit
+
+Even in multi-agent threads, every AI message must still identify `FROM`, `TO`, and `TYPE`.
+
+## Next Action
+
+Use the same identity format when new named agents join GitHub coordination threads.
+
+---
+
+# Coordination Shorthand Added
+
+## Summary
+
+Added a short operator shorthand for GitHub coordination commands: `0` means write to the channel, and `00` means check the thread and report what is new.
+
+## Executed Repository Actions
+
+### Action 1 - Shorthand rule documented
+
+Affected files:
+
+- `docs/AI_COORDINATION_HUB_STANDARD.md`
+- `AI-Coordination-Hub/docs/COORDINATION_PROTOCOL.md`
+
+Purpose:
+
+Make repeated coordination actions faster without re-explaining the same intent in full sentences.
+
+## Key Decisions
+
+### Decision 1 - `0` means write
+
+The shorthand `0` now means: write to the active GitHub coordination channel.
+
+### Decision 2 - `00` means check
+
+The shorthand `00` now means: inspect the GitHub coordination thread and report updates.
+
+## Next Action
+
+Use this shorthand only where the GitHub coordination channel is already known and active.
+
+---
+
 # AI Coordination Hub Created
 
 ## Summary
