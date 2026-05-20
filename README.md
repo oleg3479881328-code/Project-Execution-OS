@@ -8,6 +8,7 @@ It is also the central repository for:
 
 - reusable workflow and governance standards;
 - central reusable skills;
+- central reusable agent templates;
 - central reusable knowledge;
 - migration of validated ideas from incubator repositories.
 
@@ -100,8 +101,11 @@ INPUT
 - `docs/GRAPHIFY_STANDARD.md`
 - `docs/DEFERRED_SYSTEM_IDEAS.md`
 - `docs/AGENT_CREATION_STANDARD.md`
+- `docs/AGENT_LIBRARY_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
+- `agent-library/README.md`
+- `agent-library/PROJECT_INDEX.md`
 - `skills/PROJECT_INDEX.md`
 - `skills/registry.md`
 - `workflow-templates/universal-project-v1/README.md`

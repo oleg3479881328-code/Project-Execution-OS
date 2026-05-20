@@ -1274,6 +1274,77 @@ Use this shorthand only where the GitHub coordination channel is already known a
 
 ---
 
+# Agent Library Standard Added
+
+## Summary
+
+Added a central reusable agent library standard and starter templates based on public multi-agent patterns from OpenAI Agents SDK, AutoGen, and LangGraph.
+
+## Executed Repository Actions
+
+### Action 1 - Central standard created
+
+Affected files:
+
+- `docs/AGENT_LIBRARY_STANDARD.md`
+- `agent-library/README.md`
+- `agent-library/PROJECT_INDEX.md`
+
+Purpose:
+
+Create a reusable agent layer so common agent roles do not need to be reinvented for each project.
+
+### Action 2 - Starter templates added
+
+Affected files:
+
+- `agent-library/templates/_TEMPLATE/AGENT.md`
+- `agent-library/templates/reviewer/AGENT.md`
+- `agent-library/templates/research-agent/AGENT.md`
+- `agent-library/templates/documentation-agent/AGENT.md`
+- `agent-library/templates/orchestrator-agent/AGENT.md`
+
+Purpose:
+
+Seed the library with the smallest useful reusable roles and a standard template contract.
+
+### Action 3 - Canonical docs linked to the library
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+
+Purpose:
+
+Make the new agent-library layer discoverable from the main entry documents.
+
+## Key Decisions
+
+### Decision 1 - Store reusable roles, not runtime sessions
+
+The central library keeps reusable agent templates, while project-local agents and live GitHub participants remain separate layers.
+
+### Decision 2 - Adopt specialist-first orchestration
+
+The default patterns now explicitly follow public best practices:
+
+- specialist agents over one overloaded generalist
+- manager/supervisor when one role should keep control
+- handoff when ownership should move
+- reviewer loop when acceptance quality matters
+
+### Decision 3 - Keep context minimal
+
+Library agents must declare the minimum context they need instead of assuming full history by default.
+
+## Next Action
+
+Review the starter templates in real projects and promote only the reusable ones that survive repeated use.
+
+---
+
 # AI Coordination Hub Created
 
 ## Summary

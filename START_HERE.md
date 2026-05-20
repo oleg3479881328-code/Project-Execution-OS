@@ -131,11 +131,16 @@ If central reusable skills are relevant to the task, also read:
 8. `skills/PROJECT_INDEX.md`
 9. `skills/registry.md`
 
+If reusable agent roles are relevant to the task, also read:
+
+10. `docs/AGENT_LIBRARY_STANDARD.md`
+11. `agent-library/PROJECT_INDEX.md`
+
 If the work will move from a reasoning model to Codex through GitHub, also read:
 
-10. `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
-11. `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
-12. `docs/AI_COORDINATION_HUB_STANDARD.md`
+12. `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+13. `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+14. `docs/AI_COORDINATION_HUB_STANDARD.md`
 
 In that mode, treat `GitHub main` as the source of truth and the local Codex folder as an execution workspace only.
 
@@ -213,6 +218,12 @@ Always distinguish:
 - active state: approved for reuse.
 
 Do not claim that something is saved, applied, executed, reviewed, active, or complete unless there is evidence.
+
+Interpret evidence carefully:
+
+- a `commit SHA` proves a repository change exists;
+- it does not by itself prove full correctness;
+- validation and review are still required.
 
 ## 11. Default Next Action
 

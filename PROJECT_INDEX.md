@@ -50,6 +50,7 @@ Project Execution OS
   ├── Project Workspace Standard
   ├── Universal Workflow Contract
   ├── Agent Creation Standard
+  ├── Agent Library Standard
   ├── Knowledge System
   ├── Governance Layer
   ├── Review Layer
@@ -77,8 +78,11 @@ Project Execution OS
 - `docs/GRAPHIFY_STANDARD.md`
 - `docs/DEFERRED_SYSTEM_IDEAS.md`
 - `docs/AGENT_CREATION_STANDARD.md`
+- `docs/AGENT_LIBRARY_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
+- `agent-library/README.md`
+- `agent-library/PROJECT_INDEX.md`
 - `skills/PROJECT_INDEX.md`
 - `skills/registry.md`
 - `workflow-templates/universal-project-v1/README.md`
@@ -158,6 +162,10 @@ Required agent artifact:
 Central reusable skills live under:
 
 `skills/<category>/<skill-name>/`
+
+Central reusable agent templates live under:
+
+`agent-library/templates/`
 
 Key coordination skill:
 
