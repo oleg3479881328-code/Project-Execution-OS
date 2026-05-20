@@ -107,7 +107,7 @@ Default model:
 
 Every project should live in its own dedicated private GitHub repository by default.
 
-Every new repository should also have a short clear GitHub description from the start.
+Every new repository should also have a short clear bilingual GitHub description from the start, with Russian first and English second.
 
 Internal project folders under:
 

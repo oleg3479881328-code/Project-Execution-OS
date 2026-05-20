@@ -68,7 +68,9 @@ Default rule:
 
 Create a dedicated private GitHub repository for the new project.
 
-When creating a new repository, also set a short clear GitHub description immediately.
+When creating a new repository, also set a short clear bilingual GitHub description immediately.
+
+Put Russian first and English second.
 
 Use an internal folder inside `Project Execution OS` only as an explicit exception for compact or temporary work.
 

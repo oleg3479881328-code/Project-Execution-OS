@@ -144,7 +144,8 @@ Preferred model:
 - one project = one dedicated GitHub repository;
 - new repositories are private by default unless the user explicitly chooses public visibility;
 - the repository name should match the project topic as closely as practical;
-- every new repository should receive a short clear GitHub description at creation time;
+- every new repository should receive a short clear bilingual GitHub description at creation time;
+- in that description, Russian should come first and English second;
 - the repository becomes the durable source of truth for that project;
 - Project Execution OS remains the central brain, not the storage place for all project execution history.
 

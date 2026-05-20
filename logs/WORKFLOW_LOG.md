@@ -1251,3 +1251,41 @@ Setting a GitHub description is now treated as a standard creation-time step, no
 ## Next Action
 
 Apply this rule to future repository creation flows and keep descriptions short, specific, and human-readable.
+
+---
+
+# Bilingual Repository Description Rule Added
+
+## Summary
+
+Refined the repository-description rule: new repositories should use bilingual GitHub descriptions with Russian first and English second.
+
+## Executed Repository Actions
+
+### Action 1 - Repo-description docs refined
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+- `Start New Project.md`
+- `docs/PROJECT_STRUCTURE_STANDARD.md`
+
+Purpose:
+
+Standardize not only the existence of descriptions, but also their language order and readability.
+
+## Key Decisions
+
+### Decision 1 - Repository descriptions should be bilingual
+
+Descriptions should work for both Russian-first and English-readable navigation contexts.
+
+### Decision 2 - Russian comes first
+
+The default order is Russian first, English second.
+
+## Next Action
+
+Apply this bilingual-description rule to future repository creation and update older repositories when their descriptions are touched.
