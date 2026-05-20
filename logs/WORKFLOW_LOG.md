@@ -1213,3 +1213,41 @@ The hub does not replace project-local source of truth or repository-bound execu
 ## Next Action
 
 Push both the new coordination hub repository and the central `Project-Execution-OS` doc updates, then use the hub for future cross-project AI communication.
+
+---
+
+# Repository Description Rule Added
+
+## Summary
+
+Added a rule that every newly created repository should receive a short clear GitHub description at creation time.
+
+## Executed Repository Actions
+
+### Action 1 - Repo-creation docs updated
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+- `Start New Project.md`
+- `docs/PROJECT_STRUCTURE_STANDARD.md`
+
+Purpose:
+
+Make new repositories easier to identify and understand in GitHub lists, navigation, and search views.
+
+## Key Decisions
+
+### Decision 1 - Repository name alone is not enough
+
+Each new repository should also have a concise description that explains its role or purpose.
+
+### Decision 2 - Description is part of repository bootstrap
+
+Setting a GitHub description is now treated as a standard creation-time step, not an optional later cleanup.
+
+## Next Action
+
+Apply this rule to future repository creation flows and keep descriptions short, specific, and human-readable.

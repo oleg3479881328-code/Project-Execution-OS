@@ -12,6 +12,8 @@ Default rule:
 
 Every project should live in its own dedicated private GitHub repository by default.
 
+Every new repository should also receive a short clear GitHub description at creation time so the repository remains identifiable in GitHub lists, search, and navigation.
+
 The root `projects/` folder inside `Project Execution OS` is for internal or compact exceptions, not the primary default.
 
 Recommended project id format:

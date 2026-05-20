@@ -39,6 +39,7 @@ First read the entrypoint, understand the project workflow, then create or conti
 Every new project should have:
 
 - one dedicated private GitHub repository by default;
+- one short clear repository description at creation time;
 - one clear project entrypoint;
 - one local project memory;
 - one workflow run folder;

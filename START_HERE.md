@@ -68,6 +68,8 @@ Default rule:
 
 Create a dedicated private GitHub repository for the new project.
 
+When creating a new repository, also set a short clear GitHub description immediately.
+
 Use an internal folder inside `Project Execution OS` only as an explicit exception for compact or temporary work.
 
 New repositories should be private by default unless the user explicitly chooses public visibility.

@@ -107,6 +107,8 @@ Default model:
 
 Every project should live in its own dedicated private GitHub repository by default.
 
+Every new repository should also have a short clear GitHub description from the start.
+
 Internal project folders under:
 
 `projects/<project-id>/`
