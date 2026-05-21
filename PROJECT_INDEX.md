@@ -30,6 +30,10 @@ It must also support:
 
 Every user, assistant, agent, or automation session must start there.
 
+For new project startup specifically, the canonical boot-router is:
+
+`Start New Project.md`
+
 ## Current Phase
 
 Foundation phase.
@@ -64,8 +68,13 @@ Project Execution OS
 
 - `README.md`
 - `START_HERE.md`
+- `Start New Project.md`
 - `PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
+- `docs/CODEX_HANDOFF_STANDARD.md`
+- `docs/RESEARCH_STANDARD.md`
+- `docs/REVIEW_STANDARD.md`
+- `docs/DECISION_REGISTRY_STANDARD.md`
 - `docs/GOVERNANCE.md`
 - `docs/REPOSITORY_MEMORY_STANDARD.md`
 - `docs/SKILL_SPEC.md`
@@ -228,3 +237,9 @@ Run the first real project using this OS with the default repository-per-project
 Purpose:
 
 Run Project Execution OS on itself and review the foundation through the universal workflow.
+
+## v2 Direction
+
+`Start New Project.md` is now intended to stay short and act only as a startup router.
+
+Heavier operating logic belongs in linked standards under `docs/`.

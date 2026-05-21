@@ -18,6 +18,10 @@ System:
 
 `Project Execution OS`
 
+For the dedicated new-project startup router, use:
+
+`Start New Project.md`
+
 ## 2. What This System Is
 
 Project Execution OS is a repository-first operating system for running projects through a repeatable workflow.
@@ -165,6 +169,10 @@ Every meaningful project run follows this chain:
 09_LOG.md
 ```
 
+For the full workflow standard, compact mode, and clarification bundling rules, read:
+
+`docs/WORKFLOW_CONTRACT.md`
+
 ## 8. Agent Creation Rule
 
 Agents are created under the project only when a workflow stage requires a specialized role.
@@ -211,6 +219,10 @@ Reusable skills may be promoted into the central skill layer only after review.
 For the canonical GitHub-based collaboration loop between reasoning models and Codex, read:
 
 `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+
+For the handoff packet formats themselves, read:
+
+`docs/CODEX_HANDOFF_STANDARD.md`
 
 ## 10. State Separation
 

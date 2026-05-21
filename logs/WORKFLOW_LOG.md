@@ -1512,3 +1512,62 @@ The default order is Russian first, English second.
 ## Next Action
 
 Apply this bilingual-description rule to future repository creation and update older repositories when their descriptions are touched.
+
+---
+
+# Start New Project v2 Split
+
+## Summary
+
+Reduced `Start New Project.md` from a heavy mixed entrypoint into a short boot-router and moved deeper operating logic into dedicated linked standards.
+
+## Executed Repository Actions
+
+### Action 1 - Startup entrypoint reduced to routing role
+
+Affected files:
+
+- `Start New Project.md`
+
+Purpose:
+
+Keep the startup file short, strict, and hard to ignore while preventing it from becoming a second brain.
+
+### Action 2 - Heavy operating logic split into focused standards
+
+Affected files:
+
+- `docs/CODEX_HANDOFF_STANDARD.md`
+- `docs/RESEARCH_STANDARD.md`
+- `docs/REVIEW_STANDARD.md`
+- `docs/DECISION_REGISTRY_STANDARD.md`
+
+Purpose:
+
+Move deeper rules out of the startup file so they can evolve without bloating the boot layer.
+
+### Action 3 - Index documents updated
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+
+Purpose:
+
+Make the v2 split discoverable from the main entry documents.
+
+## Key Decisions
+
+### Decision 1 - Start New Project is a router, not a constitution
+
+The startup file should force correct routing, not duplicate the whole operating system.
+
+### Decision 2 - Deeper standards should be loaded on demand
+
+Workflow, handoff, research, review, and decision-tracking rules now live in dedicated docs.
+
+## Next Action
+
+Use the new boot-router in real startup sessions and tighten any linked standard only when real usage exposes a gap.

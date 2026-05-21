@@ -28,6 +28,10 @@ Every human or AI agent must start with:
 
 `START_HERE.md`
 
+For new project startup specifically, use:
+
+`Start New Project.md`
+
 Do not start by coding.
 Do not start by creating agents.
 Do not start by building runtime.
@@ -87,8 +91,13 @@ INPUT
 ## Main Documents
 
 - `START_HERE.md`
+- `Start New Project.md`
 - `PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
+- `docs/CODEX_HANDOFF_STANDARD.md`
+- `docs/RESEARCH_STANDARD.md`
+- `docs/REVIEW_STANDARD.md`
+- `docs/DECISION_REGISTRY_STANDARD.md`
 - `docs/GOVERNANCE.md`
 - `docs/REPOSITORY_MEMORY_STANDARD.md`
 - `docs/SKILL_SPEC.md`
@@ -117,6 +126,10 @@ INPUT
 ## First Operational Rule
 
 When a new project begins, create a dedicated private GitHub repository by default.
+
+`Start New Project.md` is the short boot-router.
+
+The heavier operating logic lives in the linked standards under `docs/`.
 
 Internal project folders under:
 
