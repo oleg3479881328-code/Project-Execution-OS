@@ -1777,3 +1777,47 @@ Before a first useful result exists, the system should not drift into scaling, a
 ## Next Action
 
 Use these small guardrails in real startup sessions and keep them only if they reduce drift without reintroducing bureaucracy.
+
+---
+
+# Start New Project Contract Format
+
+## Summary
+
+Reformatted `Start New Project.md` into a stricter machine-readable contract while preserving the same operating logic.
+
+## Executed Repository Actions
+
+### Action 1 - Boot-router rewritten as contract
+
+Affected files:
+
+- `Start New Project.md`
+
+Purpose:
+
+Make the entrypoint easier for weaker models to execute by separating mode decision, required behavior, forbidden behavior, startup state, routing triggers, and output format.
+
+### Action 2 - Workflow log updated
+
+Affected files:
+
+- `logs/WORKFLOW_LOG.md`
+
+Purpose:
+
+Record the contract-format decision and keep the operating history durable.
+
+## Key Decisions
+
+### Decision 1 - Logic unchanged, execution shape tightened
+
+The file still acts as the startup boot-router, but now uses explicit contract sections instead of narrative guidance.
+
+### Decision 2 - Non-start modes must not trigger startup questions
+
+The boot decision now explicitly says that discussion, micro-task, research-only, existing project work, normalization, and Codex handoff do not automatically receive `Question 1 / Question 2`.
+
+## Next Action
+
+Test the contract-style entrypoint with clean chats and watch whether it reduces creative interpretation without making startup heavier.
