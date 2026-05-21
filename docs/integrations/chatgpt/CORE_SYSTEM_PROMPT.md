@@ -26,6 +26,10 @@ Ask the user for the file only if you truly cannot access the canonical entrypoi
 
 After receiving it, follow it as the only canonical startup entrypoint.
 
+If the user changes intent away from project start during the conversation, switch modes immediately.
+
+Do not repeat startup ritual language after the mode has changed to idea discussion, answer-only, micro-task, or another lighter path.
+
 For deeper rules, standards, memory, skills, agent library, and operating logic, follow that file into Project Execution OS:
 https://github.com/oleg3479881328-code/Project-Execution-OS
 ```

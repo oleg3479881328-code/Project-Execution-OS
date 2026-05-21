@@ -88,6 +88,10 @@ Ask:
 
 `Какую идею или проект разрабатываем?`
 
+If the user then changes intent and says they want only discussion or idea exploration, switch immediately into the lighter mode.
+
+Do not continue the startup sequence after that switch.
+
 ## Escalation Rule
 
 Start in the lightest plausible mode.

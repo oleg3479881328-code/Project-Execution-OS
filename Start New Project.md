@@ -33,6 +33,8 @@ If the user asks to create a project but gives no project idea, do not infer the
 
 Ask `Question 1` and wait.
 
+If the user changes intent during startup and says they want only to discuss the idea, stop the startup sequence immediately and switch to the lightest correct non-start mode.
+
 ## NEW PROJECT START
 
 ### Question 1
@@ -132,6 +134,14 @@ For a new project start, respond with only the next required startup question un
 After Question 1 and Question 2, output the short `STARTUP STATE` and the next action.
 
 For non-start modes, answer or act in the lightest correct mode.
+
+Do not re-announce that you are re-checking the startup entrypoint after the mode has already switched away from project start.
+
+Do not format a simple idea-discussion prompt as `Question 1 of 1`.
+
+Prefer natural phrasing such as:
+
+`В чем идея, которую хочешь обсудить?`
 
 ## FINAL RULE
 

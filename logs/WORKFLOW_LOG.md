@@ -2098,3 +2098,48 @@ The user should be asked to paste or resend the file only when the canonical ent
 ## Next Action
 
 Use this tighter rule in future clean-chat tests and keep watching for any remaining passive handoff behavior around entrypoint retrieval.
+
+---
+
+# Startup-to-Idea Switch Behavior Tightened
+
+## Summary
+
+Tightened the startup behavior so if a user changes intent from project creation to idea discussion, the assistant must switch modes immediately without repeating startup ritual language or formatting the discussion as a procedural questionnaire.
+
+## Executed Repository Actions
+
+### Action 1 - Core prompt updated
+
+Affected files:
+
+- `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+
+Purpose:
+
+Make mode switching explicit in the ChatGPT-facing system layer.
+
+### Action 2 - Startup router and classifier updated
+
+Affected files:
+
+- `Start New Project.md`
+- `docs/MODE_CLASSIFIER.md`
+
+Purpose:
+
+Prevent the assistant from continuing startup choreography after the user has clearly downgraded the request to idea discussion.
+
+## Key Decisions
+
+### Decision 1 - Intent change should end startup ritual immediately
+
+Once the user switches from project start to idea discussion, the assistant should stop the startup sequence and move into the lighter mode.
+
+### Decision 2 - Light mode should sound natural
+
+Simple idea discussion should not be phrased as `Question 1 of 1` or wrapped in extra procedural text.
+
+## Next Action
+
+Keep testing clean-chat behavior and trim any remaining ritual language that survives mode switching.
