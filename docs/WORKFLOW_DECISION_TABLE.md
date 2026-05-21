@@ -4,6 +4,10 @@
 
 Use this table to decide how heavy the workflow should be.
 
+Run the mode classifier first:
+
+`docs/MODE_CLASSIFIER.md`
+
 ## Decision Table
 
 | Situation | Recommended mode | Typical artifacts | Codex default |
@@ -12,6 +16,8 @@ Use this table to decide how heavy the workflow should be.
 | New meaningful project | full or compact startup via `Start New Project.md` | `00_INPUT.md` plus the smallest useful follow-up artifacts | maybe later |
 | Small but durable project task | `compact mode` | one compact workflow record or a few targeted files | only if executor access is needed |
 | Tiny safe task | `micro-task mode` | minimal artifact only when useful | no by default |
+| Opinion, explanation, comparison, translation, or short answer | `discussion / answer-only` | answer only or optional tiny note | no |
+| Research without project startup | `research-only` | research artifact only when useful | no by default |
 | Existing old repo that does not match the standard | `legacy-project-normalization mode` | audit, mapping, migration artifacts | maybe |
 | Narrow implementation or repo change with clear scope | `Codex handoff` or `Codex packet lite` | handoff packet, execution report, review artifact | yes |
 

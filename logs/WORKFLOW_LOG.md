@@ -1681,3 +1681,50 @@ Deeper standards should be opened only when the current task has a concrete reas
 ## Next Action
 
 Use this tighter gate in real sessions and watch for any remaining cases where the system still expands too eagerly.
+
+---
+
+# Mode Classifier Added
+
+## Summary
+
+Added an explicit first-pass classifier so the system can distinguish project start, micro-task, discussion, research-only, normalization, and Codex handoff before expanding workflow.
+
+## Executed Repository Actions
+
+### Action 1 - Classifier standard added
+
+Affected files:
+
+- `docs/MODE_CLASSIFIER.md`
+
+Purpose:
+
+Give the system a fast way to choose the lightest correct mode before repository or workflow expansion.
+
+### Action 2 - Routing docs linked to classifier
+
+Affected files:
+
+- `Start New Project.md`
+- `START_FAST.md`
+- `docs/PROJECT_ENTRY_MODES.md`
+- `docs/WORKFLOW_DECISION_TABLE.md`
+
+Purpose:
+
+Make the classifier part of the normal operating path instead of an implicit idea.
+
+## Key Decisions
+
+### Decision 1 - Not every request is a project
+
+The system must distinguish new project, existing work, micro-task, discussion, research-only, normalization, and handoff before choosing workflow weight.
+
+### Decision 2 - Classify first, expand second
+
+The classifier exists to keep the operating system from turning small work into unnecessary process.
+
+## Next Action
+
+Use the classifier in live sessions and tighten the boundary cases only if repeated ambiguity appears.

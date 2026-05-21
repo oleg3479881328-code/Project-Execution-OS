@@ -68,6 +68,7 @@ If a direct runtime bridge to Codex does not exist but a GitHub coordination sur
 
 Read deeper rules only when they are actually needed:
 
+- mode classifier: `docs/MODE_CLASSIFIER.md`
 - project modes: `docs/PROJECT_ENTRY_MODES.md`
 - workflow chain and compact mode: `docs/WORKFLOW_CONTRACT.md`
 - workflow mode selection: `docs/WORKFLOW_DECISION_TABLE.md`

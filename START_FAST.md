@@ -24,6 +24,7 @@ If you are starting a new project, the canonical entrypoint is still:
 ## Quick Routing
 
 - new project: `Start New Project.md`
+- mode classifier: `docs/MODE_CLASSIFIER.md`
 - mode choice: `docs/WORKFLOW_DECISION_TABLE.md`
 - workflow details: `docs/WORKFLOW_CONTRACT.md`
 - micro-task mode: `docs/MICRO_TASK_MODE.md`

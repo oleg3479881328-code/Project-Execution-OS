@@ -6,6 +6,10 @@ This document defines the valid entry modes for work entering `Project-Execution
 
 The central brain must distinguish these modes early so it does not force the wrong workflow shape.
 
+For the fast first-pass classifier, read:
+
+`docs/MODE_CLASSIFIER.md`
+
 ## Mode 1 — New Project
 
 Use when:
@@ -79,6 +83,16 @@ Recommended skill path:
 At startup, the system should classify the request into one of these modes before forcing repository creation or workflow expansion.
 
 If unclear, ask only the minimum question needed to identify the mode.
+
+The classifier should first distinguish:
+- new project;
+- existing project work;
+- micro-task;
+- discussion or answer-only;
+- research-only;
+- brainstorm-only;
+- legacy normalization;
+- Codex handoff.
 
 After mode selection, use the workflow decision table:
 
