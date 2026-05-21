@@ -1821,3 +1821,43 @@ The boot decision now explicitly says that discussion, micro-task, research-only
 ## Next Action
 
 Test the contract-style entrypoint with clean chats and watch whether it reduces creative interpretation without making startup heavier.
+
+---
+
+# Workflow Reference vs Execution Form Clarified
+
+## Summary
+
+Clarified that the full `00_INPUT.md -> 09_LOG.md` workflow is the reference model, while compact mode is the default execution form.
+
+## Executed Repository Actions
+
+### Action 1 - Workflow contract clarified
+
+Affected files:
+
+- `docs/WORKFLOW_CONTRACT.md`
+
+Purpose:
+
+Remove ambiguity between the full workflow chain and compact-first execution.
+
+### Action 2 - Decision table clarified
+
+Affected files:
+
+- `docs/WORKFLOW_DECISION_TABLE.md`
+
+Purpose:
+
+Make the default path for a new meaningful project compact unless scope, risk, review, handoff, or reuse justifies full workflow expansion.
+
+## Key Decision
+
+Full workflow is a map, not mandatory bureaucracy.
+
+Compact mode is the default execution form.
+
+## Next Action
+
+Watch clean-chat behavior for whether models now choose compact mode more consistently on normal startup tasks.

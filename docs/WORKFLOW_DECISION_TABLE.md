@@ -8,12 +8,20 @@ Run the mode classifier first:
 
 `docs/MODE_CLASSIFIER.md`
 
+Default principle:
+
+Full workflow is the reference model.
+
+Compact mode is the default execution form.
+
+Expand only when scope, risk, review, handoff, or reuse requires it.
+
 ## Decision Table
 
 | Situation | Recommended mode | Typical artifacts | Codex default |
 | --- | --- | --- | --- |
 | Raw idea, no project yet | `brainstorm-only mode` | chat notes or optional lightweight artifact | no |
-| New meaningful project | full or compact startup via `Start New Project.md` | `00_INPUT.md` plus the smallest useful follow-up artifacts | maybe later |
+| New meaningful project | compact startup via `Start New Project.md` by default; full workflow only when justified | `00_INPUT.md` or the smallest useful startup artifact | maybe later |
 | Small but durable project task | `compact mode` | one compact workflow record or a few targeted files | only if executor access is needed |
 | Tiny safe task | `micro-task mode` | minimal artifact only when useful | no by default |
 | Opinion, explanation, comparison, translation, or short answer | `discussion / answer-only` | answer only or optional tiny note | no |

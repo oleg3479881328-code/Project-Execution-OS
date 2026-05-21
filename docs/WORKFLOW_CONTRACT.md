@@ -36,7 +36,13 @@ Each project should use its own dedicated private GitHub repository unless there
 
 ## 3. Universal Workflow Chain
 
-Every meaningful project run must use this chain:
+The full workflow is the reference model.
+
+Compact mode is the default execution form.
+
+Expand into the full file chain only when scope, risk, review, handoff, or reuse requires it.
+
+Reference chain:
 
 ```text
 00_INPUT.md
@@ -169,7 +175,7 @@ Compact mode is allowed for small or low-risk projects.
 
 Compact mode is the default unless there is a concrete reason to expand into a heavier workflow.
 
-Compact mode may use fewer files than the full workflow, but it must preserve:
+Compact mode may use fewer files than the full workflow reference chain, but it must preserve:
 
 - source-of-truth repository artifacts;
 - explicit clarification when needed;
@@ -219,3 +225,5 @@ Do not expand from compact or micro-task mode into a heavier workflow unless at 
 - future reuse or continuation clearly depends on richer state.
 
 If a useful result can be achieved through `1 file`, `1 issue`, `1 packet`, or `1 short artifact`, that lighter path should win by default.
+
+The full workflow is a map, not mandatory bureaucracy.
