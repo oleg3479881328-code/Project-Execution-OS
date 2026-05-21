@@ -74,8 +74,9 @@ Start by identifying whether you are:
 3. reviewing a project;
 4. extracting reusable knowledge;
 5. brainstorming without creating a project yet;
-6. normalizing an older project into the current standard;
-7. updating the operating system itself.
+6. capturing an idea or reference so it does not get lost;
+7. normalizing an older project into the current standard;
+8. updating the operating system itself.
 
 ## 5. If Starting A New Project
 
@@ -193,6 +194,10 @@ For fast mode selection, read:
 For tiny safe tasks, read:
 
 `docs/MICRO_TASK_MODE.md`
+
+If the task is an idea, note, or reference that should not be lost but is not yet a project, read:
+
+`docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 
 ## 8. Agent Creation Rule
 

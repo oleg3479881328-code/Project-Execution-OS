@@ -11,11 +11,16 @@ It is also the central repository for:
 - central reusable skills;
 - central reusable agent templates;
 - central reusable knowledge;
+- integration rules for lightweight idea capture before project creation;
 - migration of validated ideas from incubator repositories.
 
 Default private AI coordination hub:
 
 `oleg3479881328-code/AI-Coordination-Hub`
+
+Default external idea intake library:
+
+`oleg3479881328-code/Reference-Idea-Library`
 
 Important coordination rule:
 
@@ -102,6 +107,7 @@ INPUT
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/WORKFLOW_DECISION_TABLE.md`
 - `docs/MICRO_TASK_MODE.md`
+- `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
 - `docs/RESEARCH_STANDARD.md`
 - `docs/REVIEW_STANDARD.md`

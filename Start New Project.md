@@ -24,6 +24,7 @@ Allowed non-start modes:
 - micro-task;
 - research-only;
 - brainstorm-only;
+- idea capture / reference triage;
 - existing project work;
 - legacy project normalization;
 - Codex handoff.
@@ -98,6 +99,7 @@ Forbidden now:
 ## WHEN
 
 - if user wants idea exploration only -> use `brainstorm-only mode`;
+- if user wants to discuss an idea and avoid losing it without starting a project -> use `reference idea capture`;
 - if user points to an older non-standard repo -> use `legacy-project-normalization mode`;
 - if project-bound GitHub issue, PR, or review thread already exists -> use it first;
 - if no direct Codex runtime bridge exists but GitHub coordination exists -> use GitHub as Codex transport;
@@ -114,6 +116,7 @@ Forbidden now:
 - graph navigation needed -> `docs/GRAPHIFY_STANDARD.md`
 - research needed -> `docs/RESEARCH_STANDARD.md`
 - review needed -> `docs/REVIEW_STANDARD.md`
+- idea should not be lost but is not yet a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - Codex execution next -> `docs/CODEX_HANDOFF_STANDARD.md`
 - GitHub coordination needed -> `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
 - coordination hub needed -> `docs/AI_COORDINATION_HUB_STANDARD.md`

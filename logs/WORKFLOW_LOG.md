@@ -2015,3 +2015,51 @@ ChatGPT-specific routing now has a dedicated home under `docs/integrations/` eve
 ## Next Action
 
 Run the new project-structure validator in normal repository work, then tighten or relax its checks only when real usage exposes false positives or missing guarantees.
+
+---
+
+# Reference Idea Capture Function Added
+
+## Summary
+
+Added a lightweight idea-capture function so a new chat can discuss an idea, avoid losing it, and optionally route it into `Reference-Idea-Library` without forcing premature project startup.
+
+## Executed Repository Actions
+
+### Action 1 - Idea capture standard created
+
+Affected files:
+
+- `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
+
+Purpose:
+
+Define a durable but lightweight path for ideas, references, links, and notes that are not yet project state.
+
+### Action 2 - Startup and routing docs updated
+
+Affected files:
+
+- `Start New Project.md`
+- `START_HERE.md`
+- `docs/MODE_CLASSIFIER.md`
+- `README.md`
+- `PROJECT_INDEX.md`
+
+Purpose:
+
+Teach the system that "I have an idea, let's discuss it" can route into idea capture instead of being forced into project creation.
+
+## Key Decisions
+
+### Decision 1 - Idea capture is a function, not another brain
+
+`Reference-Idea-Library` is treated as an intake, holding, and promotion layer rather than a replacement for project repositories or the central operating system.
+
+### Decision 2 - Record only on explicit user intent
+
+Discussion may stay ephemeral, but when the user wants the idea preserved, the system now has a canonical place and rule set for doing that.
+
+## Next Action
+
+Use this function in real chats where the user brings an idea or reference that should not be lost, then refine the standard only if repeated use exposes ambiguity.

@@ -54,6 +54,13 @@ Use when:
 - the idea is still exploratory;
 - the user wants options, framing, or direction before deciding whether a project should exist.
 
+### Mode F2 — Idea Capture / Reference Triage
+
+Use when:
+- the user has an idea, note, link, screenshot, or reference that should not be lost;
+- the material is not yet project state;
+- the right output is discussion, triage, and possibly durable idea capture rather than project startup.
+
 ### Mode G — Legacy Project Normalization
 
 Use when:
@@ -91,3 +98,5 @@ Escalate only when the task proves it needs:
 - broader research;
 - structured handoff;
 - future continuity.
+
+If the material only needs preservation and triage, prefer idea capture over project creation.

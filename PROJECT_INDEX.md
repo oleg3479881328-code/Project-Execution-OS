@@ -21,6 +21,7 @@ For the canonical GitHub-based coordination loop between reasoning models and Co
 It must also support:
 
 - brainstorm-only work without forcing project creation;
+- idea capture without forcing project creation;
 - normalization of older repositories into the current standard.
 - durable ChatGPT to Codex communication through GitHub.
 
@@ -79,6 +80,7 @@ Project Execution OS
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/WORKFLOW_DECISION_TABLE.md`
 - `docs/MICRO_TASK_MODE.md`
+- `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
 - `docs/RESEARCH_STANDARD.md`
 - `docs/REVIEW_STANDARD.md`
