@@ -1345,6 +1345,52 @@ Review the starter templates in real projects and promote only the reusable ones
 
 ---
 
+# ChatGPT Core System Prompt Added
+
+## Summary
+
+Added a short stable ChatGPT core system prompt that tells the model to request and follow `Start New Project.md` first, then use `Project Execution OS` as the evolving external brain.
+
+## Executed Repository Actions
+
+### Action 1 - Core system prompt created
+
+Affected file:
+
+- `docs/CHATGPT_CORE_SYSTEM_PROMPT.md`
+
+Purpose:
+
+Separate stable constitutional instructions from the living startup playbook and the wider central memory system.
+
+### Action 2 - Canonical docs linked to the prompt
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+
+Purpose:
+
+Make the system-prompt layer discoverable from the main repository entry documents.
+
+## Key Decisions
+
+### Decision 1 - System prompt should stay short and stable
+
+The system prompt should define the constitutional read order and behavior, not carry the full evolving operating system.
+
+### Decision 2 - `Start New Project.md` remains the living startup contract
+
+The core prompt points to `Start New Project.md`, and that file then leads into the wider `Project Execution OS` brain.
+
+## Next Action
+
+Use this core prompt in ChatGPT custom instructions or other stable system layers, while continuing to evolve `Start New Project.md` and the central repository documents separately.
+
+---
+
 # AI Coordination Hub Created
 
 ## Summary

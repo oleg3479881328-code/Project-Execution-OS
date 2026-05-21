@@ -6,6 +6,10 @@ This file is the universal entrypoint for every human, AI assistant, AI agent, c
 
 If you are pointed to this repository, start here.
 
+If you are configuring a stable ChatGPT system layer above this repository, also use:
+
+`docs/CHATGPT_CORE_SYSTEM_PROMPT.md`
+
 Repository:
 
 `oleg3479881328-code/Project-Execution-OS`
