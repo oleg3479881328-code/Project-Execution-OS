@@ -18,7 +18,11 @@ Do not invent your own startup workflow.
 Do not skip this file.
 Do not replace it with your own interpretation.
 
-If Start New Project.md is not yet in context, ask for it first.
+If this exact file URL is already known and you can access it, fetch and read it yourself.
+
+Do not ask the user to paste or resend the file when the canonical URL is already available and readable.
+
+Ask the user for the file only if you truly cannot access the canonical entrypoint from the provided URL or context.
 
 After receiving it, follow it as the only canonical startup entrypoint.
 

@@ -14,6 +14,10 @@ Current integrations:
 - `chatgpt/CORE_SYSTEM_PROMPT.md`
 - `chatgpt/CODEX_GITHUB_PROTOCOL.md`
 
+Operational rule:
+
+If a canonical integration document URL is already known and accessible, the model should fetch and read it directly instead of asking the user to paste it again.
+
 Design rule:
 
 The operating system stays tool-neutral at the core.

@@ -2063,3 +2063,38 @@ Discussion may stay ephemeral, but when the user wants the idea preserved, the s
 ## Next Action
 
 Use this function in real chats where the user brings an idea or reference that should not be lost, then refine the standard only if repeated use exposes ambiguity.
+
+---
+
+# ChatGPT Entrypoint Fetch Rule Tightened
+
+## Summary
+
+Strengthened the ChatGPT integration layer so a new chat should fetch `Start New Project.md` itself when the canonical URL is already known and accessible, instead of asking the user to paste the file again.
+
+## Executed Repository Actions
+
+### Action 1 - Core prompt behavior tightened
+
+Affected files:
+
+- `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+- `docs/integrations/README.md`
+
+Purpose:
+
+Remove a passive failure mode where the model acknowledged the startup contract but still pushed the retrieval work back onto the user.
+
+## Key Decisions
+
+### Decision 1 - Known canonical URL should be used directly
+
+If the exact startup entrypoint URL is already known and readable, the model should fetch it itself.
+
+### Decision 2 - Asking the user is fallback behavior only
+
+The user should be asked to paste or resend the file only when the canonical entrypoint truly cannot be accessed from the known URL or available context.
+
+## Next Action
+
+Use this tighter rule in future clean-chat tests and keep watching for any remaining passive handoff behavior around entrypoint retrieval.
