@@ -42,6 +42,7 @@ Options:
 After Question 2 is answered:
 - create or use repository artifacts as the source of truth;
 - use the smallest useful workflow;
+- create an artifact only when it will actually be useful later;
 - ask only necessary clarification;
 - avoid overengineering;
 - route into the deeper standards listed below only when needed.
@@ -68,6 +69,8 @@ Read deeper rules only when they are actually needed:
 
 - project modes: `docs/PROJECT_ENTRY_MODES.md`
 - workflow chain and compact mode: `docs/WORKFLOW_CONTRACT.md`
+- workflow mode selection: `docs/WORKFLOW_DECISION_TABLE.md`
+- micro-task mode: `docs/MICRO_TASK_MODE.md`
 - project location and structure: `docs/PROJECT_STRUCTURE_STANDARD.md`
 - repository memory and project memory: `docs/REPOSITORY_MEMORY_STANDARD.md`
 - graph memory: `docs/GRAPHIFY_STANDARD.md`
@@ -93,6 +96,8 @@ For a new project:
 Do not turn the startup into ceremony.
 
 Do not force the full workflow when compact mode or brainstorming mode is enough.
+
+Do not force a file artifact when the result is too small to justify one.
 
 Do not use Codex for small safe reasoning, drafting, or documentation tasks that can be completed directly without executor access.
 

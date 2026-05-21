@@ -34,6 +34,10 @@ For new project startup specifically, the canonical boot-router is:
 
 `Start New Project.md`
 
+For quick daily orientation after the startup model is already known, use:
+
+`START_FAST.md`
+
 ## Current Phase
 
 Foundation phase.
@@ -69,8 +73,11 @@ Project Execution OS
 - `README.md`
 - `START_HERE.md`
 - `Start New Project.md`
+- `START_FAST.md`
 - `PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
+- `docs/WORKFLOW_DECISION_TABLE.md`
+- `docs/MICRO_TASK_MODE.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
 - `docs/RESEARCH_STANDARD.md`
 - `docs/REVIEW_STANDARD.md`

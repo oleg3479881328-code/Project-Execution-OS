@@ -32,6 +32,10 @@ For new project startup specifically, use:
 
 `Start New Project.md`
 
+For quick daily orientation after the system is already understood, use:
+
+`START_FAST.md`
+
 Do not start by coding.
 Do not start by creating agents.
 Do not start by building runtime.
@@ -92,8 +96,11 @@ INPUT
 
 - `START_HERE.md`
 - `Start New Project.md`
+- `START_FAST.md`
 - `PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
+- `docs/WORKFLOW_DECISION_TABLE.md`
+- `docs/MICRO_TASK_MODE.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
 - `docs/RESEARCH_STANDARD.md`
 - `docs/REVIEW_STANDARD.md`

@@ -22,6 +22,10 @@ For the dedicated new-project startup router, use:
 
 `Start New Project.md`
 
+For quick daily orientation after the system is already understood, use:
+
+`START_FAST.md`
+
 ## 2. What This System Is
 
 Project Execution OS is a repository-first operating system for running projects through a repeatable workflow.
@@ -120,6 +124,8 @@ If the project is small, low-risk, or intentionally compact, use compact mode wi
 - reusable knowledge is extracted when it appears;
 - the next action is logged explicitly.
 
+If the task is tiny and safe, use `micro-task mode` instead of creating a full workflow trail.
+
 If the repository is broad enough that future navigation or architecture understanding will matter, build Graphify and use `graphify-out/GRAPH_REPORT.md` as a graph-memory layer for later sessions.
 
 ## 6. If Continuing An Existing Project
@@ -172,6 +178,14 @@ Every meaningful project run follows this chain:
 For the full workflow standard, compact mode, and clarification bundling rules, read:
 
 `docs/WORKFLOW_CONTRACT.md`
+
+For fast mode selection, read:
+
+`docs/WORKFLOW_DECISION_TABLE.md`
+
+For tiny safe tasks, read:
+
+`docs/MICRO_TASK_MODE.md`
 
 ## 8. Agent Creation Rule
 
@@ -250,6 +264,8 @@ If the user only gives a project idea, preserve it in `00_INPUT.md` and ask only
 Use Codex only when executor access is actually needed for repository edits, local commands, validation, or other tool-only work.
 
 If the task is small, safe, and can be completed through reasoning and drafting alone, do it directly instead of handing it off.
+
+Create an artifact only when it will actually be useful later as state, evidence, review material, reuse material, or decision memory.
 
 If one AI-ready package needs several clarification answers, collect them in chat first and then commit one repository update after the package is complete instead of updating the repository after every answer.
 

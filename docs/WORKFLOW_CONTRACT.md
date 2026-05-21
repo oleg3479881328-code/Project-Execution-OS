@@ -176,3 +176,29 @@ Compact mode may use fewer files than the full workflow, but it must preserve:
 Clarification rule:
 
 When multiple user answers are needed to complete one coherent artifact such as an AI-ready package, gather those answers in chat first and then write one repository update for the completed package unless the user explicitly asks for per-answer persistence.
+
+## 11. Micro-Task Mode
+
+Micro-task mode is allowed for tiny, safe, low-risk work that does not justify a full workflow run.
+
+Use the minimal shape:
+
+```text
+goal -> action -> result -> short review note -> next action
+```
+
+Micro-task mode should prefer direct completion over ceremony.
+
+## 12. Artifact Only When Useful
+
+Do not create a file artifact just because a workflow stage exists in theory.
+
+Create an artifact when it will actually be useful for at least one of:
+- future state recovery;
+- review;
+- evidence;
+- reuse;
+- decision memory;
+- handoff.
+
+If the artifact will not materially help later work, keep the task lighter.

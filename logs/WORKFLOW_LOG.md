@@ -1571,3 +1571,67 @@ Workflow, handoff, research, review, and decision-tracking rules now live in ded
 ## Next Action
 
 Use the new boot-router in real startup sessions and tighten any linked standard only when real usage exposes a gap.
+
+---
+
+# Lightweight Workflow Layer Added
+
+## Summary
+
+Added a lightweight operating layer so the system stays disciplined without drifting into bureaucracy on tiny or routine work.
+
+## Executed Repository Actions
+
+### Action 1 - Quick daily shortcut added
+
+Affected files:
+
+- `START_FAST.md`
+
+Purpose:
+
+Provide a short operational shortcut without creating a competing canonical startup entrypoint.
+
+### Action 2 - Lightweight workflow standards added
+
+Affected files:
+
+- `docs/MICRO_TASK_MODE.md`
+- `docs/WORKFLOW_DECISION_TABLE.md`
+
+Purpose:
+
+Make small-task handling and workflow selection explicit instead of leaving them implicit.
+
+### Action 3 - Core docs updated with lightweight rules
+
+Affected files:
+
+- `Start New Project.md`
+- `START_HERE.md`
+- `README.md`
+- `PROJECT_INDEX.md`
+- `docs/WORKFLOW_CONTRACT.md`
+- `docs/PROJECT_ENTRY_MODES.md`
+
+Purpose:
+
+Promote `artifact only when useful`, `micro-task mode`, and explicit workflow selection into the main operating path.
+
+## Key Decisions
+
+### Decision 1 - Keep one canonical startup router
+
+`Start New Project.md` remains the only canonical startup entrypoint for new projects.
+
+### Decision 2 - Allow a fast operational shortcut
+
+`START_FAST.md` is a shortcut for daily use after the system is already understood, not a replacement for the canonical startup router.
+
+### Decision 3 - Lightweight discipline beats file ritual
+
+Tiny safe tasks should use the smallest durable structure that still preserves useful state and evidence.
+
+## Next Action
+
+Use the decision table and micro-task mode in real sessions, then refine thresholds only if repeated work shows ambiguity.

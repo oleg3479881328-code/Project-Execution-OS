@@ -79,3 +79,9 @@ Recommended skill path:
 At startup, the system should classify the request into one of these modes before forcing repository creation or workflow expansion.
 
 If unclear, ask only the minimum question needed to identify the mode.
+
+After mode selection, use the workflow decision table:
+
+`docs/WORKFLOW_DECISION_TABLE.md`
+
+If the task is tiny and safe, prefer `micro-task mode` over heavier workflow expansion.
