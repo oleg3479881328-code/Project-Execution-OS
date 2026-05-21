@@ -10,10 +10,13 @@ If you are starting a new project, the canonical entrypoint is still:
 
 - repository-first: durable state belongs in repository artifacts, not only in chat;
 - use the smallest useful workflow;
+- default to `compact-first`;
 - artifact only when useful;
 - prefer `micro-task mode` for small, safe, sub-15-minute work;
 - use `compact mode` for small but still meaningful project work;
 - use full workflow only when the task complexity or risk justifies it;
+- do not read deeper standards until you know exactly why you need one;
+- if `1 file / 1 issue / 1 packet / 1 short artifact` is enough, stop there;
 - use Codex only when executor access is actually needed;
 - review before stable acceptance;
 - log the next action explicitly.

@@ -40,6 +40,7 @@ Options:
 - F) свой вариант
 
 After Question 2 is answered:
+- default to `compact-first`;
 - create or use repository artifacts as the source of truth;
 - use the smallest useful workflow;
 - create an artifact only when it will actually be useful later;
@@ -84,16 +85,23 @@ Read deeper rules only when they are actually needed:
 - central reusable skills: `skills/PROJECT_INDEX.md`
 - deferred future-system ideas: `docs/DEFERRED_SYSTEM_IDEAS.md`
 
+Do not read deeper standards by default.
+
+Read a deeper standard only if you can name the concrete reason it is needed for the current task.
+
 ## RESPONSE BEHAVIOR
 
 For a new project:
 - ask Question 1;
 - ask Question 2;
+- default to the shortest useful path;
 - choose the smallest useful workflow;
 - preserve the idea in repository artifacts;
 - move into deeper standards only when the task truly requires them.
 
 Do not turn the startup into ceremony.
+
+If a useful result can be achieved through `1 file`, `1 issue`, `1 packet`, or `1 short artifact`, do not expand into a heavier workflow without a concrete reason.
 
 Do not force the full workflow when compact mode or brainstorming mode is enough.
 

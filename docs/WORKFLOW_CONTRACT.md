@@ -26,6 +26,10 @@ Do not build giant architecture before the project has passed through a clear wo
 
 Execution quality is more important than architectural fantasy.
 
+Default operating gate:
+
+`compact-first`
+
 Default project-location rule:
 
 Each project should use its own dedicated private GitHub repository unless there is an explicit reason to use compact or internal mode.
@@ -163,6 +167,8 @@ The workflow is acceptable only if it:
 
 Compact mode is allowed for small or low-risk projects.
 
+Compact mode is the default unless there is a concrete reason to expand into a heavier workflow.
+
 Compact mode may use fewer files than the full workflow, but it must preserve:
 
 - source-of-truth repository artifacts;
@@ -202,3 +208,14 @@ Create an artifact when it will actually be useful for at least one of:
 - handoff.
 
 If the artifact will not materially help later work, keep the task lighter.
+
+## 13. Expansion Gate
+
+Do not expand from compact or micro-task mode into a heavier workflow unless at least one condition is true:
+- scope is genuinely broad;
+- risk is non-trivial;
+- review needs several distinct artifacts;
+- handoff needs a structured packet;
+- future reuse or continuation clearly depends on richer state.
+
+If a useful result can be achieved through `1 file`, `1 issue`, `1 packet`, or `1 short artifact`, that lighter path should win by default.

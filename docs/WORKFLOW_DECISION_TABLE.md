@@ -24,3 +24,18 @@ Choose the lightest mode that still:
 - supports review when the result will matter later.
 
 If in doubt, start lighter and escalate only when the task proves it needs more structure.
+
+## Standards-On-Demand Rule
+
+Do not open deeper standards just because they exist.
+
+Before loading a deeper standard, be able to name the reason:
+- mode selection;
+- handoff;
+- research;
+- review;
+- memory;
+- structure;
+- graph navigation.
+
+If no such reason exists yet, stay in the lighter mode.

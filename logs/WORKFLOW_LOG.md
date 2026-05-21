@@ -1635,3 +1635,49 @@ Tiny safe tasks should use the smallest durable structure that still preserves u
 ## Next Action
 
 Use the decision table and micro-task mode in real sessions, then refine thresholds only if repeated work shows ambiguity.
+
+---
+
+# Compact-First Gate Tightened
+
+## Summary
+
+Strengthened the system so compact execution wins by default and deeper standards load only on explicit need.
+
+## Executed Repository Actions
+
+### Action 1 - Startup router tightened
+
+Affected files:
+
+- `Start New Project.md`
+- `START_FAST.md`
+
+Purpose:
+
+Make `compact-first`, `1 file / 1 issue / 1 packet`, and standards-on-demand part of the default operating behavior.
+
+### Action 2 - Workflow expansion gate formalized
+
+Affected files:
+
+- `docs/WORKFLOW_CONTRACT.md`
+- `docs/WORKFLOW_DECISION_TABLE.md`
+
+Purpose:
+
+Prevent automatic escalation into heavier workflow layers when a shorter useful path is enough.
+
+## Key Decisions
+
+### Decision 1 - Compact-first is now the default gate
+
+Heavier workflow is allowed only when scope, risk, review, handoff, or future continuity clearly requires it.
+
+### Decision 2 - Standards are loaded on demand, not by ritual
+
+Deeper standards should be opened only when the current task has a concrete reason for them.
+
+## Next Action
+
+Use this tighter gate in real sessions and watch for any remaining cases where the system still expands too eagerly.
