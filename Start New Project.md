@@ -25,6 +25,10 @@ Ask only this first question now:
 
 Какую идею или проект разрабатываем?
 
+If the user asks to create a project but does not provide the idea, do not guess it.
+
+Ask `Question 1` and wait.
+
 After the user answers Question 1, ask in Russian:
 
 ### Question 2
@@ -41,6 +45,7 @@ Options:
 
 After Question 2 is answered:
 - default to `compact-first`;
+- create a short `STARTUP STATE`;
 - create or use repository artifacts as the source of truth;
 - use the smallest useful workflow;
 - create an artifact only when it will actually be useful later;
@@ -63,6 +68,10 @@ If the user points to an older non-standard repository or folder, use `legacy-pr
 If the work is project-bound and already has a suitable GitHub issue, PR, or review thread, use the existing coordination channel first instead of creating a new one.
 
 If a direct runtime bridge to Codex does not exist but a GitHub coordination surface exists, use GitHub as the transport layer to Codex.
+
+For Codex-bound work, the next artifact is:
+
+`Implementation Handoff Packet`
 
 ## ROUTING INTO THE BRAIN
 
@@ -90,19 +99,40 @@ Do not read deeper standards by default.
 
 Read a deeper standard only if you can name the concrete reason it is needed for the current task.
 
+Typical trigger list:
+- mode is unclear -> `docs/MODE_CLASSIFIER.md`
+- workflow weight is unclear -> `docs/WORKFLOW_DECISION_TABLE.md`
+- small safe task -> `docs/MICRO_TASK_MODE.md`
+- research is needed -> `docs/RESEARCH_STANDARD.md`
+- review is needed -> `docs/REVIEW_STANDARD.md`
+- Codex execution is next -> `docs/CODEX_HANDOFF_STANDARD.md`
+- project structure is needed -> `docs/PROJECT_STRUCTURE_STANDARD.md`
+- memory recovery is needed -> `docs/REPOSITORY_MEMORY_STANDARD.md`
+- graph navigation is needed -> `docs/GRAPHIFY_STANDARD.md`
+
 ## RESPONSE BEHAVIOR
 
 For a new project:
 - ask Question 1;
 - ask Question 2;
+- write a short `STARTUP STATE`;
 - default to the shortest useful path;
 - choose the smallest useful workflow;
 - preserve the idea in repository artifacts;
 - move into deeper standards only when the task truly requires them.
 
+`STARTUP STATE` should capture only:
+- project idea;
+- project mode;
+- storage decision;
+- current next action;
+- what is forbidden now.
+
 Do not turn the startup into ceremony.
 
 If a useful result can be achieved through `1 file`, `1 issue`, `1 packet`, or `1 short artifact`, do not expand into a heavier workflow without a concrete reason.
+
+Until there is a minimal working version or equivalent first useful result, do not expand into scaling, complex abstractions, agent proliferation, or automation layers without a concrete reason.
 
 Do not force the full workflow when compact mode or brainstorming mode is enough.
 

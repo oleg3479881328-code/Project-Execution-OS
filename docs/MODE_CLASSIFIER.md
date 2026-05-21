@@ -75,6 +75,12 @@ If the mode is unclear, ask only the minimum needed:
 2. Does this need durable project state, or is the answer itself enough?
 3. Does this require Codex execution, or can it be completed directly?
 
+If the user asks to create a project but has not yet stated the project idea, do not infer it.
+
+Ask:
+
+`Какую идею или проект разрабатываем?`
+
 ## Escalation Rule
 
 Start in the lightest plausible mode.

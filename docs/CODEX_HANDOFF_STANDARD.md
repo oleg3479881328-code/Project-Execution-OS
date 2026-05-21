@@ -52,6 +52,8 @@ Rollback Notes:
 Execution Report Contract:
 ```
 
+This is the default next artifact whenever the task is clearly Codex-bound and executor access is now the missing step.
+
 ## Packet Lite
 
 Use this when the task is narrow, low-risk, and bounded to a few files:

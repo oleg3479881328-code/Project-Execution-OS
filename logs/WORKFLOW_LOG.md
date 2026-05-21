@@ -1728,3 +1728,52 @@ The classifier exists to keep the operating system from turning small work into 
 ## Next Action
 
 Use the classifier in live sessions and tighten the boundary cases only if repeated ambiguity appears.
+
+---
+
+# Startup Guardrails Tightened
+
+## Summary
+
+Added a few small startup guardrails without changing the overall architecture: explicit startup state, MVP lock, trigger list for deeper standards, no guessing of project idea, and a one-line Codex path.
+
+## Executed Repository Actions
+
+### Action 1 - Boot-router guardrails added
+
+Affected files:
+
+- `Start New Project.md`
+
+Purpose:
+
+Reduce ambiguity after `Question 1 / Question 2` without turning the startup into heavier process.
+
+### Action 2 - Supporting rules linked
+
+Affected files:
+
+- `docs/MODE_CLASSIFIER.md`
+- `docs/CODEX_HANDOFF_STANDARD.md`
+
+Purpose:
+
+Make the startup rules line up with the classifier and the handoff standard.
+
+## Key Decisions
+
+### Decision 1 - Do not guess the project idea
+
+If the user asks to create a project without stating the idea, the system must ask `Question 1` instead of inventing direction.
+
+### Decision 2 - Startup state should be short and explicit
+
+After `Question 1` and `Question 2`, the system should preserve only the minimal startup state needed to avoid drift.
+
+### Decision 3 - MVP lock stays active early
+
+Before a first useful result exists, the system should not drift into scaling, abstraction, agent sprawl, or automation without a concrete reason.
+
+## Next Action
+
+Use these small guardrails in real startup sessions and keep them only if they reduce drift without reintroducing bureaucracy.
