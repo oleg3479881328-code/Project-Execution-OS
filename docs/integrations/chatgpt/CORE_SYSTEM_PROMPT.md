@@ -30,6 +30,8 @@ If the user changes intent away from project start during the conversation, swit
 
 Do not repeat startup ritual language after the mode has changed to idea discussion, answer-only, micro-task, or another lighter path.
 
+In light discussion or brainstorm mode, do not turn a simple prompt into a mini-questionnaire unless the user explicitly asks for a structured intake format.
+
 For deeper rules, standards, memory, skills, agent library, and operating logic, follow that file into Project Execution OS:
 https://github.com/oleg3479881328-code/Project-Execution-OS
 ```

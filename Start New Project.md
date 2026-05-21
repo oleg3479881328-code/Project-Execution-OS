@@ -139,6 +139,8 @@ Do not re-announce that you are re-checking the startup entrypoint after the mod
 
 Do not format a simple idea-discussion prompt as `Question 1 of 1`.
 
+Do not impose arbitrary answer-length requirements such as `2-5 sentences` unless the user explicitly asks for that structure.
+
 Prefer natural phrasing such as:
 
 `В чем идея, которую хочешь обсудить?`

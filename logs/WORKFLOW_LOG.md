@@ -2143,3 +2143,47 @@ Simple idea discussion should not be phrased as `Question 1 of 1` or wrapped in 
 ## Next Action
 
 Keep testing clean-chat behavior and trim any remaining ritual language that survives mode switching.
+
+---
+
+# Brainstorm Prompt Naturalness Tightened
+
+## Summary
+
+Tightened the light-mode behavior again so a simple idea discussion should not be turned into a mini-questionnaire with arbitrary answer-length instructions unless the user explicitly wants a structured intake format.
+
+## Executed Repository Actions
+
+### Action 1 - Core prompt refined
+
+Affected files:
+
+- `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+
+Purpose:
+
+Keep brainstorm and answer-only behavior conversational instead of bureaucratic.
+
+### Action 2 - Startup router refined
+
+Affected files:
+
+- `Start New Project.md`
+
+Purpose:
+
+Block another residual pattern where the assistant asks for a fixed number of sentences even after correctly switching out of startup mode.
+
+## Key Decisions
+
+### Decision 1 - Natural discussion is the default in light modes
+
+If the user only wants to discuss an idea, the assistant should ask naturally rather than impose a structured response shape.
+
+### Decision 2 - Structured intake remains optional
+
+Length or format constraints belong only in cases where the user explicitly requests a form-like intake.
+
+## Next Action
+
+Use this stricter natural-language rule in future clean-chat tests and keep trimming leftover questionnaire habits if they appear again.
