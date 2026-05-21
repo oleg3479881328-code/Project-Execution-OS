@@ -115,7 +115,7 @@ Forbidden now:
 - research needed -> `docs/RESEARCH_STANDARD.md`
 - review needed -> `docs/REVIEW_STANDARD.md`
 - Codex execution next -> `docs/CODEX_HANDOFF_STANDARD.md`
-- GitHub coordination needed -> `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+- GitHub coordination needed -> `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
 - coordination hub needed -> `docs/AI_COORDINATION_HUB_STANDARD.md`
 - agent creation needed -> `docs/AGENT_CREATION_STANDARD.md`
 - central reusable agents needed -> `agent-library/PROJECT_INDEX.md`

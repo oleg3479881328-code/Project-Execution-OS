@@ -84,6 +84,17 @@ Purpose:
 - local workflow history;
 - project-only agents and project-only knowledge.
 
+### 10. `projects/<project-id>/CONTEXT_PACK.md` when present
+
+Purpose:
+- fast re-entry brief;
+- short handoff pack between sessions or agents;
+- cache-like memory summary for projects with repeated continuation.
+
+This file is optional.
+
+It must not override canonical project artifacts.
+
 ## Required Read Order
 
 ### When entering the central system
@@ -152,6 +163,10 @@ After any meaningful central repository change, consider updating:
 - `knowledge-library/` if reusable knowledge changed
 
 After any meaningful project-level change, update the relevant project memory artifacts first.
+
+When `PROJECT_STATE.md` uses machine-readable frontmatter, update that header whenever the effective project status, mode, current step, or next action changes.
+
+When `CONTEXT_PACK.md` exists, refresh it only after the underlying canonical state has already been updated.
 
 ## State Labels
 

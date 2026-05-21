@@ -6,10 +6,6 @@ This file is the universal entrypoint for every human, AI assistant, AI agent, c
 
 If you are pointed to this repository, start here.
 
-If you are configuring a stable ChatGPT system layer above this repository, also use:
-
-`docs/CHATGPT_CORE_SYSTEM_PROMPT.md`
-
 Repository:
 
 `oleg3479881328-code/Project-Execution-OS`
@@ -18,13 +14,19 @@ System:
 
 `Project Execution OS`
 
-For the dedicated new-project startup router, use:
+## 1A. Top-Level Router
 
-`Start New Project.md`
+Use this file as the one top-level entry into the system.
 
-For quick daily orientation after the system is already understood, use:
+Then route as follows:
 
-`START_FAST.md`
+- new project -> `Start New Project.md`
+- continue an existing project -> read that project's memory artifacts
+- quick daily orientation after the system is already understood -> `START_FAST.md`
+
+If you are configuring a stable ChatGPT system layer above this repository, use:
+
+`docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
 
 ## 2. What This System Is
 
@@ -157,7 +159,7 @@ If a reusable domain block is relevant to the task, also read:
 
 If the work will move from a reasoning model to Codex through GitHub, also read:
 
-13. `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+13. `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
 14. `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
 15. `docs/AI_COORDINATION_HUB_STANDARD.md`
 
@@ -237,7 +239,7 @@ Reusable skills may be promoted into the central skill layer only after review.
 
 For the canonical GitHub-based collaboration loop between reasoning models and Codex, read:
 
-`docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+`docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
 
 For the handoff packet formats themselves, read:
 

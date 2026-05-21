@@ -1,3 +1,12 @@
+---
+status: in-progress
+project_mode: compact
+current_step: 07_RESULT
+current_run: workflow-runs/0001-initial-definition/
+last_updated: 2026-05-21
+next_action: Open `projects/20260516-green-apple/site/index.html` locally or publish the site with GitHub Pages.
+---
+
 # PROJECT STATE — Green Apple
 
 ## Current Phase

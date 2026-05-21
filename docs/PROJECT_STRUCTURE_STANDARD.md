@@ -41,6 +41,10 @@ Every full-mode project must contain:
 - workflow-runs/
 - logs/
 
+Optional but recommended when handoff speed matters:
+
+- CONTEXT_PACK.md
+
 ## Compact Project Mode
 
 Compact mode is allowed for small or low-risk projects.
@@ -82,6 +86,19 @@ Must include:
 
 Current state snapshot.
 
+The file should start with a short machine-readable frontmatter block:
+
+```yaml
+---
+status: in-progress
+project_mode: compact
+current_step: 07_RESULT
+current_run: workflow-runs/0001-initial-definition/
+last_updated: 2026-05-21
+next_action: Open the landing page locally or publish it with GitHub Pages.
+---
+```
+
 Must include:
 
 - current phase;
@@ -92,6 +109,10 @@ Must include:
 - local knowledge status;
 - latest result;
 - next action.
+
+Keep the frontmatter short and stable.
+
+It exists so a human or agent can recover project state without rereading the whole repository.
 
 ## PROJECT_RULES.md
 
@@ -162,3 +183,20 @@ If project state conflicts:
 Important project state must not live only in chat.
 
 If it matters, write it into a project artifact.
+
+## CONTEXT_PACK.md
+
+Optional compact briefing artifact.
+
+Use it when a project will be handed between agents or sessions often and a short recovery file will materially reduce re-entry cost.
+
+`CONTEXT_PACK.md` is not the primary source of truth.
+
+It is a cache-like briefing layer that should summarize:
+
+- current goal;
+- current mode;
+- latest durable decisions;
+- current run;
+- next action;
+- which artifacts are canonical right now.

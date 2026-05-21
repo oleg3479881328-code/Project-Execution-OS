@@ -25,17 +25,15 @@ For that workflow, `GitHub main` is the committed source of truth. Local folders
 
 ## Start Here
 
-Every human or AI agent must start with:
+Use one top-level entry:
 
 `START_HERE.md`
 
-For new project startup specifically, use:
+Then route from there:
 
-`Start New Project.md`
-
-For quick daily orientation after the system is already understood, use:
-
-`START_FAST.md`
+- new project -> `Start New Project.md`
+- continue an existing project -> project memory inside that repository
+- quick daily orientation -> `START_FAST.md`
 
 Do not start by coding.
 Do not start by creating agents.
@@ -114,8 +112,9 @@ INPUT
 - `docs/SKILL_LIFECYCLE.md`
 - `docs/SKILL_REVIEW_STANDARD.md`
 - `docs/COMPATIBILITY_MODEL.md`
-- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
-- `docs/CHATGPT_CORE_SYSTEM_PROMPT.md`
+- `docs/integrations/README.md`
+- `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
+- `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
 - `docs/AI_COORDINATION_HUB_STANDARD.md`
 - `docs/SKILL_UNIVERSE_INVENTORY.md`
 - `docs/GRAPHIFY_STANDARD.md`
@@ -131,6 +130,7 @@ INPUT
 - `workflow-templates/universal-project-v1/README.md`
 - `knowledge-library/README.md`
 - `knowledge-library/PROJECT_INDEX.md`
+- `CHANGELOG.md`
 - `logs/WORKFLOW_LOG.md`
 
 ## First Operational Rule

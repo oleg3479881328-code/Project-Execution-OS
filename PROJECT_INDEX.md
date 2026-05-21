@@ -16,7 +16,7 @@ The system must support humans, ChatGPT, Codex, Claude, local models, specialize
 
 For the canonical GitHub-based coordination loop between reasoning models and Codex, use:
 
-`docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+`docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
 
 It must also support:
 
@@ -30,13 +30,11 @@ It must also support:
 
 Every user, assistant, agent, or automation session must start there.
 
-For new project startup specifically, the canonical boot-router is:
+Top-level routing from there:
 
-`Start New Project.md`
-
-For quick daily orientation after the startup model is already known, use:
-
-`START_FAST.md`
+- new project -> `Start New Project.md`
+- continue an existing project -> project memory inside that repository
+- quick daily orientation -> `START_FAST.md`
 
 ## Current Phase
 
@@ -91,8 +89,9 @@ Project Execution OS
 - `docs/SKILL_LIFECYCLE.md`
 - `docs/SKILL_REVIEW_STANDARD.md`
 - `docs/COMPATIBILITY_MODEL.md`
-- `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
-- `docs/CHATGPT_CORE_SYSTEM_PROMPT.md`
+- `docs/integrations/README.md`
+- `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
+- `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
 - `docs/AI_COORDINATION_HUB_STANDARD.md`
 - `docs/SKILL_UNIVERSE_INVENTORY.md`
 - `docs/GRAPHIFY_STANDARD.md`
@@ -108,6 +107,7 @@ Project Execution OS
 - `workflow-templates/universal-project-v1/README.md`
 - `knowledge-library/README.md`
 - `knowledge-library/PROJECT_INDEX.md`
+- `CHANGELOG.md`
 - `logs/WORKFLOW_LOG.md`
 
 ## Universal Workflow Chain

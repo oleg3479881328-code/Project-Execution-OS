@@ -1925,3 +1925,93 @@ The embedded block includes standards, templates, skill, and example, but not al
 ## Next Action
 
 Use the Documentation Block in real work inside `Project-Execution-OS` and promote or trim its assets based on actual reuse.
+
+---
+
+# Entry Hierarchy, Integrations Layer, And Structure Validation
+
+## Summary
+
+Strengthened the operating system so the top-level entry hierarchy is clearer, project state is easier for agents to parse, ChatGPT-specific docs have a dedicated integrations home, and project structure can now be checked automatically.
+
+## Executed Repository Actions
+
+### Action 1 - Top-level routing clarified
+
+Affected files:
+
+- `START_HERE.md`
+- `README.md`
+- `PROJECT_INDEX.md`
+- `Start New Project.md`
+
+Purpose:
+
+Keep one top-level entry while preserving the dedicated startup router and fast shortcut as downstream paths rather than competing roots.
+
+### Action 2 - Machine-readable project state added
+
+Affected files:
+
+- `docs/PROJECT_STRUCTURE_STANDARD.md`
+- `docs/REPOSITORY_MEMORY_STANDARD.md`
+- `projects/20260516-green-apple/PROJECT_STATE.md`
+
+Purpose:
+
+Add a stable frontmatter shape so agents can recover project status, mode, current run, and next action without rereading the whole project.
+
+### Action 3 - Integrations layer added
+
+Affected files:
+
+- `docs/integrations/README.md`
+- `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+- `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
+
+Purpose:
+
+Move ChatGPT-facing entrypoints into an explicit integrations layer so the root docs stay more AI-agnostic.
+
+### Action 4 - Structure validation automated
+
+Affected files:
+
+- `.github/workflows/validate-project-structure.yml`
+- `scripts/validate-project-structure.ps1`
+
+Purpose:
+
+Turn part of the project-structure governance into an executable check instead of relying only on participant discipline.
+
+### Action 5 - Changelog added
+
+Affected files:
+
+- `CHANGELOG.md`
+
+Purpose:
+
+Provide one short high-signal place to track recent operating-system changes without rereading the whole workflow log.
+
+## Key Decisions
+
+### Decision 1 - One top-level entry does not require one file for every role
+
+`START_HERE.md` is the single top-level entry, while `Start New Project.md` and `START_FAST.md` remain specialized downstream routers.
+
+### Decision 2 - `PROJECT_STATE.md` should be readable by humans and agents
+
+Short frontmatter is now the preferred machine-readable state layer, while the body remains the human-readable detailed state.
+
+### Decision 3 - `CONTEXT_PACK.md` is optional and secondary
+
+Fast recovery briefs are allowed, but they must not replace canonical project memory artifacts.
+
+### Decision 4 - Integration-specific docs belong in an integrations layer
+
+ChatGPT-specific routing now has a dedicated home under `docs/integrations/` even while compatibility aliases still exist elsewhere in the repository.
+
+## Next Action
+
+Run the new project-structure validator in normal repository work, then tighten or relax its checks only when real usage exposes false positives or missing guarantees.
