@@ -7,6 +7,7 @@ This repository is the source of truth for a universal project workflow that can
 It is also the central repository for:
 
 - reusable workflow and governance standards;
+- reusable domain blocks;
 - central reusable skills;
 - central reusable agent templates;
 - central reusable knowledge;
@@ -98,6 +99,8 @@ INPUT
 - `Start New Project.md`
 - `START_FAST.md`
 - `PROJECT_INDEX.md`
+- `blocks/README.md`
+- `blocks/PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/WORKFLOW_DECISION_TABLE.md`
 - `docs/MICRO_TASK_MODE.md`

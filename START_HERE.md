@@ -36,6 +36,7 @@ Instead:
 
 - projects become repository folders;
 - decisions become artifacts;
+- domain blocks become reusable central modules;
 - agents become task-specific modules;
 - central reusable skills live in the central system;
 - reviews become governance;
@@ -150,11 +151,15 @@ If reusable agent roles are relevant to the task, also read:
 10. `docs/AGENT_LIBRARY_STANDARD.md`
 11. `agent-library/PROJECT_INDEX.md`
 
+If a reusable domain block is relevant to the task, also read:
+
+12. `blocks/PROJECT_INDEX.md`
+
 If the work will move from a reasoning model to Codex through GitHub, also read:
 
-12. `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
-13. `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
-14. `docs/AI_COORDINATION_HUB_STANDARD.md`
+13. `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`
+14. `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+15. `docs/AI_COORDINATION_HUB_STANDARD.md`
 
 In that mode, treat `GitHub main` as the source of truth and the local Codex folder as an execution workspace only.
 

@@ -1861,3 +1861,67 @@ Compact mode is the default execution form.
 ## Next Action
 
 Watch clean-chat behavior for whether models now choose compact mode more consistently on normal startup tasks.
+
+---
+
+# Documentation Block Embedded
+
+## Summary
+
+Embedded the reusable core of `Documentation-OS` into `Project-Execution-OS` as an internal Documentation Block instead of keeping that domain capability only in a separate repository.
+
+## Executed Repository Actions
+
+### Action 1 - Blocks layer introduced
+
+Affected files:
+
+- `blocks/README.md`
+- `blocks/PROJECT_INDEX.md`
+
+Purpose:
+
+Create a formal home for reusable domain blocks inside the central brain.
+
+### Action 2 - Documentation Block created
+
+Affected files:
+
+- `blocks/documentation/BLOCK.md`
+- `blocks/documentation/PROJECT_INDEX.md`
+- `blocks/documentation/MIGRATION_MAP.md`
+- `blocks/documentation/standards/AI_READY_DOCUMENTATION_PACKAGE_STANDARD.md`
+- `blocks/documentation/standards/REPOSITORY_DOCUMENTATION_TRANSFER_STANDARD.md`
+- `blocks/documentation/templates/compact-repository-documentation/`
+- `blocks/documentation/examples/family-memory-book-transfer-package/EXAMPLE.md`
+- `blocks/documentation/skills/repository-documentation-transfer/SKILL.md`
+
+Purpose:
+
+Embed only the reusable documentation layer, not the full source repository history.
+
+### Action 3 - Central indexes updated
+
+Affected files:
+
+- `README.md`
+- `START_HERE.md`
+- `PROJECT_INDEX.md`
+
+Purpose:
+
+Make the new blocks layer discoverable without bloating the startup router.
+
+## Key Decisions
+
+### Decision 1 - Separate repository becomes source, central repo becomes canonical home
+
+`Documentation-OS` remains useful as an incubator and history source, but the reusable documentation capability now has an embedded canonical home inside the central brain.
+
+### Decision 2 - Reusable core only
+
+The embedded block includes standards, templates, skill, and example, but not all one-off workflow history from the source repository.
+
+## Next Action
+
+Use the Documentation Block in real work inside `Project-Execution-OS` and promote or trim its assets based on actual reuse.

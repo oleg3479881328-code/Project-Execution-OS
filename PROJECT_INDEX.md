@@ -57,6 +57,7 @@ Project Execution OS
   ├── Universal Entrypoint
   ├── Project Workspace Standard
   ├── Universal Workflow Contract
+  ├── Domain Blocks Layer
   ├── Agent Creation Standard
   ├── Agent Library Standard
   ├── Knowledge System
@@ -75,6 +76,8 @@ Project Execution OS
 - `Start New Project.md`
 - `START_FAST.md`
 - `PROJECT_INDEX.md`
+- `blocks/README.md`
+- `blocks/PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/WORKFLOW_DECISION_TABLE.md`
 - `docs/MICRO_TASK_MODE.md`
@@ -183,6 +186,10 @@ Central reusable skills live under:
 Central reusable agent templates live under:
 
 `agent-library/templates/`
+
+Central reusable domain blocks live under:
+
+`blocks/`
 
 Key coordination skill:
 
