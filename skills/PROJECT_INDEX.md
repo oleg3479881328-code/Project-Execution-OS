@@ -50,13 +50,14 @@ skills/
 | project-experience-memory | memory | reviewed | approved | 0.1.0 | skills/memory/project-experience-memory/SKILL.md |
 | project-knowledge-sync | knowledge | reviewed | approved | 0.1.0 | skills/knowledge/project-knowledge-sync/SKILL.md |
 | project-documentation-architect | documentation | reviewed | approved | 0.1.0 | skills/documentation/project-documentation-architect/SKILL.md |
+| chrome-web-store-publication-readiness | documentation | candidate | not_reviewed | 0.1.0 | skills/documentation/chrome-web-store-publication-readiness/SKILL.md |
 | logic-deconstruction | analysis | reviewed | approved | 0.1.0 | skills/analysis/logic-deconstruction/SKILL.md |
 
 ## Current Counts
 
 ```text
 active: 0
-candidate: 7
+candidate: 8
 reviewed: 7
 draft: 0
 deprecated: 0
@@ -65,10 +66,11 @@ retired: 0
 
 ## Current Priorities
 
-1. Review the remaining migrated candidates that still require improvements before promotion.
-2. Decide which reviewed skills are ready for real central operational use.
-3. Wire reviewed `graphify` into actual project bootstrap behavior.
-4. Keep governance stronger than skill-count growth.
+1. Review candidate skills before promotion.
+2. Use `chrome-web-store-publication-readiness` on Voice Button as its first proving project, while keeping it in candidate status.
+3. Decide which reviewed skills are ready for real central operational use.
+4. Wire reviewed `graphify` into actual project bootstrap behavior.
+5. Keep governance stronger than skill-count growth.
 
 ## Forbidden Expansion Areas
 
