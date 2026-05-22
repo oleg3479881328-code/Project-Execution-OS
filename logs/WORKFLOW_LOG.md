@@ -2187,3 +2187,49 @@ Length or format constraints belong only in cases where the user explicitly requ
 ## Next Action
 
 Use this stricter natural-language rule in future clean-chat tests and keep trimming leftover questionnaire habits if they appear again.
+
+---
+
+# Decision Council Pressure-Test Skill Added
+
+## Summary
+
+Added a new candidate central review skill that adapts the reusable pattern from `tenfoldmarc/llm-council-skill` into a tool-neutral decision pressure-test capability.
+
+## Executed Repository Actions
+
+### Action 1 - Candidate review skill created
+
+Affected files:
+
+- `skills/review/decision-council-pressure-test/SKILL.md`
+- `skills/review/decision-council-pressure-test/references.md`
+
+Purpose:
+
+Capture the reusable `LLM council` pattern without importing the source repository verbatim or treating its Claude-specific orchestration as canonical.
+
+### Action 2 - Central skill layer updated
+
+Affected files:
+
+- `skills/PROJECT_INDEX.md`
+- `skills/registry.md`
+
+Purpose:
+
+Register the new capability as a candidate central review skill with explicit external source attribution.
+
+## Key Decisions
+
+### Decision 1 - Steal the pattern, not the whole repository
+
+The central skill keeps the five-lens adversarial review pattern, anonymous peer review, and chairman synthesis, but does not canonize HTML report generation or Claude-specific sub-agent mechanics.
+
+### Decision 2 - This is a review capability, not startup logic
+
+The council pattern belongs in the review and decision-pressure-test layer, not in project startup, memory, or idea intake.
+
+## Next Action
+
+Use this candidate skill on a real high-stakes decision, then review whether it deserves promotion from `candidate` toward `reviewed`.

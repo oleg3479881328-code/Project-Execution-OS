@@ -53,6 +53,7 @@ Allowed review states:
 | github-repository-research | research | reviewed | approved | chatgpt, codex, claude | 0.1.1 | migrated_from_3TestAgents | skills/research/github-repository-research/SKILL.md |
 | pre-architecture-brainstorming | design | candidate | reviewed_with_required_improvements | chatgpt, codex, claude | 0.1.0 | migrated_from_3TestAgents | skills/design/pre-architecture-brainstorming/SKILL.md |
 | multi-agent-design-review | review | candidate | reviewed_with_required_improvements | chatgpt, codex, claude | 0.1.0 | migrated_from_3TestAgents | skills/review/multi-agent-design-review/SKILL.md |
+| decision-council-pressure-test | review | candidate | not_reviewed | chatgpt, codex, claude | 0.1.0 | adapted_from_tenfoldmarc_llm_council_skill | skills/review/decision-council-pressure-test/SKILL.md |
 | codex-execution-review | review | candidate | reviewed_with_required_improvements | codex, chatgpt, claude | 0.1.0 | migrated_from_3TestAgents | skills/review/codex-execution-review/SKILL.md |
 | implementation-handoff-packet | implementation | candidate | reviewed_with_required_improvements | codex, chatgpt, claude | 0.1.0 | migrated_from_3TestAgents | skills/implementation/implementation-handoff-packet/SKILL.md |
 | repository-memory-update | memory | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_3TestAgents | skills/memory/repository-memory-update/SKILL.md |

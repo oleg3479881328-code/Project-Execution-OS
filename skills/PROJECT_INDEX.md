@@ -40,6 +40,7 @@ skills/
 | github-repository-research | research | reviewed | approved | 0.1.1 | skills/research/github-repository-research/SKILL.md |
 | pre-architecture-brainstorming | design | candidate | reviewed_with_required_improvements | 0.1.0 | skills/design/pre-architecture-brainstorming/SKILL.md |
 | multi-agent-design-review | review | candidate | reviewed_with_required_improvements | 0.1.0 | skills/review/multi-agent-design-review/SKILL.md |
+| decision-council-pressure-test | review | candidate | not_reviewed | 0.1.0 | skills/review/decision-council-pressure-test/SKILL.md |
 | codex-execution-review | review | candidate | reviewed_with_required_improvements | 0.1.0 | skills/review/codex-execution-review/SKILL.md |
 | implementation-handoff-packet | implementation | candidate | reviewed_with_required_improvements | 0.1.0 | skills/implementation/implementation-handoff-packet/SKILL.md |
 | repository-memory-update | memory | reviewed | approved | 0.1.0 | skills/memory/repository-memory-update/SKILL.md |
@@ -55,7 +56,7 @@ skills/
 
 ```text
 active: 0
-candidate: 6
+candidate: 7
 reviewed: 7
 draft: 0
 deprecated: 0
