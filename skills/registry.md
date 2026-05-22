@@ -63,6 +63,7 @@ Allowed review states:
 | project-experience-memory | memory | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/memory/project-experience-memory/SKILL.md |
 | project-knowledge-sync | knowledge | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/knowledge/project-knowledge-sync/SKILL.md |
 | project-documentation-architect | documentation | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/documentation/project-documentation-architect/SKILL.md |
+| chrome-web-store-publication-readiness | documentation | candidate | not_reviewed | chatgpt, codex, claude | 0.1.0 | extracted_from_Voice-Button_issue_2 | skills/documentation/chrome-web-store-publication-readiness/SKILL.md |
 | logic-deconstruction | analysis | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/analysis/logic-deconstruction/SKILL.md |
 
 ## Governance Notes
