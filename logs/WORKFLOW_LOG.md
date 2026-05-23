@@ -2233,3 +2233,50 @@ The council pattern belongs in the review and decision-pressure-test layer, not 
 ## Next Action
 
 Use this candidate skill on a real high-stakes decision, then review whether it deserves promotion from `candidate` toward `reviewed`.
+
+---
+
+# Notion Adapter Standard Added
+
+## Summary
+
+Added a canonical `Notion` adapter standard so the system can use `Notion` as a normal external working layer without confusing it with repository truth.
+
+## Executed Repository Actions
+
+### Action 1 - Notion adapter standard created
+
+Affected files:
+
+- `docs/integrations/notion/README.md`
+
+Purpose:
+
+Define exactly how `Notion` fits into `Project Execution OS` as a workspace, synthesis, and shared-visibility adapter.
+
+### Action 2 - Integration indexes updated
+
+Affected files:
+
+- `docs/integrations/README.md`
+- `README.md`
+- `PROJECT_INDEX.md`
+- `START_HERE.md`
+
+Purpose:
+
+Make the `Notion` adapter discoverable without moving it into the tool-neutral core or startup router.
+
+## Key Decisions
+
+### Decision 1 - `Notion` is a normal adapter, not a second brain
+
+`Notion` is now explicitly allowed as a useful working surface, but it must not silently replace repository memory or become the only truth-layer.
+
+### Decision 2 - Durable outcomes still return to the repository
+
+Even when work is captured, synthesized, or shared through `Notion`, important committed state must still be written back into repository artifacts.
+
+## Next Action
+
+Use this adapter in real `Notion`-backed work and refine the standard only if repeated use exposes unclear sync boundaries.

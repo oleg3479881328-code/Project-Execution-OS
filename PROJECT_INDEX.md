@@ -94,6 +94,7 @@ Project Execution OS
 - `docs/integrations/README.md`
 - `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
 - `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+- `docs/integrations/notion/README.md`
 - `docs/AI_COORDINATION_HUB_STANDARD.md`
 - `docs/SKILL_UNIVERSE_INVENTORY.md`
 - `docs/GRAPHIFY_STANDARD.md`

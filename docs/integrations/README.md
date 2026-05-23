@@ -13,6 +13,7 @@ Current integrations:
 
 - `chatgpt/CORE_SYSTEM_PROMPT.md`
 - `chatgpt/CODEX_GITHUB_PROTOCOL.md`
+- `notion/README.md`
 
 Operational rule:
 

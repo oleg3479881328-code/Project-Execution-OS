@@ -158,11 +158,15 @@ If a reusable domain block is relevant to the task, also read:
 
 12. `blocks/PROJECT_INDEX.md`
 
+If `Notion` is relevant as a shared workspace or adapter layer, also read:
+
+13. `docs/integrations/notion/README.md`
+
 If the work will move from a reasoning model to Codex through GitHub, also read:
 
-13. `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
-14. `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
-15. `docs/AI_COORDINATION_HUB_STANDARD.md`
+14. `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
+15. `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
+16. `docs/AI_COORDINATION_HUB_STANDARD.md`
 
 In that mode, treat `GitHub main` as the source of truth and the local Codex folder as an execution workspace only.
 
