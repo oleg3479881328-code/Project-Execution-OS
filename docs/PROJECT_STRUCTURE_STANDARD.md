@@ -6,6 +6,10 @@ This standard defines the folder structure for every project inside Project Exec
 
 Any human or AI agent must be able to open a project folder and understand the goal, current state, rules, agents, knowledge, workflow history, and next action.
 
+For the exact contract of the first-project-read artifact, use:
+
+`docs/PROJECT_ENTRYPOINT_STANDARD.md`
+
 ## Project Root
 
 Default rule:
@@ -81,6 +85,10 @@ Must include:
 - current state file;
 - latest workflow run;
 - current next action.
+
+For the canonical structure and section logic, use:
+
+`docs/PROJECT_ENTRYPOINT_STANDARD.md`
 
 ## PROJECT_STATE.md
 

@@ -22,6 +22,7 @@ skills/
   registry.md
   PROJECT_INDEX.md
   analysis/
+  coordination/
   documentation/
   graph/
   knowledge/
@@ -47,6 +48,7 @@ skills/
 | skill-runtime-router | orchestration | candidate | reviewed_with_required_improvements | 0.1.0 | skills/orchestration/skill-runtime-router/SKILL.md |
 | workflow-state-machine | orchestration | candidate | reviewed_with_required_improvements | 0.1.0 | skills/orchestration/workflow-state-machine/SKILL.md |
 | graphify | graph | reviewed | approved | 0.1.0 | skills/graph/graphify/SKILL.md |
+| chatgpt-codex-github-communication | coordination | reviewed | approved | 0.1.0 | skills/coordination/chatgpt-codex-github-communication/SKILL.md |
 | project-experience-memory | memory | reviewed | approved | 0.1.0 | skills/memory/project-experience-memory/SKILL.md |
 | project-knowledge-sync | knowledge | reviewed | approved | 0.1.0 | skills/knowledge/project-knowledge-sync/SKILL.md |
 | project-documentation-architect | documentation | reviewed | approved | 0.1.0 | skills/documentation/project-documentation-architect/SKILL.md |
@@ -57,8 +59,8 @@ skills/
 
 ```text
 active: 0
-candidate: 8
-reviewed: 7
+candidate: 7
+reviewed: 8
 draft: 0
 deprecated: 0
 retired: 0

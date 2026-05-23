@@ -116,6 +116,15 @@ Use the template:
 
 `workflow-templates/universal-project-v1/`
 
+For the project front door itself, use the shared entrypoint contract:
+
+`docs/PROJECT_ENTRYPOINT_STANDARD.md`
+
+Starter templates exist here:
+
+- `workflow-templates/project-entrypoint/GITHUB_PROJECT_ENTRYPOINT_TEMPLATE.md`
+- `workflow-templates/project-entrypoint/NOTION_PROJECT_ENTRYPOINT_TEMPLATE.md`
+
 Start with:
 
 `00_INPUT.md`

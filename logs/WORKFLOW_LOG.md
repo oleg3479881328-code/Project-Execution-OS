@@ -2280,3 +2280,102 @@ Even when work is captured, synthesized, or shared through `Notion`, important c
 ## Next Action
 
 Use this adapter in real `Notion`-backed work and refine the standard only if repeated use exposes unclear sync boundaries.
+
+---
+
+# Notion Vs GitHub Usage Rule Added
+
+## Summary
+
+Added a short environment-choice rule clarifying when lightweight work belongs in `Notion` and when repository-driven work belongs in `GitHub`.
+
+## Executed Repository Actions
+
+### Action 1 - Notion adapter standard clarified
+
+Affected files:
+
+- `docs/integrations/notion/README.md`
+
+Purpose:
+
+Make the `Notion` adapter practical for everyday use by explicitly separating `light workspace` use from `durable repository execution`.
+
+## Key Decisions
+
+### Decision 1 - `Notion` is valid for lightweight life/workspace cases
+
+Examples like travel planning, recipe collections, shopping comparisons, and lightweight coordination should not be forced into dedicated Git repositories.
+
+### Decision 2 - `GitHub` stays for durable execution-grade work
+
+Code, implementation packets, reviewable diffs, technical docs, and repository memory still belong in `GitHub`.
+
+## Next Action
+
+Use this rule in real routing decisions and only tighten it further if repeated borderline cases stay ambiguous.
+
+---
+
+# Universal Project Entrypoint Standard Added
+
+## Summary
+
+Added one shared `Project Entrypoint` contract so every project can have the same fast first-read surface whether it lives mainly in `GitHub` or `Notion`.
+
+## Executed Repository Actions
+
+### Action 1 - Universal project entrypoint standard created
+
+Affected files:
+
+- `docs/PROJECT_ENTRYPOINT_STANDARD.md`
+
+Purpose:
+
+Define the exact questions and sections a first-read project entrypoint must answer for any new human or AI participant.
+
+### Action 2 - GitHub and Notion templates created
+
+Affected files:
+
+- `workflow-templates/project-entrypoint/GITHUB_PROJECT_ENTRYPOINT_TEMPLATE.md`
+- `workflow-templates/project-entrypoint/NOTION_PROJECT_ENTRYPOINT_TEMPLATE.md`
+
+Purpose:
+
+Provide ready-to-use environment-specific forms of the same contract without splitting the system into separate project memory philosophies.
+
+### Action 3 - Central indexes and standards linked
+
+Affected files:
+
+- `README.md`
+- `PROJECT_INDEX.md`
+- `START_HERE.md`
+- `docs/PROJECT_STRUCTURE_STANDARD.md`
+- `docs/integrations/notion/README.md`
+
+Purpose:
+
+Make the new contract discoverable from the central brain, project structure rules, and the Notion adapter layer.
+
+## Key Decisions
+
+### Decision 1 - One contract, two forms
+
+`GitHub` projects use `PROJECT_ENTRYPOINT.md`.
+
+`Notion` projects use a `Project Entrypoint` page or top section.
+
+The medium changes, but the entry contract stays the same.
+
+### Decision 2 - Entrypoint is the front door, not the full memory
+
+The project entrypoint must stay short and answer what the project is, what matters now, and where to read next.
+
+It must not become the full history, rules, or transcript archive.
+
+## Next Action
+
+Use this standard on real `GitHub` and `Notion` projects and tighten the section set only if repeated onboarding gaps still appear.

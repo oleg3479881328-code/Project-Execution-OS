@@ -1,0 +1,60 @@
+# Notion Project Entrypoint Template
+
+Use this as the top block or dedicated `Project Entrypoint` section/page inside a `Notion` project.
+
+## Project
+
+- Name:
+- Type:
+- Short description:
+
+## Purpose
+
+- Why this exists:
+- Who it is for:
+- Current success target:
+
+## Source Of Truth
+
+- Primary source of truth:
+- Related GitHub repository if any:
+- Supporting workspace/databases:
+
+## Current Status
+
+- Mode:
+- Current phase:
+- Status:
+
+## Done So Far
+
+- 
+- 
+- 
+
+## Current Focus
+
+- 
+
+## Next Practical Step
+
+- 
+
+## Key Decisions And Constraints
+
+- 
+- 
+- 
+
+## Open Next
+
+1. current task list or task database
+2. current notes or working section
+3. linked project artifacts
+4. related knowledge or reference pages
+
+## Notes
+
+This is the front door to the project, not the full history.
+
+Keep it short, current, and easy to scan.

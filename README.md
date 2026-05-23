@@ -130,11 +130,14 @@ INPUT
 - `docs/AGENT_LIBRARY_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
+- `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - `agent-library/README.md`
 - `agent-library/PROJECT_INDEX.md`
 - `skills/PROJECT_INDEX.md`
 - `skills/registry.md`
 - `workflow-templates/universal-project-v1/README.md`
+- `workflow-templates/project-entrypoint/GITHUB_PROJECT_ENTRYPOINT_TEMPLATE.md`
+- `workflow-templates/project-entrypoint/NOTION_PROJECT_ENTRYPOINT_TEMPLATE.md`
 - `knowledge-library/README.md`
 - `knowledge-library/PROJECT_INDEX.md`
 - `CHANGELOG.md`

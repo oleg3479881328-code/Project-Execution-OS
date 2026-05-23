@@ -196,6 +196,15 @@ Allowed `TYPE` examples:
 
 This avoids ambiguity when issues or PRs contain messages from the user, ChatGPT, Codex, and reviewers in the same thread.
 
+This rule also applies to other explicitly named agents such as:
+
+- `Reviewer`
+- `Research-Agent`
+- `Architecture-Agent`
+- `Documentation-Agent`
+
+or any other clearly named project agent.
+
 ## Required Handoff Packet
 
 Before Codex executes meaningful repository changes, create a deterministic packet in repository artifacts or PR or issue-linked artifacts.
@@ -289,6 +298,12 @@ GitHub evidence should support the actual state:
 - the reported commit SHA exists when a fix was pushed.
 
 If GitHub evidence is missing, do not claim that the state exists.
+
+Evidence interpretation rule:
+
+- a `commit SHA` proves that a file change exists in repository history;
+- a `commit SHA` does not by itself prove full behavioral correctness;
+- behavioral confidence still depends on validation evidence and review.
 
 ## What Not To Do
 

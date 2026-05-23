@@ -57,6 +57,7 @@ Current central source:
 | `implementation-handoff-packet` | `central_candidate` | Strong execution handoff skill. |
 | `skill-runtime-router` | `central_candidate` | Useful, but must stay lightweight. |
 | `workflow-state-machine` | `central_candidate` | Useful, but must avoid bureaucracy. |
+| `chatgpt-codex-github-communication` | `central_reviewed` | Central coordination skill for durable reasoning-model to Codex collaboration through GitHub. |
 
 ## High-Priority Migration Candidates From Local Skill Stores
 
@@ -67,8 +68,8 @@ These are the strongest next candidates for central-brain adoption because they 
 | `graphify` | `.agents` | `central_reviewed` | Migrated and centrally reviewed; still not `active` until live operational use is proven. |
 | `project-experience-memory` | `.codex` | `central_reviewed` | Migrated and centrally reviewed; still not `active` until repeated use proves the pattern. |
 | `project-knowledge-sync` | `.codex` | `central_reviewed` | Migrated and centrally reviewed; still not `active` until central-library sync is proven in live projects. |
-| `project-documentation-architect` | `.codex` | `central_candidate` | Migrated into the central system; useful for normalization and onboarding. |
-| `logic-deconstruction` | `.codex` | `central_candidate` | Migrated into the central system; useful for reasoning quality. |
+| `project-documentation-architect` | `.codex` | `central_reviewed` | Migrated and centrally reviewed; useful for normalization and onboarding. |
+| `logic-deconstruction` | `.codex` | `central_reviewed` | Migrated and centrally reviewed; useful for reasoning quality. |
 
 ## Adapter / Domain Skill Candidates
 
@@ -131,11 +132,11 @@ These may remain external until there is a clear reason to create central capabi
 
 Recommended next central migration wave:
 
-1. Central review `project-documentation-architect`
-2. Central review `logic-deconstruction`
-3. Central review `implementation-handoff-packet`
-4. Central review `codex-execution-review`
-5. Central review `pre-architecture-brainstorming`
+1. Central review `implementation-handoff-packet`
+2. Central review `codex-execution-review`
+3. Central review `pre-architecture-brainstorming`
+4. Central review `multi-agent-design-review`
+5. Central review `workflow-state-machine`
 
 ## Rules For The Universe
 

@@ -60,6 +60,7 @@ Allowed review states:
 | skill-runtime-router | orchestration | candidate | reviewed_with_required_improvements | chatgpt, codex, claude | 0.1.0 | migrated_from_3TestAgents | skills/orchestration/skill-runtime-router/SKILL.md |
 | workflow-state-machine | orchestration | candidate | reviewed_with_required_improvements | chatgpt, codex, claude | 0.1.0 | migrated_from_3TestAgents | skills/orchestration/workflow-state-machine/SKILL.md |
 | graphify | graph | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_agents_skills | skills/graph/graphify/SKILL.md |
+| chatgpt-codex-github-communication | coordination | reviewed | approved | chatgpt, codex, claude | 0.1.0 | internal_project_execution_os | skills/coordination/chatgpt-codex-github-communication/SKILL.md |
 | project-experience-memory | memory | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/memory/project-experience-memory/SKILL.md |
 | project-knowledge-sync | knowledge | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/knowledge/project-knowledge-sync/SKILL.md |
 | project-documentation-architect | documentation | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/documentation/project-documentation-architect/SKILL.md |

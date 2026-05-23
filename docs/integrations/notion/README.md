@@ -32,6 +32,14 @@ Use `Notion` when you need:
 - meeting prep, agendas, or summaries;
 - a temporary working surface before durable repository write-back.
 
+If a `Notion` project needs a clean first-read surface for humans or AI, use the shared contract from:
+
+- `docs/PROJECT_ENTRYPOINT_STANDARD.md`
+
+and the `Notion`-specific template:
+
+- `workflow-templates/project-entrypoint/NOTION_PROJECT_ENTRYPOINT_TEMPLATE.md`
+
 ## What Notion Must Not Replace
 
 Do not treat `Notion` as:
@@ -95,6 +103,35 @@ Before execution, ensure the relevant committed version or derived packet exists
 Use `Notion` as a readable shared surface for humans who do not want to navigate raw repository files.
 
 This is a presentation and coordination function, not a truth-layer override.
+
+## When To Use Notion Vs GitHub
+
+Prefer `Notion` when the work is lightweight, personal, or coordination-heavy, for example:
+
+- travel planning;
+- recipe collections;
+- shopping comparisons;
+- life planning notes;
+- shared checklists;
+- idea discussion and rough structuring;
+- human-readable project coordination that does not need repository-grade execution history.
+
+Prefer `GitHub` when the work becomes repository-driven, for example:
+
+- code or executable artifacts;
+- implementation packets for `Codex`;
+- reviewable diffs and validation history;
+- committed technical documentation;
+- durable project memory tied to files and versions;
+- work that needs branch, PR, issue, or review-thread discipline.
+
+Use this mental model:
+
+`Notion = light workspace`
+
+`GitHub = durable execution and repository truth`
+
+If something starts in `Notion` and later becomes a real project, move the durable project state into the repository rather than forcing the whole project to stay only in `Notion`.
 
 ## Sync Rule
 
