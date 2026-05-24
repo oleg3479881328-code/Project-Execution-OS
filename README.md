@@ -1,18 +1,50 @@
 # Project Execution OS
 
-Universal repository-first operating system for starting, running, reviewing, and preserving project work.
+Operating system for starting, managing, executing, reviewing and preserving project work without forcing every idea into the same storage model.
 
-This repository is the source of truth for a universal project workflow that can be used by humans, ChatGPT, Codex, Claude, local AI agents, research agents, coding agents, and future automation systems.
+This repository contains the reusable rules, standards, skills, templates and knowledge for the system itself.
 
-It is also the central repository for:
+## Start Here
 
-- reusable workflow and governance standards;
-- reusable domain blocks;
-- central reusable skills;
-- central reusable agent templates;
-- central reusable knowledge;
-- integration rules for lightweight idea capture before project creation;
-- migration of validated ideas from incubator repositories.
+Use the single top-level entrypoint:
+
+`START_HERE.md`
+
+That entrypoint is navigation only. It routes into the relevant internal system node rather than carrying operational logic itself.
+
+For a possible new initiative, it routes to:
+
+`Start New Project.md`
+
+## Core Operating Model
+
+Projects use only the layers they actually need:
+
+| Layer | Role |
+| --- | --- |
+| Chat | discussion, analysis, decisions and commands |
+| Notion | readable memory, status, project catalogue and coordination when durable context is needed |
+| GitHub | versioned execution, code, durable technical artifacts and Codex work when required |
+| Google Drive | optional heavy files and source assets when required |
+
+Read the internal lifecycle node for the full rule:
+
+`docs/PROJECT_LIFECYCLE_MODEL.md`
+
+Key principle:
+
+- not every thought becomes a project;
+- not every project needs GitHub;
+- not every project needs Google Drive;
+- every persistent project must state which layer stores which kind of truth.
+
+## System Repository Role
+
+For **Project Execution OS itself**, this GitHub repository is the committed source of truth for its standards and reusable artifacts.
+
+This rule does not mean that GitHub is mandatory for every project managed by the system.
+
+## Coordination And Execution
 
 Default private AI coordination hub:
 
@@ -22,51 +54,12 @@ Default external idea intake library:
 
 `oleg3479881328-code/Reference-Idea-Library`
 
-Important coordination rule:
+Use the `ChatGPT <-> Codex <-> GitHub` collaboration protocol only when bounded execution work must be handed to Codex through a durable reviewable surface.
 
-Use the central `ChatGPT <-> Codex <-> GitHub` collaboration protocol and skill whenever reasoning-model work must be handed to Codex through a durable reviewable surface.
+Working division:
 
-For that workflow, `GitHub main` is the committed source of truth. Local folders are execution workspaces only.
-
-## Start Here
-
-Use one top-level entry:
-
-`START_HERE.md`
-
-Then route from there:
-
-- new project -> `Start New Project.md`
-- continue an existing project -> project memory inside that repository
-- quick daily orientation -> `START_FAST.md`
-
-Do not start by coding.
-Do not start by creating agents.
-Do not start by building runtime.
-Do not start by designing a giant architecture.
-
-First read the entrypoint, understand the project workflow, then create or continue a project through repository artifacts.
-
-## Core Idea
-
-Every new project should have:
-
-- one dedicated private GitHub repository by default;
-- one short clear bilingual repository description at creation time, with Russian first and English second;
-- one clear project entrypoint;
-- one local project memory;
-- one workflow run folder;
-- task-specific agents created only when needed;
-- project knowledge extracted into the project library;
-- reusable knowledge promoted into the central knowledge library after review.
-
-## Repository Role
-
-GitHub is the source of truth.
-
-Chat messages, generated drafts, and uncommitted ideas are not final project state.
-
-A project state becomes valid only when it is represented by a repository artifact.
+- ChatGPT handles research, comparison, classification, architecture reasoning and decision preparation when it has adequate access;
+- Codex handles bounded technical execution after the decision is clear: scripts, bulk updates, file changes, commits, pull requests, verification and logs.
 
 ## Current Mode
 
@@ -77,86 +70,33 @@ No frontend.
 No runtime engine.
 No orchestration engine.
 No vector database.
-No automation layer.
+No broad automation layer.
 No mass agent creation.
 
-Important future-system ideas that are intentionally deferred belong in:
+## Main Internal Nodes
 
-`docs/DEFERRED_SYSTEM_IDEAS.md`
+- `START_HERE.md` — system front door and router only
+- `Start New Project.md` — new-initiative router only
+- `docs/PROJECT_LIFECYCLE_MODEL.md` — layer and source-of-truth decisions
+- `docs/MODE_CLASSIFIER.md` — choose the lightest correct mode
+- `docs/PROJECT_ENTRYPOINT_STANDARD.md` — front door for a specific project
+- `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md` — keep useful ideas without creating projects prematurely
+- `docs/WORKFLOW_CONTRACT.md` — workflow rules when work actually needs them
+- `docs/MICRO_TASK_MODE.md` — bounded small tasks
+- `docs/RESEARCH_STANDARD.md` — research work
+- `docs/REVIEW_STANDARD.md` — review work
+- `docs/CODEX_HANDOFF_STANDARD.md` — approved execution transfer
+- `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md` — GitHub-based ChatGPT/Codex coordination
+- `docs/integrations/notion/README.md` — Notion integration guidance
+- `docs/KNOWLEDGE_SYSTEM.md` — reusable knowledge layer
+- `knowledge-library/README.md` — central knowledge library
+- `skills/PROJECT_INDEX.md` — reusable skills
+- `agent-library/PROJECT_INDEX.md` — reusable agents
+- `CHANGELOG.md` — accepted repository changes
+- `logs/WORKFLOW_LOG.md` — workflow log
 
-## Universal Workflow
+## Guiding Rule
 
-INPUT
-→ CLARIFICATION
-→ RESEARCH
-→ PLAN
-→ EXECUTION SPEC
-→ REVIEW
-→ RESULT
-→ KNOWLEDGE EXTRACT
-→ LOG
-
-## Main Documents
-
-- `START_HERE.md`
-- `Start New Project.md`
-- `START_FAST.md`
-- `PROJECT_INDEX.md`
-- `blocks/README.md`
-- `blocks/PROJECT_INDEX.md`
-- `docs/WORKFLOW_CONTRACT.md`
-- `docs/WORKFLOW_DECISION_TABLE.md`
-- `docs/MICRO_TASK_MODE.md`
-- `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
-- `docs/CODEX_HANDOFF_STANDARD.md`
-- `docs/RESEARCH_STANDARD.md`
-- `docs/REVIEW_STANDARD.md`
-- `docs/DECISION_REGISTRY_STANDARD.md`
-- `docs/GOVERNANCE.md`
-- `docs/REPOSITORY_MEMORY_STANDARD.md`
-- `docs/SKILL_SPEC.md`
-- `docs/SKILL_LIFECYCLE.md`
-- `docs/SKILL_REVIEW_STANDARD.md`
-- `docs/COMPATIBILITY_MODEL.md`
-- `docs/integrations/README.md`
-- `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
-- `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
-- `docs/integrations/notion/README.md`
-- `docs/AI_COORDINATION_HUB_STANDARD.md`
-- `docs/SKILL_UNIVERSE_INVENTORY.md`
-- `docs/GRAPHIFY_STANDARD.md`
-- `docs/DEFERRED_SYSTEM_IDEAS.md`
-- `docs/AGENT_CREATION_STANDARD.md`
-- `docs/AGENT_LIBRARY_STANDARD.md`
-- `docs/KNOWLEDGE_SYSTEM.md`
-- `docs/PROJECT_STRUCTURE_STANDARD.md`
-- `docs/PROJECT_ENTRYPOINT_STANDARD.md`
-- `agent-library/README.md`
-- `agent-library/PROJECT_INDEX.md`
-- `skills/PROJECT_INDEX.md`
-- `skills/registry.md`
-- `workflow-templates/universal-project-v1/README.md`
-- `workflow-templates/project-entrypoint/GITHUB_PROJECT_ENTRYPOINT_TEMPLATE.md`
-- `workflow-templates/project-entrypoint/NOTION_PROJECT_ENTRYPOINT_TEMPLATE.md`
-- `knowledge-library/README.md`
-- `knowledge-library/PROJECT_INDEX.md`
-- `CHANGELOG.md`
-- `logs/WORKFLOW_LOG.md`
-
-## First Operational Rule
-
-When a new project begins, create a dedicated private GitHub repository by default.
-
-`Start New Project.md` is the short boot-router.
-
-The heavier operating logic lives in the linked standards under `docs/`.
-
-Internal project folders under:
-
-`projects/<project-id>/`
-
-are exceptions for compact or intentionally internal work.
-
-Then create the first workflow run from:
-
-`workflow-templates/universal-project-v1/`
+Start at the front door.
+Route to the smallest necessary internal node.
+Expand only when real work proves that another layer or standard is needed.
