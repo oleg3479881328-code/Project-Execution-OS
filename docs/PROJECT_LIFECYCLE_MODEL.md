@@ -26,6 +26,7 @@ A project can use several layers, but it does not have to use all of them.
 5. GitHub is the execution and version-control layer only for projects that require it.
 6. Google Drive is an optional files/assets layer, not the project brain and not the source of operational decisions.
 7. A project may start in Chat, gain a Notion layer when it must persist, and gain GitHub or Google Drive layers only when proved necessary.
+8. Do not design an ideal system before obtaining the smallest working result when a usable existing solution can be adapted first.
 
 ## Minimal Routing
 
@@ -56,6 +57,40 @@ A project entrypoint must state which layers exist and where each kind of truth 
 - Codex performs bounded technical execution after the decision is already clear: scripts, bulk updates, file changes, commits, pull requests, verification and logs.
 - Do not spend Codex execution limits on open-ended thinking that ChatGPT can complete directly.
 
+## Reference-Led MVP Route
+
+Purpose: reach a working MVP faster by adapting proven solutions before inventing architecture from scratch.
+
+Use this route when the proposed product, workflow, interface or automation is likely to have close existing analogues, reusable open-source foundations, proven templates or transferable patterns.
+
+### Operating Sequence
+
+1. Define the smallest working result that would prove the idea useful.
+2. Search for existing products, open-source projects, templates, libraries or workflows that already solve a substantial part of that result.
+3. Select a viable donor when it covers roughly 60–80% of the needed MVP and is legally and technically usable.
+4. Stop searching once an adequate donor exists; do not turn donor search into a new perfection loop.
+5. Adapt only what is required to produce the working MVP.
+6. Test the working result in real use.
+7. Only after the MVP works, extract reusable rules, architecture, standards or library entries justified by evidence.
+
+### Adoption Rules
+
+- Prefer adaptation of a working foundation over greenfield construction when it materially shortens time to a usable result.
+- Reuse product flows, interaction patterns, data models, technical patterns and permitted code/components when they fit the MVP.
+- Verify licensing, attribution obligations, asset ownership, branding restrictions, secret exposure and deployment constraints before copying or adapting implementation material.
+- Do not copy proprietary code, protected brand assets, paid materials, secrets or unnecessary complexity.
+- Do not build a full reusable platform before the first adapted product has proved which parts actually deserve standardization.
+
+### Stop Conditions
+
+Do not continue donor research when:
+
+- a usable solution already covers most of the MVP;
+- additional comparison delays implementation without changing the core choice;
+- the candidate is lawful to adapt and the remaining work is bounded.
+
+Build minimally from scratch only when no suitable reusable foundation exists or when adaptation would introduce greater risk than implementation.
+
 ## Current Validation Cases
 
 ### Case 1 — GitHub Repository Inventory Cleanup
@@ -82,4 +117,5 @@ Current phase:
 - `docs/MODE_CLASSIFIER.md` — choose the lightest operating mode
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md` — per-project front door
 - `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md` — preserve ideas that are not projects yet
+- `docs/RESEARCH_STANDARD.md` — evidence-backed reuse-first research
 - `docs/CODEX_HANDOFF_STANDARD.md` — bounded execution transfer to Codex
