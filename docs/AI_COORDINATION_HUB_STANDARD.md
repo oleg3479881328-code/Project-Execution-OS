@@ -96,3 +96,15 @@ Notion comments are the lightweight coordination path when readable ongoing comm
 GitHub is used when coordination is inseparable from repository execution or review.
 
 Do not create or use a heavier communication structure unless real work proves it necessary.
+
+## Bidirectional Coordination Commands
+
+These shorthand commands control communication only:
+
+- `01` = send the relevant current message to the other AI through the active coordination channel
+- when Oleg sends `01` to `ChatGPT`, `ChatGPT` writes to `Codex`
+- when Oleg sends `01` to `Codex`, `Codex` writes to `ChatGPT`
+- `02` = read the latest relevant incoming message from the other AI through the active coordination channel and respond based on its actual content
+- when Oleg sends `02` to `ChatGPT`, `ChatGPT` reads `Codex`'s message
+- when Oleg sends `02` to `Codex`, `Codex` reads `ChatGPT`'s message
+- `01` and `02` do not by themselves approve destructive or scope-changing actions
