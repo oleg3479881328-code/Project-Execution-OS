@@ -2,59 +2,62 @@
 
 ## Purpose
 
-This is the central reusable knowledge library for Project Execution OS.
+This is the central reusable knowledge library for `Project Execution OS`.
 
-It stores knowledge that has value beyond one project.
+It stores reviewed knowledge that has value beyond one project and is useful for future work.
 
-## Local vs Central Knowledge
+Layer selection follows `docs/PROJECT_LIFECYCLE_MODEL.md` and knowledge promotion follows `docs/KNOWLEDGE_SYSTEM.md`.
 
-Project-local knowledge lives inside each project:
+## Project-Specific vs Central Knowledge
 
-projects/<project-id>/project-library/
+Project-specific knowledge stays in the durable layer the project actually uses:
 
-Central reusable knowledge lives here:
+- Notion-managed projects may keep local decisions and lessons in their Notion project space;
+- GitHub-backed technical projects may keep technical lessons beside their versioned artifacts;
+- Google Drive-backed asset collections may be referenced from the project's management layer.
 
-knowledge-library/
+Do not create a GitHub repository or local library folder merely because one note exists.
 
-Local knowledge must not be promoted automatically.
+For a GitHub-backed project that genuinely benefits from a local library, `project-library/` is an available pattern, not a requirement.
 
-## Required Review Before Active Reuse
+Central reusable knowledge lives here in `knowledge-library/` only after there is evidence that it is worth reuse across projects.
 
-A knowledge entry can become active only after review.
+## Review Before Active Reuse
 
-Before review, it may exist as draft or candidate.
+A central knowledge entry becomes active only after review.
 
-## Entry Categories
+Before review, useful material may be kept as a `candidate` when preserving it prevents rediscovery or supports later validation.
 
-Recommended folders:
+A candidate is not an active system rule.
 
-- patterns/
-- anti-patterns/
-- agent-templates/
-- workflow-lessons/
-- research-methods/
-- architecture-decisions/
-- execution-standards/
+## Useful Entry Categories
 
-## Entry Format
+Create category folders only when an accepted or useful candidate entry needs them. Categories may include:
 
-Each entry should define:
+- `patterns/`;
+- `anti-patterns/`;
+- `workflow-lessons/`;
+- `research-methods/`;
+- `architecture-decisions/`;
+- `execution-standards/`;
+- `verified-technical-solutions/`.
 
-- type;
-- source project;
-- source workflow run;
-- problem;
+## Entry Content
+
+A reusable entry should include only what helps later reuse:
+
+- type and review status;
+- source and evidence;
+- problem addressed;
 - reusable pattern or lesson;
-- when to use;
-- when not to use;
+- when to use and when not to use;
 - adaptation notes;
-- risks;
-- review status.
+- risks and validation still required.
+
+For a narrow verified technical fix, use the compact format defined in `docs/KNOWLEDGE_SYSTEM.md`: `Problem / Investigation / Solution / Verification`.
 
 ## Anti-Dump Rule
 
-Do not store random chat fragments here.
+Do not store random chat fragments, speculative active rules, project-only noise, secrets, duplicated entries or empty templates here.
 
-Do not store project-only details here.
-
-Do not mark unreviewed material as active.
+Do not promote a historical claim as an active solution until current evidence supports it.
