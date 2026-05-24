@@ -63,22 +63,40 @@ Purpose: reach a working MVP faster by adapting proven solutions before inventin
 
 Use this route when the proposed product, workflow, interface or automation is likely to have close existing analogues, reusable open-source foundations, proven templates or transferable patterns.
 
+### Default Use Context
+
+The default initial mode is personal, non-commercial experimentation and local MVP use by Oleg.
+
+In this mode, do not slow down research, copying for local testing, adaptation, reverse engineering or prototype assembly merely because a future commercial or public-distribution question may exist.
+
+A dedicated licensing, attribution, distribution and branding review becomes required only before one of these transitions:
+
+- public publication or public release;
+- sale, monetization or commercial deployment;
+- redistribution to other users;
+- transfer to a client or third party;
+- incorporation of copied materials into a publicly represented original product.
+
+Immediate hard limits still apply even in personal mode: do not use stolen secrets or credentials, bypass unauthorized access, distribute unlawfully obtained materials, or publicly misrepresent another product as original work.
+
 ### Operating Sequence
 
 1. Define the smallest working result that would prove the idea useful.
 2. Search for existing products, open-source projects, templates, libraries or workflows that already solve a substantial part of that result.
-3. Select a viable donor when it covers roughly 60–80% of the needed MVP and is legally and technically usable.
+3. Select a viable donor when it covers roughly 60–80% of the needed MVP and is technically usable for the current personal testing purpose.
 4. Stop searching once an adequate donor exists; do not turn donor search into a new perfection loop.
 5. Adapt only what is required to produce the working MVP.
 6. Test the working result in real use.
 7. Only after the MVP works, extract reusable rules, architecture, standards or library entries justified by evidence.
+8. Perform deeper licensing and release review only when the work is about to cross from personal experimentation into publication, redistribution or commercialization.
 
 ### Adoption Rules
 
 - Prefer adaptation of a working foundation over greenfield construction when it materially shortens time to a usable result.
-- Reuse product flows, interaction patterns, data models, technical patterns and permitted code/components when they fit the MVP.
-- Verify licensing, attribution obligations, asset ownership, branding restrictions, secret exposure and deployment constraints before copying or adapting implementation material.
-- Do not copy proprietary code, protected brand assets, paid materials, secrets or unnecessary complexity.
+- Reuse product flows, interaction patterns, data models, technical patterns and code/components appropriate for personal MVP testing when they fit the target result.
+- Do not pre-emptively block local experimentation because public-release obligations may arise later; record any obvious future release concern and keep building the personal MVP.
+- Before public distribution, commercialization or delivery to another person, verify licensing, attribution obligations, asset ownership, branding restrictions, secret exposure and deployment constraints.
+- Do not use secrets, unauthorized access, or copied materials in a way that creates an immediate legal or security problem even during personal testing.
 - Do not build a full reusable platform before the first adapted product has proved which parts actually deserve standardization.
 
 ### Stop Conditions
@@ -87,9 +105,9 @@ Do not continue donor research when:
 
 - a usable solution already covers most of the MVP;
 - additional comparison delays implementation without changing the core choice;
-- the candidate is lawful to adapt and the remaining work is bounded.
+- the candidate is technically adequate for personal local testing and the remaining work is bounded.
 
-Build minimally from scratch only when no suitable reusable foundation exists or when adaptation would introduce greater risk than implementation.
+Build minimally from scratch only when no suitable reusable foundation exists or when adaptation would introduce greater practical risk than implementation.
 
 ## Current Validation Cases
 
