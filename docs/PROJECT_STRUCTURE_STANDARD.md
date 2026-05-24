@@ -1,210 +1,194 @@
-# Project Structure Standard v1
+# Project Structure Standard v2
 
 ## Purpose
 
-This standard defines the folder structure for every project inside Project Execution OS.
+This standard defines the durable file structure for a project **when that project has a GitHub or versioned-file execution layer**.
 
-Any human or AI agent must be able to open a project folder and understand the goal, current state, rules, agents, knowledge, workflow history, and next action.
+It is not a rule that every idea or every project must receive a repository.
 
-For the exact contract of the first-project-read artifact, use:
+Before applying this standard, use:
+
+`docs/PROJECT_LIFECYCLE_MODEL.md`
+
+For the exact contract of the first project-read artifact, use:
 
 `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 
-## Project Root
+## Applicability
 
-Default rule:
+Apply this standard when a project needs one or more of the following:
 
-Every project should live in its own dedicated private GitHub repository by default.
+- code;
+- versioned files;
+- technical documentation maintained as files;
+- Codex execution;
+- commits, branches or pull requests;
+- reproducible file-based technical work.
 
-Every new repository should also receive a short clear bilingual GitHub description at creation time so the repository remains identifiable in GitHub lists, search, and navigation.
+Do not apply it automatically to:
 
-Description order rule:
+- raw ideas;
+- short discussions;
+- Notion-first personal or research projects that have no versioned execution need;
+- projects that only need heavy assets in Google Drive.
 
-- Russian first
-- English second
+## Storage Decision
 
-The root `projects/` folder inside `Project Execution OS` is for internal or compact exceptions, not the primary default.
+A project may have:
 
-Recommended project id format:
+- a Notion layer for readable management and durable status;
+- a GitHub layer for versioned technical execution;
+- a Google Drive layer for heavy source files and assets.
 
-YYYYMMDD-short-kebab-name
+When a GitHub layer is used, the project entrypoint must state what GitHub is authoritative for and what remains authoritative in Notion or Google Drive.
+
+## GitHub Project Root
+
+When a project requires its own GitHub execution layer, use a dedicated repository unless there is a concrete reason to place the work inside an existing repository.
+
+When creating a new repository, set a short clear bilingual GitHub description:
+
+- Russian first;
+- English second.
+
+An internal folder inside `Project Execution OS` may be used only when the work belongs to the OS itself or is an explicitly chosen compact internal workstream.
+
+Recommended internal project id format:
+
+`YYYYMMDD-short-kebab-name`
 
 Example:
 
-projects/20260516-news-telegram-bot/
+`projects/20260516-news-telegram-bot/`
 
-## Required Project Files And Folders
+## Required Files And Folders For Full GitHub-Backed Mode
 
-Every full-mode project must contain:
+A full-mode GitHub-backed project should contain:
 
-- PROJECT_ENTRYPOINT.md
-- PROJECT_STATE.md
-- PROJECT_RULES.md
-- agents/
-- project-library/
-- workflow-runs/
-- logs/
+- `PROJECT_ENTRYPOINT.md`
+- `PROJECT_STATE.md`
+- `PROJECT_RULES.md`
+- `agents/` only when agent modules are actually required
+- `project-library/` when project-local reusable knowledge exists
+- `workflow-runs/` when structured workflow runs are used
+- `logs/` when durable execution history is required
 
-Optional but recommended when handoff speed matters:
+Do not create empty folders simply to satisfy ceremony. Create only artifacts that are useful to future continuation, review or verification.
 
-- CONTEXT_PACK.md
+## Compact GitHub-Backed Mode
 
-## Compact Project Mode
+Compact mode is preferred for small or low-risk technical projects.
 
-Compact mode is allowed for small or low-risk projects.
-
-Compact mode may use a smaller structure, for example:
+It may use a smaller structure, for example:
 
 ```text
 PROJECT_ENTRYPOINT.md
 PROJECT_STATE.md
-workflow-runs/
 logs/
 ```
 
 or another minimal structure that still preserves:
 
-- source of truth;
+- source-of-truth boundaries;
 - explicit current state;
 - explicit next action;
 - evidence-backed research when relevant;
-- review before stable acceptance;
-- durable log history.
+- review before stable acceptance when relevant;
+- durable log history when execution must be recoverable.
 
-Compact mode must not be used as an excuse to hide important state in chat.
+Compact mode must not hide important durable state in chat.
 
 ## PROJECT_ENTRYPOINT.md
 
-Single entrypoint for this specific project.
+This is the single front door for the GitHub-backed project.
 
-Must include:
+It must include in compact form:
 
-- project name;
-- project goal;
-- required read order;
-- current state file;
-- latest workflow run;
+- project name and purpose;
+- active layers: Notion / GitHub / Google Drive, if any;
+- what each active layer is authoritative for;
+- current state location;
+- latest relevant execution artifact;
 - current next action.
 
-For the canonical structure and section logic, use:
+Use:
 
 `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 
 ## PROJECT_STATE.md
 
-Current state snapshot.
+Current technical state snapshot for the GitHub/file execution layer.
 
-The file should start with a short machine-readable frontmatter block:
+A useful short frontmatter block may be:
 
 ```yaml
 ---
 status: in-progress
 project_mode: compact
-current_step: 07_RESULT
-current_run: workflow-runs/0001-initial-definition/
-last_updated: 2026-05-21
-next_action: Open the landing page locally or publish it with GitHub Pages.
+current_step: execution
+last_updated: 2026-05-24
+next_action: Verify the approved change and record the result.
 ---
 ```
 
-Must include:
+Include only what is needed to recover current file-based work:
 
-- current phase;
-- current workflow run;
-- confirmed decisions;
-- open questions;
-- active or candidate agents;
-- local knowledge status;
+- current phase or task;
+- confirmed technical decisions;
+- active constraints;
 - latest result;
 - next action.
 
-Keep the frontmatter short and stable.
-
-It exists so a human or agent can recover project state without rereading the whole repository.
-
 ## PROJECT_RULES.md
 
-Project-specific rules.
+Create project-specific rules only when they materially constrain future execution.
 
-Must include:
+Possible contents:
 
 - scope boundaries;
 - forbidden actions;
-- quality rules;
-- tool rules;
-- domain constraints;
-- evidence rules;
-- state separation rules.
+- quality or evidence requirements;
+- tool restrictions;
+- security constraints;
+- state-separation rules.
 
-## agents/
+## workflow-runs/ And logs/
 
-Stores project-specific agents.
+Use workflow runs and logs when a technical action must be durable, reviewable or recoverable.
 
-Each agent should have its own folder and AGENT.md file.
+A log may record:
 
-Agents are created only when the workflow proves they are needed.
+- approved action;
+- executed change;
+- verification result;
+- failure and fix;
+- next action.
 
-## project-library/
+Do not generate large logging structures for trivial safe actions.
 
-Stores project-local knowledge.
+## Source-Of-Truth Rule
 
-Suggested categories:
+There is no single source-of-truth medium for every project.
 
-- patterns;
-- anti-patterns;
-- decisions;
-- research notes;
-- templates.
+For a project with multiple layers:
 
-Project-local knowledge is not automatically central knowledge.
+1. Notion may govern readable status, decisions and coordination.
+2. GitHub governs committed code, file-based technical artifacts and implementation history.
+3. Google Drive governs heavy source assets when used.
+4. Chat is discussion until a durable decision is recorded in its proper persistent layer.
 
-## workflow-runs/
+The project entrypoint must remove ambiguity by stating these boundaries explicitly.
 
-Stores workflow runs.
+## No Hidden Durable State
 
-Each run gets its own folder.
+Important durable state must not exist only in chat.
 
-Each run follows the universal workflow contract.
-
-## logs/
-
-Stores project execution logs.
-
-Required file:
-
-logs/PROJECT_LOG.md
-
-The log records workflow milestones, repository changes, decisions, reviews, knowledge extraction, and next actions.
-
-## State Truth Rule
-
-If project state conflicts:
-
-1. committed repository artifacts beat chat memory;
-2. PROJECT_STATE.md is the latest project state;
-3. the latest workflow run is the current execution state;
-4. logs preserve historical sequence;
-5. central knowledge library governs reusable cross-project rules.
-
-## No Hidden Project State
-
-Important project state must not live only in chat.
-
-If it matters, write it into a project artifact.
+Write it into the correct active layer of the project: Notion, GitHub or Google Drive linkage, depending on what kind of truth it is.
 
 ## CONTEXT_PACK.md
 
-Optional compact briefing artifact.
+`CONTEXT_PACK.md` is optional.
 
-Use it when a project will be handed between agents or sessions often and a short recovery file will materially reduce re-entry cost.
+Use it only when handoff between agents or sessions is frequent enough that a short re-entry brief reduces real work.
 
-`CONTEXT_PACK.md` is not the primary source of truth.
-
-It is a cache-like briefing layer that should summarize:
-
-- current goal;
-- current mode;
-- latest durable decisions;
-- current run;
-- next action;
-- which artifacts are canonical right now.
+It is a briefing cache, not the source of truth.
