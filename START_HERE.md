@@ -19,7 +19,8 @@ Do not store operating rules, project-storage decisions, workflow details, tool 
 - research task -> `docs/RESEARCH_STANDARD.md`
 - review task -> `docs/REVIEW_STANDARD.md`
 - already-decided Codex execution handoff -> `docs/CODEX_HANDOFF_STANDARD.md`
-- GitHub-based ChatGPT / Codex coordination -> `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
+- connected AI agent coordination or channel selection -> `docs/AI_COORDINATION_HUB_STANDARD.md`
+- GitHub-based ChatGPT / Codex execution collaboration -> `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
 - stable ChatGPT system-layer configuration -> `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
 
 ## Final Rule
