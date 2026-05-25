@@ -1,0 +1,26 @@
+{
+  "name": "external-pattern-research",
+  "version": "0.1.0",
+  "status": "candidate",
+  "description": "Evaluate an external repository, product, workflow, or public solution as a donor pattern for one of Oleg's existing systems or projects.",
+  "source_patterns": [
+    "https://github.com/anthropics/knowledge-work-plugins"
+  ],
+  "owners": [
+    "Oleg Povalyukhin"
+  ],
+  "applies_to": [
+    "Project Execution OS",
+    "Central Knowledge Library",
+    "Agent Network OS",
+    "existing project repositories"
+  ],
+  "skills": [
+    "external-pattern-evaluation"
+  ],
+  "commands": [
+    "research-external-pattern"
+  ],
+  "connectors_file": null,
+  "handoff_contracts": []
+}
