@@ -32,6 +32,49 @@ Do not apply it automatically to:
 - Notion-first personal or research projects that have no versioned execution need;
 - projects that only need heavy assets in Google Drive.
 
+## Canonical Project Naming Rule
+
+A project must keep the same canonical project name across all active layers and storage locations.
+
+This includes:
+
+- local project folders;
+- GitHub repositories when possible;
+- Notion project pages;
+- Google Drive folders;
+- shared archives;
+- removable storage;
+- execution workspaces;
+- transfer artifacts.
+
+The goal is to eliminate naming drift and ambiguity between systems.
+
+A project should not appear under different names in different layers unless there is a hard technical limitation.
+
+Examples:
+
+```text
+Local folder:
+website-design-system
+
+GitHub repository:
+website-design-system
+
+Notion project:
+Website Design System
+
+Google Drive folder:
+website-design-system
+```
+
+Minor formatting differences are acceptable:
+
+- kebab-case vs readable title case;
+- filesystem-safe variants;
+- platform-specific restrictions.
+
+But the semantic project identity must stay identical.
+
 ## Storage Decision
 
 A project may have:
