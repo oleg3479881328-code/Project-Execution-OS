@@ -4,7 +4,7 @@
 
 This document defines the canonical collaboration loop between a reasoning model such as ChatGPT and an execution model such as Codex when GitHub is used as the durable coordination layer.
 
-The goal is to prevent vague handoffs, hidden state, and fake completion claims.
+The goal is to prevent vague handoffs, hidden state, fake completion claims, and confusion about how one AI session reports results to another.
 
 Codex is not the default answer for every task. Use this protocol only when repository execution, local commands, validation, or other executor-only actions are actually needed.
 
@@ -20,8 +20,9 @@ Use this sequence:
 Reasoning model defines or reviews the work.
 GitHub stores the durable task context.
 Codex executes repository changes.
+Codex posts its report in the GitHub coordination surface.
+ChatGPT reads and reviews that report through GitHub.
 GitHub stores the execution diff and review trail.
-Reviewer verifies against the original packet.
 Repository memory preserves the accepted result.
 ```
 
@@ -29,10 +30,9 @@ Short form:
 
 ```text
 ChatGPT thinks.
-GitHub carries the task.
-Codex executes.
-GitHub records the change.
-Reviewer verifies.
+GitHub carries the task and replies.
+Codex executes and reports in GitHub.
+ChatGPT reads GitHub and reviews.
 Repository memory persists.
 ```
 
@@ -48,7 +48,7 @@ ChatGPT, Claude, Gemini, or another reasoning-oriented AI may:
 - prepare design or execution artifacts;
 - produce implementation handoff packets;
 - review Codex output;
-- draft GitHub comments, issues, or PR guidance.
+- write GitHub comments, issues, or PR guidance when the connector is available.
 
 The reasoning model must not pretend it already executed repository changes if Codex or another executor has not done so.
 
@@ -61,10 +61,12 @@ Codex may:
 - read repository context;
 - modify the repository within approved scope;
 - run validations when requested and available;
-- report blockers, risks, and assumptions;
+- report blockers, risks, assumptions, commits, and validation evidence in the specified GitHub coordination surface;
 - prepare commit-ready or PR-ready repository changes.
 
 Codex must not redesign the task silently when the handoff packet is explicit.
+
+Codex must not attempt to contact a separate ChatGPT chat session directly. Its reply to ChatGPT is a GitHub issue comment, PR comment, or review-thread reply on the coordination surface named in the handoff.
 
 ### Reviewer
 
@@ -85,8 +87,8 @@ GitHub is the default durable communication layer when the work already lives in
 GitHub may carry the collaboration through:
 
 - repository files committed on a branch;
-- issues for scoped work requests;
-- pull requests for execution diffs;
+- issues for scoped work requests and execution-report replies;
+- pull requests for execution diffs and review-report replies;
 - PR descriptions for the handoff packet summary;
 - PR comments and review threads for follow-up;
 - GitHub Actions checks for validation evidence.
@@ -100,6 +102,29 @@ Default cross-project coordination hub:
 Use that hub for reusable or cross-project AI coordination threads.
 
 Use the target project repository when the work is tightly bound to one repository's execution scope or review history.
+
+## Transport Reality Rule
+
+There is no required direct transport from one ChatGPT or Codex session into another ChatGPT chat window.
+
+For repository-bound work, communication works as follows:
+
+1. ChatGPT creates or updates a GitHub issue, pull request, review thread, or repository handoff artifact.
+2. Codex reads that GitHub surface and executes locally within the allowed scope.
+3. Codex posts its `Execution Report`, clarification, blocker, commit SHA, or validation evidence as a comment in the exact GitHub surface identified in the handoff.
+4. ChatGPT reads the GitHub surface through the GitHub connector and responds there with approval, requested changes, or the next packet.
+5. The user is not the normal relay for AI-to-AI project coordination.
+
+When Codex says it cannot send a message to a separate ChatGPT chat, that is not a blocker. The required reply channel is GitHub, not chat-to-chat messaging.
+
+Every Codex handoff must explicitly include this instruction when a GitHub coordination surface exists:
+
+```text
+Do not attempt to contact another ChatGPT chat session directly.
+Post your structured reply as a new comment in this GitHub issue / PR / review thread.
+ChatGPT will read and review it here through GitHub.
+The user should not need to manually relay the report.
+```
 
 ## Sync Discipline
 
@@ -135,9 +160,10 @@ Use when the project already follows Project Execution OS.
 Flow:
 
 1. Write the task into workflow artifacts such as `05_EXECUTION_SPEC.md` or a dedicated task artifact.
-2. Give Codex the exact file paths to read.
+2. Give Codex the exact file paths to read and the GitHub surface where its response must be posted.
 3. Let Codex execute locally in the repository.
-4. Store the result in repository artifacts and optionally publish to GitHub PR.
+4. Codex posts the report in the named GitHub surface.
+5. Store the accepted result in repository artifacts and optionally publish to GitHub PR.
 
 This is the preferred mode for disciplined project work.
 
@@ -148,10 +174,10 @@ Use when the task starts from a GitHub issue or when issue-level traceability ma
 Flow:
 
 1. Reasoning model shapes the issue into a precise objective.
-2. Issue body or linked artifact defines scope, constraints, and acceptance criteria.
+2. Issue body or linked artifact defines scope, constraints, acceptance criteria, and the instruction to reply in that same issue.
 3. Codex executes against that issue scope.
-4. Execution is published as a branch and PR.
-5. Reviewer checks the PR against the issue and handoff packet.
+4. Codex posts the execution report as a comment in the issue and, when code changed, publishes a branch/PR or an explicitly permitted commit.
+5. Reviewer reads the issue/PR through GitHub and checks execution against the issue and handoff packet.
 
 ### Mode 3 — PR-centered collaboration
 
@@ -161,9 +187,10 @@ Flow:
 
 1. Reasoning model prepares or updates the handoff packet.
 2. Codex implements on a branch.
-3. GitHub PR becomes the visible review surface.
-4. Review comments and threads drive follow-up work.
-5. Reviewer confirms acceptance or requests more changes.
+3. GitHub PR becomes the visible review and reply surface.
+4. Codex posts reports and replies inside that PR or its review threads.
+5. Review comments and threads drive follow-up work.
+6. Reviewer confirms acceptance or requests more changes.
 
 ## Message Identity Rule
 
@@ -193,6 +220,7 @@ Allowed `TYPE` examples:
 - `Execution Report`
 - `Review Request`
 - `Blocker`
+- `Coordination Clarification`
 
 This avoids ambiguity when issues or PRs contain messages from the user, ChatGPT, Codex, and reviewers in the same thread.
 
@@ -227,7 +255,10 @@ Acceptance Criteria:
 Validation Commands / Checks:
 Rollback Notes:
 Execution Report Contract:
+Reply Surface:
 ```
+
+`Reply Surface` must name the exact GitHub issue, PR, or review thread in which Codex posts its report. If there is no GitHub surface, the packet must state the explicit fallback delivery method.
 
 See:
 
@@ -235,11 +266,15 @@ See:
 
 ## Required Execution Report
 
-Codex must return a structured execution report.
+Codex must return a structured execution report **as a comment in the named GitHub reply surface**, unless the packet explicitly states a different fallback.
 
 Minimum structure:
 
 ```text
+FROM: Codex
+TO: ChatGPT
+TYPE: Execution Report
+
 EXECUTION REPORT
 
 Status:
@@ -252,17 +287,18 @@ Risks / Follow-Up:
 Ready For Review: Yes / No
 ```
 
-Execution without a report is incomplete for important work.
+Execution without a report in the required reply surface is incomplete for important work.
 
 ## GitHub Comment And Review Cycle
 
 When GitHub is the active coordination surface:
 
-1. PR comments and review threads are treated as durable follow-up tasks.
-2. Actionable comments must be grouped by file or behavior area.
-3. Codex should address only the selected or approved threads.
-4. Each follow-up should remain traceable to the original review request.
-5. Resolved, outdated, or non-actionable threads must not be treated as fresh work by default.
+1. Codex posts its structured reply in the named GitHub issue, PR, or review thread; it does not ask the user to transfer the reply into a ChatGPT chat.
+2. PR comments and review threads are treated as durable follow-up tasks.
+3. Actionable comments must be grouped by file or behavior area.
+4. Codex should address only the selected or approved threads.
+5. Each follow-up should remain traceable to the original review request.
+6. Resolved, outdated, or non-actionable threads must not be treated as fresh work by default.
 
 Relevant GitHub-oriented skills already exist for this loop:
 
@@ -290,10 +326,11 @@ Never confuse:
 GitHub evidence should support the actual state:
 
 - issue exists;
+- reply comment exists in the named coordination surface;
 - branch exists;
 - PR exists;
 - checks passed or failed;
-- comments are open or resolved.
+- comments are open or resolved;
 - latest `main` was pulled before local validation when required;
 - the reported commit SHA exists when a fix was pushed.
 
@@ -309,6 +346,9 @@ Evidence interpretation rule:
 
 Do not:
 
+- instruct Codex to send a message directly to another ChatGPT chat session;
+- allow Codex to treat inability to message a ChatGPT chat as a blocker when a GitHub reply surface exists;
+- use the user as the normal relay between Codex and ChatGPT for repo-bound coordination;
 - send Codex vague prompts such as `improve the project`;
 - use GitHub comments as a substitute for a real execution packet;
 - allow Codex to broaden scope silently;
@@ -325,8 +365,9 @@ For software work, the safest default loop is:
 1. clarify and research;
 2. if no executor access is needed, complete the small safe step directly;
 3. if executor access is needed, create repository artifact or execution spec;
-4. create implementation handoff packet;
+4. create implementation handoff packet naming the exact GitHub reply surface;
 5. let Codex execute within explicit scope;
-6. publish to a private branch and draft PR when GitHub review is needed;
-7. review against the original packet;
-8. update repository memory after acceptance.
+6. require Codex to post its execution report in that same GitHub surface;
+7. publish to a private branch and draft PR when GitHub diff review is needed;
+8. review against the original packet and GitHub-posted report;
+9. update repository memory after acceptance.
