@@ -13,7 +13,7 @@
 
 ## System Entry Point
 
-- `START_HERE.md`
+- `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
 
 ## Operating Principle
 
@@ -46,7 +46,7 @@
 
 ## Read Next
 
-1. `START_HERE.md`
-2. `docs/PROJECT_BOOTSTRAP_STANDARD.md`
-3. `docs/PROJECT_ENTRYPOINT_STANDARD.md`
-4. `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
+1. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
+2. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_BOOTSTRAP_STANDARD.md`
+3. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_ENTRYPOINT_STANDARD.md`
+4. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`

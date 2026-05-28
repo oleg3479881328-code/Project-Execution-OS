@@ -77,6 +77,8 @@ A bootstrap `AGENTS.md` must state:
 - do not invent solutions before checking existing suitable ones;
 - read `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` for the canonical rule.
 
+For externally generated project bootstrap artifacts, references to central Project Execution OS documents must use canonical absolute URLs, not relative local paths that do not exist inside the new project folder.
+
 ## Required Bootstrap Sequence
 
 1. Detect explicit creation of a new project folder or workspace.
