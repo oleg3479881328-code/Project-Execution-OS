@@ -17,48 +17,52 @@ A project can use several layers, but it does not have to use all of them.
 | GitHub | versioned execution, code, durable technical artifacts, Codex work | only when code, versioned files, technical documentation or executable work exists |
 | Google Drive | optional files/assets storage | only when the project has heavy or non-versioned source materials such as images, scans, audio, video, PDFs or large exports |
 
-## Idea Discussion vs Explicit Project Creation
+## Idea Discussion vs Project Initialization
 
-These are different lifecycle states:
+These are different lifecycle actions:
 
-- idea discussion means the work may stay in chat or reference capture without becoming a project;
-- explicit project creation means a new project folder or workspace is intentionally created and must receive bootstrap immediately.
+- idea discussion may stay in chat or reference capture without becoming a durable project;
+- starting project work applies the relevant standards and the `Existing Solution First` rule where relevant;
+- initializing a project folder with `AGENTS.md` and `PROJECT_ENTRYPOINT.md` happens only when the owner explicitly requests that durable folder entrypoint.
 
 Do not turn every idea into a project.
 
-Do not delay bootstrap once explicit project creation has happened.
+Do not automatically create files merely because a folder or Codex Desktop project was created or opened.
 
 ## Hard Rules
 
 1. Not every thought becomes a project.
 2. Not every project needs GitHub.
 3. Not every project needs Google Drive.
-4. Notion is the readable management layer when durable project context is needed.
-5. GitHub is the execution and version-control layer only for projects that require it.
-6. Google Drive is an optional files/assets layer, not the project brain and not the source of operational decisions.
-7. A project may start in Chat, gain a Notion layer when it must persist, and gain GitHub or Google Drive layers only when proved necessary.
-8. Do not design an ideal system before obtaining the smallest working result when a usable existing solution can be adapted first.
-9. Apply `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` before new architecture, implementation, workflow invention, or custom tooling.
+4. Not every new folder needs project-entrypoint files.
+5. Notion is the readable management layer when durable project context is needed.
+6. GitHub is the execution and version-control layer only for projects that require it.
+7. Google Drive is an optional files/assets layer, not the project brain and not the source of operational decisions.
+8. A project may start in Chat, gain a Notion layer when it must persist, and gain GitHub or Google Drive layers only when proved necessary.
+9. Do not design an ideal system before obtaining the smallest working result when a usable existing solution can be adapted first.
+10. Apply `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` before new architecture, implementation, workflow invention, or custom tooling.
 
-## Bootstrap Before Layer Expansion
+## Optional Folder Entrypoint Initialization
 
-When a new file-based project is explicitly created, apply `docs/PROJECT_BOOTSTRAP_STANDARD.md` first.
+When the owner explicitly requests a transferable project folder entrypoint, use `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
 
-That zero-state bootstrap creates only the minimal front-door artifacts.
+That on-demand action creates only minimal front-door artifacts and may honestly record unknown purpose.
 
-Only after purpose is confirmed should the project gain extra durable layers such as:
+Only after purpose and storage needs are confirmed should the project gain extra durable layers such as:
 
 - Notion for readable management;
 - GitHub for versioned execution;
 - Google Drive for heavy assets.
 
-GitHub is not mandatory for every project, and no project should receive extra layers simply because a folder now exists.
+GitHub is not mandatory for every project, and no project receives extra layers simply because a folder exists.
 
 ## Minimal Routing
 
 ```text
 Thought or request
 → discuss in Chat
+→ apply Existing Solution First when real research / technical work begins
+→ initialize folder entrypoint only by explicit request
 → preserve/manage in Notion only if it must persist
 → attach GitHub only if versioned execution is required
 → attach Google Drive only if heavy source files/assets are required
@@ -75,13 +79,14 @@ The source of truth depends on the project layer:
 - heavy source assets: Google Drive when the project has a Drive layer;
 - current discussion: Chat only until a durable decision is written into the proper persistent layer.
 
-A project entrypoint must state which layers exist and where each kind of truth lives.
+A project entrypoint, when one exists, must state which layers exist and where each kind of truth lives.
 
 ## Execution Split
 
 - ChatGPT performs research, comparison, classification, architecture reasoning and decision preparation whenever it has adequate access.
 - Codex performs bounded technical execution after the decision is already clear: scripts, bulk updates, file changes, commits, pull requests, verification and logs.
 - Do not spend Codex execution limits on open-ended thinking that ChatGPT can complete directly.
+- Do not spend Codex context on automatic bootstrap behavior when explicit instruction is enough.
 
 ## Reference-Led MVP Route
 
@@ -158,8 +163,9 @@ Current phase:
 
 - `START_HERE.md` — top-level router only
 - `Start New Project.md` — new-project route only
+- `docs/PROJECT_BOOTSTRAP_STANDARD.md` — optional folder-entrypoint initialization only on explicit request
 - `docs/MODE_CLASSIFIER.md` — choose the lightest operating mode
-- `docs/PROJECT_ENTRYPOINT_STANDARD.md` — per-project front door
+- `docs/PROJECT_ENTRYPOINT_STANDARD.md` — per-project front door when used
 - `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md` — preserve ideas that are not projects yet
 - `docs/RESEARCH_STANDARD.md` — evidence-backed reuse-first research
 - `docs/CODEX_HANDOFF_STANDARD.md` — bounded execution transfer to Codex
