@@ -23,6 +23,19 @@ Accordingly, the Project Execution OS guarantee for Codex environments is:
 - creation-time bootstrap when a confirmed creation-template mechanism is available;
 - otherwise bootstrap before substantive work in the first Codex session opened in the selected project folder.
 
+## Confirmed Supported Mechanism
+
+The confirmed supported mechanism is a Codex `SessionStart` hook.
+
+On systems where a shared user-level bootstrap is desired, install:
+
+- `~/.codex/hooks.json`
+- a hook script referenced from that file, for example under `~/.codex/hooks/`
+
+That hook may create missing `AGENTS.md` and `PROJECT_ENTRYPOINT.md` at session start when the selected folder is clearly a new project folder and still in safe zero state.
+
+This is a session-start guarantee, not a click-time create-project guarantee.
+
 ## Required Root Artifacts
 
 A Codex-facing folder that has completed bootstrap contains:

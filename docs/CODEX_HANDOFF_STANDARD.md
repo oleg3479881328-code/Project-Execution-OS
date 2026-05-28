@@ -45,6 +45,7 @@ Out of Scope:
 Repository Context:
 Files Allowed To Change:
 Forbidden Changes:
+Existing Solution Search Required:
 Implementation Instructions:
 Acceptance Criteria:
 Validation Commands / Checks:
@@ -64,10 +65,13 @@ CODEX PACKET LITE
 Objective:
 Files Allowed To Change:
 Forbidden Changes:
+Existing Solution Search Required:
 Acceptance Criteria:
 Validation:
 Return:
 ```
+
+For architecture, implementation, configuration, debugging, automation, and integration work, `Existing Solution Search Required` defaults to `Yes` unless there is a stated reason otherwise.
 
 ## Execution Report
 
@@ -78,6 +82,9 @@ EXECUTION REPORT
 
 Status:
 Files Changed:
+Existing Solutions Checked:
+Solution Reused Or Adapted:
+Why Custom Implementation Was Necessary:
 Validation Performed:
 Validation Not Performed:
 Blockers:

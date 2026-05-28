@@ -19,6 +19,7 @@ Use this as the top block or dedicated `Project Entrypoint` section/page inside 
 - Primary source of truth:
 - Related GitHub repository if any:
 - Supporting workspace/databases:
+- System entry point: `START_HERE.md`
 
 ## Current Status
 
@@ -45,6 +46,7 @@ Use this as the top block or dedicated `Project Entrypoint` section/page inside 
 - 
 - 
 - 
+- Existing Solution First: check for an adequate existing solution before custom implementation.
 
 ## Open Next
 
@@ -58,3 +60,5 @@ Use this as the top block or dedicated `Project Entrypoint` section/page inside 
 This is the front door to the project, not the full history.
 
 Keep it short, current, and easy to scan.
+
+If the project is only initialized and the purpose is not yet defined, say that directly instead of guessing.

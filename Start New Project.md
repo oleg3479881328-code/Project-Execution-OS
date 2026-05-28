@@ -26,6 +26,8 @@ Follow `docs/PROJECT_BOOTSTRAP_STANDARD.md` first. The project may be initialize
 
 Only after the minimal project bootstrap exists should the project purpose be obtained or refined.
 
+That bootstrap must already inherit `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` so the project starts with reuse-first constraints instead of invention-first drift.
+
 ## Minimum Question After Bootstrap
 
 If the project has been initialized but its idea has not been stated, ask only:

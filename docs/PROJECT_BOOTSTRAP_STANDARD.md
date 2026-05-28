@@ -6,6 +6,8 @@ This standard defines the mandatory zero-state initialization of a newly created
 
 A project must become a transferable, self-explaining work object immediately, even when its purpose has not yet been discussed.
 
+This zero state must already inherit the central reuse-first rule from `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`.
+
 ## Core Invariant
 
 An explicit project-creation event is sufficient to initialize a project.
@@ -23,6 +25,8 @@ Unknown purpose is valid state and must not be replaced by guesses.
 Bootstrap is required for an explicit new-project creation action, including creation of a local project folder, a new development workspace, or a new agent project workspace.
 
 Bootstrap is not triggered by casual idea discussion, exploratory research, or saving a reference without starting a project.
+
+Explicit creation and idea discussion are different lifecycle moments and must not be conflated.
 
 ## Earliest Enforceable Moment Rule
 
@@ -63,12 +67,15 @@ A bootstrap `PROJECT_ENTRYPOINT.md` must state:
 - that no purpose, architecture, implementation plan, storage-layer choice, tool choice or execution decision has been confirmed;
 - that no substantive work should begin until intent is confirmed;
 - the next practical step: ask what idea or project is being developed.
+- that `Existing Solution First` remains mandatory once a real task exists.
 
 A bootstrap `AGENTS.md` must state:
 
 - read `PROJECT_ENTRYPOINT.md` before project work;
 - follow the central Project Execution OS entrypoint and its selected route;
 - do not infer missing project purpose, architecture or decisions.
+- do not invent solutions before checking existing suitable ones;
+- read `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` for the canonical rule.
 
 ## Required Bootstrap Sequence
 
@@ -79,6 +86,8 @@ A bootstrap `AGENTS.md` must state:
 5. After purpose is confirmed, update the project entrypoint and route into the minimal appropriate lifecycle, structure, research or execution standards.
 
 ## Transition Out Of Zero State
+
+Zero state is not the same as a defined project.
 
 After the project purpose is confirmed:
 
@@ -100,3 +109,4 @@ For Codex desktop, app and IDE environments, use `docs/integrations/codex/CODEX_
 - `docs/PROJECT_LIFECYCLE_MODEL.md` — layer and persistence decisions
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md` — ongoing entrypoint contract
 - `docs/PROJECT_STRUCTURE_STANDARD.md` — later file or versioned structure when justified
+- `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` — mandatory reuse-first rule from zero state onward

@@ -17,6 +17,17 @@ A project can use several layers, but it does not have to use all of them.
 | GitHub | versioned execution, code, durable technical artifacts, Codex work | only when code, versioned files, technical documentation or executable work exists |
 | Google Drive | optional files/assets storage | only when the project has heavy or non-versioned source materials such as images, scans, audio, video, PDFs or large exports |
 
+## Idea Discussion vs Explicit Project Creation
+
+These are different lifecycle states:
+
+- idea discussion means the work may stay in chat or reference capture without becoming a project;
+- explicit project creation means a new project folder or workspace is intentionally created and must receive bootstrap immediately.
+
+Do not turn every idea into a project.
+
+Do not delay bootstrap once explicit project creation has happened.
+
 ## Hard Rules
 
 1. Not every thought becomes a project.
@@ -27,6 +38,21 @@ A project can use several layers, but it does not have to use all of them.
 6. Google Drive is an optional files/assets layer, not the project brain and not the source of operational decisions.
 7. A project may start in Chat, gain a Notion layer when it must persist, and gain GitHub or Google Drive layers only when proved necessary.
 8. Do not design an ideal system before obtaining the smallest working result when a usable existing solution can be adapted first.
+9. Apply `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` before new architecture, implementation, workflow invention, or custom tooling.
+
+## Bootstrap Before Layer Expansion
+
+When a new file-based project is explicitly created, apply `docs/PROJECT_BOOTSTRAP_STANDARD.md` first.
+
+That zero-state bootstrap creates only the minimal front-door artifacts.
+
+Only after purpose is confirmed should the project gain extra durable layers such as:
+
+- Notion for readable management;
+- GitHub for versioned execution;
+- Google Drive for heavy assets.
+
+GitHub is not mandatory for every project, and no project should receive extra layers simply because a folder now exists.
 
 ## Minimal Routing
 

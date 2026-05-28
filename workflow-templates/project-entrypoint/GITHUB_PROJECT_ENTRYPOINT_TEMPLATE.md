@@ -16,6 +16,7 @@
 
 - Primary source of truth:
 - Secondary workspace if any:
+- System entry point: `START_HERE.md`
 
 ## Current Status
 
@@ -43,6 +44,7 @@
 - 
 - 
 - 
+- Existing Solution First: check for an adequate existing solution before custom implementation.
 
 ## Read Next
 
@@ -55,6 +57,8 @@
 ## Notes
 
 Keep this file short.
+
+Initialization-only zero state is allowed when purpose is still unknown. In that case state it explicitly instead of guessing.
 
 Do not turn it into:
 

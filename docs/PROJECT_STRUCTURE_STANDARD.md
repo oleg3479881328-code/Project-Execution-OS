@@ -25,6 +25,27 @@ Apply this standard when a project needs one or more of the following:
 - commits, branches or pull requests;
 - reproducible file-based technical work.
 
+## Bootstrap Structure vs Execution Structure
+
+Do not confuse the initial bootstrap structure with later execution structure.
+
+### Initial Bootstrap Structure
+
+At explicit project creation time, use only:
+
+```text
+AGENTS.md
+PROJECT_ENTRYPOINT.md
+```
+
+This is defined by `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
+
+Do not expand a new project with empty folders or ceremonial files during bootstrap.
+
+### Later Execution Structure
+
+Only after the project purpose and execution needs are known should the project move into compact mode or full GitHub-backed mode.
+
 Do not apply it automatically to:
 
 - raw ideas;

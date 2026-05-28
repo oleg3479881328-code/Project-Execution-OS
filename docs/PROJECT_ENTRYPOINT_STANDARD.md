@@ -36,6 +36,25 @@ The medium may differ.
 
 The contract should stay the same.
 
+## Initialization-Only Entrypoint
+
+An entrypoint may honestly exist before the project purpose is known.
+
+This initialization-only form is valid for a newly bootstrapped project and should not be treated as incomplete merely because some fields are still unknown.
+
+In that zero state, the entrypoint should explicitly say:
+
+- status: `initialized — purpose not yet defined`;
+- type: `not yet classified`;
+- purpose is not yet confirmed;
+- architecture, stack, storage layers, scope, and implementation plan are not yet confirmed;
+- no substantive implementation should begin yet;
+- next practical step is to obtain the project purpose from the owner.
+
+Unknown fields are allowed when they are truthful.
+
+Invented fields are not allowed.
+
 ## Required Questions The Entrypoint Must Answer
 
 After reading the entrypoint, a new human or AI should be able to answer:
@@ -67,6 +86,8 @@ Every project entrypoint should include the following sections in compact form:
 - why the project exists;
 - who it is for;
 - what success looks like at the current stage.
+
+If purpose is unknown, say so directly instead of guessing.
 
 ### 3. Source Of Truth
 
@@ -115,6 +136,7 @@ Examples:
 - visibility or privacy rule;
 - source-of-truth rule;
 - review or handoff rule.
+- `Existing Solution First` when the project must search for adequate existing solutions before custom work.
 
 ### 9. Read Next
 
@@ -127,6 +149,8 @@ Examples:
 - latest log
 - relevant knowledge entry
 - linked Notion database or subpage
+
+In initialization-only state, those deeper artifacts may legitimately not exist yet.
 
 ## What The Entrypoint Must Not Become
 
@@ -156,6 +180,8 @@ This form should point to:
 - `PROJECT_RULES.md` if present
 - latest workflow run
 - latest project log
+
+In initialization-only state, those deeper artifacts may legitimately not exist yet.
 
 ### Notion Form
 
@@ -192,9 +218,12 @@ A good project entrypoint is:
 - easy to scan;
 - strong enough that a new human or AI can continue with minimal confusion.
 
+It must also be honest about unknowns.
+
 ## Related Standards
 
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
 - `docs/REPOSITORY_MEMORY_STANDARD.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/integrations/notion/README.md`
+- `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`

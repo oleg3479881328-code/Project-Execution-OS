@@ -1,4 +1,4 @@
-# Review Standard v1
+# Review Standard v2
 
 ## Purpose
 
@@ -13,6 +13,10 @@ Review should check:
 - risky assumptions;
 - acceptance-criteria gaps;
 - unvalidated claims;
+- whether an existing solution was checked before custom work;
+- whether reuse was rejected with a real reason;
+- whether custom architecture was created unnecessarily;
+- whether donor search continued after a sufficiently good solution was already found;
 - next-step clarity.
 
 ## Acceptance Rule
