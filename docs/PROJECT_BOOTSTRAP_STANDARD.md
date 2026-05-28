@@ -2,19 +2,19 @@
 
 ## Purpose
 
-This standard defines the mandatory zero-state initialization of a newly created file-based project inside Project Execution OS.
+This standard defines an optional minimal project-folder initialization action inside Project Execution OS.
 
-A project must become a transferable, self-explaining work object immediately, even when its purpose has not yet been discussed.
+Use it only when the user explicitly requests a transferable project entrypoint or asks to initialize a project folder under this system.
 
-This zero state must already inherit the central reuse-first rule from `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`.
+It is not an automatic Codex Desktop, folder-creation, workspace-opening, or session-start behavior.
 
-## Core Invariant
+## Core Rule
 
-An explicit project-creation event is sufficient to initialize a project.
+No folder is automatically mutated merely because it is created, opened, selected in an IDE, or used in Codex Desktop.
 
-When a user creates a new project folder or workspace through any supported interface, the folder must receive the minimal Project Execution OS bootstrap at the earliest technically enforceable moment and before substantive discussion, planning, research, architecture or implementation begins.
+Minimal bootstrap may be performed only by explicit user instruction.
 
-A newly initialized project may truthfully exist in this state:
+When requested before the project purpose is known, the folder may truthfully record this state:
 
 `initialized — purpose not yet defined`
 
@@ -22,24 +22,24 @@ Unknown purpose is valid state and must not be replaced by guesses.
 
 ## Trigger Boundary
 
-Bootstrap is required for an explicit new-project creation action, including creation of a local project folder, a new development workspace, or a new agent project workspace.
+Bootstrap is permitted when the user explicitly asks to:
 
-Bootstrap is not triggered by casual idea discussion, exploratory research, or saving a reference without starting a project.
+- initialize a new project folder under Project Execution OS;
+- create a transferable front door for a project folder;
+- create minimal project entrypoint files before the purpose is defined.
 
-Explicit creation and idea discussion are different lifecycle moments and must not be conflated.
+Bootstrap is not triggered by:
 
-For interfaces such as Codex Desktop, the parent location of the new folder may vary. The invariant applies to a safely recognized new empty project folder, not to one hard-coded parent root.
+- creating or opening a folder;
+- creating or opening a Codex Desktop project;
+- starting a Codex session;
+- casual idea discussion;
+- exploratory research;
+- saving a reference without starting a project.
 
-## Earliest Enforceable Moment Rule
+## Minimal On-Demand Artifacts
 
-- When an interface exposes a project-created action or template mechanism, bootstrap occurs as part of creation.
-- When an interface creates or selects a folder but exposes no project-created trigger, bootstrap occurs at the first controllable session start in that folder, before other project work.
-- The system must not claim click-time initialization unless the project files were actually created at click time.
-- Existing non-empty projects that already contain implementation or other real project content must not be automatically mutated just because bootstrap files are missing.
-
-## Minimal Bootstrap Artifacts
-
-For a newly created folder-based project, create only:
+When the user explicitly requests minimal folder bootstrap, create only:
 
 ```text
 <project-folder>/
@@ -53,15 +53,15 @@ Do not automatically create state files, rules files, logs, workflow folders, ag
 
 ### `AGENTS.md`
 
-This is the automatic agent-discovery shim for Codex-compatible work. It must be short and route the agent to `PROJECT_ENTRYPOINT.md` and the central Project Execution OS entrypoint. It must not duplicate the complete system or project history.
+When explicitly created for a project folder, this is a short Codex-compatible entry adapter. It should route the agent to `PROJECT_ENTRYPOINT.md` and the central Project Execution OS entrypoint, without duplicating the complete system or project history.
 
 ### `PROJECT_ENTRYPOINT.md`
 
-This is the project front door for humans and AI participants. In zero state it records that the project exists while its purpose remains unconfirmed, identifies the central system entrypoint, blocks invented purpose or decisions, and states the next practical action.
+This is the project front door for humans and AI participants. In initialization-only state it records that the folder has been initialized on request while its purpose remains unconfirmed, identifies the central system entrypoint, blocks invented purpose or decisions, and states the next practical action.
 
-## Required Zero-State Content
+## Required Initialization-Only Content
 
-A bootstrap `PROJECT_ENTRYPOINT.md` must state:
+An initialization-only `PROJECT_ENTRYPOINT.md` must state:
 
 - project name from the folder name or already confirmed name;
 - status: `initialized — purpose not yet defined` when purpose is unknown;
@@ -69,30 +69,29 @@ A bootstrap `PROJECT_ENTRYPOINT.md` must state:
 - that the project operates under Project Execution OS;
 - that no purpose, architecture, implementation plan, storage-layer choice, tool choice or execution decision has been confirmed;
 - that no substantive work should begin until intent is confirmed;
-- the next practical step: ask what idea or project is being developed.
-- that `Existing Solution First` remains mandatory once a real task exists.
+- the next practical step: obtain the project purpose;
+- that `Existing Solution First` applies once a real technical or project task exists.
 
-A bootstrap `AGENTS.md` must state:
+An explicitly created `AGENTS.md` should state:
 
 - read `PROJECT_ENTRYPOINT.md` before project work;
 - follow the central Project Execution OS entrypoint and its selected route;
-- do not infer missing project purpose, architecture or decisions.
+- do not infer missing project purpose, architecture or decisions;
 - do not invent solutions before checking existing suitable ones;
-- read `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` for the canonical rule.
+- follow `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` for the canonical rule.
 
-For externally generated project bootstrap artifacts, references to central Project Execution OS documents must use canonical absolute URLs, not relative local paths that do not exist inside the new project folder.
+For project folders outside this repository, references to central Project Execution OS documents must use canonical absolute URLs, not relative local paths.
 
-## Required Bootstrap Sequence
+## Required On-Demand Sequence
 
-1. Detect explicit creation of a new project folder or workspace.
-2. Create `AGENTS.md` and `PROJECT_ENTRYPOINT.md` in that project root at the earliest technically enforceable moment.
-3. Mark unconfirmed purpose explicitly as unknown.
-4. Only after bootstrap, obtain or continue defining the project purpose.
-5. After purpose is confirmed, update the project entrypoint and route into the minimal appropriate lifecycle, structure, research or execution standards.
+1. Receive an explicit request to initialize the project folder.
+2. Confirm the intended target folder from the user's request or the current project context.
+3. Create `AGENTS.md` and `PROJECT_ENTRYPOINT.md` only in that requested project root.
+4. Mark unconfirmed purpose explicitly as unknown.
+5. Obtain or continue defining the project purpose.
+6. After purpose is confirmed, update the project entrypoint and route into the minimal appropriate lifecycle, structure, research or execution standards.
 
-## Transition Out Of Zero State
-
-Zero state is not the same as a defined project.
+## Transition Out Of Initialization-Only State
 
 After the project purpose is confirmed:
 
@@ -101,11 +100,11 @@ After the project purpose is confirmed:
 - use `docs/PROJECT_STRUCTURE_STANDARD.md` only when a versioned or file-execution structure is justified;
 - create additional artifacts only when they hold real state or constraints.
 
-## Tool Adapters
+## Codex Desktop Rule
 
-Platform-specific adapters may implement this invariant but must not weaken it or claim capabilities that the platform does not expose.
+Automatic Codex Desktop bootstrap is disabled by policy.
 
-For Codex desktop, app and IDE environments, use `docs/integrations/codex/CODEX_PROJECT_BOOTSTRAP_ADAPTER.md`.
+Do not install or rely on global Codex hooks or global instructions that automatically create project files. When the owner wants a folder initialized, perform the minimal bootstrap only on explicit request.
 
 ## Related Nodes
 
@@ -113,5 +112,5 @@ For Codex desktop, app and IDE environments, use `docs/integrations/codex/CODEX_
 - `Start New Project.md` — new-project route
 - `docs/PROJECT_LIFECYCLE_MODEL.md` — layer and persistence decisions
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md` — ongoing entrypoint contract
-- `docs/PROJECT_STRUCTURE_STANDARD.md` — later file or versioned structure when justified
-- `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` — mandatory reuse-first rule from zero state onward
+- `docs/PROJECT_STRUCTURE_STANDARD.md` — file or versioned structure when justified
+- `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` — mandatory reuse-first rule for relevant project work
