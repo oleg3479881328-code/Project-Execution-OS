@@ -1,58 +1,33 @@
 # Codex Project Bootstrap Adapter
 
-## Canonical Contract
+## Status
 
-The project-level requirement is defined in `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
+Automatic Codex Desktop bootstrap is withdrawn.
 
-## Codex Discovery Facts
+Project-folder initialization is now an on-demand action only. Use `docs/PROJECT_BOOTSTRAP_STANDARD.md` only after an explicit owner request to initialize a folder under Project Execution OS.
 
-Current Codex documentation identifies `AGENTS.md` as its instruction-discovery file. Codex reads global guidance from the Codex home directory and project guidance from the project root hierarchy when a run starts.
+## Current Rule
 
-Current Codex app documentation describes the user selecting a project folder for Codex to work in.
+Creating or opening a folder or Codex Desktop project does not automatically require `AGENTS.md` or `PROJECT_ENTRYPOINT.md`.
 
-Current Codex hooks documentation exposes a `SessionStart` lifecycle event and identifies the working directory in its input.
-
-## Implementation Boundary
-
-These capabilities support checking and initializing a selected project folder at session start.
-
-They do not, by themselves, prove that pressing a create-project control in the desktop interface creates bootstrap files before a Codex session starts.
-
-Accordingly, the Project Execution OS guarantee for Codex environments is:
-
-- creation-time bootstrap when a confirmed creation-template mechanism is available;
-- otherwise bootstrap before substantive work in the first Codex session opened in the selected project folder.
-
-## Confirmed Supported Mechanism
-
-The confirmed supported mechanism is a Codex `SessionStart` hook.
-
-On systems where a shared user-level bootstrap is desired, install:
-
-- `~/.codex/hooks.json`
-- a hook script referenced from that file, for example under `~/.codex/hooks/`
-
-That hook may create missing `AGENTS.md` and `PROJECT_ENTRYPOINT.md` at session start when the selected folder is clearly a new project folder and still in safe zero state.
-
-For Codex Desktop, the location of that new folder may be chosen by the interface or by the user through the interface. The bootstrap rule must therefore detect a safely recognizable new empty project folder rather than rely on one fixed parent root.
-
-Existing non-empty projects that already contain implementation or other real project content must not be mutated automatically merely because bootstrap files are missing.
-
-This is a session-start guarantee, not a click-time create-project guarantee.
-
-## Required Root Artifacts
-
-A Codex-facing folder that has completed bootstrap contains:
+When explicitly requested, minimal initialization may create:
 
 ```text
 AGENTS.md
 PROJECT_ENTRYPOINT.md
 ```
 
-`AGENTS.md` serves Codex instruction discovery. `PROJECT_ENTRYPOINT.md` remains the project entrypoint artifact for humans and AI participants.
+## Reason
 
-## External References
+The automatic bootstrap experiment introduced unwanted overhead and complexity. The preferred model is lightweight and explicit.
 
-- OpenAI Codex documentation: `Custom instructions with AGENTS.md`
-- OpenAI Codex documentation: `Hooks`
-- OpenAI Codex documentation: `Codex app`
+## Preserved Principle
+
+`docs/EXISTING_SOLUTION_FIRST_STANDARD.md` remains the canonical rule for relevant project, research, architecture, implementation and debugging work.
+
+## Related Nodes
+
+- `START_HERE.md`
+- `Start New Project.md`
+- `docs/PROJECT_BOOTSTRAP_STANDARD.md`
+- `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
