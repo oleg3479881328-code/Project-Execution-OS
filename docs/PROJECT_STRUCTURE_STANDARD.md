@@ -25,22 +25,24 @@ Apply this standard when a project needs one or more of the following:
 - commits, branches or pull requests;
 - reproducible file-based technical work.
 
-## Bootstrap Structure vs Execution Structure
+## Optional Entrypoint Initialization vs Execution Structure
 
-Do not confuse the initial bootstrap structure with later execution structure.
+Do not confuse an explicitly requested minimal project entrypoint with later execution structure.
 
-### Initial Bootstrap Structure
+### Optional Minimal Entrypoint Structure
 
-At explicit project creation time, use only:
+Only when the owner explicitly requests initialization of a transferable project folder entrypoint, use:
 
 ```text
 AGENTS.md
 PROJECT_ENTRYPOINT.md
 ```
 
-This is defined by `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
+This optional action is defined by `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
 
-Do not expand a new project with empty folders or ceremonial files during bootstrap.
+It is not triggered automatically when a folder or Codex Desktop project is created or opened.
+
+Do not expand a new project with empty folders or ceremonial files during optional initialization.
 
 ### Later Execution Structure
 
