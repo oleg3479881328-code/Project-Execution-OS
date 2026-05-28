@@ -28,11 +28,14 @@ Bootstrap is not triggered by casual idea discussion, exploratory research, or s
 
 Explicit creation and idea discussion are different lifecycle moments and must not be conflated.
 
+For interfaces such as Codex Desktop, the parent location of the new folder may vary. The invariant applies to a safely recognized new empty project folder, not to one hard-coded parent root.
+
 ## Earliest Enforceable Moment Rule
 
 - When an interface exposes a project-created action or template mechanism, bootstrap occurs as part of creation.
 - When an interface creates or selects a folder but exposes no project-created trigger, bootstrap occurs at the first controllable session start in that folder, before other project work.
 - The system must not claim click-time initialization unless the project files were actually created at click time.
+- Existing non-empty projects that already contain implementation or other real project content must not be automatically mutated just because bootstrap files are missing.
 
 ## Minimal Bootstrap Artifacts
 

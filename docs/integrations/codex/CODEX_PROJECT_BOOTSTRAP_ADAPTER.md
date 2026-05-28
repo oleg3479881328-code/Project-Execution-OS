@@ -34,6 +34,10 @@ On systems where a shared user-level bootstrap is desired, install:
 
 That hook may create missing `AGENTS.md` and `PROJECT_ENTRYPOINT.md` at session start when the selected folder is clearly a new project folder and still in safe zero state.
 
+For Codex Desktop, the location of that new folder may be chosen by the interface or by the user through the interface. The bootstrap rule must therefore detect a safely recognizable new empty project folder rather than rely on one fixed parent root.
+
+Existing non-empty projects that already contain implementation or other real project content must not be mutated automatically merely because bootstrap files are missing.
+
 This is a session-start guarantee, not a click-time create-project guarantee.
 
 ## Required Root Artifacts
