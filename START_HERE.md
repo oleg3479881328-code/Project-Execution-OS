@@ -15,6 +15,7 @@ Do not store operating rules, project-storage decisions, workflow details, tool 
 - idea or reference that should be preserved but is not yet a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - lifecycle or storage-layer decision -> `docs/PROJECT_LIFECYCLE_MODEL.md`
 - entry into a specific existing project -> that project's current entrypoint; if it is missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
+- multi-layer context assembly, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
 - small bounded existing-project action -> `docs/MICRO_TASK_MODE.md`
 - research task -> `docs/RESEARCH_STANDARD.md`
 - review task -> `docs/REVIEW_STANDARD.md`
