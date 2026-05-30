@@ -50,17 +50,23 @@ These layers describe this `Project-Execution-OS` repository, not every project 
 ### 1. `START_HERE.md`
 
 Purpose:
-- top-level router only;
+- stable top-level door;
 - first orientation for a human or AI entering this system repository.
 
-### 2. `PROJECT_INDEX.md`
+### 2. `docs/ROUTER.md`
+
+Purpose:
+- live internal router;
+- current route catalogue for internal navigation.
+
+### 3. `PROJECT_INDEX.md`
 
 Purpose:
 - current central system map;
 - canonical document list;
 - current phase and next action when maintained.
 
-### 3. `logs/WORKFLOW_LOG.md`
+### 4. `logs/WORKFLOW_LOG.md`
 
 Purpose:
 - meaningful executed history;
@@ -71,12 +77,12 @@ Purpose:
 
 Do not log trivial activity by ritual.
 
-### 4. `skills/registry.md` and `skills/PROJECT_INDEX.md`
+### 5. `skills/registry.md` and `skills/PROJECT_INDEX.md`
 
 Purpose:
 - reusable skill lifecycle and navigation when skills are involved.
 
-### 5. `knowledge-library/`
+### 6. `knowledge-library/`
 
 Purpose:
 - reviewed reusable cross-project knowledge;
@@ -84,7 +90,7 @@ Purpose:
 - architecture and workflow lessons;
 - verified technical solutions worth reuse.
 
-### 6. `graphify-out/` when present and justified
+### 7. `graphify-out/` when present and justified
 
 Purpose:
 - optional graph-memory layer;
@@ -92,7 +98,7 @@ Purpose:
 
 Do not require graph output for small repositories or simple tasks.
 
-### 7. `projects/<project-id>/...` when a project is intentionally stored inside this repository
+### 8. `projects/<project-id>/...` when a project is intentionally stored inside this repository
 
 Purpose:
 - internal project-specific state;
@@ -101,13 +107,29 @@ Purpose:
 
 This is an exception model, not the default home for all projects.
 
-### 8. `projects/<project-id>/CONTEXT_PACK.md` when present
+### 9. `projects/<project-id>/CONTEXT_PACK.md` when present
 
 Purpose:
 - optional fast re-entry brief;
 - short handoff pack between sessions or agents.
 
 It must not override canonical project evidence.
+
+### 10. `PROJECT_CHANGE_INDEX.md` when present
+
+Purpose:
+- short semantic change index — короткий смысловой индекс изменений;
+- faster re-entry for agents that need recent delta only.
+
+It must not replace Git commits as technical evidence.
+
+### 11. `agent-checkpoints/<agent-id>.md` when present
+
+Purpose:
+- short per-agent checkpoint — короткая контрольная отметка конкретного агента;
+- record of the last seen commit and next expected action.
+
+It must not become project history or project truth.
 
 ## Required Read Order
 
@@ -116,10 +138,11 @@ It must not override canonical project evidence.
 Start at:
 
 1. `START_HERE.md`
+2. `docs/ROUTER.md`
 
-Then follow only the route relevant to the current work.
+Then follow only the relevant route.
 
-Do not read every standard by default. The front door must remain a router, and internal documents should be opened only when their branch is active.
+Do not read every standard by default. The stable door must remain minimal. The live route catalogue belongs in `docs/ROUTER.md`.
 
 Examples:
 
@@ -138,9 +161,16 @@ A GitHub-backed project should define only the memory artifacts it actually need
 
 1. project entrypoint, when present;
 2. current project state or decision artifact, when present;
-3. relevant active issue, pull request or execution report;
-4. recent logs or workflow artifact only when required for continuation;
-5. relevant reusable knowledge when it applies.
+3. `PROJECT_CHANGE_INDEX.md` and `agent-checkpoints/` when incremental re-entry is needed;
+4. relevant active issue, pull request or execution report;
+5. recent logs or workflow artifact only when required for continuation;
+6. relevant reusable knowledge when it applies.
+
+For incremental re-entry — инкрементальный повторный вход — use:
+
+`docs/INCREMENTAL_REENTRY_STANDARD.md`
+
+That standard defines how `PROJECT_ENTRYPOINT.md`, Git diff, `PROJECT_CHANGE_INDEX.md`, `CONTEXT_PACK.md`, and `agent-checkpoints/` work together without replacing Git as technical truth.
 
 Do not impose this repository's full internal structure on every GitHub-backed project.
 
@@ -198,6 +228,8 @@ After a meaningful change to `Project-Execution-OS`, update only the central art
 - `knowledge-library/` when reviewed reusable knowledge was produced.
 
 After a meaningful change to a separate GitHub-backed project, update that project's necessary technical evidence first.
+
+When a project uses `PROJECT_CHANGE_INDEX.md` or `agent-checkpoints/`, update them only after meaningful completed work that improves future re-entry.
 
 After a meaningful change to a Notion-managed project without GitHub, update Notion rather than inventing repository artifacts.
 
