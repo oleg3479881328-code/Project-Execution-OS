@@ -6,7 +6,7 @@ This is the live internal router for `Project Execution OS`.
 
 `START_HERE.md` is the stable external entrypoint. It should remain minimal and durable.
 
-This router may evolve as the internal system grows. Its job is to route a human or AI participant to the smallest relevant internal node for the current work.
+This router may evolve as the internal system grows. Its job is to route an agent to the smallest relevant internal node for the current work.
 
 ## Routing Rule
 
@@ -14,12 +14,15 @@ Choose the narrowest route that fits the active request.
 
 Do not read every standard by default.
 
+Do not append an unrelated next-project question after answering the active request.
+
 ## Routes
 
 - possible new project or new initiative -> `Start New Project.md`
 - operating-mode uncertainty -> `docs/MODE_CLASSIFIER.md`
 - idea or reference that should be preserved but is not yet a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - lifecycle or storage-layer decision -> `docs/PROJECT_LIFECYCLE_MODEL.md`
+- current-project summary, status, orientation, or "where are we now?" question -> read the current project's entrypoint and only the minimum necessary current-state evidence; answer the question directly; stop after the answer; do not trigger `Start New Project.md` or ask which new project to create unless the owner explicitly requests a new project
 - entry into a specific existing project -> that project's current entrypoint; if it is missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - multi-layer context assembly, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
 - small bounded existing-project action -> `docs/MICRO_TASK_MODE.md`
@@ -46,4 +49,4 @@ Do not place detailed operating procedures, project state, implementation plans,
 
 This file is the live internal map.
 
-Choose the path and continue inside the relevant node.
+Choose the path, answer the active request, and stop unless the owner asked for another action.
