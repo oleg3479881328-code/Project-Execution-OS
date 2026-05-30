@@ -23,3 +23,17 @@ Turn repository analysis into reusable AI-ready documentation packages, transfer
 Current status:
 
 `reviewed_candidate`
+
+### Skill Creator Block
+
+Path:
+
+`blocks/skill-creator/`
+
+Purpose:
+
+Provide one reusable workflow for creating, checking, reviewing, registering, and maintaining central skills without duplicating the underlying skill standards.
+
+Current status:
+
+`candidate`
