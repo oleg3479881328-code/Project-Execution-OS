@@ -27,6 +27,7 @@ Do not append an unrelated next-project question after answering the active requ
 - create, review, register, migrate, deprecate, or retire a reusable skill -> `blocks/skill-creator/BLOCK.md`
 - multi-layer context assembly, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
 - small bounded existing-project action -> `docs/MICRO_TASK_MODE.md`
+- agent re-entry into an existing GitHub-backed project, handoff between agents, or request to inspect only changes since prior work -> `docs/INCREMENTAL_REENTRY_STANDARD.md`
 - research task -> `docs/RESEARCH_STANDARD.md`
 - review task -> `docs/REVIEW_STANDARD.md`
 - already-decided Codex execution handoff -> `docs/CODEX_HANDOFF_STANDARD.md`

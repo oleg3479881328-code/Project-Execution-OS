@@ -113,6 +113,7 @@ Project Execution OS
 - `docs/AGENT_CREATION_STANDARD.md`
 - `docs/AGENT_LIBRARY_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
+- `docs/INCREMENTAL_REENTRY_STANDARD.md`
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - `agent-library/README.md`
@@ -122,12 +123,14 @@ Project Execution OS
 - `workflow-templates/universal-project-v1/README.md`
 - `workflow-templates/project-entrypoint/GITHUB_PROJECT_ENTRYPOINT_TEMPLATE.md`
 - `workflow-templates/project-entrypoint/NOTION_PROJECT_ENTRYPOINT_TEMPLATE.md`
+- `workflow-templates/incremental-reentry/`
 - `knowledge-library/README.md`
 - `knowledge-library/PROJECT_INDEX.md`
 - `CHANGELOG.md`
 - `logs/WORKFLOW_LOG.md`
 - `logs/2026-05-29-context-cache-implementation.md`
 - `logs/2026-05-29-stable-start-here-router-split.md`
+- `project-library/decisions/009-incremental-agent-reentry.md`
 
 ## Universal Workflow Chain
 
@@ -199,6 +202,12 @@ API token usage, provider-side cache behavior and cost evidence are measured thr
 `docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md`
 
 Do not load the entire system, project, knowledge library or skill layer by default.
+
+Incremental re-entry for a GitHub-backed project should prefer delta-based reading through:
+
+`docs/INCREMENTAL_REENTRY_STANDARD.md`
+
+This adds a fast agent re-entry path through Git commits, `PROJECT_CHANGE_INDEX.md`, `CONTEXT_PACK.md`, and `agent-checkpoints/` instead of full repository rereads.
 
 ## Knowledge Architecture
 

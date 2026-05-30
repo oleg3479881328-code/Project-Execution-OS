@@ -109,6 +109,22 @@ Purpose:
 
 It must not override canonical project evidence.
 
+### 9. `PROJECT_CHANGE_INDEX.md` when present
+
+Purpose:
+- short semantic change index — короткий смысловой индекс изменений;
+- faster re-entry for agents that need recent delta only.
+
+It must not replace Git commits as technical evidence.
+
+### 10. `agent-checkpoints/<agent-id>.md` when present
+
+Purpose:
+- short per-agent checkpoint — короткая контрольная отметка конкретного агента;
+- record of the last seen commit and next expected action.
+
+It must not become project history or project truth.
+
 ## Required Read Order
 
 ### When entering `Project-Execution-OS` itself
@@ -138,9 +154,16 @@ A GitHub-backed project should define only the memory artifacts it actually need
 
 1. project entrypoint, when present;
 2. current project state or decision artifact, when present;
-3. relevant active issue, pull request or execution report;
-4. recent logs or workflow artifact only when required for continuation;
-5. relevant reusable knowledge when it applies.
+3. `PROJECT_CHANGE_INDEX.md` and `agent-checkpoints/` when incremental re-entry is needed;
+4. relevant active issue, pull request or execution report;
+5. recent logs or workflow artifact only when required for continuation;
+6. relevant reusable knowledge when it applies.
+
+For incremental re-entry — инкрементальный повторный вход — use:
+
+`docs/INCREMENTAL_REENTRY_STANDARD.md`
+
+That standard defines how `PROJECT_ENTRYPOINT.md`, Git diff, `PROJECT_CHANGE_INDEX.md`, `CONTEXT_PACK.md`, and `agent-checkpoints/` work together without replacing Git as technical truth.
 
 Do not impose this repository's full internal structure on every GitHub-backed project.
 
@@ -198,6 +221,8 @@ After a meaningful change to `Project-Execution-OS`, update only the central art
 - `knowledge-library/` when reviewed reusable knowledge was produced.
 
 After a meaningful change to a separate GitHub-backed project, update that project's necessary technical evidence first.
+
+When a project uses `PROJECT_CHANGE_INDEX.md` or `agent-checkpoints/`, update them only after meaningful completed work that improves future re-entry.
 
 After a meaningful change to a Notion-managed project without GitHub, update Notion rather than inventing repository artifacts.
 
