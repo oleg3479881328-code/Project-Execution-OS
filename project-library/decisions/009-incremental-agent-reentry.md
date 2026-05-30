@@ -6,55 +6,37 @@
 
 ## Decision
 
-Adopt incremental re-entry — инкрементальный повторный вход — as the default MVP pattern for agent continuation in GitHub-backed projects where rereading the whole repository is unnecessary.
+Adopt incremental re-entry as the default MVP pattern for agent continuation in GitHub-backed projects when rereading the whole repository is unnecessary.
 
 ## Core Rule
-
-Use:
 
 ```text
 PROJECT_ENTRYPOINT.md
 → agent checkpoint
 → last_seen_commit..HEAD
 → PROJECT_CHANGE_INDEX.md
-→ changed files and directly related files only
+→ changed and directly related files only
 → continue work
 → update checkpoint
 ```
 
 ## Reason
 
-The repository already has adjacent mechanisms that should be reused instead of replaced:
-
-- `PROJECT_ENTRYPOINT.md` for entry;
-- `CONTEXT_PACK.md` for optional fast briefing;
-- Git commits for technical truth;
-- repository-memory and context-assembly standards for bounded loading.
-
-The missing piece was a light central rule for delta-based re-entry between agents.
+Reuse existing project entrypoints, optional context packs, Git commits, repository-memory rules, and bounded context loading. Add only a lightweight delta-based re-entry layer.
 
 ## Boundary
 
-Do not build:
-
-- backend;
-- runtime engine;
-- vector database;
-- semantic index;
-- embeddings;
-- dashboard;
-- heavy automation.
-
-This is a document-first MVP — документный MVP.
+Do not build heavy automation, backend, runtime engine, vector database, semantic index, embeddings, or dashboard for this MVP.
 
 ## Status
 
-`proposed — committed on feature branch; pending review and merge`
+`accepted — reviewed and merged into main; ready for project adoption`
 
 ## Implementation Evidence
 
 - `docs/INCREMENTAL_REENTRY_STANDARD.md`
 - `workflow-templates/incremental-reentry/`
+- merge commit: `3d9aae42af66c205fa2efa2106c3bf37002e10a1`
 
 ## Final Rule
 
