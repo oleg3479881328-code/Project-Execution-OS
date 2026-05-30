@@ -36,6 +36,7 @@ Top-level routing from there:
 - new project -> `Start New Project.md`
 - continue an existing project -> project memory inside that repository
 - quick daily orientation -> `START_FAST.md`
+- multi-layer context assembly, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
 
 ## Current Phase
 
@@ -56,6 +57,9 @@ Project Execution OS
   ├── Universal Entrypoint
   ├── Project Workspace Standard
   ├── Universal Workflow Contract
+  ├── Context Assembly Standard
+  ├── System Context Versioning
+  ├── API Runtime Cost And Cache Logging
   ├── Domain Blocks Layer
   ├── Agent Creation Standard
   ├── Agent Library Standard
@@ -75,12 +79,17 @@ Project Execution OS
 - `Start New Project.md`
 - `START_FAST.md`
 - `PROJECT_INDEX.md`
+- `SYSTEM_CONTEXT_MANIFEST.md`
+- `project-library/DECISION_REGISTRY.md`
 - `blocks/README.md`
 - `blocks/PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/WORKFLOW_DECISION_TABLE.md`
 - `docs/MICRO_TASK_MODE.md`
 - `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
+- `docs/CONTEXT_ASSEMBLY_STANDARD.md`
+- `docs/SYSTEM_CONTEXT_VERSION_STANDARD.md`
+- `docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
 - `docs/RESEARCH_STANDARD.md`
 - `docs/REVIEW_STANDARD.md`
@@ -115,6 +124,7 @@ Project Execution OS
 - `knowledge-library/PROJECT_INDEX.md`
 - `CHANGELOG.md`
 - `logs/WORKFLOW_LOG.md`
+- `logs/2026-05-29-context-cache-implementation.md`
 
 ## Universal Workflow Chain
 
@@ -159,6 +169,26 @@ workflow-runs/
 logs/
 ```
 
+## Context Assembly Architecture
+
+Minimum sufficient context is assembled through:
+
+`docs/CONTEXT_ASSEMBLY_STANDARD.md`
+
+Stable reusable context identity is recorded in:
+
+`SYSTEM_CONTEXT_MANIFEST.md`
+
+Context-profile versioning rules live in:
+
+`docs/SYSTEM_CONTEXT_VERSION_STANDARD.md`
+
+API token usage, provider-side cache behavior and cost evidence are measured through:
+
+`docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md`
+
+Do not load the entire system, project, knowledge library or skill layer by default.
+
 ## Knowledge Architecture
 
 Local project knowledge:
@@ -174,6 +204,8 @@ Promotion rule:
 Project knowledge becomes central knowledge only after review.
 
 Research and design work should prefer publicly verifiable external sources, including official documentation, GitHub repositories, open-source examples, and other public evidence sources appropriate to the domain.
+
+Central knowledge must be loaded selectively when relevant to the active task rather than injected wholesale into every AI context.
 
 ## Agent Architecture
 
@@ -224,14 +256,19 @@ Deferred future-system ideas that are worth preserving without building yet belo
 
 Foundation initialized as committed repository artifacts.
 
-Committed artifacts:
+Committed artifacts include:
 
 - `README.md`
 - `START_HERE.md`
 - `PROJECT_INDEX.md`
+- `SYSTEM_CONTEXT_MANIFEST.md`
+- `project-library/DECISION_REGISTRY.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/GOVERNANCE.md`
 - `docs/REPOSITORY_MEMORY_STANDARD.md`
+- `docs/CONTEXT_ASSEMBLY_STANDARD.md`
+- `docs/SYSTEM_CONTEXT_VERSION_STANDARD.md`
+- `docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md`
 - `docs/SKILL_SPEC.md`
 - `docs/SKILL_LIFECYCLE.md`
 - `docs/SKILL_REVIEW_STANDARD.md`
@@ -247,16 +284,11 @@ Committed artifacts:
 - `knowledge-library/README.md`
 - `knowledge-library/PROJECT_INDEX.md`
 - `logs/WORKFLOW_LOG.md`
+- `logs/2026-05-29-context-cache-implementation.md`
 
 ## Next Required Action
 
-Run the first real project using this OS with the default repository-per-project model:
-
-`projects/0001-project-execution-os-foundation-review/`
-
-Purpose:
-
-Run Project Execution OS on itself and review the foundation through the universal workflow.
+Validate the new context-assembly and API-economics artifacts through a bounded review pass before building any runtime orchestrator.
 
 ## v2 Direction
 
