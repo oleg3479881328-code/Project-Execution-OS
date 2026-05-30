@@ -1,4 +1,4 @@
-# Context Assembly Standard v1
+# Context Assembly Standard v2
 
 ## Purpose
 
@@ -11,7 +11,8 @@ Its goal is to reduce confusion, unnecessary context expansion, duplicated work 
 Use the smallest sufficient context package for the active task.
 
 ```text
-Route first.
+Enter through the stable door.
+Route through the live internal map.
 Load only what the route and task require.
 Do not load the whole system or whole project by default.
 ```
@@ -24,12 +25,13 @@ Use these layers only when applicable to the current task:
 
 ```text
 0. Stable system instruction / integration prompt
-1. START_HERE.md routing entrypoint
-2. Relevant Project Execution OS standard selected by route
-3. Project entrypoint and current durable evidence, when a project is involved
-4. Minimum task-specific files, artifacts or evidence
-5. Relevant reusable knowledge, skills or blocks only when triggered by the task
-6. Current user instruction, new error, current log or immediate execution input
+1. START_HERE.md stable top-level entrypoint
+2. docs/ROUTER.md live internal router
+3. Relevant Project Execution OS standard selected by route
+4. Project entrypoint and current durable evidence, when a project is involved
+5. Minimum task-specific files, artifacts or evidence
+6. Relevant reusable knowledge, skills or blocks only when triggered by the task
+7. Current user instruction, new error, current log or immediate execution input
 ```
 
 The presence of a later layer does not justify loading every artifact in earlier or adjacent layers.
@@ -42,13 +44,19 @@ A connected assistant or automation may have a short stable system-layer instruc
 
 Do not copy evolving workflow logic, project state or large knowledge libraries into the stable system instruction.
 
-### Layer 1 — System Route
+### Layer 1 — Stable Top-Level Entrypoint
 
-Always enter project-related work through `START_HERE.md` and follow only the relevant route.
+Always enter project-related work through `START_HERE.md`.
 
-Do not read every internal standard by default.
+`START_HERE.md` must remain minimal and durable. Its role is to point to the current internal router, not to store the growing route catalogue.
 
-### Layer 2 — Relevant System Standard
+### Layer 2 — Live Internal Router
+
+Open `docs/ROUTER.md` and follow only the narrowest route relevant to the current work.
+
+The router may evolve as the system grows. Do not read every route target or every internal standard by default.
+
+### Layer 3 — Relevant System Standard
 
 Read the smallest internal node that governs the active work, for example:
 
@@ -61,7 +69,7 @@ Read the smallest internal node that governs the active work, for example:
 
 Read additional standards only when the task actually crosses into their scope.
 
-### Layer 3 — Project Entrypoint And Durable Evidence
+### Layer 4 — Project Entrypoint And Durable Evidence
 
 When work concerns a specific project, read that project's current entrypoint first.
 
@@ -69,7 +77,7 @@ The entrypoint should tell the participant what the project is, where truth live
 
 Do not replace project entrypoint use by indiscriminately reading an entire repository, full chat history or complete log archive.
 
-### Layer 4 — Task-Specific Evidence
+### Layer 5 — Task-Specific Evidence
 
 Load only the files and evidence needed to perform or verify the active action.
 
@@ -80,7 +88,7 @@ Examples:
 - architecture review -> current architecture artifacts, decision registry and relevant standards;
 - execution -> bounded handoff packet, allowed files and validation checks.
 
-### Layer 5 — Reusable Knowledge, Skills And Blocks
+### Layer 6 — Reusable Knowledge, Skills And Blocks
 
 Use central reusable knowledge only when the current task may benefit from a reviewed cross-project solution or pattern.
 
@@ -88,7 +96,7 @@ Use a skill, plugin, domain block or reusable agent artifact only when it is rel
 
 Do not load the complete `knowledge-library/`, `skills/`, `agent-library/` or `blocks/` trees into routine work.
 
-### Layer 6 — Live Input
+### Layer 7 — Live Input
 
 Put the current request, current error, new log output or immediate execution instruction last in the working context whenever practical.
 
@@ -137,7 +145,10 @@ Only reviewed and relevant knowledge should be loaded as active reusable guidanc
 When an API-based orchestrator is later used, the context package should be assembled deterministically where practical:
 
 ```text
-stable routed system context
+stable system instruction
+→ START_HERE.md stable door
+→ docs/ROUTER.md live internal map
+→ selected routed standards
 → stable project orientation when applicable
 → selected reusable knowledge or skill guidance
 → current project evidence
@@ -178,11 +189,13 @@ Review should check:
 - whether unnecessary context was loaded;
 - whether stale or unreviewed knowledge was treated as active guidance;
 - whether executor context was adequately bounded;
-- whether API context assembly remains measurable when costs or caching matter.
+- whether API context assembly remains measurable when costs or caching matter;
+- whether `START_HERE.md` stayed minimal and internal route growth remained inside `docs/ROUTER.md`.
 
 ## Related Nodes
 
 - `START_HERE.md`
+- `docs/ROUTER.md`
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - `docs/REPOSITORY_MEMORY_STANDARD.md`
 - `docs/KNOWLEDGE_SYSTEM.md`
@@ -195,4 +208,4 @@ Review should check:
 
 The system must not depend on an AI reading everything.
 
-It must enable an AI to load the smallest trustworthy context that is sufficient for the current action.
+It must enable an AI to enter through one stable door, follow one live internal map and load the smallest trustworthy context sufficient for the current action.
