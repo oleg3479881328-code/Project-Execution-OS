@@ -49,7 +49,7 @@ This is a document-first MVP — документный MVP.
 
 ## Status
 
-`accepted — bounded MVP standard added`
+`proposed — committed on feature branch; pending review and merge`
 
 ## Implementation Evidence
 

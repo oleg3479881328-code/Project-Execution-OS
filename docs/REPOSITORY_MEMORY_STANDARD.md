@@ -50,17 +50,23 @@ These layers describe this `Project-Execution-OS` repository, not every project 
 ### 1. `START_HERE.md`
 
 Purpose:
-- top-level router only;
+- stable top-level door;
 - first orientation for a human or AI entering this system repository.
 
-### 2. `PROJECT_INDEX.md`
+### 2. `docs/ROUTER.md`
+
+Purpose:
+- live internal router;
+- current route catalogue for internal navigation.
+
+### 3. `PROJECT_INDEX.md`
 
 Purpose:
 - current central system map;
 - canonical document list;
 - current phase and next action when maintained.
 
-### 3. `logs/WORKFLOW_LOG.md`
+### 4. `logs/WORKFLOW_LOG.md`
 
 Purpose:
 - meaningful executed history;
@@ -71,12 +77,12 @@ Purpose:
 
 Do not log trivial activity by ritual.
 
-### 4. `skills/registry.md` and `skills/PROJECT_INDEX.md`
+### 5. `skills/registry.md` and `skills/PROJECT_INDEX.md`
 
 Purpose:
 - reusable skill lifecycle and navigation when skills are involved.
 
-### 5. `knowledge-library/`
+### 6. `knowledge-library/`
 
 Purpose:
 - reviewed reusable cross-project knowledge;
@@ -84,7 +90,7 @@ Purpose:
 - architecture and workflow lessons;
 - verified technical solutions worth reuse.
 
-### 6. `graphify-out/` when present and justified
+### 7. `graphify-out/` when present and justified
 
 Purpose:
 - optional graph-memory layer;
@@ -92,7 +98,7 @@ Purpose:
 
 Do not require graph output for small repositories or simple tasks.
 
-### 7. `projects/<project-id>/...` when a project is intentionally stored inside this repository
+### 8. `projects/<project-id>/...` when a project is intentionally stored inside this repository
 
 Purpose:
 - internal project-specific state;
@@ -101,7 +107,7 @@ Purpose:
 
 This is an exception model, not the default home for all projects.
 
-### 8. `projects/<project-id>/CONTEXT_PACK.md` when present
+### 9. `projects/<project-id>/CONTEXT_PACK.md` when present
 
 Purpose:
 - optional fast re-entry brief;
@@ -109,7 +115,7 @@ Purpose:
 
 It must not override canonical project evidence.
 
-### 9. `PROJECT_CHANGE_INDEX.md` when present
+### 10. `PROJECT_CHANGE_INDEX.md` when present
 
 Purpose:
 - short semantic change index — короткий смысловой индекс изменений;
@@ -117,7 +123,7 @@ Purpose:
 
 It must not replace Git commits as technical evidence.
 
-### 10. `agent-checkpoints/<agent-id>.md` when present
+### 11. `agent-checkpoints/<agent-id>.md` when present
 
 Purpose:
 - short per-agent checkpoint — короткая контрольная отметка конкретного агента;
@@ -132,10 +138,11 @@ It must not become project history or project truth.
 Start at:
 
 1. `START_HERE.md`
+2. `docs/ROUTER.md`
 
-Then follow only the route relevant to the current work.
+Then follow only the relevant route.
 
-Do not read every standard by default. The front door must remain a router, and internal documents should be opened only when their branch is active.
+Do not read every standard by default. The stable door must remain minimal. The live route catalogue belongs in `docs/ROUTER.md`.
 
 Examples:
 
