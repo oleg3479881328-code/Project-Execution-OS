@@ -8,13 +8,13 @@ It is a version identity artifact for context assembly. It is not proof of provi
 
 ## Manifest Version
 
-`system-context-manifest-v2`
+`system-context-manifest-v3`
 
 ## Generated At
 
 `2026-05-29`
 
-## Profile: `knowledge-aware-core-v2`
+## Profile: `knowledge-aware-core-v3`
 
 ### Purpose
 
@@ -23,7 +23,7 @@ Use as the stable reusable foundation for routed project-related AI work that ma
 ### Ordered Files
 
 ```text
-docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md=6800f5918f09a25400d63656a1e3415071ce11f1
+docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md=ffa44bccdd2e24dd96c1b6ee726c0726712f1e1a
 START_HERE.md=f315656999e3e78b1b797ad2c1c971ef64fccbf9
 docs/ROUTER.md=819c36cb80e40d1bb5ce3e8439d20166fc50653f
 docs/CONTEXT_ASSEMBLY_STANDARD.md=5f1a1749f6f261c6de92d1a0e79f8a53878b7afa
@@ -37,7 +37,7 @@ The ordered file list above, encoded as UTF-8 with one `<path>=<git-blob-sha>` l
 ### SHA-256 Fingerprint
 
 ```text
-4f540eac511c5a83623d0994426c1b6a061f53833f12dc9dfaa15daf3bd39116
+1c76b4fd2e9156a2294c46873542e0202fd12f738e120e3746a188e14bbfee0d
 ```
 
 ### Loading Rule
@@ -59,16 +59,19 @@ Append only the routed standard, project orientation, task-specific evidence, se
 
 `active — current recorded profile`
 
-## Superseded Profile
+## Superseded Profiles
 
-`knowledge-aware-core-v1`
+- `knowledge-aware-core-v1`
+- `knowledge-aware-core-v2`
 
-Superseded because routing was split into:
+`knowledge-aware-core-v1` was superseded because routing was split into:
 
 ```text
 START_HERE.md stable door
 → docs/ROUTER.md live internal map
 ```
+
+`knowledge-aware-core-v2` was superseded because the ChatGPT core prompt was aligned with that split.
 
 ## Update Rule
 
