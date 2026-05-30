@@ -2,30 +2,26 @@
 
 ## Purpose
 
-This is the single top-level entrypoint into `Project Execution OS`.
+This is the single stable top-level entrypoint into `Project Execution OS`.
 
-Its job is navigation only: identify why a human or AI entered the system and route to the smallest relevant internal node.
+Its job is intentionally minimal:
 
-Do not store operating rules, project-storage decisions, workflow details, tool procedures, architecture, agent logic, or execution instructions in this file.
+1. enter the system through this file;
+2. open the current internal router;
+3. follow the smallest relevant route for the active work.
 
-## Route
+## Internal Router
 
-- possible new project or new initiative -> `Start New Project.md`
-- operating-mode uncertainty -> `docs/MODE_CLASSIFIER.md`
-- idea or reference that should be preserved but is not yet a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
-- lifecycle or storage-layer decision -> `docs/PROJECT_LIFECYCLE_MODEL.md`
-- entry into a specific existing project -> that project's current entrypoint; if it is missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
-- multi-layer context assembly, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
-- small bounded existing-project action -> `docs/MICRO_TASK_MODE.md`
-- research task -> `docs/RESEARCH_STANDARD.md`
-- review task -> `docs/REVIEW_STANDARD.md`
-- already-decided Codex execution handoff -> `docs/CODEX_HANDOFF_STANDARD.md`
-- connected AI agent coordination or channel selection -> `docs/AI_COORDINATION_HUB_STANDARD.md`
-- GitHub-based ChatGPT / Codex execution collaboration -> `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
-- stable ChatGPT system-layer configuration -> `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+Open:
+
+`docs/ROUTER.md`
+
+## Boundary
+
+Do not store operating rules, project-storage decisions, workflow details, tool procedures, architecture, agent logic, execution instructions or the growing internal route catalogue in this file.
 
 ## Final Rule
 
-This file is the front door, not the building.
+This file is the stable door.
 
-Choose the path and continue inside the relevant node.
+`docs/ROUTER.md` is the live internal map.
