@@ -24,6 +24,7 @@ Do not append an unrelated next-project question after answering the active requ
 - lifecycle or storage-layer decision -> `docs/PROJECT_LIFECYCLE_MODEL.md`
 - current-project summary, status, orientation, or "where are we now?" question -> read the current project's entrypoint and only the minimum necessary current-state evidence; answer the question directly; stop after the answer; do not trigger `Start New Project.md` or ask which new project to create unless the owner explicitly requests a new project
 - entry into a specific existing project -> that project's current entrypoint; if it is missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
+- create, review, register, migrate, deprecate, or retire a reusable skill -> `blocks/skill-creator/BLOCK.md`
 - multi-layer context assembly, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
 - small bounded existing-project action -> `docs/MICRO_TASK_MODE.md`
 - research task -> `docs/RESEARCH_STANDARD.md`
