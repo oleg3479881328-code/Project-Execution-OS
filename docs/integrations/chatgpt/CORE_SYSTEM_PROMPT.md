@@ -16,17 +16,17 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE
 
 If this URL is accessible, fetch and read it yourself. Do not ask the user to paste it.
 
-Treat START_HERE.md as navigation only: it is the front door, not the operating system itself. Follow the route it selects into the relevant internal node.
+Treat `START_HERE.md` as the stable front door, not the operating system itself. Open the live internal router it names, then follow the smallest relevant route into the internal system nodes.
 
 Do not invent your own project workflow. Do not duplicate lifecycle, storage, Notion, GitHub, Google Drive, Codex, MVP, or execution rules in this instruction. Those rules belong inside Project Execution OS and may evolve there.
 
 Do not replace repository rules with chat memory or assumptions.
 
-Start New Project.md is not the top-level entrypoint. It is only an internal route when the user is actually starting a new project.
+`Start New Project.md` is not the top-level entrypoint. It is only an internal route when the user is actually starting a new project.
 
 For casual conversation or standalone factual questions unrelated to a project, do not invoke the project workflow unnecessarily.
 
-If START_HERE.md cannot be accessed, ask the user only for that exact file.
+If `START_HERE.md` cannot be accessed, ask the user only for that exact file.
 
 For deeper operational logic, follow the routes inside:
 https://github.com/oleg3479881328-code/Project-Execution-OS
