@@ -22,7 +22,7 @@ It must also support:
 
 - brainstorm-only work without forcing project creation;
 - idea capture without forcing project creation;
-- normalization of older repositories into the current standard.
+- normalization of older repositories into the current standard;
 - durable ChatGPT to Codex communication through GitHub.
 
 ## Primary Entrypoint
@@ -31,12 +31,11 @@ It must also support:
 
 Every user, assistant, agent, or automation session must start there.
 
-Top-level routing from there:
+`START_HERE.md` is intentionally minimal and durable. It points to the live internal router:
 
-- new project -> `Start New Project.md`
-- continue an existing project -> project memory inside that repository
-- quick daily orientation -> `START_FAST.md`
-- multi-layer context assembly, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
+`docs/ROUTER.md`
+
+Internal route growth belongs in `docs/ROUTER.md`, not in `START_HERE.md`.
 
 ## Current Phase
 
@@ -54,7 +53,8 @@ Status:
 
 ```text
 Project Execution OS
-  ├── Universal Entrypoint
+  ├── Stable Universal Entrypoint
+  ├── Live Internal Router
   ├── Project Workspace Standard
   ├── Universal Workflow Contract
   ├── Context Assembly Standard
@@ -76,11 +76,13 @@ Project Execution OS
 
 - `README.md`
 - `START_HERE.md`
+- `docs/ROUTER.md`
 - `Start New Project.md`
 - `START_FAST.md`
 - `PROJECT_INDEX.md`
 - `SYSTEM_CONTEXT_MANIFEST.md`
 - `project-library/DECISION_REGISTRY.md`
+- `project-library/decisions/006-stable-start-here-live-router.md`
 - `blocks/README.md`
 - `blocks/PROJECT_INDEX.md`
 - `docs/WORKFLOW_CONTRACT.md`
@@ -125,6 +127,7 @@ Project Execution OS
 - `CHANGELOG.md`
 - `logs/WORKFLOW_LOG.md`
 - `logs/2026-05-29-context-cache-implementation.md`
+- `logs/2026-05-29-stable-start-here-router-split.md`
 
 ## Universal Workflow Chain
 
@@ -170,6 +173,14 @@ logs/
 ```
 
 ## Context Assembly Architecture
+
+Stable entry and routing:
+
+```text
+START_HERE.md
+→ docs/ROUTER.md
+→ smallest relevant internal node
+```
 
 Minimum sufficient context is assembled through:
 
@@ -260,9 +271,11 @@ Committed artifacts include:
 
 - `README.md`
 - `START_HERE.md`
+- `docs/ROUTER.md`
 - `PROJECT_INDEX.md`
 - `SYSTEM_CONTEXT_MANIFEST.md`
 - `project-library/DECISION_REGISTRY.md`
+- `project-library/decisions/006-stable-start-here-live-router.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/GOVERNANCE.md`
 - `docs/REPOSITORY_MEMORY_STANDARD.md`
@@ -285,10 +298,11 @@ Committed artifacts include:
 - `knowledge-library/PROJECT_INDEX.md`
 - `logs/WORKFLOW_LOG.md`
 - `logs/2026-05-29-context-cache-implementation.md`
+- `logs/2026-05-29-stable-start-here-router-split.md`
 
 ## Next Required Action
 
-Validate the new context-assembly and API-economics artifacts through a bounded review pass before building any runtime orchestrator.
+Run a bounded review for stale references that still treat `START_HERE.md` as the live route catalogue, then validate the new context-assembly and API-economics artifacts before building any runtime orchestrator.
 
 ## v2 Direction
 
