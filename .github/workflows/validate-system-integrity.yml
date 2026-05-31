@@ -1,0 +1,19 @@
+name: Validate System Integrity
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  validate-system-integrity:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate system integrity
+        shell: pwsh
+        run: ./scripts/validate-system-integrity.ps1

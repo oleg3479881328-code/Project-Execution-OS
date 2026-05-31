@@ -73,6 +73,14 @@ No vector database.
 No broad automation layer.
 No mass agent creation.
 
+## Integrity Validation
+
+- `system-manifest.json` — machine-readable map of the active core routing surface and typed document relationships
+- `.github/workflows/validate-system-integrity.yml` — GitHub Actions workflow for OS self-integrity validation
+- `scripts/validate-system-integrity.ps1` — native PowerShell validator for registered nodes, typed links and acyclic `route_to` / `depends_on` graphs
+
+This adds machine-checkable structural validation for the document-first foundation. It does not turn the system into a runtime engine.
+
 ## Main Internal Nodes
 
 - `START_HERE.md` — system front door and router only

@@ -1,0 +1,227 @@
+{
+  "schema_version": "0.1.0",
+  "system": {
+    "name": "Project Execution OS",
+    "mode": "document-first-foundation",
+    "entrypoint": "START_HERE.md"
+  },
+  "relationship_types": {
+    "route_to": {
+      "meaning": "Required routing or next-path relationship.",
+      "acyclic": true
+    },
+    "depends_on": {
+      "meaning": "Required normative dependency.",
+      "acyclic": true
+    },
+    "related_to": {
+      "meaning": "Contextual or reverse-navigation relationship.",
+      "acyclic": false
+    }
+  },
+  "nodes": [
+    {
+      "path": "START_HERE.md",
+      "kind": "entrypoint",
+      "status": "active",
+      "owns": [],
+      "route_to": [
+        "Start New Project.md",
+        "docs/MODE_CLASSIFIER.md",
+        "docs/REFERENCE_IDEA_CAPTURE_STANDARD.md",
+        "docs/PROJECT_LIFECYCLE_MODEL.md",
+        "docs/PROJECT_ENTRYPOINT_STANDARD.md",
+        "docs/MICRO_TASK_MODE.md",
+        "docs/RESEARCH_STANDARD.md",
+        "docs/REVIEW_STANDARD.md",
+        "docs/CODEX_HANDOFF_STANDARD.md",
+        "docs/AI_COORDINATION_HUB_STANDARD.md",
+        "docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md",
+        "docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md"
+      ],
+      "depends_on": [],
+      "related_to": []
+    },
+    {
+      "path": "Start New Project.md",
+      "kind": "router",
+      "status": "active",
+      "owns": [],
+      "route_to": [
+        "docs/MODE_CLASSIFIER.md",
+        "docs/REFERENCE_IDEA_CAPTURE_STANDARD.md",
+        "docs/PROJECT_LIFECYCLE_MODEL.md",
+        "docs/PROJECT_ENTRYPOINT_STANDARD.md",
+        "docs/CODEX_HANDOFF_STANDARD.md",
+        "docs/EXISTING_SOLUTION_FIRST_STANDARD.md"
+      ],
+      "depends_on": [],
+      "related_to": [
+        "START_HERE.md"
+      ]
+    },
+    {
+      "path": "docs/MODE_CLASSIFIER.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [],
+      "related_to": [
+        "START_HERE.md",
+        "Start New Project.md"
+      ]
+    },
+    {
+      "path": "docs/REFERENCE_IDEA_CAPTURE_STANDARD.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [],
+      "related_to": [
+        "START_HERE.md",
+        "Start New Project.md",
+        "docs/PROJECT_LIFECYCLE_MODEL.md"
+      ]
+    },
+    {
+      "path": "docs/PROJECT_LIFECYCLE_MODEL.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [
+        "docs/EXISTING_SOLUTION_FIRST_STANDARD.md"
+      ],
+      "related_to": [
+        "START_HERE.md",
+        "Start New Project.md",
+        "docs/PROJECT_ENTRYPOINT_STANDARD.md",
+        "docs/RESEARCH_STANDARD.md",
+        "docs/CODEX_HANDOFF_STANDARD.md",
+        "docs/AI_COORDINATION_HUB_STANDARD.md"
+      ]
+    },
+    {
+      "path": "docs/PROJECT_ENTRYPOINT_STANDARD.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [],
+      "related_to": [
+        "START_HERE.md",
+        "Start New Project.md",
+        "docs/EXISTING_SOLUTION_FIRST_STANDARD.md"
+      ]
+    },
+    {
+      "path": "docs/MICRO_TASK_MODE.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [],
+      "related_to": [
+        "START_HERE.md"
+      ]
+    },
+    {
+      "path": "docs/RESEARCH_STANDARD.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [
+        "docs/EXISTING_SOLUTION_FIRST_STANDARD.md"
+      ],
+      "related_to": [
+        "START_HERE.md",
+        "docs/PROJECT_LIFECYCLE_MODEL.md"
+      ]
+    },
+    {
+      "path": "docs/REVIEW_STANDARD.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [],
+      "related_to": [
+        "START_HERE.md",
+        "docs/EXISTING_SOLUTION_FIRST_STANDARD.md"
+      ]
+    },
+    {
+      "path": "docs/CODEX_HANDOFF_STANDARD.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [],
+      "related_to": [
+        "START_HERE.md",
+        "Start New Project.md",
+        "docs/PROJECT_LIFECYCLE_MODEL.md",
+        "docs/EXISTING_SOLUTION_FIRST_STANDARD.md",
+        "docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md"
+      ]
+    },
+    {
+      "path": "docs/AI_COORDINATION_HUB_STANDARD.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [
+        "docs/PROJECT_LIFECYCLE_MODEL.md"
+      ],
+      "related_to": [
+        "START_HERE.md",
+        "docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md"
+      ]
+    },
+    {
+      "path": "docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md",
+      "kind": "integration",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [],
+      "related_to": [
+        "START_HERE.md",
+        "docs/CODEX_HANDOFF_STANDARD.md",
+        "docs/AI_COORDINATION_HUB_STANDARD.md"
+      ]
+    },
+    {
+      "path": "docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md",
+      "kind": "integration",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [],
+      "related_to": [
+        "START_HERE.md",
+        "Start New Project.md"
+      ]
+    },
+    {
+      "path": "docs/EXISTING_SOLUTION_FIRST_STANDARD.md",
+      "kind": "standard",
+      "status": "active",
+      "owns": [],
+      "route_to": [],
+      "depends_on": [],
+      "related_to": [
+        "Start New Project.md",
+        "docs/PROJECT_LIFECYCLE_MODEL.md",
+        "docs/PROJECT_ENTRYPOINT_STANDARD.md",
+        "docs/RESEARCH_STANDARD.md",
+        "docs/REVIEW_STANDARD.md",
+        "docs/CODEX_HANDOFF_STANDARD.md"
+      ]
+    }
+  ]
+}
