@@ -27,7 +27,7 @@ Use these layers only when applicable to the current task:
 0. Stable system instruction / integration prompt
 1. START_HERE.md stable top-level entrypoint
 2. docs/ROUTER.md live internal router
-3. Relevant Project Execution OS standard selected by route
+3. Relevant Project Execution OS standard or block selected by route
 4. Project entrypoint and current durable evidence, when a project is involved
 5. Minimum task-specific files, artifacts or evidence
 6. Relevant reusable knowledge, skills or blocks only when triggered by the task
@@ -56,7 +56,7 @@ Open `docs/ROUTER.md` and follow only the narrowest route relevant to the curren
 
 The router may evolve as the system grows. Do not read every route target or every internal standard by default.
 
-### Layer 3 — Relevant System Standard
+### Layer 3 — Relevant System Standard Or Block
 
 Read the smallest internal node that governs the active work, for example:
 
@@ -65,7 +65,8 @@ Read the smallest internal node that governs the active work, for example:
 - review -> `docs/REVIEW_STANDARD.md`;
 - central knowledge work -> `docs/KNOWLEDGE_SYSTEM.md`;
 - Codex execution handoff -> `docs/CODEX_HANDOFF_STANDARD.md`;
-- AI coordination -> `docs/AI_COORDINATION_HUB_STANDARD.md`.
+- connected-agent communication or channel selection -> `blocks/communication-channel/BLOCK.md`;
+- detailed AI coordination policy or channel registry -> `docs/AI_COORDINATION_HUB_STANDARD.md`.
 
 Read additional standards only when the task actually crosses into their scope.
 
@@ -148,7 +149,7 @@ When an API-based orchestrator is later used, the context package should be asse
 stable system instruction
 → START_HERE.md stable door
 → docs/ROUTER.md live internal map
-→ selected routed standards
+→ selected routed standards or blocks
 → stable project orientation when applicable
 → selected reusable knowledge or skill guidance
 → current project evidence
@@ -202,6 +203,7 @@ Review should check:
 - `docs/RESEARCH_STANDARD.md`
 - `docs/REVIEW_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
+- `blocks/communication-channel/BLOCK.md`
 - `docs/AI_COORDINATION_HUB_STANDARD.md`
 
 ## Final Rule
