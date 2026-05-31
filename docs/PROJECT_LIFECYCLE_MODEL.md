@@ -29,6 +29,8 @@ Do not turn every idea into a project.
 
 Do not automatically create files merely because a folder or Codex Desktop project was created or opened.
 
+Whenever the owner intentionally creates a real project folder, initialize it immediately as a local Git repository with `git init`. Local Git metadata is the narrow automatic exception; it does not create project files, a GitHub repository, or a remote connection.
+
 ## Hard Rules
 
 1. Not every thought becomes a project.
@@ -41,6 +43,7 @@ Do not automatically create files merely because a folder or Codex Desktop proje
 8. A project may start in Chat, gain a Notion layer when it must persist, and gain GitHub or Google Drive layers only when proved necessary.
 9. Do not design an ideal system before obtaining the smallest working result when a usable existing solution can be adapted first.
 10. Apply `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` before new architecture, implementation, workflow invention, or custom tooling.
+11. Every intentionally created real project folder starts as a local Git repository through `git init`, even when no GitHub layer is attached.
 
 ## Optional Folder Entrypoint Initialization
 
@@ -56,12 +59,15 @@ Only after purpose and storage needs are confirmed should the project gain extra
 
 GitHub is not mandatory for every project, and no project receives extra layers simply because a folder exists.
 
+Local Git is separate from the optional GitHub layer. A real project folder receives local version-control metadata through `git init`; a GitHub repository is attached only when justified.
+
 ## Minimal Routing
 
 ```text
 Thought or request
 → discuss in Chat
 → apply Existing Solution First when real research / technical work begins
+→ when a real project folder is intentionally created, run `git init`
 → initialize folder entrypoint only by explicit request
 → preserve/manage in Notion only if it must persist
 → attach GitHub only if versioned execution is required
@@ -86,7 +92,8 @@ A project entrypoint, when one exists, must state which layers exist and where e
 - ChatGPT performs research, comparison, classification, architecture reasoning and decision preparation whenever it has adequate access.
 - Codex performs bounded technical execution after the decision is already clear: scripts, bulk updates, file changes, commits, pull requests, verification and logs.
 - Do not spend Codex execution limits on open-ended thinking that ChatGPT can complete directly.
-- Do not spend Codex context on automatic bootstrap behavior when explicit instruction is enough.
+- Do not spend Codex context on automatic project-file bootstrap behavior when explicit instruction is enough.
+- Local `git init` for an intentionally created real project folder is the only narrow automatic bootstrap exception.
 
 ## Reference-Led MVP Route
 
