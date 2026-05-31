@@ -14,6 +14,16 @@ No folder is automatically mutated merely because it is created, opened, selecte
 
 Minimal bootstrap may be performed only by explicit user instruction.
 
+### Local Git Initialization Exception
+
+Whenever the owner intentionally creates a real project folder, initialize that folder immediately as a local Git repository with:
+
+```bash
+git init
+```
+
+This narrow exception is automatic for real project folders. It does not create `AGENTS.md`, `PROJECT_ENTRYPOINT.md`, state files, logs, or any other project artifacts. It does not create a GitHub repository, attach a remote, or promote an exploratory idea into a project.
+
 When requested before the project purpose is known, the folder may truthfully record this state:
 
 `initialized — purpose not yet defined`
@@ -30,7 +40,7 @@ Bootstrap is permitted when the user explicitly asks to:
 
 Bootstrap is not triggered by:
 
-- creating or opening a folder;
+- creating or opening a folder, except for the local `git init` rule when the folder is intentionally created as a real project folder;
 - creating or opening a Codex Desktop project;
 - starting a Codex session;
 - casual idea discussion;
@@ -105,6 +115,8 @@ After the project purpose is confirmed:
 Automatic Codex Desktop bootstrap is disabled by policy.
 
 Do not install or rely on global Codex hooks or global instructions that automatically create project files. When the owner wants a folder initialized, perform the minimal bootstrap only on explicit request.
+
+The local `git init` rule is separate from project-file bootstrap. It may be executed automatically for an intentionally created real project folder because it creates version-control metadata only.
 
 ## Related Nodes
 
