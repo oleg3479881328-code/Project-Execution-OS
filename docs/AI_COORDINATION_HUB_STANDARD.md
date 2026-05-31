@@ -6,6 +6,14 @@ This standard defines how Oleg, ChatGPT, Codex and other explicitly connected AI
 
 Channel choice follows the active project layers defined in `docs/PROJECT_LIFECYCLE_MODEL.md`.
 
+## Entry Block
+
+For communication-channel selection, enter through:
+
+`blocks/communication-channel/BLOCK.md`
+
+The block is the short routing layer. This document remains the detailed canonical policy and connected-agent channel registry.
+
 ## Core Rule
 
 Use the lightest durable channel that fits the work and that is technically available to every participant in the exchange.
