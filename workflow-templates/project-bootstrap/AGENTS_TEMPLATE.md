@@ -51,6 +51,8 @@ Do not create an index ritualistically for an empty project.
 
 ## Notes
 
-Create `AGENTS.md` only when the project benefits from local agent-facing instructions.
+For a standalone external project folder, `AGENTS.md` is required.
 
-For an internal subproject inside an existing repository, `PROJECT.md` may be enough when there are no extra local instructions to add.
+For an internal subproject inside an existing repository,
+`AGENTS.md` is optional when `PROJECT.md` alone is sufficient
+and no local subproject instructions are needed.

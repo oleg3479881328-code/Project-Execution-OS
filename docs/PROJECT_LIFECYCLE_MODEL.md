@@ -48,9 +48,11 @@ When the owner intentionally creates a real project, use `docs/PROJECT_BOOTSTRAP
 
 That bootstrap creates only the minimum zero-state front door.
 
+Standalone external project folders already have local Git from bootstrap.
+Internal subprojects inherit the parent repository Git layer.
+
 Only after purpose and storage needs are confirmed should the project gain extra durable layers such as:
 
-- local Git for version-control continuity;
 - GitHub for versioned execution and shared review;
 - Notion for readable management;
 - Google Drive for heavy assets.

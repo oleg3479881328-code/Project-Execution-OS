@@ -1,4 +1,4 @@
-name: Validate Project Structure
+name: Validate Project OS Integrity
 
 on:
   push:
@@ -17,3 +17,7 @@ jobs:
       - name: Validate project structure
         shell: pwsh
         run: ./scripts/validate-project-structure.ps1
+
+      - name: Validate system context manifest
+        shell: pwsh
+        run: ./scripts/validate-system-context-manifest.ps1

@@ -8,13 +8,13 @@ It identifies the intended ordered context foundation. It does not prove provide
 
 ## Manifest Version
 
-`system-context-manifest-v5`
+`system-context-manifest-v6`
 
 ## Generated At
 
 `2026-06-01`
 
-## Profile: `knowledge-aware-core-v5`
+## Profile: `knowledge-aware-core-v6`
 
 ### Ordered Files
 
@@ -22,14 +22,14 @@ It identifies the intended ordered context foundation. It does not prove provide
 docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md=ffa44bccdd2e24dd96c1b6ee726c0726712f1e1a
 START_HERE.md=f315656999e3e78b1b797ad2c1c971ef64fccbf9
 docs/ROUTER.md=72866fa917b20b97026a7527aa21ae2a910c9b23
-docs/CONTEXT_ASSEMBLY_STANDARD.md=92d5c72d7750ba57d4a0257b0568470ff85fb00e
+docs/CONTEXT_ASSEMBLY_STANDARD.md=c9b2e4e8739a0ec5cc1ce6e0657e238f5f443541
 docs/KNOWLEDGE_SYSTEM.md=8f7336081925f182a55a6102bd8dfe1a326eecd5
 ```
 
 ### SHA-256 Fingerprint
 
 ```text
-e755e888fe0a70884dc2be16c1c6c52a5d00f3083dce3ac57d3c6b61fc942890
+1bbce391d1350f78140131eedf9f9e566192e455cd56b129ecdb0fa073de991a
 ```
 
 ### Loading Rule
