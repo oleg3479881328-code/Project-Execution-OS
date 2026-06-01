@@ -17,6 +17,14 @@ Build from scratch only when no adequate existing solution exists
 or when adaptation is demonstrably worse for the current task.
 ```
 
+Also use this execution refinement:
+
+```text
+Before custom diagnostics, workaround design, or low-level experimentation,
+first search for an existing official or established solution and try the
+standard path first.
+```
+
 Also assume:
 
 ```text
@@ -54,6 +62,12 @@ Check in this order unless the task clearly requires a different first source:
 7. manuals or technical guides;
 8. community sources such as Reddit as supporting evidence for practical problems and workarounds;
 9. only then a new custom implementation.
+
+For operational troubleshooting, debugging, repair, or environment issues:
+
+1. first try the official or established standard path;
+2. only after that fails, move into custom diagnostics, speculative workarounds, or low-level experimentation;
+3. if the standard path requires elevated permissions, a restart, a vendor reset flow, a system repair tool, or another known maintenance procedure, prefer that documented path before inventing a custom one.
 
 ## Stop Rule
 
