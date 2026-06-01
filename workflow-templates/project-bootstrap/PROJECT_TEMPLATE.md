@@ -42,7 +42,7 @@
 
 - Purpose is unknown and must not be invented.
 - Architecture, stack, tooling, persistence layers, implementation plan, and scope are not yet confirmed.
-- This real project folder has already received `git init`, `AGENTS.md`, and `PROJECT.md` as the minimum bootstrap set.
+- The project has received the minimum bootstrap appropriate for its location.
 - After the task is defined, check for adequate existing solutions before custom implementation.
 
 ## Read Next

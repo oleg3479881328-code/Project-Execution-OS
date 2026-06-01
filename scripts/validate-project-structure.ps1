@@ -42,17 +42,43 @@ $projectDirs = Get-ChildItem -Path $projectsRoot -Directory
 foreach ($projectDir in $projectDirs) {
     $projectPath = Join-Path $projectDir.FullName "PROJECT.md"
     $legacyEntrypointPath = Join-Path $projectDir.FullName "PROJECT_ENTRYPOINT.md"
-    if (-not (Test-Path $projectPath) -and -not (Test-Path $legacyEntrypointPath)) {
+    $agentsPath = Join-Path $projectDir.FullName "AGENTS.md"
+    $statePath = Join-Path $projectDir.FullName "PROJECT_STATE.md"
+    $logsLatestPath = Join-Path $projectDir.FullName "logs\latest.md"
+    $workflowRoot = Join-Path $projectDir.FullName "workflow-runs"
+
+    $hasProject = Test-Path $projectPath
+    $hasLegacy = Test-Path $legacyEntrypointPath
+    $hasAgents = Test-Path $agentsPath
+    $hasState = Test-Path $statePath
+    $hasLatestLog = Test-Path $logsLatestPath
+
+    if (-not $hasProject -and -not $hasLegacy) {
         continue
     }
 
-    if ((Test-Path $projectPath) -and (Test-Path $legacyEntrypointPath)) {
+    if ($hasProject -and $hasLegacy) {
         Add-ErrorMessage $errors $projectDir.Name "both PROJECT.md and legacy PROJECT_ENTRYPOINT.md exist"
+        continue
     }
 
-    $statePath = Join-Path $projectDir.FullName "PROJECT_STATE.md"
-    if (-not (Test-Path $statePath)) {
-        Add-ErrorMessage $errors $projectDir.Name "missing PROJECT_STATE.md"
+    if ($hasLegacy -and -not $hasProject) {
+        Write-Host "Legacy entrypoint allowed temporarily for $($projectDir.Name); migrate PROJECT_ENTRYPOINT.md to PROJECT.md." -ForegroundColor Yellow
+    }
+
+    if (-not $hasState -and -not $hasLatestLog) {
+        if ($hasProject -or $hasLegacy) {
+            if ($hasAgents) {
+                Write-Host "$($projectDir.Name): valid zero-state bootstrap (PROJECT + optional AGENTS only)." -ForegroundColor DarkGray
+            } else {
+                Write-Host "$($projectDir.Name): valid zero-state bootstrap or lightweight internal subproject entrypoint." -ForegroundColor DarkGray
+            }
+        }
+        continue
+    }
+
+    if ($hasState -xor $hasLatestLog) {
+        Add-ErrorMessage $errors $projectDir.Name "active project state must include both PROJECT_STATE.md and logs/latest.md"
         continue
     }
 
@@ -60,34 +86,14 @@ foreach ($projectDir in $projectDirs) {
     $projectMode = Get-FrontmatterValue -Content $stateContent -Key "project_mode"
     $status = Get-FrontmatterValue -Content $stateContent -Key "status"
 
-    if (-not $projectMode) {
-        $projectMode = if (Test-Path (Join-Path $projectDir.FullName "PROJECT_RULES.md")) { "full" } else { "compact" }
-    }
-
     if (-not $status) {
         Add-ErrorMessage $errors $projectDir.Name "PROJECT_STATE.md should define frontmatter key: status"
     }
 
-    $commonRequired = @(
-        "workflow-runs",
-        "logs"
-    )
-
-    foreach ($item in $commonRequired) {
-        if (-not (Test-Path (Join-Path $projectDir.FullName $item))) {
-            Add-ErrorMessage $errors $projectDir.Name "missing $item"
-        }
+    if ($projectMode -eq "full" -and -not (Test-Path (Join-Path $projectDir.FullName "PROJECT_RULES.md"))) {
+        Add-ErrorMessage $errors $projectDir.Name "full-mode project missing PROJECT_RULES.md"
     }
 
-    if ($projectMode -eq "full") {
-        foreach ($item in @("PROJECT_RULES.md", "agents", "project-library")) {
-            if (-not (Test-Path (Join-Path $projectDir.FullName $item))) {
-                Add-ErrorMessage $errors $projectDir.Name "full-mode project missing $item"
-            }
-        }
-    }
-
-    $workflowRoot = Join-Path $projectDir.FullName "workflow-runs"
     if (Test-Path $workflowRoot) {
         $runDirs = Get-ChildItem -Path $workflowRoot -Directory
         foreach ($runDir in $runDirs) {

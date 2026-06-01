@@ -1,6 +1,8 @@
-Read `PROJECT.md` first for any project-related work in this repository.
+Read `START_HERE.md` first for any project-related work in this repository.
 
-Then read `START_HERE.md` for central system routing.
+Then open `docs/ROUTER.md` and follow only the narrowest route required by the current task.
+
+If the routed work concerns this repository as a project, read `PROJECT.md` next, then `PROJECT_INDEX.md` only if it is useful, then only the minimum additional files needed for the task.
 
 This repository is itself governed by `Project Execution OS`.
 

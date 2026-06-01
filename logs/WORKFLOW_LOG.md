@@ -2398,3 +2398,5 @@ Reinforced bootstrap continuity rules now also include:
 - minimum-context reading;
 - stable-prefix behavior for accumulating files;
 - legacy fallback for old `PROJECT_ENTRYPOINT.md` projects without keeping two active front doors.
+
+Updated `SYSTEM_CONTEXT_MANIFEST.md` to `system-context-manifest-v5` after the router and context-assembly profile changes, including refreshed blob SHAs and SHA-256 fingerprint.

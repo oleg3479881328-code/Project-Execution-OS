@@ -17,8 +17,8 @@ Landing page / agribusiness concept / product marketing project.
 Start by reading this file, then read:
 
 1. `PROJECT_STATE.md`
-2. `PROJECT_RULES.md`
-3. `logs/PROJECT_LOG.md`
+2. `logs/latest.md`
+3. `PROJECT_RULES.md`
 4. latest workflow run in `workflow-runs/`
 5. `project-library/README.md`
 6. relevant root knowledge-library entries if needed
@@ -29,7 +29,7 @@ Start by reading this file, then read:
 
 ## Current Status
 
-`initialized`
+`active — transfer-ready minimum set present`
 
 ## Current Next Action
 

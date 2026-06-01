@@ -78,6 +78,26 @@ The entrypoint should tell the participant what the project is, where truth live
 
 Do not replace project entrypoint use by indiscriminately reading an entire repository, full chat history or complete log archive.
 
+The intended sequence is:
+
+```text
+START_HERE.md
+→ docs/ROUTER.md
+→ PROJECT.md for the specific project
+→ existing project index if useful
+→ minimum additional files needed for the task
+```
+
+### Project Index Rule
+
+Before mass scanning a project, check whether a useful existing index already exists.
+
+If the project has grown enough that a useful index is missing, create a minimal one.
+
+After a meaningful structural change, update the index.
+
+Do not create an index ritualistically for an empty project.
+
 ### Layer 5 — Task-Specific Evidence
 
 Load only the files and evidence needed to perform or verify the active action.

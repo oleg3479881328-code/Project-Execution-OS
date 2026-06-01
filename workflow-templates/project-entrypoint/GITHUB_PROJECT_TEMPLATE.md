@@ -16,7 +16,7 @@
 
 - Primary source of truth:
 - Secondary workspace if any:
-- System entry point: `START_HERE.md`
+- System entry point: `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
 
 ## Current Status
 

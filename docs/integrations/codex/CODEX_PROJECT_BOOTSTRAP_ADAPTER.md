@@ -4,19 +4,21 @@
 
 Automatic bootstrap for every opened folder is still withdrawn.
 
-Intentional creation of a real new project folder now triggers the minimum project bootstrap defined by `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
+Intentional creation of a real project now triggers the minimum project bootstrap defined by `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
 
 ## Current Rule
 
 Creating or opening a folder or Codex Desktop project does not automatically require project files.
 
-When the owner intentionally creates a real new project folder, the minimum bootstrap creates:
+For a standalone real project folder, the minimum bootstrap creates:
 
 ```text
 git init
 AGENTS.md
 PROJECT.md
 ```
+
+For an internal subproject inside an existing repository, do not create nested Git. Create `PROJECT.md` and add `AGENTS.md` only when local instructions are actually needed.
 
 ## Reason
 

@@ -3,8 +3,8 @@
 ## Project
 
 - Name: `Project Execution OS`
-- Type: `repository-first project operating system`
-- Short description: `central standards, templates, routing, and reusable artifacts for project execution`
+- Type: `layer-aware project operating system`
+- Short description: `central standards, templates, routing, and reusable artifacts for starting and running projects across the right durable layers`
 
 ## Purpose
 
@@ -21,28 +21,29 @@
 
 - Mode: `document-first`
 - Phase: `foundation`
-- Status: `active migration of project bootstrap and entrypoint standards`
+- Status: `bootstrap and PROJECT.md migration reviewed and adopted`
 
 ## Done So Far
 
 - Established `START_HERE.md` as the stable top-level entrypoint.
 - Split live routing into `docs/ROUTER.md`.
-- Built central standards for lifecycle, context assembly, repository memory, review, research, and handoff.
+- Built central standards for lifecycle, context assembly, repository memory, review, research, handoff, and bootstrap.
 
 ## Current Focus
 
-- Keep central standards internally consistent while reducing bootstrap friction for real projects.
+- Keep central standards internally consistent while making real-project bootstrap lightweight and safe.
 
 ## Next Practical Step
 
-- Complete and validate the `PROJECT_ENTRYPOINT.md` to `PROJECT.md` migration across active standards, templates, and examples.
+- Validate the new bootstrap model on the next intentionally created real project.
 
 ## Key Decisions And Constraints
 
 - Do not duplicate evolving system logic into ad hoc files when the repository standards already define it.
 - `Existing Solution First` applies before inventing new central mechanisms.
-- `PROJECT.md` is the canonical local project entrypoint for GitHub-backed projects.
+- `PROJECT.md` is the canonical local project entrypoint for GitHub-backed and file-executed projects.
 - `PROJECT_INDEX.md` remains an index and must not replace the role of `PROJECT.md`.
+- Local Git is the default bootstrap for real project folders; GitHub, Notion, and Google Drive are attached only when they are actually needed.
 
 ## Read Next
 

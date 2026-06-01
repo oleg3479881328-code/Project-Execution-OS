@@ -8,7 +8,7 @@ If you are starting a new project, the canonical entrypoint is still:
 
 ## Fast Rules
 
-- repository-first: durable state belongs in repository artifacts, not only in chat;
+- layer-aware: durable state belongs in the right active layer, not only in chat;
 - use the smallest useful workflow;
 - default to `compact-first`;
 - artifact only when useful;

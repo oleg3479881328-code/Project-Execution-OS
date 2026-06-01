@@ -2,129 +2,138 @@
 
 ## Purpose
 
-This standard defines the minimal project-folder initialization action inside Project Execution OS.
+This standard defines the minimum safe bootstrap for a real project inside Project Execution OS.
 
-Use it when the owner intentionally starts a real new project folder under this system.
+Its job is to create only the smallest durable front door needed to begin real project work honestly.
 
-It is not an automatic Codex Desktop, folder-opening, workspace-opening, or session-start behavior.
+## Constitutional Entry Order
 
-## Core Rule
-
-No folder is automatically mutated merely because it is created, opened, selected in an IDE, or used in Codex Desktop.
-
-Real project bootstrap is automatic only when the owner intentionally creates a real new project folder.
-
-Whenever that boundary is met, initialize the folder immediately with:
-
-```bash
-git init
-```
-
-and create:
+Bootstrap must preserve this order:
 
 ```text
+START_HERE.md
+→ docs/ROUTER.md
+→ PROJECT.md for the specific project
+→ existing project index if useful
+→ minimum additional files required by the task
+```
+
+`PROJECT.md` is the local front door for one project.
+
+It does not replace `START_HERE.md` as the top-level door into the overall system.
+
+## Bootstrap Boundary
+
+No folder is automatically mutated merely because it is opened, selected in an IDE, or used in Codex Desktop.
+
+Bootstrap is allowed only when the owner intentionally creates a real project.
+
+Bootstrap is not triggered by:
+
+- casual idea discussion;
+- exploratory research;
+- saving a reference without starting a project;
+- opening an existing folder or workspace;
+- opening an existing project;
+- creating a temporary working folder.
+
+## External Project vs Internal Subproject
+
+### External independent project folder
+
+When the owner intentionally creates a standalone real project folder, bootstrap it with:
+
+```text
+git init
 AGENTS.md
 PROJECT.md
 ```
 
-This narrow automatic bootstrap applies only to intentionally created real project folders. It does not create a GitHub repository, attach a remote, or promote an exploratory idea into a project. It must not create additional project artifacts beyond this minimum set.
+### Internal subproject inside an existing Git repository
 
-When requested before the project purpose is known, the folder may truthfully record this state:
+When the owner intentionally creates a project-like subfolder inside an already versioned repository:
 
-`initialized — purpose not yet defined`
+- do not run nested `git init`;
+- use the parent repository's Git history;
+- create `PROJECT.md`;
+- create `AGENTS.md` only when local subproject instructions are actually needed.
+
+Inside `projects/<project-id>/` in this central repository, do not create nested Git repositories unless there is a separate explicit decision to do so.
+
+## Zero-State Bootstrap
+
+The valid zero-state bootstrap set is:
+
+```text
+PROJECT.md
+AGENTS.md    # optional for internal subprojects; required for standalone external folders
+```
+
+Do not automatically create `PROJECT_STATE.md`, `PROJECT_CHANGE_INDEX.md`, `CONTEXT_PACK.md`, `HANDOFF.md`, `workflow-runs/`, `docs/`, `logs/`, `research/`, `architecture/`, `tasks/`, or other structure at zero state.
 
 Unknown purpose is valid state and must not be replaced by guesses.
 
-## Trigger Boundary
+## First Meaningful Execution Step
 
-Bootstrap is permitted when the owner intentionally starts a real new project folder, including cases where the purpose is still unknown.
-
-Bootstrap is not triggered by:
-
-- creating or opening a folder without intentionally starting a real project;
-- creating or opening a Codex Desktop project;
-- starting a Codex session;
-- casual idea discussion;
-- exploratory research;
-- saving a reference without starting a project.
-
-## Minimal Bootstrap Artifacts
-
-When a real new project folder is intentionally created, create only:
+After the first meaningful execution step, the active project should gain:
 
 ```text
-<project-folder>/
-├── .git/
-├── AGENTS.md
-└── PROJECT.md
+PROJECT_STATE.md
+logs/latest.md
 ```
 
-Do not automatically create `README.md`, `INDEX.md`, `PROJECT_STATE.md`, `PROJECT_CHANGE_INDEX.md`, `CONTEXT_PACK.md`, `HANDOFF.md`, `docs/`, `logs/`, `research/`, `architecture/`, `tasks/`, agent folders, libraries, or infrastructure folders until real project work requires them.
+Use `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md` for the continuity rules that begin after zero-state bootstrap.
 
-## Artifact Roles
+## Template Rule
 
-### `AGENTS.md`
+Project bootstrap templates are stored as passive templates under:
 
-This is a short agent-compatible entry adapter. It should route the agent to `PROJECT.md` and the central Project Execution OS entrypoint, while keeping only the critical local guardrails that are often missed in the central system alone.
+- `workflow-templates/project-bootstrap/AGENTS_TEMPLATE.md`
+- `workflow-templates/project-bootstrap/PROJECT_TEMPLATE.md`
 
-### `PROJECT.md`
+Bootstrap copies them into the target project under the working names:
 
-This is the project front door for humans and AI participants. In initialization-only state it records that the folder has been initialized while its purpose remains unconfirmed, identifies the central system entrypoint, blocks invented purpose or decisions, and states the next practical action.
+- `AGENTS.md`
+- `PROJECT.md`
 
-## Required Initialization-Only Content
+Do not keep an active template `AGENTS.md` inside the template directory itself.
 
-An initialization-only `PROJECT.md` must state:
+## Required Zero-State Content
+
+`PROJECT.md` at zero state must state:
 
 - project name from the folder name or already confirmed name;
 - status: `initialized — purpose not yet defined` when purpose is unknown;
 - project type: not yet classified when unknown;
 - that the project operates under Project Execution OS;
-- that no purpose, architecture, implementation plan, storage-layer choice, tool choice or execution decision has been confirmed;
+- that no purpose, architecture, implementation plan, storage-layer choice, tool choice, or execution decision has been confirmed;
 - that no substantive work should begin until intent is confirmed;
 - the next practical step: obtain the project purpose;
 - that `Existing Solution First` applies once a real technical or project task exists.
 
-An automatically created `AGENTS.md` should state:
+If created, `AGENTS.md` must reinforce:
 
-- read `PROJECT.md` before project work;
-- follow the central Project Execution OS entrypoint and its selected route;
-- use only the minimum necessary route and project context;
-- do not infer missing project purpose, architecture or decisions;
-- do not invent solutions before checking existing suitable ones;
-- preserve stable starts of accumulating files where practical so repeated model context remains reusable;
-- use `blocks/communication-channel/BLOCK.md` as the official inter-agent communication route;
-- follow `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` for the canonical rule.
+- the constitutional entry order;
+- minimum-context reading;
+- index check before mass scanning;
+- continuity and transfer-readiness standards;
+- official communication-channel routing;
+- legacy migration from `PROJECT_ENTRYPOINT.md` to `PROJECT.md` when needed.
 
-If `PROJECT.md` does not exist yet but legacy `PROJECT_ENTRYPOINT.md` is present, read it as the temporary local entrypoint and migrate it to `PROJECT.md` at the nearest safe opportunity without keeping both files active.
-
-For project folders outside this repository, references to central Project Execution OS documents must use canonical absolute URLs, not relative local paths.
+For projects outside this repository, central-system references must use canonical absolute URLs rather than relative paths.
 
 ## Required Bootstrap Sequence
 
-1. Confirm that the owner is intentionally creating a real new project folder.
-2. Confirm the intended target folder from the user's request or the current project context.
-3. Run `git init` in that project root.
-4. Create `AGENTS.md` and `PROJECT.md` in that same root.
-5. Mark unconfirmed purpose explicitly as unknown when it is still unknown.
-6. Obtain or continue defining the project purpose.
-7. After purpose is confirmed, update the project entrypoint and route into the minimal appropriate lifecycle, structure, research or execution standards.
-
-## Transition Out Of Initialization-Only State
-
-After the project purpose is confirmed:
-
-- update the project entrypoint with the actual project purpose, type, source-of-truth boundaries, focus and next step;
-- determine required durable layers through `docs/PROJECT_LIFECYCLE_MODEL.md`;
-- use `docs/PROJECT_STRUCTURE_STANDARD.md` only when a versioned or file-execution structure is justified;
-- create additional artifacts only when they hold real state or constraints.
-
-## Codex Desktop Rule
-
-Automatic Codex Desktop bootstrap for every opened folder is disabled by policy.
-
-Do not install or rely on global Codex hooks or global instructions that create project files for every opened folder, workspace, or session. Bootstrap is allowed only for an intentionally created real new project folder.
-
-When that bootstrap boundary is met, `git init`, `AGENTS.md`, and `PROJECT.md` are the complete automatic minimum. No additional files should be created automatically.
+1. Confirm that the owner is intentionally creating a real project.
+2. Confirm whether the target is:
+   - a standalone external project folder; or
+   - an internal subproject inside an existing Git repository.
+3. For a standalone folder, run `git init`.
+4. Copy `PROJECT_TEMPLATE.md` into the project as `PROJECT.md`.
+5. Copy `AGENTS_TEMPLATE.md` into the project as `AGENTS.md` when the case requires local agent instructions.
+6. Mark unconfirmed purpose explicitly as unknown when it is still unknown.
+7. Obtain or continue defining the project purpose.
+8. After purpose is confirmed, route into the minimal appropriate lifecycle, structure, research, or execution standards.
 
 ## Related Nodes
 
@@ -133,4 +142,5 @@ When that bootstrap boundary is met, `git init`, `AGENTS.md`, and `PROJECT.md` a
 - `docs/PROJECT_LIFECYCLE_MODEL.md` — layer and persistence decisions
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md` — ongoing entrypoint contract
 - `docs/PROJECT_STRUCTURE_STANDARD.md` — file or versioned structure when justified
+- `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md` — continuity after zero-state bootstrap
 - `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` — mandatory reuse-first rule for relevant project work
