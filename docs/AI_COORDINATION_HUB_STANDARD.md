@@ -12,7 +12,11 @@ For communication-channel selection, enter through:
 
 `blocks/communication-channel/BLOCK.md`
 
-The block is the short routing layer. This document remains the detailed canonical policy and connected-agent channel registry.
+The block is the single top-level route named `Канал связи`.
+
+This document remains the detailed canonical policy and connected-agent channel registry.
+
+Do not route to this document directly from `docs/ROUTER.md`.
 
 ## Core Rule
 
@@ -36,7 +40,9 @@ Use native comments on that page for:
 - notifications that an artifact or report exists;
 - links to repository-bound technical evidence.
 
-Do not accumulate coordination messages, large reports, implementation packets or copied technical evidence in the page body merely to preserve a chat trail. If an agent can only append page-body blocks but cannot use native comments, Notion is a readable status/reference layer for that agent, not the active bidirectional message transport.
+Do not accumulate coordination messages, large reports, implementation packets or copied technical evidence in the page body merely to preserve a chat trail.
+
+If an agent can only append page-body blocks but cannot use native comments, Notion is a readable status/reference layer for that agent, not the active bidirectional message transport.
 
 ## When To Use GitHub Instead
 
@@ -48,6 +54,12 @@ Use GitHub in the target repository when the message is directly tied to:
 - technical acceptance criteria;
 - repository-specific execution evidence;
 - an implementation task that should remain next to the technical source of truth.
+
+When GitHub is selected for a ChatGPT / Codex collaboration loop, open:
+
+`docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
+
+This is a nested channel-specific protocol inside `Канал связи`, not a separate top-level route.
 
 Use the optional cross-repository hub when a durable direct agent-to-agent thread is required and the lightweight Notion-comments path is technically unavailable to one or more participants.
 
@@ -132,14 +144,6 @@ If material is substantial:
 - GitHub issue `AI-Coordination-Hub#1` became the active direct coordination transport;
 - DeepSeek acknowledged that channel in the issue thread.
 
-## Final Rule
-
-Notion comments are the lightweight coordination path when readable ongoing communication is needed and every participant can use native comments.
-
-GitHub is used when coordination is inseparable from repository execution or review, or when the required Notion-comments transport is unavailable to a participating agent.
-
-Do not create or use a heavier communication structure unless real work proves it necessary.
-
 ## Bidirectional Coordination Commands
 
 These shorthand commands control communication only:
@@ -151,3 +155,11 @@ These shorthand commands control communication only:
 - when Oleg sends `02` to `ChatGPT`, `ChatGPT` reads the targeted connected agent's message through the registered channel.
 - when Oleg sends `02` to `Codex` or `DeepSeek`, that agent reads `ChatGPT`'s message through its active registered channel.
 - `01` and `02` do not by themselves approve destructive or scope-changing actions.
+
+## Final Rule
+
+Notion comments are the lightweight coordination path when readable ongoing communication is needed and every participant can use native comments.
+
+GitHub is used when coordination is inseparable from repository execution or review, or when the required Notion-comments transport is unavailable to a participating agent.
+
+Do not create or use a heavier communication structure unless real work proves it necessary.
