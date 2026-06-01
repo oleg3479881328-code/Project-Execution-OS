@@ -18,7 +18,7 @@ Green Apple will be a landing page about growing green apples and later processi
 
 ## Created Artifacts
 
-- `PROJECT_ENTRYPOINT.md`
+- `PROJECT.md`
 - `PROJECT_STATE.md`
 - `PROJECT_RULES.md`
 - `project-library/README.md`

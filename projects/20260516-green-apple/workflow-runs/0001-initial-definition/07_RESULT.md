@@ -10,7 +10,7 @@ The workflow run produced a first project direction, identified missing decision
 
 ## Completed Artifacts
 
-- `PROJECT_ENTRYPOINT.md`
+- `PROJECT.md`
 - `PROJECT_STATE.md`
 - `PROJECT_RULES.md`
 - `project-library/README.md`

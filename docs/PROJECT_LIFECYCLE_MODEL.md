@@ -23,33 +23,33 @@ These are different lifecycle actions:
 
 - idea discussion may stay in chat or reference capture without becoming a durable project;
 - starting project work applies the relevant standards and the `Existing Solution First` rule where relevant;
-- initializing a project folder with `AGENTS.md` and `PROJECT_ENTRYPOINT.md` happens only when the owner explicitly requests that durable folder entrypoint.
+- intentionally creating a real new project folder bootstraps it with `git init`, `AGENTS.md`, and `PROJECT.md`.
 
 Do not turn every idea into a project.
 
 Do not automatically create files merely because a folder or Codex Desktop project was created or opened.
 
-Whenever the owner intentionally creates a real project folder, initialize it immediately as a local Git repository with `git init`. Local Git metadata is the narrow automatic exception; it does not create project files, a GitHub repository, or a remote connection.
+Whenever the owner intentionally creates a real project folder, initialize it immediately with the minimum bootstrap set: `git init`, `AGENTS.md`, and `PROJECT.md`. This does not create a GitHub repository or attach a remote connection.
 
 ## Hard Rules
 
 1. Not every thought becomes a project.
 2. Not every project needs GitHub.
 3. Not every project needs Google Drive.
-4. Not every new folder needs project-entrypoint files.
+4. Not every new folder needs project bootstrap files.
 5. Notion is the readable management layer when durable project context is needed.
 6. GitHub is the execution and version-control layer only for projects that require it.
 7. Google Drive is an optional files/assets layer, not the project brain and not the source of operational decisions.
 8. A project may start in Chat, gain a Notion layer when it must persist, and gain GitHub or Google Drive layers only when proved necessary.
 9. Do not design an ideal system before obtaining the smallest working result when a usable existing solution can be adapted first.
 10. Apply `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` before new architecture, implementation, workflow invention, or custom tooling.
-11. Every intentionally created real project folder starts as a local Git repository through `git init`, even when no GitHub layer is attached.
+11. Every intentionally created real project folder starts with the minimum bootstrap set: `git init`, `AGENTS.md`, and `PROJECT.md`, even when no GitHub layer is attached.
 
-## Optional Folder Entrypoint Initialization
+## Real Project Folder Bootstrap
 
-When the owner explicitly requests a transferable project folder entrypoint, use `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
+When the owner intentionally creates a real new project folder, use `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
 
-That on-demand action creates only minimal front-door artifacts and may honestly record unknown purpose.
+That bootstrap creates only the minimum front-door artifacts and may honestly record unknown purpose.
 
 Only after purpose and storage needs are confirmed should the project gain extra durable layers such as:
 
@@ -59,7 +59,7 @@ Only after purpose and storage needs are confirmed should the project gain extra
 
 GitHub is not mandatory for every project, and no project receives extra layers simply because a folder exists.
 
-Local Git is separate from the optional GitHub layer. A real project folder receives local version-control metadata through `git init`; a GitHub repository is attached only when justified.
+Local Git remains separate from the optional GitHub layer. A real project folder receives local version-control metadata through `git init`, while a GitHub repository is attached only when justified.
 
 ## Minimal Routing
 
@@ -67,8 +67,7 @@ Local Git is separate from the optional GitHub layer. A real project folder rece
 Thought or request
 → discuss in Chat
 → apply Existing Solution First when real research / technical work begins
-→ when a real project folder is intentionally created, run `git init`
-→ initialize folder entrypoint only by explicit request
+→ when a real project folder is intentionally created, run the minimum bootstrap: `git init`, `AGENTS.md`, `PROJECT.md`
 → preserve/manage in Notion only if it must persist
 → attach GitHub only if versioned execution is required
 → attach Google Drive only if heavy source files/assets are required
@@ -92,8 +91,8 @@ A project entrypoint, when one exists, must state which layers exist and where e
 - ChatGPT performs research, comparison, classification, architecture reasoning and decision preparation whenever it has adequate access.
 - Codex performs bounded technical execution after the decision is already clear: scripts, bulk updates, file changes, commits, pull requests, verification and logs.
 - Do not spend Codex execution limits on open-ended thinking that ChatGPT can complete directly.
-- Do not spend Codex context on automatic project-file bootstrap behavior when explicit instruction is enough.
-- Local `git init` for an intentionally created real project folder is the only narrow automatic bootstrap exception.
+- Do not spend Codex context on unnecessary extra project-file generation beyond the minimum bootstrap set.
+- `git init`, `AGENTS.md`, and `PROJECT.md` are the only narrow automatic bootstrap set for an intentionally created real project folder.
 
 ## Reference-Led MVP Route
 
@@ -170,7 +169,7 @@ Current phase:
 
 - `START_HERE.md` — top-level router only
 - `Start New Project.md` — new-project route only
-- `docs/PROJECT_BOOTSTRAP_STANDARD.md` — optional folder-entrypoint initialization only on explicit request
+- `docs/PROJECT_BOOTSTRAP_STANDARD.md` — minimum bootstrap for an intentionally created real new project folder
 - `docs/MODE_CLASSIFIER.md` — choose the lightest operating mode
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md` — per-project front door when used
 - `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md` — preserve ideas that are not projects yet

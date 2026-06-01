@@ -24,7 +24,7 @@ Do not use them just to create structure.
 Recommended files in a GitHub-backed project:
 
 ```text
-PROJECT_ENTRYPOINT.md
+PROJECT.md
 PROJECT_STATE.md
 CONTEXT_PACK.md
 PROJECT_CHANGE_INDEX.md

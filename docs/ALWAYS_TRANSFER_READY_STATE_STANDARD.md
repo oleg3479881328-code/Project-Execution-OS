@@ -34,14 +34,14 @@ Do not leave important durable state only in chat.
 For projects that use a local folder, GitHub repository, versioned files, Codex Desktop or any file-based execution workspace, the minimum transfer-ready set is:
 
 ```text
-PROJECT_ENTRYPOINT.md
+PROJECT.md
 PROJECT_STATE.md
 logs/latest.md
 ```
 
 Optional artifacts may exist, but they must not replace this minimum set.
 
-## PROJECT_ENTRYPOINT.md
+## PROJECT.md
 
 The entrypoint is the stable front door.
 
@@ -135,7 +135,7 @@ Update `PROJECT_STATE.md` and `logs/latest.md` after every meaningful step that 
 - active file set;
 - constraint or do-not-break rule.
 
-Update `PROJECT_ENTRYPOINT.md` only when the project front door would otherwise mislead a new executor.
+Update `PROJECT.md` only when the project front door would otherwise mislead a new executor.
 
 ## Executor Responsibility
 
@@ -157,7 +157,7 @@ Do not create empty folders or placeholder files just to satisfy ceremony.
 
 A project passes the transfer test if a new executor can read:
 
-1. `PROJECT_ENTRYPOINT.md`
+1. `PROJECT.md`
 2. `PROJECT_STATE.md`
 3. `logs/latest.md`
 

@@ -79,7 +79,7 @@ No mass agent creation.
 - `Start New Project.md` — new-initiative router only
 - `docs/PROJECT_LIFECYCLE_MODEL.md` — layer and source-of-truth decisions
 - `docs/MODE_CLASSIFIER.md` — choose the lightest correct mode
-- `docs/PROJECT_ENTRYPOINT_STANDARD.md` — front door for a specific project
+- `docs/PROJECT_ENTRYPOINT_STANDARD.md` — standard for a specific project's front door, using `PROJECT.md` for repository projects
 - `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md` — keep useful ideas without creating projects prematurely
 - `docs/WORKFLOW_CONTRACT.md` — workflow rules when work actually needs them
 - `docs/MICRO_TASK_MODE.md` — bounded small tasks

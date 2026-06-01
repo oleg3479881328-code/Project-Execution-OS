@@ -211,3 +211,5 @@ Review should check:
 The system must not depend on an AI reading everything.
 
 It must enable an AI to enter through one stable door, follow one live internal map and load the smallest trustworthy context sufficient for the current action.
+
+For project work, that means reading `PROJECT.md` first when it exists, then the project index if one exists, then only the minimum additional files needed for the task.

@@ -27,22 +27,22 @@ Apply this standard when a project needs one or more of the following:
 
 ## Optional Entrypoint Initialization vs Execution Structure
 
-Do not confuse an explicitly requested minimal project entrypoint with later execution structure.
+Do not confuse minimum real-project bootstrap with later execution structure.
 
-### Optional Minimal Entrypoint Structure
+### Minimum Real-Project Bootstrap Structure
 
-Only when the owner explicitly requests initialization of a transferable project folder entrypoint, use:
+When the owner intentionally creates a real new project folder, the minimum bootstrap uses:
 
 ```text
 AGENTS.md
-PROJECT_ENTRYPOINT.md
+PROJECT.md
 ```
 
-This optional action is defined by `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
+This bootstrap action is defined by `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
 
-It is not triggered automatically when a folder or Codex Desktop project is created or opened.
+It is not triggered automatically when a folder or Codex Desktop project is merely created or opened without intentionally starting real project work.
 
-Do not expand a new project with empty folders or ceremonial files during optional initialization.
+Do not expand a new project with empty folders or ceremonial files during bootstrap.
 
 ### Later Execution Structure
 
@@ -131,7 +131,7 @@ Example:
 
 A full-mode GitHub-backed project should contain:
 
-- `PROJECT_ENTRYPOINT.md`
+- `PROJECT.md`
 - `PROJECT_STATE.md`
 - `PROJECT_RULES.md`
 - `agents/` only when agent modules are actually required
@@ -148,7 +148,7 @@ Compact mode is preferred for small or low-risk technical projects.
 It may use a smaller structure, for example:
 
 ```text
-PROJECT_ENTRYPOINT.md
+PROJECT.md
 PROJECT_STATE.md
 logs/
 ```
@@ -164,7 +164,7 @@ or another minimal structure that still preserves:
 
 Compact mode must not hide important durable state in chat.
 
-## PROJECT_ENTRYPOINT.md
+## PROJECT.md
 
 This is the single front door for the GitHub-backed project.
 

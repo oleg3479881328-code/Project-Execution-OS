@@ -2379,3 +2379,22 @@ It must not become the full history, rules, or transcript archive.
 ## Next Action
 
 Use this standard on real `GitHub` and `Notion` projects and tighten the section set only if repeated onboarding gaps still appear.
+
+---
+
+## 2026-06-01 - PROJECT.md bootstrap migration
+
+Canonical local project entrypoint migrated from `PROJECT_ENTRYPOINT.md` to `PROJECT.md` across active standards, templates, and examples.
+
+New intentionally created real project folders now receive only the minimum bootstrap set:
+
+- `.git/`
+- `AGENTS.md`
+- `PROJECT.md`
+
+Reinforced bootstrap continuity rules now also include:
+
+- official communication-channel routing;
+- minimum-context reading;
+- stable-prefix behavior for accumulating files;
+- legacy fallback for old `PROJECT_ENTRYPOINT.md` projects without keeping two active front doors.

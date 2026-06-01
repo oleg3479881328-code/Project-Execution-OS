@@ -75,6 +75,7 @@ Project Execution OS
 ## Canonical Documents
 
 - `README.md`
+- `PROJECT.md`
 - `START_HERE.md`
 - `docs/ROUTER.md`
 - `Start New Project.md`
@@ -121,8 +122,10 @@ Project Execution OS
 - `skills/PROJECT_INDEX.md`
 - `skills/registry.md`
 - `workflow-templates/universal-project-v1/README.md`
-- `workflow-templates/project-entrypoint/GITHUB_PROJECT_ENTRYPOINT_TEMPLATE.md`
-- `workflow-templates/project-entrypoint/NOTION_PROJECT_ENTRYPOINT_TEMPLATE.md`
+- `workflow-templates/project-entrypoint/GITHUB_PROJECT_TEMPLATE.md`
+- `workflow-templates/project-entrypoint/NOTION_PROJECT_TEMPLATE.md`
+- `workflow-templates/project-bootstrap/AGENTS.md`
+- `workflow-templates/project-bootstrap/PROJECT.md`
 - `workflow-templates/incremental-reentry/`
 - `knowledge-library/README.md`
 - `knowledge-library/PROJECT_INDEX.md`
@@ -166,7 +169,7 @@ Public repositories should be treated as an explicit user choice, not the defaul
 Internal full-mode projects must contain:
 
 ```text
-PROJECT_ENTRYPOINT.md
+PROJECT.md
 PROJECT_STATE.md
 PROJECT_RULES.md
 agents/
@@ -207,7 +210,7 @@ Incremental re-entry for a GitHub-backed project should prefer delta-based readi
 
 `docs/INCREMENTAL_REENTRY_STANDARD.md`
 
-This adds a fast agent re-entry path through Git commits, `PROJECT_CHANGE_INDEX.md`, `CONTEXT_PACK.md`, and `agent-checkpoints/` instead of full repository rereads.
+This adds a fast agent re-entry path through `PROJECT.md`, Git commits, `PROJECT_CHANGE_INDEX.md`, `CONTEXT_PACK.md`, and `agent-checkpoints/` instead of full repository rereads.
 
 ## Knowledge Architecture
 

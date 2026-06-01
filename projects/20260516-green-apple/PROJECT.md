@@ -1,4 +1,4 @@
-# PROJECT ENTRYPOINT — Green Apple
+# PROJECT.md — Green Apple
 
 ## Project Name
 

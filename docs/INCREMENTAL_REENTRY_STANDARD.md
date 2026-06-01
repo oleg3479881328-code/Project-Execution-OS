@@ -22,7 +22,7 @@ Examples:
 ## Core Rule
 
 ```text
-PROJECT_ENTRYPOINT
+PROJECT.md
 → agent checkpoint
 → compare last_seen_commit..HEAD
 → PROJECT_CHANGE_INDEX
@@ -49,7 +49,7 @@ Read the delta first.
 
 `PROJECT_CHANGE_INDEX.md` helps explain the meaning of changes — смысл изменений — but it does not replace Git commits — коммиты Git — or canonical evidence — канонические подтверждения.
 
-`CONTEXT_PACK.md` helps speed up re-entry — ускоряет повторный вход — but it does not replace `PROJECT_ENTRYPOINT.md`, `PROJECT_STATE.md`, code, or commits.
+`CONTEXT_PACK.md` helps speed up re-entry — ускоряет повторный вход — but it does not replace `PROJECT.md`, `PROJECT_STATE.md`, code, or commits.
 
 An `agent checkpoint` — контрольная отметка агента — shows where one specific agent stopped. It is not the project source of truth.
 
@@ -58,7 +58,7 @@ Git remains the technical source of truth for file changes.
 ## Re-entry Workflow
 
 ```text
-1. Read PROJECT_ENTRYPOINT.md.
+1. Read PROJECT.md.
 2. Read agent checkpoint if present.
 3. Get last_seen_commit.
 4. Get current HEAD.
@@ -73,7 +73,8 @@ Git remains the technical source of truth for file changes.
 
 If no checkpoint exists:
 
-- read `PROJECT_ENTRYPOINT.md`;
+- read `PROJECT.md`;
+- if `PROJECT.md` is missing but legacy `PROJECT_ENTRYPOINT.md` exists, read the legacy file and migrate it at the nearest safe opportunity;
 - read only the minimum current state needed to start safely;
 - record the current `HEAD` as the first checkpoint;
 - do not read the whole repository without a real reason.
@@ -93,7 +94,7 @@ A full project read is allowed only when at least one of these is true:
 For a GitHub-backed project, the recommended minimal placement is:
 
 ```text
-PROJECT_ENTRYPOINT.md
+PROJECT.md
 PROJECT_STATE.md
 CONTEXT_PACK.md
 PROJECT_CHANGE_INDEX.md

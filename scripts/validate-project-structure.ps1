@@ -40,9 +40,14 @@ if (-not (Test-Path $projectsRoot)) {
 $projectDirs = Get-ChildItem -Path $projectsRoot -Directory
 
 foreach ($projectDir in $projectDirs) {
-    $entrypointPath = Join-Path $projectDir.FullName "PROJECT_ENTRYPOINT.md"
-    if (-not (Test-Path $entrypointPath)) {
+    $projectPath = Join-Path $projectDir.FullName "PROJECT.md"
+    $legacyEntrypointPath = Join-Path $projectDir.FullName "PROJECT_ENTRYPOINT.md"
+    if (-not (Test-Path $projectPath) -and -not (Test-Path $legacyEntrypointPath)) {
         continue
+    }
+
+    if ((Test-Path $projectPath) -and (Test-Path $legacyEntrypointPath)) {
+        Add-ErrorMessage $errors $projectDir.Name "both PROJECT.md and legacy PROJECT_ENTRYPOINT.md exist"
     }
 
     $statePath = Join-Path $projectDir.FullName "PROJECT_STATE.md"

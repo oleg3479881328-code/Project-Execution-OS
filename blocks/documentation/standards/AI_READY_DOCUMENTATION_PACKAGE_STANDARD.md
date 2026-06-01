@@ -9,7 +9,7 @@ This standard defines the default output package for repository-focused document
 The default AI-ready documentation package contains:
 
 - `README.md`
-- `PROJECT_ENTRYPOINT.md`
+- `PROJECT.md`
 - `PROJECT_STATE.md`
 - `PROJECT_RULES.md`
 - `docs/CODEX_HANDOFF.md`
@@ -35,7 +35,7 @@ Should explain:
 - the highest-signal repository map;
 - where deeper maintainer docs live.
 
-### PROJECT_ENTRYPOINT.md
+### PROJECT.md
 
 The fast maintainer entry document.
 

@@ -1,4 +1,6 @@
-Read `START_HERE.md` first for any project-related work in this repository.
+Read `PROJECT.md` first for any project-related work in this repository.
+
+Then read `START_HERE.md` for central system routing.
 
 This repository is itself governed by `Project Execution OS`.
 

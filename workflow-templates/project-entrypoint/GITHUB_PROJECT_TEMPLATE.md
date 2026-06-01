@@ -1,4 +1,4 @@
-# PROJECT_ENTRYPOINT.md Template
+# PROJECT.md Template
 
 ## Project
 

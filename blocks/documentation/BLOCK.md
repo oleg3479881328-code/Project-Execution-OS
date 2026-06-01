@@ -42,7 +42,7 @@ Typical inputs:
 
 Typical outputs:
 - `README.md`
-- `PROJECT_ENTRYPOINT.md`
+- `PROJECT.md`
 - `PROJECT_STATE.md`
 - `PROJECT_RULES.md`
 - `docs/CODEX_HANDOFF.md`

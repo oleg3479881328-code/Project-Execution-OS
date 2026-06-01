@@ -2,24 +2,25 @@
 
 ## Status
 
-Automatic Codex Desktop bootstrap is withdrawn.
+Automatic bootstrap for every opened folder is still withdrawn.
 
-Project-folder initialization is now an on-demand action only. Use `docs/PROJECT_BOOTSTRAP_STANDARD.md` only after an explicit owner request to initialize a folder under Project Execution OS.
+Intentional creation of a real new project folder now triggers the minimum project bootstrap defined by `docs/PROJECT_BOOTSTRAP_STANDARD.md`.
 
 ## Current Rule
 
-Creating or opening a folder or Codex Desktop project does not automatically require `AGENTS.md` or `PROJECT_ENTRYPOINT.md`.
+Creating or opening a folder or Codex Desktop project does not automatically require project files.
 
-When explicitly requested, minimal initialization may create:
+When the owner intentionally creates a real new project folder, the minimum bootstrap creates:
 
 ```text
+git init
 AGENTS.md
-PROJECT_ENTRYPOINT.md
+PROJECT.md
 ```
 
 ## Reason
 
-The automatic bootstrap experiment introduced unwanted overhead and complexity. The preferred model is lightweight and explicit.
+The previous broad automatic bootstrap experiment introduced unwanted overhead and complexity. The preferred model is narrow, intentional, and minimal.
 
 ## Preserved Principle
 

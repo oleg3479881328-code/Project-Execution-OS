@@ -170,7 +170,7 @@ For incremental re-entry — инкрементальный повторный �
 
 `docs/INCREMENTAL_REENTRY_STANDARD.md`
 
-That standard defines how `PROJECT_ENTRYPOINT.md`, Git diff, `PROJECT_CHANGE_INDEX.md`, `CONTEXT_PACK.md`, and `agent-checkpoints/` work together without replacing Git as technical truth.
+That standard defines how `PROJECT.md`, legacy `PROJECT_ENTRYPOINT.md` when still being migrated, Git diff, `PROJECT_CHANGE_INDEX.md`, `CONTEXT_PACK.md`, and `agent-checkpoints/` work together without replacing Git as technical truth.
 
 Do not impose this repository's full internal structure on every GitHub-backed project.
 

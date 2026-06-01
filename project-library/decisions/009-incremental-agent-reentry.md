@@ -11,7 +11,7 @@ Adopt incremental re-entry as the default MVP pattern for agent continuation in 
 ## Core Rule
 
 ```text
-PROJECT_ENTRYPOINT.md
+PROJECT.md
 → agent checkpoint
 → last_seen_commit..HEAD
 → PROJECT_CHANGE_INDEX.md
