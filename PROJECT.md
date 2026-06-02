@@ -16,26 +16,32 @@
 - This repository is the committed source of truth for `Project Execution OS` standards, templates, skills, and reusable repository artifacts.
 - `START_HERE.md` is the stable system door.
 - `docs/ROUTER.md` is the live internal map.
+- `PROJECT_STATE.md` and `logs/latest.md` preserve the current active continuity state for executor handoff.
 
 ## Current Status
 
 - Mode: `document-first`
 - Phase: `foundation`
-- Status: `bootstrap and PROJECT.md migration reviewed and adopted`
+- Status: `transfer-ready central project`
 
 ## Done So Far
 
 - Established `START_HERE.md` as the stable top-level entrypoint.
 - Split live routing into `docs/ROUTER.md`.
 - Built central standards for lifecycle, context assembly, repository memory, review, research, handoff, and bootstrap.
+- Migrated the canonical local project entrypoint to `PROJECT.md`.
+- Adopted lightweight standalone bootstrap: local Git, `AGENTS.md`, and `PROJECT.md`.
+- Confirmed separate handling for internal subprojects without nested Git by default.
+- Smoke-tested the bootstrap model with temporary project `Test123`; the owner reports that the test project was deleted after validation.
+- Added root `PROJECT_STATE.md` and `logs/latest.md` so this central project complies with its own active continuity standard.
 
 ## Current Focus
 
-- Keep central standards internally consistent while making real-project bootstrap lightweight and safe.
+- Keep the central system internally consistent and transfer-ready after every meaningful change.
 
 ## Next Practical Step
 
-- Validate the new bootstrap model on the next intentionally created real project.
+- Await the owner's next bounded central-system task.
 
 ## Key Decisions And Constraints
 
@@ -44,11 +50,13 @@
 - `PROJECT.md` is the canonical local project entrypoint for GitHub-backed and file-executed projects.
 - `PROJECT_INDEX.md` remains an index and must not replace the role of `PROJECT.md`.
 - Local Git is the default bootstrap for real project folders; GitHub, Notion, and Google Drive are attached only when they are actually needed.
+- Active projects must maintain `PROJECT_STATE.md` and `logs/latest.md` after meaningful changes.
 
 ## Read Next
 
 1. `START_HERE.md`
 2. `docs/ROUTER.md`
-3. `PROJECT_INDEX.md`
-4. `docs/PROJECT_BOOTSTRAP_STANDARD.md`
-5. `docs/PROJECT_ENTRYPOINT_STANDARD.md`
+3. `PROJECT_STATE.md`
+4. `logs/latest.md`
+5. `PROJECT_INDEX.md` only when broader navigation is needed
+6. routed standards only when the active task requires them

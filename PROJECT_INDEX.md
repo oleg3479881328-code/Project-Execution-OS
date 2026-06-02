@@ -47,12 +47,14 @@ Mode:
 
 Status:
 
-`foundation_candidate`
+`transfer_ready`
 
 ## Canonical Documents
 
 - `README.md`
 - `PROJECT.md`
+- `PROJECT_STATE.md`
+- `logs/latest.md`
 - `START_HERE.md`
 - `docs/ROUTER.md`
 - `Start New Project.md`
@@ -157,8 +159,10 @@ logs/latest.md
 
 ## Current Status
 
-Foundation initialized as committed repository artifacts.
+The central repository is an active transfer-ready project with committed continuity artifacts.
+
+The lightweight bootstrap model was smoke-tested with temporary project `Test123`; the owner reports that the temporary test project has been deleted.
 
 ## Next Required Action
 
-Validate the adopted bootstrap model on the next intentionally created real project.
+Await the owner's next bounded central-system task.
