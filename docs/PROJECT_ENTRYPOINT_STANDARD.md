@@ -183,6 +183,24 @@ This form should point to:
 
 In initialization-only state, those deeper artifacts may legitimately not exist yet.
 
+## Optional Deployment Metadata
+
+If the project is deployable and static/frontend in nature, the entrypoint may include an optional deployment metadata block.
+
+Record these fields when they are relevant:
+
+- `deployment_provider`
+- `github_repo`
+- `production_branch`
+- `build_command`
+- `output_directory`
+- `production_url`
+- `preview_url`
+- `custom_domain`
+- `deployment_status`
+
+If deployment is not set up yet, unknown values may remain explicit rather than guessed.
+
 ## Legacy Migration Rule
 
 For repository projects:

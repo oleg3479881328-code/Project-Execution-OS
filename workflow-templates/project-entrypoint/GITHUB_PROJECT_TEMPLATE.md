@@ -18,6 +18,18 @@
 - Secondary workspace if any:
 - System entry point: `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
 
+## Optional Deployment Metadata
+
+- deployment_provider:
+- github_repo:
+- production_branch:
+- build_command:
+- output_directory:
+- production_url:
+- preview_url:
+- custom_domain:
+- deployment_status:
+
 ## Current Status
 
 - Mode:

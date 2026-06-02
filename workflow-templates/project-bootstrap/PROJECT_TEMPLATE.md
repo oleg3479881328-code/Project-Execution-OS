@@ -25,6 +25,18 @@
 - Current source of truth: this `PROJECT.md` file plus the central `Project Execution OS` standards.
 - No project-specific durable system has been confirmed yet.
 
+## Optional Deployment Metadata
+
+- deployment_provider:
+- github_repo:
+- production_branch:
+- build_command:
+- output_directory:
+- production_url:
+- preview_url:
+- custom_domain:
+- deployment_status:
+
 ## Current Status
 
 - Status: `initialized — purpose not yet defined`
