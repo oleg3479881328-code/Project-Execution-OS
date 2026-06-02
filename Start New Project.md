@@ -15,17 +15,27 @@ First determine what the user is actually doing:
 - exploring or discussing an idea only -> `docs/MODE_CLASSIFIER.md`
 - preserving an idea or reference without starting a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - explicitly starting project work -> `docs/PROJECT_LIFECYCLE_MODEL.md` and `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
-- explicitly requesting a minimal project folder entrypoint -> `docs/PROJECT_BOOTSTRAP_STANDARD.md`, then `docs/PROJECT_ENTRYPOINT_STANDARD.md`
+- explicitly starting a real project -> `docs/PROJECT_BOOTSTRAP_STANDARD.md`, then `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - continuing an existing project -> its current project entrypoint; if missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - handing an already-defined execution task to Codex -> `docs/CODEX_HANDOFF_STANDARD.md`
 
-## No Automatic Folder Mutation Rule
+## Bootstrap Boundary
 
 Creating or opening a folder, workspace, or Codex Desktop project does not automatically create project files under Project Execution OS.
 
-Do not automatically create `AGENTS.md`, `PROJECT_ENTRYPOINT.md`, or other project artifacts solely because a new folder exists.
+When the owner intentionally creates a standalone real project folder, initialize it immediately with:
 
-Minimal project initialization is performed only when the user explicitly requests it.
+```text
+git init
+AGENTS.md
+PROJECT.md
+```
+
+When the owner intentionally creates an internal subproject inside an existing Git repository, do not run nested `git init`; create `PROJECT.md` and add `AGENTS.md` only if local subproject instructions are useful.
+
+Do not create these artifacts solely because a new folder exists, a workspace is opened, or an idea is being discussed.
+
+Do not automatically create any additional project artifacts beyond that minimum bootstrap set.
 
 ## Minimum Question
 

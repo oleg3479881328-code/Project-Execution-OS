@@ -1,4 +1,4 @@
-# PROJECT_ENTRYPOINT.md
+# PROJECT.md
 
 ## Project
 
@@ -22,7 +22,7 @@
 
 ## Source Of Truth
 
-- Current source of truth: this bootstrap entrypoint plus the central `Project Execution OS` standards.
+- Current source of truth: this `PROJECT.md` file plus the central `Project Execution OS` standards.
 - No project-specific durable system has been confirmed yet.
 
 ## Current Status
@@ -42,6 +42,7 @@
 
 - Purpose is unknown and must not be invented.
 - Architecture, stack, tooling, persistence layers, implementation plan, and scope are not yet confirmed.
+- The project has received the minimum bootstrap appropriate for its location.
 - After the task is defined, check for adequate existing solutions before custom implementation.
 
 ## Read Next

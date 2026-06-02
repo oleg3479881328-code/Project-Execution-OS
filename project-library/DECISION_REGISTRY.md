@@ -70,7 +70,7 @@ Expected context sequence when applicable:
 CORE_SYSTEM_PROMPT
 → START_HERE.md
 → relevant system standard selected by route
-→ PROJECT_ENTRYPOINT.md for a specific project, when applicable
+→ PROJECT.md for a specific project, when applicable
 → minimum task-relevant files/evidence
 → relevant reusable knowledge only when needed
 → current instruction, error, log or live input

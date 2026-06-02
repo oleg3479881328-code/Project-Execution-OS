@@ -19,7 +19,7 @@ Project id:
 
 ## Artifacts Changed
 
-- `PROJECT_ENTRYPOINT.md`
+- `PROJECT.md`
 - `PROJECT_STATE.md`
 - `PROJECT_RULES.md`
 - `project-library/README.md`

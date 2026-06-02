@@ -29,7 +29,7 @@ It is the shortest reliable way to enter the project without re-deriving context
 
 Use the same contract in two environment-specific forms:
 
-- `GitHub / repository projects` -> `PROJECT_ENTRYPOINT.md`
+- `GitHub / repository projects` -> `PROJECT.md`
 - `Notion / workspace-first projects` -> `Project Entrypoint` page or top section
 
 The medium may differ.
@@ -172,7 +172,7 @@ The entrypoint remains the front door.
 
 ### GitHub Form
 
-Use `PROJECT_ENTRYPOINT.md` in the repository root or project root.
+Use `PROJECT.md` in the repository root or project root.
 
 This form should point to:
 
@@ -182,6 +182,17 @@ This form should point to:
 - latest project log
 
 In initialization-only state, those deeper artifacts may legitimately not exist yet.
+
+## Legacy Migration Rule
+
+For repository projects:
+
+- if `PROJECT.md` exists, use it as the canonical project entrypoint;
+- if `PROJECT.md` is absent but `PROJECT_ENTRYPOINT.md` exists, treat `PROJECT_ENTRYPOINT.md` as a legacy name;
+- read that legacy file temporarily;
+- migrate it to `PROJECT.md` at the nearest safe opportunity;
+- update project links and references during that migration;
+- do not keep both `PROJECT.md` and `PROJECT_ENTRYPOINT.md` active at the same time.
 
 ### Notion Form
 
