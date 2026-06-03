@@ -31,6 +31,8 @@ Only after the channel is selected, open the narrowest relevant nested standard 
 
 When an active GitHub-backed project contains `AI_COORDINATION_STATE.md`, treat that file as the compact operational snapshot for channel continuation.
 
+When the project also contains `AI_COORDINATION_LOG.md`, treat it as the append-only chronological journal of meaningful coordination events.
+
 ## Route
 
 ```text
@@ -58,15 +60,21 @@ Use it to choose among:
 
 ### Compact coordination state
 
-When an active GitHub-backed project contains a root-level coordination snapshot, open:
+When an active GitHub-backed project contains root-level coordination files, open:
 
-`AI_COORDINATION_STATE.md`
+```text
+AI_COORDINATION_STATE.md
+AI_COORDINATION_LOG.md
+```
 
 Use:
 
-`docs/AI_COORDINATION_STATE_STANDARD.md`
+```text
+docs/AI_COORDINATION_STATE_STANDARD.md
+docs/AI_COORDINATION_LOG_STANDARD.md
+```
 
-for the canonical file format, update triggers, reading order, and channel-migration rule.
+for the canonical file formats, update triggers, reading order, append-only rule, and channel-migration rule.
 
 ### GitHub-based ChatGPT / Codex collaboration
 
@@ -107,6 +115,7 @@ read AI_COORDINATION_STATE.md
 → open its Active Channel
 → read latest relevant incoming comments
 → inspect latest repository commit or PR state
+→ read AI_COORDINATION_LOG.md only when historical context is required
 → continue from Next Step
 ```
 
