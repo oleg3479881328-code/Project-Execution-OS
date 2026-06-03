@@ -6,15 +6,16 @@ This standard defines the compact operational state file used during multi-agent
 
 The file prevents long GitHub issues, pull-request threads, or chat trails from becoming the only readable coordination memory.
 
-## Canonical File
+## Canonical Files
 
-For an active GitHub-backed project, use a root-level file named:
+For an active GitHub-backed project, use two root-level files:
 
 ```text
 AI_COORDINATION_STATE.md
+AI_COORDINATION_LOG.md
 ```
 
-Use this file when two or more participants coordinate technical work through GitHub or another durable project channel and the active thread may become too long, fragmented, or hard to resume reliably.
+Use these files when two or more participants coordinate technical work through GitHub or another durable project channel and the active thread may become too long, fragmented, or hard to resume reliably.
 
 ## Core Split
 
@@ -23,16 +24,23 @@ GitHub issue / PR / review thread
 -> message transport and durable discussion trail
 
 AI_COORDINATION_STATE.md
--> compact operational state snapshot
+-> compact current operational snapshot
+-> replace in place when the current state changes
+
+AI_COORDINATION_LOG.md
+-> append-only chronological event journal
+-> append meaningful events at the bottom only
 ```
 
 Do not use `AI_COORDINATION_STATE.md` as a full transcript.
 
-Do not copy every comment into the file.
+Do not use `AI_COORDINATION_LOG.md` as a copied chat trail.
 
-## Required Contents
+Do not copy every comment into either file.
 
-The file should contain only the minimum durable coordination state:
+## Snapshot Contents
+
+`AI_COORDINATION_STATE.md` should contain only the minimum durable current state:
 
 ```text
 Project
@@ -50,7 +58,7 @@ Update Rule
 Reading Rule
 ```
 
-## Update Triggers
+## Snapshot Update Triggers
 
 Update `AI_COORDINATION_STATE.md` only after a meaningful state transition:
 
@@ -63,19 +71,54 @@ Update `AI_COORDINATION_STATE.md` only after a meaningful state transition:
 
 Do not update it for every short coordination message.
 
+## Append-Only Log Rule
+
+`AI_COORDINATION_LOG.md` is governed by:
+
+`docs/AI_COORDINATION_LOG_STANDARD.md`
+
+Existing log entries must not be rewritten, reordered, deleted, compressed, or silently corrected.
+
+New meaningful events are appended at the bottom only.
+
+If an earlier entry contains an error, append a correction event at the bottom.
+
+Do not rewrite history.
+
+## Event And Snapshot Write Order
+
+After a meaningful transition:
+
+```text
+append event to AI_COORDINATION_LOG.md
+-> update AI_COORDINATION_STATE.md if the current operational state changed
+-> keep the active Issue / PR / review thread as message transport
+```
+
+The log is chronological history.
+
+The snapshot is current operational state.
+
+The GitHub thread is the durable discussion trail.
+
+Do not merge these roles.
+
 ## Reading Rule
 
-Before resuming AI-to-AI coordination in an existing project, especially when processing shorthand command `02`, read in this order when the file exists:
+Before resuming AI-to-AI coordination in an existing project, especially when processing shorthand command `02`, read in this order when the files exist:
 
 ```text
 AI_COORDINATION_STATE.md
 -> Active Channel
 -> latest relevant comments in the active channel
 -> latest repository commit or PR state
+-> AI_COORDINATION_LOG.md only when historical context is required
 -> Next Step
 ```
 
-Do not assume the newest issue or the longest thread is the active channel. Use the file's `Active Channel` field.
+Do not read the whole append-only log by default when the snapshot is sufficient.
+
+Do not assume the newest issue or the longest thread is the active channel. Use the snapshot's `Active Channel` field.
 
 ## Channel Migration Rule
 
@@ -83,6 +126,7 @@ When an issue, pull request, or review thread becomes too long or unreliable to 
 
 ```text
 create a new continuation channel
+-> append a Channel Migration event to AI_COORDINATION_LOG.md
 -> record the new channel in AI_COORDINATION_STATE.md
 -> move old channel into Previous Channels
 -> post a migration notice in the old channel
@@ -95,15 +139,17 @@ Do not continue posting new execution reports into an archived channel.
 
 Keep generated state and executed state separate.
 
-A file update proves that the snapshot exists in repository history.
+A snapshot update proves that the snapshot exists in repository history.
 
-It does not prove that code changes, validations, or runtime behavior are correct.
+A log append proves that an event record exists in repository history.
+
+Neither proves that code changes, validations, or runtime behavior are correct.
 
 Record commit SHAs and validation evidence separately.
 
 ## Model-Neutral Rule
 
-The file must remain model-neutral and vendor-neutral.
+The files must remain model-neutral and vendor-neutral.
 
 The executor may be:
 
@@ -118,7 +164,9 @@ The reviewer may also be any explicitly named review-capable participant.
 
 ## Scope Boundary
 
-Use this file only for active coordination state.
+Use `AI_COORDINATION_STATE.md` only for current operational coordination state.
+
+Use `AI_COORDINATION_LOG.md` only for meaningful chronological coordination events.
 
 Do not store:
 
@@ -131,84 +179,11 @@ Do not store:
 
 Store large technical artifacts in the appropriate project files and send only short references through the active channel.
 
-## Minimal Template
-
-```markdown
-# AI Coordination State
-
-## Project
-
-<project name>
-
-## Purpose
-
-Compact operational state for AI-to-AI coordination.
-
-## Active Channel
-
-<exact GitHub issue / PR / review-thread URL>
-
-## Previous Channels
-
-- <old channel and reason for migration>
-
-## Active Participants
-
-- Owner:
-- Reviewer:
-- Executor Agent:
-
-## Current Task
-
-<one bounded task>
-
-## Current Repository State
-
-Latest reviewed commit:
-
-`<sha>`
-
-Current review status:
-
-`<status>`
-
-## Accepted Changes
-
-- <accepted item>
-
-## Open Review Items
-
-- <open item>
-
-## Next Step
-
-<one next action>
-
-## Required Validation
-
-```text
-<commands and manual checks>
-```
-
-## Update Rule
-
-Update only after a meaningful state transition.
-
-## Reading Rule
-
-```text
-read AI_COORDINATION_STATE.md
--> open Active Channel
--> read latest relevant comments
--> inspect latest repository commit
--> continue from Next Step
-```
-```
-
 ## Relationship To Other Standards
 
 Use together with:
 
+- `docs/AI_COORDINATION_LOG_STANDARD.md`;
 - `blocks/communication-channel/BLOCK.md`;
 - `docs/AI_COORDINATION_HUB_STANDARD.md`;
 - `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`;
@@ -218,6 +193,8 @@ Use together with:
 
 Use GitHub threads for transport.
 
-Use `AI_COORDINATION_STATE.md` for compact operational state.
+Use `AI_COORDINATION_STATE.md` for compact current state.
+
+Use `AI_COORDINATION_LOG.md` for append-only chronological history.
 
 Do not allow a long message thread to become the only resumable project memory.
