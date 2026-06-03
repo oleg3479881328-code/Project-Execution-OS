@@ -65,19 +65,22 @@ Use the optional cross-repository hub when a durable direct agent-to-agent threa
 
 GitHub is an execution and review channel for GitHub-backed work, not the default home for all project communication.
 
-## Compact Coordination State Snapshot
+## Compact Coordination State Snapshot And Append-Only Log
 
-When a GitHub-backed project has a multi-step AI-to-AI execution or review loop, use a root-level file:
+When a GitHub-backed project has a multi-step AI-to-AI execution or review loop, use two root-level files:
 
 ```text
 AI_COORDINATION_STATE.md
+AI_COORDINATION_LOG.md
 ```
 
-This file is the compact operational snapshot.
+`AI_COORDINATION_STATE.md` is the compact current operational snapshot.
+
+`AI_COORDINATION_LOG.md` is the append-only chronological journal of meaningful coordination events.
 
 The GitHub issue, pull request, or review thread remains the message transport and durable discussion trail.
 
-The snapshot file stores only:
+The snapshot stores only:
 
 - the active channel;
 - previous channels;
@@ -89,32 +92,55 @@ The snapshot file stores only:
 - one next step;
 - required validation.
 
-Do not copy the full discussion history into the file.
+The log stores only meaningful chronological events.
 
-Update the snapshot only after a meaningful state transition:
+New log entries are appended at the bottom only.
+
+Do not rewrite, reorder, delete, compress, or silently correct prior log entries.
+
+If an earlier log entry is wrong, append a correction event at the bottom.
+
+Do not copy the full discussion history into either file.
+
+After a meaningful state transition:
+
+```text
+append event to AI_COORDINATION_LOG.md
+-> update AI_COORDINATION_STATE.md if current operational state changed
+-> keep the active Issue / PR / review thread as message transport
+```
+
+Update the snapshot and append to the log for:
 
 - communication-channel migration;
 - meaningful implementation commit;
 - accepted review;
+- blocked review with actionable revision;
 - new blocker;
+- blocker resolution;
 - scope change;
-- completed task.
+- completed task;
+- important reusable workflow lesson.
 
-Before processing `02` in an active GitHub-backed project, read in this order when the file exists:
+Before processing `02` in an active GitHub-backed project, read in this order when the files exist:
 
 ```text
 AI_COORDINATION_STATE.md
 -> Active Channel
 -> latest relevant comments
 -> latest repository commit or PR state
+-> AI_COORDINATION_LOG.md only when historical context is required
 -> Next Step
 ```
 
 Use:
 
-`docs/AI_COORDINATION_STATE_STANDARD.md`
+```text
+docs/AI_COORDINATION_STATE_STANDARD.md
+docs/AI_COORDINATION_LOG_STANDARD.md
+```
 
-for the canonical file format and migration rule.
+for the canonical file formats and migration rule.
 
 ## Optional Cross-Repository Hub
 
@@ -165,7 +191,8 @@ Keep coordination messages short.
 If material is substantial:
 
 - store readable project management state in Notion when appropriate;
-- store compact operational coordination state in `AI_COORDINATION_STATE.md` when a GitHub-backed project has a multi-step agent loop;
+- store compact operational coordination state in `AI_COORDINATION_STATE.md`;
+- append meaningful chronological coordination events to `AI_COORDINATION_LOG.md`;
 - store technical artifacts and execution evidence in the relevant GitHub repository when a GitHub layer exists;
 - store heavy source files in Google Drive when a Drive layer exists;
 - send only the short status and reference through the coordination channel.
@@ -201,8 +228,9 @@ If material is substantial:
 - a GitHub issue became too long for reliable connector reading;
 - a continuation issue became the new active transport;
 - `AI_COORDINATION_STATE.md` was added at repository root;
-- the file preserved accepted changes, open review items, validation checks and one next step;
-- future coordination resumed from the snapshot instead of relying on the full old thread.
+- `AI_COORDINATION_LOG.md` was added as the append-only meaningful-event journal;
+- future coordination resumed from the snapshot instead of relying on the full old thread;
+- chronological coordination history remained readable without bloating the snapshot.
 
 ## Bidirectional Coordination Commands
 
@@ -212,8 +240,8 @@ These shorthand commands control communication only:
 - when Oleg sends `01` to `ChatGPT`, `ChatGPT` writes to the currently targeted connected agent through that agent's registered active channel.
 - when Oleg sends `01` to `Codex` or `DeepSeek`, that agent writes to `ChatGPT` through its active registered channel.
 - `02` = read the latest relevant incoming message from the other AI through the active coordination channel and respond based on its actual content.
-- when Oleg sends `02` to `ChatGPT`, `ChatGPT` reads `AI_COORDINATION_STATE.md` first when it exists, then reads the targeted connected agent's message through the recorded active channel.
-- when Oleg sends `02` to `Codex` or `DeepSeek`, that agent reads `AI_COORDINATION_STATE.md` first when it exists, then reads `ChatGPT`'s message through the recorded active channel.
+- when Oleg sends `02` to `ChatGPT`, `ChatGPT` reads `AI_COORDINATION_STATE.md` first when it exists, then reads the targeted connected agent's message through the recorded active channel, and opens `AI_COORDINATION_LOG.md` only when historical context is required.
+- when Oleg sends `02` to `Codex` or `DeepSeek`, that agent follows the same order.
 - `01` and `02` do not by themselves approve destructive or scope-changing actions.
 
 ## Final Rule
@@ -222,6 +250,8 @@ Notion comments are the lightweight coordination path when readable ongoing comm
 
 GitHub is used when coordination is inseparable from repository execution or review, or when the required Notion-comments transport is unavailable to a participating agent.
 
-Use `AI_COORDINATION_STATE.md` when a GitHub-backed multi-step agent loop needs compact resumable state.
+Use `AI_COORDINATION_STATE.md` for compact current state.
+
+Use `AI_COORDINATION_LOG.md` for append-only chronological history.
 
 Do not create or use a heavier communication structure unless real work proves it necessary.
