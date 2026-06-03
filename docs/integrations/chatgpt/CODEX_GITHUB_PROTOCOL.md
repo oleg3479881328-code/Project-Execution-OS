@@ -18,6 +18,22 @@ Use this nested protocol when:
 - GitHub issue, pull request, or review thread will carry the task;
 - durable GitHub-based multi-agent coordination is needed.
 
+## Compact Coordination State
+
+When the target repository contains:
+
+`AI_COORDINATION_STATE.md`
+
+read it before opening the active GitHub issue, pull request, or review thread.
+
+Use:
+
+`docs/AI_COORDINATION_STATE_STANDARD.md`
+
+for the canonical snapshot format, update triggers, reading order, and channel-migration rule.
+
+This snapshot does not replace GitHub comments, commits, PR diffs, or validation evidence.
+
 ## Canonical Protocol
 
 The canonical full protocol currently lives here:
@@ -36,6 +52,7 @@ Use that document for:
 ## Related Artifacts
 
 - `blocks/communication-channel/BLOCK.md`
+- `docs/AI_COORDINATION_STATE_STANDARD.md`
 - `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
 - `docs/AI_COORDINATION_HUB_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
