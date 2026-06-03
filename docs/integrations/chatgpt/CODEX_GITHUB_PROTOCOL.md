@@ -18,21 +18,39 @@ Use this nested protocol when:
 - GitHub issue, pull request, or review thread will carry the task;
 - durable GitHub-based multi-agent coordination is needed.
 
-## Compact Coordination State
+## Compact Coordination State And Append-Only Log
 
 When the target repository contains:
 
-`AI_COORDINATION_STATE.md`
+```text
+AI_COORDINATION_STATE.md
+AI_COORDINATION_LOG.md
+```
 
-read it before opening the active GitHub issue, pull request, or review thread.
+read `AI_COORDINATION_STATE.md` before opening the active GitHub issue, pull request, or review thread.
+
+Read `AI_COORDINATION_LOG.md` only when historical coordination context is required.
 
 Use:
 
-`docs/AI_COORDINATION_STATE_STANDARD.md`
+```text
+docs/AI_COORDINATION_STATE_STANDARD.md
+docs/AI_COORDINATION_LOG_STANDARD.md
+```
 
-for the canonical snapshot format, update triggers, reading order, and channel-migration rule.
+for the canonical snapshot format, append-only log rule, update triggers, reading order, and channel-migration rule.
 
-This snapshot does not replace GitHub comments, commits, PR diffs, or validation evidence.
+The snapshot does not replace GitHub comments, commits, PR diffs, or validation evidence.
+
+The append-only log does not replace the snapshot or the active GitHub discussion surface.
+
+After a meaningful coordination transition:
+
+```text
+append event to AI_COORDINATION_LOG.md
+-> update AI_COORDINATION_STATE.md if current operational state changed
+-> keep the active Issue / PR / review thread as message transport
+```
 
 ## Canonical Protocol
 
@@ -53,6 +71,7 @@ Use that document for:
 
 - `blocks/communication-channel/BLOCK.md`
 - `docs/AI_COORDINATION_STATE_STANDARD.md`
+- `docs/AI_COORDINATION_LOG_STANDARD.md`
 - `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
 - `docs/AI_COORDINATION_HUB_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
