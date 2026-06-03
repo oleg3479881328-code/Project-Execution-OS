@@ -38,7 +38,7 @@ Do not append an unrelated next-project question after answering the active requ
 - central knowledge capture, promotion, review, selective loading or retirement -> `docs/KNOWLEDGE_SYSTEM.md`
 - repository-memory question for this system or a GitHub-backed project -> `docs/REPOSITORY_MEMORY_STANDARD.md`
 - system-context profile identity, fingerprint or compatibility question -> `docs/SYSTEM_CONTEXT_VERSION_STANDARD.md`
-- API token usage, cost or provider cache measurement -> `docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md`
+- any API-based AI model integration, API token usage, cost analysis, prompt-cache design, or provider cache measurement -> `knowledge-library/execution-standards/api-model-runtime-cache-gate.md` -> `docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md`
 
 ## Boundary
 

@@ -55,6 +55,29 @@ Execution Report Contract:
 
 This is the default next artifact whenever the task is clearly Codex-bound and executor access is now the missing step.
 
+For any API-based AI model integration, the handoff packet - пакет передачи задачи - must also include the complete block:
+
+```text
+API Model Runtime Check
+
+Provider:
+Model:
+API-based AI model: Yes / No
+Prompt caching supported: Yes / No / Unknown
+Usage fields available:
+Cache-hit fields available:
+Cache-miss fields available:
+Stable prefix ordering preserved: Yes / No / Not Applicable
+Runtime logging implemented: Yes / No
+If not implemented, blocker or reason:
+```
+
+For tasks not involving an API-based AI model integration, this line is allowed:
+
+```text
+API Model Runtime Check: Not Applicable
+```
+
 ## Packet Lite
 
 Use this when the task is narrow, low-risk, and bounded to a few files:
@@ -72,6 +95,8 @@ Return:
 ```
 
 For architecture, implementation, configuration, debugging, automation, and integration work, `Existing Solution Search Required` defaults to `Yes` unless there is a stated reason otherwise.
+
+The same API Model Runtime Check requirement applies to `CODEX PACKET LITE` whenever the task includes an API-based AI model integration.
 
 ## Execution Report
 
@@ -91,6 +116,14 @@ Blockers:
 Assumptions Made:
 Risks / Follow-Up:
 Ready For Review: Yes / No
+```
+
+For any API-based AI model integration, the execution report - отчёт исполнителя - must also answer the complete `API Model Runtime Check` block.
+
+For tasks not involving an API-based AI model integration, this line is allowed:
+
+```text
+API Model Runtime Check: Not Applicable
 ```
 
 ## Evidence Rule

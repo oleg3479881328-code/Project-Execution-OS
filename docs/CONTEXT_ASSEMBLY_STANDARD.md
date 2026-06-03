@@ -163,6 +163,10 @@ Only reviewed and relevant knowledge should be loaded as active reusable guidanc
 
 ## API And Cache-Aware Extension
 
+Use the active gate:
+
+- `knowledge-library/execution-standards/api-model-runtime-cache-gate.md`
+
 When an API-based orchestrator is later used, the context package should be assembled deterministically where practical:
 
 ```text
@@ -178,7 +182,11 @@ stable system instruction
 
 For prefix-caching providers, this ordering can increase reuse of stable leading content. It must not be treated as permanent memory or guaranteed cache reuse.
 
-An API implementation should, where available, log:
+This extension remains model-neutral. It applies to API-based AI model providers that expose comparable runtime usage or cache behavior, not only to a single vendor.
+
+When runtime usage or cache fields are available from the provider, an API implementation must log them.
+
+An API implementation must, where available, log:
 
 - model and provider;
 - system/context version or commit reference;

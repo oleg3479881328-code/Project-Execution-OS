@@ -29,6 +29,17 @@ Possible outcomes:
 - blocked;
 - reject.
 
+## Blocking API-Model Rule
+
+An API-based AI model integration is not acceptable if the `API Model Runtime Check` is:
+
+- missing;
+- present but not filled in;
+- contradicted by the implementation evidence;
+- bypassed while available provider usage or cache fields are silently ignored.
+
+Ordinary non-model APIs such as Azure Translator do not fall under this mandatory gate unless they expose comparable AI model runtime usage or cache fields and the task is explicitly operating as an API-based AI model integration.
+
 ## Review Evidence
 
 Review must distinguish:
@@ -40,6 +51,12 @@ Review must distinguish:
 A commit alone is not enough.
 
 Validation and artifact inspection still matter.
+
+For API-based AI model integrations, review must also check:
+
+- whether the `API Model Runtime Check` was included in the handoff and execution report;
+- whether official provider documentation was checked when runtime or cache support was unknown;
+- whether exposed usage, cost, cache-hit, or cache-miss fields were logged instead of silently discarded.
 
 ## Micro-Task Mode
 
