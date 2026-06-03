@@ -29,6 +29,8 @@ First select the active communication channel.
 
 Only after the channel is selected, open the narrowest relevant nested standard or protocol.
 
+When an active GitHub-backed project contains `AI_COORDINATION_STATE.md`, treat that file as the compact operational snapshot for channel continuation.
+
 ## Route
 
 ```text
@@ -53,6 +55,18 @@ Use it to choose among:
 - `Notion comments`;
 - the target repository's GitHub issue, pull request, or review thread;
 - the optional cross-repository coordination hub.
+
+### Compact coordination state
+
+When an active GitHub-backed project contains a root-level coordination snapshot, open:
+
+`AI_COORDINATION_STATE.md`
+
+Use:
+
+`docs/AI_COORDINATION_STATE_STANDARD.md`
+
+for the canonical file format, update triggers, reading order, and channel-migration rule.
 
 ### GitHub-based ChatGPT / Codex collaboration
 
@@ -85,6 +99,16 @@ Send the relevant current message to the targeted connected AI participant throu
 ### `02`
 
 Read the latest relevant incoming message from the targeted connected AI participant through the registered active channel and respond based on its actual content.
+
+When the active project contains `AI_COORDINATION_STATE.md`, use this order:
+
+```text
+read AI_COORDINATION_STATE.md
+→ open its Active Channel
+→ read latest relevant incoming comments
+→ inspect latest repository commit or PR state
+→ continue from Next Step
+```
 
 `01` and `02` control communication only.
 
