@@ -65,6 +65,57 @@ Use the optional cross-repository hub when a durable direct agent-to-agent threa
 
 GitHub is an execution and review channel for GitHub-backed work, not the default home for all project communication.
 
+## Compact Coordination State Snapshot
+
+When a GitHub-backed project has a multi-step AI-to-AI execution or review loop, use a root-level file:
+
+```text
+AI_COORDINATION_STATE.md
+```
+
+This file is the compact operational snapshot.
+
+The GitHub issue, pull request, or review thread remains the message transport and durable discussion trail.
+
+The snapshot file stores only:
+
+- the active channel;
+- previous channels;
+- active participants;
+- the current task;
+- latest reviewed repository state;
+- accepted changes;
+- open review items;
+- one next step;
+- required validation.
+
+Do not copy the full discussion history into the file.
+
+Update the snapshot only after a meaningful state transition:
+
+- communication-channel migration;
+- meaningful implementation commit;
+- accepted review;
+- new blocker;
+- scope change;
+- completed task.
+
+Before processing `02` in an active GitHub-backed project, read in this order when the file exists:
+
+```text
+AI_COORDINATION_STATE.md
+-> Active Channel
+-> latest relevant comments
+-> latest repository commit or PR state
+-> Next Step
+```
+
+Use:
+
+`docs/AI_COORDINATION_STATE_STANDARD.md`
+
+for the canonical file format and migration rule.
+
 ## Optional Cross-Repository Hub
 
 A dedicated GitHub coordination hub may exist as an optional transport for repository-oriented cross-project technical work when Notion is unavailable or a reviewable GitHub trail is specifically useful.
@@ -114,6 +165,7 @@ Keep coordination messages short.
 If material is substantial:
 
 - store readable project management state in Notion when appropriate;
+- store compact operational coordination state in `AI_COORDINATION_STATE.md` when a GitHub-backed project has a multi-step agent loop;
 - store technical artifacts and execution evidence in the relevant GitHub repository when a GitHub layer exists;
 - store heavy source files in Google Drive when a Drive layer exists;
 - send only the short status and reference through the coordination channel.
@@ -144,6 +196,14 @@ If material is substantial:
 - GitHub issue `AI-Coordination-Hub#1` became the active direct coordination transport;
 - DeepSeek acknowledged that channel in the issue thread.
 
+### QuizLight Channel Migration
+
+- a GitHub issue became too long for reliable connector reading;
+- a continuation issue became the new active transport;
+- `AI_COORDINATION_STATE.md` was added at repository root;
+- the file preserved accepted changes, open review items, validation checks and one next step;
+- future coordination resumed from the snapshot instead of relying on the full old thread.
+
 ## Bidirectional Coordination Commands
 
 These shorthand commands control communication only:
@@ -152,8 +212,8 @@ These shorthand commands control communication only:
 - when Oleg sends `01` to `ChatGPT`, `ChatGPT` writes to the currently targeted connected agent through that agent's registered active channel.
 - when Oleg sends `01` to `Codex` or `DeepSeek`, that agent writes to `ChatGPT` through its active registered channel.
 - `02` = read the latest relevant incoming message from the other AI through the active coordination channel and respond based on its actual content.
-- when Oleg sends `02` to `ChatGPT`, `ChatGPT` reads the targeted connected agent's message through the registered channel.
-- when Oleg sends `02` to `Codex` or `DeepSeek`, that agent reads `ChatGPT`'s message through its active registered channel.
+- when Oleg sends `02` to `ChatGPT`, `ChatGPT` reads `AI_COORDINATION_STATE.md` first when it exists, then reads the targeted connected agent's message through the recorded active channel.
+- when Oleg sends `02` to `Codex` or `DeepSeek`, that agent reads `AI_COORDINATION_STATE.md` first when it exists, then reads `ChatGPT`'s message through the recorded active channel.
 - `01` and `02` do not by themselves approve destructive or scope-changing actions.
 
 ## Final Rule
@@ -161,5 +221,7 @@ These shorthand commands control communication only:
 Notion comments are the lightweight coordination path when readable ongoing communication is needed and every participant can use native comments.
 
 GitHub is used when coordination is inseparable from repository execution or review, or when the required Notion-comments transport is unavailable to a participating agent.
+
+Use `AI_COORDINATION_STATE.md` when a GitHub-backed multi-step agent loop needs compact resumable state.
 
 Do not create or use a heavier communication structure unless real work proves it necessary.
