@@ -168,21 +168,37 @@ It does not replace Notion as a readable coordination layer or the target reposi
 
 For DeepSeek work that is tightly bound to a specific repository, move the execution/review thread to that target repository and use the hub issue only for routing or short cross-project coordination.
 
-## Identity Format
+## Signed Message Rule
 
-When a durable coordination message is sent to Notion comments or GitHub, use a short explicit identity header when it materially improves continuation:
+Durable coordination notes, letters, requests, reviews, reports, and acknowledgements must not be faceless.
 
-`FROM: <sender>`
-`TO: <recipient>`
-`TYPE: <message type>`
-`PROJECT: <project>`
+Use:
 
-Recommended additional fields when a next action matters:
+`docs/AI_COORDINATION_MESSAGE_STANDARD.md`
 
-`STATUS: <short state>`
-`NEXT STEP: <one next action>`
+Every durable message must identify:
 
-Do not require this ceremony for ordinary conversational replies where the participants and context are already obvious.
+```text
+FROM: <sender name and role>
+TO: <recipient name and role>
+SUBJECT: <short human-readable subject>
+TYPE: <message type>
+PROJECT: <project name>
+```
+
+Then write a normal short professional note with:
+
+- a polite greeting;
+- short context or acknowledgement;
+- a clear request, decision, report, or next action;
+- a polite closing;
+- the sender's signature and role.
+
+Do not send anonymous command dumps.
+
+Do not reduce a durable acknowledgement to an unsigned line such as `Status: accepted`.
+
+A blocked review may be strict, but it must remain respectful and signed.
 
 ## Message Size Rule
 
@@ -253,5 +269,7 @@ GitHub is used when coordination is inseparable from repository execution or rev
 Use `AI_COORDINATION_STATE.md` for compact current state.
 
 Use `AI_COORDINATION_LOG.md` for append-only chronological history.
+
+Use signed polite messages for durable coordination.
 
 Do not create or use a heavier communication structure unless real work proves it necessary.
