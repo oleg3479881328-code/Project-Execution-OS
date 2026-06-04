@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="2.0">
+  <head>
+    <title>News Layer MVP Starter Sources</title>
+  </head>
+  <body>
+    <outline text="politics" title="politics" />
+    <outline text="economy" title="economy" />
+    <outline text="law" title="law" />
+    <outline text="immigration" title="immigration" />
+    <outline text="AI" title="AI" />
+    <outline text="technology" title="technology">
+      <outline
+        text="TechCrunch"
+        title="TechCrunch"
+        type="rss"
+        xmlUrl="https://techcrunch.com/feed/"
+        htmlUrl="https://techcrunch.com/"
+      />
+    </outline>
+    <outline text="markets" title="markets" />
+    <outline text="local" title="local" />
+  </body>
+</opml>
