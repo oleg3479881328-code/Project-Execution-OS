@@ -30,6 +30,19 @@ GitHub issue, PR comment, or review thread is the transport when no direct runti
 
 Prefer an existing suitable project-bound GitHub channel before creating a new one.
 
+## Owner-Facing Handoff Rule
+
+The owner should not receive large handoff packets in chat by default.
+
+Default behavior:
+
+1. prepare the full execution packet inside the selected GitHub transport;
+2. keep detailed instructions, constraints, acceptance criteria, and reporting format inside that transport;
+3. return to the owner only the shortest useful handoff, normally a single GitHub issue, PR, or review-thread link;
+4. provide the full packet in chat only when the owner explicitly asks for copy-paste text.
+
+The purpose is to reduce chat clutter while preserving complete execution context for the executor.
+
 ## Full Packet
 
 Use this for meaningful software execution work:
@@ -41,7 +54,7 @@ Packet Type:
 Objective:
 Source Decision / Design:
 Allowed Scope:
-Out of Scope:
+Out Of Scope:
 Repository Context:
 Files Allowed To Change:
 Forbidden Changes:
