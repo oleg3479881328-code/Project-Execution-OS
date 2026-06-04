@@ -52,6 +52,40 @@ append event to AI_COORDINATION_LOG.md
 -> keep the active Issue / PR / review thread as message transport
 ```
 
+## Signed Polite Message Rule
+
+For every durable GitHub coordination note, letter, request, review, report, or acknowledgement, use:
+
+`docs/AI_COORDINATION_MESSAGE_STANDARD.md`
+
+Every durable message must begin with:
+
+```text
+FROM: <sender name and role>
+TO: <recipient name and role>
+SUBJECT: <short human-readable subject>
+TYPE: <message type>
+PROJECT: <project name>
+```
+
+Then write a short professional note with:
+
+- a polite greeting;
+- short context or acknowledgement;
+- a clear request, decision, report, or next action;
+- a polite closing;
+- the sender's name and role as signature.
+
+Do not send anonymous command dumps.
+
+Do not use faceless durable acknowledgements such as:
+
+```text
+Status: accepted
+```
+
+when a signed short reply should be written.
+
 ## Canonical Protocol
 
 The canonical full protocol currently lives here:
@@ -70,6 +104,7 @@ Use that document for:
 ## Related Artifacts
 
 - `blocks/communication-channel/BLOCK.md`
+- `docs/AI_COORDINATION_MESSAGE_STANDARD.md`
 - `docs/AI_COORDINATION_STATE_STANDARD.md`
 - `docs/AI_COORDINATION_LOG_STANDARD.md`
 - `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
@@ -85,3 +120,5 @@ Keep one top-level communication route:
 Keep ChatGPT-specific GitHub routing here.
 
 Keep the deeper reusable protocol stable and reviewable in the canonical protocol artifact.
+
+Use signed polite messages for durable coordination.
