@@ -12,6 +12,12 @@ This protocol is also operationalized as a central reusable skill:
 
 - `skills/coordination/chatgpt-codex-github-communication/SKILL.md`
 
+Supporting coordination standards:
+
+- `docs/AI_COORDINATION_MESSAGE_STANDARD.md`
+- `docs/AI_COORDINATION_STATE_STANDARD.md`
+- `docs/AI_COORDINATION_LOG_STANDARD.md`
+
 ## Core Model
 
 Use this sequence:
@@ -126,6 +132,21 @@ ChatGPT will read and review it here through GitHub.
 The user should not need to manually relay the report.
 ```
 
+## Minimum Viable Direct Loop
+
+Use this minimum viable workflow when the work is repository-bound and GitHub is the active channel:
+
+1. ChatGPT prepares or updates the handoff packet in the target repository or GitHub thread.
+2. The packet names one exact `Reply Surface`.
+3. Codex reads that GitHub surface and executes within the allowed scope.
+4. Codex posts a structured `Execution Report` in that same GitHub issue, PR, or review thread.
+5. ChatGPT later reads the same GitHub surface and either approves, reviews, or sends a revision request there.
+6. If compact continuation state is useful, keep `AI_COORDINATION_STATE.md` and `AI_COORDINATION_LOG.md` in the project as lightweight continuity artifacts rather than asking the user to replay prior messages manually.
+
+This is a direct coordination loop through a durable channel.
+
+It is not a direct chat-window bridge between AI sessions.
+
 ## Sync Discipline
 
 For GitHub-coordinated work:
@@ -196,6 +217,8 @@ Flow:
 
 When GitHub comments or issue updates are used as the communication bridge, each AI-to-AI message should identify the speaker and intended recipient explicitly.
 
+Use the signed polite message format defined in `docs/AI_COORDINATION_MESSAGE_STANDARD.md` for durable AI-to-AI GitHub messages unless the thread context already makes the minimal header enough.
+
 Minimum header:
 
 ```text
@@ -263,6 +286,7 @@ Reply Surface:
 See:
 
 - `skills/implementation/implementation-handoff-packet/SKILL.md`
+- `docs/AI_COORDINATION_MESSAGE_STANDARD.md`
 
 ## Required Execution Report
 
@@ -288,6 +312,23 @@ Ready For Review: Yes / No
 ```
 
 Execution without a report in the required reply surface is incomplete for important work.
+
+For reusable report wording and review-request wording, see:
+
+- `docs/AI_COORDINATION_MESSAGE_STANDARD.md`
+
+## Compact Continuation State
+
+When a GitHub-backed project needs concise continuation state beyond the visible issue or PR thread, use:
+
+- `AI_COORDINATION_STATE.md` for current durable coordination state;
+- `AI_COORDINATION_LOG.md` for append-only coordination history.
+
+Keep them compact.
+
+They supplement GitHub coordination evidence.
+
+They do not replace the GitHub reply surface, code review, issue history, or repository memory.
 
 ## GitHub Comment And Review Cycle
 
