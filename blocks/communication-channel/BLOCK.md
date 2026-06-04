@@ -80,11 +80,11 @@ Do not confuse payload with transport.
 
 ### `01`
 
-Send the relevant current message to the targeted connected AI participant through that participant's registered active channel.
+Send or update the relevant durable current message to the targeted connected AI participant through that participant's registered active channel.
 
 ### `02`
 
-Read the latest relevant incoming message from the targeted connected AI participant through the registered active channel and respond based on its actual content.
+Read the latest relevant incoming durable message from the targeted connected AI participant through the registered active channel and continue from its actual content.
 
 `01` and `02` control communication only.
 

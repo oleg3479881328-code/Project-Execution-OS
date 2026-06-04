@@ -28,8 +28,10 @@ Use that document for:
 
 - the complete role model;
 - message header rules;
+- the minimum viable direct GitHub coordination loop;
 - handoff packet expectations;
 - execution report expectations;
+- compact coordination state and log usage;
 - fallback and default-decision behavior;
 - review and validation separation.
 

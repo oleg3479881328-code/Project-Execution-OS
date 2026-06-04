@@ -55,6 +55,12 @@ Use GitHub in the target repository when the message is directly tied to:
 - repository-specific execution evidence;
 - an implementation task that should remain next to the technical source of truth.
 
+When GitHub is the active channel for repository-bound AI coordination:
+
+- the GitHub issue, pull request, or review thread is the durable reply surface;
+- Codex or another execution agent must post its structured execution reply in that same GitHub surface;
+- Oleg is the product owner and decision maker, not the normal courier between AI agents.
+
 When GitHub is selected for a ChatGPT / Codex collaboration loop, open:
 
 `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
@@ -93,7 +99,9 @@ For DeepSeek work that is tightly bound to a specific repository, move the execu
 
 ## Identity Format
 
-When a durable coordination message is sent to Notion comments or GitHub, use a short explicit identity header when it materially improves continuation:
+When a durable coordination message is sent to Notion comments or GitHub, use the signed polite message format - подписанный вежливый формат сообщения - when it materially improves continuation.
+
+Minimum identity header:
 
 `FROM: <sender>`
 `TO: <recipient>`
@@ -104,6 +112,11 @@ Recommended additional fields when a next action matters:
 
 `STATUS: <short state>`
 `NEXT STEP: <one next action>`
+
+Recommended closing:
+
+`Thank you,`
+`<sender>`
 
 Do not require this ceremony for ordinary conversational replies where the participants and context are already obvious.
 
@@ -149,9 +162,11 @@ If material is substantial:
 These shorthand commands control communication only:
 
 - `01` = send the relevant current message to the other AI through the active coordination channel.
+- in a durable channel such as GitHub or Notion comments, `01` means send or update the relevant durable message through the active channel.
 - when Oleg sends `01` to `ChatGPT`, `ChatGPT` writes to the currently targeted connected agent through that agent's registered active channel.
 - when Oleg sends `01` to `Codex` or `DeepSeek`, that agent writes to `ChatGPT` through its active registered channel.
 - `02` = read the latest relevant incoming message from the other AI through the active coordination channel and respond based on its actual content.
+- in a durable channel such as GitHub or Notion comments, `02` means read the latest relevant incoming durable message and continue from that actual content.
 - when Oleg sends `02` to `ChatGPT`, `ChatGPT` reads the targeted connected agent's message through the registered channel.
 - when Oleg sends `02` to `Codex` or `DeepSeek`, that agent reads `ChatGPT`'s message through its active registered channel.
 - `01` and `02` do not by themselves approve destructive or scope-changing actions.

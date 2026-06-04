@@ -35,6 +35,12 @@ Prefer an existing suitable project-bound GitHub channel before creating a new o
 Use this for meaningful software execution work:
 
 ```text
+FROM: ChatGPT
+TO: Codex
+SUBJECT:
+TYPE: Implementation Handoff
+PROJECT:
+
 IMPLEMENTATION HANDOFF PACKET
 
 Packet Type:
@@ -51,6 +57,7 @@ Acceptance Criteria:
 Validation Commands / Checks:
 Rollback Notes:
 Execution Report Contract:
+Reply Surface:
 ```
 
 This is the default next artifact whenever the task is clearly Codex-bound and executor access is now the missing step.
@@ -83,6 +90,12 @@ API Model Runtime Check: Not Applicable
 Use this when the task is narrow, low-risk, and bounded to a few files:
 
 ```text
+FROM: ChatGPT
+TO: Codex
+SUBJECT:
+TYPE: Implementation Handoff
+PROJECT:
+
 CODEX PACKET LITE
 
 Objective:
@@ -92,6 +105,7 @@ Existing Solution Search Required:
 Acceptance Criteria:
 Validation:
 Return:
+Reply Surface:
 ```
 
 For architecture, implementation, configuration, debugging, automation, and integration work, `Existing Solution Search Required` defaults to `Yes` unless there is a stated reason otherwise.
@@ -103,6 +117,12 @@ The same API Model Runtime Check requirement applies to `CODEX PACKET LITE` when
 Codex must return:
 
 ```text
+FROM: Codex
+TO: ChatGPT
+SUBJECT:
+TYPE: Execution Report
+PROJECT:
+
 EXECUTION REPORT
 
 Status:
@@ -117,6 +137,12 @@ Assumptions Made:
 Risks / Follow-Up:
 Ready For Review: Yes / No
 ```
+
+If a GitHub coordination surface exists, `Reply Surface` must name the exact issue, PR, or review thread where Codex posts this report.
+
+When a GitHub reply surface exists, Codex must post the structured report there.
+
+Do not ask the user to manually relay the report back into ChatGPT.
 
 For any API-based AI model integration, the execution report - отчёт исполнителя - must also answer the complete `API Model Runtime Check` block.
 
