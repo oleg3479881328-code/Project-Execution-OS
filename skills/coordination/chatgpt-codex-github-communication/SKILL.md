@@ -1,6 +1,6 @@
 ---
 name: chatgpt-codex-github-communication
-description: Coordinate reasoning-model work and executor-agent execution through GitHub using explicit handoff packets, compact coordination snapshots, append-only event logs, bounded execution, and reviewable follow-up loops.
+description: Coordinate reasoning-model work and executor-agent execution through GitHub using explicit signed polite messages, handoff packets, compact coordination snapshots, append-only event logs, bounded execution, and reviewable follow-up loops.
 category: coordination
 status: reviewed
 target_agent: tool-neutral
@@ -20,13 +20,14 @@ outputs:
   - github_surface_plan
   - coordination_snapshot_plan
   - coordination_log_plan
+  - signed_message_plan
   - execution_report_contract
   - review_loop_plan
   - sync_validation_report
 safety_level: medium
 source: internal_project_execution_os
 review_status: approved
-version: 0.3.0
+version: 0.4.0
 ---
 
 # Purpose
@@ -42,7 +43,8 @@ Use this skill when:
 - execution scope must stay bounded and reviewable;
 - multiple AI sessions may touch the same project;
 - a long coordination thread needs a compact resumable state snapshot;
-- meaningful coordination history must be preserved without bloating the snapshot.
+- meaningful coordination history must be preserved without bloating the snapshot;
+- durable coordination notes must remain human-readable and signed.
 
 # Source Of Truth
 
@@ -53,7 +55,8 @@ For GitHub-coordinated work:
 - Google Drive or other mirrors are inspection channels, not execution or sync authorities;
 - `AI_COORDINATION_STATE.md` is the compact current operational snapshot when it exists;
 - `AI_COORDINATION_LOG.md` is the append-only chronological journal when it exists;
-- neither file replaces issue comments, commits, diffs, PR state, or validation evidence.
+- signed issue, PR, or review-thread messages carry durable human-readable coordination;
+- none of these replace commits, diffs, PR state, or validation evidence.
 
 # Workflow
 
@@ -64,12 +67,42 @@ For GitHub-coordinated work:
 5. Select the collaboration mode.
 6. Require a deterministic handoff packet before execution.
 7. Bind the executor agent to explicit scope and report contract.
-8. Use GitHub comments, PR threads, or issues only as durable follow-up surfaces.
-9. After meaningful state transitions, append one event to `AI_COORDINATION_LOG.md`.
-10. Update `AI_COORDINATION_STATE.md` only if the current operational state changed.
-11. Review execution against the original packet before accepting state.
-12. Persist accepted knowledge back into repository memory.
-13. Label each AI-to-AI GitHub message with explicit speaker and recipient identity.
+8. Write every durable GitHub coordination message as a signed polite professional note.
+9. Use GitHub comments, PR threads, or issues only as durable follow-up surfaces.
+10. After meaningful state transitions, append one event to `AI_COORDINATION_LOG.md`.
+11. Update `AI_COORDINATION_STATE.md` only if the current operational state changed.
+12. Review execution against the original packet before accepting state.
+13. Persist accepted knowledge back into repository memory.
+
+# Signed Polite Coordination Messages
+
+For every durable issue comment, PR comment, review note, handoff, report, request, or acknowledgement, use:
+
+`docs/AI_COORDINATION_MESSAGE_STANDARD.md`
+
+Required header:
+
+```text
+FROM: <sender name> — <sender role>
+TO: <recipient name> — <recipient role>
+SUBJECT: <short human-readable subject>
+TYPE: <message type>
+PROJECT: <project name>
+```
+
+Then include:
+
+- a polite greeting;
+- short context or acknowledgement;
+- a clear request, decision, report, or next action;
+- a polite closing;
+- a signature with sender name and role.
+
+Do not send anonymous command dumps.
+
+Do not use a faceless line such as `Status: accepted` as a durable reply when a signed short note should be written.
+
+Technical code blocks and validation lists may remain structured, but they must be wrapped inside the signed human message.
 
 # Compact Coordination Snapshot
 
@@ -165,7 +198,7 @@ After any local fix:
 3. Commit only the minimal intended files.
 4. Do not commit `.venv`, logs, `.env`, `desktop.ini`, cache files, or local junk.
 5. Push to GitHub only after the fix is validated.
-6. Post the commit SHA and validation report in the coordination surface.
+6. Post the commit SHA and validation report in the coordination surface as a signed polite message.
 7. Append one meaningful event to `AI_COORDINATION_LOG.md` when the fix changes durable coordination history.
 8. Update `AI_COORDINATION_STATE.md` only when the fix changes current operational state.
 
@@ -179,6 +212,8 @@ After any local fix:
 
 Do not:
 - leave the speaker identity implicit in mixed GitHub threads;
+- send faceless durable notes;
+- send unsigned command dumps;
 - send the executor vague prompts;
 - treat GitHub comments as a substitute for a real handoff packet;
 - allow silent scope expansion;
@@ -196,6 +231,8 @@ Do not:
 
 Possible failures:
 - vague handoff and broad unintended execution;
+- faceless coordination notes that obscure accountability;
+- unsigned acknowledgements with unclear sender identity;
 - GitHub thread noise mistaken for approved work;
 - missing traceability from issue or packet to final diff;
 - review without comparison to the source packet;
@@ -222,7 +259,8 @@ Before finalizing:
 - `AI_COORDINATION_LOG.md` was appended at the bottom only for meaningful events;
 - earlier log entries remain unchanged;
 - a handoff packet exists or is required;
-- AI-to-AI GitHub comments identify `FROM`, `TO`, and message `TYPE`;
+- every durable coordination message identifies `FROM`, `TO`, `SUBJECT`, `TYPE`, and `PROJECT`;
+- every durable coordination message includes greeting, clear request or report, polite closing, and signature;
 - executor scope is bounded;
 - execution report requirements are explicit;
 - review loop is defined;
