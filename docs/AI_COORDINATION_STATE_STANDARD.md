@@ -10,6 +10,8 @@ Use it when the issue or pull request thread alone is not enough for efficient r
 
 `AI_COORDINATION_STATE.md` stores the current coordination state - текущее состояние координации - only.
 
+When a project adopts rotating GitHub issues or PR threads as working transports, `AI_COORDINATION_STATE.md` is the permanent compact pointer to the currently active reply surface.
+
 It is a compact operational snapshot, not a running transcript.
 
 Use it to record the currently active channel, reply surface, latest reviewed repository state, and one next expected move.

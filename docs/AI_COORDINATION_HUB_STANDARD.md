@@ -67,6 +67,22 @@ When GitHub is selected for a ChatGPT / Codex collaboration loop, open:
 
 This is a nested channel-specific protocol inside `Канал связи`, not a separate top-level route.
 
+## GitHub Transport Rotation
+
+For GitHub-based AI coordination, root `AI_COORDINATION_STATE.md` is the permanent compact state pointer.
+
+The currently active GitHub issue, pull request, or review thread is the working transport, not the permanent memory container.
+
+Agents must read `AI_COORDINATION_STATE.md` first, then open the recorded active reply surface, then continue from the latest relevant incoming durable message in that surface.
+
+When a GitHub thread becomes too long, noisy, stale, or otherwise unsuitable:
+
+- create a continuation issue, pull request thread, or other GitHub reply surface;
+- append a migration event to `AI_COORDINATION_LOG.md`;
+- update `AI_COORDINATION_STATE.md` so it points to the new active reply surface;
+- continue in the new surface;
+- do not ask Oleg to remember or manually relay the active issue number.
+
 Use the optional cross-repository hub when a durable direct agent-to-agent thread is required and the lightweight Notion-comments path is technically unavailable to one or more participants.
 
 GitHub is an execution and review channel for GitHub-backed work, not the default home for all project communication.

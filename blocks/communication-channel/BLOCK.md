@@ -64,6 +64,8 @@ This is a nested channel-specific protocol.
 
 It is not a separate top-level route beside `Канал связи`.
 
+For re-entry into an already active GitHub transport, read root `AI_COORDINATION_STATE.md` first, then open the recorded active reply surface and continue from the latest relevant incoming durable message.
+
 ### Codex execution payload
 
 When the task itself is already decided and executor access is required, also open:

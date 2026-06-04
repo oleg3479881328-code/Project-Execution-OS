@@ -42,6 +42,22 @@ Use that document for:
 - `docs/AI_COORDINATION_HUB_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
 
+## GitHub Re-Entry Order
+
+For a GitHub-backed coordination thread that may rotate over time, re-enter in this compact order:
+
+```text
+START_HERE.md
+→ docs/ROUTER.md
+→ blocks/communication-channel/BLOCK.md
+→ AI_COORDINATION_STATE.md
+→ Active Reply Surface
+→ latest relevant incoming comment
+→ latest repository state
+→ AI_COORDINATION_LOG.md only when historical context is required
+→ One Next Step
+```
+
 ## Design Rule
 
 Keep one top-level communication route:
