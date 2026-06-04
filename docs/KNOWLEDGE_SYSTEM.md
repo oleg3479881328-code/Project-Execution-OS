@@ -8,6 +8,7 @@ The goal is to prevent useful lessons from disappearing inside chats or one-off 
 
 Layer selection follows `docs/PROJECT_LIFECYCLE_MODEL.md`.
 Context loading follows `docs/CONTEXT_ASSEMBLY_STANDARD.md`.
+Explicit owner preservation requests follow `docs/AUTOMATIC_CAPTURE_STANDARD.md`.
 
 ## 2. Knowledge Layers
 
@@ -241,6 +242,7 @@ Review should establish:
 
 ## 16. Related Nodes
 
+- `docs/AUTOMATIC_CAPTURE_STANDARD.md`
 - `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - `docs/CONTEXT_ASSEMBLY_STANDARD.md`
 - `docs/PROJECT_LIFECYCLE_MODEL.md`
