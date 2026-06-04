@@ -32,7 +32,7 @@ Do not append an unrelated next-project question after answering the active requ
 - agent re-entry into an existing GitHub-backed project, handoff between agents, or request to inspect only changes since prior work -> `docs/INCREMENTAL_REENTRY_STANDARD.md`
 - research task -> `docs/RESEARCH_STANDARD.md`
 - review task -> `docs/REVIEW_STANDARD.md`
-- already-decided Codex execution handoff -> `docs/CODEX_HANDOFF_STANDARD.md`
+- already-decided Codex execution handoff -> `docs/CODEX_HANDOFF_ENTRYPOINT.md`
 - communication channel, connected-agent communication, message transport, `01`, `02`, channel selection, or coordination-path uncertainty -> `blocks/communication-channel/BLOCK.md`
 - stable ChatGPT system-layer configuration -> `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
 - central knowledge capture, promotion, review, selective loading or retirement -> `docs/KNOWLEDGE_SYSTEM.md`
