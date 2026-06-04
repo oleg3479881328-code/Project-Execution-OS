@@ -20,6 +20,7 @@ Do not append an unrelated next-project question after answering the active requ
 
 - possible new project or new initiative -> `Start New Project.md`
 - operating-mode uncertainty -> `docs/MODE_CLASSIFIER.md`
+- explicit preservation intent such as save, capture, record, remember, add to library, add to project, or do not lose this -> `docs/AUTOMATIC_CAPTURE_STANDARD.md`
 - idea or reference that should be preserved but is not yet a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - lifecycle or storage-layer decision -> `docs/PROJECT_LIFECYCLE_MODEL.md`
 - current-project summary, status, orientation, or "where are we now?" question -> read the current project's entrypoint and only the minimum necessary current-state evidence; answer the question directly; stop after the answer; do not trigger `Start New Project.md` or ask which new project to create unless the owner explicitly requests a new project
