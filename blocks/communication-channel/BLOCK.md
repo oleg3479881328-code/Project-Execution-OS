@@ -80,6 +80,27 @@ docs/AI_COORDINATION_LOG_STANDARD.md
 
 for the canonical file formats, update triggers, reading order, append-only rule, and channel-migration rule.
 
+### Channel transition handshake
+
+Whenever the active durable transport changes, open:
+
+`docs/CHANNEL_TRANSITION_HANDSHAKE_STANDARD.md`
+
+Never switch channels silently.
+
+A new issue, PR, review thread, or coordination hub becomes active only after:
+
+```text
+redirect notice in previous active channel
+→ origin notice in new channel
+→ AI_COORDINATION_STATE.md Active Channel update
+→ Previous Channels update
+→ AI_COORDINATION_LOG.md Channel Transition append
+→ executor acknowledgement in the new channel
+```
+
+This applies to long-thread continuation, transition from issue to PR, transition from merged PR to a new issue, and project-phase changes.
+
 ### Signed polite coordination messages
 
 For durable coordination messages, open:
