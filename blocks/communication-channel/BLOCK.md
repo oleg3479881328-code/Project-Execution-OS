@@ -98,6 +98,16 @@ This is a nested channel-specific protocol.
 
 It is not a separate top-level route beside `Канал связи`.
 
+### In-scope review continuation
+
+For bounded review fixes, required validation, bookkeeping updates, and required execution reports, open:
+
+`docs/IN_SCOPE_REVIEW_CONTINUATION_STANDARD.md`
+
+A review follow-up that remains inside the already approved task scope is a continuation of the active task. The executor continues from the latest bounded instruction in the registered active channel without asking the owner for a second confirmation.
+
+Return to the owner only for scope expansion, destructive action, repository visibility change, external publication, business decision, or unresolved ambiguity that cannot be resolved from repository standards.
+
 ### Codex execution payload
 
 When the task itself is already decided and executor access is required, also open:
