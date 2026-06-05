@@ -6,6 +6,15 @@ param(
 $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
+function Is-ChildPath {
+  param([string]$ChildPath, [string]$ParentPath)
+  $child = [System.IO.Path]::GetFullPath($ChildPath)
+  $parent = [System.IO.Path]::GetFullPath($ParentPath)
+  $separator = [System.IO.Path]::DirectorySeparatorChar
+  if (-not $parent.EndsWith($separator)) { $parent = $parent + $separator }
+  return $child.StartsWith($parent, [System.StringComparison]::OrdinalIgnoreCase)
+}
+
 if ([string]::IsNullOrWhiteSpace($PortalRoot)) {
   $PortalRoot = Join-Path $repoRoot "Project-Execution-OS-Library-Portal"
 }
@@ -33,8 +42,8 @@ foreach ($entry in $entries) {
   if (-not $entry.source -or -not $entry.destination) { throw "Each allowlist entry needs source and destination." }
   $source = [System.IO.Path]::GetFullPath((Join-Path $repoRoot $entry.source))
   $target = [System.IO.Path]::GetFullPath((Join-Path $content $entry.destination))
-  if (-not $source.StartsWith($repoRoot, [System.StringComparison]::OrdinalIgnoreCase)) { throw "Source escapes repository root." }
-  if (-not $target.StartsWith($content, [System.StringComparison]::OrdinalIgnoreCase)) { throw "Destination escapes Quartz content root." }
+  if (-not (Is-ChildPath -ChildPath $source -ParentPath $repoRoot)) { throw "Source path is outside the repository root." }
+  if (-not (Is-ChildPath -ChildPath $target -ParentPath $content)) { throw "Destination path is outside the Quartz content folder." }
   if (-not (Test-Path -LiteralPath $source)) { throw "Missing source file: $source" }
   New-Item -ItemType Directory -Path (Split-Path -Parent $target) -Force | Out-Null
   Copy-Item -LiteralPath $source -Destination $target -Force
