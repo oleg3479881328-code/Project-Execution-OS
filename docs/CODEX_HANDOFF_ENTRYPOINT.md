@@ -11,6 +11,19 @@ Read both:
 - `docs/CODEX_HANDOFF_STANDARD.md`
 - `docs/CODEX_RESPONSE_CHANNEL.md`
 
+For shorthand coordination commands, also read:
+
+- `blocks/communication-channel/BLOCK.md`
+
+## Short Command Safety Rule
+
+Never interpret `01` or `02` as numbered options, first-path selection, second-path selection, or permission to expand scope.
+
+Their meanings come only from `blocks/communication-channel/BLOCK.md`:
+
+- `01` = send the relevant current message through the registered active channel;
+- `02` = read the latest relevant incoming message through the registered active channel and continue from its actual content.
+
 ## Mandatory Outcome
 
 Every GitHub-based execution handoff must contain:
