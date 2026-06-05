@@ -78,10 +78,10 @@ None currently recorded.
 =======
 status: in-progress
 project_mode: document-first
-current_step: knowledge-library-access-layer-bootstrap
+current_step: knowledge-library-access-layer-review-evidence
 current_run: issue-11-obsidian-quartz-access-layer
 last_updated: 2026-06-04
-next_action: Review the generated Quartz portal, decide whether to keep the local scaffold nested or publish it into its own private GitHub repository, and only then consider deployment wiring.
+next_action: Wait for reviewer feedback on commit `b2cdb742904d2c9da72834d36b7e4dc26b167507` pushed to branch `codex/issue-11-knowledge-library-access`, then decide whether to keep the Quartz scaffold local-only or publish it into its own separate repository.
 ---
 
 # PROJECT STATE — Project Execution OS
@@ -92,7 +92,7 @@ Foundation system is active and now also has a first local knowledge-library acc
 
 ## Current Workflow Run
 
-Issue `#11` local implementation and validation.
+Issue `#11` local implementation, validation, and reviewer-evidence follow-up.
 
 ## Confirmed Decisions
 
@@ -108,6 +108,7 @@ Issue `#11` local implementation and validation.
 
 - The current repository itself is governed by `Project Execution OS`.
 - The current knowledge-library portal implementation is local-preview-first and does not yet attach any public hosting target.
+- Repository-side evidence for the implementation now exists in commit `b2cdb742904d2c9da72834d36b7e4dc26b167507` on branch `codex/issue-11-knowledge-library-access`.
 
 ## Open Questions
 
@@ -132,9 +133,13 @@ Issue `#11` local implementation and validation.
 
 ## Latest Result
 
-Issue `#11` now has a working first implementation: the official Quartz repository was cloned locally into `Project-Execution-OS-Library-Portal`, `npm ci` and Quartz plugin installation succeeded, a PowerShell allowlist sync now copies only approved knowledge-library files into `content/`, and `npx quartz build` completed successfully against that curated subset.
+Issue `#11` now has a pushed repository-evidence commit for the root-repository changes, plus a final local preview check on `http://localhost:8085/` using direct Quartz CLI invocation through `node .\quartz\bootstrap-cli.mjs ...`. The nested `Project-Execution-OS-Library-Portal/` scaffold remains local-only and is now ignored by the root repository.
 
 ## Next Action
 
+<<<<<<< HEAD
 Review the generated portal content and decide whether to keep iterating locally or publish the scaffold into its own private GitHub repository before any hosting work.
 >>>>>>> b2cdb74 (Add knowledge library Obsidian Quartz access layer)
+=======
+Wait for reviewer feedback on the pushed evidence branch, then either accept the local-only scaffold approach or move into separate-repository publication for the Quartz portal.
+>>>>>>> 2bd9ed3 (Record issue 11 review evidence follow-up)
