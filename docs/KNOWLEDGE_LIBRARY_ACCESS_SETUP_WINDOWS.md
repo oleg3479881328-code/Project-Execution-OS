@@ -90,14 +90,14 @@ At minimum verify that these areas do not appear:
 - unrelated `docs/`
 - private workflow material
 
-The boundary is enforced by `docs/KNOWLEDGE_LIBRARY_PUBLIC_ALLOWLIST.json` and the sync script, not by memory.
+The boundary is enforced by `docs/KNOWLEDGE_LIBRARY_ALLOWLIST.json` and the sync script, not by memory.
 
 ## 6. Update Workflow
 
 When approved public content changes:
 
 1. edit the source Markdown in `Project-Execution-OS`;
-2. if needed, update `docs/KNOWLEDGE_LIBRARY_PUBLIC_ALLOWLIST.json`;
+2. if needed, update `docs/KNOWLEDGE_LIBRARY_ALLOWLIST.json`;
 3. rerun the sync script;
 4. rerun Quartz preview or build.
 
@@ -131,6 +131,6 @@ This creates a separate repository for the portal code without changing public s
 To roll back the access layer without touching canonical knowledge files:
 
 1. stop the Quartz preview process;
-2. remove files from `docs/KNOWLEDGE_LIBRARY_PUBLIC_ALLOWLIST.json` if they should no longer appear;
+2. remove files from `docs/KNOWLEDGE_LIBRARY_ALLOWLIST.json` if they should no longer appear;
 3. rerun the sync script;
 4. optionally remove the local `Project-Execution-OS-Library-Portal` folder.
