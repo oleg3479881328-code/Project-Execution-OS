@@ -124,11 +124,17 @@ Send the relevant current message to the targeted connected AI participant throu
 
 Use signed polite message format for durable channel messages.
 
+`01` is not a separate execution authorization. Do not request `01` merely because an already-authorized task was discovered after reading the channel.
+
 ### `02`
 
 Meaning: `read / check`.
 
 Read the latest relevant incoming message from the targeted connected AI participant through the registered active channel and respond based on its actual content.
+
+If the latest incoming message contains an already-authorized actionable request that is within the approved scope, continue with that request immediately after reading it. Do not stop to ask for a separate `01` command.
+
+Ask for a new explicit approval only when the newly discovered action is destructive, expands scope, changes repository visibility, publishes externally, or otherwise requires owner approval under an existing standard.
 
 When the active project contains `AI_COORDINATION_STATE.md`, use this order:
 
