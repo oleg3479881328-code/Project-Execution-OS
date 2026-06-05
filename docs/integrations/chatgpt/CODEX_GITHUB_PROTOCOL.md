@@ -18,6 +18,19 @@ Use this nested protocol when:
 - GitHub issue, pull request, or review thread will carry the task;
 - durable GitHub-based multi-agent coordination is needed.
 
+## Short Command Pre-Check
+
+Before interpreting an isolated shorthand command such as `01` or `02`, read:
+
+`blocks/communication-channel/BLOCK.md`
+
+Use only these universal meanings:
+
+- `01` = write / send the relevant current message through the active channel;
+- `02` = read / check the latest relevant incoming message through the active channel, then continue from its actual content.
+
+Never treat `01` or `02` as numbered options, first-path selection, second-path selection, approval, or scope expansion.
+
 ## Compact Coordination State And Append-Only Log
 
 When the target repository contains:
