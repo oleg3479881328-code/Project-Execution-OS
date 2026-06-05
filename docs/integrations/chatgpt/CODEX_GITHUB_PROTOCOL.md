@@ -31,6 +31,20 @@ Use only these universal meanings:
 
 Never treat `01` or `02` as numbered options, first-path selection, second-path selection, approval, or scope expansion.
 
+## In-Scope Review Continuation
+
+Open:
+
+`docs/IN_SCOPE_REVIEW_CONTINUATION_STANDARD.md`
+
+A bounded review follow-up that remains inside the already approved task scope is continuation of the active task.
+
+Codex continues from the latest bounded instruction in the registered active GitHub channel without asking the owner for a second confirmation.
+
+Routine continuation includes narrow review fixes, required validation runs, bookkeeping updates to coordination files, and required execution reports.
+
+Return to the owner only for scope expansion, destructive action, repository visibility change, external publication, business decision, or unresolved ambiguity that cannot be resolved from repository standards.
+
 ## Compact Coordination State And Append-Only Log
 
 When the target repository contains:
@@ -117,6 +131,7 @@ Use that document for:
 ## Related Artifacts
 
 - `blocks/communication-channel/BLOCK.md`
+- `docs/IN_SCOPE_REVIEW_CONTINUATION_STANDARD.md`
 - `docs/AI_COORDINATION_MESSAGE_STANDARD.md`
 - `docs/AI_COORDINATION_STATE_STANDARD.md`
 - `docs/AI_COORDINATION_LOG_STANDARD.md`
