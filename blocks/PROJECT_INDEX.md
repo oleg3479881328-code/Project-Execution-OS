@@ -10,6 +10,20 @@ Blocks live below the central operating system:
 
 ## Current Blocks
 
+### Design Block
+
+Path:
+
+`blocks/design/`
+
+Purpose:
+
+Provide one reusable workflow for website design that stays usable, buildable, reviewable, and implementation-aware.
+
+Current status:
+
+`candidate`
+
 ### Documentation Block
 
 Path:
