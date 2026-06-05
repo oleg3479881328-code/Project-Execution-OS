@@ -17,12 +17,14 @@ For shorthand coordination commands, also read:
 
 ## Short Command Safety Rule
 
+The meanings of `01` and `02` are universal for all connected AI participants.
+
 Never interpret `01` or `02` as numbered options, first-path selection, second-path selection, or permission to expand scope.
 
 Their meanings come only from `blocks/communication-channel/BLOCK.md`:
 
-- `01` = send the relevant current message through the registered active channel;
-- `02` = read the latest relevant incoming message through the registered active channel and continue from its actual content.
+- `01` = write / send the relevant current message through the registered active channel;
+- `02` = read / check the latest relevant incoming message through the registered active channel and continue from its actual content.
 
 ## Mandatory Outcome
 
