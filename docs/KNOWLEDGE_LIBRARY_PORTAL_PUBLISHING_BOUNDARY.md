@@ -2,7 +2,7 @@
 
 ## Rule
 
-Quartz receives content only from `docs/KNOWLEDGE_LIBRARY_PUBLIC_ALLOWLIST.json`.
+Quartz receives content only from `docs/KNOWLEDGE_LIBRARY_ALLOWLIST.json`.
 
 The sync script copies only listed files into the Quartz `content/` folder.
 
