@@ -1,0 +1,32 @@
+[
+  {
+    "source": "knowledge-library/README.md",
+    "destination": "knowledge-library/index.md",
+    "title": "Knowledge Library Overview"
+  },
+  {
+    "source": "knowledge-library/PROJECT_INDEX.md",
+    "destination": "knowledge-library/project-index.md",
+    "title": "Knowledge Library Index"
+  },
+  {
+    "source": "knowledge-library/patterns/document-first-mvp.md",
+    "destination": "knowledge-library/patterns/document-first-mvp.md",
+    "title": "Document-First MVP"
+  },
+  {
+    "source": "knowledge-library/patterns/tool-neutral-core.md",
+    "destination": "knowledge-library/patterns/tool-neutral-core.md",
+    "title": "Tool-Neutral Core"
+  },
+  {
+    "source": "knowledge-library/patterns/state-separation-in-ai-systems.md",
+    "destination": "knowledge-library/patterns/state-separation-in-ai-systems.md",
+    "title": "State Separation In AI Systems"
+  },
+  {
+    "source": "knowledge-library/architecture-decisions/github-obsidian-quartz-knowledge-access.md",
+    "destination": "knowledge-library/architecture-decisions/github-obsidian-quartz-knowledge-access.md",
+    "title": "GitHub Obsidian Quartz Access"
+  }
+]
