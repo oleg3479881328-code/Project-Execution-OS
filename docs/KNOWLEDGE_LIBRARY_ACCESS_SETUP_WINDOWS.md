@@ -8,12 +8,12 @@ This guide sets up the first local access layer for the `Project-Execution-OS` k
 
 ## Verified Prerequisites
 
-Verified in this environment on June 4, 2026:
+Verified in the executor environment on June 4, 2026:
 
 - official Quartz 5 docs require `Node` `v22+` and `npm` `10.9.2+`;
-- local machine currently has `node v24.13.0`;
-- local machine currently has `npm 11.6.2`;
-- `Obsidian` is already installed at `C:\Users\oleg3\AppData\Local\Programs\Obsidian\Obsidian.exe`.
+- the tested environment had `node v24.13.0`;
+- the tested environment had `npm 11.6.2`;
+- `Obsidian` was already installed and reused instead of reinstalling it.
 
 Official Obsidian help states that an existing local folder can be opened directly as a vault.
 
@@ -28,17 +28,15 @@ Do not edit publishable source material inside the Quartz `content/` folder. Tha
 
 1. Start `Obsidian`.
 2. Choose `Open folder as vault`.
-3. Select:
-
-   `C:\Users\oleg3\OneDrive\Documents\Project-Execution-OS`
-
+3. Select the local folder where you cloned `Project-Execution-OS`.
 4. Confirm the vault opens successfully.
 
 Expected result:
 
 - the repository is browsable as one vault;
 - Obsidian creates or reuses `.obsidian/` in the repository root;
-- Markdown files remain plain files in the Git repository.
+- Markdown files remain plain files in the Git repository;
+- `.obsidian/` stays local and is ignored by Git.
 
 ## 2. Sync Only Approved Library Content Into Quartz
 
@@ -63,19 +61,22 @@ Set-Location .\Project-Execution-OS-Library-Portal
 npm ci
 ```
 
-This repository already completed that step once in the current environment.
-
 ## 4. Preview The Portal Locally
 
-From `Project-Execution-OS-Library-Portal\` run:
+From `Project-Execution-OS-Library-Portal\` run the tested command:
 
 ```powershell
-npx quartz build --serve
+node .\quartz\bootstrap-cli.mjs build --serve --port 8085 --wsPort 3005
 ```
 
 Expected local preview address:
 
-`http://localhost:8080`
+`http://localhost:8085/`
+
+Technical note:
+
+- the direct `node .\quartz\bootstrap-cli.mjs ...` invocation was verified successfully in the tested environment;
+- `npx quartz ...` may also work in other environments, but it hit a local ESM resolution issue during this validation pass.
 
 ## 5. Verify The Boundary
 
@@ -113,11 +114,11 @@ Before any deployment:
 
 ## 8. Optional Separate GitHub Repository
 
-The local portal scaffold already exists at:
+The local portal scaffold exists at:
 
 `Project-Execution-OS-Library-Portal\`
 
-If you want to publish that scaffold into its own GitHub repository later, run this from inside the portal folder:
+If you want to publish that scaffold into its own private GitHub repository later, run this from inside the portal folder:
 
 ```powershell
 gh repo create oleg3479881328-code/Project-Execution-OS-Library-Portal --private --source=. --remote=origin --push
