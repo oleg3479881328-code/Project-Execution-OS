@@ -112,13 +112,21 @@ Do not confuse payload with transport.
 
 ## Commands
 
+The meanings below are universal for all connected AI participants.
+
+Do not reinterpret them based on role, model, project, or nearby numbered options.
+
 ### `01`
+
+Meaning: `write / send`.
 
 Send the relevant current message to the targeted connected AI participant through that participant's registered active channel.
 
 Use signed polite message format for durable channel messages.
 
 ### `02`
+
+Meaning: `read / check`.
 
 Read the latest relevant incoming message from the targeted connected AI participant through the registered active channel and respond based on its actual content.
 
