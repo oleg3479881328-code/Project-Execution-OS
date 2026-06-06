@@ -8,6 +8,7 @@ Bootstrap snapshot. This file is refreshed by `scripts/build_system_index.py`.
 - `knowledge-library/architecture-decisions/AI_MUSIC_CREATION_STACK.md`
 - `knowledge-library/architecture-decisions/US_LEGAL_RESEARCH_STACK.md`
 - `knowledge-library/architecture-decisions/TELEGRAM_PRODUCT_STACK.md`
+- `knowledge-library/architecture-decisions/INDEXING_LAYER_STACK.md`
 
 ## Workflow lessons
 
