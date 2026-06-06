@@ -20,7 +20,7 @@ Use:
 - `indexes/BLOCK_CATALOG.generated.md`
 - `indexes/KNOWLEDGE_CATALOG.generated.md`
 - `scripts/build_system_index.py`
-- `scripts/validate_system_index.py`
+- `scripts/validate_system_index_v2.py`
 - `scripts/query_system_index.py`
 - `.github/workflows/system-index.yml`
 - `SYSTEM_CONTEXT_MANIFEST.md`
@@ -59,7 +59,7 @@ python scripts/build_system_index.py
 Validate:
 
 ```bash
-python scripts/validate_system_index.py
+python scripts/validate_system_index_v2.py
 ```
 
 Search the current corpus:
