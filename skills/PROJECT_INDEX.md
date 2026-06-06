@@ -47,6 +47,7 @@ skills/
 | repository-memory-update | memory | reviewed | approved | 0.1.0 | skills/memory/repository-memory-update/SKILL.md |
 | skill-runtime-router | orchestration | candidate | reviewed_with_required_improvements | 0.1.0 | skills/orchestration/skill-runtime-router/SKILL.md |
 | workflow-state-machine | orchestration | candidate | reviewed_with_required_improvements | 0.1.0 | skills/orchestration/workflow-state-machine/SKILL.md |
+| domain-block-creation | orchestration | candidate | reviewed_with_required_improvements | 0.1.0 | skills/orchestration/domain-block-creation/SKILL.md |
 | graphify | graph | reviewed | approved | 0.1.0 | skills/graph/graphify/SKILL.md |
 | chatgpt-codex-github-communication | coordination | reviewed | approved | 0.1.0 | skills/coordination/chatgpt-codex-github-communication/SKILL.md |
 | project-experience-memory | memory | reviewed | approved | 0.1.0 | skills/memory/project-experience-memory/SKILL.md |
@@ -59,7 +60,7 @@ skills/
 
 ```text
 active: 0
-candidate: 7
+candidate: 8
 reviewed: 8
 draft: 0
 deprecated: 0
@@ -69,10 +70,11 @@ retired: 0
 ## Current Priorities
 
 1. Review candidate skills before promotion.
-2. Use `chrome-web-store-publication-readiness` on Voice Button as its first proving project, while keeping it in candidate status.
-3. Decide which reviewed skills are ready for real central operational use.
-4. Wire reviewed `graphify` into actual project bootstrap behavior.
-5. Keep governance stronger than skill-count growth.
+2. Use `domain-block-creation` on the next real domain-block request and review the proving run before promotion.
+3. Use `chrome-web-store-publication-readiness` on Voice Button as its first proving project, while keeping it in candidate status.
+4. Decide which reviewed skills are ready for real central operational use.
+5. Wire reviewed `graphify` into actual project bootstrap behavior.
+6. Keep governance stronger than skill-count growth.
 
 ## Forbidden Expansion Areas
 
