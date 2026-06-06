@@ -55,8 +55,9 @@ Open only the smallest relevant path:
 4. `blocks/us-law/LEGAL_AGENT_STANDARD.md` when preparing an answer, memo, or agent workflow
 5. `blocks/us-law/ESCALATION_RULES.md` when the issue may carry material risk
 6. `blocks/us-law/TOOLS_AND_PLATFORMS.md` when choosing research tools, APIs, or paid databases
-7. `blocks/us-law/REFERENCES.md` for the source map
-8. `blocks/us-law/RESEARCH_REPORT_2026-06-06.md` for the current research snapshot
+7. `blocks/us-law/immigration/BLOCK.md` for immigration-law issues, including Form I-485 and marriage-based adjustment of status
+8. `blocks/us-law/REFERENCES.md` for the source map
+9. `blocks/us-law/RESEARCH_REPORT_2026-06-06.md` for the current research snapshot
 
 ## Typical Modes
 
