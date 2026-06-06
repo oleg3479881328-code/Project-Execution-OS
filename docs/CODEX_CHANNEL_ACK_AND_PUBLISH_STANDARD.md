@@ -1,75 +1,29 @@
 # Codex Channel Acknowledgement And Publication Standard
 
 Updated: 2026-06-06
-Status: `active`
+Status: `active_adapter`
 
 ## Purpose
 
-Prevent Codex from completing local work silently, waiting for manual prompting, or treating routine publication of reviewable changes as a new owner decision.
+Apply the universal executor communication rule to Codex-specific workflows.
 
-## Mandatory Acknowledgement
+## Required Parent Standard
 
-When Codex receives a bounded GitHub handoff packet, it must immediately post a short signed acknowledgement in the exact named reply surface before starting work.
+Read and apply:
 
-The acknowledgement must state:
+`docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md`
 
-- handoff received;
-- active reply surface;
-- execution has started;
-- whether any blocker exists;
-- the next expected report type.
+## Codex-Specific Route
 
-## Active Reply Surface
+For Codex work through GitHub, the named issue, pull request, or review thread is the active bidirectional reply surface.
 
-The named GitHub issue, pull request, or review thread is the active bidirectional channel.
+Codex must:
 
-Codex must post all of the following there without waiting for the owner to relay messages:
-
-- acknowledgement;
-- clarification question;
-- blocker report;
-- status update when useful;
-- execution report;
-- commit SHA;
-- pull-request URL;
-- validation evidence.
-
-## Default Publication Rule
-
-For a bounded implementation handoff that authorizes repository edits and reviewable publication, Codex must continue through:
-
-```text
-local implementation
--> validation
--> minimal commit
--> push to private branch
--> open draft pull request
--> post execution report in the named reply surface
-```
-
-This is routine in-scope execution. It does not require a second owner confirmation.
-
-## Stop Boundary
-
-Codex must stop and ask in the active reply surface before:
-
-- destructive action;
-- scope expansion;
-- repository visibility change;
-- external public publication;
-- production deployment;
-- irreversible data migration;
-- business decision;
-- unresolved ambiguity that cannot be resolved from repository standards.
-
-## Blocker Rule
-
-If Codex cannot continue, it must post a signed blocker report immediately in the active reply surface. It must not wait silently for a manual prompt.
-
-## Review Continuation Rule
-
-When ChatGPT posts a bounded revision request inside the active scope, Codex continues automatically through fix, validation, commit, push, and updated report.
+- acknowledge receipt immediately;
+- post blockers and clarification questions there without waiting for the owner;
+- continue routine in-scope implementation through validation, minimal commit, private review branch, draft PR, and execution report;
+- stop only at a real escalation boundary defined by the parent standard.
 
 ## Final Rule
 
-A bounded GitHub handoff is not complete when local files exist. It is complete only when the reviewable branch or PR and the structured report are visible in the named GitHub channel.
+Codex follows the universal executor rule. It is not a special exception.
