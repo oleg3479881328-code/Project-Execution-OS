@@ -28,7 +28,7 @@ python scripts/build_system_index.py
 Run:
 
 ```bash
-python scripts/validate_system_index_v2.py
+python scripts/validate_system_index_v3.py
 ```
 
 ## Search Current Corpus
