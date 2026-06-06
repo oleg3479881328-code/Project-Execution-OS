@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "0f549b701d27ebd18f3e670668fdd1ee8277b433",
-  "generated_at": "2026-06-06T19:31:00-04:00",
-  "artifact_count": 289,
+  "repository_commit": "58be1811c958ac9cdcbe5a3ad8339a1ce4a65253",
+  "generated_at": "2026-06-06T19:31:12-04:00",
+  "artifact_count": 290,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -5795,6 +5795,33 @@
         "Failure Modes",
         "Validation Checklist",
         "References"
+      ]
+    },
+    {
+      "path": "skills/orchestration/domain-block-creation/assets/BLOCK_BLUEPRINT.md",
+      "title": "Domain Block Blueprint",
+      "type": "skill-artifact",
+      "domain": "orchestration",
+      "status": null,
+      "date": null,
+      "sha256": "28d2bf515edc757a9dd7d9108f01d64dd76a526001aac6ec36394401d08f6fe7",
+      "headings": [
+        "Domain Block Blueprint",
+        "Level Selection",
+        "Compact Block",
+        "Full Block",
+        "BLOCK.md Template",
+        "<Domain> Block",
+        "Purpose",
+        "Status",
+        "When To Use",
+        "When Not To Use",
+        "Core Rule",
+        "Required Reading Inside This Block",
+        "Typical Outputs",
+        "Boundary",
+        "Final Rule",
+        "Completion Checklist"
       ]
     },
     {
