@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fa91016e45ebfc25b287bfac5967bbef23706d17",
-  "generated_at": "2026-06-06T19:08:28-04:00",
-  "artifact_count": 285,
+  "repository_commit": "6d6c4b0f074fcb2a1492b1774142a0c9fbaeb84e",
+  "generated_at": "2026-06-06T19:08:51-04:00",
+  "artifact_count": 286,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1723,6 +1723,20 @@
         "Litigation Monitoring",
         "Related Official Sources",
         "Source-Use Rule"
+      ]
+    },
+    {
+      "path": "docs/AGENT_CREATION_COMMUNICATION_ADDENDUM.md",
+      "title": "Agent Creation Communication Addendum",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "active",
+      "date": "2026-06-06",
+      "sha256": "acb37d867b6f7481e5bb0e19a076ab7fd88cf0d9f852632ebee0df71a9eb1853",
+      "headings": [
+        "Agent Creation Communication Addendum",
+        "Rule",
+        "Final Rule"
       ]
     },
     {
