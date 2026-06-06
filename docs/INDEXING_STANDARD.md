@@ -1,134 +1,56 @@
-# Indexing Layer Standard
+# Indexing Standard
 
 ## Purpose
 
-This standard defines the structural indexing layer for `Project Execution OS`.
+This standard defines the bounded indexing stack used by `Project Execution OS` for repository discovery.
 
-Its goal is to keep navigation current, make repository knowledge machine-readable, prepare a semantic-search corpus, and prevent agents from repeatedly scanning the entire repository.
+The indexing layer exists to narrow file selection before broad scanning.
 
-## Core Rule
+## Layers
 
-Use layered indexing:
+The current bounded stack is:
 
 ```text
-stable door
-  -> live router
-  -> curated section indexes
-  -> generated machine index
-  -> semantic-ready chunk corpus
-  -> optional embeddings runtime
-  -> optional graph-memory layer
+curated indexes
+-> generated structural corpus
+-> local semantic SQLite store
+-> canonical-file verification
 ```
 
-No generated index replaces canonical source files.
+## Current Generated Artifacts
 
-## Required Artifacts
+- `indexes/semantic-documents.jsonl` -> generated structural corpus for semantic build input
+- `.local/semantic-index/semantic-index.sqlite3` -> local-only semantic store
 
-### Curated navigation
+## Build Commands
 
-- `START_HERE.md`
-- `docs/ROUTER.md`
-- `PROJECT_INDEX.md`
-- `blocks/PROJECT_INDEX.md`
-- `knowledge-library/PROJECT_INDEX.md`
-- `skills/PROJECT_INDEX.md`
-- `agent-library/PROJECT_INDEX.md`
+```text
+python scripts/build_system_index.py
+python scripts/validate_system_index_v3.py
+python -m pip install -r semantic-requirements.txt
+python scripts/build_semantic_store.py
+```
 
-### Generated indexing artifacts
+## Query Commands
 
-- `indexes/system-index.json`
-- `indexes/semantic-documents.jsonl`
-- `indexes/BLOCK_CATALOG.generated.md`
-- `indexes/KNOWLEDGE_CATALOG.generated.md`
+```text
+python scripts/query_semantic_store.py "подтверждение телефона через Telegram" --limit 5
+python scripts/query_semantic_store.py "адаптивная музыка для видео" --limit 5
+python scripts/query_semantic_store.py "USCIS marriage interview memo" --domain us-law --limit 5
+```
 
-### Automation
+## Rules
 
-- `scripts/build_system_index.py`
-- `.github/workflows/system-index.yml`
+- Inspect curated indexes first.
+- Use generated indexes to narrow candidates before broad scanning.
+- Use semantic retrieval when wording is uncertain or repository wording differs from the query.
+- Open canonical files for selected hits before relying on them.
+- Keep the SQLite store local-only and do not commit it.
+- Do not add hosted vector services or cloud embedding APIs for this pilot.
 
-## Structural Indexing Rule
+## Related Nodes
 
-After a meaningful structural change:
-
-1. update the relevant curated index when human-readable navigation changed;
-2. regenerate machine-readable artifacts;
-3. verify that new blocks contain `BLOCK.md`;
-4. verify that paths remain valid;
-5. verify statuses and dated snapshots where applicable;
-6. preserve canonical files as the source of truth.
-
-## Generated Index Scope
-
-The generated index may include:
-
-- path;
-- title;
-- artifact type;
-- domain;
-- lifecycle status when detected;
-- updated or captured date when detected;
-- content hash;
-- related repository paths;
-- source URLs;
-- headings;
-- search text;
-- chunk identifiers for semantic ingestion.
-
-Do not place secrets, tokens, personal data, or confidential case material in generated public indexes.
-
-## Semantic-Ready Corpus
-
-`indexes/semantic-documents.jsonl` is a preparation layer for future semantic search.
-
-Each record should contain:
-
-- stable chunk ID;
-- source path;
-- heading path;
-- artifact type;
-- domain;
-- lifecycle status where available;
-- text;
-- content hash.
-
-The corpus is not an embeddings database by itself.
-
-## Semantic Search Boundary
-
-Embeddings search is optional and requires an approved runtime and storage layer.
-
-Before enabling embeddings:
-
-1. choose the storage system;
-2. define access boundaries;
-3. exclude confidential data;
-4. define refresh behavior;
-5. define stale-index handling;
-6. define retrieval limits;
-7. validate that retrieved chunks improve context quality and cost.
-
-## Graphify Boundary
-
-Graphify remains an optional graph-memory layer under `docs/GRAPHIFY_STANDARD.md`.
-
-Use it only for broad repositories or document corpora where cross-file navigation benefit justifies maintenance cost.
-
-## Context Assembly Rule
-
-Use generated indexes to locate the smallest sufficient context package.
-
-Do not load the entire repository, the entire knowledge library, or the entire semantic corpus into routine work.
-
-## Freshness Rule
-
-Generated artifacts must record the repository commit they reflect when practical.
-
-If an index is stale:
-
-- report that limitation;
-- verify important conclusions against canonical source files;
-- refresh the index before relying on broad navigation.
-
-## Final Rule
-
-Index for navigation and selective loading. Never treat an index as a substitute for the underlying source of truth.
+- `docs/AGENT_INDEX_FIRST_ENTRY_STANDARD.md`
+- `docs/SEMANTIC_INDEX_ARCHITECTURE.md`
+- `docs/SEMANTIC_SEARCH_RUNTIME.md`
+- `docs/INDEXING_LAYER_STATUS.md`

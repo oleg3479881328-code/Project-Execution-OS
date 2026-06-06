@@ -1,46 +1,61 @@
 # Semantic Search Runtime
 
-Updated: 2026-06-06
-Status: `candidate_operational`
-
 ## Purpose
 
-Provide local semantic retrieval for Project Execution OS without requiring a separate database server.
+This document defines the local commands and operating behavior for the semantic-search pilot.
 
-## Default Stack
+## Local Setup
 
-- multilingual Sentence Transformers embeddings;
-- local SQLite vector store;
-- cosine-similarity ranking;
-- optional domain and status filters;
-- canonical-file verification after retrieval.
+Install the runtime:
 
-Default model:
+```text
+python -m pip install -r semantic-requirements.txt
+```
 
-`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
+Build the structural corpus:
 
-## Why This Stack
+```text
+python scripts/build_system_index.py
+python scripts/validate_system_index_v3.py
+```
 
-Repository files are often in English while user queries may be in Russian. A multilingual embedding model is therefore the correct default.
+Build the local semantic store:
 
-SQLite is the first runtime because it is local, portable, and serverless.
+```text
+python scripts/build_semantic_store.py
+```
 
-## Storage Boundary
-
-Default local database path:
+The default database path is:
 
 `.local/semantic-index/semantic-index.sqlite3`
 
-Do not commit the database file.
+## Query
 
-## Scale Boundary
+Run a semantic query:
 
-Move to pgvector or Qdrant only when measured corpus size, concurrency, or latency justifies a dedicated service.
+```text
+python scripts/query_semantic_store.py "подтверждение телефона через Telegram" --limit 5
+```
 
-## Retrieval Rule
+Optional filters:
 
-A semantic hit is a navigation lead, not authority. Open the canonical file, confirm status and freshness, then load only the minimum relevant excerpt.
+```text
+python scripts/query_semantic_store.py "USCIS marriage interview memo" --domain us-law --status reference --limit 5
+```
 
-## Final Rule
+## Runtime Behavior
 
-Use semantic retrieval before broad scanning when the correct file is not obvious.
+- The build script reads `indexes/semantic-documents.jsonl`.
+- Missing embedding dependencies fail with a clear install instruction.
+- Embeddings are normalized at build and query time.
+- Query results are ranked by cosine similarity.
+- Results print score, source path, heading, and a bounded excerpt.
+- Output reminds the user that hits are navigation leads and canonical files must be opened before reliance.
+
+## Rebuild Policy
+
+Rebuild after meaningful repository-document changes that should affect retrieval quality.
+
+Do not commit the SQLite store.
+
+Do commit refreshed generated corpus files under `indexes/` when they are intentionally updated.

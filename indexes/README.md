@@ -2,51 +2,15 @@
 
 ## Purpose
 
-This folder stores generated navigation artifacts for `Project Execution OS`.
+This directory stores generated discovery artifacts that help agents narrow file selection before broad scanning.
 
-## Generated Files
+## Current Files
 
-- `system-index.json` — machine-readable repository catalog;
-- `semantic-documents.jsonl` — semantic-ready text chunks for future embeddings ingestion;
-- `BLOCK_CATALOG.generated.md` — generated block artifact catalog;
-- `KNOWLEDGE_CATALOG.generated.md` — generated knowledge-library artifact catalog.
+- `semantic-documents.jsonl` -> generated structural corpus used by the semantic-store builder
 
-## Source Of Truth
+## Rules
 
-Generated indexes are navigation aids. Canonical repository files remain the source of truth.
-
-## Refresh
-
-Run:
-
-```bash
-python scripts/build_system_index.py
-```
-
-## Validate
-
-Run:
-
-```bash
-python scripts/validate_system_index_v3.py
-```
-
-## Search Current Corpus
-
-Run:
-
-```bash
-python scripts/query_system_index.py "telegram phone verification"
-```
-
-The query tool performs lightweight lexical ranking over the prepared corpus. It is useful before an embeddings runtime is activated.
-
-## Automation
-
-The GitHub Actions workflow refreshes generated artifacts after relevant structural changes:
-
-`.github/workflows/system-index.yml`
-
-## Semantic Search Boundary
-
-`semantic-documents.jsonl` is not an embeddings database. It is the prepared corpus for a later approved embeddings runtime.
+- Treat generated indexes as discovery aids, not source of truth.
+- Open canonical files for any selected hit before relying on it.
+- Refresh generated indexes after meaningful structural or documentation changes that should affect retrieval.
+- Do not store the local SQLite vector database here. It lives under `.local/semantic-index/` and is ignored by Git.

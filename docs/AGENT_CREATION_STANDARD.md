@@ -55,20 +55,20 @@ failure_modes:
 review_requirements:
 state:
 version:
-active_reply_surface_rule:
-acknowledgement_rule:
-blocker_reporting_rule:
-publication_mode:
-escalation_boundary:
-execution_report_contract:
 ```
 
-For communication behavior, apply:
+## 4A. Required Entry Inheritance
 
-```text
-docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md
-docs/AGENT_CREATION_COMMUNICATION_ADDENDUM.md
-```
+Every project-related agent must inherit the repository entry protocol instead of inventing its own:
+
+1. enter through `START_HERE.md`;
+2. follow `docs/ROUTER.md`;
+3. inspect useful curated indexes and generated indexes before broad scanning;
+4. use semantic retrieval when wording is uncertain, the repository is large, or the right files are not obvious;
+5. open canonical files for selected hits before relying on them;
+6. load only the minimum sufficient evidence.
+
+If an agent works in a repository that exposes a local index-first standard, the agent should reference that standard briefly instead of duplicating detailed search workflow in every agent file.
 
 ## 5. Agent Lifecycle States
 
@@ -110,6 +110,8 @@ Agents must separate:
 If an agent relies on repository content, it must cite or name the file path.
 
 If an agent relies on web research, it must preserve source links in the artifact.
+
+If an agent relies on index hits or semantic retrieval, it must still name the canonical files that were opened and used as evidence.
 
 ## 8. No Fake Execution Rule
 
@@ -154,9 +156,6 @@ That file must answer:
 3. What exact problem does it solve?
 4. What artifact will it produce?
 5. How will it be reviewed?
-6. Which durable reply surface will it use?
-7. Which publication mode applies?
-8. What conditions require escalation?
 
 ## 11. Activation Rule
 
@@ -166,23 +165,4 @@ An agent becomes active only after:
 2. it is used in at least one workflow run or reviewed against expected use;
 3. review passes;
 4. status is explicitly changed to `active`;
-5. the change is logged;
-6. its communication contract is defined.
-
-## 12. Universal Communication Rule
-
-Every execution agent must:
-
-```text
-acknowledge
--> execute bounded work
--> validate
--> publish the smallest reviewable result
--> report evidence in the same registered durable channel
-```
-
-The owner starts or redirects work. The owner is not the routine courier between agents.
-
-## Final Rule
-
-An agent is not ready for active execution until its purpose, evidence boundary, review path, and durable communication behavior are explicit.
+5. the change is logged.

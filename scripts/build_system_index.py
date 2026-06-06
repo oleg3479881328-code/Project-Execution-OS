@@ -1,151 +1,152 @@
-#!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import re
-import subprocess
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "indexes"
-EXCLUDE = {
-    "indexes/system-index.json",
-    "indexes/semantic-documents.jsonl",
-    "indexes/BLOCK_CATALOG.generated.md",
-    "indexes/KNOWLEDGE_CATALOG.generated.md",
-}
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+OUTPUT_PATH = REPO_ROOT / "indexes" / "semantic-documents.jsonl"
+TEXT_EXTENSIONS = {".md", ".txt", ".html", ".yml", ".yaml"}
+ALLOWED_PREFIXES = (
+    "docs/",
+    "blocks/",
+    "workflow-templates/",
+    "knowledge-library/",
+    "project-library/",
+    "news-layer-mvp/sources/",
+    "START_HERE.md",
+    "PROJECT.md",
+    "PROJECT_INDEX.md",
+    "README.md",
+    "AGENTS.md",
+    "SYSTEM_CONTEXT_MANIFEST.md",
+)
 
 
-def git_value(*args: str) -> str:
-    try:
-        return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
-    except Exception:
-        return "unknown"
+def should_index(path: Path) -> bool:
+    if path.suffix.lower() not in TEXT_EXTENSIONS:
+        return False
+    relative = path.relative_to(REPO_ROOT).as_posix()
+    return relative.startswith(ALLOWED_PREFIXES)
 
 
-def read(path: Path) -> str:
-    return path.read_text(encoding="utf-8", errors="replace")
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8", errors="ignore").replace("\r\n", "\n")
 
 
-def first(text: str, patterns: list[str]) -> str | None:
-    for pattern in patterns:
-        match = re.search(pattern, text, re.I | re.M)
-        if match:
-            return match.group(1).strip().strip("` ")
-    return None
+def clean_text(text: str) -> str:
+    text = re.sub(r"`{3,}.*?`{3,}", " ", text, flags=re.S)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
 
 
-def kind(rel: str) -> str:
-    if rel.endswith("/BLOCK.md"):
-        return "domain-block-entrypoint"
-    if rel.startswith("knowledge-library/"):
-        return "knowledge-entry"
-    if rel.startswith("blocks/"):
-        return "domain-block-artifact"
-    if rel.startswith("docs/"):
-        return "system-standard"
-    if rel.startswith("skills/"):
-        return "skill-artifact"
-    if rel.startswith("agent-library/"):
-        return "agent-artifact"
-    if rel.startswith("projects/"):
-        return "project-artifact"
-    return "repository-artifact"
+def infer_domain(path_text: str, text: str) -> str:
+    lowered = f"{path_text}\n{text}".lower()
+    if any(term in lowered for term in ("uscis", "immigration", "visa", "green card", "marriage interview")):
+        return "us-law"
+    if any(term in lowered for term in ("telegram", "bot", "messaging")):
+        return "messaging"
+    if any(term in lowered for term in ("video", "audio", "music")):
+        return "media"
+    if path_text.startswith("workflow-templates/"):
+        return "workflow"
+    if path_text.startswith("blocks/"):
+        return "blocks"
+    if path_text.startswith("knowledge-library/"):
+        return "knowledge"
+    if path_text.startswith("project-library/"):
+        return "project-memory"
+    return "project-os"
 
 
-def domain(rel: str) -> str:
-    parts = rel.split("/")
-    if parts[0] in {"blocks", "skills", "projects"} and len(parts) > 1:
-        return parts[1]
-    if parts[0] == "knowledge-library" and len(parts) > 1:
-        return f"knowledge:{parts[1]}"
-    return "system"
+def infer_status(path_text: str) -> str:
+    if path_text.startswith("knowledge-library/") or path_text.startswith("news-layer-mvp/sources/"):
+        return "reference"
+    if path_text.startswith("indexes/"):
+        return "generated"
+    return "active"
 
 
-def markdown_files() -> list[Path]:
-    files = []
-    for path in ROOT.rglob("*.md"):
-        rel = path.relative_to(ROOT).as_posix()
-        if rel in EXCLUDE or ".git" in path.parts or "node_modules" in path.parts:
+def split_sections(text: str) -> list[tuple[str, str]]:
+    sections: list[tuple[str, str]] = []
+    current_heading = "Document"
+    current_lines: list[str] = []
+    for line in text.splitlines():
+        if line.startswith("#"):
+            if current_lines:
+                sections.append((current_heading, "\n".join(current_lines).strip()))
+                current_lines = []
+            current_heading = line.lstrip("#").strip() or "Document"
             continue
-        files.append(path)
-    return sorted(files)
+        current_lines.append(line)
+    if current_lines:
+        sections.append((current_heading, "\n".join(current_lines).strip()))
+    return [(heading, body) for heading, body in sections if clean_text(body)]
 
 
-def artifact(path: Path) -> dict:
-    rel = path.relative_to(ROOT).as_posix()
-    text = read(path)
-    headings = re.findall(r"^#{1,6}\s+(.+)$", text, re.M)
-    title = headings[0] if headings else path.stem
-    status = first(text, [r"^Lifecycle status:\s*(.+)$", r"^Current status:\s*(.+)$", r"^Status:\s*(.+)$"])
-    date = first(text, [r"^Updated:\s*(.+)$", r"^Captured:\s*(.+)$", r"^Date checked:\s*(.+)$", r"^Date:\s*(.+)$"])
-    return {
-        "path": rel,
-        "title": title,
-        "type": kind(rel),
-        "domain": domain(rel),
-        "status": status,
-        "date": date,
-        "sha256": hashlib.sha256(text.encode()).hexdigest(),
-        "headings": headings,
-    }
-
-
-def chunks(path: Path, item: dict) -> list[dict]:
-    text = read(path)
-    parts = re.split(r"(?=^#{1,6}\s+)", text, flags=re.M)
-    rows = []
-    for index, part in enumerate(parts):
-        part = part.strip()
-        if not part:
+def chunk_text(text: str, limit: int = 900) -> list[str]:
+    chunks: list[str] = []
+    paragraphs = [clean_text(part) for part in re.split(r"\n\s*\n", text) if clean_text(part)]
+    current = ""
+    for paragraph in paragraphs:
+        candidate = f"{current}\n\n{paragraph}".strip() if current else paragraph
+        if len(candidate) <= limit:
+            current = candidate
             continue
-        heading_match = re.match(r"^#{1,6}\s+(.+)$", part.splitlines()[0])
-        heading = heading_match.group(1) if heading_match else item["title"]
-        for offset in range(0, len(part), 3000):
-            text_chunk = part[offset:offset + 3000].strip()
-            chunk_id = hashlib.sha256(f"{item['path']}|{index}|{offset}|{text_chunk}".encode()).hexdigest()[:24]
-            rows.append({
-                "chunk_id": chunk_id,
-                "source_path": item["path"],
-                "heading": heading,
-                "type": item["type"],
-                "domain": item["domain"],
-                "status": item["status"] or "unknown",
-                "text": text_chunk,
-            })
-    return rows
+        if current:
+            chunks.append(current)
+        while len(paragraph) > limit:
+            chunks.append(paragraph[:limit].strip())
+            paragraph = paragraph[limit - 120 :].strip()
+        current = paragraph
+    if current:
+        chunks.append(current)
+    return chunks
 
 
-def catalog(title: str, rows: list[dict], prefix: str) -> str:
-    lines = [f"# {title}", "", "Generated by `scripts/build_system_index.py`. Do not edit manually.", "", "| Path | Type | Domain | Status |", "|---|---|---|---|"]
-    for row in rows:
-        if row["path"].startswith(prefix):
-            lines.append(f"| `{row['path']}` | `{row['type']}` | `{row['domain']}` | `{row['status'] or 'unknown'}` |")
-    return "\n".join(lines) + "\n"
+def build_records() -> list[dict[str, str]]:
+    records: list[dict[str, str]] = []
+    for path in sorted(REPO_ROOT.rglob("*")):
+        if not path.is_file() or not should_index(path):
+            continue
+        relative = path.relative_to(REPO_ROOT).as_posix()
+        text = read_text(path)
+        if not clean_text(text):
+            continue
+        for section_index, (heading, body) in enumerate(split_sections(text), start=1):
+            for chunk_index, chunk in enumerate(chunk_text(body), start=1):
+                content_hash = hashlib.sha256(chunk.encode("utf-8")).hexdigest()
+                records.append(
+                    {
+                        "id": f"{relative}#{section_index}-{chunk_index}",
+                        "path": relative,
+                        "heading": heading,
+                        "domain": infer_domain(relative, chunk),
+                        "status": infer_status(relative),
+                        "content_hash": content_hash,
+                        "text": chunk,
+                    }
+                )
+    return records
 
 
-def main() -> None:
-    OUT.mkdir(exist_ok=True)
-    files = markdown_files()
-    rows = [artifact(path) for path in files]
-    payload = {
-        "schema_version": 1,
-        "repository": "oleg3479881328-code/Project-Execution-OS",
-        "repository_commit": git_value("rev-parse", "HEAD"),
-        "generated_at": git_value("show", "-s", "--format=%cI", "HEAD"),
-        "artifact_count": len(rows),
-        "artifacts": rows,
-    }
-    (OUT / "system-index.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    with (OUT / "semantic-documents.jsonl").open("w", encoding="utf-8") as handle:
-        for path, item in zip(files, rows):
-            for row in chunks(path, item):
-                handle.write(json.dumps(row, ensure_ascii=False) + "\n")
-    (OUT / "BLOCK_CATALOG.generated.md").write_text(catalog("Generated Block Catalog", rows, "blocks/"), encoding="utf-8")
-    (OUT / "KNOWLEDGE_CATALOG.generated.md").write_text(catalog("Generated Knowledge Catalog", rows, "knowledge-library/"), encoding="utf-8")
-    print(f"Indexed {len(rows)} Markdown files")
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Build the structural corpus for semantic retrieval.")
+    parser.add_argument("--output", type=Path, default=OUTPUT_PATH)
+    args = parser.parse_args()
+
+    records = build_records()
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    with args.output.open("w", encoding="utf-8", newline="\n") as handle:
+        for record in records:
+            handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+    print(f"Wrote {len(records)} records to {args.output}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

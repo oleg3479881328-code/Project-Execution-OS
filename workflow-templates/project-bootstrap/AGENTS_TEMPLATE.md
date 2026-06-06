@@ -15,14 +15,27 @@ Before project work:
 2. Open the live router selected by that entrypoint:
    `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ROUTER.md`
 3. Read the local `PROJECT.md` for this project.
-4. Check whether a useful project index already exists.
-5. Read only the minimum additional files needed for the active task.
+4. If the project already shows active execution evidence such as `PROJECT_STATE.md` or `logs/latest.md`, read the transfer-readiness standard before meaningful work:
+   `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
+5. Check whether a useful project index already exists.
+6. Inspect relevant curated indexes and generated indexes before broad scanning.
+7. If wording is uncertain, the repository is large, or the correct files are not obvious, use semantic retrieval before mass scanning:
+   `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/AGENT_INDEX_FIRST_ENTRY_STANDARD.md`
+8. Open canonical files for the selected hits, then read only the minimum additional files needed for the active task.
 
 If `PROJECT.md` is absent but legacy `PROJECT_ENTRYPOINT.md` exists, read the legacy file temporarily and migrate it to `PROJECT.md` at the nearest safe opportunity without keeping both files active.
 
 ## Project Index
 
 Before mass scanning the project, check whether a useful existing index is already present.
+
+Inspect curated indexes first.
+If generated indexes exist under `indexes/`, check those before broad scanning as well.
+
+When wording is uncertain, the repository is large, or the correct files are not obvious, use semantic retrieval to narrow candidates before opening files directly.
+
+Semantic hits are navigation leads, not source of truth.
+Open the canonical files for any selected hits before relying on them.
 
 If the project has grown enough that a useful index is missing, create a minimal index.
 
@@ -38,6 +51,8 @@ Do not create an index ritualistically for an empty project.
 - Treat model memory, hidden context, and chat history as non-authoritative unless the project records them durably.
 - Do not invent project purpose, architecture, stack, scope, or prior decisions when they are not explicitly confirmed.
 - Check for an adequate existing solution before designing, writing, or fixing your own.
+- For code, MVP, automation, app, integration, or tool work where donors are plausible, include a relevant GitHub repository search unless there is a clear recorded reason to skip it.
+- Use semantic retrieval as a narrowing step, not as a substitute for opening canonical files.
 - Preserve stable starts of accumulating files where practical. Add normal chronological updates lower in the file instead of rearranging unchanged blocks without a real reason.
 
 ## Central Standards To Use Directly

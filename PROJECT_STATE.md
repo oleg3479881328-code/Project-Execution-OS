@@ -1,76 +1,80 @@
 ---
-project_name: Project Execution OS
-project_mode: compact
 status: transfer_ready
-updated_at: 2026-06-01
-source_of_truth: repository
-active_branch: main
+project_mode: document-first
+current_step: issue-21-semantic-index-pilot-implemented
+current_run: none
+last_updated: 2026-06-06
+next_action: Decide whether the semantic pilot should be published as-is or refined further for query quality before PR/merge.
 ---
 
-# PROJECT_STATE.md
+# PROJECT STATE — Project Execution OS
 
-## Current State
+## Current Phase
 
-`Project Execution OS` is an active central project and is prepared for transfer to another executor.
+Foundation system is active and now includes an index-first discovery layer with a local semantic retrieval pilot for issue `#21`.
 
-The repository now uses the minimum active continuity set required by `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`:
+## Current Workflow Run
 
-```text
-PROJECT.md
-PROJECT_STATE.md
-logs/latest.md
-```
+None.
 
-## Latest Confirmed Milestone
+## Confirmed Decisions
 
-- PR `#6` was merged into `main`.
-- Merge commit: `8c86466fa6394bcaf9d833a5ca29d7464893eeba`.
-- Canonical local project entrypoint: `PROJECT.md`.
-- New standalone real project folders bootstrap with local Git, `AGENTS.md`, and `PROJECT.md`.
-- Internal subprojects inside an existing repository inherit the parent Git layer and do not receive nested `git init` unless separately authorized.
-- Zero-state and active-state project structures are explicitly separated.
-- Project index maintenance, stable-prefix behavior, communication-channel routing, and executor continuity are part of the active standards.
-- GitHub Actions validates both project structure and system-context manifest integrity.
-- The bootstrap model was smoke-tested with temporary project `Test123`; the owner reports that the temporary test project has been deleted.
+- `START_HERE.md` remains the single stable external entrypoint.
+- `docs/ROUTER.md` remains the live internal map.
+- Project entry should stay narrow and selective rather than loading the whole repository by default.
+- Active projects must preserve transfer-ready state as a byproduct of work rather than only on explicit handoff request.
+- Existing solutions and current repository standards should be adapted before inventing new mechanisms.
+- For code-like project work where donors are plausible, a relevant GitHub repository search is part of a complete reuse-first pass unless explicitly ruled out.
+- The knowledge-library access layer should use `GitHub -> Obsidian -> Quartz` with an explicit allowlist sync boundary rather than whole-repository publication.
+- The accepted repository-side implementation for issue `#11` was merged through PR `#13` at commit `d5cafedb169c89d4ad0c8b4d1192a78ff9fab851`.
+- Issue `#14` should produce a lightweight reusable `blocks/design/` package centered on goal, user path, structure, wireframe, UI system, responsive behavior, frontend-aware handoff, and design review.
+- Issue `#21` should add a bounded structural corpus builder, a local semantic SQLite runtime, and mandatory index-first entry rules without introducing hosted retrieval infrastructure.
 
-## Current Focus
+## Workflow Operating Notes
 
-Keep the central project internally consistent and transfer-ready after every meaningful change.
+- The current repository itself is governed by `Project Execution OS`.
+- The current knowledge-library portal implementation is local-preview-first and does not yet attach any public hosting target.
+- The local Quartz scaffold remains local-only and public deployment is still deferred.
+- The semantic runtime is local-only, uses `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, and keeps the SQLite store outside Git under `.local/semantic-index/`.
 
-## Current Next Safe Action
+## Open Questions
 
-No implementation task is currently active.
+- Whether the current corpus boundary is sufficient or should be refined further for better query quality on sparse domains.
+- Whether a separate lexical query companion should be added later for stronger fallback behavior.
+- Whether the portal scaffold should remain as a nested local clone or be promoted into its own private GitHub repository next.
 
-Await the owner's next bounded central-system task. When a new task arrives:
+## Active Files
 
-1. enter through `START_HERE.md`;
-2. follow `docs/ROUTER.md`;
-3. read `PROJECT.md`, then this file and `logs/latest.md`;
-4. perform only the smallest justified change;
-5. update `PROJECT_STATE.md` and `logs/latest.md` after the meaningful step.
+- `.gitignore`
+- `AGENTS.md`
+- `SYSTEM_CONTEXT_MANIFEST.md`
+- `.github/workflows/semantic-index-pilot.yml`
+- `docs/AGENT_CREATION_STANDARD.md`
+- `docs/AGENT_INDEX_FIRST_ENTRY_STANDARD.md`
+- `docs/CONTEXT_ASSEMBLY_STANDARD.md`
+- `docs/INDEXING_STANDARD.md`
+- `docs/INDEXING_LAYER_STATUS.md`
+- `docs/ROUTER.md`
+- `docs/SEMANTIC_INDEX_ARCHITECTURE.md`
+- `docs/SEMANTIC_SEARCH_RUNTIME.md`
+- `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+- `indexes/README.md`
+- `indexes/semantic-documents.jsonl`
+- `scripts/build_system_index.py`
+- `scripts/validate_system_index_v3.py`
+- `scripts/build_semantic_store.py`
+- `scripts/query_semantic_store.py`
+- `semantic-requirements.txt`
+- `docs/ROUTER.md`
+- `workflow-templates/project-bootstrap/AGENTS_TEMPLATE.md`
+- `PROJECT.md`
+- `PROJECT_STATE.md`
+- `logs/latest.md`
 
-## Active Files For Re-entry
+## Latest Result
 
-Read in this order when resuming central-project work:
+Issue `#21` now has a bounded local discovery implementation: a structural corpus builder, corpus validator, semantic SQLite store builder, semantic query CLI, semantic pilot workflow, refreshed generated corpus, and mandatory index-first routing updates in the root agent instructions, bootstrap template, context standard, agent-creation standard, router, and ChatGPT integration prompt. Local validation succeeded for corpus build, corpus validation, dependency install, semantic-store build, semantic queries, manifest validation, and Git ignore protection for `.local/semantic-index/semantic-index.sqlite3`.
 
-1. `START_HERE.md`
-2. `docs/ROUTER.md`
-3. `PROJECT.md`
-4. `PROJECT_STATE.md`
-5. `logs/latest.md`
-6. `PROJECT_INDEX.md` only when broader navigation is needed
-7. routed standards only when the active task requires them
+## Next Action
 
-## Known Blockers
-
-None currently recorded.
-
-## Do-Not-Break Rules
-
-- Do not bypass `START_HERE.md` as the stable top-level entrypoint.
-- Do not replace `docs/ROUTER.md` with duplicated navigation logic elsewhere.
-- Do not treat chat memory as durable project truth.
-- Do not add files, folders, or architectural layers ritualistically.
-- Do not claim execution without a confirmed repository event.
-- Preserve the smallest sufficient context-loading path.
-- Update this file and `logs/latest.md` after every meaningful central-project change.
+Review query quality on additional real retrieval tasks, then publish or refine the issue `#21` implementation based on whether the current bounded corpus is adequate.

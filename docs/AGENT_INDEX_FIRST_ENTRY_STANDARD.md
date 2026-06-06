@@ -1,54 +1,83 @@
 # Agent Index-First Entry Standard
 
-Updated: 2026-06-06
-Status: `active`
-
 ## Purpose
 
-Require every project-related agent to use repository indexes before broad scanning.
+This standard makes selective, index-first repository entry mandatory for project-related agents.
 
-## Mandatory Entry Order
+Its goal is to reduce unnecessary scanning, token cost, and wrong-file drift while preserving canonical-file verification.
 
-For project-related work:
+## Core Rule
 
-1. read `START_HERE.md`;
-2. open `docs/ROUTER.md`;
-3. open the narrowest routed standard or block;
-4. read the relevant project entrypoint when a specific project is involved;
-5. inspect existing curated and generated indexes before broad file reads;
-6. use semantic retrieval when the repository is large, the wording is uncertain, or the correct files are not obvious;
-7. open canonical source files for the selected hits;
-8. load only the minimum evidence needed for the active task.
+Use this order before broad scanning:
 
-## Mandatory Rule
+```text
+START_HERE.md
+-> docs/ROUTER.md
+-> routed standard or project entrypoint
+-> curated indexes
+-> generated indexes under indexes/ when relevant
+-> semantic retrieval when wording is uncertain or the right files are not obvious
+-> canonical files for selected hits
+```
 
-Do not scan an entire repository, block tree, or knowledge library by default.
+Semantic hits are navigation leads, not truth.
 
-Before broad scanning, use:
+Open the canonical files before relying on a retrieved hit.
 
-- `PROJECT_INDEX.md`;
-- section indexes;
-- `indexes/system-index.json`;
-- `indexes/BLOCK_CATALOG.generated.md`;
-- `indexes/KNOWLEDGE_CATALOG.generated.md`;
-- semantic retrieval when available.
+## Mandatory Behavior
 
-## Semantic Retrieval Boundary
+For project-related work, an agent must:
 
-Semantic results are navigation leads. They do not replace canonical files.
+1. enter through `START_HERE.md`;
+2. follow `docs/ROUTER.md`;
+3. read the specific project's `PROJECT.md` when a project is involved;
+4. inspect curated indexes before broad scanning;
+5. inspect generated indexes under `indexes/` when they are relevant to the task;
+6. use semantic retrieval when wording is uncertain, repository size makes direct scanning wasteful, or correct files are not obvious;
+7. open canonical files for promising hits before using them as evidence;
+8. load only the minimum sufficient evidence for the active action.
 
-After retrieval, verify:
+## Curated Indexes
 
-- source path;
-- lifecycle status;
-- freshness;
-- task applicability;
-- minimum excerpts needed.
+Examples of curated indexes include:
 
-## Executor Rule
+- `PROJECT_INDEX.md`
+- `blocks/PROJECT_INDEX.md`
+- `knowledge-library/PROJECT_INDEX.md`
+- project-specific indexes created by the project itself
 
-Codex and other execution agents should receive a bounded context package. They should not rediscover the whole repository unless the task explicitly requires repository-wide analysis.
+## Generated Indexes
 
-## Final Rule
+Generated indexes may exist under `indexes/`.
 
-Index first. Retrieve narrowly. Verify canonical sources. Load the minimum sufficient context.
+Treat them as discovery aids.
+
+They narrow candidate files, but they do not replace canonical documents.
+
+## Semantic Retrieval Rule
+
+Use semantic retrieval when:
+
+- the user description does not match exact repository wording;
+- multiple plausible files might contain the answer;
+- the repository is large enough that manual scanning is inefficient;
+- cross-lingual wording may hide the correct file.
+
+Do not use semantic retrieval as an excuse to skip canonical-file verification.
+
+## Anti-Scan Rule
+
+Do not full-scan a repository by default when indexes or semantic retrieval can narrow the candidate set first.
+
+Mass scanning is allowed only when:
+
+- no adequate index exists;
+- retrieval is unavailable or clearly insufficient;
+- the task genuinely requires whole-repository evidence.
+
+## Related Nodes
+
+- `docs/CONTEXT_ASSEMBLY_STANDARD.md`
+- `docs/INDEXING_STANDARD.md`
+- `docs/SEMANTIC_SEARCH_RUNTIME.md`
+- `workflow-templates/project-bootstrap/AGENTS_TEMPLATE.md`

@@ -1,82 +1,37 @@
 # Indexing Layer Status
 
-Updated: 2026-06-06
-Status: `operational_structural`
+## Snapshot Date
 
-## Purpose
-
-Provide one compact navigation page for the committed indexing layer.
-
-## Active Structural Layer
-
-Use:
-
-- `docs/INDEXING_STANDARD.md`
-- `docs/SEMANTIC_INDEX_ARCHITECTURE.md`
-- `docs/SEMANTIC_INDEX_PILOT_BACKLOG.md`
-- `indexes/README.md`
-- `indexes/system-index.json`
-- `indexes/semantic-documents.jsonl`
-- `indexes/BLOCK_CATALOG.generated.md`
-- `indexes/KNOWLEDGE_CATALOG.generated.md`
-- `scripts/build_system_index.py`
-- `scripts/validate_system_index_v3.py`
-- `scripts/query_system_index.py`
-- `.github/workflows/system-index.yml`
-- `SYSTEM_CONTEXT_MANIFEST.md`
+`2026-06-06`
 
 ## Current State
 
-Implemented and confirmed:
+- Structural corpus build: implemented locally through `scripts/build_system_index.py`
+- Structural corpus validation: implemented locally through `scripts/validate_system_index_v3.py`
+- Local semantic runtime: implemented locally through SQLite plus `sentence-transformers`
+- Hosted retrieval API: inactive
+- Graphify retrieval layer: inactive
 
-- curated block index refresh;
-- curated knowledge-library index refresh plus temporary addendum for the indexing knowledge entry;
-- router entry for indexing work;
-- machine-readable JSON index;
-- semantic-ready JSONL corpus;
-- Python generator for repository Markdown indexing;
-- non-blocking validator for generated index integrity and curated-index warnings;
-- local lexical query command for the semantic-ready corpus;
-- GitHub Actions workflow for automatic rebuild and commit of generated artifacts;
-- first successful automatic GitHub Actions refresh;
-- stable context manifest update to `knowledge-aware-core-v7`.
+## Validation Evidence
 
-Confirmed automatic refresh result:
+The intended local validation commands are:
 
-- generated commit: `1b73511882ed66237fe36e96bf88befa64468000`;
-- indexed Markdown artifacts: `274`.
-
-Not active yet:
-
-- embeddings generation;
-- vector database;
-- semantic retrieval API;
-- automatic Graphify refresh.
-
-## Local Commands
-
-Rebuild:
-
-```bash
+```text
 python scripts/build_system_index.py
-```
-
-Validate:
-
-```bash
 python scripts/validate_system_index_v3.py
+python -m pip install -r semantic-requirements.txt
+python scripts/build_semantic_store.py
+python scripts/query_semantic_store.py "подтверждение телефона через Telegram" --limit 5
+python scripts/query_semantic_store.py "адаптивная музыка для видео" --limit 5
+python scripts/query_semantic_store.py "USCIS marriage interview memo" --domain us-law --limit 5
 ```
 
-Search the current corpus:
+Workflow validation for the semantic pilot is provided by:
 
-```bash
-python scripts/query_system_index.py "telegram phone verification"
-```
+`.github/workflows/semantic-index-pilot.yml`
 
-## Source Of Truth
+## Operational Notes
 
-Generated indexes assist navigation. Canonical repository files remain the source of truth.
-
-## Next Validation
-
-Run a bounded semantic-search pilot only when a real retrieval problem justifies it.
+- The SQLite store is local-only and ignored by Git.
+- Retrieval quality is bounded by the generated corpus currently present in `indexes/semantic-documents.jsonl`.
+- Agents must still open canonical files before relying on hits.

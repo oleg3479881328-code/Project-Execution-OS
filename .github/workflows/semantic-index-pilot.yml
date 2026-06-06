@@ -1,0 +1,67 @@
+name: Semantic Index Pilot
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/semantic-index-pilot.yml"
+      - ".gitignore"
+      - "AGENTS.md"
+      - "workflow-templates/project-bootstrap/AGENTS_TEMPLATE.md"
+      - "docs/CONTEXT_ASSEMBLY_STANDARD.md"
+      - "docs/AGENT_CREATION_STANDARD.md"
+      - "docs/AGENT_INDEX_FIRST_ENTRY_STANDARD.md"
+      - "docs/INDEXING_STANDARD.md"
+      - "docs/SEMANTIC_INDEX_ARCHITECTURE.md"
+      - "docs/SEMANTIC_SEARCH_RUNTIME.md"
+      - "docs/INDEXING_LAYER_STATUS.md"
+      - "docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md"
+      - "indexes/**"
+      - "scripts/build_system_index.py"
+      - "scripts/validate_system_index_v3.py"
+      - "scripts/build_semantic_store.py"
+      - "scripts/query_semantic_store.py"
+      - "semantic-requirements.txt"
+
+jobs:
+  semantic-index-pilot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install semantic runtime dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r semantic-requirements.txt
+
+      - name: Rebuild structural corpus
+        run: |
+          python scripts/build_system_index.py
+          python scripts/validate_system_index_v3.py
+
+      - name: Build semantic store
+        run: python scripts/build_semantic_store.py
+
+      - name: Smoke queries
+        run: |
+          mkdir -p artifacts
+          python scripts/query_semantic_store.py "подтверждение телефона через Telegram" --limit 5 | tee artifacts/query-telegram.txt
+          python scripts/query_semantic_store.py "адаптивная музыка для видео" --limit 5 | tee artifacts/query-media.txt
+          python scripts/query_semantic_store.py "USCIS marriage interview memo" --domain us-law --limit 5 | tee artifacts/query-us-law.txt
+
+      - name: Upload semantic store and query logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: semantic-index-pilot-artifacts
+          path: |
+            .local/semantic-index/semantic-index.sqlite3
+            artifacts/query-telegram.txt
+            artifacts/query-media.txt
+            artifacts/query-us-law.txt

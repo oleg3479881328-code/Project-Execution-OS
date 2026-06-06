@@ -92,6 +92,15 @@ START_HERE.md
 
 Before mass scanning a project, check whether a useful existing index already exists.
 
+Inspect curated indexes first.
+
+If generated indexes exist under `indexes/`, inspect the relevant generated index before broad scanning as well.
+
+When wording is uncertain, the repository is large, or the right files are not obvious, use semantic retrieval to narrow likely candidates before direct file reading.
+
+Semantic hits are navigation leads only.
+Open the canonical files for selected hits before treating them as evidence or operational truth.
+
 If the project has grown enough that a useful index is missing, create a minimal one.
 
 After a meaningful structural change, update the index.
@@ -141,6 +150,7 @@ Do not create context packages made of:
 - entire repositories without a task-specific reason;
 - complete historical chat dumps;
 - every system standard at once;
+- broad file-system scans before checking indexes or retrieval paths;
 - unreviewed reference collections;
 - all knowledge, skills or templates merely because they exist;
 - stale project files that are not required for the current action.
@@ -163,6 +173,10 @@ Only reviewed and relevant knowledge should be loaded as active reusable guidanc
 
 ## API And Cache-Aware Extension
 
+Use the active gate:
+
+- `knowledge-library/execution-standards/api-model-runtime-cache-gate.md`
+
 When an API-based orchestrator is later used, the context package should be assembled deterministically where practical:
 
 ```text
@@ -178,7 +192,11 @@ stable system instruction
 
 For prefix-caching providers, this ordering can increase reuse of stable leading content. It must not be treated as permanent memory or guaranteed cache reuse.
 
-An API implementation should, where available, log:
+This extension remains model-neutral. It applies to API-based AI model providers that expose comparable runtime usage or cache behavior, not only to a single vendor.
+
+When runtime usage or cache fields are available from the provider, an API implementation must log them.
+
+An API implementation must, where available, log:
 
 - model and provider;
 - system/context version or commit reference;
@@ -234,4 +252,5 @@ It must enable an AI to enter through one stable door, follow one live internal 
 
 For project work, enter through `START_HERE.md` and `docs/ROUTER.md` first.
 Then read the specific project's `PROJECT.md`, the project index if one exists,
+use semantic retrieval before mass scanning when the correct files are not obvious,
 and only the minimum additional files needed for the active task.

@@ -18,6 +18,8 @@ If this URL is accessible, fetch and read it yourself. Do not ask the user to pa
 
 Treat `START_HERE.md` as the stable front door, not the operating system itself. Open the live internal router it names, then follow the smallest relevant route into the internal system nodes.
 
+Before broad repository scanning, follow the routed index-first context rules and use available indexes or retrieval paths to narrow the file set first.
+
 Do not invent your own project workflow. Do not duplicate lifecycle, storage, Notion, GitHub, Google Drive, Codex, MVP, or execution rules in this instruction. Those rules belong inside Project Execution OS and may evolve there.
 
 Do not replace repository rules with chat memory or assumptions.
