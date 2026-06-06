@@ -20,7 +20,11 @@ Routine continuation includes:
 - validation runs already required by the task;
 - bookkeeping updates to coordination state and logs;
 - execution reports required by the active task;
-- small documentation corrections needed to close the reviewed task.
+- small documentation corrections needed to close the reviewed task;
+- minimal commits for validated bounded changes;
+- pushes to private review branches;
+- draft pull-request publication for review;
+- posting commit SHA, draft PR URL, and validation evidence in the registered active channel.
 
 ## Owner Escalation Boundary
 
@@ -29,7 +33,9 @@ Return to the owner only when the next action requires one of the following:
 - scope expansion;
 - destructive action;
 - repository visibility change;
-- external publication;
+- external public publication;
+- production deployment;
+- irreversible data migration;
 - business decision;
 - unresolved ambiguity that cannot be resolved from repository standards.
 
