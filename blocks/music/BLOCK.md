@@ -51,10 +51,13 @@ Open only the smallest relevant path:
 2. `blocks/music/TOOL_SELECTION_MATRIX.md` when selecting an existing platform, model, or utility
 3. `blocks/music/STACK_ARCHITECTURES.md` when designing a reusable workflow or product integration
 4. `blocks/music/MUSIC_AGENT_STANDARD.md` when defining agent behavior, prompts, or output structure
-5. `blocks/music/VALIDATION_GENERATION.md` when testing generation platforms
-6. `blocks/music/VALIDATION_REALTIME.md` when testing interactive generation
-7. `blocks/music/VALIDATION_UTILITIES.md` when testing analysis, stems, MIDI, normalization, or mastering
-8. `blocks/music/REFERENCES.md` when evaluating donor solutions or research directions
+5. `blocks/music/RIGHTS_CHECKLIST.md` before commercial use, client delivery, redistribution, or platform publication
+6. `blocks/music/VALIDATION_GENERATION.md` when testing generation platforms
+7. `blocks/music/VALIDATION_REALTIME.md` when testing interactive generation
+8. `blocks/music/VALIDATION_UTILITIES.md` when testing analysis, stems, MIDI, normalization, or mastering
+9. `blocks/music/REFERENCES.md` for the compact reference layer
+10. `blocks/music/REFERENCES_EXTENDED.md` for the expanded donor map
+11. `blocks/music/RESEARCH_REPORT_2026-06-06.md` for the current research snapshot
 
 ## Typical Modes
 
