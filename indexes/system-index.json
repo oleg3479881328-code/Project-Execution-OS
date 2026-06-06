@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3b4108313ca396c22a03d01d43f54fac2138c86b",
-  "generated_at": "2026-06-06T18:59:31-04:00",
-  "artifact_count": 278,
+  "repository_commit": "589b8b13004f437a707e4a2e2a0825a5e19cee7a",
+  "generated_at": "2026-06-06T18:59:45-04:00",
+  "artifact_count": 279,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2197,6 +2197,22 @@
         "Packet Lite",
         "Execution Report",
         "Evidence Rule"
+      ]
+    },
+    {
+      "path": "docs/CODEX_HANDOFF_STANDARD_ADDENDUM_2026-06-06.md",
+      "title": "Codex Handoff Standard Addendum — 2026-06-06",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "758f0d106ef90349937cdbb5701a27a043f311ecce2a0c9189c3b6d53ad1b376",
+      "headings": [
+        "Codex Handoff Standard Addendum — 2026-06-06",
+        "Purpose",
+        "Required Companion Standard",
+        "Operational Effect",
+        "Final Rule"
       ]
     },
     {
