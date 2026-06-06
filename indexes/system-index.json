@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b2419427e671d2b99a1bec500391b11b8139183e",
-  "generated_at": "2026-06-06T19:07:57-04:00",
-  "artifact_count": 283,
+  "repository_commit": "701a7ddcd15312b2aac4a02eceb3cc6abc9b6a37",
+  "generated_at": "2026-06-06T19:08:07-04:00",
+  "artifact_count": 284,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2447,6 +2447,23 @@
         "Blocker Rule",
         "Review Continuation Rule",
         "Owner Trigger Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/EXECUTOR_HANDOFF_STANDARD_ADDENDUM_2026-06-06.md",
+      "title": "Executor Handoff Standard Addendum — 2026-06-06",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "a44e94b39253d6f4f27624a667adbb1bfff8ad223cfd0c07b90f79eb9bced262",
+      "headings": [
+        "Executor Handoff Standard Addendum — 2026-06-06",
+        "Purpose",
+        "Required Companion Standard",
+        "Mandatory Handoff Fields",
+        "Default Publication Mode",
         "Final Rule"
       ]
     },
