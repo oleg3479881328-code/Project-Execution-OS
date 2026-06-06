@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1cc9c29e66e709ab21414b64cb2325388ba6c84d",
-  "generated_at": "2026-06-06T19:04:17-04:00",
-  "artifact_count": 282,
+  "repository_commit": "2fb740a970f328af3e0b39eb1fbebeb98d5531e0",
+  "generated_at": "2026-06-06T19:07:32-04:00",
+  "artifact_count": 283,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2431,6 +2431,27 @@
         "EXECUTION STATUS",
         "NEXT RECOMMENDED STEP",
         "Финальная инструкция"
+      ]
+    },
+    {
+      "path": "docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md",
+      "title": "Executor Channel Acknowledgement And Publication Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "active",
+      "date": "2026-06-06",
+      "sha256": "d60e6c9077540b4ee5f05e1d2e6493063f8c7f3600b92a0a3725dea067d5b436",
+      "headings": [
+        "Executor Channel Acknowledgement And Publication Standard",
+        "Purpose",
+        "Mandatory Acknowledgement",
+        "Active Reply Surface",
+        "Default Publication Rule",
+        "Stop Boundary",
+        "Blocker Rule",
+        "Review Continuation Rule",
+        "Owner Trigger Rule",
+        "Final Rule"
       ]
     },
     {
