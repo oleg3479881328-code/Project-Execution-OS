@@ -18,6 +18,14 @@ Use this nested protocol when:
 - GitHub issue, pull request, or review thread will carry the task;
 - durable GitHub-based multi-agent coordination is needed.
 
+## Mandatory Companion Standard
+
+For every bounded Codex handoff, also read and apply:
+
+`docs/CODEX_CHANNEL_ACK_AND_PUBLISH_STANDARD.md`
+
+This requires immediate acknowledgement in the named GitHub reply surface and routine publication of reviewable changes to a private branch and draft PR without a second owner confirmation.
+
 ## Short Command Pre-Check
 
 Before interpreting an isolated shorthand command such as `01` or `02`, read:
@@ -41,9 +49,9 @@ A bounded review follow-up that remains inside the already approved task scope i
 
 Codex continues from the latest bounded instruction in the registered active GitHub channel without asking the owner for a second confirmation.
 
-Routine continuation includes narrow review fixes, required validation runs, bookkeeping updates to coordination files, and required execution reports.
+Routine continuation includes narrow review fixes, required validation runs, bookkeeping updates to coordination files, required execution reports, minimal commits, pushes to private branches, and draft PR publication for review.
 
-Return to the owner only for scope expansion, destructive action, repository visibility change, external publication, business decision, or unresolved ambiguity that cannot be resolved from repository standards.
+Return to the owner only for scope expansion, destructive action, repository visibility change, external public publication, production deployment, business decision, or unresolved ambiguity that cannot be resolved from repository standards.
 
 ## Compact Coordination State And Append-Only Log
 
@@ -131,6 +139,8 @@ Use that document for:
 ## Related Artifacts
 
 - `blocks/communication-channel/BLOCK.md`
+- `blocks/communication-channel/CODEX_REPLY_SURFACE_ADDENDUM.md`
+- `docs/CODEX_CHANNEL_ACK_AND_PUBLISH_STANDARD.md`
 - `docs/IN_SCOPE_REVIEW_CONTINUATION_STANDARD.md`
 - `docs/AI_COORDINATION_MESSAGE_STANDARD.md`
 - `docs/AI_COORDINATION_STATE_STANDARD.md`
