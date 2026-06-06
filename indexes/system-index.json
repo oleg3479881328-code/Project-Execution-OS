@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2fb740a970f328af3e0b39eb1fbebeb98d5531e0",
-  "generated_at": "2026-06-06T19:07:32-04:00",
+  "repository_commit": "b2419427e671d2b99a1bec500391b11b8139183e",
+  "generated_at": "2026-06-06T19:07:57-04:00",
   "artifact_count": 283,
   "artifacts": [
     {
@@ -2181,18 +2181,14 @@
       "title": "Codex Channel Acknowledgement And Publication Standard",
       "type": "system-standard",
       "domain": "system",
-      "status": "active",
+      "status": "active_adapter",
       "date": "2026-06-06",
-      "sha256": "2bb0f04c3dda985fdf4ad33537b104ce6c069304f7d6bfd1d7f0c41af985d3c3",
+      "sha256": "8e94c2f55daed161dd86b31ccea900cacc756d9f8990bbcaa8942ee1b59f4829",
       "headings": [
         "Codex Channel Acknowledgement And Publication Standard",
         "Purpose",
-        "Mandatory Acknowledgement",
-        "Active Reply Surface",
-        "Default Publication Rule",
-        "Stop Boundary",
-        "Blocker Rule",
-        "Review Continuation Rule",
+        "Required Parent Standard",
+        "Codex-Specific Route",
         "Final Rule"
       ]
     },
