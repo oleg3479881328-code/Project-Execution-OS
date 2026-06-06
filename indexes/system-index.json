@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "345004c951be967521c95c26bffda15d3d4fd44e",
-  "generated_at": "2026-06-06T19:03:20-04:00",
-  "artifact_count": 281,
+  "repository_commit": "390e7b1dbae3c51737c195099799b294eb16f6e4",
+  "generated_at": "2026-06-06T19:03:36-04:00",
+  "artifact_count": 282,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2246,6 +2246,20 @@
         "Required Companion Standard",
         "Operational Effect",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/CODEX_ISSUE_21_DECISION.md",
+      "title": "Codex Issue 21 Publication Decision",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "active_instruction",
+      "date": "2026-06-06",
+      "sha256": "cda83554b9791690efed13cc87dd2350604dee1ebe72b4e22c84d4c3870dd5c8",
+      "headings": [
+        "Codex Issue 21 Publication Decision",
+        "Decision",
+        "Channel Rule"
       ]
     },
     {
