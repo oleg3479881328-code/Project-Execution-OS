@@ -36,6 +36,25 @@ The executor must post there without waiting for the owner to relay messages:
 - commit SHA and pull-request URL when repository changes are published;
 - validation evidence.
 
+## Mandatory Owner-Visible Receipt
+
+After sending any durable message, the executor must immediately show the owner a short linked receipt using:
+
+`docs/OWNER_VISIBLE_CHANNEL_RECEIPT_STANDARD.md`
+
+The receipt must identify:
+
+- what was sent;
+- message type;
+- recipient;
+- active channel;
+- direct message URL or narrowest available durable channel URL;
+- current state;
+- what the executor is waiting for;
+- next action.
+
+Do not merely say `sent`.
+
 ## Default Publication Rule
 
 For a bounded implementation handoff that authorizes reviewable repository edits, the executor continues through:
@@ -48,6 +67,7 @@ acknowledge
 -> push to private review branch
 -> open draft pull request
 -> post structured execution report in the named reply surface
+-> show owner-visible linked receipt
 ```
 
 This is routine in-scope execution. It does not require a second owner confirmation.
@@ -70,11 +90,11 @@ The executor must stop and ask in the active reply surface before:
 
 ## Blocker Rule
 
-If the executor cannot continue, it must post a signed blocker report immediately in the active reply surface. It must not wait silently for a manual prompt.
+If the executor cannot continue, it must post a signed blocker report immediately in the active reply surface, then show the owner a linked receipt. It must not wait silently for a manual prompt.
 
 ## Review Continuation Rule
 
-When a reviewer posts a bounded revision request inside the approved scope, the executor continues automatically through fix, validation, publication, and updated report.
+When a reviewer posts a bounded revision request inside the approved scope, the executor continues automatically through fix, validation, publication, updated report, and owner-visible linked receipt.
 
 ## Owner Trigger Rule
 
@@ -82,4 +102,4 @@ The owner starts or redirects work. The owner is not the routine courier between
 
 ## Final Rule
 
-A bounded handoff is not complete when local work exists. It is complete only when the reviewable result and structured report are visible in the named durable channel.
+A bounded handoff is not complete when local work exists. It is complete only when the reviewable result, structured report, and owner-visible linked receipt are visible.
