@@ -22,6 +22,7 @@ Use this block when the task involves:
 - prompt design for music-generation systems;
 - music-agent behavior;
 - DAW-aware or application-aware music handoff;
+- stem separation, audio-to-MIDI, mastering, loudness normalization, or export;
 - legal, licensing, or platform-risk review for generated music.
 
 ## When Not To Use
@@ -40,15 +41,20 @@ Do not treat AI music as a single prompt-to-track task.
 
 A valid music workflow should connect:
 
-`goal -> use case -> musical role -> constraints -> generation or sourcing method -> arrangement behavior -> export requirements -> rights check -> quality review -> project handoff`
+`goal -> use case -> musical role -> constraints -> generation or sourcing method -> arrangement behavior -> edit or stem path -> export requirements -> rights check -> quality review -> project handoff`
 
 ## Required Reading Inside This Block
 
 Open only the smallest relevant path:
 
 1. `blocks/music/MUSIC_WORKFLOW_PIPELINE.md`
-2. `blocks/music/MUSIC_AGENT_STANDARD.md` when defining agent behavior, prompts, or output structure
-3. `blocks/music/REFERENCES.md` when evaluating tools, donor solutions, or research directions
+2. `blocks/music/TOOL_SELECTION_MATRIX.md` when selecting an existing platform, model, or utility
+3. `blocks/music/STACK_ARCHITECTURES.md` when designing a reusable workflow or product integration
+4. `blocks/music/MUSIC_AGENT_STANDARD.md` when defining agent behavior, prompts, or output structure
+5. `blocks/music/VALIDATION_GENERATION.md` when testing generation platforms
+6. `blocks/music/VALIDATION_REALTIME.md` when testing interactive generation
+7. `blocks/music/VALIDATION_UTILITIES.md` when testing analysis, stems, MIDI, normalization, or mastering
+8. `blocks/music/REFERENCES.md` when evaluating donor solutions or research directions
 
 ## Typical Modes
 
@@ -60,6 +66,11 @@ This block may route work into:
 - background music for short-form content;
 - music for long-form video;
 - game or application music systems;
+- full-song generation with vocals;
+- stem separation and remix workflows;
+- MIDI extraction and manipulation;
+- audio analysis and loudness normalization;
+- mastering prototypes;
 - music-tool research;
 - music licensing and platform-risk review;
 - implementation handoff for a specific project.
@@ -76,6 +87,7 @@ Typical outputs:
 - export specification;
 - legal and platform-risk checklist;
 - project handoff packet;
+- validation report;
 - recommendation to create a narrower skill when a repeatable workflow becomes clear.
 
 ## Boundary
