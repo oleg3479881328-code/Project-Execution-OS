@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ed155ca3fd79ec505a1ac31d1aa44d4a07a83d33",
-  "generated_at": "2026-06-06T19:10:31-04:00",
-  "artifact_count": 287,
+  "repository_commit": "9d33270e6f06bc24803646b3bd8a8e99330864ce",
+  "generated_at": "2026-06-06T19:30:42-04:00",
+  "artifact_count": 288,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -5764,6 +5764,37 @@
         "Verdict",
         "Status Recommendation",
         "Activation Note"
+      ]
+    },
+    {
+      "path": "skills/orchestration/domain-block-creation/SKILL.md",
+      "title": "Domain Block Creation",
+      "type": "skill-artifact",
+      "domain": "orchestration",
+      "status": "candidate",
+      "date": null,
+      "sha256": "a07bcc02e66c444eadde1a5a78e2a7c757f4609fb9da6022dc938e68cbee6a82",
+      "headings": [
+        "Domain Block Creation",
+        "Purpose",
+        "When To Use",
+        "When Not To Use",
+        "Required Inputs",
+        "Outputs",
+        "Core Principle",
+        "Artifact Classification",
+        "Block Levels",
+        "Level 1 — Reference Note",
+        "Level 2 — Compact Domain Block",
+        "Level 3 — Full Domain Block",
+        "Workflow",
+        "BLOCK.md Contract",
+        "Research Rule",
+        "Indexing Rule",
+        "Constraints",
+        "Failure Modes",
+        "Validation Checklist",
+        "References"
       ]
     },
     {
