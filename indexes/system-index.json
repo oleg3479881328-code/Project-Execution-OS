@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4b55de02aa7e96861daef14a8939e9eb1ce9ea3a",
-  "generated_at": "2026-06-06T19:09:05-04:00",
+  "repository_commit": "3a9d8b9d578709e3e760924a48219dcc964bae38",
+  "generated_at": "2026-06-06T19:10:05-04:00",
   "artifact_count": 287,
   "artifacts": [
     {
@@ -391,7 +391,7 @@
       "domain": "communication-channel",
       "status": null,
       "date": null,
-      "sha256": "593393fc64378d3f0c52ab008d9cff7f61f78b2c295196139dac4181ea423321",
+      "sha256": "43638930c59be0c3c8097dd147981936faf99c37464261d7099d2e28c23ddbbc",
       "headings": [
         "Communication Channel Block",
         "Display Name",
@@ -401,12 +401,13 @@
         "Route",
         "Nested Routes",
         "General channel selection or coordination policy",
+        "Universal executor reply surface",
         "Compact coordination state",
         "Channel transition handshake",
         "Signed polite coordination messages",
         "GitHub-based ChatGPT / Codex collaboration",
         "In-scope review continuation",
-        "Codex execution payload",
+        "Execution payload",
         "Commands",
         "`01`",
         "`02`",
