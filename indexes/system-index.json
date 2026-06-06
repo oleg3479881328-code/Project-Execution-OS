@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3265e8a65f32433d5d319228670564efac6cb293",
-  "generated_at": "2026-06-06T19:32:46-04:00",
-  "artifact_count": 291,
+  "repository_commit": "1d9f4eeb9ddd34abe5cb144e948bf0bd1640835c",
+  "generated_at": "2026-06-06T19:55:30-04:00",
+  "artifact_count": 292,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -149,13 +149,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "fd7aad26d6cf79a8b0dd7a10e5c948c74259e0ae58bd5ccd71724e02adaf07b1",
+      "sha256": "83c815c0d47c7c68275710951460fc8377e6fbf728aa9195eb9d33198bcb2335",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v7`",
+        "Profile: `knowledge-aware-core-v8`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -2879,6 +2879,26 @@
         "Why This Architecture",
         "Risks",
         "Next Implementation Packet",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/OWNER_VISIBLE_CHANNEL_RECEIPT_STANDARD.md",
+      "title": "Owner-Visible Channel Receipt Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "active",
+      "date": "2026-06-06",
+      "sha256": "49b4a25f7e15bba2013aaa7f311292e058a9851c88512efbc3a41a2439b1cc1c",
+      "headings": [
+        "Owner-Visible Channel Receipt Standard",
+        "Purpose",
+        "Core Rule",
+        "Required Receipt Fields",
+        "Link Rule",
+        "Current State Values",
+        "Example",
+        "Owner Visibility Rule",
         "Final Rule"
       ]
     },
