@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "390e7b1dbae3c51737c195099799b294eb16f6e4",
-  "generated_at": "2026-06-06T19:03:36-04:00",
+  "repository_commit": "1cc9c29e66e709ab21414b64cb2325388ba6c84d",
+  "generated_at": "2026-06-06T19:04:17-04:00",
   "artifact_count": 282,
   "artifacts": [
     {
@@ -1891,7 +1891,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "f31da07173cf5e2a7f4bec73c8cb747aa7e0b738ad4ffe23a9f7735a72d659cf",
+      "sha256": "8dc747f4307b5727239d5a47ca31fae94cfd09f0debe43f0b20a6dd55d2c4258",
       "headings": [
         "AI Coordination Channel Standard",
         "Purpose",
@@ -1899,6 +1899,7 @@
         "Core Rule",
         "Default Lightweight Coordination Channel",
         "When To Use GitHub Instead",
+        "Codex Mandatory Reply Surface Rule",
         "Compact Coordination State Snapshot And Append-Only Log",
         "Optional Cross-Repository Hub",
         "Connected Agent Channel Registry",
