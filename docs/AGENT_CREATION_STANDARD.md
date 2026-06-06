@@ -58,6 +58,7 @@ version:
 active_reply_surface_rule:
 acknowledgement_rule:
 blocker_reporting_rule:
+owner_visible_receipt_rule:
 publication_mode:
 escalation_boundary:
 execution_report_contract:
@@ -67,6 +68,7 @@ For communication behavior, apply:
 
 ```text
 docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md
+docs/OWNER_VISIBLE_CHANNEL_RECEIPT_STANDARD.md
 docs/AGENT_CREATION_COMMUNICATION_ADDENDUM.md
 ```
 
@@ -155,8 +157,9 @@ That file must answer:
 4. What artifact will it produce?
 5. How will it be reviewed?
 6. Which durable reply surface will it use?
-7. Which publication mode applies?
-8. What conditions require escalation?
+7. How will the owner-visible linked receipt be shown after each outbound durable message?
+8. Which publication mode applies?
+9. What conditions require escalation?
 
 ## 11. Activation Rule
 
@@ -167,7 +170,8 @@ An agent becomes active only after:
 3. review passes;
 4. status is explicitly changed to `active`;
 5. the change is logged;
-6. its communication contract is defined.
+6. its communication contract is defined;
+7. its owner-visible linked receipt behavior is defined.
 
 ## 12. Universal Communication Rule
 
@@ -179,10 +183,11 @@ acknowledge
 -> validate
 -> publish the smallest reviewable result
 -> report evidence in the same registered durable channel
+-> show the owner a linked receipt with current workflow state
 ```
 
 The owner starts or redirects work. The owner is not the routine courier between agents.
 
 ## Final Rule
 
-An agent is not ready for active execution until its purpose, evidence boundary, review path, and durable communication behavior are explicit.
+An agent is not ready for active execution until its purpose, evidence boundary, review path, durable communication behavior, and owner-visible linked receipt behavior are explicit.
