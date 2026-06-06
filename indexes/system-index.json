@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "9d33270e6f06bc24803646b3bd8a8e99330864ce",
-  "generated_at": "2026-06-06T19:30:42-04:00",
-  "artifact_count": 288,
+  "repository_commit": "0f549b701d27ebd18f3e670668fdd1ee8277b433",
+  "generated_at": "2026-06-06T19:31:00-04:00",
+  "artifact_count": 289,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -5795,6 +5795,25 @@
         "Failure Modes",
         "Validation Checklist",
         "References"
+      ]
+    },
+    {
+      "path": "skills/orchestration/domain-block-creation/references.md",
+      "title": "References — Domain Block Creation",
+      "type": "skill-artifact",
+      "domain": "orchestration",
+      "status": null,
+      "date": null,
+      "sha256": "ef35467be75ff298a11265ee46cc87a4191f19e133f786dc98c08c697c9dca3f",
+      "headings": [
+        "References — Domain Block Creation",
+        "Central Standards",
+        "Proven Internal Examples",
+        "Music Domain Block",
+        "United States Law Domain Block",
+        "Telegram Domain Block",
+        "Reusable Lessons Extracted",
+        "Duplicate Check"
       ]
     },
     {
