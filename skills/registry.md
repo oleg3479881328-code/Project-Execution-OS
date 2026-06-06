@@ -59,6 +59,7 @@ Allowed review states:
 | repository-memory-update | memory | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_3TestAgents | skills/memory/repository-memory-update/SKILL.md |
 | skill-runtime-router | orchestration | candidate | reviewed_with_required_improvements | chatgpt, codex, claude | 0.1.0 | migrated_from_3TestAgents | skills/orchestration/skill-runtime-router/SKILL.md |
 | workflow-state-machine | orchestration | candidate | reviewed_with_required_improvements | chatgpt, codex, claude | 0.1.0 | migrated_from_3TestAgents | skills/orchestration/workflow-state-machine/SKILL.md |
+| domain-block-creation | orchestration | candidate | reviewed_with_required_improvements | chatgpt, codex, claude | 0.1.0 | extracted_from_project_execution_os_block_building_practice | skills/orchestration/domain-block-creation/SKILL.md |
 | graphify | graph | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_agents_skills | skills/graph/graphify/SKILL.md |
 | chatgpt-codex-github-communication | coordination | reviewed | approved | chatgpt, codex, claude | 0.1.0 | internal_project_execution_os | skills/coordination/chatgpt-codex-github-communication/SKILL.md |
 | project-experience-memory | memory | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/memory/project-experience-memory/SKILL.md |
