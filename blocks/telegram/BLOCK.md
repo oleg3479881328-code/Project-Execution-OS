@@ -46,20 +46,22 @@ Choose the smallest Telegram surface that solves the actual job.
 
 Use:
 
-`goal -> user journey -> Telegram surface -> platform capability -> framework or SDK -> data model -> security boundary -> monetization path -> hosting and operations -> validation -> project handoff`
+`goal -> user journey -> Telegram surface -> platform capability -> ready solution or framework -> data model -> security boundary -> monetization path -> hosting and operations -> validation -> project handoff`
 
 ## Required Reading Inside This Block
 
 Open only the smallest relevant path:
 
 1. `blocks/telegram/PRODUCT_SURFACES.md`
-2. `blocks/telegram/TELEGRAM_WORKFLOW_PIPELINE.md`
-3. `blocks/telegram/TOOL_SELECTION_MATRIX.md` when choosing an implementation stack
-4. `blocks/telegram/MONETIZATION_AND_PAYMENTS.md` for revenue or payment flows
-5. `blocks/telegram/SECURITY_AND_COMPLIANCE.md` before implementation or production deployment
-6. `blocks/telegram/VALIDATION_BACKLOG.md` when testing a capability
-7. `blocks/telegram/REFERENCES.md` for the source map
-8. `blocks/telegram/RESEARCH_REPORT_2026-06-06.md` for the current research snapshot
+2. `blocks/telegram/CURRENT_CAPABILITIES_2026-06-06.md` when current Telegram features matter
+3. `blocks/telegram/TELEGRAM_WORKFLOW_PIPELINE.md`
+4. `blocks/telegram/READY_SOLUTIONS.md` before custom implementation
+5. `blocks/telegram/TOOL_SELECTION_MATRIX.md` when choosing an implementation stack
+6. `blocks/telegram/MONETIZATION_AND_PAYMENTS.md` for revenue or payment flows
+7. `blocks/telegram/SECURITY_AND_COMPLIANCE.md` before implementation or production deployment
+8. `blocks/telegram/VALIDATION_BACKLOG.md` when testing a capability
+9. `blocks/telegram/REFERENCES.md` for the source map
+10. `blocks/telegram/RESEARCH_REPORT_2026-06-06.md` for the current research snapshot
 
 ## Typical Outputs
 
