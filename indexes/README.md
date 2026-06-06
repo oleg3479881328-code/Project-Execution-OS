@@ -23,7 +23,29 @@ Run:
 python scripts/build_system_index.py
 ```
 
-The GitHub Actions workflow also refreshes these artifacts after relevant structural changes.
+## Validate
+
+Run:
+
+```bash
+python scripts/validate_system_index_v2.py
+```
+
+## Search Current Corpus
+
+Run:
+
+```bash
+python scripts/query_system_index.py "telegram phone verification"
+```
+
+The query tool performs lightweight lexical ranking over the prepared corpus. It is useful before an embeddings runtime is activated.
+
+## Automation
+
+The GitHub Actions workflow refreshes generated artifacts after relevant structural changes:
+
+`.github/workflows/system-index.yml`
 
 ## Semantic Search Boundary
 
