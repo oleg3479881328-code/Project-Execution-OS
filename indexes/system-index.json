@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "mode": "bootstrap_snapshot",
+  "generator": "scripts/build_system_index.py",
+  "entrypoints": [
+    "START_HERE.md",
+    "docs/ROUTER.md",
+    "docs/INDEXING_STANDARD.md",
+    "blocks/PROJECT_INDEX.md",
+    "knowledge-library/PROJECT_INDEX.md"
+  ]
+}
