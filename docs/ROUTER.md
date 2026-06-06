@@ -28,6 +28,7 @@ Do not append an unrelated next-project question after answering the active requ
 - Telegram bots, Telegram Mini Apps, Telegram Business or Secretary Bots, Managed Bots, Telegram Login, Telegram Gateway, Telegram Stars, Bot API, TDLib, MTProto, or Telegram integrations -> `blocks/telegram/BLOCK.md`
 - immigration law, USCIS, Form I-485, marriage-based adjustment of status, consular processing, immigration interviews, RFEs, NOIDs, immigration travel risk, or USCIS PM-602-0199 -> `blocks/us-law/immigration/BLOCK.md`
 - United States law, federal or state legal research, statutes, regulations, court rules, case law, legal deadlines, legal-risk triage, attorney handoff preparation, or legal-source automation -> `blocks/us-law/BLOCK.md`
+- indexing or repository catalog work -> `docs/INDEXING_STANDARD.md`
 - current-project summary, status, orientation, or "where are we now?" question -> read the current project's entrypoint and only the minimum necessary current-state evidence; answer the question directly; stop after the answer; do not trigger `Start New Project.md` or ask which new project to create unless the owner explicitly requests a new project
 - entry into a specific existing project -> that project's current entrypoint; prefer `PROJECT.md`, fall back to legacy `PROJECT_ENTRYPOINT.md` only during migration, and use `docs/PROJECT_ENTRYPOINT_STANDARD.md` if no project entrypoint exists
 - transfer readiness, executor continuity, durable state maintenance, or handoff survivability -> `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
