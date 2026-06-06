@@ -65,6 +65,14 @@ Use the optional cross-repository hub when a durable direct agent-to-agent threa
 
 GitHub is an execution and review channel for GitHub-backed work, not the default home for all project communication.
 
+## Codex Mandatory Reply Surface Rule
+
+For bounded Codex work in a GitHub issue, pull request, or review thread, also apply:
+
+`docs/CODEX_CHANNEL_ACK_AND_PUBLISH_STANDARD.md`
+
+Codex must acknowledge receipt immediately in the named GitHub reply surface, post blockers there without waiting for a manual prompt, and continue through validated private-branch draft-PR publication when that remains inside the approved scope.
+
 ## Compact Coordination State Snapshot And Append-Only Log
 
 When a GitHub-backed project has a multi-step AI-to-AI execution or review loop, use two root-level files:
