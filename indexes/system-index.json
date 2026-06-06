@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fbe09c3af77adff2ec231a362b364055e6d3c4e2",
-  "generated_at": "2026-06-06T19:00:02-04:00",
+  "repository_commit": "d9314a65affb07f3ffe45d900d2f4d988bfc0cd3",
+  "generated_at": "2026-06-06T19:00:21-04:00",
   "artifact_count": 280,
   "artifacts": [
     {
@@ -3266,10 +3266,11 @@
       "domain": "system",
       "status": "accepted",
       "date": null,
-      "sha256": "6c87bb46608fc289d32af08c90494d405e08bdcb4164ea9027c7407381b8a4f4",
+      "sha256": "ff63f6e5983fe6a626347826361a37459cccc05148775e6acd62d290c7042196",
       "headings": [
         "ChatGPT Codex GitHub Integration",
         "Purpose",
+        "Mandatory Companion Standard",
         "Short Command Pre-Check",
         "In-Scope Review Continuation",
         "Compact Coordination State And Append-Only Log",
