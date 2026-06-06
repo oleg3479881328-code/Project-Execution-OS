@@ -1,7 +1,7 @@
 # Indexing Layer Status
 
 Updated: 2026-06-06
-Status: `candidate_operational`
+Status: `operational_structural`
 
 ## Purpose
 
@@ -20,29 +20,34 @@ Use:
 - `indexes/BLOCK_CATALOG.generated.md`
 - `indexes/KNOWLEDGE_CATALOG.generated.md`
 - `scripts/build_system_index.py`
-- `scripts/validate_system_index_v2.py`
+- `scripts/validate_system_index_v3.py`
 - `scripts/query_system_index.py`
 - `.github/workflows/system-index.yml`
 - `SYSTEM_CONTEXT_MANIFEST.md`
 
 ## Current State
 
-Implemented:
+Implemented and confirmed:
 
 - curated block index refresh;
 - curated knowledge-library index refresh plus temporary addendum for the indexing knowledge entry;
 - router entry for indexing work;
-- machine-readable JSON bootstrap index;
-- semantic-ready JSONL bootstrap corpus;
+- machine-readable JSON index;
+- semantic-ready JSONL corpus;
 - Python generator for repository Markdown indexing;
-- Python validator for curated and generated index integrity;
+- non-blocking validator for generated index integrity and curated-index warnings;
 - local lexical query command for the semantic-ready corpus;
 - GitHub Actions workflow for automatic rebuild and commit of generated artifacts;
+- first successful automatic GitHub Actions refresh;
 - stable context manifest update to `knowledge-aware-core-v7`.
+
+Confirmed automatic refresh result:
+
+- generated commit: `1b73511882ed66237fe36e96bf88befa64468000`;
+- indexed Markdown artifacts: `274`.
 
 Not active yet:
 
-- confirmed first automatic GitHub Actions refresh;
 - embeddings generation;
 - vector database;
 - semantic retrieval API;
@@ -59,7 +64,7 @@ python scripts/build_system_index.py
 Validate:
 
 ```bash
-python scripts/validate_system_index_v2.py
+python scripts/validate_system_index_v3.py
 ```
 
 Search the current corpus:
@@ -74,4 +79,4 @@ Generated indexes assist navigation. Canonical repository files remain the sourc
 
 ## Next Validation
 
-Confirm the first successful GitHub Actions refresh. After that, run the bounded semantic-search pilot only when a real retrieval problem justifies it.
+Run a bounded semantic-search pilot only when a real retrieval problem justifies it.
