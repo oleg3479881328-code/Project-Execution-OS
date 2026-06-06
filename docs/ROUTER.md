@@ -25,6 +25,7 @@ Do not append an unrelated next-project question after answering the active requ
 - lifecycle or storage-layer decision -> `docs/PROJECT_LIFECYCLE_MODEL.md`
 - website design, landing-page design, page structure, wireframe, UI system, responsive UI spec, or website design review -> `blocks/design/BLOCK.md`
 - music generation, soundtrack design, adaptive music, real-time music, music-agent behavior, generated-music rights review, or music-tool evaluation -> `blocks/music/BLOCK.md`
+- Telegram bots, Telegram Mini Apps, Telegram Business or Secretary Bots, Managed Bots, Telegram Login, Telegram Gateway, Telegram Stars, Bot API, TDLib, MTProto, or Telegram integrations -> `blocks/telegram/BLOCK.md`
 - immigration law, USCIS, Form I-485, marriage-based adjustment of status, consular processing, immigration interviews, RFEs, NOIDs, immigration travel risk, or USCIS PM-602-0199 -> `blocks/us-law/immigration/BLOCK.md`
 - United States law, federal or state legal research, statutes, regulations, court rules, case law, legal deadlines, legal-risk triage, attorney handoff preparation, or legal-source automation -> `blocks/us-law/BLOCK.md`
 - current-project summary, status, orientation, or "where are we now?" question -> read the current project's entrypoint and only the minimum necessary current-state evidence; answer the question directly; stop after the answer; do not trigger `Start New Project.md` or ask which new project to create unless the owner explicitly requests a new project
