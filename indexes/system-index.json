@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c1f8da8ca327f3417795f1b58d564214d8097fcb",
-  "generated_at": "2026-06-06T16:39:45-04:00",
-  "artifact_count": 274,
+  "repository_commit": "433f282dba4d4e94367ba989554a2e9c32ca5f5d",
+  "generated_at": "2026-06-06T16:47:34-04:00",
+  "artifact_count": 275,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1733,6 +1733,24 @@
       ]
     },
     {
+      "path": "docs/AGENT_INDEX_FIRST_ENTRY_STANDARD.md",
+      "title": "Agent Index-First Entry Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "active",
+      "date": "2026-06-06",
+      "sha256": "70256197ada86b1efafd23dec24fd98e7680e1d5bdab98bb75446c40dd2e3ec4",
+      "headings": [
+        "Agent Index-First Entry Standard",
+        "Purpose",
+        "Mandatory Entry Order",
+        "Mandatory Rule",
+        "Semantic Retrieval Boundary",
+        "Executor Rule",
+        "Final Rule"
+      ]
+    },
+    {
       "path": "docs/AGENT_LIBRARY_STANDARD.md",
       "title": "Agent Library Standard",
       "type": "system-standard",
@@ -3234,7 +3252,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "61aa6828e55f8f202da4bf6d343dcecbb6b358703cda1e80f39219fa9b61e8e5",
+      "sha256": "59d4dccb2af7b08fc525868a5a8fd639174da21d86f507344bfb0d5b5a0c94e9",
       "headings": [
         "Indexes",
         "Purpose",
