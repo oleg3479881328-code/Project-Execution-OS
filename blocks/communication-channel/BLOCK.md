@@ -37,6 +37,10 @@ For every durable coordination note, letter, request, review, report, or acknowl
 
 `docs/AI_COORDINATION_MESSAGE_STANDARD.md`
 
+For every execution agent, apply:
+
+`docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md`
+
 ## Route
 
 ```text
@@ -61,6 +65,19 @@ Use it to choose among:
 - `Notion comments`;
 - the target repository's GitHub issue, pull request, or review thread;
 - the optional cross-repository coordination hub.
+
+### Universal executor reply surface
+
+For any bounded execution handoff, open:
+
+```text
+docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md
+blocks/communication-channel/EXECUTOR_REPLY_SURFACE_ADDENDUM.md
+```
+
+This applies to Codex, DeepSeek, Claude, local models, specialized agents, future connected executors, and human-assisted executor workflows.
+
+The executor must acknowledge immediately in the named durable reply surface, report blockers there without waiting for the owner, publish a reviewable result according to the selected mode, and post structured evidence in the same channel.
 
 ### Compact coordination state
 
@@ -115,7 +132,7 @@ Open only after GitHub has been selected as the active channel:
 
 `docs/integrations/chatgpt/CODEX_GITHUB_PROTOCOL.md`
 
-This is a nested channel-specific protocol.
+This is a nested Codex-specific adapter over the universal executor rule.
 
 It is not a separate top-level route beside `Канал связи`.
 
@@ -127,17 +144,20 @@ For bounded review fixes, required validation, bookkeeping updates, and required
 
 A review follow-up that remains inside the already approved task scope is a continuation of the active task. The executor continues from the latest bounded instruction in the registered active channel without asking the owner for a second confirmation.
 
-Return to the owner only for scope expansion, destructive action, repository visibility change, external publication, business decision, or unresolved ambiguity that cannot be resolved from repository standards.
+Return to the owner only for scope expansion, destructive action, repository visibility change, external publication, production deployment, irreversible data migration, business decision, or unresolved ambiguity that cannot be resolved from repository standards.
 
-### Codex execution payload
+### Execution payload
 
 When the task itself is already decided and executor access is required, also open:
 
-`docs/CODEX_HANDOFF_STANDARD.md`
+```text
+docs/EXECUTOR_HANDOFF_STANDARD_ADDENDUM_2026-06-06.md
+docs/CODEX_HANDOFF_STANDARD.md   # only for Codex-specific execution payloads
+```
 
 The handoff packet is the payload.
 
-The selected communication channel is the transport.
+The selected communication channel is the transport and reply surface.
 
 Do not confuse payload with transport.
 
@@ -165,7 +185,7 @@ Read the latest relevant incoming message from the targeted connected AI partici
 
 If the latest incoming message contains an already-authorized actionable request that is within the approved scope, continue with that request immediately after reading it. Do not stop to ask for a separate `01` command.
 
-Ask for a new explicit approval only when the newly discovered action is destructive, expands scope, changes repository visibility, publishes externally, or otherwise requires owner approval under an existing standard.
+Ask for a new explicit approval only when the newly discovered action is destructive, expands scope, changes repository visibility, publishes externally, deploys to production, causes irreversible data migration, or otherwise requires owner approval under an existing standard.
 
 When the active project contains `AI_COORDINATION_STATE.md`, use this order:
 
@@ -197,3 +217,5 @@ Select the transport first.
 Then open only the narrowest nested protocol required by the selected channel and the active work.
 
 Use signed polite messages for durable coordination.
+
+Apply the universal executor reply-surface rule to every execution agent.
