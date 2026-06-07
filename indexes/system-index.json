@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "90d4d66a53ed3c913977843d75d16a8914dd45d0",
-  "generated_at": "2026-06-06T20:04:42-04:00",
-  "artifact_count": 294,
+  "repository_commit": "3a38a1a38a1a169cb1ed471763f59fad92307987",
+  "generated_at": "2026-06-06T20:32:09-04:00",
+  "artifact_count": 295,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -806,6 +806,28 @@
         "When To Use",
         "Template Files",
         "Rule"
+      ]
+    },
+    {
+      "path": "blocks/logic/BLOCK.md",
+      "title": "Logic Block",
+      "type": "domain-block-entrypoint",
+      "domain": "logic",
+      "status": null,
+      "date": null,
+      "sha256": "77a466441d98a0ba06bc5562bfbc4cce52ac2ed2538fdeee56bd1a20b2209b88",
+      "headings": [
+        "Logic Block",
+        "Purpose",
+        "Status",
+        "When To Use",
+        "When Not To Use",
+        "Core Rule",
+        "Required Reading Inside This Block",
+        "Typical Modes",
+        "Typical Outputs",
+        "Boundary",
+        "Final Rule"
       ]
     },
     {
