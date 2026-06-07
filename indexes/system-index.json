@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "80ec2b6c538c7c24bd47a79b980b13d72c58c3c7",
-  "generated_at": "2026-06-07T12:36:59-04:00",
-  "artifact_count": 322,
+  "repository_commit": "29cb49b583dc6ed1b48309d5b5a3263151c0cb5e",
+  "generated_at": "2026-06-07T12:37:42-04:00",
+  "artifact_count": 323,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1835,6 +1835,32 @@
         "Surface 6 — DeFi / Trading Interface",
         "Surface 7 — AI Agent + Solana",
         "Surface 8 — Analytics / Indexing Product",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/solana/READY_SOLUTIONS.md",
+      "title": "Solana Ready Solutions",
+      "type": "domain-block-artifact",
+      "domain": "solana",
+      "status": null,
+      "date": null,
+      "sha256": "0bcd6ac1748c996367835893006e734760ab421b96c58582786569b2dec0eed7",
+      "headings": [
+        "Solana Ready Solutions",
+        "Purpose",
+        "Default Rule",
+        "Official / Core Sources",
+        "Solana Documentation",
+        "Solana Developer Templates",
+        "Official SDKs",
+        "Frameworks",
+        "Anchor",
+        "Native Rust Solana Program",
+        "Common Existing Programs / Protocol Areas",
+        "Frontend / Wallet Layer",
+        "Data / Indexing Layer",
+        "Donor Evaluation Checklist",
         "Final Rule"
       ]
     },
