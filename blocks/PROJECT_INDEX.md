@@ -46,11 +46,11 @@ Path:
 
 Purpose:
 
-Provide one reusable workflow for website design that stays usable, buildable, reviewable, and implementation-aware.
+Provide a reusable website and site-building design layer for donor research, page strategy, landing/SaaS patterns, UI systems, conversion, ready site stacks, implementation handoff, and review.
 
 Current status:
 
-`candidate`
+`candidate_v2`
 
 ### Documentation Block
 
