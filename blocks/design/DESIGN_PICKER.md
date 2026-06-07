@@ -32,7 +32,7 @@ Extract patterns, constraints, and composition logic.
 
 A lightweight library of selected examples with screenshots, links, tags, and notes.
 
-Use this first.
+Keep this as the durable data layer and import/export format.
 
 Recommended storage:
 
@@ -54,11 +54,15 @@ The owner can select:
 - specific sections or components worth borrowing;
 - style notes in plain language.
 
-### Level 3 — Design Picker UI
+### Level 3 — Design Picker Web App
 
-A dedicated web interface with thumbnail cards, filters, saved selections, and export into a design brief.
+A dedicated internal web interface with thumbnail cards, URL import, preview generation, filters, saved selections, and export into a design brief.
 
-Build this only after the lightweight library has proven useful across real projects.
+Build this as the first usable MVP while preserving the lightweight repository-backed catalog as the durable fallback and export format.
+
+See:
+
+`blocks/design/DESIGN_PICKER_WEB_APP.md`
 
 ## Donor Card Schema
 
@@ -69,7 +73,7 @@ Each catalog item should contain:
 | `id` | stable reference id |
 | `title` | short human-readable name |
 | `source_url` | original website or reference link |
-| `screenshot_path` | local or repository-backed preview |
+| `screenshot_path` | local, object-storage, or repository-backed preview |
 | `project_type` | landing page, SaaS, dashboard, marketplace, portfolio, AI product, onboarding, pricing, etc. |
 | `style_tags` | minimal, editorial, bold, playful, premium, technical, dark, light, etc. |
 | `section_tags` | hero, pricing, cards, navigation, FAQ, onboarding, dashboard, checkout, etc. |
@@ -134,11 +138,13 @@ The agent must produce:
 
 ## Recommended Initial Implementation
 
-Start with a repository-backed curated catalog and a project-specific design board.
+Build a small internal web app with URL import, generated screenshots, manual tags, project boards, owner decisions, and Markdown / JSON export.
 
-Do not build a custom visual application first.
+Keep the repository-backed catalog format as a stable fallback and data portability layer.
 
-Validate the workflow manually on several website projects. Build the UI only when the recurring browsing and selection pain is proven.
+Do not begin with large-scale crawling, automated cloning, or an AI-heavy analysis layer.
+
+Validate the MVP on one real project with 15–30 donor references before expanding it.
 
 ## Boundary
 
