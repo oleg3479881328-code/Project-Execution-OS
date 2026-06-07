@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e99fefd834e1f1c0ae44d56974f9d3b3015d5f6a",
-  "generated_at": "2026-06-07T13:37:10-04:00",
-  "artifact_count": 363,
+  "repository_commit": "9303e493484ca9b7241e77170d20f622ec437108",
+  "generated_at": "2026-06-07T13:37:51-04:00",
+  "artifact_count": 364,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3187,6 +3187,27 @@
         "Surface 7 — SaaS Acquisition Channel",
         "Surface 8 — Multilingual Channel Network",
         "Surface 9 — Internal YouTube Research / Transcript Tool",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/PUBLISHING_AND_METADATA.md",
+      "title": "Publishing and Metadata",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "43bc68454c7615b503b023604ef882ea48a1131fefadafb5babadd69b81b7dc5",
+      "headings": [
+        "Publishing and Metadata",
+        "Purpose",
+        "Core Rule",
+        "Publish Package",
+        "Title Rules",
+        "Description Rules",
+        "Thumbnail Rules",
+        "Playlist Rules",
+        "API-Assisted Publishing Rule",
         "Final Rule"
       ]
     },
