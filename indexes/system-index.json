@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a8a91f64630907311c0d84186af65dba75d480c8",
-  "generated_at": "2026-06-07T15:40:32-04:00",
+  "repository_commit": "71099f785395d7e934ebc9600f463114c04edc53",
+  "generated_at": "2026-06-07T15:41:19-04:00",
   "artifact_count": 374,
   "artifacts": [
     {
@@ -7128,11 +7128,12 @@
       "domain": "design-picker",
       "status": null,
       "date": null,
-      "sha256": "b945743a7a773b5a5d4ff5cc6ccbeb354ffd7474b2ee1e20905c2dcf791847b5",
+      "sha256": "ecc93f143faf14e97a9eb690f783462d95e546db2ba1934a792c646bce8bf301",
       "headings": [
         "Design Picker MVP",
         "Run",
         "What Works",
+        "Current Preview Adapter",
         "What Is Deferred",
         "Linkwarden Integration Seam",
         "Security Note"
