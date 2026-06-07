@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "cbd40c574d952cb499ecec0dd12cc38843a07d04",
-  "generated_at": "2026-06-06T20:40:22-04:00",
-  "artifact_count": 298,
+  "repository_commit": "27770ef0f9dcfa2b565cf32c7259e7a766e92acc",
+  "generated_at": "2026-06-07T11:13:46-04:00",
+  "artifact_count": 299,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -383,6 +383,27 @@
       "sha256": "ff3dd8509a6649c6e54126fd5198fb94e98e1aefee8804c50f84e5d586e7eca3",
       "headings": [
         "Blocks"
+      ]
+    },
+    {
+      "path": "blocks/chrome-extension/BLOCK.md",
+      "title": "Chrome Extension Block",
+      "type": "domain-block-entrypoint",
+      "domain": "chrome-extension",
+      "status": null,
+      "date": null,
+      "sha256": "65a29d9e72721cf299dac9fa1cb2fdaa0b5364abf60bb6e2a7b7373442b52633",
+      "headings": [
+        "Chrome Extension Block",
+        "Purpose",
+        "Status",
+        "When To Use",
+        "When Not To Use",
+        "Core Rule",
+        "Required Reading Inside This Block",
+        "Typical Outputs",
+        "Boundary",
+        "Final Rule"
       ]
     },
     {
