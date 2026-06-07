@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fb78a9005b176a182c7b3c64ddbd11385cbc85e7",
-  "generated_at": "2026-06-07T11:16:51-04:00",
-  "artifact_count": 302,
+  "repository_commit": "0578bc9de2d111d4ddd6f64c20a24bf075cb81ce",
+  "generated_at": "2026-06-07T11:17:20-04:00",
+  "artifact_count": 303,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -447,6 +447,27 @@
         "Minimal MV3 starter",
         "React + TypeScript + Vite starter",
         "Donor Evaluation Checklist",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/chrome-extension/SECURITY_AND_COMPLIANCE.md",
+      "title": "Chrome Extension Security and Compliance",
+      "type": "domain-block-artifact",
+      "domain": "chrome-extension",
+      "status": null,
+      "date": null,
+      "sha256": "8799f0245d50b7b4e27b20186c4b94228c9fe71eeafa7b70d33fa2eb71971072",
+      "headings": [
+        "Chrome Extension Security and Compliance",
+        "Purpose",
+        "Core Rules",
+        "Permission Review",
+        "Data Review",
+        "AI-Specific Review",
+        "Payment and License Review",
+        "Store Policy Review",
+        "Escalation",
         "Final Rule"
       ]
     },
