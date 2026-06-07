@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1644ac8550a90ca91bd0801ddf44379aea7a75b7",
-  "generated_at": "2026-06-07T13:34:50-04:00",
-  "artifact_count": 355,
+  "repository_commit": "1a84da2166e41813c0821e60964cb40e1e9966e3",
+  "generated_at": "2026-06-07T13:35:10-04:00",
+  "artifact_count": 356,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3000,6 +3000,26 @@
         "Common Processing Decisions",
         "Vertical Export Baseline",
         "Batch Safety",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/ANALYTICS_AND_EXPERIMENTS.md",
+      "title": "Analytics and Experiments",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "f0e2575f55861c9761a52ce85838812dbbd6365dfa0303165c4d992cf8ac5533",
+      "headings": [
+        "Analytics and Experiments",
+        "Purpose",
+        "Core Rule",
+        "Core Metrics",
+        "Shorts Review",
+        "Long-Form Review",
+        "Experiment Log",
+        "Testing Rule",
         "Final Rule"
       ]
     },
