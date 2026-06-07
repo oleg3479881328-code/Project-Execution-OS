@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "88340adec5d4787615a184062044ae346d976a6b",
-  "generated_at": "2026-06-07T15:22:27-04:00",
-  "artifact_count": 369,
+  "repository_commit": "6003ed1de88b195afa9ff33294e229a2fee6d3a2",
+  "generated_at": "2026-06-07T15:26:32-04:00",
+  "artifact_count": 370,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -837,6 +837,40 @@
         "Deliverable After Selection",
         "Recommended Initial Implementation",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/DESIGN_PICKER_WEB_APP.md",
+      "title": "Design Picker Web App",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": null,
+      "date": null,
+      "sha256": "6fef5bbe9171e13fa0c822f5cd1bc67f527f8cb4e6641381a08ce084c052555a",
+      "headings": [
+        "Design Picker Web App",
+        "Purpose",
+        "Product Decision",
+        "Owner Experience",
+        "MVP Scope",
+        "Include",
+        "Exclude From First MVP",
+        "Preview Strategy",
+        "Layer 1 — Screenshot Preview",
+        "Layer 2 — Open Graph Preview",
+        "Layer 3 — Manual Preview",
+        "Preview Provider Decision",
+        "Suggested Data Model",
+        "`donors`",
+        "`projects`",
+        "`project_donor_selections`",
+        "Suggested Stack",
+        "Import Flow",
+        "Failure Handling",
+        "Security And Compliance Notes",
+        "First Validation Scenario",
+        "Future Expansion",
         "Final Rule"
       ]
     },
