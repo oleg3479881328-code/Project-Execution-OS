@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "11f79f304ed624341df2b713a5610a751e118b5c",
-  "generated_at": "2026-06-07T13:34:38-04:00",
-  "artifact_count": 354,
+  "repository_commit": "1644ac8550a90ca91bd0801ddf44379aea7a75b7",
+  "generated_at": "2026-06-07T13:34:50-04:00",
+  "artifact_count": 355,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3063,6 +3063,29 @@
         "Copyright Review",
         "Transformation Review",
         "AI Content Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/MONETIZATION.md",
+      "title": "YouTube Monetization",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "510048db4a864d3574f7d0108c15ae771196d4af8e08c887d4c4f6f3e6fb33c2",
+      "headings": [
+        "YouTube Monetization",
+        "Purpose",
+        "Core Rule",
+        "Monetization Paths",
+        "YouTube Partner Program",
+        "Affiliate Revenue",
+        "SaaS Acquisition",
+        "Digital Products",
+        "Sponsorship",
+        "Services / White Label",
+        "Revenue Tracking",
         "Final Rule"
       ]
     },
