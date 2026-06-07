@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "cc35716eb8f5b907e649009ec66b0b1281bbc1ec",
-  "generated_at": "2026-06-07T13:10:43-04:00",
+  "repository_commit": "04e4b4922459f83be6def630d7d829048468a91e",
+  "generated_at": "2026-06-07T13:10:57-04:00",
   "artifact_count": 349,
   "artifacts": [
     {
@@ -355,7 +355,7 @@
       "domain": "PROJECT_INDEX.md",
       "status": "candidate",
       "date": null,
-      "sha256": "083599191fcc96f691546f79637efcca37968176a59e43b9396d0adcaf69bdb3",
+      "sha256": "144366e7cddc13fddef5a2d6bb3494d83e44ce6d5475a5bb3b91378b16423222",
       "headings": [
         "Blocks Index",
         "Purpose",
@@ -371,6 +371,7 @@
         "Telegram Block",
         "US Law Block",
         "Immigration Sub-Block",
+        "Video Production Block",
         "Generated Catalog",
         "Final Rule"
       ]
