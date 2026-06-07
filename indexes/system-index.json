@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8764f4d08bd5d6dfa833f3d3f942f51bc0fbc1bc",
-  "generated_at": "2026-06-07T12:10:02-04:00",
-  "artifact_count": 319,
+  "repository_commit": "8eaccf82383aa052dad5c093169014a4cc42ee73",
+  "generated_at": "2026-06-07T12:10:22-04:00",
+  "artifact_count": 320,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1076,6 +1076,31 @@
         "Stage 7 - Frontend Handoff",
         "Stage 8 - Design Review",
         "Minimal Deliverable Shape",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/WEBSITE_REVIEW_CHECKLIST.md",
+      "title": "Website Review Checklist",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": null,
+      "date": null,
+      "sha256": "d54334fe0e4e047b1cd8e54073b3ed4225177c204d6bd3cc854f6365d4c99c07",
+      "headings": [
+        "Website Review Checklist",
+        "Purpose",
+        "Review Order",
+        "Output Format",
+        "Checks",
+        "Goal",
+        "Audience",
+        "Message",
+        "CTA",
+        "Proof",
+        "Visual System",
+        "Mobile",
+        "Build",
         "Final Rule"
       ]
     },
