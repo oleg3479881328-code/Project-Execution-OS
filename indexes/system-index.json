@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "113bf3793eb2d9b28eac002178d0d14445adda5f",
-  "generated_at": "2026-06-07T15:31:25-04:00",
-  "artifact_count": 371,
+  "repository_commit": "a5fb58f4591579d7a0bec9ec0b6312c1cf3f1c25",
+  "generated_at": "2026-06-07T15:31:46-04:00",
+  "artifact_count": 372,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7100,6 +7100,41 @@
         "Existing Solution First",
         "Storage Layers",
         "Next Practical Step"
+      ]
+    },
+    {
+      "path": "projects/design-picker/RESEARCH_REPORT_2026-06-07.md",
+      "title": "Design Picker — Reuse-First Research Report",
+      "type": "project-artifact",
+      "domain": "design-picker",
+      "status": null,
+      "date": "2026-06-07",
+      "sha256": "0c9dd257a8b4c8247469c6145045540cd3280a342fa310bd5bb47ba109ed477a",
+      "headings": [
+        "Design Picker — Reuse-First Research Report",
+        "Goal",
+        "Confirmed Product Need",
+        "Existing Solutions Checked",
+        "1. Linkwarden",
+        "Fit",
+        "Gaps For Design Picker",
+        "Adaptation View",
+        "2. Karakeep",
+        "Fit",
+        "Gaps For Design Picker",
+        "Adaptation View",
+        "3. Raindrop.io",
+        "Fit",
+        "Limitation",
+        "4. Readeck",
+        "Fit",
+        "Limitation",
+        "Decision",
+        "Recommended MVP Direction",
+        "Confirmed Facts vs Assumptions",
+        "Confirmed",
+        "Assumptions To Validate",
+        "Next Validation Step"
       ]
     },
     {
