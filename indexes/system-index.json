@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "48f6cfb462a7b1b4347772fef0afe104089f0e26",
-  "generated_at": "2026-06-07T15:27:03-04:00",
-  "artifact_count": 370,
+  "repository_commit": "113bf3793eb2d9b28eac002178d0d14445adda5f",
+  "generated_at": "2026-06-07T15:31:25-04:00",
+  "artifact_count": 371,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7079,6 +7079,27 @@
         "Decisions",
         "Risks Or Lessons",
         "Next Required Action"
+      ]
+    },
+    {
+      "path": "projects/design-picker/PROJECT.md",
+      "title": "Design Picker",
+      "type": "project-artifact",
+      "domain": "design-picker",
+      "status": null,
+      "date": null,
+      "sha256": "b643593aee4b3cc9f742a615168be89cabc8ebc366429bd15ca4b1d2a9c51921",
+      "headings": [
+        "Design Picker",
+        "Status",
+        "Purpose",
+        "Project Type",
+        "Operating System",
+        "Source Of Truth",
+        "Confirmed Goal",
+        "Existing Solution First",
+        "Storage Layers",
+        "Next Practical Step"
       ]
     },
     {
