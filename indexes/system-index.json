@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "29cb49b583dc6ed1b48309d5b5a3263151c0cb5e",
-  "generated_at": "2026-06-07T12:37:42-04:00",
-  "artifact_count": 323,
+  "repository_commit": "fb355c624ab8c82d42a2e1479014060ed76508c0",
+  "generated_at": "2026-06-07T12:38:32-04:00",
+  "artifact_count": 324,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1793,6 +1793,26 @@
         "Failure Modes",
         "Validation Checklist",
         "References"
+      ]
+    },
+    {
+      "path": "blocks/solana/ARCHITECTURE_PATTERNS.md",
+      "title": "Solana Architecture Patterns",
+      "type": "domain-block-artifact",
+      "domain": "solana",
+      "status": null,
+      "date": null,
+      "sha256": "a3416d504e8591bc33ab2408efe88bbe6c347567a757a87421017e6380e3b5ce",
+      "headings": [
+        "Solana Architecture Patterns",
+        "Purpose",
+        "Pattern 1 — Off-Chain App + Wallet Signatures",
+        "Pattern 2 — Existing Program Integration",
+        "Pattern 3 — Anchor Custom Program",
+        "Pattern 4 — Indexer + Dashboard",
+        "Pattern 5 — Payments Product",
+        "Pattern 6 — AI Agent + Human Approval",
+        "Final Rule"
       ]
     },
     {
