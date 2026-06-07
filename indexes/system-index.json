@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "bc0befe153cadc59486d50e671f3409064333899",
-  "generated_at": "2026-06-07T13:36:02-04:00",
-  "artifact_count": 358,
+  "repository_commit": "bb27ed9618040c3db596e0b7222a00138ae5552b",
+  "generated_at": "2026-06-07T13:36:21-04:00",
+  "artifact_count": 359,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3126,6 +3126,27 @@
         "Sponsorship",
         "Services / White Label",
         "Revenue Tracking",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/PLATFORM_OPERATIONS.md",
+      "title": "Platform Operations",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "ce7274af74ac41eb8386b112ac5b0241939ecfb6880e49a2c6994a81252753e7",
+      "headings": [
+        "Platform Operations",
+        "Purpose",
+        "Core Rule",
+        "Weekly Operating Loop",
+        "Channel Record",
+        "Video Queue",
+        "Playlist Strategy",
+        "Comment / Community Review",
+        "Scaling Rule",
         "Final Rule"
       ]
     },
