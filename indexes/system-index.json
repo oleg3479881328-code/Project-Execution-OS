@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "082b336a8b082e55834ee41ebcc2ced3f0e094ae",
-  "generated_at": "2026-06-07T12:30:41-04:00",
-  "artifact_count": 320,
+  "repository_commit": "e0204c995e432b18130c6e2a8b0141f8d0d00c98",
+  "generated_at": "2026-06-07T12:36:19-04:00",
+  "artifact_count": 321,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1793,6 +1793,27 @@
         "Failure Modes",
         "Validation Checklist",
         "References"
+      ]
+    },
+    {
+      "path": "blocks/solana/BLOCK.md",
+      "title": "Solana Block",
+      "type": "domain-block-entrypoint",
+      "domain": "solana",
+      "status": null,
+      "date": null,
+      "sha256": "c461591583e08d36719cb08e2560374ad59eea9d7473f150da89505914038b55",
+      "headings": [
+        "Solana Block",
+        "Purpose",
+        "Status",
+        "Core Principle",
+        "When To Use",
+        "When Not To Use",
+        "Required Reading Inside This Block",
+        "Typical Outputs",
+        "Boundary",
+        "Final Rule"
       ]
     },
     {
