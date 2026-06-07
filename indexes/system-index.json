@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "9864fb03b733b3d40da66fc51b5c2bb5a8d3b060",
-  "generated_at": "2026-06-07T12:07:37-04:00",
-  "artifact_count": 317,
+  "repository_commit": "e9c898a2795b6dac2125bc6c1d1f1fdbf022952b",
+  "generated_at": "2026-06-07T12:08:08-04:00",
+  "artifact_count": 318,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -718,6 +718,28 @@
         "Relationship To Codex And Frontend Execution",
         "Typical Outputs",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/CONVERSION_AND_MARKETING.md",
+      "title": "Conversion and Marketing",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": null,
+      "date": null,
+      "sha256": "2844ef05406ade116327d6ee69b0fc852f68f96df15e6306bb67023eaa5f425a",
+      "headings": [
+        "Conversion and Marketing",
+        "Purpose",
+        "Core Rule",
+        "Conversion Goal",
+        "Message Hierarchy",
+        "CTA Rules",
+        "Objection Handling",
+        "Proof Ladder",
+        "Offer Design",
+        "Page-Level Review",
         "Final Rule"
       ]
     },
