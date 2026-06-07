@@ -164,6 +164,20 @@ Current status:
 
 `candidate`
 
+### Video Production Block
+
+Path:
+
+`blocks/video-production/`
+
+Purpose:
+
+Provide a reusable video-production layer for Reels, Shorts, TikTok, automated clipping, yt-dlp, ffmpeg, CapCut, AI voice/avatar workflows, multilingual factories, monetization, and implementation handoff.
+
+Current status:
+
+`candidate`
+
 ## Generated Catalog
 
 For the automatically refreshed machine-derived artifact list, use:
