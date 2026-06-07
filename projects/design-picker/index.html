@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Picker MVP</title>
+  <style>
+    :root {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #1f2937;
+      background: #f5f7fb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header {
+      padding: 24px;
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+    h1 { margin: 0 0 6px; font-size: 24px; }
+    .muted { color: #6b7280; font-size: 14px; }
+    main { padding: 24px; display: grid; gap: 20px; }
+    .panel {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font: inherit;
+    }
+    textarea { min-height: 88px; resize: vertical; }
+    button {
+      cursor: pointer;
+      background: #111827;
+      color: white;
+      border: 0;
+      font-weight: 600;
+    }
+    button.secondary { background: #e5e7eb; color: #111827; }
+    button.ghost { background: transparent; color: #111827; border: 1px solid #d1d5db; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 360px;
+    }
+    .preview {
+      aspect-ratio: 16 / 9;
+      background: #eef2ff;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .preview img { width: 100%; height: 100%; object-fit: cover; }
+    .card-body { padding: 14px; display: grid; gap: 10px; }
+    .card-title { margin: 0; font-size: 18px; }
+    .url { color: #2563eb; text-decoration: none; font-size: 13px; word-break: break-all; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { background: #eef2ff; color: #3730a3; border-radius: 999px; padding: 4px 8px; font-size: 12px; }
+    .status { font-weight: 700; font-size: 13px; }
+    .status-primary { color: #047857; }
+    .status-partial { color: #b45309; }
+    .status-rejected { color: #b91c1c; }
+    .status-undecided { color: #6b7280; }
+    .row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .small { font-size: 12px; color: #6b7280; }
+    dialog {
+      width: min(760px, calc(100vw - 32px));
+      border: 0;
+      border-radius: 16px;
+      padding: 0;
+    }
+    dialog::backdrop { background: rgba(15, 23, 42, 0.45); }
+    .dialog-body { padding: 18px; display: grid; gap: 12px; }
+    .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+    .checkbox-grid label { display: flex; gap: 8px; align-items: center; font-size: 14px; }
+    .checkbox-grid input { width: auto; }
+    .empty { text-align: center; color: #6b7280; padding: 40px 10px; }
+    @media (max-width: 640px) {
+      header, main { padding: 16px; }
+      .row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Design Picker MVP</h1>
+    <div class="muted">Каталог дизайн-доноров: добавляй ссылки, выбирай паттерны и экспортируй решение.</div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <div class="toolbar">
+        <input id="search" placeholder="Поиск по названию, URL или тегам" />
+        <select id="filterStatus">
+          <option value="all">Все статусы</option>
+          <option value="primary">Основной</option>
+          <option value="partial">Частичный</option>
+          <option value="rejected">Отклонён</option>
+          <option value="undecided">Не решено</option>
+        </select>
+        <button id="addBtn">Добавить донора</button>
+        <button id="exportMdBtn" class="secondary">Экспорт Markdown</button>
+        <button id="exportJsonBtn" class="ghost">Экспорт JSON</button>
+      </div>
+    </section>
+
+    <section id="grid" class="grid"></section>
+  </main>
+
+  <dialog id="editor">
+    <form method="dialog" id="editorForm" class="dialog-body">
+      <h2 id="editorTitle">Добавить донора</h2>
+      <input id="title" placeholder="Название" required />
+      <input id="sourceUrl" placeholder="https://example.com" required />
+      <input id="previewUrl" placeholder="URL превью или og:image" />
+      <input id="projectType" placeholder="Тип проекта: SaaS, landing, dashboard..." />
+      <input id="styleTags" placeholder="Теги стиля через запятую" />
+      <input id="sectionTags" placeholder="Теги секций через запятую" />
+      <select id="decision">
+        <option value="undecided">Не решено</option>
+        <option value="primary">Основной</option>
+        <option value="partial">Частичный</option>
+        <option value="rejected">Отклонён</option>
+      </select>
+      <div>
+        <div class="small">Выбрать полезные паттерны</div>
+        <div class="checkbox-grid" id="patterns"></div>
+      </div>
+      <textarea id="notes" placeholder="Что нравится, что не брать, что упростить"></textarea>
+      <div class="row">
+        <button value="save" id="saveBtn">Сохранить</button>
+        <button value="cancel" class="secondary">Отмена</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    const PATTERNS = ["hero", "cards", "pricing", "navigation", "motion", "dashboard", "onboarding", "checkout", "custom"];
+    const STORAGE_KEY = "design-picker-mvp-v1";
+
+    const seed = [
+      {
+        id: crypto.randomUUID(),
+        title: "Linear",
+        sourceUrl: "https://linear.app",
+        previewUrl: "https://www.google.com/s2/favicons?domain=linear.app&sz=128",
+        projectType: "SaaS",
+        styleTags: ["minimal", "dark", "premium"],
+        sectionTags: ["hero", "product", "navigation"],
+        decision: "partial",
+        patterns: ["hero", "navigation", "motion"],
+        notes: "Нравится спокойная премиальная подача и плотная навигация. Не копировать цвета буквально."
+      },
+      {
+        id: crypto.randomUUID(),
+        title: "Stripe",
+        sourceUrl: "https://stripe.com",
+        previewUrl: "https://www.google.com/s2/favicons?domain=stripe.com&sz=128",
+        projectType: "Landing",
+        styleTags: ["clean", "technical", "light"],
+        sectionTags: ["hero", "pricing", "trust"],
+        decision: "undecided",
+        patterns: ["hero", "pricing"],
+        notes: "Полезно посмотреть структуру объяснения продукта и доверительные блоки."
+      }
+    ];
+
+    let donors = load();
+    let editingId = null;
+
+    const grid = document.getElementById("grid");
+    const editor = document.getElementById("editor");
+    const form = document.getElementById("editorForm");
+    const patternBox = document.getElementById("patterns");
+
+    function load() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return seed;
+      try { return JSON.parse(raw); } catch { return seed; }
+    }
+
+    function persist() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(donors));
+    }
+
+    function splitTags(value) {
+      return value.split(",").map(x => x.trim()).filter(Boolean);
+    }
+
+    function statusLabel(status) {
+      return {
+        primary: "Основной",
+        partial: "Частичный",
+        rejected: "Отклонён",
+        undecided: "Не решено"
+      }[status] || status;
+    }
+
+    function renderPatterns(selected = []) {
+      patternBox.innerHTML = PATTERNS.map(pattern => `
+        <label><input type="checkbox" value="${pattern}" ${selected.includes(pattern) ? "checked" : ""}/> ${pattern}</label>
+      `).join("");
+    }
+
+    function getPatternSelection() {
+      return [...patternBox.querySelectorAll("input:checked")].map(x => x.value);
+    }
+
+    function render() {
+      const query = document.getElementById("search").value.trim().toLowerCase();
+      const status = document.getElementById("filterStatus").value;
+      const filtered = donors.filter(donor => {
+        const text = [donor.title, donor.sourceUrl, donor.projectType, ...(donor.styleTags || []), ...(donor.sectionTags || [])].join(" ").toLowerCase();
+        return text.includes(query) && (status === "all" || donor.decision === status);
+      });
+
+      if (!filtered.length) {
+        grid.innerHTML = `<div class="panel empty">Нет доноров под выбранный фильтр.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(donor => `
+        <article class="card">
+          <div class="preview">
+            ${donor.previewUrl ? `<img src="${escapeHtml(donor.previewUrl)}" alt="Превью ${escapeHtml(donor.title)}" onerror="this.remove(); this.parentElement.textContent='Нет превью';">` : "Нет превью"}
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${escapeHtml(donor.title)}</h3>
+            <a class="url" href="${escapeHtml(donor.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(donor.sourceUrl)}</a>
+            <div class="status status-${donor.decision}">${statusLabel(donor.decision)}</div>
+            <div class="tags">${[...(donor.styleTags || []), ...(donor.sectionTags || [])].map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
+            <div class="small">Паттерны: ${(donor.patterns || []).join(", ") || "не выбраны"}</div>
+            <div>${escapeHtml(donor.notes || "")}</div>
+            <div class="row">
+              <button class="secondary" onclick="editDonor('${donor.id}')">Редактировать</button>
+              <button class="ghost" onclick="removeDonor('${donor.id}')">Удалить</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function escapeHtml(value = "") {
+      return value.replace(/[&<>'"]/g, ch => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#039;", '"':"&quot;"}[ch]));
+    }
+
+    function openEditor(donor = null) {
+      editingId = donor?.id || null;
+      document.getElementById("editorTitle").textContent = donor ? "Редактировать донора" : "Добавить донора";
+      document.getElementById("title").value = donor?.title || "";
+      document.getElementById("sourceUrl").value = donor?.sourceUrl || "";
+      document.getElementById("previewUrl").value = donor?.previewUrl || "";
+      document.getElementById("projectType").value = donor?.projectType || "";
+      document.getElementById("styleTags").value = (donor?.styleTags || []).join(", ");
+      document.getElementById("sectionTags").value = (donor?.sectionTags || []).join(", ");
+      document.getElementById("decision").value = donor?.decision || "undecided";
+      document.getElementById("notes").value = donor?.notes || "";
+      renderPatterns(donor?.patterns || []);
+      editor.showModal();
+    }
+
+    window.editDonor = id => openEditor(donors.find(x => x.id === id));
+    window.removeDonor = id => {
+      donors = donors.filter(x => x.id !== id);
+      persist();
+      render();
+    };
+
+    form.addEventListener("submit", event => {
+      const submitter = event.submitter?.value;
+      if (submitter !== "save") return;
+      event.preventDefault();
+      const donor = {
+        id: editingId || crypto.randomUUID(),
+        title: document.getElementById("title").value.trim(),
+        sourceUrl: document.getElementById("sourceUrl").value.trim(),
+        previewUrl: document.getElementById("previewUrl").value.trim(),
+        projectType: document.getElementById("projectType").value.trim(),
+        styleTags: splitTags(document.getElementById("styleTags").value),
+        sectionTags: splitTags(document.getElementById("sectionTags").value),
+        decision: document.getElementById("decision").value,
+        patterns: getPatternSelection(),
+        notes: document.getElementById("notes").value.trim()
+      };
+      donors = editingId ? donors.map(x => x.id === editingId ? donor : x) : [donor, ...donors];
+      persist();
+      editor.close();
+      render();
+    });
+
+    function download(filename, content, type) {
+      const blob = new Blob([content], { type });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    function toMarkdown() {
+      const primary = donors.filter(x => x.decision === "primary");
+      const partial = donors.filter(x => x.decision === "partial");
+      const rejected = donors.filter(x => x.decision === "rejected");
+      const section = (title, items) => `## ${title}\n\n${items.length ? items.map(x => `### ${x.title}\n- URL: ${x.sourceUrl}\n- Тип: ${x.projectType || "не указан"}\n- Паттерны: ${(x.patterns || []).join(", ") || "не выбраны"}\n- Заметки: ${x.notes || "нет"}\n`).join("\n") : "Нет записей.\n"}`;
+      return `# Design Selection Record\n\n${section("Primary Direction", primary)}\n${section("Borrow These Patterns", partial)}\n${section("Rejected Directions", rejected)}\n`;
+    }
+
+    document.getElementById("addBtn").addEventListener("click", () => openEditor());
+    document.getElementById("search").addEventListener("input", render);
+    document.getElementById("filterStatus").addEventListener("change", render);
+    document.getElementById("exportMdBtn").addEventListener("click", () => download("design-selection.md", toMarkdown(), "text/markdown"));
+    document.getElementById("exportJsonBtn").addEventListener("click", () => download("design-selection.json", JSON.stringify(donors, null, 2), "application/json"));
+
+    renderPatterns();
+    render();
+  </script>
+</body>
+</html>
