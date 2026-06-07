@@ -186,11 +186,11 @@ Path:
 
 Purpose:
 
-Provide a reusable YouTube platform layer for channel strategy, Shorts and long-form publishing, YouTube Partner Program readiness, monetization, copyright/reused-content review, analytics, playlists, uploads, API automation, and channel operations.
+Provide a reusable YouTube platform layer for channel strategy, Shorts and long-form publishing, YouTube Partner Program readiness, monetization, originality/copyright review, analytics, playlists, uploads, API automation, multilingual scaling, and channel operations.
 
 Current status:
 
-`candidate`
+`candidate_v2`
 
 ## Generated Catalog
 
