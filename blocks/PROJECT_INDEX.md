@@ -52,6 +52,20 @@ Current status:
 
 `reviewed_candidate`
 
+### Logic Block
+
+Path:
+
+`blocks/logic/`
+
+Purpose:
+
+Provide a reusable reasoning layer for logic concepts, argument structure, cause-and-effect analysis, reasoning-error detection, assumption review, contradiction checks, and decision-quality review.
+
+Current status:
+
+`candidate`
+
 ### Music Block
 
 Path:
