@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d201b260a9fd7941c94c6021c78e6c2dc9286a24",
-  "generated_at": "2026-06-07T12:03:37-04:00",
-  "artifact_count": 312,
+  "repository_commit": "04fa1d62f79dd603e4468cc0a30100995e96020b",
+  "generated_at": "2026-06-07T12:04:19-04:00",
+  "artifact_count": 313,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -859,6 +859,29 @@
         "Marketplace",
         "Agency Website",
         "Education Platform",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/SAAS_PATTERNS.md",
+      "title": "SaaS Website Patterns",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": null,
+      "date": null,
+      "sha256": "104f3a33974d6726f4c52d9a640ed3e9cdb287abfef0c45557510a3e41545a58",
+      "headings": [
+        "SaaS Website Patterns",
+        "Purpose",
+        "Core Rule",
+        "SaaS Marketing Site Structure",
+        "Product Screenshot Pattern",
+        "Feature Group Pattern",
+        "Use-Case Pattern",
+        "Pricing Page Pattern",
+        "Onboarding Pattern",
+        "Dashboard Pattern",
+        "Trust Pattern",
         "Final Rule"
       ]
     },
