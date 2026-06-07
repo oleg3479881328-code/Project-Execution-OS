@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d482671c4948747c8cc470b80822cab616d29108",
-  "generated_at": "2026-06-06T20:36:30-04:00",
-  "artifact_count": 297,
+  "repository_commit": "5bbedc0cce3d33065bba7af77e777297d35e2c32",
+  "generated_at": "2026-06-06T20:39:22-04:00",
+  "artifact_count": 298,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -858,6 +858,36 @@
         "Неприкосновенный",
         "Source Hierarchy",
         "Boundary"
+      ]
+    },
+    {
+      "path": "blocks/logic/RESOURCE_MAP.md",
+      "title": "Logic Block Resource Map",
+      "type": "domain-block-artifact",
+      "domain": "logic",
+      "status": null,
+      "date": null,
+      "sha256": "d4b525a0b7dcb66d498698b248dab34e8567a60504814e35860aeedefb3c55d6",
+      "headings": [
+        "Logic Block Resource Map",
+        "Purpose",
+        "Selection Rule",
+        "Best Courses",
+        "MIT OpenCourseWare — Logic I",
+        "OpenLearn — Getting Started with Logic",
+        "Coursera — Introduction to Logic",
+        "Best Materials",
+        "Open Logic Project",
+        "forall x: Calgary",
+        "Stanford Encyclopedia of Philosophy — Logical Consequence",
+        "Argument Mapping Overview",
+        "Best Ready-Made Solutions",
+        "Kialo Edu",
+        "Carnap",
+        "Araucaria",
+        "Compendium / IBIS-style Dialogue Mapping",
+        "Practical Recommendation",
+        "Freshness Rule"
       ]
     },
     {
