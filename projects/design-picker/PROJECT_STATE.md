@@ -4,7 +4,7 @@ Date: 2026-06-07
 
 ## Current Phase
 
-`implementation bootstrap`
+`local MVP built and browser-validated`
 
 ## Confirmed Direction
 
@@ -56,6 +56,48 @@ The first internal MVP must remain standalone enough to run without Linkwarden, 
 - deployment;
 - AI tagging.
 
+## Latest Result
+
+A polished static local MVP now exists with:
+
+- donor card grid;
+- add, edit, delete, and refresh actions;
+- decision statuses;
+- pattern selection;
+- search and filtering;
+- local persistence;
+- Markdown and JSON export;
+- a preview-provider adapter seam;
+- Windows launcher path.
+
+## Validation Evidence
+
+Browser validation confirmed:
+
+- two real public donor URLs were added successfully;
+- one donor was edited after creation;
+- one donor persisted as `primary` and another as `partial`;
+- automatic preview URLs were generated through the adapter;
+- refresh preview worked;
+- local persistence survived reload;
+- Markdown and JSON exports downloaded with expected records;
+- the layout remained usable at a narrow viewport without horizontal overflow.
+
+## Active Files
+
+- `projects/design-picker/index.html`
+- `projects/design-picker/styles.css`
+- `projects/design-picker/app.js`
+- `projects/design-picker/Launch-Design-Picker.bat`
+- `projects/design-picker/README.md`
+- `projects/design-picker/PROJECT.md`
+- `projects/design-picker/PROJECT_STATE.md`
+- `projects/design-picker/logs/latest.md`
+
 ## Next Practical Step
 
-Create a browser-runnable static MVP and verify the interaction model before adding backend integration.
+Run the MVP against a larger real donor set and then choose between:
+
+- keeping the static local tool and refining board workflow;
+- adding Linkwarden-backed screenshot integration;
+- introducing a lightweight local server only if richer metadata import becomes necessary.
