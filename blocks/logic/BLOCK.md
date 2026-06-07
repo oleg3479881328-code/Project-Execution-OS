@@ -48,7 +48,8 @@ If a conclusion depends on a missing premise, weak evidence, or an untested alte
 Open only the smallest relevant path:
 
 1. `blocks/logic/REFERENCES.md` when source anchors or terminology are needed.
-2. `blocks/logic/VALIDATION_BACKLOG.md` when turning logic ideas into reusable checks, examples, or agent tests.
+2. `blocks/logic/RESOURCE_MAP.md` when courses, learning materials, or ready-made logic tools are needed.
+3. `blocks/logic/VALIDATION_BACKLOG.md` when turning logic ideas into reusable checks, examples, or agent tests.
 
 Add narrower files only after repeated use proves they are needed.
 
