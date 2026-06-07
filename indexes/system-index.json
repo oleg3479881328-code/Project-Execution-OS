@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1a84da2166e41813c0821e60964cb40e1e9966e3",
-  "generated_at": "2026-06-07T13:35:10-04:00",
-  "artifact_count": 356,
+  "repository_commit": "4e82926f4ea99ead0d836c45aef7584c6cc86767",
+  "generated_at": "2026-06-07T13:35:47-04:00",
+  "artifact_count": 357,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3020,6 +3020,26 @@
         "Long-Form Review",
         "Experiment Log",
         "Testing Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/AUTOMATION_AND_API.md",
+      "title": "Automation and API",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "cd5d351cdf4dc5ec30f56735c9369d4cd93bdd0d27d3f6495a49d1bd3f51f0ce",
+      "headings": [
+        "Automation and API",
+        "Purpose",
+        "Core Rule",
+        "API Use Cases",
+        "Upload Workflow",
+        "Metadata Package",
+        "Automation Boundaries",
+        "Transcript / Research Tools",
         "Final Rule"
       ]
     },
