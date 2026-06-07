@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "28ad999f59bdeaa8a0be487bbfc3a9a93a7749dd",
-  "generated_at": "2026-06-07T13:04:15-04:00",
-  "artifact_count": 332,
+  "repository_commit": "462aa143c611c7dec50a43c9f916bcf621695761",
+  "generated_at": "2026-06-07T13:04:28-04:00",
+  "artifact_count": 333,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2635,6 +2635,28 @@
         "Required Reading Inside This Block",
         "Typical Outputs",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/PRODUCT_SURFACES.md",
+      "title": "Video Production Product Surfaces",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "baa15d35ab37075fb04478be045e50c7f798fc0ace4dacec3205b7ea96c1d10a",
+      "headings": [
+        "Video Production Product Surfaces",
+        "Purpose",
+        "Surface 1 — Long Video To Shorts Factory",
+        "Surface 2 — Gadget / Affiliate Reels Factory",
+        "Surface 3 — Facts / Cinema / Documentary Factory",
+        "Surface 4 — Multilingual Content Factory",
+        "Surface 5 — QuizLight Video Learning Factory",
+        "Surface 6 — AI Generated Video Factory",
+        "Surface 7 — Creator Assistant / Internal Editing Tool",
+        "Surface 8 — Video SaaS Product",
         "Final Rule"
       ]
     },
