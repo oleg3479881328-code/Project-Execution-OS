@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "20811925a77c0329d2448eb89c605182dfd5e921",
-  "generated_at": "2026-06-07T13:36:32-04:00",
-  "artifact_count": 360,
+  "repository_commit": "757d3f7968298550a43ec578fe25756fdb2c4ee0",
+  "generated_at": "2026-06-07T13:36:43-04:00",
+  "artifact_count": 361,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3208,6 +3208,24 @@
         "API Automation",
         "Analytics",
         "Donor Review",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/REFERENCES.md",
+      "title": "YouTube References",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "58861c05d8626d536fc57b02fc73502fc338c2f73a6fd47f232c85d5ab9394af",
+      "headings": [
+        "YouTube References",
+        "Purpose",
+        "Official YouTube Sources",
+        "Official API Sources",
+        "Related Internal Block",
+        "Freshness Rule",
         "Final Rule"
       ]
     },
