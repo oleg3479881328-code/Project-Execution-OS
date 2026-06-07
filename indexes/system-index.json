@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "626ff86c37129f3a05ef8aa2383559b11a3e33ed",
-  "generated_at": "2026-06-07T13:07:37-04:00",
-  "artifact_count": 343,
+  "repository_commit": "e02784a030d1b9605af8dc2c77a9b181babde701",
+  "generated_at": "2026-06-07T13:08:21-04:00",
+  "artifact_count": 344,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2717,6 +2717,26 @@
         "Pattern 4 — Template Video Factory",
         "Pattern 5 — Human Review Gate",
         "Pattern 6 — Analytics Loop",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/PLATFORM_PATTERNS.md",
+      "title": "Platform Patterns",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "9ea7a32d407039e9afdad083ee0d909cb506381425c0363b0af8fe2f51d4d61a",
+      "headings": [
+        "Platform Patterns",
+        "Purpose",
+        "Core Rule",
+        "Facebook Reels",
+        "TikTok",
+        "YouTube Shorts",
+        "Instagram Reels",
+        "Platform Matrix Fields",
         "Final Rule"
       ]
     },
