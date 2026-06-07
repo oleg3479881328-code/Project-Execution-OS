@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ba19fb9ae13f1aa436b7d1a646765d73611c1646",
-  "generated_at": "2026-06-07T12:42:34-04:00",
-  "artifact_count": 330,
+  "repository_commit": "03b34328fd08d560ded5967e0e8bc966b5dc320a",
+  "generated_at": "2026-06-07T12:43:47-04:00",
+  "artifact_count": 331,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1946,6 +1946,25 @@
         "Security Research To Track",
         "Freshness Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/solana/RESEARCH_REPORT_2026-06-07.md",
+      "title": "Solana Research Report — 2026-06-07",
+      "type": "domain-block-artifact",
+      "domain": "solana",
+      "status": null,
+      "date": null,
+      "sha256": "62b86c744eb857630e456e73d978fd1270b1895aa062c58bc041349e527c1d6e",
+      "headings": [
+        "Solana Research Report — 2026-06-07",
+        "Purpose",
+        "Artifact Decision",
+        "Domain Boundary",
+        "Main Research Findings",
+        "Recommended Default",
+        "Files Created",
+        "Final Recommendation"
       ]
     },
     {
