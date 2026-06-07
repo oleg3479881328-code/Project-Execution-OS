@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "5b376e447ba3f4119e67d627bbeaf879cfe04810",
-  "generated_at": "2026-06-07T11:18:12-04:00",
-  "artifact_count": 304,
+  "repository_commit": "8178e29e69d8b26355c0351438c875e77b2b33db",
+  "generated_at": "2026-06-07T11:18:38-04:00",
+  "artifact_count": 305,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -453,6 +453,25 @@
         "ExtensionPay",
         "Default Recommendation",
         "Payment Architecture Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/chrome-extension/PUBLISHING.md",
+      "title": "Chrome Extension Publishing",
+      "type": "domain-block-artifact",
+      "domain": "chrome-extension",
+      "status": null,
+      "date": null,
+      "sha256": "547677698cf4b9c6bac1a06330912012bcec238190bba6f761a23121c948022f",
+      "headings": [
+        "Chrome Extension Publishing",
+        "Purpose",
+        "Publishing Path",
+        "Store Listing Checklist",
+        "Technical Checklist",
+        "Review Risk Checklist",
+        "Post-Submission",
         "Final Rule"
       ]
     },
