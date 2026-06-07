@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1602faa7e8b57b71b4231e58c7d6eeacfd54cab7",
-  "generated_at": "2026-06-06T20:32:39-04:00",
-  "artifact_count": 296,
+  "repository_commit": "fba6012a50f1c8aafdb7b1e3b494dbb98a85d7aa",
+  "generated_at": "2026-06-06T20:33:29-04:00",
+  "artifact_count": 297,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -854,6 +854,26 @@
         "Initial Example Anchor",
         "Source Hierarchy",
         "Boundary"
+      ]
+    },
+    {
+      "path": "blocks/logic/VALIDATION_BACKLOG.md",
+      "title": "Logic Block Validation Backlog",
+      "type": "domain-block-artifact",
+      "domain": "logic",
+      "status": null,
+      "date": null,
+      "sha256": "32fe794e2e5b9a156fc59360d5eee3867960e36f488a1cad1733618cb43faaba",
+      "headings": [
+        "Logic Block Validation Backlog",
+        "Purpose",
+        "Candidate Validation Tasks",
+        "1. Sequence vs causation explanation",
+        "2. Argument map output",
+        "3. Project decision review",
+        "4. Reasoning error detection",
+        "5. Agent-output reasoning review",
+        "Current Status"
       ]
     },
     {
