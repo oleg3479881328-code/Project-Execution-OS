@@ -2,7 +2,7 @@
 
 ## Status
 
-`initialized — active research and MVP definition`
+`active — local MVP implemented`
 
 ## Purpose
 
@@ -57,4 +57,4 @@ The first research candidates are Linkwarden and Karakeep. The project must deci
 
 ## Next Practical Step
 
-Complete reuse-first research and record the adaptation decision.
+Validate the local MVP on a real donor shortlist, then decide whether the next step is Linkwarden-backed preview integration or richer project-board workflow.

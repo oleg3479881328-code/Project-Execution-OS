@@ -21,7 +21,7 @@ It identifies the intended ordered context foundation. It does not prove provide
 ```text
 docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md=ffa44bccdd2e24dd96c1b6ee726c0726712f1e1a
 START_HERE.md=f315656999e3e78b1b797ad2c1c971ef64fccbf9
-docs/ROUTER.md=86de8756c90b44f88bc5837907860c18d35498cc
+docs/ROUTER.md=42232138a547dbd244c583aac7f0d7e1e221f360
 docs/CONTEXT_ASSEMBLY_STANDARD.md=c9b2e4e8739a0ec5cc1ce6e0657e238f5f443541
 docs/KNOWLEDGE_SYSTEM.md=e5500ceb295997403f0e2e6ca47ee9c02f3c623c
 ```
@@ -29,7 +29,7 @@ docs/KNOWLEDGE_SYSTEM.md=e5500ceb295997403f0e2e6ca47ee9c02f3c623c
 ### SHA-256 Fingerprint
 
 ```text
-a9872af67e850bb9d23fd33dbf689a694fad9c26a6e5f42d67adce5f19262c69
+055ef54507e49291578423242cfaa50861d3968f299f678dd5e3f7b548e1f150
 ```
 
 ### Loading Rule
