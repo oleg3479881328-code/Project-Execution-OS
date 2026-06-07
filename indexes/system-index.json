@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "18c632ac7b0335de8c61431d5a33e3057654a714",
-  "generated_at": "2026-06-07T13:39:12-04:00",
-  "artifact_count": 365,
+  "repository_commit": "d7248b4cd042720ff5cdd2f2b8518c84cb4480c3",
+  "generated_at": "2026-06-07T13:39:46-04:00",
+  "artifact_count": 366,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3105,6 +3105,29 @@
         "Transformation Review",
         "AI Content Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/CURRENT_PLATFORM_SNAPSHOT_2026-06-07.md",
+      "title": "YouTube Current Platform Snapshot — 2026-06-07",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "0fd0a7598e46f972705ea6fb6bd7f00fb29e7ea2866a7d4cfc8bbf97a886eaa5",
+      "headings": [
+        "YouTube Current Platform Snapshot — 2026-06-07",
+        "Purpose",
+        "YouTube Partner Program",
+        "Shorts Classification",
+        "Shorts Metrics",
+        "Shorts Monetization",
+        "Content Policy",
+        "Content ID Risk For Longer Shorts",
+        "Brand Account Channels",
+        "API Uploads",
+        "Analytics APIs",
+        "Freshness Rule"
       ]
     },
     {
