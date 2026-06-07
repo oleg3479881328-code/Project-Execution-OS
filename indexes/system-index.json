@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6608cba67725fe83f2f69041f6514d6170ab330b",
-  "generated_at": "2026-06-07T12:02:06-04:00",
-  "artifact_count": 311,
+  "repository_commit": "d201b260a9fd7941c94c6021c78e6c2dc9286a24",
+  "generated_at": "2026-06-07T12:03:37-04:00",
+  "artifact_count": 312,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -813,6 +813,30 @@
         "Portfolios",
         "Marketplaces",
         "Required Review Questions",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/LANDING_PAGE_PATTERNS.md",
+      "title": "Landing Page Patterns",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": null,
+      "date": null,
+      "sha256": "aebbba27a923a73a04864edeb5655c15f12e7fa710173f149642f08716bedd8b",
+      "headings": [
+        "Landing Page Patterns",
+        "Purpose",
+        "Core Rule",
+        "Default Landing Structure",
+        "Hero Pattern",
+        "Problem / Pain Pattern",
+        "Benefits Pattern",
+        "How It Works Pattern",
+        "Proof Pattern",
+        "Pricing / Offer Pattern",
+        "FAQ Pattern",
+        "CTA Pattern",
         "Final Rule"
       ]
     },
