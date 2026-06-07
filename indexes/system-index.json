@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2aab1c7599c0a4dc4b9dcc3d0b8af09ef85cdfb9",
-  "generated_at": "2026-06-07T13:04:42-04:00",
-  "artifact_count": 334,
+  "repository_commit": "d09873e18ac64b68d50977386393ae2265618790",
+  "generated_at": "2026-06-07T13:05:02-04:00",
+  "artifact_count": 335,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2687,6 +2687,26 @@
         "AI Video / Visual Generation",
         "Workflow / Automation",
         "Donor Evaluation Checklist",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/TOOL_SELECTION_MATRIX.md",
+      "title": "Video Production Tool Selection Matrix",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "e29c2e2096a8338f0c78c707bbd80bac2d3662fc7d02b23f5f7f3c713f6178a8",
+      "headings": [
+        "Video Production Tool Selection Matrix",
+        "Purpose",
+        "Matrix",
+        "Source Handling Choices",
+        "Editing Choices",
+        "Caption Choices",
+        "Voice Choices",
+        "Automation Choices",
         "Final Rule"
       ]
     },
