@@ -108,6 +108,20 @@ Current status:
 
 `candidate`
 
+### Solana Block
+
+Path:
+
+`blocks/solana/`
+
+Purpose:
+
+Provide a reusable Solana product and implementation layer for dApps, wallet flows, Anchor programs, SPL Token, payments, DeFi/NFT patterns, AI-agent actions, security, monetization, and handoff.
+
+Current status:
+
+`candidate`
+
 ### Telegram Block
 
 Path:
