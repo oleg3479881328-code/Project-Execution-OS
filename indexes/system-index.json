@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e760d77e2d71bd1b8ba5e75c7e97382476a4d1cd",
-  "generated_at": "2026-06-07T12:46:53-04:00",
-  "artifact_count": 331,
+  "repository_commit": "28ad999f59bdeaa8a0be487bbfc3a9a93a7749dd",
+  "generated_at": "2026-06-07T13:04:15-04:00",
+  "artifact_count": 332,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2615,6 +2615,27 @@
         "Litigation Monitoring",
         "Related Official Sources",
         "Source-Use Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/BLOCK.md",
+      "title": "Video Production Block",
+      "type": "domain-block-entrypoint",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "d75e1f7df960e06950218f9107a2a9d81e663edbfe24193357fae8109c97e191",
+      "headings": [
+        "Video Production Block",
+        "Purpose",
+        "Status",
+        "Core Principle",
+        "When To Use",
+        "When Not To Use",
+        "Required Reading Inside This Block",
+        "Typical Outputs",
+        "Boundary",
+        "Final Rule"
       ]
     },
     {
