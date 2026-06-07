@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fb355c624ab8c82d42a2e1479014060ed76508c0",
-  "generated_at": "2026-06-07T12:38:32-04:00",
-  "artifact_count": 324,
+  "repository_commit": "a92b527d968f115a727506a9529997175376bf69",
+  "generated_at": "2026-06-07T12:39:15-04:00",
+  "artifact_count": 325,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1881,6 +1881,26 @@
         "Frontend / Wallet Layer",
         "Data / Indexing Layer",
         "Donor Evaluation Checklist",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/solana/TOOL_SELECTION_MATRIX.md",
+      "title": "Solana Tool Selection Matrix",
+      "type": "domain-block-artifact",
+      "domain": "solana",
+      "status": null,
+      "date": null,
+      "sha256": "947d6b43b185d6c4517e594afb4553221e4a81f40442ca141174ad6e9db0c45a",
+      "headings": [
+        "Solana Tool Selection Matrix",
+        "Purpose",
+        "Default Stack By Situation",
+        "Frontend Choices",
+        "Program Choices",
+        "SDK Choices",
+        "Backend Choices",
+        "RPC / Data Provider Choices",
         "Final Rule"
       ]
     },
