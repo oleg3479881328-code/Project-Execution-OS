@@ -1,56 +1,56 @@
 # Design Picker MVP
 
-## Purpose
+## Назначение
 
-`Design Picker` is a local internal website for collecting design donors, browsing them as visual cards, marking what should be reused, and exporting a clean selection record.
+`Design Picker` — это локальный внутренний сайт для сбора дизайн-доноров, просмотра их как визуальных карточек, фиксации того, что стоит переиспользовать, и экспорта понятной selection record.
 
-## Windows Launch
+## Запуск на Windows
 
-### Fastest path
+### Самый быстрый путь
 
-Double-click:
+Двойной клик по:
 
 `Launch-Design-Picker.bat`
 
-This opens:
+Откроется:
 
 `index.html`
 
-in your default browser.
+в браузере по умолчанию.
 
-### One copy-ready command
+### Одна готовая команда
 
-From PowerShell inside `projects/design-picker/`:
+Из PowerShell внутри `projects/design-picker/`:
 
 ```powershell
 .\Launch-Design-Picker.bat
 ```
 
-No install step is required for the MVP.
+Для MVP ничего устанавливать не нужно.
 
-## Owner Workflow
+## Как пользоваться
 
-1. Launch the site.
-2. Click `Add donor`.
-3. Paste a public website URL.
-4. Leave `Manual preview override` empty to use the automatic preview adapter.
-5. Add tags, notes, and pattern selections.
-6. Mark the donor as `Primary`, `Partial`, `Rejected`, or `Undecided`.
-7. Use search and filters to shape the shortlist.
-8. Export Markdown or JSON when the board is ready.
+1. Запусти сайт.
+2. Нажми `Добавить донора`.
+3. Вставь публичный URL сайта.
+4. Оставь поле `Ручная замена превью` пустым, чтобы использовать автоматический preview adapter.
+5. Добавь теги, заметки и выбранные паттерны.
+6. Поставь статус: `Основной`, `Частичный`, `Отклонён` или `Не решено`.
+7. Используй поиск и фильтры, чтобы собрать shortlist.
+8. Экспортируй Markdown или JSON, когда отбор готов.
 
-## Current MVP Capabilities
+## Что уже умеет MVP
 
-- clean local website with visual donor cards;
-- add donor flow with one required field: source URL;
-- automatic title fallback from the donor domain;
-- automatic preview generation through a preview-provider adapter;
-- manual preview override;
-- edit, delete, and refresh donor actions;
-- search by title, URL, notes, tags, and patterns;
-- filter by decision status and by pattern;
-- design statuses: `primary`, `partial`, `rejected`, `undecided`;
-- reusable pattern selection:
+- аккуратный локальный сайт с визуальными карточками доноров;
+- добавление донора с одним обязательным полем: source URL;
+- автоматическое название по домену, если вручную не заполнено;
+- автоматическая генерация превью через preview-provider adapter;
+- ручная замена превью;
+- действия: редактировать, удалить, обновить превью;
+- поиск по названию, URL, заметкам, тегам и паттернам;
+- фильтрация по статусу решения и по паттерну;
+- внутренние статусы: `primary`, `partial`, `rejected`, `undecided`;
+- выбор переиспользуемых паттернов:
   - `hero`
   - `cards`
   - `pricing`
@@ -60,48 +60,48 @@ No install step is required for the MVP.
   - `onboarding`
   - `checkout`
   - `custom`
-- owner notes and strong-points field;
-- Markdown export;
-- JSON export;
-- local persistence through browser `localStorage`.
+- заметки владельца и поле сильных сторон;
+- экспорт в Markdown;
+- экспорт в JSON;
+- локальное сохранение через browser `localStorage`.
 
-## Files
+## Файлы
 
-- `index.html` — app shell
-- `styles.css` — visual system and responsive layout
-- `app.js` — state, preview adapter, filters, editor, export logic
-- `Launch-Design-Picker.bat` — Windows double-click launcher
+- `index.html` — оболочка приложения
+- `styles.css` — визуальная система и responsive layout
+- `app.js` — состояние, preview adapter, фильтры, редактор и экспорт
+- `Launch-Design-Picker.bat` — Windows launcher для двойного клика
 
 ## Preview Provider Adapter
 
-The MVP keeps preview generation behind a small adapter seam inside `app.js`.
+MVP держит генерацию превью за небольшим adapter seam внутри `app.js`.
 
-Current runtime order:
+Текущий порядок работы:
 
 1. manual preview override;
 2. hosted screenshot endpoint;
-3. built-in visual fallback card.
+3. встроенная fallback-карточка.
 
-Current hosted screenshot endpoint:
+Текущий hosted screenshot endpoint:
 
 ```text
 https://image.thum.io/get/width/1440/crop/900/noanimate/{url}
 ```
 
-This is a local-validation adapter, not a final locked dependency.
+Это локальный validation adapter, а не финальная жёстко зафиксированная зависимость.
 
-## Existing Solutions Reused Conceptually
+## Что заимствовано концептуально
 
 - Linkwarden:
-  - screenshot-preservation direction;
-  - future backend preview path;
-  - donor preservation mindset.
+  - направление на screenshot-preservation;
+  - будущий backend path для превью;
+  - модель сохранения доноров.
 - Karakeep:
-  - visual browsing feel;
-  - lightweight bookmark-card UX inspiration;
-  - modern collection-oriented browsing patterns.
+  - ощущение визуального browse-режима;
+  - лёгкий bookmark-card UX;
+  - современные паттерны коллекционного просмотра.
 
-## What Is Still Deferred
+## Что пока отложено
 
 - server-side metadata extraction;
 - Linkwarden API integration;
@@ -112,8 +112,8 @@ This is a local-validation adapter, not a final locked dependency.
 - deployment;
 - AI tagging or automatic design analysis.
 
-## Security Note
+## Замечание по безопасности
 
-This MVP stores data only in the current browser profile and uses an external screenshot endpoint for public URLs.
+Этот MVP хранит данные только в текущем профиле браузера и использует внешний screenshot endpoint для публичных URL.
 
-Use public donor URLs only during this MVP phase.
+На этой стадии используй только публичные donor URL.

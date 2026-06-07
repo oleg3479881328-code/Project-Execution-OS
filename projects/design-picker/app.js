@@ -12,11 +12,23 @@ const PATTERN_OPTIONS = [
   "custom"
 ];
 
+const PATTERN_LABELS = {
+  hero: "Hero — главный первый экран",
+  cards: "Cards — карточки",
+  pricing: "Pricing — тарифы и цены",
+  navigation: "Navigation — навигация",
+  motion: "Motion — движение и анимация",
+  dashboard: "Dashboard — панель управления",
+  onboarding: "Onboarding — первые шаги пользователя",
+  checkout: "Checkout — оформление заказа",
+  custom: "Custom — свой паттерн"
+};
+
 const STATUS_LABELS = {
-  primary: "Primary",
-  partial: "Partial",
-  rejected: "Rejected",
-  undecided: "Undecided"
+  primary: "Основной",
+  partial: "Частичный",
+  rejected: "Отклонён",
+  undecided: "Не решено"
 };
 
 const seedDonors = [
@@ -25,13 +37,13 @@ const seedDonors = [
     title: "Linear",
     sourceUrl: "https://linear.app",
     manualPreviewUrl: "",
-    projectType: "SaaS product",
+    projectType: "SaaS-продукт",
     styleTags: ["minimal", "dark", "premium"],
     sectionTags: ["hero", "navigation", "product"],
     decision: "partial",
     patterns: ["hero", "navigation", "motion"],
-    notes: "Use the calm density and product-led framing. Do not copy the exact dark palette.",
-    strongPoints: "Strong visual hierarchy and mature interface tone.",
+    notes: "Нравится спокойная плотность интерфейса и продуктовая подача. Не копировать тёмную палитру буквально.",
+    strongPoints: "Сильная визуальная иерархия и зрелый тон интерфейса.",
     previewMeta: {
       provider: "screenshot_api",
       status: "ready",
@@ -47,13 +59,13 @@ const seedDonors = [
     title: "Stripe",
     sourceUrl: "https://stripe.com",
     manualPreviewUrl: "",
-    projectType: "Marketing site",
+    projectType: "Маркетинговый сайт",
     styleTags: ["technical", "light", "clear"],
     sectionTags: ["hero", "pricing", "trust"],
     decision: "undecided",
     patterns: ["hero", "pricing"],
-    notes: "Good reference for explanation sequence and proof blocks.",
-    strongPoints: "Clear product storytelling with strong section pacing.",
+    notes: "Хороший ориентир для порядка объяснения и блоков доверия.",
+    strongPoints: "Понятная подача продукта и сильный темп секций.",
     previewMeta: {
       provider: "screenshot_api",
       status: "ready",
@@ -78,7 +90,7 @@ const previewAdapter = {
         provider: "manual",
         status: "ready",
         capturedAt: donor.previewMeta?.capturedAt || donor.updatedAt || new Date().toISOString(),
-        fallbackLabel: "Manual preview"
+        fallbackLabel: "Ручное превью"
       };
     },
 
@@ -95,7 +107,7 @@ const previewAdapter = {
         provider: "screenshot_api",
         status: "ready",
         capturedAt: donor.previewMeta?.capturedAt || donor.updatedAt || new Date().toISOString(),
-        fallbackLabel: "Auto preview"
+        fallbackLabel: "Автопревью"
       };
     }
   },
@@ -106,7 +118,7 @@ const previewAdapter = {
       provider: "placeholder",
       status: "failed",
       capturedAt: donor.previewMeta?.capturedAt || donor.updatedAt || new Date().toISOString(),
-      fallbackLabel: "Preview unavailable"
+      fallbackLabel: "Превью недоступно"
     };
   }
 };
@@ -188,13 +200,13 @@ function bindEvents() {
 function hydratePatternOptions() {
   nodes.patternFilter.insertAdjacentHTML(
     "beforeend",
-    PATTERN_OPTIONS.map(pattern => `<option value="${pattern}">${pattern}</option>`).join("")
+    PATTERN_OPTIONS.map(pattern => `<option value="${pattern}">${escapeHtml(PATTERN_LABELS[pattern])}</option>`).join("")
   );
 
   nodes.patternChecklist.innerHTML = PATTERN_OPTIONS.map(pattern => `
     <label class="pattern-toggle">
       <input type="checkbox" value="${pattern}" />
-      <span>${pattern}</span>
+      <span>${escapeHtml(PATTERN_LABELS[pattern])}</span>
     </label>
   `).join("");
 }
@@ -213,11 +225,11 @@ function renderHeroStats() {
   const patterns = new Set(state.donors.flatMap(donor => donor.patterns || []));
 
   nodes.heroStats.innerHTML = [
-    { value: state.donors.length, label: "saved donors" },
-    { value: primary, label: "primary picks" },
-    { value: partial, label: "partial references" },
-    { value: patterns.size, label: "pattern types selected" },
-    { value: withManualPreview, label: "manual preview overrides" }
+    { value: state.donors.length, label: "сохранённых доноров" },
+    { value: primary, label: "основных направлений" },
+    { value: partial, label: "частичных референсов" },
+    { value: patterns.size, label: "типов паттернов выбрано" },
+    { value: withManualPreview, label: "ручных замен превью" }
   ].map(stat => `
     <article class="hero-stat">
       <strong>${stat.value}</strong>
@@ -243,22 +255,22 @@ function renderBoardSummary() {
 
   nodes.boardSummary.innerHTML = `
     <div>
-      <p class="section-kicker">Selection board</p>
-      <h3>See the shortlist shape before exporting.</h3>
-      <p class="hero-text">This board stays local in the browser, survives reloads, and keeps the preview provider behind one adapter seam for later Linkwarden integration.</p>
+      <p class="section-kicker">Доска отбора</p>
+      <h3>Смотри форму shortlist до экспорта.</h3>
+      <p class="hero-text">Эта доска хранится локально в браузере, переживает перезагрузки и сохраняет preview-provider adapter как отдельный seam для будущей интеграции с Linkwarden.</p>
     </div>
     <div class="board-summary-grid">
       ${countsByStatus.map(item => `
         <article class="summary-card">
           <strong class="status-${item.status}">${item.count}</strong>
-          <span>${STATUS_LABELS[item.status]} donors</span>
+          <span>${STATUS_LABELS[item.status]} доноров</span>
         </article>
       `).join("")}
       <article class="summary-card">
         <strong>${topPatterns.length}</strong>
-        <span>top active patterns</span>
+        <span>активных паттернов в топе</span>
         <ul>
-          ${topPatterns.length ? topPatterns.map(item => `<li>${item.pattern}: ${item.count}</li>`).join("") : "<li>No patterns selected yet.</li>"}
+          ${topPatterns.length ? topPatterns.map(item => `<li>${escapeHtml(PATTERN_LABELS[item.pattern])}: ${item.count}</li>`).join("") : "<li>Пока ни один паттерн не выбран.</li>"}
         </ul>
       </article>
     </div>
@@ -274,10 +286,10 @@ function renderCardGrid(donors) {
   nodes.cardGrid.innerHTML = donors.map(donor => {
     const preview = previewAdapter.capture(donor);
     const providerLabel = preview.provider === "manual"
-      ? "Manual preview"
+      ? "Ручное превью"
       : preview.provider === "screenshot_api"
-        ? "Auto screenshot"
-        : "Fallback";
+        ? "Автоскриншот"
+        : "Запасной вариант";
 
     return `
       <article class="donor-card">
@@ -294,7 +306,7 @@ function renderCardGrid(donors) {
         <div class="donor-body">
           <div class="donor-header">
             <div>
-              <p class="section-kicker">Donor</p>
+              <p class="section-kicker">Донор</p>
               <h3 class="donor-title">${escapeHtml(donor.title)}</h3>
             </div>
             <span class="meta-pill status-chip status-${donor.decision}">${STATUS_LABELS[donor.decision]}</span>
@@ -303,29 +315,29 @@ function renderCardGrid(donors) {
           <a class="donor-url" href="${escapeHtml(donor.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(donor.sourceUrl)}</a>
 
           <div class="meta-cluster">
-            <span class="meta-pill">${escapeHtml(donor.projectType || "Project type not set")}</span>
+            <span class="meta-pill">${escapeHtml(donor.projectType || "Тип проекта не указан")}</span>
             <span class="meta-pill">${escapeHtml(getDomainLabel(donor.sourceUrl))}</span>
-            <span class="meta-pill">${preview.provider === "manual" ? "Manual override active" : "Adapter preview"}</span>
+            <span class="meta-pill">${preview.provider === "manual" ? "Ручная замена активна" : "Превью через адаптер"}</span>
           </div>
 
-          ${renderPillCluster("Style tags", donor.styleTags, "tag")}
-          ${renderPillCluster("Section tags", donor.sectionTags, "tag")}
-          ${renderPillCluster("Patterns", donor.patterns, "pattern")}
+          ${renderPillCluster("Теги стиля", donor.styleTags, "tag")}
+          ${renderPillCluster("Теги секций", donor.sectionTags, "tag")}
+          ${renderPillCluster("Паттерны", donor.patterns, "pattern")}
 
           <div>
-            <p class="subheading">Strong points</p>
-            <div class="donor-copy">${escapeHtml(donor.strongPoints || "Not captured yet.")}</div>
+            <p class="subheading">Сильные стороны</p>
+            <div class="donor-copy">${escapeHtml(donor.strongPoints || "Пока не зафиксировано.")}</div>
           </div>
 
           <div>
-            <p class="subheading">Notes</p>
-            <div class="donor-copy">${escapeHtml(donor.notes || "No notes yet.")}</div>
+            <p class="subheading">Заметки</p>
+            <div class="donor-copy">${escapeHtml(donor.notes || "Пока нет заметок.")}</div>
           </div>
 
           <div class="action-row">
-            <button class="button button-primary" type="button" data-action="edit" data-id="${donor.id}">Edit</button>
-            <button class="button button-secondary" type="button" data-action="refresh" data-id="${donor.id}">Refresh preview</button>
-            <button class="button button-ghost" type="button" data-action="delete" data-id="${donor.id}">Delete</button>
+            <button class="button button-primary" type="button" data-action="edit" data-id="${donor.id}">Редактировать</button>
+            <button class="button button-secondary" type="button" data-action="refresh" data-id="${donor.id}">Обновить превью</button>
+            <button class="button button-ghost" type="button" data-action="delete" data-id="${donor.id}">Удалить</button>
           </div>
         </div>
       </article>
@@ -343,11 +355,15 @@ function renderPillCluster(label, values, kind) {
   }
 
   const className = kind === "pattern" ? "pattern-pill" : "tag-pill";
+  const renderedValues = kind === "pattern"
+    ? values.map(value => `<span class="${className}">${escapeHtml(PATTERN_LABELS[value] || value)}</span>`).join("")
+    : values.map(value => `<span class="${className}">${escapeHtml(value)}</span>`).join("");
+
   return `
     <div>
       <p class="subheading">${label}</p>
       <div class="${kind}-cluster">
-        ${values.map(value => `<span class="${className}">${escapeHtml(value)}</span>`).join("")}
+        ${renderedValues}
       </div>
     </div>
   `;
@@ -400,7 +416,7 @@ function handleCardAction(action, id) {
 
 function openEditor(donor = null) {
   state.editingId = donor?.id || null;
-  nodes.dialogTitle.textContent = donor ? "Edit donor" : "Add donor";
+  nodes.dialogTitle.textContent = donor ? "Редактировать донора" : "Добавить донора";
   nodes.sourceUrlInput.value = donor?.sourceUrl || "";
   nodes.titleInput.value = donor?.title || "";
   nodes.projectTypeInput.value = donor?.projectType || "";
@@ -465,7 +481,7 @@ function saveEditor(event) {
 
   const duplicate = state.donors.find(item => item.id !== donor.id && normalizeUrl(item.sourceUrl) === donor.sourceUrl);
   if (duplicate) {
-    const shouldReplace = window.confirm(`A donor for ${donor.sourceUrl} already exists. Replace the existing record?`);
+    const shouldReplace = window.confirm(`Донор для ${donor.sourceUrl} уже существует. Заменить существующую запись?`);
     if (!shouldReplace) {
       return;
     }
@@ -524,18 +540,18 @@ function exportMarkdown() {
   const grouped = groupByStatus(state.donors);
   const markdown = `# Design Selection Record
 
-Generated: ${new Date().toISOString()}
+Сгенерировано: ${new Date().toISOString()}
 
-## Primary Direction
+## Основное направление
 ${renderMarkdownList(grouped.primary)}
 
-## Partial References
+## Частичные референсы
 ${renderMarkdownList(grouped.partial)}
 
-## Rejected Directions
+## Отклонённые направления
 ${renderMarkdownList(grouped.rejected)}
 
-## Undecided Donors
+## Доноры без решения
 ${renderMarkdownList(grouped.undecided)}
 `;
 
@@ -564,22 +580,22 @@ function groupByStatus(donors) {
 
 function renderMarkdownList(donors) {
   if (!donors.length) {
-    return "- None.\n";
+    return "- Нет записей.\n";
   }
 
   return donors.map(donor => {
     const preview = previewAdapter.capture(donor);
     return `### ${donor.title}
 - URL: ${donor.sourceUrl}
-- Decision: ${STATUS_LABELS[donor.decision]}
-- Project type: ${donor.projectType || "Not set"}
-- Patterns: ${(donor.patterns || []).join(", ") || "None"}
-- Style tags: ${(donor.styleTags || []).join(", ") || "None"}
-- Section tags: ${(donor.sectionTags || []).join(", ") || "None"}
-- Strong points: ${donor.strongPoints || "Not captured"}
-- Notes: ${donor.notes || "No notes"}
-- Preview source: ${preview.provider}
-- Preview URL: ${preview.imageUrl || "Fallback only"}
+- Статус: ${STATUS_LABELS[donor.decision]}
+- Тип проекта: ${donor.projectType || "Не указан"}
+- Паттерны: ${(donor.patterns || []).map(pattern => PATTERN_LABELS[pattern] || pattern).join(", ") || "Нет"}
+- Теги стиля: ${(donor.styleTags || []).join(", ") || "Нет"}
+- Теги секций: ${(donor.sectionTags || []).join(", ") || "Нет"}
+- Сильные стороны: ${donor.strongPoints || "Не зафиксировано"}
+- Заметки: ${donor.notes || "Нет заметок"}
+- Источник превью: ${preview.provider}
+- URL превью: ${preview.imageUrl || "Только fallback"}
 `;
   }).join("\n");
 }
@@ -634,12 +650,12 @@ function normalizeUrl(value, options = {}) {
 
 function formatDate(value) {
   if (!value) {
-    return "Fresh";
+    return "Свежо";
   }
 
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
-    return "Fresh";
+    return "Свежо";
   }
 
   return date.toLocaleDateString(undefined, {
@@ -660,7 +676,7 @@ function escapeHtml(value = "") {
 
 window.__designPickerHandlePreviewError = function handlePreviewError(event) {
   const image = event.target;
-  const title = image.dataset.fallbackTitle || "Preview unavailable";
+  const title = image.dataset.fallbackTitle || "Превью недоступно";
   const domain = image.dataset.fallbackDomain || "";
   image.replaceWith(createFallbackNode(title, domain));
 };
@@ -672,7 +688,7 @@ function createFallbackNode(title, domain) {
     <div>
       <strong>${escapeHtml(title)}</strong>
       <div>${escapeHtml(domain)}</div>
-      <div>Preview unavailable. Use manual override if needed.</div>
+      <div>Превью недоступно. При необходимости используй ручную замену.</div>
     </div>
   `;
   return wrapper;
