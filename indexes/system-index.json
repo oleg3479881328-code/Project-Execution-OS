@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "589bb98f0e6b9a0f5071b22a734521e85840e077",
-  "generated_at": "2026-06-07T12:41:16-04:00",
-  "artifact_count": 328,
+  "repository_commit": "92caf9b0e961016dccf7a20f5405692e1e95df00",
+  "generated_at": "2026-06-07T12:41:50-04:00",
+  "artifact_count": 329,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1925,6 +1925,26 @@
         "Frontend / Wallet Layer",
         "Data / Indexing Layer",
         "Donor Evaluation Checklist",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/solana/REFERENCES.md",
+      "title": "Solana References",
+      "type": "domain-block-artifact",
+      "domain": "solana",
+      "status": null,
+      "date": null,
+      "sha256": "d54f5da8709eda02516886ee8014aecbff243c393f8c21d1e2a4b395d9922783",
+      "headings": [
+        "Solana References",
+        "Purpose",
+        "Source Hierarchy",
+        "Official Solana Sources",
+        "Frameworks and Program Docs",
+        "Repositories / Libraries",
+        "Security Research To Track",
+        "Freshness Rule",
         "Final Rule"
       ]
     },
