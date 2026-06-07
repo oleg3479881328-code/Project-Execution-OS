@@ -81,6 +81,34 @@ The mistake "after this, therefore because of this" is the classic sequence-caus
 
 Russian: ошибка «после этого — значит из-за этого» смешивает временный порядок и причину.
 
+## Contrast Pair Anchor: Неприкасаемый vs Неприкосновенный
+
+These words sound similar but point in opposite directions.
+
+### Неприкасаемый
+
+Core idea: a person avoided, rejected, or socially excluded.
+
+Reason: people do not touch or associate because of contempt, stigma, or perceived impurity.
+
+Memory anchor:
+
+"Не трогай, потому что отвергают".
+
+### Неприкосновенный
+
+Core idea: a person, object, right, or reserve protected from interference.
+
+Reason: people may not touch it because it is protected, important, sacred, or legally shielded.
+
+Memory anchor:
+
+"Руки прочь, потому что охраняется".
+
+Reasoning lesson:
+
+The two words share a surface similarity but represent opposite social meanings. One points downward toward exclusion. The other points upward toward protection.
+
 ## Source Hierarchy
 
 For logic teaching and reusable reasoning work, prefer:
