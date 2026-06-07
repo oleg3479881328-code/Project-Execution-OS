@@ -25,7 +25,8 @@ Do not append an unrelated next-project question after answering the active requ
 - lifecycle or storage-layer decision -> `docs/PROJECT_LIFECYCLE_MODEL.md`
 - website design, landing-page design, page structure, wireframe, UI system, responsive UI spec, or website design review -> `blocks/design/BLOCK.md`
 - Chrome Extension, browser extension, Manifest V3, extension content scripts, extension service workers, Chrome Web Store publishing, extension monetization, or extension payments -> `blocks/chrome-extension/BLOCK.md`
-- Video Production, video factory, reels factory, YouTube Shorts, Facebook Reels, TikTok videos, yt-dlp, ffmpeg, CapCut, automated clipping, multilingual video production, AI voice, AI avatar, or QuizLight video-card extraction -> `blocks/video-production/BLOCK.md`
+- YouTube channel strategy, YouTube Shorts publishing strategy, YouTube long-form strategy, YouTube Partner Program, YPP, YouTube monetization, YouTube copyright, reused content, Content ID, YouTube analytics, YouTube playlists, YouTube Data API, YouTube uploads, or multilingual YouTube channels -> `blocks/youtube/BLOCK.md`
+- Video Production, video factory, reels factory, short-form editing, TikTok videos, yt-dlp, ffmpeg, CapCut, automated clipping, multilingual video production, AI voice, AI avatar, or QuizLight video-card extraction -> `blocks/video-production/BLOCK.md`
 - Solana, Solana dApp, wallet-connected app, Anchor program, SPL Token, Token Extensions, Solana payments, Solana NFT, Solana DeFi, Solana marketplace, Solana RPC, or Solana program security -> `blocks/solana/BLOCK.md`
 - logic concepts, argument structure, cause-and-effect analysis, fallacy detection, assumption review, contradiction check, or decision-quality reasoning review -> `blocks/logic/BLOCK.md`
 - music generation, soundtrack design, adaptive music, real-time music, music-agent behavior, generated-music rights review, or music-tool evaluation -> `blocks/music/BLOCK.md`
