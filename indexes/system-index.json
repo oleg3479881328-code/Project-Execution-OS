@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "629721c15bb1d1ab541690139c2a2408dc173d35",
-  "generated_at": "2026-06-07T12:07:13-04:00",
-  "artifact_count": 316,
+  "repository_commit": "9864fb03b733b3d40da66fc51b5c2bb5a8d3b060",
+  "generated_at": "2026-06-07T12:07:37-04:00",
+  "artifact_count": 317,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -860,6 +860,28 @@
         "Pricing / Offer Pattern",
         "FAQ Pattern",
         "CTA Pattern",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/MOTION_AND_ANIMATION.md",
+      "title": "Motion and Animation",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": null,
+      "date": null,
+      "sha256": "b6391423595597c634cffb80c46e23cef98067817e9f9cbd07d5d1839438edec",
+      "headings": [
+        "Motion and Animation",
+        "Purpose",
+        "Core Rule",
+        "Good Uses of Motion",
+        "Bad Uses of Motion",
+        "Landing Page Motion",
+        "SaaS Product Motion",
+        "Microinteractions",
+        "Performance Rule",
+        "Accessibility Rule",
         "Final Rule"
       ]
     },
