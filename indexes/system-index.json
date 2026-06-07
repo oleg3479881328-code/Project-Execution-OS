@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4cf6e1b391619fce6400db2457ccfb1d03b6317c",
-  "generated_at": "2026-06-06T20:35:01-04:00",
+  "repository_commit": "d482671c4948747c8cc470b80822cab616d29108",
+  "generated_at": "2026-06-06T20:36:30-04:00",
   "artifact_count": 297,
   "artifacts": [
     {
@@ -838,7 +838,7 @@
       "domain": "logic",
       "status": null,
       "date": null,
-      "sha256": "21deca7368e4a0a02eb7254b13f872980acd1a31932ef115fdc05605279a127a",
+      "sha256": "1354df22a6770842b339c4185ddfaa7290dbb13dd10dc4a61caa8fa95d266dcb",
       "headings": [
         "Logic Block References",
         "Purpose",
@@ -853,6 +853,9 @@
         "Fallacy",
         "Common Reusable Checks",
         "Initial Example Anchor",
+        "Contrast Pair Anchor: Неприкасаемый vs Неприкосновенный",
+        "Неприкасаемый",
+        "Неприкосновенный",
         "Source Hierarchy",
         "Boundary"
       ]
