@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a92b527d968f115a727506a9529997175376bf69",
-  "generated_at": "2026-06-07T12:39:15-04:00",
-  "artifact_count": 325,
+  "repository_commit": "bfdcf0379ce5605ff10b77e3ec18200fcb073177",
+  "generated_at": "2026-06-07T12:40:07-04:00",
+  "artifact_count": 326,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1881,6 +1881,27 @@
         "Frontend / Wallet Layer",
         "Data / Indexing Layer",
         "Donor Evaluation Checklist",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/solana/SECURITY_AND_COMPLIANCE.md",
+      "title": "Solana Security and Compliance",
+      "type": "domain-block-artifact",
+      "domain": "solana",
+      "status": null,
+      "date": null,
+      "sha256": "2b523d6d3a39b3b59cda819bd215d2087451d5b455df2c0b02e792e246ac4155",
+      "headings": [
+        "Solana Security and Compliance",
+        "Purpose",
+        "Core Rules",
+        "Wallet Safety",
+        "Program Security Review",
+        "Token Safety",
+        "DeFi Risk Review",
+        "AI Agent Safety",
+        "Escalation",
         "Final Rule"
       ]
     },
