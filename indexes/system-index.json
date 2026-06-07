@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "5fb6fda4f8de1e910b053d3e2c9e8073ce72d119",
-  "generated_at": "2026-06-07T15:21:55-04:00",
-  "artifact_count": 368,
+  "repository_commit": "88340adec5d4787615a184062044ae346d976a6b",
+  "generated_at": "2026-06-07T15:22:27-04:00",
+  "artifact_count": 369,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -767,6 +767,44 @@
         "Frontend-Aware Handoff Rule",
         "Review Before Completion",
         "Anti-Patterns",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/DESIGN_DONOR_CATALOG_TEMPLATE.md",
+      "title": "Design Donor Catalog Template",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": null,
+      "date": null,
+      "sha256": "02bceaf8f79435ebd00fcae8a6d24b60fcf2d30060360529b49d6b4be8d713e7",
+      "headings": [
+        "Design Donor Catalog Template",
+        "Purpose",
+        "Catalog Maintenance Rules",
+        "Recommended Folder Shape",
+        "Catalog Index",
+        "Donor Detail Card",
+        "donor-XXX — Title",
+        "Source",
+        "Fit",
+        "Tags",
+        "Strong Points",
+        "Reuse Notes",
+        "Avoid Notes",
+        "Implementation Notes",
+        "Copy / Asset Risk",
+        "Project-Specific Design Board",
+        "Design Board — Project Name",
+        "Project Goal",
+        "Shortlist",
+        "Owner Selection Record",
+        "Primary Direction",
+        "Borrow These Patterns",
+        "Avoid",
+        "Style Notes In Owner's Words",
+        "Open Design Decisions",
+        "Future UI Mapping",
         "Final Rule"
       ]
     },
