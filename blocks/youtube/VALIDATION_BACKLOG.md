@@ -6,7 +6,7 @@ Track what must be validated before YouTube Block recommendations are treated as
 
 ## Status
 
-`candidate`
+`candidate_v2`
 
 Research and prior owner discussions are captured. Real channel validation is still required.
 
@@ -18,6 +18,7 @@ Research and prior owner discussions are captured. Real channel validation is st
 - Validate first 10 video ideas.
 - Validate one Shorts template.
 - Validate one long-form template where relevant.
+- Validate one channel setup path, including Brand Account decision.
 
 ## Originality / Copyright Validation
 
@@ -27,6 +28,15 @@ Research and prior owner discussions are captured. Real channel validation is st
 - Validate music rights handling.
 - Validate thumbnail and metadata truthfulness.
 - Validate AI-content review gate.
+- Validate anti-repetition review for multilingual and template-based factories.
+
+## Publishing / Metadata Validation
+
+- Validate manual YouTube Studio upload.
+- Validate one complete publish package.
+- Validate title, description, playlist, visibility, audience, CTA, and rights fields.
+- Validate Shorts thumbnail-frame workflow where applicable.
+- Validate upload status logging and stored YouTube video id.
 
 ## Monetization Validation
 
@@ -35,14 +45,16 @@ Research and prior owner discussions are captured. Real channel validation is st
 - Validate SaaS/product conversion path.
 - Validate revenue tracking per video.
 - Validate production-cost tracking.
+- Validate content against current reused-content and inauthentic-content guidance.
 
 ## Analytics Validation
 
 - Validate experiment log.
-- Validate Shorts metric review.
+- Validate Shorts metric review, including engaged views where applicable.
 - Validate long-form retention review.
 - Validate topic comparison.
 - Validate language comparison where multilingual channels exist.
+- Validate manual Studio review before API dashboard work.
 
 ## API / Automation Validation
 
@@ -50,9 +62,19 @@ Research and prior owner discussions are captured. Real channel validation is st
 - Validate metadata read/write flow.
 - Validate playlist operations.
 - Validate reviewed upload flow.
+- Validate private-mode restriction and API-audit implications for the selected API project.
 - Validate upload status logging.
 - Validate failure handling and retries.
-- Validate analytics import or manual analytics capture.
+- Validate Analytics API or Reporting API import only after manual capture is understood.
+
+## Multilingual Scaling Validation
+
+- Validate one master script.
+- Validate one localized script with language QA.
+- Validate localized voice and captions.
+- Validate localized metadata.
+- Validate channel routing.
+- Test a small language subset before broad scaling.
 
 ## Related Video Production Validation
 
@@ -67,6 +89,7 @@ Research and prior owner discussions are captured. Real channel validation is st
 - Hybrid Shorts + long-form structure will be stronger than Shorts-only for authority and product conversion where depth matters.
 - Original voiceover, titles, ideas, and meaningful editing materially improve monetization durability compared with repost-like workflows.
 - API-assisted publish packages should precede full autopublishing.
+- Multilingual scaling should happen only after one format is proven and anti-repetition review works.
 
 ## Final Rule
 
