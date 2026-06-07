@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "5a91ebc9f4325b36aa9fb1bc59603c07b6f9b094",
-  "generated_at": "2026-06-07T13:38:26-04:00",
-  "artifact_count": 364,
+  "repository_commit": "3cdeb765ea7510444e480045f7b7fa27c16ef1f5",
+  "generated_at": "2026-06-07T13:38:58-04:00",
+  "artifact_count": 365,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -355,7 +355,7 @@
       "domain": "PROJECT_INDEX.md",
       "status": "candidate",
       "date": null,
-      "sha256": "144366e7cddc13fddef5a2d6bb3494d83e44ce6d5475a5bb3b91378b16423222",
+      "sha256": "eb2ca931c49918ed7f7dd4e7bf96b336d23f644a834d2e248b37c36854ffdfe7",
       "headings": [
         "Blocks Index",
         "Purpose",
@@ -372,6 +372,7 @@
         "US Law Block",
         "Immigration Sub-Block",
         "Video Production Block",
+        "YouTube Block",
         "Generated Catalog",
         "Final Rule"
       ]
@@ -3143,6 +3144,27 @@
         "Sponsorship",
         "Services / White Label",
         "Revenue Tracking",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/MULTILINGUAL_SCALING.md",
+      "title": "Multilingual Scaling",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "37db4d40131d77ce75a09cb55a9f3ac009b7cb036a054a604afc2de35baedbff",
+      "headings": [
+        "Multilingual Scaling",
+        "Purpose",
+        "Core Rule",
+        "Recommended Flow",
+        "Channel Architecture",
+        "Localization Checklist",
+        "Anti-Spam Rule",
+        "Analytics Matrix",
+        "Owner-Relevant Pattern",
         "Final Rule"
       ]
     },
