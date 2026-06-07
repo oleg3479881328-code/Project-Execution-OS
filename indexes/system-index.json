@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e6bc714b18af93de6174a4256df1ee1a50ece553",
-  "generated_at": "2026-06-07T15:36:09-04:00",
-  "artifact_count": 373,
+  "repository_commit": "7f28c5b3febda541d41e9efeb4555d8438546060",
+  "generated_at": "2026-06-07T15:37:09-04:00",
+  "artifact_count": 374,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7119,6 +7119,23 @@
         "First Build Scope",
         "Explicitly Deferred",
         "Next Practical Step"
+      ]
+    },
+    {
+      "path": "projects/design-picker/README.md",
+      "title": "Design Picker MVP",
+      "type": "project-artifact",
+      "domain": "design-picker",
+      "status": null,
+      "date": null,
+      "sha256": "b945743a7a773b5a5d4ff5cc6ccbeb354ffd7474b2ee1e20905c2dcf791847b5",
+      "headings": [
+        "Design Picker MVP",
+        "Run",
+        "What Works",
+        "What Is Deferred",
+        "Linkwarden Integration Seam",
+        "Security Note"
       ]
     },
     {
