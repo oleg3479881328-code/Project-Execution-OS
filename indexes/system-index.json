@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8eaccf82383aa052dad5c093169014a4cc42ee73",
-  "generated_at": "2026-06-07T12:10:22-04:00",
+  "repository_commit": "460ec467a5c5ae67cde6f6c5e8f27a2c6a282a0d",
+  "generated_at": "2026-06-07T12:12:19-04:00",
   "artifact_count": 320,
   "artifacts": [
     {
@@ -706,16 +706,17 @@
       "domain": "design",
       "status": null,
       "date": null,
-      "sha256": "63104fec408eabdd381d0f5604928188e40025921123861e1d28d87e1e8f7346",
+      "sha256": "66e069add575640668174c4cdcc659e5581325057c26b1d760ff13ca3c38553d",
       "headings": [
         "Design Block",
         "Purpose",
         "Status",
+        "Core Principle",
         "When To Use",
         "When Not To Use",
-        "Core Rule",
+        "Required Design Chain",
         "Required Reading Inside This Block",
-        "Relationship To Codex And Frontend Execution",
+        "Relationship To Frontend Execution",
         "Typical Outputs",
         "Boundary",
         "Final Rule"
