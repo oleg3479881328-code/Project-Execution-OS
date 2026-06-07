@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1373ff4f020317f95e037898d4bf4b870773ad4e",
-  "generated_at": "2026-06-06T20:03:07-04:00",
-  "artifact_count": 293,
+  "repository_commit": "90d4d66a53ed3c913977843d75d16a8914dd45d0",
+  "generated_at": "2026-06-06T20:04:42-04:00",
+  "artifact_count": 294,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2789,6 +2789,18 @@
         "15. Review And Activation",
         "16. Related Nodes",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/LOW_CHATTER_ADOPTION.md",
+      "title": "Low-Chatter Adoption",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "active",
+      "date": null,
+      "sha256": "032ace50b6ae102bf5860815039d9c243af224fdeebc7d05d0083c0fd0891b43",
+      "headings": [
+        "Low-Chatter Adoption"
       ]
     },
     {
