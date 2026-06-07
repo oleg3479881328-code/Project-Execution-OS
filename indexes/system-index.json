@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "96c6cc9f36e6f6b3b9cb9be37cce2fdef49d49fd",
-  "generated_at": "2026-06-07T12:01:55-04:00",
-  "artifact_count": 310,
+  "repository_commit": "6608cba67725fe83f2f69041f6514d6170ab330b",
+  "generated_at": "2026-06-07T12:02:06-04:00",
+  "artifact_count": 311,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -791,6 +791,28 @@
         "screenshot-to-code / v0.diy",
         "AI UX Playground",
         "What Stays Custom",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/DONOR_ANALYSIS.md",
+      "title": "Donor Analysis",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": null,
+      "date": null,
+      "sha256": "954a38cbc1f4f672c116683782d17b74ad105ecde4e241b80a82b8ab160030c3",
+      "headings": [
+        "Donor Analysis",
+        "Purpose",
+        "Core Principle",
+        "Donor Categories",
+        "Landing Pages",
+        "SaaS",
+        "AI Products",
+        "Portfolios",
+        "Marketplaces",
+        "Required Review Questions",
         "Final Rule"
       ]
     },
