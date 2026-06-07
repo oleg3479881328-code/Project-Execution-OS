@@ -73,8 +73,19 @@
       place-items: center;
       overflow: hidden;
       border-bottom: 1px solid #e5e7eb;
+      position: relative;
     }
     .preview img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-badge {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      background: rgba(17, 24, 39, .75);
+      color: white;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 11px;
+    }
     .card-body { padding: 14px; display: grid; gap: 10px; }
     .card-title { margin: 0; font-size: 18px; }
     .url { color: #2563eb; text-decoration: none; font-size: 13px; word-break: break-all; }
@@ -108,7 +119,7 @@
 <body>
   <header>
     <h1>Design Picker MVP</h1>
-    <div class="muted">Каталог дизайн-доноров: добавляй ссылки, выбирай паттерны и экспортируй решение.</div>
+    <div class="muted">Каталог дизайн-доноров: вставь ссылку, получи превью, выбери паттерны и экспортируй решение.</div>
   </header>
 
   <main>
@@ -134,9 +145,10 @@
   <dialog id="editor">
     <form method="dialog" id="editorForm" class="dialog-body">
       <h2 id="editorTitle">Добавить донора</h2>
-      <input id="title" placeholder="Название" required />
+      <input id="title" placeholder="Название (можно оставить пустым — возьмём домен)" />
       <input id="sourceUrl" placeholder="https://example.com" required />
-      <input id="previewUrl" placeholder="URL превью или og:image" />
+      <input id="previewUrl" placeholder="Необязательно: свой URL превью вместо автоматического screenshot" />
+      <div class="small">Если поле превью пустое, приложение автоматически сформирует screenshot URL через внешний preview endpoint.</div>
       <input id="projectType" placeholder="Тип проекта: SaaS, landing, dashboard..." />
       <input id="styleTags" placeholder="Теги стиля через запятую" />
       <input id="sectionTags" placeholder="Теги секций через запятую" />
@@ -160,14 +172,15 @@
 
   <script>
     const PATTERNS = ["hero", "cards", "pricing", "navigation", "motion", "dashboard", "onboarding", "checkout", "custom"];
-    const STORAGE_KEY = "design-picker-mvp-v1";
+    const STORAGE_KEY = "design-picker-mvp-v2";
+    const SCREENSHOT_PROVIDER = "thum.io";
 
     const seed = [
       {
         id: crypto.randomUUID(),
         title: "Linear",
         sourceUrl: "https://linear.app",
-        previewUrl: "https://www.google.com/s2/favicons?domain=linear.app&sz=128",
+        previewUrl: "",
         projectType: "SaaS",
         styleTags: ["minimal", "dark", "premium"],
         sectionTags: ["hero", "product", "navigation"],
@@ -179,7 +192,7 @@
         id: crypto.randomUUID(),
         title: "Stripe",
         sourceUrl: "https://stripe.com",
-        previewUrl: "https://www.google.com/s2/favicons?domain=stripe.com&sz=128",
+        previewUrl: "",
         projectType: "Landing",
         styleTags: ["clean", "technical", "light"],
         sectionTags: ["hero", "pricing", "trust"],
@@ -209,6 +222,33 @@
 
     function splitTags(value) {
       return value.split(",").map(x => x.trim()).filter(Boolean);
+    }
+
+    function normalizeUrl(value) {
+      const trimmed = value.trim();
+      if (!trimmed) return "";
+      return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+    }
+
+    function titleFromUrl(value) {
+      try {
+        return new URL(normalizeUrl(value)).hostname.replace(/^www\./, "");
+      } catch {
+        return value;
+      }
+    }
+
+    function automaticPreviewUrl(sourceUrl) {
+      const normalized = normalizeUrl(sourceUrl);
+      return normalized ? `https://image.thum.io/get/width/1280/crop/720/noanimate/${encodeURIComponent(normalized)}` : "";
+    }
+
+    function effectivePreview(donor) {
+      return donor.previewUrl?.trim() || automaticPreviewUrl(donor.sourceUrl);
+    }
+
+    function previewSource(donor) {
+      return donor.previewUrl?.trim() ? "ручное превью" : `авто: ${SCREENSHOT_PROVIDER}`;
     }
 
     function statusLabel(status) {
@@ -246,7 +286,8 @@
       grid.innerHTML = filtered.map(donor => `
         <article class="card">
           <div class="preview">
-            ${donor.previewUrl ? `<img src="${escapeHtml(donor.previewUrl)}" alt="Превью ${escapeHtml(donor.title)}" onerror="this.remove(); this.parentElement.textContent='Нет превью';">` : "Нет превью"}
+            ${effectivePreview(donor) ? `<img src="${escapeHtml(effectivePreview(donor))}" alt="Превью ${escapeHtml(donor.title)}" onerror="this.remove(); this.parentElement.innerHTML='<span>Не удалось получить превью</span>';">` : "Нет превью"}
+            <span class="preview-badge">${escapeHtml(previewSource(donor))}</span>
           </div>
           <div class="card-body">
             <h3 class="card-title">${escapeHtml(donor.title)}</h3>
@@ -257,15 +298,16 @@
             <div>${escapeHtml(donor.notes || "")}</div>
             <div class="row">
               <button class="secondary" onclick="editDonor('${donor.id}')">Редактировать</button>
-              <button class="ghost" onclick="removeDonor('${donor.id}')">Удалить</button>
+              <button class="ghost" onclick="refreshPreview('${donor.id}')">Обновить превью</button>
             </div>
+            <button class="ghost" onclick="removeDonor('${donor.id}')">Удалить</button>
           </div>
         </article>
       `).join("");
     }
 
     function escapeHtml(value = "") {
-      return value.replace(/[&<>'"]/g, ch => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#039;", '"':"&quot;"}[ch]));
+      return String(value).replace(/[&<>'"]/g, ch => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#039;", '"':"&quot;"}[ch]));
     }
 
     function openEditor(donor = null) {
@@ -289,22 +331,30 @@
       persist();
       render();
     };
+    window.refreshPreview = id => {
+      donors = donors.map(donor => donor.id === id ? { ...donor, previewUrl: "", previewRefreshNonce: Date.now() } : donor);
+      persist();
+      render();
+    };
 
     form.addEventListener("submit", event => {
       const submitter = event.submitter?.value;
       if (submitter !== "save") return;
       event.preventDefault();
+      const sourceUrl = normalizeUrl(document.getElementById("sourceUrl").value);
+      const title = document.getElementById("title").value.trim() || titleFromUrl(sourceUrl);
       const donor = {
         id: editingId || crypto.randomUUID(),
-        title: document.getElementById("title").value.trim(),
-        sourceUrl: document.getElementById("sourceUrl").value.trim(),
+        title,
+        sourceUrl,
         previewUrl: document.getElementById("previewUrl").value.trim(),
         projectType: document.getElementById("projectType").value.trim(),
         styleTags: splitTags(document.getElementById("styleTags").value),
         sectionTags: splitTags(document.getElementById("sectionTags").value),
         decision: document.getElementById("decision").value,
         patterns: getPatternSelection(),
-        notes: document.getElementById("notes").value.trim()
+        notes: document.getElementById("notes").value.trim(),
+        updatedAt: new Date().toISOString()
       };
       donors = editingId ? donors.map(x => x.id === editingId ? donor : x) : [donor, ...donors];
       persist();
@@ -325,7 +375,7 @@
       const primary = donors.filter(x => x.decision === "primary");
       const partial = donors.filter(x => x.decision === "partial");
       const rejected = donors.filter(x => x.decision === "rejected");
-      const section = (title, items) => `## ${title}\n\n${items.length ? items.map(x => `### ${x.title}\n- URL: ${x.sourceUrl}\n- Тип: ${x.projectType || "не указан"}\n- Паттерны: ${(x.patterns || []).join(", ") || "не выбраны"}\n- Заметки: ${x.notes || "нет"}\n`).join("\n") : "Нет записей.\n"}`;
+      const section = (title, items) => `## ${title}\n\n${items.length ? items.map(x => `### ${x.title}\n- URL: ${x.sourceUrl}\n- Превью: ${effectivePreview(x)}\n- Источник превью: ${previewSource(x)}\n- Тип: ${x.projectType || "не указан"}\n- Паттерны: ${(x.patterns || []).join(", ") || "не выбраны"}\n- Заметки: ${x.notes || "нет"}\n`).join("\n") : "Нет записей.\n"}`;
       return `# Design Selection Record\n\n${section("Primary Direction", primary)}\n${section("Borrow These Patterns", partial)}\n${section("Rejected Directions", rejected)}\n`;
     }
 
@@ -333,7 +383,7 @@
     document.getElementById("search").addEventListener("input", render);
     document.getElementById("filterStatus").addEventListener("change", render);
     document.getElementById("exportMdBtn").addEventListener("click", () => download("design-selection.md", toMarkdown(), "text/markdown"));
-    document.getElementById("exportJsonBtn").addEventListener("click", () => download("design-selection.json", JSON.stringify(donors, null, 2), "application/json"));
+    document.getElementById("exportJsonBtn").addEventListener("click", () => download("design-selection.json", JSON.stringify(donors.map(donor => ({ ...donor, effectivePreviewUrl: effectivePreview(donor), previewSource: previewSource(donor) })), null, 2), "application/json"));
 
     renderPatterns();
     render();
