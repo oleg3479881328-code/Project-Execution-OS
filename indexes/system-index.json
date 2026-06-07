@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3a38a1a38a1a169cb1ed471763f59fad92307987",
-  "generated_at": "2026-06-06T20:32:09-04:00",
-  "artifact_count": 295,
+  "repository_commit": "1602faa7e8b57b71b4231e58c7d6eeacfd54cab7",
+  "generated_at": "2026-06-06T20:32:39-04:00",
+  "artifact_count": 296,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -828,6 +828,32 @@
         "Typical Outputs",
         "Boundary",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/logic/REFERENCES.md",
+      "title": "Logic Block References",
+      "type": "domain-block-artifact",
+      "domain": "logic",
+      "status": null,
+      "date": null,
+      "sha256": "21deca7368e4a0a02eb7254b13f872980acd1a31932ef115fdc05605279a127a",
+      "headings": [
+        "Logic Block References",
+        "Purpose",
+        "Stable Internal Terms",
+        "Sequence",
+        "Causation",
+        "Correlation",
+        "Premise",
+        "Conclusion",
+        "Inference",
+        "Hidden Assumption",
+        "Fallacy",
+        "Common Reusable Checks",
+        "Initial Example Anchor",
+        "Source Hierarchy",
+        "Boundary"
       ]
     },
     {
