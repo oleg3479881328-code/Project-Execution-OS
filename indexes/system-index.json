@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "270f9a8fcbd5ac9b3f00e52f034d5aab53da4ddb",
-  "generated_at": "2026-06-07T12:40:45-04:00",
-  "artifact_count": 327,
+  "repository_commit": "589bb98f0e6b9a0f5071b22a734521e85840e077",
+  "generated_at": "2026-06-07T12:41:16-04:00",
+  "artifact_count": 328,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1833,6 +1833,26 @@
         "Required Reading Inside This Block",
         "Typical Outputs",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/solana/IMPLEMENTATION_HANDOFF.md",
+      "title": "Solana Implementation Handoff",
+      "type": "domain-block-artifact",
+      "domain": "solana",
+      "status": null,
+      "date": null,
+      "sha256": "b308b27bfe94b1cca8404ef761d61f34a5f2cc77251ac53a5a9781ce9d1147e1",
+      "headings": [
+        "Solana Implementation Handoff",
+        "Purpose",
+        "Required Handoff Layers",
+        "Wallet Flow",
+        "Transaction Flow",
+        "Custom Program Handoff",
+        "Backend Handoff",
+        "Validation Handoff",
         "Final Rule"
       ]
     },
