@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "99b5b2ec7f5eae44d9af5211dc165489147f3bd4",
-  "generated_at": "2026-06-07T13:33:39-04:00",
-  "artifact_count": 351,
+  "repository_commit": "720a5427aa108c1e5aac544b74f65bb3aa2548aa",
+  "generated_at": "2026-06-07T13:33:55-04:00",
+  "artifact_count": 352,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3021,6 +3021,28 @@
         "Required Reading Inside This Block",
         "Typical Outputs",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/CHANNEL_STRATEGY.md",
+      "title": "YouTube Channel Strategy",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "e93d8edde94c625f7beab67c31a88bb6f57430abceb6a2a74fc2da495633a8f8",
+      "headings": [
+        "YouTube Channel Strategy",
+        "Purpose",
+        "Core Rule",
+        "Channel Definition",
+        "Niche Rule",
+        "Content Pillars",
+        "Format Ladder",
+        "Channel Naming",
+        "Channel Launch Minimum",
+        "Review Questions",
         "Final Rule"
       ]
     },
