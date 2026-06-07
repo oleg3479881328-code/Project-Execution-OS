@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b876ab49fb71245c873a413e172347678d5fb84c",
-  "generated_at": "2026-06-07T11:21:14-04:00",
+  "repository_commit": "b11fe0a7ea3c43d29880938ce7304a2900c55cab",
+  "generated_at": "2026-06-07T11:21:50-04:00",
   "artifact_count": 308,
   "artifacts": [
     {
@@ -355,11 +355,12 @@
       "domain": "PROJECT_INDEX.md",
       "status": "candidate",
       "date": null,
-      "sha256": "0ac8c40cb1c9dc12e66473c8d058fd980f105230262bf2b525cbebd2e912f373",
+      "sha256": "0d7346c58576f5710a3b33f653ba5c6b1ddae71b5cb0c35b9027c842a8d8cb94",
       "headings": [
         "Blocks Index",
         "Purpose",
         "Current Blocks",
+        "Chrome Extension Block",
         "Communication Channel Block",
         "Design Block",
         "Documentation Block",
