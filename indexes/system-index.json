@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2d1eb462df9f7df666261aa7df7980ff50e9fad1",
-  "generated_at": "2026-06-07T11:15:30-04:00",
-  "artifact_count": 301,
+  "repository_commit": "fb78a9005b176a182c7b3c64ddbd11385cbc85e7",
+  "generated_at": "2026-06-07T11:16:51-04:00",
+  "artifact_count": 302,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -383,6 +383,26 @@
       "sha256": "ff3dd8509a6649c6e54126fd5198fb94e98e1aefee8804c50f84e5d586e7eca3",
       "headings": [
         "Blocks"
+      ]
+    },
+    {
+      "path": "blocks/chrome-extension/ARCHITECTURE_PATTERNS.md",
+      "title": "Chrome Extension Architecture Patterns",
+      "type": "domain-block-artifact",
+      "domain": "chrome-extension",
+      "status": null,
+      "date": null,
+      "sha256": "6472b4042d597004f2cb456ea48150a947bf57d044a89539f06192481cd819a8",
+      "headings": [
+        "Chrome Extension Architecture Patterns",
+        "Purpose",
+        "Pattern 1 — Local Utility Extension",
+        "Pattern 2 — Content Script plus Page UI",
+        "Pattern 3 — Extension plus SaaS Backend",
+        "Pattern 4 — AI Extension",
+        "Pattern 5 — Affiliate or Commerce Helper",
+        "Pattern 6 — Internal Operator Extension",
+        "Final Rule"
       ]
     },
     {
