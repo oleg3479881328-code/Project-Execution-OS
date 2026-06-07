@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "04e4b4922459f83be6def630d7d829048468a91e",
-  "generated_at": "2026-06-07T13:10:57-04:00",
-  "artifact_count": 349,
+  "repository_commit": "94d2543dfb98662bcee92754a714a24c5ba9b9c8",
+  "generated_at": "2026-06-07T13:33:23-04:00",
+  "artifact_count": 350,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3000,6 +3000,27 @@
         "Common Processing Decisions",
         "Vertical Export Baseline",
         "Batch Safety",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/BLOCK.md",
+      "title": "YouTube Block",
+      "type": "domain-block-entrypoint",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "7e93443ff7a7fe970f153593715919e09087e38620765ce13d2508bffc14a763",
+      "headings": [
+        "YouTube Block",
+        "Purpose",
+        "Status",
+        "Core Principle",
+        "When To Use",
+        "When Not To Use",
+        "Required Reading Inside This Block",
+        "Typical Outputs",
+        "Boundary",
         "Final Rule"
       ]
     },
