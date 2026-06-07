@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a1aa886ed8495cd3b153df44ac395cd15a0f1649",
-  "generated_at": "2026-06-07T13:05:19-04:00",
-  "artifact_count": 336,
+  "repository_commit": "10576a2cd6dc48418ee0281800a7fe2c04b5a52e",
+  "generated_at": "2026-06-07T13:05:53-04:00",
+  "artifact_count": 337,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2635,6 +2635,27 @@
         "Required Reading Inside This Block",
         "Typical Outputs",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/CONTENT_FACTORY_PATTERNS.md",
+      "title": "Content Factory Patterns",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "fcd4c0cb05384881d44499f366b8654647b95f5359f9d26167e6506d04c561ea",
+      "headings": [
+        "Content Factory Patterns",
+        "Purpose",
+        "Core Rule",
+        "Pattern 1 — One Source To Many Clips",
+        "Pattern 2 — One Master To Many Languages",
+        "Pattern 3 — Topic Batch Factory",
+        "Pattern 4 — Template Video Factory",
+        "Pattern 5 — Human Review Gate",
+        "Pattern 6 — Analytics Loop",
         "Final Rule"
       ]
     },
