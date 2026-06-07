@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7fc32a6e476e51966f4fa487438d136b91dead1d",
-  "generated_at": "2026-06-07T13:07:16-04:00",
-  "artifact_count": 341,
+  "repository_commit": "afba659b92329147461c3f79627af7252efd6c9d",
+  "generated_at": "2026-06-07T13:07:27-04:00",
+  "artifact_count": 342,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2615,6 +2615,27 @@
         "Litigation Monitoring",
         "Related Official Sources",
         "Source-Use Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/AI_VIDEO_STACKS.md",
+      "title": "AI Video Stacks",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "9ea9e15caefc2782f2a6adcf450a19bb63ea427c51554e902562c8a7b785f58d",
+      "headings": [
+        "AI Video Stacks",
+        "Purpose",
+        "Stack 1 — AI Script + TTS + Manual Edit",
+        "Stack 2 — Transcript + AI Clip Suggestions",
+        "Stack 3 — AI Visuals + TTS + Template Render",
+        "Stack 4 — Multilingual AI Localization",
+        "Stack 5 — AI Avatar Video",
+        "Stack 6 — QuizLight Card Generator",
+        "AI Review Rules",
+        "Final Rule"
       ]
     },
     {
