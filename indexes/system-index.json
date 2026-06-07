@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "0494016c5822d4697c09d10db7b51a200bf1bc6c",
-  "generated_at": "2026-06-07T13:07:02-04:00",
-  "artifact_count": 340,
+  "repository_commit": "7fc32a6e476e51966f4fa487438d136b91dead1d",
+  "generated_at": "2026-06-07T13:07:16-04:00",
+  "artifact_count": 341,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2656,6 +2656,25 @@
         "Required Reading Inside This Block",
         "Typical Outputs",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/CAPCUT.md",
+      "title": "CapCut Desktop",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "413fa6b35bdafffdf2bd84521f1f08e302a94816f567ed3a9fe8b3ef85360bc6",
+      "headings": [
+        "CapCut Desktop",
+        "Purpose",
+        "Core Rule",
+        "Best Uses",
+        "Good Workflow",
+        "Preset Areas",
+        "What To Automate Later",
         "Final Rule"
       ]
     },
