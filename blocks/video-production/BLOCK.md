@@ -6,6 +6,8 @@ Provide a reusable Project Execution OS domain layer for short-form and long-for
 
 This block is for recurring video-production systems across projects, especially automated Reels, Shorts, TikTok, educational video, and media-factory workflows.
 
+For YouTube-specific channel strategy, YPP, reused-content policy, playlists, analytics, uploads, or YouTube Data API workflows, use `blocks/youtube/BLOCK.md`.
+
 ## Status
 
 `candidate`
@@ -41,6 +43,7 @@ Use this block for:
 
 Do not use this block for:
 
+- YouTube-specific channel strategy, YPP readiness, YouTube copyright/reused-content review, playlists, YouTube analytics, uploads, or YouTube Data API workflows; use `blocks/youtube/BLOCK.md`;
 - piracy or copyright evasion;
 - downloading or republishing content without rights or permission;
 - bypassing platform controls;
@@ -70,6 +73,7 @@ Smallest useful path:
 15. `IMPLEMENTATION_HANDOFF.md` before executor handoff
 16. `VALIDATION_BACKLOG.md` before treating research as verified
 17. `REFERENCES.md` when freshness or authority matters
+18. `blocks/youtube/BLOCK.md` when YouTube-specific platform decisions matter
 
 Do not load every file by default. Load only the files relevant to the active workflow.
 
