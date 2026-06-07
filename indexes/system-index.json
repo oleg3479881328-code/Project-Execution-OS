@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6003ed1de88b195afa9ff33294e229a2fee6d3a2",
-  "generated_at": "2026-06-07T15:26:32-04:00",
+  "repository_commit": "48f6cfb462a7b1b4347772fef0afe104089f0e26",
+  "generated_at": "2026-06-07T15:27:03-04:00",
   "artifact_count": 370,
   "artifacts": [
     {
@@ -815,7 +815,7 @@
       "domain": "design",
       "status": null,
       "date": null,
-      "sha256": "9cde536b9e94ba66dfa60761f2a5b271d713c8835a9025798237fcd150142e81",
+      "sha256": "2eb65d4d373805f8c908c4651c980f087397906bdf7f4d5a293dfefdd5e64dd1",
       "headings": [
         "Design Picker",
         "Purpose",
@@ -824,7 +824,7 @@
         "Catalog Levels",
         "Level 1 — Curated Reference Library",
         "Level 2 — Design Board",
-        "Level 3 — Design Picker UI",
+        "Level 3 — Design Picker Web App",
         "Donor Card Schema",
         "Owner Selection Format",
         "Design Selection Record",
