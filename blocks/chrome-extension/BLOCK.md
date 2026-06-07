@@ -56,10 +56,11 @@ Smallest useful path:
 3. `TOOL_SELECTION_MATRIX.md`
 4. `ARCHITECTURE_PATTERNS.md`
 5. `SECURITY_AND_COMPLIANCE.md`
-6. `MONETIZATION_AND_PAYMENTS.md` when monetization matters
-7. `PUBLISHING.md` before Chrome Web Store work
-8. `VALIDATION_BACKLOG.md` before treating research as verified
-9. `REFERENCES.md` when source freshness or authority matters
+6. `READY_SAAS_STACKS.md` when backend, auth, AI, affiliate, payments, or SaaS architecture matter
+7. `MONETIZATION_AND_PAYMENTS.md` when monetization matters
+8. `PUBLISHING.md` before Chrome Web Store work
+9. `VALIDATION_BACKLOG.md` before treating research as verified
+10. `REFERENCES.md` when source freshness or authority matters
 
 Do not load every file by default. Load the smallest path that fits the task.
 
@@ -68,6 +69,7 @@ Do not load every file by default. Load the smallest path that fits the task.
 - extension concept brief;
 - ready-solution comparison;
 - tool-selection decision;
+- ready SaaS stack recommendation;
 - architecture outline;
 - MVP scope;
 - security/privacy checklist;
