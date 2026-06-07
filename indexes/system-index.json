@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1cf7a3f7b9b379fa113e6e5e74b0e66f811f0759",
-  "generated_at": "2026-06-07T13:09:00-04:00",
-  "artifact_count": 346,
+  "repository_commit": "c68850a0c2776f07211b12dc82976cbe9221aa56",
+  "generated_at": "2026-06-07T13:09:34-04:00",
+  "artifact_count": 347,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2832,6 +2832,26 @@
         "AI Video / Visual Generation",
         "Workflow / Automation",
         "Donor Evaluation Checklist",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/REFERENCES.md",
+      "title": "Video Production References",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "745ceece291aa7c02509791fe912b24c34eedb900be6984d3dfadfe8939bef40",
+      "headings": [
+        "Video Production References",
+        "Purpose",
+        "Source Hierarchy",
+        "Core Tools",
+        "Transcription / Speech",
+        "Automation",
+        "Platform Documentation",
+        "Freshness Rule",
         "Final Rule"
       ]
     },
