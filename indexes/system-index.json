@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a5fb58f4591579d7a0bec9ec0b6312c1cf3f1c25",
-  "generated_at": "2026-06-07T15:31:46-04:00",
-  "artifact_count": 372,
+  "repository_commit": "cf7a3bde5920fa0edd2e31d791c6acf64e869431",
+  "generated_at": "2026-06-07T15:35:15-04:00",
+  "artifact_count": 373,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7099,6 +7099,25 @@
         "Confirmed Goal",
         "Existing Solution First",
         "Storage Layers",
+        "Next Practical Step"
+      ]
+    },
+    {
+      "path": "projects/design-picker/PROJECT_STATE.md",
+      "title": "Design Picker — Project State",
+      "type": "project-artifact",
+      "domain": "design-picker",
+      "status": null,
+      "date": "2026-06-07",
+      "sha256": "9c14bfeca54d1278b51ecdcd76cbbef0e2886683b703a48918a8653150e04f96",
+      "headings": [
+        "Design Picker — Project State",
+        "Current Phase",
+        "Confirmed Direction",
+        "Confirmed Linkwarden Findings",
+        "MVP Decision",
+        "First Build Scope",
+        "Explicitly Deferred",
         "Next Practical Step"
       ]
     },
