@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "71099f785395d7e934ebc9600f463114c04edc53",
-  "generated_at": "2026-06-07T15:41:19-04:00",
-  "artifact_count": 374,
+  "repository_commit": "2aab7280074c04e7ab8840719e3a9792efaa795a",
+  "generated_at": "2026-06-07T17:44:16-04:00",
+  "artifact_count": 375,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -149,7 +149,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "83c815c0d47c7c68275710951460fc8377e6fbf728aa9195eb9d33198bcb2335",
+      "sha256": "15b3c46a9293fd43abd7fb5b4db2e659ae000c448c768183e78b8b72f762122b",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
@@ -7088,7 +7088,7 @@
       "domain": "design-picker",
       "status": null,
       "date": null,
-      "sha256": "b643593aee4b3cc9f742a615168be89cabc8ebc366429bd15ca4b1d2a9c51921",
+      "sha256": "266b9f7c5dd5e36cab07b405f068566b7fe030b8825a9a17b1f080a90f30e80b",
       "headings": [
         "Design Picker",
         "Status",
@@ -7107,9 +7107,9 @@
       "title": "Design Picker — Project State",
       "type": "project-artifact",
       "domain": "design-picker",
-      "status": null,
+      "status": "in-progress",
       "date": "2026-06-07",
-      "sha256": "9c14bfeca54d1278b51ecdcd76cbbef0e2886683b703a48918a8653150e04f96",
+      "sha256": "ee34ddea21df01d7011e4b5cba88f17ede859ba3a3a8f723098f7d63bfe69fa9",
       "headings": [
         "Design Picker — Project State",
         "Current Phase",
@@ -7118,6 +7118,9 @@
         "MVP Decision",
         "First Build Scope",
         "Explicitly Deferred",
+        "Latest Result",
+        "Validation Evidence",
+        "Active Files",
         "Next Practical Step"
       ]
     },
@@ -7128,15 +7131,20 @@
       "domain": "design-picker",
       "status": null,
       "date": null,
-      "sha256": "ecc93f143faf14e97a9eb690f783462d95e546db2ba1934a792c646bce8bf301",
+      "sha256": "1858f893c214254b21875c6c1ebda2912ca378255bdb13236f7c3b27c7a0ec7a",
       "headings": [
         "Design Picker MVP",
-        "Run",
-        "What Works",
-        "Current Preview Adapter",
-        "What Is Deferred",
-        "Linkwarden Integration Seam",
-        "Security Note"
+        "Назначение",
+        "Запуск на Windows",
+        "Самый быстрый путь",
+        "Одна готовая команда",
+        "Как пользоваться",
+        "Что уже умеет MVP",
+        "Файлы",
+        "Preview Provider Adapter",
+        "Что заимствовано концептуально",
+        "Что пока отложено",
+        "Замечание по безопасности"
       ]
     },
     {
@@ -7172,6 +7180,25 @@
         "Confirmed",
         "Assumptions To Validate",
         "Next Validation Step"
+      ]
+    },
+    {
+      "path": "projects/design-picker/logs/latest.md",
+      "title": "Latest Log",
+      "type": "project-artifact",
+      "domain": "design-picker",
+      "status": null,
+      "date": null,
+      "sha256": "fee5bfa7139c6fc29fdf7717286e83e2c27350350b2632ae01ad611eb5eccc75",
+      "headings": [
+        "Latest Log",
+        "Date",
+        "Executor",
+        "Action",
+        "Result",
+        "Verification",
+        "Issues",
+        "Next Action"
       ]
     },
     {
