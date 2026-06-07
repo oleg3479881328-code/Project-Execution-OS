@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "10576a2cd6dc48418ee0281800a7fe2c04b5a52e",
-  "generated_at": "2026-06-07T13:05:53-04:00",
-  "artifact_count": 337,
+  "repository_commit": "26404eab1e09660d5a95291646fb48af2b372147",
+  "generated_at": "2026-06-07T13:06:19-04:00",
+  "artifact_count": 338,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2708,6 +2708,32 @@
         "AI Video / Visual Generation",
         "Workflow / Automation",
         "Donor Evaluation Checklist",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/SHORT_FORM_PATTERNS.md",
+      "title": "Short-Form Patterns",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "a902d38fc3a26ab504fb5666a9efc5d589d4605559d7162b6c216c8c1cdef267",
+      "headings": [
+        "Short-Form Patterns",
+        "Purpose",
+        "Core Rule",
+        "Hook Types",
+        "Result First",
+        "Question Hook",
+        "Mistake Hook",
+        "Before / After",
+        "List Hook",
+        "Length Guidance",
+        "Editing Rhythm",
+        "Caption Pattern",
+        "CTA Pattern",
+        "Platform Adaptation",
         "Final Rule"
       ]
     },
