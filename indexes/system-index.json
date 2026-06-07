@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "afba659b92329147461c3f79627af7252efd6c9d",
-  "generated_at": "2026-06-07T13:07:27-04:00",
-  "artifact_count": 342,
+  "repository_commit": "626ff86c37129f3a05ef8aa2383559b11a3e33ed",
+  "generated_at": "2026-06-07T13:07:37-04:00",
+  "artifact_count": 343,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2836,6 +2836,24 @@
         "Pipeline 5 — QuizLight Video Learning Pipeline",
         "Pipeline 6 — AI Generated Visual Short",
         "Pipeline 7 — Manual Validation Pipeline",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/VOICE_AND_AVATAR.md",
+      "title": "Voice and Avatar",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "aa971aa0a48573da764f4d58203eed54fa65f065ef34764d6f4a657d0f1c66f4",
+      "headings": [
+        "Voice and Avatar",
+        "Purpose",
+        "Voice Options",
+        "Voice Review",
+        "Avatar Options",
+        "Anonymous Channel Pattern",
         "Final Rule"
       ]
     },
