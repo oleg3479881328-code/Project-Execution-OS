@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "bb629950837063c6ed1e212c16fe29be918b358d",
-  "generated_at": "2026-06-07T11:19:35-04:00",
-  "artifact_count": 307,
+  "repository_commit": "5123931e8654c9c15cf162cc529239a224a053f7",
+  "generated_at": "2026-06-07T11:20:22-04:00",
+  "artifact_count": 308,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -517,6 +517,29 @@
         "Payments and Monetization",
         "Freshness Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/chrome-extension/RESEARCH_REPORT_2026-06-07.md",
+      "title": "Chrome Extension Research Report — 2026-06-07",
+      "type": "domain-block-artifact",
+      "domain": "chrome-extension",
+      "status": null,
+      "date": null,
+      "sha256": "681e008f4d02351036f247cfe84a7da0afff9b28308282aad90e5f8a805f06e2",
+      "headings": [
+        "Chrome Extension Research Report — 2026-06-07",
+        "Purpose",
+        "Artifact Decision",
+        "Domain Boundary",
+        "Main Research Findings",
+        "Recommended Default",
+        "Ready Solution Shortlist",
+        "Monetization Shortlist",
+        "Payment Shortlist",
+        "Risks",
+        "Follow-Up Needed",
+        "Final Recommendation"
       ]
     },
     {
