@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "26404eab1e09660d5a95291646fb48af2b372147",
-  "generated_at": "2026-06-07T13:06:19-04:00",
-  "artifact_count": 338,
+  "repository_commit": "6594385aad233e6ba7a78f110940e6fe902034a6",
+  "generated_at": "2026-06-07T13:06:45-04:00",
+  "artifact_count": 339,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2615,6 +2615,27 @@
         "Litigation Monitoring",
         "Related Official Sources",
         "Source-Use Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/AUTOMATION_PATTERNS.md",
+      "title": "Automation Patterns",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "afc8df4e9a022f1de0360e42a3100b3cc934b331c0f25e6838f28a182c61a4fc",
+      "headings": [
+        "Automation Patterns",
+        "Purpose",
+        "Core Rule",
+        "Pattern 1 — Local Script Pipeline",
+        "Pattern 2 — Queue-Based Worker Pipeline",
+        "Pattern 3 — AI-Assisted Clip Selection",
+        "Pattern 4 — Multilingual Render Matrix",
+        "Pattern 5 — Publish Package Builder",
+        "Pattern 6 — Analytics Feedback Loop",
+        "Final Rule"
       ]
     },
     {
