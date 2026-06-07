@@ -178,6 +178,20 @@ Current status:
 
 `candidate`
 
+### YouTube Block
+
+Path:
+
+`blocks/youtube/`
+
+Purpose:
+
+Provide a reusable YouTube platform layer for channel strategy, Shorts and long-form publishing, YouTube Partner Program readiness, monetization, copyright/reused-content review, analytics, playlists, uploads, API automation, and channel operations.
+
+Current status:
+
+`candidate`
+
 ## Generated Catalog
 
 For the automatically refreshed machine-derived artifact list, use:
