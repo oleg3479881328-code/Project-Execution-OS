@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6594385aad233e6ba7a78f110940e6fe902034a6",
-  "generated_at": "2026-06-07T13:06:45-04:00",
-  "artifact_count": 339,
+  "repository_commit": "0494016c5822d4697c09d10db7b51a200bf1bc6c",
+  "generated_at": "2026-06-07T13:07:02-04:00",
+  "artifact_count": 340,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2796,6 +2796,27 @@
         "Pipeline 5 — QuizLight Video Learning Pipeline",
         "Pipeline 6 — AI Generated Visual Short",
         "Pipeline 7 — Manual Validation Pipeline",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/YT_DLP_AND_FFMPEG.md",
+      "title": "yt-dlp and ffmpeg",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "c0456371e3185b572e468167048486cf2e9ef012f13c4e3dbcc7faf96c23d820",
+      "headings": [
+        "yt-dlp and ffmpeg",
+        "Purpose",
+        "Core Rule",
+        "Owner Context",
+        "yt-dlp Uses",
+        "ffmpeg Uses",
+        "Common Processing Decisions",
+        "Vertical Export Baseline",
+        "Batch Safety",
         "Final Rule"
       ]
     },
