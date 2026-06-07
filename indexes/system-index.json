@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "462aa143c611c7dec50a43c9f916bcf621695761",
-  "generated_at": "2026-06-07T13:04:28-04:00",
-  "artifact_count": 333,
+  "repository_commit": "2aab1c7599c0a4dc4b9dcc3d0b8af09ef85cdfb9",
+  "generated_at": "2026-06-07T13:04:42-04:00",
+  "artifact_count": 334,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2657,6 +2657,36 @@
         "Surface 6 — AI Generated Video Factory",
         "Surface 7 — Creator Assistant / Internal Editing Tool",
         "Surface 8 — Video SaaS Product",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/READY_SOLUTIONS.md",
+      "title": "Video Production Ready Solutions",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "abecc3ade0a4b18b066f61553a0a381ae23c948c2d2901be227d3de546995f56",
+      "headings": [
+        "Video Production Ready Solutions",
+        "Purpose",
+        "Core Rule",
+        "Source Import / Download",
+        "yt-dlp",
+        "Direct Upload / Local Import",
+        "Video Processing",
+        "ffmpeg",
+        "CapCut Desktop",
+        "Remotion",
+        "MoviePy",
+        "Transcription / Captions",
+        "Whisper / Faster-Whisper",
+        "Platform Captions",
+        "AI Voice",
+        "AI Video / Visual Generation",
+        "Workflow / Automation",
+        "Donor Evaluation Checklist",
         "Final Rule"
       ]
     },
