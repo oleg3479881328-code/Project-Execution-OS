@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "992878ec48c5633a30a257db429829c7d735ae16",
-  "generated_at": "2026-06-07T13:41:09-04:00",
+  "repository_commit": "e13facccc35a600162ccb1d0c738aaddf38e8254",
+  "generated_at": "2026-06-07T13:41:35-04:00",
   "artifact_count": 366,
   "artifacts": [
     {
@@ -3345,16 +3345,18 @@
       "domain": "youtube",
       "status": null,
       "date": null,
-      "sha256": "5b242083592eac8349c9f89363a3745d2c5ebe04d8ef881a74d8e50c7031b4dc",
+      "sha256": "1f3528e4ca2f7138b5a53edb9f738ff9bd0075fc25a4155d4e0e37a0a78e29e0",
       "headings": [
         "YouTube Validation Backlog",
         "Purpose",
         "Status",
         "Channel Strategy Validation",
         "Originality / Copyright Validation",
+        "Publishing / Metadata Validation",
         "Monetization Validation",
         "Analytics Validation",
         "API / Automation Validation",
+        "Multilingual Scaling Validation",
         "Related Video Production Validation",
         "Known Unvalidated Assumptions",
         "Final Rule"
