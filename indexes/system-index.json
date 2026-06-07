@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "757d3f7968298550a43ec578fe25756fdb2c4ee0",
-  "generated_at": "2026-06-07T13:36:43-04:00",
-  "artifact_count": 361,
+  "repository_commit": "1ba4c4260ce492653996e4b7e9a2c7ad89f1f292",
+  "generated_at": "2026-06-07T13:36:56-04:00",
+  "artifact_count": 362,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3245,6 +3245,28 @@
         "Long-Form Role",
         "Hybrid Pattern",
         "Testing Pattern",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/youtube/VALIDATION_BACKLOG.md",
+      "title": "YouTube Validation Backlog",
+      "type": "domain-block-artifact",
+      "domain": "youtube",
+      "status": null,
+      "date": null,
+      "sha256": "5b242083592eac8349c9f89363a3745d2c5ebe04d8ef881a74d8e50c7031b4dc",
+      "headings": [
+        "YouTube Validation Backlog",
+        "Purpose",
+        "Status",
+        "Channel Strategy Validation",
+        "Originality / Copyright Validation",
+        "Monetization Validation",
+        "Analytics Validation",
+        "API / Automation Validation",
+        "Related Video Production Validation",
+        "Known Unvalidated Assumptions",
         "Final Rule"
       ]
     },
