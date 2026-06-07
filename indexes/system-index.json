@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "995fb74f1c3d584d487ef00d5ffbb1b6684d0dd4",
-  "generated_at": "2026-06-06T19:56:12-04:00",
-  "artifact_count": 292,
+  "repository_commit": "1373ff4f020317f95e037898d4bf4b870773ad4e",
+  "generated_at": "2026-06-06T20:03:07-04:00",
+  "artifact_count": 293,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1847,6 +1847,28 @@
         "Memory And Context Rule",
         "Project Instantiation Rule",
         "Sources"
+      ]
+    },
+    {
+      "path": "docs/AGENT_LOW_CHATTER_TELEMETRY_STANDARD.md",
+      "title": "Agent Low-Chatter Telemetry Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "active",
+      "date": "2026-06-06",
+      "sha256": "cf393cb01304668a590f1329ac116957d8f6687c75353f1680a0daad9cddd418",
+      "headings": [
+        "Agent Low-Chatter Telemetry Standard",
+        "Purpose",
+        "Core Rule",
+        "Allowed Outbound Status Types",
+        "Default Message Contents",
+        "Prohibited By Default",
+        "When More Detail Is Allowed",
+        "Tool Output Rule",
+        "Frequency Rule",
+        "Owner Visibility Example",
+        "Final Rule"
       ]
     },
     {
