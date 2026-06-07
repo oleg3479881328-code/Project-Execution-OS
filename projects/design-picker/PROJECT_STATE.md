@@ -1,3 +1,10 @@
+---
+status: in-progress
+project_mode: compact
+last_updated: 2026-06-07
+next_action: Wait for PR `#26` review and merge, then run the Design Picker against a larger real donor set.
+---
+
 # Design Picker — Project State
 
 Date: 2026-06-07
