@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "38a2536cfcb61b15d97bf6792092102f57220f99",
-  "generated_at": "2026-06-07T13:42:25-04:00",
-  "artifact_count": 367,
+  "repository_commit": "d874cd73f2ec24c1cea7cfc2ef4df0017c9710dd",
+  "generated_at": "2026-06-07T15:21:39-04:00",
+  "artifact_count": 368,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -767,6 +767,38 @@
         "Frontend-Aware Handoff Rule",
         "Review Before Completion",
         "Anti-Patterns",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/DESIGN_PICKER.md",
+      "title": "Design Picker",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": null,
+      "date": null,
+      "sha256": "9cde536b9e94ba66dfa60761f2a5b271d713c8835a9025798237fcd150142e81",
+      "headings": [
+        "Design Picker",
+        "Purpose",
+        "Core Principle",
+        "Required Flow",
+        "Catalog Levels",
+        "Level 1 — Curated Reference Library",
+        "Level 2 — Design Board",
+        "Level 3 — Design Picker UI",
+        "Donor Card Schema",
+        "Owner Selection Format",
+        "Design Selection Record",
+        "Primary Direction",
+        "Borrow These Patterns",
+        "Avoid",
+        "Style Notes In Owner's Words",
+        "Open Design Decisions",
+        "Pattern Extraction Rules",
+        "Deliverable After Selection",
+        "Recommended Initial Implementation",
+        "Boundary",
         "Final Rule"
       ]
     },
