@@ -10,6 +10,20 @@ Blocks live below the central operating system:
 
 ## Current Blocks
 
+### Chrome Extension Block
+
+Path:
+
+`blocks/chrome-extension/`
+
+Purpose:
+
+Provide a reusable browser-extension product layer for Chrome Extension architecture, Manifest V3, ready frameworks, permissions, security/privacy, publishing, monetization, and payments.
+
+Current status:
+
+`candidate`
+
 ### Communication Channel Block
 
 Path:
