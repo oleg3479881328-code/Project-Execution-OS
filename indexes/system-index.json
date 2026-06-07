@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "de7e5ed3d53c1b3fd00527531d1addf3cb223840",
-  "generated_at": "2026-06-07T13:40:04-04:00",
+  "repository_commit": "ea243abb198f0f9f25d95c8f2f03fb569b66aea1",
+  "generated_at": "2026-06-07T13:40:16-04:00",
   "artifact_count": 366,
   "artifacts": [
     {
@@ -3284,12 +3284,16 @@
       "domain": "youtube",
       "status": null,
       "date": null,
-      "sha256": "58861c05d8626d536fc57b02fc73502fc338c2f73a6fd47f232c85d5ab9394af",
+      "sha256": "4eb9015d871638310b28a62196b9fbbfea25793171052d1a8eceb701f8615a4b",
       "headings": [
         "YouTube References",
         "Purpose",
-        "Official YouTube Sources",
-        "Official API Sources",
+        "Official Channel / Account Sources",
+        "Official Shorts Sources",
+        "Official Monetization / Policy Sources",
+        "Official Publishing / API Sources",
+        "Official Analytics Sources",
+        "Creator Resources",
         "Related Internal Block",
         "Freshness Rule",
         "Final Rule"
