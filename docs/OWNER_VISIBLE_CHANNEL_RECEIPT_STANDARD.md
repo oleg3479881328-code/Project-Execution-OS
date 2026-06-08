@@ -1,6 +1,6 @@
 # Owner-Visible Channel Receipt Standard
 
-Updated: 2026-06-06
+Updated: 2026-06-08
 Status: `active`
 
 ## Purpose
@@ -37,8 +37,33 @@ CHANNEL:
 LINK:
 CURRENT STATE:
 WAITING FOR:
+OWNER ACTION REQUIRED:
 NEXT ACTION:
 ```
+
+## Owner Action Rule
+
+`OWNER ACTION REQUIRED` is mandatory.
+
+Use exactly one of these shapes:
+
+```text
+OWNER ACTION REQUIRED: none
+```
+
+or:
+
+```text
+OWNER ACTION REQUIRED: send `02` to the executor now
+```
+
+or another equally explicit single action.
+
+Do not tell the owner that nothing is required when a manual trigger, relay, click, approval, or UI action is still necessary.
+
+If the workflow cannot continue until the owner sends `02`, say that directly.
+
+If the owner must click Merge, approve access, paste a token, open a link, or relay a one-line trigger, state that exact action.
 
 ## Link Rule
 
@@ -62,14 +87,15 @@ Use one of:
 ## Example
 
 ```text
-SENT: clarification request
-MESSAGE TYPE: question
+SENT: review correction request
+MESSAGE TYPE: review instruction
 TO: Codex — Executor Agent
-CHANNEL: GitHub issue #21
-LINK: https://github.com/<owner>/<repo>/issues/21#issuecomment-<id>
-CURRENT STATE: sent_blocked_waiting_for_answer
-WAITING FOR: Codex clarification response
-NEXT ACTION: read reply through 02 and continue inside approved scope
+CHANNEL: GitHub pull request #30
+LINK: https://github.com/<owner>/<repo>/pull/30
+CURRENT STATE: sent_execution_continues
+WAITING FOR: Codex correction commit and validation report
+OWNER ACTION REQUIRED: send `02` to the executor now
+NEXT ACTION: Codex reads PR #30 and continues inside approved scope
 ```
 
 ## Owner Visibility Rule
@@ -82,6 +108,8 @@ Do not omit the link.
 
 Do not make the owner inspect the external channel to discover whether a message was actually posted.
 
+Do not hide a required owner trigger behind wording such as `nothing to do` or `wait for the executor`.
+
 ## Final Rule
 
-Every durable inter-agent message must produce an owner-visible receipt with a direct link and a clear workflow state.
+Every durable inter-agent message must produce an owner-visible receipt with a direct link, a clear workflow state, and an explicit statement of whether the owner must do anything next.
