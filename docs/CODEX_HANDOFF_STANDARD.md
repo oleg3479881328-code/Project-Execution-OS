@@ -43,6 +43,20 @@ Default behavior:
 
 The purpose is to reduce chat clutter while preserving complete execution context for the executor.
 
+## Mandatory Execution Mode
+
+Every Codex or executor handoff must include an `Execution Mode` section.
+
+Default behavior:
+
+- begin implementation immediately;
+- do not pause for optional clarification questions before starting work;
+- resolve minor, reversible ambiguity with the smallest reasonable implementation and record the assumption in the execution report;
+- ask a question only when a real blocker prevents safe execution, such as missing access, missing required credentials, conflicting repository state, or an irreversible high-risk choice;
+- do not pause for optional preferences, naming choices, or reversible low-risk decisions.
+
+Use an interactive planning session instead only when the owner explicitly requests planning rather than execution.
+
 ## Full Packet
 
 Use this for meaningful software execution work:
@@ -60,6 +74,11 @@ Files Allowed To Change:
 Forbidden Changes:
 Existing Solution Search Required:
 Implementation Instructions:
+Execution Mode:
+- Begin implementation immediately.
+- Do not pause for optional clarification questions before starting work.
+- Resolve minor, reversible ambiguity with the smallest reasonable implementation and record assumptions.
+- Ask only if a real blocker prevents safe execution.
 Acceptance Criteria:
 Validation Commands / Checks:
 Rollback Notes:
@@ -79,6 +98,11 @@ Objective:
 Files Allowed To Change:
 Forbidden Changes:
 Existing Solution Search Required:
+Execution Mode:
+- Begin implementation immediately.
+- Do not pause for optional clarification questions before starting work.
+- Resolve minor, reversible ambiguity with the smallest reasonable implementation and record assumptions.
+- Ask only if a real blocker prevents safe execution.
 Acceptance Criteria:
 Validation:
 Return:
