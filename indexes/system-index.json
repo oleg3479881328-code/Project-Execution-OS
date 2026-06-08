@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "33728af383794c1e25853768c5a02850f5a61ee1",
-  "generated_at": "2026-06-08T15:04:48-04:00",
-  "artifact_count": 378,
+  "repository_commit": "bf2a7c19fcd735386df7d60d4e51ecb5e3a94482",
+  "generated_at": "2026-06-08T17:31:17-04:00",
+  "artifact_count": 379,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -37,18 +37,15 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "762752ebf8bf66fef973566bb16530d84fb0ebfba3c9f449f5724a97699f67aa",
+      "sha256": "a70b66e2cedc58b58b1695eabb3b643a5e9bf192a243dc479b4962c1dc3d4ef3",
       "headings": [
         "AI Coordination State",
         "Project",
-        "Purpose",
         "Active Channel",
-        "Previous Channels",
+        "Owner Shortcut",
         "Current Task",
-        "Current Repository State",
-        "Open Review Items",
-        "Next Step",
-        "Reading Rule"
+        "Current State",
+        "Next Step"
       ]
     },
     {
@@ -4048,12 +4045,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "334d4a8c12dad42c84eb97240f15f87a4b840956e8b264dbc7b25c03b00854f2",
+      "sha256": "eabcc83f702896bca7b920ed27686ed535b4a05a88bf139dfe1032a0924ac755",
       "headings": [
         "Codex Handoff Entrypoint",
         "Purpose",
         "Required Reading",
         "Short Command Safety Rule",
+        "Bare GitHub Channel Shortcut",
         "Mandatory Outcome",
         "Owner-Facing Rule"
       ]
@@ -6295,6 +6293,18 @@
         "Decision 2 - Entrypoint is the front door, not the full memory",
         "Next Action",
         "2026-06-01 - PROJECT.md bootstrap migration"
+      ]
+    },
+    {
+      "path": "logs/coordination/2026-06-08-pr30-merged.md",
+      "title": "PR #30 Merge Completion",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": "2026-06-08",
+      "sha256": "e59b85c2607f3062f9510e3e10139c149fb7596d0bda30ad0175e01bf9ead722",
+      "headings": [
+        "PR #30 Merge Completion"
       ]
     },
     {
