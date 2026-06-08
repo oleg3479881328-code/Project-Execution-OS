@@ -1,0 +1,14 @@
+2026-06-08 09:14:11 INFO build start pipeline=semantic-index
+2026-06-08 09:14:14 ERROR sqlite3.OperationalError database is locked file=.local/semantic-index/semantic-index.sqlite3
+2026-06-08 09:14:14 INFO retrying in 2 seconds
+2026-06-08 09:14:16 ERROR sqlite3.OperationalError database is locked file=.local/semantic-index/semantic-index.sqlite3
+2026-06-08 09:14:16 INFO retrying in 2 seconds
+2026-06-08 09:14:18 WARNING write skipped for indexes/semantic-documents.jsonl because previous lock still active
+2026-06-08 09:14:19 ERROR sqlite3.OperationalError database is locked file=.local/semantic-index/semantic-index.sqlite3
+2026-06-08 09:14:20 INFO suspected caller scripts/build_semantic_store.py
+2026-06-08 09:14:22 ERROR sqlite3.OperationalError database is locked file=.local/semantic-index/semantic-index.sqlite3
+2026-06-08 09:14:24 ERROR sqlite3.OperationalError database is locked file=.local/semantic-index/semantic-index.sqlite3
+2026-06-08 09:14:26 WARNING downstream validation skipped because the store was never committed
+2026-06-08 09:14:29 ERROR traceback most recent call last in scripts/build_semantic_store.py line 94
+2026-06-08 09:14:29 ERROR sqlite3.OperationalError database is locked file=.local/semantic-index/semantic-index.sqlite3
+2026-06-08 09:14:31 INFO build aborted after 5 retries

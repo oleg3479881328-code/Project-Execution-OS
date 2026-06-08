@@ -163,6 +163,20 @@ Only reviewed and relevant knowledge should be loaded as active reusable guidanc
 
 ## API And Cache-Aware Extension
 
+Use the active gate:
+
+- `knowledge-library/execution-standards/api-model-runtime-cache-gate.md`
+
+An optional local preprocessing stage may be inserted before a cloud API call when all of the following stay true:
+
+- the task already uses a bounded smallest-sufficient evidence package;
+- the local stage is explicitly limited to compression, triage, extraction, or routing support;
+- source-path and line-range traceability are preserved where practical;
+- cloud execution still works when the local stage is disabled or unavailable.
+
+The local stage must not be used as an excuse to send an unbounded repository dump into a cheap model first.
+It compresses an already bounded package. It does not replace the core context-selection rule.
+
 When an API-based orchestrator is later used, the context package should be assembled deterministically where practical:
 
 ```text
@@ -178,7 +192,11 @@ stable system instruction
 
 For prefix-caching providers, this ordering can increase reuse of stable leading content. It must not be treated as permanent memory or guaranteed cache reuse.
 
-An API implementation should, where available, log:
+This extension remains model-neutral. It applies to API-based AI model providers that expose comparable runtime usage or cache behavior, not only to a single vendor.
+
+When runtime usage or cache fields are available from the provider, an API implementation must log them.
+
+An API implementation must, where available, log:
 
 - model and provider;
 - system/context version or commit reference;
