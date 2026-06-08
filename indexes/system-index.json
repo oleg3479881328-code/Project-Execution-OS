@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "bf2a7c19fcd735386df7d60d4e51ecb5e3a94482",
-  "generated_at": "2026-06-08T17:31:17-04:00",
+  "repository_commit": "449c442602b0e3247c7ba46c85c3707a9f90963f",
+  "generated_at": "2026-06-08T19:22:41-04:00",
   "artifact_count": 379,
   "artifacts": [
     {
@@ -37,12 +37,12 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "a70b66e2cedc58b58b1695eabb3b643a5e9bf192a243dc479b4962c1dc3d4ef3",
+      "sha256": "9dd8111931247c57b57a767f0cd91edcc12605190bb11ef8f87b3dc737805048",
       "headings": [
         "AI Coordination State",
         "Project",
         "Active Channel",
-        "Owner Shortcut",
+        "Previous Channels",
         "Current Task",
         "Current State",
         "Next Step"
@@ -4700,16 +4700,16 @@
       "domain": "system",
       "status": "active",
       "date": "2026-06-08",
-      "sha256": "c73ffd030382ce8f9d3f5399fbfdf5506f4c4b0313375e857e1ba639bda2e7da",
+      "sha256": "84af9b45f0e7dd7333067d41d41a794df0741c4f5d389ddd31b4c48746358a80",
       "headings": [
         "Owner-Visible Channel Receipt Standard",
         "Purpose",
         "Core Rule",
         "Required Receipt Fields",
         "Owner Action Rule",
+        "Final Placement Rule",
         "Link Rule",
         "Current State Values",
-        "Example",
         "Owner Visibility Rule",
         "Final Rule"
       ]
@@ -8130,11 +8130,14 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "d5b354bdbed439c116c7ef318a4b02124200621ba741f7075d57acbed4bbf403",
+      "sha256": "5141484698ac2c7a2e94cead9945f53cf427d8126e9148a7aeda6cc0cb103ea2",
       "headings": [
         "Hybrid Agent Prototype",
         "Folder",
         "Modes",
+        "Workstation Integration",
+        "Auto Policy",
+        "Timeout Strategy",
         "Configuration",
         "Minimal Local Setup With Ollama",
         "Example Cloud Setup",
