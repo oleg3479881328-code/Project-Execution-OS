@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "28043b516e9623f031675eef2f766958709ec751",
-  "generated_at": "2026-06-08T10:22:18-04:00",
-  "artifact_count": 375,
+  "repository_commit": "757bd970265e53113cd1739e51418d09c4995b57",
+  "generated_at": "2026-06-08T10:54:29-04:00",
+  "artifact_count": 377,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -14,6 +14,45 @@
       "date": null,
       "sha256": "ee2ee1cbba9805a4b7329ba7ea7d95734b9653c3afdf8d6416960053e05475c5",
       "headings": []
+    },
+    {
+      "path": "AI_COORDINATION_LOG.md",
+      "title": "AI Coordination Log",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "3d89d5942caf111568d4939fa3392f3b45f4836e12715eb40294f17c7994b262",
+      "headings": [
+        "AI Coordination Log",
+        "2026-06-08 — Active coordination snapshot created",
+        "2026-06-08 — Clean integration branch required"
+      ]
+    },
+    {
+      "path": "AI_COORDINATION_STATE.md",
+      "title": "AI Coordination State",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "a0b5095b6d37c9c3136f4689945fea5ff4e4955cff3f176b401537141bc62d3b",
+      "headings": [
+        "AI Coordination State",
+        "Project",
+        "Purpose",
+        "Active Channel",
+        "Previous Channels",
+        "Active Participants",
+        "Current Task",
+        "Current Repository State",
+        "Accepted Changes",
+        "Open Review Items",
+        "Next Step",
+        "Required Validation",
+        "Update Rule",
+        "Reading Rule"
+      ]
     },
     {
       "path": "CHANGELOG.md",
@@ -4429,11 +4468,12 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "233f34555c1bd10197454715f2be12a48b410d8cb622acc255341acec5b009c9",
+      "sha256": "f508092eba1f54ee25dc50164e6a26f4ade87da6ef7db1dc2a01448691ec6cf3",
       "headings": [
         "In-Scope Review Continuation Standard",
         "Purpose",
         "Core Rule",
+        "Anti-Permission-Loop Rule",
         "Routine Continuation Examples",
         "Owner Escalation Boundary",
         "Owner Trigger Rule",
