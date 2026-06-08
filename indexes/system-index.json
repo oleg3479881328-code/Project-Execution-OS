@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "449c442602b0e3247c7ba46c85c3707a9f90963f",
-  "generated_at": "2026-06-08T19:22:41-04:00",
+  "repository_commit": "d46dc8d6a45e741773f64620f69d3d9a3616474a",
+  "generated_at": "2026-06-08T19:25:59-04:00",
   "artifact_count": 379,
   "artifacts": [
     {
@@ -37,12 +37,11 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "9dd8111931247c57b57a767f0cd91edcc12605190bb11ef8f87b3dc737805048",
+      "sha256": "a8551a8a163718dac7d2fb77e6c455b26ef814047b518bdbe441e4211ce8de71",
       "headings": [
         "AI Coordination State",
         "Project",
         "Active Channel",
-        "Previous Channels",
         "Current Task",
         "Current State",
         "Next Step"
@@ -4700,7 +4699,7 @@
       "domain": "system",
       "status": "active",
       "date": "2026-06-08",
-      "sha256": "84af9b45f0e7dd7333067d41d41a794df0741c4f5d389ddd31b4c48746358a80",
+      "sha256": "9680c37fda231f179018e92be6d798f3aa89729b1c3d64fe95c74ad51cad1eac",
       "headings": [
         "Owner-Visible Channel Receipt Standard",
         "Purpose",
