@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "311fe87c564437a19b92d31878d1f0fda4d1bad8",
-  "generated_at": "2026-06-08T13:40:37-04:00",
-  "artifact_count": 377,
+  "repository_commit": "33728af383794c1e25853768c5a02850f5a61ee1",
+  "generated_at": "2026-06-08T15:04:48-04:00",
+  "artifact_count": 378,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -37,7 +37,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "9aebda8c3aa754e8d32c2566aab613c14330ae61e06765424af53f2ba229f3ec",
+      "sha256": "762752ebf8bf66fef973566bb16530d84fb0ebfba3c9f449f5724a97699f67aa",
       "headings": [
         "AI Coordination State",
         "Project",
@@ -185,13 +185,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "15b3c46a9293fd43abd7fb5b4db2e659ae000c448c768183e78b8b72f762122b",
+      "sha256": "df61a7d93f29d815355b746754302df17ef4a5ff521ab929f3b6c9b9f217340e",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v8`",
+        "Profile: `knowledge-aware-core-v9`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -3875,7 +3875,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "0ea400b9fbe9fe59cc9ab9090a404ad8c445b2e3282d841aa3f1e3e2e8f0c5ed",
+      "sha256": "559eea04aa43e3917c97f7bd7a2c534502d87e642c83e0e3ead331fb9558c248",
       "headings": [
         "API Runtime Cost And Cache Logging Standard v1",
         "Purpose",
@@ -4179,7 +4179,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "fb1a2e3ffb6c25fcfd2a6f75a22b3a979bb9f24ed1a2872dd4c377cdd781278d",
+      "sha256": "a4c08b1c7f0980705e0fb0ad2be203f4ebe377854e55f6c528bb91ad5353c0ea",
       "headings": [
         "Context Assembly Standard v2",
         "Purpose",
@@ -8112,6 +8112,27 @@
       "date": null,
       "sha256": "d3eb6e66e06410671deba71e99d24cb49a85db5b36040ab28b4a02a739042425",
       "headings": []
+    },
+    {
+      "path": "tools/hybrid-agent/README.md",
+      "title": "Hybrid Agent Prototype",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "d5b354bdbed439c116c7ef318a4b02124200621ba741f7075d57acbed4bbf403",
+      "headings": [
+        "Hybrid Agent Prototype",
+        "Folder",
+        "Modes",
+        "Configuration",
+        "Minimal Local Setup With Ollama",
+        "Example Cloud Setup",
+        "Example Commands",
+        "Runtime Logging",
+        "Structured Local Output Shape",
+        "Limitations"
+      ]
     },
     {
       "path": "workflow-templates/incremental-reentry/AGENT_CHECKPOINT_TEMPLATE.md",
