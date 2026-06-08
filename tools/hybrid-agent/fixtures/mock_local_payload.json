@@ -1,0 +1,23 @@
+{
+  "summary": "Repeated sqlite lock failures blocked the semantic-store build and prevented downstream validation.",
+  "relevant_error_excerpts": [
+    {
+      "path": "tools/hybrid-agent/fixtures/synthetic_repetitive_log.txt",
+      "start_line": 2,
+      "end_line": 12,
+      "reason": "Repeated sqlite lock errors and skipped validation are the dominant failure pattern."
+    }
+  ],
+  "suspected_files_modules": [
+    {
+      "path": "scripts/build_semantic_store.py",
+      "module": "sqlite write path",
+      "reason": "The log points to the builder during the lock failure and repeated retries."
+    }
+  ],
+  "escalation_recommendation": "cloud",
+  "local_stage_metadata": {
+    "confidence": "medium",
+    "notes": "Compression fixture only. No live model call was used."
+  }
+}

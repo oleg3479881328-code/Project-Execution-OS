@@ -19,6 +19,8 @@ Examples:
 
 This standard does not apply to ordinary chat use when no runtime usage data is available.
 
+For hybrid flows that use an optional local model before a cloud call, keep the same logging shape where practical and record stage-specific size metrics even when token usage is unavailable.
+
 ## Core Rule
 
 Measure actual usage.
@@ -52,6 +54,17 @@ Record these fields when the provider exposes them:
 - `notes` only when a meaningful anomaly or interpretation is required.
 
 If a provider uses different field names, preserve the provider-native values and map them into this common shape when practical.
+
+For an optional local preprocessing stage, also record when practical:
+
+- `stage` = `local_preprocess` or `cloud_reasoning`;
+- `input_size_bytes`;
+- `input_size_chars`;
+- `output_size_bytes`;
+- `output_size_chars`;
+- `compression_ratio`.
+
+If a local runtime does not expose token or cache fields, leave those fields empty rather than inventing them.
 
 ## DeepSeek Mapping
 

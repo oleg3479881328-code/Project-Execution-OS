@@ -92,6 +92,15 @@ START_HERE.md
 
 Before mass scanning a project, check whether a useful existing index already exists.
 
+Inspect curated indexes first.
+
+If generated indexes exist under `indexes/`, inspect the relevant generated index before broad scanning as well.
+
+When wording is uncertain, the repository is large, or the right files are not obvious, use semantic retrieval to narrow likely candidates before direct file reading.
+
+Semantic hits are navigation leads only.
+Open the canonical files for selected hits before treating them as evidence or operational truth.
+
 If the project has grown enough that a useful index is missing, create a minimal one.
 
 After a meaningful structural change, update the index.
@@ -141,6 +150,7 @@ Do not create context packages made of:
 - entire repositories without a task-specific reason;
 - complete historical chat dumps;
 - every system standard at once;
+- broad file-system scans before checking indexes or retrieval paths;
 - unreviewed reference collections;
 - all knowledge, skills or templates merely because they exist;
 - stale project files that are not required for the current action.
@@ -166,6 +176,16 @@ Only reviewed and relevant knowledge should be loaded as active reusable guidanc
 Use the active gate:
 
 - `knowledge-library/execution-standards/api-model-runtime-cache-gate.md`
+
+An optional local preprocessing stage may be inserted before a cloud API call when all of the following stay true:
+
+- the task already uses a bounded smallest-sufficient evidence package;
+- the local stage is explicitly limited to compression, triage, extraction, or routing support;
+- source-path and line-range traceability are preserved where practical;
+- cloud execution still works when the local stage is disabled or unavailable.
+
+The local stage must not be used as an excuse to send an unbounded repository dump into a cheap model first.
+It compresses an already bounded package. It does not replace the core context-selection rule.
 
 When an API-based orchestrator is later used, the context package should be assembled deterministically where practical:
 
@@ -242,4 +262,5 @@ It must enable an AI to enter through one stable door, follow one live internal 
 
 For project work, enter through `START_HERE.md` and `docs/ROUTER.md` first.
 Then read the specific project's `PROJECT.md`, the project index if one exists,
+use semantic retrieval before mass scanning when the correct files are not obvious,
 and only the minimum additional files needed for the active task.

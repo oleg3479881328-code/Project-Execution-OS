@@ -21,21 +21,25 @@
 
 - Mode: `document-first`
 - Phase: `foundation`
-- Status: `bootstrap and PROJECT.md migration reviewed and adopted`
+- Status: `index-first discovery layer, local semantic retrieval pilot, and optional hybrid local-model preprocessing prototype implemented`
 
 ## Done So Far
 
 - Established `START_HERE.md` as the stable top-level entrypoint.
 - Split live routing into `docs/ROUTER.md`.
 - Built central standards for lifecycle, context assembly, repository memory, review, research, handoff, and bootstrap.
+- Added a bounded structural corpus builder, local semantic SQLite runtime, and mandatory index-first agent-entry guidance.
+- Added an optional hybrid local-model preprocessing prototype for bounded context compression before cloud API reasoning.
 
 ## Current Focus
 
 - Keep central standards internally consistent while making real-project bootstrap lightweight and safe.
+- Keep repository entry narrow by default through curated indexes, generated corpus files, and local semantic retrieval.
+- Measure whether optional local preprocessing can reduce cloud-bound payload size without weakening traceability or making the local layer mandatory.
 
 ## Next Practical Step
 
-- Validate the new bootstrap model on the next intentionally created real project.
+- Validate semantic retrieval quality and the hybrid preprocessing prototype on additional real repository tasks before deciding what should be promoted beyond prototype scope.
 
 ## Key Decisions And Constraints
 

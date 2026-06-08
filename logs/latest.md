@@ -1,22 +1,22 @@
 # Latest Log
 
 ## Date
-2026-06-04
+2026-06-08
 
 ## Executor
 Codex
 
 ## Action
-Completed the reviewer follow-up for issue `#11` by committing the repository-side changes, pushing them to a dedicated evidence branch, and rerunning final local preview and allowlist-boundary checks.
+Implemented the bounded hybrid local-model preprocessing prototype and narrow standards updates for issue `#27`.
 
 ## Result
-Committed the repository-side access-layer changes as `b2cdb742904d2c9da72834d36b7e4dc26b167507` and pushed them to branch `codex/issue-11-knowledge-library-access`. The root-repository commit includes the setup docs, publication-boundary docs, allowlist manifest, architecture decision, sync script, repository memory updates, and a `.gitignore` rule that keeps `Project-Execution-OS-Library-Portal/` local-only. The nested Quartz scaffold itself was intentionally not committed to the root repository.
+Added an isolated hybrid-agent prototype under `tools/hybrid-agent/` with a small OpenAI-compatible adapter (`hybrid_agent.py`), a CLI (`run_hybrid_agent.py`), a local benchmark harness (`benchmark_fixture.py`), a usage README, synthetic fixtures, and unit tests with mocked endpoints. The local stage produces a structured compact payload that preserves source references, the hybrid path falls back cleanly to cloud reasoning when local preprocessing fails, and runtime logs record stage, size, compression ratio, latency, and token fields when an endpoint exposes them. Narrow repository standards updates were added to `docs/CONTEXT_ASSEMBLY_STANDARD.md` and `docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md` so the prototype remains optional and bounded.
 
 ## Verification
-Verified final sync again with `powershell -ExecutionPolicy Bypass -File .\scripts\sync-public-library-to-quartz.ps1`. Rebuilt Quartz successfully with `node .\quartz\bootstrap-cli.mjs build`. Ran local preview on `http://localhost:8085/` with `node .\quartz\bootstrap-cli.mjs build --serve --port 8085 --wsPort 3005` and confirmed the returned page title was `Project Execution OS Library`. Confirmed the Quartz `content/` folder contains only the generated landing page plus the six allowlisted knowledge-library files. Confirmed `public/static/contentIndex.json` does not expose disallowed repository areas such as `logs/`, `projects/`, `skills/`, `workflow-templates/`, `agent-library/`, `agent-modules/`, `blocks/`, or `project-library/`.
+Verified the issue requirements directly from GitHub issue `#27`. Checked existing-solution donors before custom code and selected the smallest reusable OpenAI-compatible endpoint pattern based on official Ollama OpenAI-compatibility documentation, llama.cpp server documentation, and OpenAI chat API usage fields. Ran `python -m unittest discover -s tools/hybrid-agent/tests -p "test_*.py" -v` and `python tools/hybrid-agent/benchmark_fixture.py`. The benchmark fixture reported `input_size_bytes=1396`, `output_size_bytes=693`, `compression_ratio=0.496418`, and `latency_ms_local_fixture=25.182`.
 
 ## Issues
-`npx quartz ...` hit a local ESM resolution problem after a fresh reinstall, but direct invocation through `node .\quartz\bootstrap-cli.mjs ...` worked for build, plugin-status, and preview. The main product-level open decision remains whether the nested local Quartz scaffold should stay local or be moved into its own private GitHub repository before any deployment work.
+The repository did not already contain a hybrid local/cloud routing prototype or a reusable OpenAI-compatible endpoint adapter for this purpose, so the implementation added the smallest isolated tool path needed to make the experiment runnable. Real endpoint validation against Ollama or another local server was not performed in this run, so live provider-specific compatibility and observed token fields remain to be confirmed outside mocked tests.
 
 ## Next Action
-Wait for reviewer feedback on the pushed evidence branch, then decide whether to keep the portal scaffold local-only or publish it into its own separate repository before any hosting step.
+Run the prototype against a real local endpoint, compare it to the cloud-only path on one or two representative tasks, and then decide whether the isolated prototype is ready for broader review as-is.
