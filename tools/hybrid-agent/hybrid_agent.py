@@ -174,18 +174,25 @@ def make_cloud_prompt(
     evidence_payload: dict[str, Any],
     local_payload: dict[str, Any] | None,
     fallback_reason: str | None,
+    include_full_evidence: bool,
 ) -> str:
     payload = {
         "task_text": task_text,
         "selected_route": selected_route,
         "fallback_reason": fallback_reason,
-        "bounded_evidence": evidence_payload["evidence"],
-        "local_preprocess": local_payload,
     }
+    if local_payload is not None:
+        payload["compact_context"] = local_payload
+        payload["traceability_mode"] = "local_payload_references"
+        if include_full_evidence:
+            payload["bounded_evidence"] = evidence_payload["evidence"]
+    else:
+        payload["bounded_evidence"] = evidence_payload["evidence"]
+        payload["traceability_mode"] = "bounded_evidence"
     return (
         "You are the cloud reasoning stage for a bounded hybrid agent prototype.\n"
         "Use the provided task and evidence only. Keep traceability to source paths and line ranges.\n"
-        "If local preprocessing exists, treat it as a compact aid rather than absolute truth.\n"
+        "If local preprocessing exists, treat it as the primary compact context rather than absolute truth.\n"
         "Return a concise actionable answer in plain text.\n"
         "Payload:\n"
         f"{json.dumps(payload, ensure_ascii=False, sort_keys=True, indent=2)}"
@@ -423,6 +430,7 @@ def run_cloud_stage(
     input_payload: dict[str, Any],
     local_payload: dict[str, Any] | None,
     fallback_reason: str | None,
+    include_full_evidence: bool,
     task_id: str | None,
     project_id: str | None,
     selected_route: str,
@@ -435,6 +443,7 @@ def run_cloud_stage(
         evidence_payload=input_payload,
         local_payload=local_payload,
         fallback_reason=fallback_reason,
+        include_full_evidence=include_full_evidence,
     )
     input_metrics = json_size_metrics({"system": system_prompt, "user": prompt})
     response, latency_ms = call_chat_completion(config, system_prompt=system_prompt, user_prompt=prompt)
@@ -479,6 +488,7 @@ def run_hybrid_agent(
     selected_route: str = DEFAULT_SELECTED_ROUTE,
     task_id: str | None = None,
     project_id: str | None = "project-execution-os",
+    include_full_evidence: bool = False,
 ) -> dict[str, Any]:
     input_payload = build_input_payload(
         task_text=task_text,
@@ -502,6 +512,7 @@ def run_hybrid_agent(
             input_payload=input_payload,
             local_payload=None,
             fallback_reason=None,
+            include_full_evidence=include_full_evidence,
             task_id=task_id,
             project_id=project_id,
             selected_route=selected_route,
@@ -572,6 +583,7 @@ def run_hybrid_agent(
         input_payload=input_payload,
         local_payload=local_payload,
         fallback_reason=fallback_reason,
+        include_full_evidence=include_full_evidence,
         task_id=task_id,
         project_id=project_id,
         selected_route=selected_route,

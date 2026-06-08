@@ -54,6 +54,11 @@ def main() -> int:
     parser.add_argument("--selected-route", default=DEFAULT_SELECTED_ROUTE)
     parser.add_argument("--runtime-log", type=Path, default=DEFAULT_LOG_PATH)
     parser.add_argument("--timeout-seconds", type=float, default=60.0)
+    parser.add_argument(
+        "--debug-full-evidence",
+        action="store_true",
+        help="Include raw bounded evidence in the cloud prompt even when local preprocessing succeeds.",
+    )
 
     parser.add_argument("--local-endpoint")
     parser.add_argument("--local-model")
@@ -92,6 +97,7 @@ def main() -> int:
         selected_route=args.selected_route,
         task_id=args.task_id,
         project_id=args.project_id,
+        include_full_evidence=args.debug_full_evidence,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0

@@ -32,8 +32,23 @@ tools/hybrid-agent/
 ## Modes
 
 - `local-only`: only run the bounded local preprocessing stage.
-- `preprocess-then-cloud`: run local preprocessing first, then send either the compact payload or a fallback bounded payload to the cloud stage.
+- `preprocess-then-cloud`: run local preprocessing first, then send the compact local payload to the cloud stage by default.
 - `cloud-only`: skip local preprocessing entirely.
+
+Successful hybrid path:
+
+- cloud receives the compact local payload as the primary context;
+- traceability is preserved through source paths and line ranges carried inside that compact payload;
+- raw bounded evidence is excluded by default to keep the cloud-bound payload smaller.
+
+Fallback or skip path:
+
+- if local preprocessing fails or is skipped, cloud receives the original bounded evidence package;
+- this preserves continuity even when the local stage is unavailable.
+
+Debug path:
+
+- pass `--debug-full-evidence` if you want successful hybrid runs to include both the compact payload and the original bounded evidence for inspection.
 
 ## Configuration
 
@@ -104,6 +119,16 @@ python tools/hybrid-agent/run_hybrid_agent.py `
   --task "Analyze repeated failures and propose the next safe implementation step." `
   --log-path logs/latest.md `
   --file-path PROJECT_STATE.md
+
+Hybrid with full-evidence debug:
+
+```powershell
+python tools/hybrid-agent/run_hybrid_agent.py `
+  --mode preprocess-then-cloud `
+  --debug-full-evidence `
+  --task "Analyze repeated failures and inspect both compressed and raw evidence." `
+  --log-path logs/latest.md
+```
 ```
 
 Benchmark fixture:

@@ -17,11 +17,13 @@ from hybrid_agent import EndpointConfig, run_hybrid_agent  # noqa: E402
 
 class MockHandler(BaseHTTPRequestHandler):
     routes: dict[str, list[dict[str, object]]] = {}
+    received_payloads: list[dict[str, object]] = []
 
     def do_POST(self) -> None:  # noqa: N802
         length = int(self.headers.get("Content-Length", "0"))
         raw_body = self.rfile.read(length).decode("utf-8")
         payload = json.loads(raw_body)
+        self.received_payloads.append(payload)
         path = self.path
         responses = self.routes.get(path)
         if not responses:
@@ -66,6 +68,7 @@ class HybridAgentTests(unittest.TestCase):
         self.workdir = Path(self.temp_dir.name)
         self.log_path = self.workdir / "runtime.jsonl"
         self.input_log = self.workdir / "sample.log"
+        MockHandler.received_payloads = []
         self.input_log.write_text(
             "\n".join(
                 [
@@ -224,6 +227,9 @@ class HybridAgentTests(unittest.TestCase):
         self.assertIn("Local summary.", json.dumps(result, ensure_ascii=False))
         logs = self.read_logs()
         self.assertEqual([item["stage"] for item in logs], ["local_preprocess", "cloud_reasoning"])
+        cloud_prompt = MockHandler.received_payloads[1]["messages"][1]["content"]
+        self.assertIn("\"compact_context\"", cloud_prompt)
+        self.assertNotIn("\"bounded_evidence\"", cloud_prompt)
 
     def test_local_failure_fallback(self) -> None:
         MockHandler.routes = {
@@ -250,6 +256,53 @@ class HybridAgentTests(unittest.TestCase):
         self.assertEqual(logs[0]["status"], "failed_fallback_to_cloud")
         self.assertEqual(logs[1]["stage"], "cloud_reasoning")
         self.assertIn("local_preprocess_failed", logs[1]["notes"])
+        cloud_prompt = MockHandler.received_payloads[1]["messages"][1]["content"]
+        self.assertIn("\"bounded_evidence\"", cloud_prompt)
+        self.assertNotIn("\"compact_context\"", cloud_prompt)
+
+    def test_preprocess_then_cloud_can_include_full_evidence_in_debug_mode(self) -> None:
+        MockHandler.routes = {
+            "/v1/chat/completions": [
+                {
+                    "body": {
+                        "id": "local-4",
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        {
+                                            "summary": "Local summary.",
+                                            "relevant_error_excerpts": [],
+                                            "suspected_files_modules": [],
+                                            "escalation_recommendation": "cloud",
+                                            "local_stage_metadata": {
+                                                "confidence": "low",
+                                                "notes": "mock",
+                                            },
+                                        }
+                                    )
+                                }
+                            }
+                        ],
+                        "usage": {"prompt_tokens": 50, "completion_tokens": 20, "total_tokens": 70},
+                    }
+                },
+                {"body": "echo-user"},
+            ]
+        }
+        run_hybrid_agent(
+            task_text="Analyze this failure.",
+            mode="preprocess-then-cloud",
+            log_paths=[self.input_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=self.cloud_config(),
+            log_path=self.log_path,
+            include_full_evidence=True,
+        )
+        cloud_prompt = MockHandler.received_payloads[1]["messages"][1]["content"]
+        self.assertIn("\"compact_context\"", cloud_prompt)
+        self.assertIn("\"bounded_evidence\"", cloud_prompt)
 
     def test_structured_output_validation(self) -> None:
         MockHandler.routes = {
