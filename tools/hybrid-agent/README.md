@@ -77,6 +77,17 @@ The adapter discovers actual workstation seams before routing:
 - VS Code CLI path;
 - DeepSeek VS Code custom-endpoint config at `%APPDATA%\\Code\\User\\chatLanguageModels.json` when present.
 
+After routing, the adapter can launch a real workstation handoff path instead of stopping at side-by-side analysis only:
+
+- `deepseek` launches `code chat --mode agent` with the generated bounded handoff packet attached;
+- `codex` writes the same bounded handoff packet inside the repository and launches the registered Codex desktop entrypoint.
+
+The Codex boundary is intentionally honest:
+
+- this workstation exposes a registered Codex desktop executable and `codex://` protocol;
+- a documented prompt-injection CLI contract for Codex Desktop was not discoverable here;
+- therefore the saved packet file is the explicit Codex handoff boundary, while DeepSeek gets direct prompt+file injection through VS Code chat.
+
 ### Auto Policy
 
 `auto` mode is conservative:
@@ -85,6 +96,11 @@ The adapter discovers actual workstation seams before routing:
 - use `preprocess-then-cloud` when bounded evidence is large enough that local compression is likely to help and both local and cloud routes are available;
 - use `local-only` when bounded evidence is meaningful but no safe cloud config is present;
 - fall back automatically if local preprocessing fails.
+
+Explicit `cloud-only` is stricter:
+
+- it skips local preprocessing entirely;
+- it also skips Ollama availability probing, so a missing local runtime does not add latency to a forced cloud-only run.
 
 ### Timeout Strategy
 
@@ -189,6 +205,14 @@ powershell -ExecutionPolicy Bypass -File tools/hybrid-agent/Invoke-Workstation-H
   -LogPath tools/hybrid-agent/fixtures/synthetic_repetitive_log.txt
 ```
 
+This launcher now runs relative to the repository root even if you invoke it from another working directory.
+
+If you want analysis output without launching the downstream executor UI, pass:
+
+```powershell
+-NoLaunchExecutor
+```
+
 Workstation route for DeepSeek:
 
 ```powershell
@@ -224,6 +248,7 @@ Normal CLI runs can use that default path without dirtying review status because
 Each stage records:
 
 - `route_decision` when the workstation adapter chooses `auto`;
+- `executor_handoff` metadata in CLI output when the downstream workstation handoff launcher is used;
 - `stage`;
 - `provider`;
 - `model`;
@@ -261,3 +286,4 @@ The local stage returns a single JSON object with:
 - This prototype preserves evidence references, but it only sees the bounded excerpts that were passed in.
 - Compact local context is accepted only when excerpt paths, line ranges, and suspected file paths pass structural validation.
 - Fallback preserves continuity, but a failed local stage still adds some latency before the cloud stage continues.
+- Codex Desktop launch is now integrated, but prompt injection into Codex Desktop is not yet a known supported contract on this workstation; the generated packet file remains the explicit handoff artifact.

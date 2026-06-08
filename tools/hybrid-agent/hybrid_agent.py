@@ -308,6 +308,10 @@ def evidence_index(input_payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
 def repair_excerpt_path(path: str, evidence_by_path: dict[str, dict[str, Any]]) -> str:
     if path in evidence_by_path:
         return path
+    normalized = path.replace("\\", "/")
+    suffix_matches = [candidate for candidate in evidence_by_path if candidate.replace("\\", "/").endswith(normalized)]
+    if len(suffix_matches) == 1:
+        return suffix_matches[0]
     if len(evidence_by_path) != 1:
         return path
 
@@ -316,7 +320,6 @@ def repair_excerpt_path(path: str, evidence_by_path: dict[str, dict[str, Any]]) 
     if not isinstance(excerpts, list):
         return path
 
-    normalized = path.replace("\\", "/")
     for excerpt in excerpts:
         if not isinstance(excerpt, dict):
             continue
@@ -372,9 +375,38 @@ def validate_suspected_paths(
         if path in evidence_by_path:
             continue
 
+        resolved_path = resolve_repo_candidate_path(path)
+        if resolved_path is not None:
+            suspect["path"] = str(resolved_path.relative_to(REPO_ROOT))
+            continue
+
         resolved_path = REPO_ROOT / Path(path)
         if not resolved_path.exists():
             raise ValueError(f"Local payload suspect #{index} references a missing path: {path}")
+
+
+def resolve_repo_candidate_path(path: str) -> Path | None:
+    candidate = REPO_ROOT / Path(path)
+    if candidate.exists():
+        return candidate
+
+    base_variant = REPO_ROOT / Path(path)
+    candidates: list[Path] = [base_variant]
+
+    underscored_name = base_variant.with_name(base_variant.name.replace("-", "_"))
+    if underscored_name != base_variant:
+        candidates.append(underscored_name)
+
+    for variant in candidates:
+        if variant.exists():
+            return variant
+        if variant.suffix:
+            continue
+        for suffix in [".py", ".md", ".ps1", ".json"]:
+            with_suffix = variant.with_suffix(suffix)
+            if with_suffix.exists():
+                return with_suffix
+    return None
 
 
 def validate_local_references(

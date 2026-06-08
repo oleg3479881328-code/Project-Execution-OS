@@ -570,6 +570,62 @@ class HybridAgentTests(unittest.TestCase):
         )
         self.assertEqual(result["local"]["payload"]["relevant_error_excerpts"][0]["path"], str(embedded_log))
 
+    def test_local_only_repairs_route_alias_suspect_path(self) -> None:
+        MockHandler.routes = {
+            "/v1/chat/completions": [
+                {
+                    "body": {
+                        "id": "local-route-alias",
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        {
+                                            "summary": "Route alias suspect path should be normalized to the real repo file.",
+                                            "relevant_error_excerpts": [
+                                                {
+                                                    "path": str(self.input_log),
+                                                    "start_line": 2,
+                                                    "end_line": 4,
+                                                    "reason": "keyword_match",
+                                                }
+                                            ],
+                                            "suspected_files_modules": [
+                                                {
+                                                    "path": "tools/hybrid-agent/workstation-route",
+                                                    "module": "route",
+                                                    "reason": "selected route alias",
+                                                }
+                                            ],
+                                            "escalation_recommendation": "local_sufficient",
+                                            "local_stage_metadata": {
+                                                "confidence": "medium",
+                                                "notes": "repair route alias",
+                                            },
+                                        }
+                                    )
+                                }
+                            }
+                        ],
+                        "usage": {},
+                    }
+                }
+            ]
+        }
+        result = run_hybrid_agent(
+            task_text="Repair route alias suspect path.",
+            mode="local-only",
+            log_paths=[self.input_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=None,
+            log_path=self.log_path,
+        )
+        self.assertEqual(
+            result["local"]["payload"]["suspected_files_modules"][0]["path"],
+            "tools\\hybrid-agent\\workstation_route.py",
+        )
+
     def test_logging_fields_and_compression_ratio(self) -> None:
         MockHandler.routes = {
             "/v1/chat/completions": [

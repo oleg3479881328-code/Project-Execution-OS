@@ -11,6 +11,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools" / "hybrid-agent"))
 
+import run_workstation_hybrid_route  # noqa: E402
 from workstation_route import (  # noqa: E402
     DEFAULT_WORKSTATION_ROUTE,
     WorkstationEntrypoints,
@@ -133,6 +134,50 @@ class WorkstationRouteTests(unittest.TestCase):
         entry = json.loads(log_lines[0])
         self.assertEqual(entry["stage"], "route_decision")
         self.assertEqual(entry["status"], "local-only")
+
+    def test_cloud_only_does_not_probe_local_runtime(self) -> None:
+        fake_entrypoints = WorkstationEntrypoints(
+            codex_cli_path="C:/codex.exe",
+            codex_desktop_path="C:/Codex.exe",
+            vscode_cli_path="C:/code.cmd",
+            deepseek_vscode_config_path=None,
+            deepseek_vscode_model_id=None,
+        )
+        with (
+            patch("workstation_route.discover_workstation_entrypoints", return_value=fake_entrypoints),
+            patch("workstation_route.build_local_config") as local_mock,
+            patch("workstation_route.build_cloud_config", return_value=self.fake_config("cloud-openai-compatible")),
+            patch(
+                "workstation_route.run_hybrid_agent",
+                return_value={"mode": "cloud-only", "fallback_used": False, "input_payload": {"evidence": []}},
+            ) as run_mock,
+        ):
+            result = run_workstation_route(
+                executor="codex",
+                mode="cloud-only",
+                task_text="cloud only task",
+                log_paths=[self.evidence_log],
+                file_paths=[],
+                log_path=self.log_file,
+            )
+        local_mock.assert_not_called()
+        run_mock.assert_called_once()
+        self.assertFalse(result["local_config_present"])
+        self.assertTrue(result["cloud_config_present"])
+
+    def test_repo_root_resolution_keeps_relative_paths_inside_repo(self) -> None:
+        repo_root = self.workdir / "repo"
+        repo_root.mkdir()
+        resolved_log = run_workstation_hybrid_route.resolve_cli_path("logs/api-runtime/hybrid-agent.jsonl", repo_root)
+        resolved_inputs = run_workstation_hybrid_route.parse_paths(
+            ["tools/hybrid-agent/fixtures/synthetic_repetitive_log.txt"],
+            repo_root,
+        )
+        self.assertEqual(resolved_log, repo_root / "logs" / "api-runtime" / "hybrid-agent.jsonl")
+        self.assertEqual(
+            resolved_inputs[0],
+            repo_root / "tools" / "hybrid-agent" / "fixtures" / "synthetic_repetitive_log.txt",
+        )
 
 
 if __name__ == "__main__":
