@@ -119,6 +119,7 @@ python tools/hybrid-agent/run_hybrid_agent.py `
   --task "Analyze repeated failures and propose the next safe implementation step." `
   --log-path logs/latest.md `
   --file-path PROJECT_STATE.md
+```
 
 Hybrid with full-evidence debug:
 
@@ -128,7 +129,6 @@ python tools/hybrid-agent/run_hybrid_agent.py `
   --debug-full-evidence `
   --task "Analyze repeated failures and inspect both compressed and raw evidence." `
   --log-path logs/latest.md
-```
 ```
 
 Benchmark fixture:
