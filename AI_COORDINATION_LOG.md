@@ -32,3 +32,20 @@ Event:
 
 Next Step:
 - Review the next executor reply in Issue #27 and verify the clean diff before integration.
+
+## 2026-06-08 — PR #30 review corrections requested
+
+Type: Review blocker
+Project: Project Execution OS
+Active Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/30
+
+Event:
+- Published clean PR #30 from `codex/issue-27-hybrid-agent-clean`.
+- Confirmed clean diff contains the intended hybrid-agent files only.
+- Found open traceability review thread: compact-context source references require validation against bounded input evidence.
+- Confirmed workflow failure occurs during system-context-manifest validation after `docs/CONTEXT_ASSEMBLY_STANDARD.md` changed.
+- Posted an in-scope correction request in PR #30.
+- Updated active channel to PR #30.
+
+Next Step:
+- On `02`, inspect PR #30 latest executor reply, new head SHA, checks, and review thread status.
