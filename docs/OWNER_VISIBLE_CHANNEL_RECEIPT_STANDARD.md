@@ -11,19 +11,7 @@ Make every inter-agent communication visible to the owner without requiring manu
 
 After sending any durable message to another agent, the sender must immediately report a short owner-visible receipt.
 
-This applies to:
-
-- acknowledgement;
-- answer;
-- request;
-- clarification question;
-- blocker report;
-- status update;
-- review instruction;
-- execution report;
-- artifact publication;
-- draft pull-request publication;
-- channel-transition notice.
+This applies to acknowledgement, answer, request, clarification question, blocker report, status update, review instruction, execution report, artifact publication, draft pull-request publication, and channel-transition notice.
 
 ## Required Receipt Fields
 
@@ -37,13 +25,13 @@ CHANNEL:
 LINK:
 CURRENT STATE:
 WAITING FOR:
-OWNER ACTION REQUIRED:
 NEXT ACTION:
+OWNER ACTION REQUIRED:
 ```
 
 ## Owner Action Rule
 
-`OWNER ACTION REQUIRED` is mandatory.
+`OWNER ACTION REQUIRED` is mandatory and must be the final line of the entire owner-facing response.
 
 Use exactly one of these shapes:
 
@@ -51,19 +39,35 @@ Use exactly one of these shapes:
 OWNER ACTION REQUIRED: none
 ```
 
-or:
+or one explicit, self-contained instruction.
+
+The instruction must still work if the owner reads only the last line and sends it to an executor who has not seen the previous chat.
+
+For a GitHub-backed handoff, include the direct URL and the required action in the final line.
+
+Good:
 
 ```text
-OWNER ACTION REQUIRED: send `02` to the executor now
+OWNER ACTION REQUIRED: send DeepSeek this exact message: `Open https://github.com/<owner>/<repo>/issues/34 and execute the handoff packet now. Post the report in that issue.`
 ```
 
-or another equally explicit single action.
+Bad:
+
+```text
+OWNER ACTION REQUIRED: send `34`
+```
+
+A bare number is allowed only when the target executor is known to share the same registered GitHub-backed coordination state and has already acknowledged that shortcut mapping in the active channel.
 
 Do not tell the owner that nothing is required when a manual trigger, relay, click, approval, or UI action is still necessary.
 
-If the workflow cannot continue until the owner sends `02`, say that directly.
-
 If the owner must click Merge, approve access, paste a token, open a link, or relay a one-line trigger, state that exact action.
+
+## Final Placement Rule
+
+`OWNER ACTION REQUIRED` must be the last line of the receipt and the last line of the whole response.
+
+Do not place commentary, explanation, or a second follow-up suggestion after it.
 
 ## Link Rule
 
@@ -84,20 +88,6 @@ Use one of:
 - `sent_channel_transition_pending_ack`;
 - `sent_completed`.
 
-## Example
-
-```text
-SENT: review correction request
-MESSAGE TYPE: review instruction
-TO: Codex — Executor Agent
-CHANNEL: GitHub pull request #30
-LINK: https://github.com/<owner>/<repo>/pull/30
-CURRENT STATE: sent_execution_continues
-WAITING FOR: Codex correction commit and validation report
-OWNER ACTION REQUIRED: send `02` to the executor now
-NEXT ACTION: Codex reads PR #30 and continues inside approved scope
-```
-
 ## Owner Visibility Rule
 
 The sender must show the receipt to the owner immediately after sending the durable message.
@@ -108,8 +98,8 @@ Do not omit the link.
 
 Do not make the owner inspect the external channel to discover whether a message was actually posted.
 
-Do not hide a required owner trigger behind wording such as `nothing to do` or `wait for the executor`.
+Do not hide a required owner trigger behind wording such as `nothing to do`, `wait for the executor`, or an unexplained bare number.
 
 ## Final Rule
 
-Every durable inter-agent message must produce an owner-visible receipt with a direct link, a clear workflow state, and an explicit statement of whether the owner must do anything next.
+Every durable inter-agent message must produce an owner-visible receipt with a direct link, a clear workflow state, and an explicit self-contained final-line owner action.
