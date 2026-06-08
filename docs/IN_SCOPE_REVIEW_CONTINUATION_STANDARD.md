@@ -12,6 +12,14 @@ It is not a new owner decision request.
 
 The execution agent continues from the latest bounded review instruction in the registered active channel.
 
+## Anti-Permission-Loop Rule
+
+When the latest durable message contains an actionable step inside the approved scope, execute it immediately.
+
+Do not stop to offer the same action for a later turn. Do not request a second confirmation, another `01`, another `02`, or a relay message from the owner merely to continue the bounded task.
+
+Only a real owner-escalation condition may interrupt execution.
+
 ## Routine Continuation Examples
 
 Routine continuation includes:
