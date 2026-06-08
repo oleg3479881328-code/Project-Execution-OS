@@ -234,7 +234,43 @@ def extract_json_object(text: str) -> dict[str, Any]:
     return parsed
 
 
+def normalize_evidence_path(path: str) -> str:
+    return str(Path(path))
+
+
+def normalize_local_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    recommendation = payload.get("escalation_recommendation")
+    if isinstance(recommendation, str):
+        normalized = recommendation.strip().lower().replace("-", "_").replace(" ", "_")
+        if normalized in {"cloud", "local_sufficient"}:
+            payload["escalation_recommendation"] = normalized
+
+    metadata = payload.get("local_stage_metadata")
+    if isinstance(metadata, dict):
+        confidence = metadata.get("confidence")
+        if isinstance(confidence, str):
+            metadata["confidence"] = confidence.strip().lower()
+
+    excerpts = payload.get("relevant_error_excerpts")
+    if isinstance(excerpts, list):
+        for item in excerpts:
+            if isinstance(item, dict):
+                path = item.get("path")
+                if isinstance(path, str) and path:
+                    item["path"] = normalize_evidence_path(path)
+
+    suspects = payload.get("suspected_files_modules")
+    if isinstance(suspects, list):
+        for item in suspects:
+            if isinstance(item, dict):
+                path = item.get("path")
+                if isinstance(path, str) and path:
+                    item["path"] = normalize_evidence_path(path)
+    return payload
+
+
 def validate_local_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    payload = normalize_local_payload(payload)
     summary = payload.get("summary")
     if not isinstance(summary, str) or not summary.strip():
         raise ValueError("Local payload is missing a string summary")
@@ -269,6 +305,27 @@ def evidence_index(input_payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return index
 
 
+def repair_excerpt_path(path: str, evidence_by_path: dict[str, dict[str, Any]]) -> str:
+    if path in evidence_by_path:
+        return path
+    if len(evidence_by_path) != 1:
+        return path
+
+    only_path, only_item = next(iter(evidence_by_path.items()))
+    excerpts = only_item.get("excerpts")
+    if not isinstance(excerpts, list):
+        return path
+
+    normalized = path.replace("\\", "/")
+    for excerpt in excerpts:
+        if not isinstance(excerpt, dict):
+            continue
+        text = excerpt.get("text")
+        if isinstance(text, str) and normalized in text.replace("\\", "/"):
+            return only_path
+    return path
+
+
 def validate_excerpt_references(
     excerpts: list[Any],
     evidence_by_path: dict[str, dict[str, Any]],
@@ -282,6 +339,10 @@ def validate_excerpt_references(
         end_line = excerpt.get("end_line")
         if not isinstance(path, str) or not path:
             raise ValueError(f"Local payload excerpt #{index} is missing a valid path")
+        repaired_path = repair_excerpt_path(path, evidence_by_path)
+        if repaired_path != path:
+            excerpt["path"] = repaired_path
+            path = repaired_path
         if path not in evidence_by_path:
             raise ValueError(f"Local payload excerpt #{index} references unknown evidence path: {path}")
         if not isinstance(start_line, int) or not isinstance(end_line, int):

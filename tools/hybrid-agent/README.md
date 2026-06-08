@@ -24,6 +24,9 @@ It does not:
 tools/hybrid-agent/
 ├─ hybrid_agent.py
 ├─ run_hybrid_agent.py
+├─ workstation_route.py
+├─ run_workstation_hybrid_route.py
+├─ Invoke-Workstation-HybridRoute.ps1
 ├─ benchmark_fixture.py
 ├─ fixtures/
 └─ tests/
@@ -34,6 +37,7 @@ tools/hybrid-agent/
 - `local-only`: only run the bounded local preprocessing stage.
 - `preprocess-then-cloud`: run local preprocessing first, then send the compact local payload to the cloud stage by default.
 - `cloud-only`: skip local preprocessing entirely.
+- `auto`: choose conservatively based on bounded-evidence size, local Ollama availability, and safe cloud-config presence.
 
 Successful hybrid path:
 
@@ -49,6 +53,50 @@ Fallback or skip path:
 Debug path:
 
 - pass `--debug-full-evidence` if you want successful hybrid runs to include both the compact payload and the original bounded evidence for inspection.
+
+## Workstation Integration
+
+The practical workstation entrypoint for normal Codex or DeepSeek use is:
+
+```text
+tools/hybrid-agent/Invoke-Workstation-HybridRoute.ps1
+```
+
+It routes through:
+
+```text
+tools/hybrid-agent/run_workstation_hybrid_route.py
+→ tools/hybrid-agent/workstation_route.py
+→ tools/hybrid-agent/hybrid_agent.py
+```
+
+The adapter discovers actual workstation seams before routing:
+
+- Codex CLI command path when available;
+- Codex desktop app path when derivable from the CLI install;
+- VS Code CLI path;
+- DeepSeek VS Code custom-endpoint config at `%APPDATA%\\Code\\User\\chatLanguageModels.json` when present.
+
+### Auto Policy
+
+`auto` mode is conservative:
+
+- use `cloud-only` for tiny bounded evidence when a safe cloud config exists;
+- use `preprocess-then-cloud` when bounded evidence is large enough that local compression is likely to help and both local and cloud routes are available;
+- use `local-only` when bounded evidence is meaningful but no safe cloud config is present;
+- fall back automatically if local preprocessing fails.
+
+### Timeout Strategy
+
+Issue `#31` live validation showed that real local Ollama runs can exceed the base 60-second timeout on this workstation.
+
+The workstation adapter therefore defaults to:
+
+```text
+240 seconds
+```
+
+This applies to normal workstation launcher use and can still be overridden explicitly.
 
 ## Configuration
 
@@ -131,6 +179,26 @@ python tools/hybrid-agent/run_hybrid_agent.py `
   --log-path logs/latest.md
 ```
 
+Workstation route for Codex:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/hybrid-agent/Invoke-Workstation-HybridRoute.ps1 `
+  -Executor codex `
+  -Mode auto `
+  -Task "Analyze this bounded task." `
+  -LogPath tools/hybrid-agent/fixtures/synthetic_repetitive_log.txt
+```
+
+Workstation route for DeepSeek:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/hybrid-agent/Invoke-Workstation-HybridRoute.ps1 `
+  -Executor deepseek `
+  -Mode auto `
+  -Task "Analyze this bounded task." `
+  -LogPath tools/hybrid-agent/fixtures/synthetic_repetitive_log.txt
+```
+
 Benchmark fixture:
 
 ```powershell
@@ -155,6 +223,7 @@ Normal CLI runs can use that default path without dirtying review status because
 
 Each stage records:
 
+- `route_decision` when the workstation adapter chooses `auto`;
 - `stage`;
 - `provider`;
 - `model`;
