@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "757bd970265e53113cd1739e51418d09c4995b57",
-  "generated_at": "2026-06-08T10:54:29-04:00",
+  "repository_commit": "311fe87c564437a19b92d31878d1f0fda4d1bad8",
+  "generated_at": "2026-06-08T13:40:37-04:00",
   "artifact_count": 377,
   "artifacts": [
     {
@@ -22,11 +22,12 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "3d89d5942caf111568d4939fa3392f3b45f4836e12715eb40294f17c7994b262",
+      "sha256": "d45e6462233662d35cbdf186cbf72cf5ae02ab2b8f3bfd5b4e76f302641c0e5c",
       "headings": [
         "AI Coordination Log",
         "2026-06-08 — Active coordination snapshot created",
-        "2026-06-08 — Clean integration branch required"
+        "2026-06-08 — Clean integration branch required",
+        "2026-06-08 — PR #30 review corrections requested"
       ]
     },
     {
@@ -36,21 +37,17 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "a0b5095b6d37c9c3136f4689945fea5ff4e4955cff3f176b401537141bc62d3b",
+      "sha256": "9aebda8c3aa754e8d32c2566aab613c14330ae61e06765424af53f2ba229f3ec",
       "headings": [
         "AI Coordination State",
         "Project",
         "Purpose",
         "Active Channel",
         "Previous Channels",
-        "Active Participants",
         "Current Task",
         "Current Repository State",
-        "Accepted Changes",
         "Open Review Items",
         "Next Step",
-        "Required Validation",
-        "Update Rule",
         "Reading Rule"
       ]
     },
@@ -4704,13 +4701,14 @@
       "type": "system-standard",
       "domain": "system",
       "status": "active",
-      "date": "2026-06-06",
-      "sha256": "49b4a25f7e15bba2013aaa7f311292e058a9851c88512efbc3a41a2439b1cc1c",
+      "date": "2026-06-08",
+      "sha256": "c73ffd030382ce8f9d3f5399fbfdf5506f4c4b0313375e857e1ba639bda2e7da",
       "headings": [
         "Owner-Visible Channel Receipt Standard",
         "Purpose",
         "Core Rule",
         "Required Receipt Fields",
+        "Owner Action Rule",
         "Link Rule",
         "Current State Values",
         "Example",
