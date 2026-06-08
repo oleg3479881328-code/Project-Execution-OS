@@ -149,9 +149,9 @@ class HybridAgentTests(unittest.TestCase):
                                             ],
                                             "suspected_files_modules": [
                                                 {
-                                                    "path": "scripts/build_semantic_store.py",
-                                                    "module": "builder",
-                                                    "reason": "Named directly in the log.",
+                                                    "path": "tools/hybrid-agent/hybrid_agent.py",
+                                                    "module": "hybrid-agent",
+                                                    "reason": "Existing repository file used for validation.",
                                                 }
                                             ],
                                             "escalation_recommendation": "cloud",
@@ -260,6 +260,111 @@ class HybridAgentTests(unittest.TestCase):
         self.assertIn("\"bounded_evidence\"", cloud_prompt)
         self.assertNotIn("\"compact_context\"", cloud_prompt)
 
+    def test_preprocess_then_cloud_falls_back_on_invalid_excerpt_range(self) -> None:
+        MockHandler.routes = {
+            "/v1/chat/completions": [
+                {
+                    "body": {
+                        "id": "local-bad-range",
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        {
+                                            "summary": "Bad range.",
+                                            "relevant_error_excerpts": [
+                                                {
+                                                    "path": str(self.input_log),
+                                                    "start_line": 2,
+                                                    "end_line": 99,
+                                                    "reason": "invalid",
+                                                }
+                                            ],
+                                            "suspected_files_modules": [],
+                                            "escalation_recommendation": "cloud",
+                                            "local_stage_metadata": {
+                                                "confidence": "low",
+                                                "notes": "mock",
+                                            },
+                                        }
+                                    )
+                                }
+                            }
+                        ],
+                        "usage": {"prompt_tokens": 50, "completion_tokens": 20, "total_tokens": 70},
+                    }
+                },
+                {"body": "echo-user"},
+            ]
+        }
+        result = run_hybrid_agent(
+            task_text="Analyze invalid range.",
+            mode="preprocess-then-cloud",
+            log_paths=[self.input_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=self.cloud_config(),
+            log_path=self.log_path,
+        )
+        self.assertTrue(result["fallback_used"])
+        self.assertIn("local_error", result)
+        self.assertIn("outside the source evidence line range", result["local_error"])
+        cloud_prompt = MockHandler.received_payloads[1]["messages"][1]["content"]
+        self.assertIn("\"bounded_evidence\"", cloud_prompt)
+        self.assertNotIn("\"compact_context\"", cloud_prompt)
+
+    def test_preprocess_then_cloud_falls_back_on_invented_suspect_path(self) -> None:
+        MockHandler.routes = {
+            "/v1/chat/completions": [
+                {
+                    "body": {
+                        "id": "local-bad-path",
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        {
+                                            "summary": "Invented path.",
+                                            "relevant_error_excerpts": [],
+                                            "suspected_files_modules": [
+                                                {
+                                                    "path": "missing/not-real.py",
+                                                    "module": "ghost",
+                                                    "reason": "invented",
+                                                }
+                                            ],
+                                            "escalation_recommendation": "cloud",
+                                            "local_stage_metadata": {
+                                                "confidence": "low",
+                                                "notes": "mock",
+                                            },
+                                        }
+                                    )
+                                }
+                            }
+                        ],
+                        "usage": {"prompt_tokens": 50, "completion_tokens": 20, "total_tokens": 70},
+                    }
+                },
+                {"body": "echo-user"},
+            ]
+        }
+        result = run_hybrid_agent(
+            task_text="Analyze invented path.",
+            mode="preprocess-then-cloud",
+            log_paths=[self.input_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=self.cloud_config(),
+            log_path=self.log_path,
+        )
+        self.assertTrue(result["fallback_used"])
+        self.assertIn("local_error", result)
+        self.assertIn("references a missing path", result["local_error"])
+        cloud_prompt = MockHandler.received_payloads[1]["messages"][1]["content"]
+        self.assertIn("\"bounded_evidence\"", cloud_prompt)
+        self.assertNotIn("\"compact_context\"", cloud_prompt)
+
     def test_preprocess_then_cloud_can_include_full_evidence_in_debug_mode(self) -> None:
         MockHandler.routes = {
             "/v1/chat/completions": [
@@ -319,6 +424,53 @@ class HybridAgentTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             run_hybrid_agent(
                 task_text="Invalid payload.",
+                mode="local-only",
+                log_paths=[self.input_log],
+                file_paths=[],
+                local_config=self.local_config(),
+                cloud_config=None,
+                log_path=self.log_path,
+            )
+
+    def test_local_only_rejects_unknown_excerpt_path(self) -> None:
+        MockHandler.routes = {
+            "/v1/chat/completions": [
+                {
+                    "body": {
+                        "id": "local-invalid-path",
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        {
+                                            "summary": "Unknown excerpt path.",
+                                            "relevant_error_excerpts": [
+                                                {
+                                                    "path": "C:/not/in/evidence.log",
+                                                    "start_line": 1,
+                                                    "end_line": 1,
+                                                    "reason": "invented",
+                                                }
+                                            ],
+                                            "suspected_files_modules": [],
+                                            "escalation_recommendation": "cloud",
+                                            "local_stage_metadata": {
+                                                "confidence": "low",
+                                                "notes": "mock",
+                                            },
+                                        }
+                                    )
+                                }
+                            }
+                        ],
+                        "usage": {},
+                    }
+                }
+            ]
+        }
+        with self.assertRaises(ValueError):
+            run_hybrid_agent(
+                task_text="Invalid excerpt path.",
                 mode="local-only",
                 log_paths=[self.input_log],
                 file_paths=[],

@@ -151,6 +151,8 @@ Runtime logs default to:
 logs/api-runtime/hybrid-agent.jsonl
 ```
 
+Normal CLI runs can use that default path without dirtying review status because `logs/api-runtime/` is ignored by Git.
+
 Each stage records:
 
 - `stage`;
@@ -188,4 +190,5 @@ The local stage returns a single JSON object with:
 - Local models still have RAM, VRAM, and context-window limits.
 - OpenAI-compatible servers vary, especially around usage and cache fields.
 - This prototype preserves evidence references, but it only sees the bounded excerpts that were passed in.
+- Compact local context is accepted only when excerpt paths, line ranges, and suspected file paths pass structural validation.
 - Fallback preserves continuity, but a failed local stage still adds some latency before the cloud stage continues.

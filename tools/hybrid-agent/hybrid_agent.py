@@ -254,6 +254,78 @@ def validate_local_payload(payload: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
+def evidence_index(input_payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    raw_evidence = input_payload.get("evidence")
+    if not isinstance(raw_evidence, list):
+        raise ValueError("Input payload is missing evidence")
+
+    index: dict[str, dict[str, Any]] = {}
+    for item in raw_evidence:
+        if not isinstance(item, dict):
+            continue
+        path = item.get("path")
+        if isinstance(path, str) and path:
+            index[path] = item
+    return index
+
+
+def validate_excerpt_references(
+    excerpts: list[Any],
+    evidence_by_path: dict[str, dict[str, Any]],
+) -> None:
+    for index, excerpt in enumerate(excerpts, start=1):
+        if not isinstance(excerpt, dict):
+            raise ValueError(f"Local payload excerpt #{index} is not an object")
+
+        path = excerpt.get("path")
+        start_line = excerpt.get("start_line")
+        end_line = excerpt.get("end_line")
+        if not isinstance(path, str) or not path:
+            raise ValueError(f"Local payload excerpt #{index} is missing a valid path")
+        if path not in evidence_by_path:
+            raise ValueError(f"Local payload excerpt #{index} references unknown evidence path: {path}")
+        if not isinstance(start_line, int) or not isinstance(end_line, int):
+            raise ValueError(f"Local payload excerpt #{index} has invalid line-range types")
+        if start_line < 1 or end_line < start_line:
+            raise ValueError(f"Local payload excerpt #{index} has an invalid line range")
+
+        total_lines = evidence_by_path[path].get("total_lines")
+        if not isinstance(total_lines, int) or end_line > total_lines:
+            raise ValueError(
+                f"Local payload excerpt #{index} points outside the source evidence line range for {path}"
+            )
+
+
+def validate_suspected_paths(
+    suspects: list[Any],
+    evidence_by_path: dict[str, dict[str, Any]],
+) -> None:
+    for index, suspect in enumerate(suspects, start=1):
+        if not isinstance(suspect, dict):
+            raise ValueError(f"Local payload suspect #{index} is not an object")
+
+        path = suspect.get("path")
+        if not isinstance(path, str) or not path:
+            raise ValueError(f"Local payload suspect #{index} is missing a valid path")
+
+        if path in evidence_by_path:
+            continue
+
+        resolved_path = REPO_ROOT / Path(path)
+        if not resolved_path.exists():
+            raise ValueError(f"Local payload suspect #{index} references a missing path: {path}")
+
+
+def validate_local_references(
+    payload: dict[str, Any],
+    input_payload: dict[str, Any],
+) -> dict[str, Any]:
+    evidence_by_path = evidence_index(input_payload)
+    validate_excerpt_references(payload["relevant_error_excerpts"], evidence_by_path)
+    validate_suspected_paths(payload["suspected_files_modules"], evidence_by_path)
+    return payload
+
+
 def call_chat_completion(
     config: EndpointConfig,
     *,
@@ -397,6 +469,7 @@ def run_local_stage(
     response, latency_ms = call_chat_completion(config, system_prompt=system_prompt, user_prompt=prompt)
     text, usage = response_text_and_usage(response)
     parsed = validate_local_payload(extract_json_object(text))
+    parsed = validate_local_references(parsed, input_payload)
     output_metrics = json_size_metrics(parsed)
     log_entry = build_log_entry(
         stage="local_preprocess",
