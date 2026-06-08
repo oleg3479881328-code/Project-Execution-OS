@@ -48,7 +48,7 @@ For a GitHub-backed handoff, include the direct URL and the required action in t
 Good:
 
 ```text
-OWNER ACTION REQUIRED: send DeepSeek this exact message: `Open https://github.com/<owner>/<repo>/issues/34 and execute the handoff packet now. Post the report in that issue.`
+OWNER ACTION REQUIRED: send any executor this exact message: `Open https://github.com/<owner>/<repo>/issues/34 and execute the handoff packet now. Post the report in that issue.`
 ```
 
 Bad:
