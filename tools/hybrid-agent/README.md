@@ -24,6 +24,9 @@ It does not:
 tools/hybrid-agent/
 ├─ hybrid_agent.py
 ├─ run_hybrid_agent.py
+├─ workstation_route.py
+├─ run_workstation_hybrid_route.py
+├─ Invoke-Workstation-HybridRoute.ps1
 ├─ benchmark_fixture.py
 ├─ fixtures/
 └─ tests/
@@ -34,6 +37,7 @@ tools/hybrid-agent/
 - `local-only`: only run the bounded local preprocessing stage.
 - `preprocess-then-cloud`: run local preprocessing first, then send the compact local payload to the cloud stage by default.
 - `cloud-only`: skip local preprocessing entirely.
+- `auto`: choose conservatively based on bounded-evidence size, local Ollama availability, and safe cloud-config presence.
 
 Successful hybrid path:
 
@@ -49,6 +53,69 @@ Fallback or skip path:
 Debug path:
 
 - pass `--debug-full-evidence` if you want successful hybrid runs to include both the compact payload and the original bounded evidence for inspection.
+
+## Workstation Integration
+
+The practical workstation entrypoint for normal Codex or DeepSeek use is:
+
+```text
+tools/hybrid-agent/Invoke-Workstation-HybridRoute.ps1
+```
+
+It routes through:
+
+```text
+tools/hybrid-agent/run_workstation_hybrid_route.py
+→ tools/hybrid-agent/workstation_route.py
+→ tools/hybrid-agent/hybrid_agent.py
+```
+
+The adapter discovers actual workstation seams before routing:
+
+- Codex CLI command path when available;
+- Codex desktop app path when derivable from the CLI install;
+- VS Code CLI path;
+- installed OpenAI VS Code Codex extension when present;
+- DeepSeek VS Code custom-endpoint config at `%APPDATA%\\Code\\User\\chatLanguageModels.json` when present.
+
+After routing, the adapter can launch a real workstation handoff path instead of stopping at side-by-side analysis only:
+
+- `deepseek` launches `code chat --mode agent` with the generated bounded handoff packet attached;
+- `codex` now prefers the installed OpenAI VS Code Codex integration and launches `code chat --mode agent` with the generated bounded handoff packet attached;
+- only if that VS Code Codex route is unavailable does `codex` fall back to the registered Codex desktop entrypoint.
+
+The Codex boundary is intentionally honest:
+
+- this workstation has the `openai.chatgpt` VS Code extension installed, with display name `Codex – OpenAI's coding agent`;
+- that extension registers VS Code chat session type `openai-codex`;
+- the public `code chat` CLI gives a usable launch surface, but it does not expose a deterministic provider-selection flag for `openai-codex`;
+- therefore Codex now prefers the VS Code chat handoff path, but exact provider targeting remains extension/UI-managed on this workstation.
+
+### Auto Policy
+
+`auto` mode is conservative:
+
+- use `cloud-only` for tiny bounded evidence when a safe cloud config exists;
+- use `preprocess-then-cloud` when bounded evidence is large enough that local compression is likely to help and both local and cloud routes are available;
+- use `local-only` when bounded evidence is meaningful but no safe cloud config is present;
+- fall back automatically if local preprocessing fails.
+
+Explicit `cloud-only` is stricter:
+
+- it skips local preprocessing entirely;
+- it also skips Ollama availability probing, so a missing local runtime does not add latency to a forced cloud-only run.
+
+### Timeout Strategy
+
+Issue `#31` live validation showed that real local Ollama runs can exceed the base 60-second timeout on this workstation.
+
+The workstation adapter therefore defaults to:
+
+```text
+240 seconds
+```
+
+This applies to normal workstation launcher use and can still be overridden explicitly.
 
 ## Configuration
 
@@ -131,6 +198,34 @@ python tools/hybrid-agent/run_hybrid_agent.py `
   --log-path logs/latest.md
 ```
 
+Workstation route for Codex:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/hybrid-agent/Invoke-Workstation-HybridRoute.ps1 `
+  -Executor codex `
+  -Mode auto `
+  -Task "Analyze this bounded task." `
+  -LogPath tools/hybrid-agent/fixtures/synthetic_repetitive_log.txt
+```
+
+This launcher now runs relative to the repository root even if you invoke it from another working directory.
+
+If you want analysis output without launching the downstream executor UI, pass:
+
+```powershell
+-NoLaunchExecutor
+```
+
+Workstation route for DeepSeek:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools/hybrid-agent/Invoke-Workstation-HybridRoute.ps1 `
+  -Executor deepseek `
+  -Mode auto `
+  -Task "Analyze this bounded task." `
+  -LogPath tools/hybrid-agent/fixtures/synthetic_repetitive_log.txt
+```
+
 Benchmark fixture:
 
 ```powershell
@@ -155,6 +250,8 @@ Normal CLI runs can use that default path without dirtying review status because
 
 Each stage records:
 
+- `route_decision` when the workstation adapter chooses `auto`;
+- `executor_handoff` metadata in CLI output when the downstream workstation handoff launcher is used;
 - `stage`;
 - `provider`;
 - `model`;
@@ -192,3 +289,5 @@ The local stage returns a single JSON object with:
 - This prototype preserves evidence references, but it only sees the bounded excerpts that were passed in.
 - Compact local context is accepted only when excerpt paths, line ranges, and suspected file paths pass structural validation.
 - Fallback preserves continuity, but a failed local stage still adds some latency before the cloud stage continues.
+- Codex Desktop launch is now integrated, but prompt injection into Codex Desktop is not yet a known supported contract on this workstation; the generated packet file remains the explicit handoff artifact.
+- Codex-in-VS-Code is the preferred practical route on this workstation, but its provider/session selection is not fully controllable from public CLI flags alone.

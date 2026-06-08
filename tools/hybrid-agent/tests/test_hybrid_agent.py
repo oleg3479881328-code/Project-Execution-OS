@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools" / "hybrid-agent"))
 
-from hybrid_agent import EndpointConfig, run_hybrid_agent  # noqa: E402
+from hybrid_agent import EndpointConfig, run_hybrid_agent, validate_local_payload  # noqa: E402
 
 
 class MockHandler(BaseHTTPRequestHandler):
@@ -432,6 +432,39 @@ class HybridAgentTests(unittest.TestCase):
                 log_path=self.log_path,
             )
 
+    def test_validate_local_payload_normalizes_live_model_variants(self) -> None:
+        payload = validate_local_payload(
+            {
+                "summary": "Repeated SQLite lock failures detected.",
+                "relevant_error_excerpts": [
+                    {
+                        "path": "tools\\hybrid-agent\\fixtures\\synthetic_repetitive_log.txt",
+                        "start_line": 1,
+                        "end_line": 2,
+                        "reason": "keyword_match",
+                    }
+                ],
+                "suspected_files_modules": [
+                    {
+                        "path": "tools\\hybrid-agent\\fixtures\\synthetic_repetitive_log.txt",
+                        "module": "scripts/build_semantic_store.py",
+                        "reason": "sqlite lock",
+                    }
+                ],
+                "escalation_recommendation": "Local Sufficient",
+                "local_stage_metadata": {
+                    "confidence": "HIGH",
+                    "notes": "normalized for workstation local runs",
+                },
+            }
+        )
+        self.assertEqual(payload["escalation_recommendation"], "local_sufficient")
+        self.assertEqual(payload["local_stage_metadata"]["confidence"], "high")
+        self.assertEqual(
+            payload["relevant_error_excerpts"][0]["path"],
+            str(Path("tools\\hybrid-agent\\fixtures\\synthetic_repetitive_log.txt")),
+        )
+
     def test_local_only_rejects_unknown_excerpt_path(self) -> None:
         MockHandler.routes = {
             "/v1/chat/completions": [
@@ -478,6 +511,184 @@ class HybridAgentTests(unittest.TestCase):
                 cloud_config=None,
                 log_path=self.log_path,
             )
+
+    def test_local_only_repairs_embedded_excerpt_path_for_single_source_evidence(self) -> None:
+        embedded_log = self.workdir / "embedded.log"
+        embedded_log.write_text(
+            "\n".join(
+                [
+                    "INFO start",
+                    "ERROR sqlite3.OperationalError database is locked file=.local/semantic-index/semantic-index.sqlite3",
+                    "WARNING retry pending",
+                ]
+            ),
+            encoding="utf-8",
+        )
+        MockHandler.routes = {
+            "/v1/chat/completions": [
+                {
+                    "body": {
+                        "id": "local-embedded-path",
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        {
+                                            "summary": "Embedded file path was selected instead of source evidence path.",
+                                            "relevant_error_excerpts": [
+                                                {
+                                                    "path": ".local\\semantic-index\\semantic-index.sqlite3",
+                                                    "start_line": 1,
+                                                    "end_line": 3,
+                                                    "reason": "mentioned inside log excerpt",
+                                                }
+                                            ],
+                                            "suspected_files_modules": [],
+                                            "escalation_recommendation": "local_sufficient",
+                                            "local_stage_metadata": {
+                                                "confidence": "medium",
+                                                "notes": "repair single-source excerpt path",
+                                            },
+                                        }
+                                    )
+                                }
+                            }
+                        ],
+                        "usage": {},
+                    }
+                }
+            ]
+        }
+        result = run_hybrid_agent(
+            task_text="Repair embedded excerpt path.",
+            mode="local-only",
+            log_paths=[embedded_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=None,
+            log_path=self.log_path,
+        )
+        self.assertEqual(result["local"]["payload"]["relevant_error_excerpts"][0]["path"], str(embedded_log))
+
+    def test_local_only_repairs_route_alias_suspect_path(self) -> None:
+        MockHandler.routes = {
+            "/v1/chat/completions": [
+                {
+                    "body": {
+                        "id": "local-route-alias",
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        {
+                                            "summary": "Route alias suspect path should be normalized to the real repo file.",
+                                            "relevant_error_excerpts": [
+                                                {
+                                                    "path": str(self.input_log),
+                                                    "start_line": 2,
+                                                    "end_line": 4,
+                                                    "reason": "keyword_match",
+                                                }
+                                            ],
+                                            "suspected_files_modules": [
+                                                {
+                                                    "path": "tools/hybrid-agent/workstation-route",
+                                                    "module": "route",
+                                                    "reason": "selected route alias",
+                                                }
+                                            ],
+                                            "escalation_recommendation": "local_sufficient",
+                                            "local_stage_metadata": {
+                                                "confidence": "medium",
+                                                "notes": "repair route alias",
+                                            },
+                                        }
+                                    )
+                                }
+                            }
+                        ],
+                        "usage": {},
+                    }
+                }
+            ]
+        }
+        result = run_hybrid_agent(
+            task_text="Repair route alias suspect path.",
+            mode="local-only",
+            log_paths=[self.input_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=None,
+            log_path=self.log_path,
+        )
+        self.assertEqual(
+            result["local"]["payload"]["suspected_files_modules"][0]["path"],
+            "tools\\hybrid-agent\\workstation_route.py",
+        )
+
+    def test_local_only_repairs_single_source_suspect_path_mentioned_inside_log(self) -> None:
+        embedded_log = self.workdir / "embedded-build.log"
+        embedded_log.write_text(
+            "\n".join(
+                [
+                    "INFO start",
+                    "ERROR failure in scripts/build_semantic_store.py",
+                    "WARNING downstream validation skipped",
+                ]
+            ),
+            encoding="utf-8",
+        )
+        MockHandler.routes = {
+            "/v1/chat/completions": [
+                {
+                    "body": {
+                        "id": "local-suspect-embedded-path",
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        {
+                                            "summary": "Repair suspect path that only appears inside the log.",
+                                            "relevant_error_excerpts": [
+                                                {
+                                                    "path": str(embedded_log),
+                                                    "start_line": 1,
+                                                    "end_line": 3,
+                                                    "reason": "keyword_match",
+                                                }
+                                            ],
+                                            "suspected_files_modules": [
+                                                {
+                                                    "path": "scripts/build_semantic_store.py",
+                                                    "module": "build_semantic_store",
+                                                    "reason": "mentioned inside the bounded evidence log",
+                                                }
+                                            ],
+                                            "escalation_recommendation": "local_sufficient",
+                                            "local_stage_metadata": {
+                                                "confidence": "medium",
+                                                "notes": "repair single-source suspect path",
+                                            },
+                                        }
+                                    )
+                                }
+                            }
+                        ],
+                        "usage": {},
+                    }
+                }
+            ]
+        }
+        result = run_hybrid_agent(
+            task_text="Repair suspect path mentioned only inside bounded evidence.",
+            mode="local-only",
+            log_paths=[embedded_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=None,
+            log_path=self.log_path,
+        )
+        self.assertEqual(result["local"]["payload"]["suspected_files_modules"][0]["path"], str(embedded_log))
 
     def test_logging_fields_and_compression_ratio(self) -> None:
         MockHandler.routes = {
