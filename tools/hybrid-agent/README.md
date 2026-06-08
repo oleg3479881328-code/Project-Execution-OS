@@ -75,18 +75,21 @@ The adapter discovers actual workstation seams before routing:
 - Codex CLI command path when available;
 - Codex desktop app path when derivable from the CLI install;
 - VS Code CLI path;
+- installed OpenAI VS Code Codex extension when present;
 - DeepSeek VS Code custom-endpoint config at `%APPDATA%\\Code\\User\\chatLanguageModels.json` when present.
 
 After routing, the adapter can launch a real workstation handoff path instead of stopping at side-by-side analysis only:
 
 - `deepseek` launches `code chat --mode agent` with the generated bounded handoff packet attached;
-- `codex` writes the same bounded handoff packet inside the repository and launches the registered Codex desktop entrypoint.
+- `codex` now prefers the installed OpenAI VS Code Codex integration and launches `code chat --mode agent` with the generated bounded handoff packet attached;
+- only if that VS Code Codex route is unavailable does `codex` fall back to the registered Codex desktop entrypoint.
 
 The Codex boundary is intentionally honest:
 
-- this workstation exposes a registered Codex desktop executable and `codex://` protocol;
-- a documented prompt-injection CLI contract for Codex Desktop was not discoverable here;
-- therefore the saved packet file is the explicit Codex handoff boundary, while DeepSeek gets direct prompt+file injection through VS Code chat.
+- this workstation has the `openai.chatgpt` VS Code extension installed, with display name `Codex – OpenAI's coding agent`;
+- that extension registers VS Code chat session type `openai-codex`;
+- the public `code chat` CLI gives a usable launch surface, but it does not expose a deterministic provider-selection flag for `openai-codex`;
+- therefore Codex now prefers the VS Code chat handoff path, but exact provider targeting remains extension/UI-managed on this workstation.
 
 ### Auto Policy
 
@@ -287,3 +290,4 @@ The local stage returns a single JSON object with:
 - Compact local context is accepted only when excerpt paths, line ranges, and suspected file paths pass structural validation.
 - Fallback preserves continuity, but a failed local stage still adds some latency before the cloud stage continues.
 - Codex Desktop launch is now integrated, but prompt injection into Codex Desktop is not yet a known supported contract on this workstation; the generated packet file remains the explicit handoff artifact.
+- Codex-in-VS-Code is the preferred practical route on this workstation, but its provider/session selection is not fully controllable from public CLI flags alone.

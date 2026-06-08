@@ -626,6 +626,70 @@ class HybridAgentTests(unittest.TestCase):
             "tools\\hybrid-agent\\workstation_route.py",
         )
 
+    def test_local_only_repairs_single_source_suspect_path_mentioned_inside_log(self) -> None:
+        embedded_log = self.workdir / "embedded-build.log"
+        embedded_log.write_text(
+            "\n".join(
+                [
+                    "INFO start",
+                    "ERROR failure in scripts/build_semantic_store.py",
+                    "WARNING downstream validation skipped",
+                ]
+            ),
+            encoding="utf-8",
+        )
+        MockHandler.routes = {
+            "/v1/chat/completions": [
+                {
+                    "body": {
+                        "id": "local-suspect-embedded-path",
+                        "choices": [
+                            {
+                                "message": {
+                                    "content": json.dumps(
+                                        {
+                                            "summary": "Repair suspect path that only appears inside the log.",
+                                            "relevant_error_excerpts": [
+                                                {
+                                                    "path": str(embedded_log),
+                                                    "start_line": 1,
+                                                    "end_line": 3,
+                                                    "reason": "keyword_match",
+                                                }
+                                            ],
+                                            "suspected_files_modules": [
+                                                {
+                                                    "path": "scripts/build_semantic_store.py",
+                                                    "module": "build_semantic_store",
+                                                    "reason": "mentioned inside the bounded evidence log",
+                                                }
+                                            ],
+                                            "escalation_recommendation": "local_sufficient",
+                                            "local_stage_metadata": {
+                                                "confidence": "medium",
+                                                "notes": "repair single-source suspect path",
+                                            },
+                                        }
+                                    )
+                                }
+                            }
+                        ],
+                        "usage": {},
+                    }
+                }
+            ]
+        }
+        result = run_hybrid_agent(
+            task_text="Repair suspect path mentioned only inside bounded evidence.",
+            mode="local-only",
+            log_paths=[embedded_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=None,
+            log_path=self.log_path,
+        )
+        self.assertEqual(result["local"]["payload"]["suspected_files_modules"][0]["path"], str(embedded_log))
+
     def test_logging_fields_and_compression_ratio(self) -> None:
         MockHandler.routes = {
             "/v1/chat/completions": [

@@ -107,6 +107,8 @@ class WorkstationRouteTests(unittest.TestCase):
             codex_cli_path="C:/codex.exe",
             codex_desktop_path=None,
             vscode_cli_path="C:/code.cmd",
+            codex_vscode_extension_path="C:/Users/test/.vscode/extensions/openai.chatgpt",
+            codex_vscode_chat_session_type="openai-codex",
             deepseek_vscode_config_path="C:/chatLanguageModels.json",
             deepseek_vscode_model_id="deepseek-v4-pro",
         )
@@ -140,6 +142,8 @@ class WorkstationRouteTests(unittest.TestCase):
             codex_cli_path="C:/codex.exe",
             codex_desktop_path="C:/Codex.exe",
             vscode_cli_path="C:/code.cmd",
+            codex_vscode_extension_path="C:/Users/test/.vscode/extensions/openai.chatgpt",
+            codex_vscode_chat_session_type="openai-codex",
             deepseek_vscode_config_path=None,
             deepseek_vscode_model_id=None,
         )
@@ -178,6 +182,85 @@ class WorkstationRouteTests(unittest.TestCase):
             resolved_inputs[0],
             repo_root / "tools" / "hybrid-agent" / "fixtures" / "synthetic_repetitive_log.txt",
         )
+
+    def test_codex_prefers_vscode_handoff_when_extension_exists(self) -> None:
+        fake_entrypoints = WorkstationEntrypoints(
+            codex_cli_path="C:/codex.exe",
+            codex_desktop_path="C:/Codex.exe",
+            vscode_cli_path="C:/code.cmd",
+            codex_vscode_extension_path="C:/Users/test/.vscode/extensions/openai.chatgpt",
+            codex_vscode_chat_session_type="openai-codex",
+            deepseek_vscode_config_path=None,
+            deepseek_vscode_model_id=None,
+        )
+        with (
+            patch("workstation_route.discover_workstation_entrypoints", return_value=fake_entrypoints),
+            patch("workstation_route.build_local_config", return_value=self.fake_config("local-openai-compatible")),
+            patch("workstation_route.build_cloud_config", return_value=None),
+            patch(
+                "workstation_route.run_hybrid_agent",
+                return_value={
+                    "mode": "local-only",
+                    "fallback_used": False,
+                    "input_payload": {"evidence": []},
+                    "local": {"payload": {"summary": "ok"}},
+                },
+            ),
+            patch("workstation_route.subprocess.Popen") as popen_mock,
+        ):
+            result = run_workstation_route(
+                executor="codex",
+                mode="auto",
+                task_text="route codex via vscode",
+                log_paths=[self.evidence_log],
+                file_paths=[],
+                log_path=self.log_file,
+                launch_executor=True,
+                repo_root=self.workdir,
+            )
+        self.assertEqual(result["executor_handoff"]["launch_method"], "vscode-chat")
+        self.assertEqual(result["executor_handoff"]["launch_status"], "launched")
+        self.assertIn("code.cmd", " ".join(result["executor_handoff"]["launch_command"]))
+        popen_mock.assert_called_once()
+
+    def test_codex_falls_back_to_desktop_when_vscode_route_missing(self) -> None:
+        fake_entrypoints = WorkstationEntrypoints(
+            codex_cli_path="C:/codex.exe",
+            codex_desktop_path="C:/Codex.exe",
+            vscode_cli_path=None,
+            codex_vscode_extension_path=None,
+            codex_vscode_chat_session_type=None,
+            deepseek_vscode_config_path=None,
+            deepseek_vscode_model_id=None,
+        )
+        with (
+            patch("workstation_route.discover_workstation_entrypoints", return_value=fake_entrypoints),
+            patch("workstation_route.build_local_config", return_value=self.fake_config("local-openai-compatible")),
+            patch("workstation_route.build_cloud_config", return_value=None),
+            patch(
+                "workstation_route.run_hybrid_agent",
+                return_value={
+                    "mode": "local-only",
+                    "fallback_used": False,
+                    "input_payload": {"evidence": []},
+                    "local": {"payload": {"summary": "ok"}},
+                },
+            ),
+            patch("workstation_route.subprocess.Popen") as popen_mock,
+        ):
+            result = run_workstation_route(
+                executor="codex",
+                mode="auto",
+                task_text="route codex fallback desktop",
+                log_paths=[self.evidence_log],
+                file_paths=[],
+                log_path=self.log_file,
+                launch_executor=True,
+                repo_root=self.workdir,
+            )
+        self.assertEqual(result["executor_handoff"]["launch_method"], "codex-desktop-wrapper")
+        self.assertEqual(result["executor_handoff"]["launch_status"], "launched")
+        popen_mock.assert_called_once()
 
 
 if __name__ == "__main__":

@@ -37,6 +37,8 @@ class WorkstationEntrypoints:
     codex_cli_path: str | None
     codex_desktop_path: str | None
     vscode_cli_path: str | None
+    codex_vscode_extension_path: str | None
+    codex_vscode_chat_session_type: str | None
     deepseek_vscode_config_path: str | None
     deepseek_vscode_model_id: str | None
 
@@ -99,8 +101,32 @@ def discover_deepseek_vscode_config() -> tuple[str | None, str | None]:
     return str(config_path), None
 
 
+def discover_codex_vscode_extension() -> tuple[str | None, str | None]:
+    extensions_root = Path.home() / ".vscode" / "extensions"
+    matches = sorted(extensions_root.glob("openai.chatgpt-*"), reverse=True)
+    if not matches:
+        return None, None
+
+    package_json = matches[0] / "package.json"
+    if not package_json.exists():
+        return str(matches[0]), None
+
+    try:
+        content = json.loads(package_json.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return str(matches[0]), None
+
+    sessions = content.get("contributes", {}).get("chatSessions")
+    if isinstance(sessions, list):
+        for item in sessions:
+            if isinstance(item, dict) and item.get("type") == "openai-codex":
+                return str(matches[0]), "openai-codex"
+    return str(matches[0]), None
+
+
 def discover_workstation_entrypoints() -> WorkstationEntrypoints:
     deepseek_config_path, deepseek_model_id = discover_deepseek_vscode_config()
+    codex_extension_path, codex_chat_session_type = discover_codex_vscode_extension()
     codex_cli = command_path("codex")
     vscode_cli = command_path("code")
     codex_desktop = None
@@ -114,6 +140,8 @@ def discover_workstation_entrypoints() -> WorkstationEntrypoints:
         codex_cli_path=codex_cli,
         codex_desktop_path=codex_desktop,
         vscode_cli_path=vscode_cli,
+        codex_vscode_extension_path=codex_extension_path,
+        codex_vscode_chat_session_type=codex_chat_session_type,
         deepseek_vscode_config_path=deepseek_config_path,
         deepseek_vscode_model_id=deepseek_model_id,
     )
@@ -537,6 +565,50 @@ def launch_deepseek_handoff(
     )
 
 
+def launch_codex_vscode_handoff(
+    *,
+    entrypoints: WorkstationEntrypoints,
+    packet_path: Path,
+    repo_root: Path,
+    evidence_paths: list[Path],
+) -> ExecutorHandoff:
+    if not entrypoints.vscode_cli_path or not entrypoints.codex_vscode_extension_path:
+        return ExecutorHandoff(
+            executor="codex",
+            packet_path=str(packet_path),
+            launch_method="vscode-chat",
+            launch_boundary="VS Code Codex integration was not available, so this handoff path could not be launched.",
+            launch_status="not_available",
+            launch_target=entrypoints.vscode_cli_path,
+            launch_command=[],
+        )
+
+    command = [
+        entrypoints.vscode_cli_path,
+        "chat",
+        "--mode",
+        "agent",
+        "--reuse-window",
+        "--add-file",
+        str(packet_path),
+    ]
+    for path in evidence_paths[:4]:
+        command.extend(["--add-file", str(path)])
+    command.append(
+        "Continue from the attached workstation hybrid handoff packet in the installed OpenAI Codex VS Code integration and execute within that bounded scope."
+    )
+    subprocess.Popen(command, cwd=repo_root)
+    return ExecutorHandoff(
+        executor="codex",
+        packet_path=str(packet_path),
+        launch_method="vscode-chat",
+        launch_boundary="Codex handoff is launched through the installed OpenAI Codex VS Code integration. The extension registers chat session type `openai-codex`, but the public `code chat` CLI does not expose deterministic provider-selection flags, so provider targeting remains extension/UI-managed on this workstation.",
+        launch_status="launched",
+        launch_target=entrypoints.vscode_cli_path,
+        launch_command=command,
+    )
+
+
 def launch_codex_handoff(
     *,
     entrypoints: WorkstationEntrypoints,
@@ -560,7 +632,7 @@ def launch_codex_handoff(
         executor="codex",
         packet_path=str(packet_path),
         launch_method="codex-desktop-wrapper",
-        launch_boundary="The packet was written inside the repository and the registered Codex desktop entrypoint was launched. This workstation did not expose a documented prompt-injection CLI contract for Codex Desktop, so the packet file is the explicit handoff boundary.",
+        launch_boundary="VS Code Codex integration was unavailable for deterministic launch, so the packet was written inside the repository and the registered Codex desktop entrypoint was launched as a fallback. A documented prompt-injection CLI contract for Codex Desktop was not discoverable on this workstation, so the packet file remains the explicit handoff boundary.",
         launch_status=status,
         launch_target=launch_target,
         launch_command=command,
@@ -597,6 +669,14 @@ def maybe_launch_executor_handoff(
             repo_root=repo_root,
             evidence_paths=evidence_paths,
         )
+    codex_vscode = launch_codex_vscode_handoff(
+        entrypoints=entrypoints,
+        packet_path=packet_path,
+        repo_root=repo_root,
+        evidence_paths=evidence_paths,
+    )
+    if codex_vscode.launch_status == "launched":
+        return codex_vscode
     return launch_codex_handoff(
         entrypoints=entrypoints,
         packet_path=packet_path,
