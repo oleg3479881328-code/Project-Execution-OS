@@ -3,33 +3,22 @@
 ## Project
 Project Execution OS
 
-## Purpose
-Compact operational snapshot for multi-agent coordination. Read this file before processing shorthand command `02`.
-
 ## Active Channel
-none — Issue #27 completed through merged PR #30
-
-## Previous Channels
-- https://github.com/oleg3479881328-code/Project-Execution-OS/pull/30 — merged hybrid-agent prototype integration
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/27 — implementation issue and execution-report history
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/28 — completed executor start-now standard fix
+https://github.com/oleg3479881328-code/Project-Execution-OS/issues/31
 
 ## Current Task
-No active hybrid-agent implementation task.
+Run live Ollama validation for the merged hybrid-agent prototype on the owner's workstation.
 
-## Current Repository State
-- PR #30 merged successfully into `main`.
+## Current State
+- Hybrid-agent prototype is merged into `main`.
 - Merge commit: `33728af383794c1e25853768c5a02850f5a61ee1`.
-- Integrated clean branch head: `21949a045aa8735c169f53b13f5b93801e88daf0`.
-- GitHub Actions passed before merge.
-- Integrated scope includes optional bounded local preprocessing, compact-context validation, fallback behavior, runtime logging hygiene, tests, benchmark fixture, and refreshed system context manifest.
-
-## Open Review Items
-- None for Issue #27.
-- Live Ollama/provider validation remains a separate future follow-up task.
+- Owner reports Ollama is already installed.
+- Issue #31 contains the terminal-execution packet.
 
 ## Next Step
-When `02` is received, report that the hybrid-agent prototype integration is complete unless a new active channel is registered.
-
-## Reading Rule
-For `02`, read this file first. Open a previous channel only when historical context is required.
+When `02` is received:
+1. open Issue #31;
+2. execute the packet using workstation handles;
+3. do not stop to summarize or ask for routine confirmation;
+4. report results in Issue #31;
+5. ask the owner only for a real blocker.
