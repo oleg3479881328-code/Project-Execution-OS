@@ -4,24 +4,16 @@
 Project Execution OS
 
 ## Active Channel
-none — Issue #32 completed through merged PR #33
-
-## Previous Channels
-- https://github.com/oleg3479881328-code/Project-Execution-OS/pull/33 — merged workstation hybrid route integration
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/32 — completed integration task
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/31 — completed Ollama live validation
-- https://github.com/oleg3479881328-code/Project-Execution-OS/pull/30 — merged hybrid-agent prototype
+https://github.com/oleg3479881328-code/Project-Execution-OS/issues/34
 
 ## Current Task
-No active hybrid-agent integration task.
+Benchmark the hybrid Ollama workstation route and measure effectiveness.
 
 ## Current State
-- PR #33 merged into `main`.
-- Merge commit: `d58580180869aad76727b6b5cdd2d6fdd99ad388`.
-- Integrated branch head: `fbe17ac54bc4a86497dde30b25f428b6ae24da04`.
-- GitHub Actions passed before merge.
-- Issue #32 closed as completed.
-- Workstation route now prefers Codex in VS Code when available, keeps Codex Desktop as fallback, supports DeepSeek in VS Code, local Ollama preprocessing, conservative auto-routing, and graceful fallback.
+- Hybrid workstation route is merged into `main`.
+- Issue #34 contains the benchmark execution packet.
+- The owner may relay the full GitHub URL to any executor.
+- Do not rely on a bare issue number for a different executor unless that executor already shares the registered coordination state.
 
 ## Next Step
-When `02` is received, report that the hybrid workstation route integration is complete unless a new active channel is registered.
+When `02` is received, open Issue #34, read the latest report or blocker, and continue from its actual content.
