@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fc171177f7e8bdbaa470271de457cba2f7ab78d4",
-  "generated_at": "2026-06-09T13:54:14-04:00",
-  "artifact_count": 416,
+  "repository_commit": "c36a146fb5a39c62ec61987a13b06ca2897fe00d",
+  "generated_at": "2026-06-09T13:54:33-04:00",
+  "artifact_count": 417,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3493,6 +3493,30 @@
         "State Review Categories",
         "Current-Source Rule",
         "Output"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/ohio/VALIDATION_BACKLOG.md",
+      "title": "Ohio Tax and Accounting Validation Backlog",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "6fb409b17638af899d1264d93ebc83d2ecfbcf3fc847e4cc40e42e4d4fec2603",
+      "headings": [
+        "Ohio Tax and Accounting Validation Backlog",
+        "Purpose",
+        "Status",
+        "Required Validation Scenarios",
+        "Scenario 1 — Ohio Resident With DoorDash Income",
+        "Scenario 2 — Ohio Single-Member LLC",
+        "Scenario 3 — Ohio Employer",
+        "Scenario 4 — Ohio Sales-Tax Question",
+        "Scenario 5 — RITA Municipality",
+        "Scenario 6 — CCA Municipality",
+        "Open Questions",
+        "Validation Record Template",
+        "Final Rule"
       ]
     },
     {
