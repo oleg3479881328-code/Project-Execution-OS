@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "702d17a58ebdbc795675d1ff7732d623dbafe6f6",
-  "generated_at": "2026-06-09T17:57:53-04:00",
-  "artifact_count": 419,
+  "repository_commit": "d16502093103dd11ae7cbfe43947b4c606bbaadb",
+  "generated_at": "2026-06-09T18:11:55-04:00",
+  "artifact_count": 420,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2028,6 +2028,33 @@
         "Project Entry Flow",
         "Naming Rule",
         "Permission Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/server-rental/BLOCK.md",
+      "title": "Server Rental Block",
+      "type": "domain-block-entrypoint",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "e5e0809644c8124afa634cab11da8c20f575ca67231d881082c61d07583a8f21",
+      "headings": [
+        "Server Rental Block",
+        "Purpose",
+        "Status",
+        "Core Principle",
+        "When To Use",
+        "When Not To Use",
+        "Default Decision Model",
+        "Compute Profiles",
+        "Lightweight Control Node",
+        "Temporary GPU Worker",
+        "Parallel Worker Pool",
+        "Geographic Research Node",
+        "Required Reading Inside This Block",
+        "Typical Outputs",
+        "Boundary",
         "Final Rule"
       ]
     },
