@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "aff0a843768d3d130c79cfae7923dac17fcc946a",
-  "generated_at": "2026-06-09T13:25:17-04:00",
-  "artifact_count": 405,
+  "repository_commit": "1dc2271b8423ac2ddd4ca2ae28cd67aa6f4e31e6",
+  "generated_at": "2026-06-09T13:25:45-04:00",
+  "artifact_count": 406,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3120,6 +3120,33 @@
         "Federal Sources",
         "State and Local Sources",
         "Source Maintenance Rule"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/RESEARCH_REPORT_2026-06-09.md",
+      "title": "US Tax and Accounting Block Research Report — 2026-06-09",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "a30059ce8d7163ae1ff02d1a363f42e23010d8b701926298b9bdb1108615f841",
+      "headings": [
+        "US Tax and Accounting Block Research Report — 2026-06-09",
+        "Purpose",
+        "Why This Block Exists",
+        "Research Method",
+        "Main Conclusions",
+        "1. Tax answers must be date-sensitive",
+        "2. Entity and tax classification must be separated",
+        "3. Federal-only answers are incomplete",
+        "4. Books quality is a first-class variable",
+        "5. Worker classification and payroll deserve a dedicated route",
+        "6. Sales tax deserves a dedicated route",
+        "7. The block must support professional handoff",
+        "Initial Files",
+        "Current Boundary",
+        "Next Validation",
+        "Final Rule"
       ]
     },
     {
