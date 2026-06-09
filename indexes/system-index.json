@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "80017018af1bb5261c529040a24e14bbc6e3e54c",
-  "generated_at": "2026-06-09T18:13:48-04:00",
-  "artifact_count": 427,
+  "repository_commit": "c7598bf4d44845c8215443e1ffc0dc5eb777a314",
+  "generated_at": "2026-06-09T18:47:02-04:00",
+  "artifact_count": 428,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2115,6 +2115,28 @@
         "Official Model Documentation",
         "Regional Documentation",
         "Rule"
+      ]
+    },
+    {
+      "path": "blocks/server-rental/RESEARCH_INTAKE_2026-06-09_GOOGLE_DOC_PARTIAL.md",
+      "title": "Server Rental Research Intake — Google Doc Partial — 2026-06-09",
+      "type": "domain-block-artifact",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "ca99d2236591353ca355d0eeebcad5e07f0f46b04556f1139549500f8139ae8f",
+      "headings": [
+        "Server Rental Research Intake — Google Doc Partial — 2026-06-09",
+        "Source",
+        "Intake Status",
+        "Strong Strategic Findings Worth Preserving",
+        "1. Thin-Terminal Strategy",
+        "2. Provider Categories",
+        "3. China As Separate Track",
+        "4. GPU Selection By Workload",
+        "Data Points Seen In The Partial Document",
+        "Important Caution Flags",
+        "Next Actions"
       ]
     },
     {
