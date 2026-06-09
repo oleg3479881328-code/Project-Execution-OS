@@ -178,6 +178,20 @@ Current status:
 
 `candidate`
 
+### US Tax and Accounting Block
+
+Path:
+
+`blocks/us-tax-accounting/`
+
+Purpose:
+
+Provide a reusable United States tax and accounting operations layer for bookkeeping, entity and tax-classification review, federal/state/local routing, deadlines, gig-economy income, payroll, contractors, information returns, sales tax, recurring close workflows, security boundaries, tool selection, and professional handoff.
+
+Current status:
+
+`candidate`
+
 ### Video Production Block
 
 Path:
