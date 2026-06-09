@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1652f67a4b208df982abbcf4ea3749edaf34aa91",
-  "generated_at": "2026-06-09T13:55:23-04:00",
+  "repository_commit": "fa44b5ed1391a66306185126ee5d5cf46059d5fc",
+  "generated_at": "2026-06-09T13:55:40-04:00",
   "artifact_count": 417,
   "artifacts": [
     {
@@ -390,7 +390,7 @@
       "domain": "PROJECT_INDEX.md",
       "status": "candidate",
       "date": null,
-      "sha256": "e5062d8d965d3fb342ebf42ecbfd7e822d49aa3c624449ee9b81f8b513da5668",
+      "sha256": "54747f50031096f33bd765b6840d4a2d34c69b2dca6c9982310c047b60d2be8a",
       "headings": [
         "Blocks Index",
         "Purpose",
@@ -408,6 +408,7 @@
         "US Law Block",
         "Immigration Sub-Block",
         "US Tax and Accounting Block",
+        "Ohio Tax and Accounting Sub-Block",
         "Video Production Block",
         "YouTube Block",
         "Generated Catalog",
