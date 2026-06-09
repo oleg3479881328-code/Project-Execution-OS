@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f6810170a2584295b998217fa514bdf94fc7e8f4",
-  "generated_at": "2026-06-09T16:30:44-04:00",
-  "artifact_count": 418,
+  "repository_commit": "702d17a58ebdbc795675d1ff7732d623dbafe6f6",
+  "generated_at": "2026-06-09T17:57:53-04:00",
+  "artifact_count": 419,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -22,14 +22,15 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "07ce39bd90ee5993d86b6d98e5300f917062f149a0aa4dd4e1aac6c0ec27387e",
+      "sha256": "da4370f107903a5b08bc074fd851c45c5a48e369d3030766afab1f1bb3608da2",
       "headings": [
         "AI Coordination Log",
         "2026-06-08 — Active coordination snapshot created",
         "2026-06-08 — Clean integration branch required",
         "2026-06-08 — PR #30 review corrections requested",
         "2026-06-09 — Hybrid fallback hardening and model comparison opened",
-        "2026-06-09 — Mandatory executor progress heartbeat added"
+        "2026-06-09 — Mandatory executor progress heartbeat added",
+        "2026-06-09 — Durable interim checkpoint rule added"
       ]
     },
     {
@@ -6276,6 +6277,30 @@
         "Risks",
         "Source",
         "Related Standards"
+      ]
+    },
+    {
+      "path": "knowledge-library/cloud-compute-on-demand-strategy.md",
+      "title": "Cloud Compute On-Demand Strategy",
+      "type": "knowledge-entry",
+      "domain": "knowledge:cloud-compute-on-demand-strategy.md",
+      "status": "captured architecture insight",
+      "date": "2026-06-09",
+      "sha256": "eb8d97fda8233ce8629c6e14713642263b7a5e681f33057d2a029753af9109c2",
+      "headings": [
+        "Cloud Compute On-Demand Strategy",
+        "Context",
+        "Core Decision",
+        "Strategic Model",
+        "Compute Ladder",
+        "Scaling Principle",
+        "Video Generation Implication",
+        "Open-Source LLM Implication",
+        "Operational Principle",
+        "Research Direction",
+        "Decision Rule For Future Recommendations",
+        "Lesson Learned",
+        "Next Research Task"
       ]
     },
     {
