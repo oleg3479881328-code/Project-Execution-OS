@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c5dcf5d80df84f6cc360b37d56bf4056ba3d6794",
-  "generated_at": "2026-06-09T08:18:26-04:00",
-  "artifact_count": 379,
+  "repository_commit": "14a9d9af789a7e33530c505ad3ee6b2d8f684cca",
+  "generated_at": "2026-06-09T12:39:56-04:00",
+  "artifact_count": 388,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -22,13 +22,14 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "852c055df636fc5171458a13843d0625d6b505262746081c80448af6fe03e12b",
+      "sha256": "07ce39bd90ee5993d86b6d98e5300f917062f149a0aa4dd4e1aac6c0ec27387e",
       "headings": [
         "AI Coordination Log",
         "2026-06-08 — Active coordination snapshot created",
         "2026-06-08 — Clean integration branch required",
         "2026-06-08 — PR #30 review corrections requested",
-        "2026-06-09 — Hybrid fallback hardening and model comparison opened"
+        "2026-06-09 — Hybrid fallback hardening and model comparison opened",
+        "2026-06-09 — Mandatory executor progress heartbeat added"
       ]
     },
     {
@@ -389,7 +390,7 @@
       "domain": "PROJECT_INDEX.md",
       "status": "candidate",
       "date": null,
-      "sha256": "5429e80fe257de424d8a3ae4e5f2b1ab97aaf208c92351f96b9bc5ff12dd98ee",
+      "sha256": "b7a2264533a99028eb5b6e936b566fbc74c1340fe9e16df6f35892e306eec07c",
       "headings": [
         "Blocks Index",
         "Purpose",
@@ -400,6 +401,7 @@
         "Documentation Block",
         "Logic Block",
         "Music Block",
+        "Notion Agent Workspace Block",
         "Skill Creator Block",
         "Solana Block",
         "Telegram Block",
@@ -1847,6 +1849,182 @@
         "Optional Future Split-Outs",
         "Review Checklist",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/notion/AGENT_RULES.md",
+      "title": "Notion Agent Rules",
+      "type": "domain-block-artifact",
+      "domain": "notion",
+      "status": null,
+      "date": null,
+      "sha256": "8c894cb61bcb80d153f4439039e5ed0b85653558ca4924dbb8957026641d5a97",
+      "headings": [
+        "Notion Agent Rules",
+        "Purpose",
+        "Entry Rule",
+        "Read Rule",
+        "Write Rule",
+        "Conflict Rule",
+        "Agent Note Rule",
+        "Secret Rule",
+        "MCP and API Rule",
+        "Sync Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/notion/BLOCK.md",
+      "title": "Notion Agent Workspace Block",
+      "type": "domain-block-entrypoint",
+      "domain": "notion",
+      "status": null,
+      "date": null,
+      "sha256": "58ab7a7322769cb1abb62813a4d5700bf7669360ac96265e977232c8f8646f6d",
+      "headings": [
+        "Notion Agent Workspace Block",
+        "Purpose",
+        "Status",
+        "Core Principle",
+        "When To Use",
+        "When Not To Use",
+        "Read Next",
+        "Typical Flow",
+        "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/notion/DATABASE_SCHEMA.md",
+      "title": "Notion Database Schema",
+      "type": "domain-block-artifact",
+      "domain": "notion",
+      "status": null,
+      "date": null,
+      "sha256": "e2c9248c6b8e58fcc942d056727e4eab930043c47f52b63a7c98dd1415eb7c8e",
+      "headings": [
+        "Notion Database Schema",
+        "Purpose",
+        "Design Rule",
+        "Projects Database",
+        "Tasks Database",
+        "Research Database",
+        "Decisions Database",
+        "Assets Database",
+        "Links Database",
+        "Logs Database",
+        "Knowledge Extracted Database",
+        "Initial MVP Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/notion/READY_SOLUTIONS.md",
+      "title": "Ready Solutions",
+      "type": "domain-block-artifact",
+      "domain": "notion",
+      "status": null,
+      "date": null,
+      "sha256": "95b58851f3097320f2d72bcad1d7d109ca20cba93cd817f940711f96c1fd209c",
+      "headings": [
+        "Ready Solutions",
+        "Purpose",
+        "Official Notion Surfaces",
+        "Notion API",
+        "Official Notion MCP",
+        "GitHub and Notion Coordination Donors",
+        "Native Notion GitHub Integration",
+        "Unito GitHub and Notion Sync",
+        "GitHub Marketplace: Notion 2 Issue",
+        "n8n Workflow Templates",
+        "Open Source and Community Donors",
+        "makenotion/notion-mcp-server",
+        "awesome-notion",
+        "Community MCP Servers",
+        "Selection Order",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/notion/REFERENCES.md",
+      "title": "References",
+      "type": "domain-block-artifact",
+      "domain": "notion",
+      "status": null,
+      "date": null,
+      "sha256": "9419c7946017400425757fee9dad703f4993ff9d34818fce034abce344d44f5d",
+      "headings": [
+        "References",
+        "Official Sources",
+        "Donor and Ecosystem Sources",
+        "Source Hierarchy",
+        "Freshness Rule"
+      ]
+    },
+    {
+      "path": "blocks/notion/RESEARCH_REPORT_2026-06-09.md",
+      "title": "Notion Agent Workspace Research Report — 2026-06-09",
+      "type": "domain-block-artifact",
+      "domain": "notion",
+      "status": null,
+      "date": null,
+      "sha256": "699b8b19afb82e4f709f825d1cdda733b105d90bd3eb280f9d2e52d9b350a866",
+      "headings": [
+        "Notion Agent Workspace Research Report — 2026-06-09",
+        "Research Question",
+        "Confirmed Existing Project State",
+        "Confirmed External Donors",
+        "Official Notion API",
+        "Official Notion MCP",
+        "Native Notion GitHub Integration",
+        "Donor Automation Patterns",
+        "Architectural Decision",
+        "Implemented MVP",
+        "GitHub Reusable Block",
+        "Live Notion Scaffold",
+        "What Was Reused",
+        "What Was Adapted",
+        "Risks",
+        "Recommended Next Test",
+        "Final Recommendation"
+      ]
+    },
+    {
+      "path": "blocks/notion/VALIDATION_BACKLOG.md",
+      "title": "Validation Backlog",
+      "type": "domain-block-artifact",
+      "domain": "notion",
+      "status": null,
+      "date": null,
+      "sha256": "9c822306714f5e0399e5ba25cc3aec80b77f1a5024ea40fb644ce3f2ba5a09ba",
+      "headings": [
+        "Validation Backlog",
+        "Purpose",
+        "Required Validation",
+        "Open Questions",
+        "Activation Criteria",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/notion/WORKSPACE_CONTRACT.md",
+      "title": "Notion Workspace Contract",
+      "type": "domain-block-artifact",
+      "domain": "notion",
+      "status": null,
+      "date": null,
+      "sha256": "7306fdff28770f316f26ad53d420190c60ebe6b796d7e6bca486e96a9db050cd",
+      "headings": [
+        "Notion Workspace Contract",
+        "Purpose",
+        "Identity Contract",
+        "Important Correction",
+        "Workspace Shape",
+        "Database Layer",
+        "Project Entry Flow",
+        "Naming Rule",
+        "Permission Rule",
         "Final Rule"
       ]
     },
@@ -4944,7 +5122,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "966dd96ca2968883b5c99a1eb0e5fe69f38538e10bafca8f34bb3ed5a601645b",
+      "sha256": "7993bed10093930f97347e6aa1e5c973a1bbba0b3b06721aff58f1e86fa30cf0",
       "headings": [
         "Project Execution OS Router",
         "Purpose",
@@ -5314,7 +5492,7 @@
       "domain": "knowledge:PROJECT_INDEX.md",
       "status": null,
       "date": null,
-      "sha256": "584285949bd0d279f0d5ca9fc7d0d0489e8be141b6cc10618da383402eeabe2d",
+      "sha256": "994aede98f3fe0852707b35eb2c6d21a845ecce53814defb78db595c25bdaf56",
       "headings": [
         "Knowledge Library — Project Index",
         "Purpose",
@@ -5404,6 +5582,24 @@
         "Reusable Lesson",
         "Current Implementation",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "knowledge-library/architecture-decisions/NOTION_AGENT_WORKSPACE_STACK.md",
+      "title": "Notion Agent Workspace Stack",
+      "type": "knowledge-entry",
+      "domain": "knowledge:architecture-decisions",
+      "status": "candidate",
+      "date": "2026-06-09",
+      "sha256": "4401abb65091ca8d9ce51e9dbe9293a9b133b16eed864ee2340b264222fc3b9d",
+      "headings": [
+        "Notion Agent Workspace Stack",
+        "Reusable Lesson",
+        "Key Rules",
+        "Entry Point",
+        "Live Pilot",
+        "Validation Still Required",
         "Final Rule"
       ]
     },
@@ -8283,12 +8479,14 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "839e238e49bb7d8fc93570bbd6b88619f072ff00d98045cf8f70e6528b96b15e",
+      "sha256": "57c4a7884571630ec650dffe60ba348aa4f055483e064bd45fdb2d4fc33f3b61",
       "headings": [
         "Notion Project Entrypoint Template",
         "Project",
         "Purpose",
-        "Source Of Truth",
+        "Active Layers",
+        "Truth Map",
+        "Entry Links",
         "Current Status",
         "Done So Far",
         "Current Focus",
