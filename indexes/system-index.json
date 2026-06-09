@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "0486ee7de0cc9e396cbc1467d831504264a882b2",
-  "generated_at": "2026-06-09T18:12:47-04:00",
-  "artifact_count": 425,
+  "repository_commit": "320725741bf9604c547eae49157cebd79da51380",
+  "generated_at": "2026-06-09T18:12:58-04:00",
+  "artifact_count": 426,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2157,6 +2157,26 @@
         "Major Clouds",
         "Mainland China And China-Focused Options",
         "Regional Nodes",
+        "Status"
+      ]
+    },
+    {
+      "path": "blocks/server-rental/VALIDATION_BACKLOG.md",
+      "title": "Validation Backlog",
+      "type": "domain-block-artifact",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "bf9f25db7757724b60aa6f642b76fd6ac0830d2673c8bde05d67874ef4dcd3fa",
+      "headings": [
+        "Validation Backlog",
+        "Purpose",
+        "Priority 1: Provider Research",
+        "Priority 2: Video Generation Economics",
+        "Priority 3: Open-Source LLM Endpoint",
+        "Priority 4: Hybrid Control Layer",
+        "Priority 5: China Research Node",
+        "Open Questions",
         "Status"
       ]
     },
