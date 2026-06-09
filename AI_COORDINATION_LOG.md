@@ -49,3 +49,17 @@ Event:
 
 Next Step:
 - On `02`, inspect PR #30 latest executor reply, new head SHA, checks, and review thread status.
+
+## 2026-06-09 — Hybrid fallback hardening and model comparison opened
+
+Type: Phase transition
+Project: Project Execution OS
+Active Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/35
+
+Event:
+- Issue #34 benchmark completed with approximately 76% average measured context reduction and approximately 13.2 seconds average local preprocessing latency on `llama3.2:3b`.
+- Observed reliability gaps: invalid local schema values, hallucinated paths, and timeout exceptions can propagate instead of degrading gracefully.
+- Opened Issue #35 to harden fallback behavior, add explicit local-model selection, compare already-installed Ollama models, and publish a clean review PR.
+
+Next Step:
+- For future `02`, open Issue #35, inspect the latest executor report or blocker, and continue from actual repository evidence.
