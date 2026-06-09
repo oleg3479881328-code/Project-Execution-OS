@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c809904dd983a1c0ad5b353929737e6acfefa127",
-  "generated_at": "2026-06-09T18:12:08-04:00",
-  "artifact_count": 421,
+  "repository_commit": "0486ee7de0cc9e396cbc1467d831504264a882b2",
+  "generated_at": "2026-06-09T18:12:47-04:00",
+  "artifact_count": 425,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2059,6 +2059,26 @@
       ]
     },
     {
+      "path": "blocks/server-rental/PATTERNS.md",
+      "title": "Patterns",
+      "type": "domain-block-artifact",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "3fbb4161b986e674b8107ab62f79c0c9775c8b43af6aacfa8fde6db88dd34a5f",
+      "headings": [
+        "Patterns",
+        "Terminal-First Pattern",
+        "Burst GPU Pattern",
+        "Warm Storage Pattern",
+        "Routing Layer Pattern",
+        "Scale-Out Pattern",
+        "Region-Specific Node Pattern",
+        "Evidence-First Pricing Pattern",
+        "Swap-Friendly Model Pattern"
+      ]
+    },
+    {
       "path": "blocks/server-rental/READY_SOLUTIONS.md",
       "title": "Ready Solutions",
       "type": "domain-block-artifact",
@@ -2076,6 +2096,68 @@
         "Route E: Parallel Batch Pool",
         "Route F: Mainland China Research Node",
         "Route G: Hybrid Project Execution OS Compute Routing"
+      ]
+    },
+    {
+      "path": "blocks/server-rental/REFERENCES.md",
+      "title": "References",
+      "type": "domain-block-artifact",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "0d3ed454638db274e61577aeb5f9ef207b633484de7971355ee0dcc2d4cf8ad1",
+      "headings": [
+        "References",
+        "Purpose",
+        "Current Internal Source",
+        "External Research To Collect",
+        "Official Provider Documentation",
+        "Official Model Documentation",
+        "Regional Documentation",
+        "Rule"
+      ]
+    },
+    {
+      "path": "blocks/server-rental/SECURITY_AND_COMPLIANCE.md",
+      "title": "Security And Compliance",
+      "type": "domain-block-artifact",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "09b874232e3891c6337e1d45b98dffeeba78338e190ae7c2045f487e10670e2c",
+      "headings": [
+        "Security And Compliance",
+        "Purpose",
+        "Secrets",
+        "Baseline Controls",
+        "Data Handling",
+        "Regional Compliance",
+        "Open-Source Model Licenses",
+        "Shutdown Discipline",
+        "Boundary"
+      ]
+    },
+    {
+      "path": "blocks/server-rental/TOOL_SELECTION_MATRIX.md",
+      "title": "Tool Selection Matrix",
+      "type": "domain-block-artifact",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "f2eeb1884c64e3f2047b52b5cdf28507fd5fcb0b9df0ec1eb2893455d262266c",
+      "headings": [
+        "Tool Selection Matrix",
+        "Purpose",
+        "Selection Dimensions",
+        "Workload Matrix",
+        "Economic Comparison Modes",
+        "Initial Provider Categories To Research",
+        "Low-Cost GPU Marketplaces",
+        "GPU Clouds And Serverless GPU Providers",
+        "Major Clouds",
+        "Mainland China And China-Focused Options",
+        "Regional Nodes",
+        "Status"
       ]
     },
     {
