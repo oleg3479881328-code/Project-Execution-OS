@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fa44b5ed1391a66306185126ee5d5cf46059d5fc",
-  "generated_at": "2026-06-09T13:55:40-04:00",
-  "artifact_count": 417,
+  "repository_commit": "076a8be71a20653de99be9e8d3ba088327cfb2f0",
+  "generated_at": "2026-06-09T16:26:37-04:00",
+  "artifact_count": 418,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -5153,6 +5153,26 @@
         "4. Refresh Rule",
         "Integration Policy",
         "Activation Boundary",
+        "Next Step"
+      ]
+    },
+    {
+      "path": "docs/HYBRID_OLLAMA_MODEL_COMPARISON_INTERIM_RESULTS_2026-06-09.md",
+      "title": "Hybrid Ollama Model Comparison — Interim Results",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "interim",
+      "date": "2026-06-09",
+      "sha256": "972caf3ebec030f0c04e9236e36ececdb1f7a802c7cdcf23ba7376a324e86b8e",
+      "headings": [
+        "Hybrid Ollama Model Comparison — Interim Results",
+        "Purpose",
+        "Implemented Reliability Improvements",
+        "Validation Snapshot",
+        "Measured Local Model Comparison",
+        "Interim Recommendation",
+        "Important Boundary",
+        "Current Integration State",
         "Next Step"
       ]
     },
