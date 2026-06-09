@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d16502093103dd11ae7cbfe43947b4c606bbaadb",
-  "generated_at": "2026-06-09T18:11:55-04:00",
-  "artifact_count": 420,
+  "repository_commit": "c809904dd983a1c0ad5b353929737e6acfefa127",
+  "generated_at": "2026-06-09T18:12:08-04:00",
+  "artifact_count": 421,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2056,6 +2056,26 @@
         "Typical Outputs",
         "Boundary",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/server-rental/READY_SOLUTIONS.md",
+      "title": "Ready Solutions",
+      "type": "domain-block-artifact",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "60f59ae606b5c9da0e572a9de3e8a39a8ac76f3e0f9c980f5c2509d283832547",
+      "headings": [
+        "Ready Solutions",
+        "Purpose",
+        "Route A: Cheap Always-On Control Node",
+        "Route B: Temporary GPU Worker",
+        "Route C: Video Generation Worker",
+        "Route D: Owner-Controlled LLM Endpoint",
+        "Route E: Parallel Batch Pool",
+        "Route F: Mainland China Research Node",
+        "Route G: Hybrid Project Execution OS Compute Routing"
       ]
     },
     {
