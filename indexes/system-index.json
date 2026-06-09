@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b91f1f98787ffe4c013c56f494d4fc6c51b60a15",
-  "generated_at": "2026-06-09T13:20:12-04:00",
-  "artifact_count": 390,
+  "repository_commit": "9bdda555fca31dea07e35b77431c553743f23bee",
+  "generated_at": "2026-06-09T13:20:27-04:00",
+  "artifact_count": 391,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2975,6 +2975,24 @@
         "Annual Snapshot Rule",
         "State and Local Rule",
         "Legal Escalation"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/TAX_AND_ACCOUNTING_INTAKE.md",
+      "title": "Tax and Accounting Intake",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "4f18e3be75a210204ed6a4f472a2eb249890fc6e742737626688c77e33586f1b",
+      "headings": [
+        "Tax and Accounting Intake",
+        "Purpose",
+        "Intake Rule",
+        "Core Intake",
+        "Document Checklist",
+        "First Classification",
+        "Stop Conditions"
       ]
     },
     {
