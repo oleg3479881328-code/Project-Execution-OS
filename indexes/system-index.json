@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a0583641576e083000ae91a72ac688b328823b94",
-  "generated_at": "2026-06-09T13:23:44-04:00",
-  "artifact_count": 400,
+  "repository_commit": "6c4d63b208e74530980523898804ef6fa66dfc22",
+  "generated_at": "2026-06-09T13:24:04-04:00",
+  "artifact_count": 401,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3188,6 +3188,24 @@
         "Green",
         "Extension Rule",
         "Output"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/TOOL_SELECTION_MATRIX.md",
+      "title": "Tool Selection Matrix",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "01ff7f40f80cc91d28187bc3b46583da166f2b2de7c3dd590fd38a8d39229989",
+      "headings": [
+        "Tool Selection Matrix",
+        "Purpose",
+        "Categories",
+        "Selection Questions",
+        "Evaluation Table",
+        "Boundary",
+        "Final Rule"
       ]
     },
     {
