@@ -71,7 +71,8 @@ Open only the smallest relevant path:
 15. `blocks/us-tax-accounting/REFERENCES.md` for the maintained source map
 16. `blocks/us-tax-accounting/VALIDATION_BACKLOG.md` for unverified assumptions and future tests
 17. `blocks/us-tax-accounting/RESEARCH_REPORT_2026-06-09.md` for the initial research rationale
-18. `blocks/us-law/BLOCK.md` when legal interpretation, disputes, notices, appeals, or attorney escalation become material
+18. `blocks/us-tax-accounting/ohio/BLOCK.md` for Ohio-specific state, municipal, gig-economy, payroll, unemployment, sales-tax, and small-business routing
+19. `blocks/us-law/BLOCK.md` when legal interpretation, disputes, notices, appeals, or attorney escalation become material
 
 ## Typical Modes
 
@@ -88,6 +89,7 @@ This block may route work into:
 - year-end tax-preparer package;
 - notice triage;
 - accounting-tool selection;
+- Ohio-specific tax-accounting workflow;
 - CPA, EA, bookkeeper, payroll-specialist, or tax-attorney handoff.
 
 ## Typical Outputs
