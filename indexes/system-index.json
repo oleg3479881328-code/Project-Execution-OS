@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c4a5d4f805990f3719280c1d5fc5e108fe121200",
-  "generated_at": "2026-06-09T13:24:28-04:00",
-  "artifact_count": 402,
+  "repository_commit": "5f7d7205d9d886e512f0dbc8c1a70946bd90dfbf",
+  "generated_at": "2026-06-09T13:24:46-04:00",
+  "artifact_count": 403,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3147,6 +3147,25 @@
         "Marketplace Rule",
         "Escalation",
         "Output"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/SECURITY_AND_COMPLIANCE.md",
+      "title": "Security and Compliance",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "cab67afe0d3eb42d5ed0aed80046d0a4fad2ede8f937a5fba2ec8494ad5e31a5",
+      "headings": [
+        "Security and Compliance",
+        "Purpose",
+        "Core Rule",
+        "Data Handling Rules",
+        "Credential Rules",
+        "Document Rules",
+        "Tool Review",
+        "Boundary"
       ]
     },
     {
