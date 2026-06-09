@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "076a8be71a20653de99be9e8d3ba088327cfb2f0",
-  "generated_at": "2026-06-09T16:26:37-04:00",
+  "repository_commit": "f6810170a2584295b998217fa514bdf94fc7e8f4",
+  "generated_at": "2026-06-09T16:30:44-04:00",
   "artifact_count": 418,
   "artifacts": [
     {
@@ -4615,12 +4615,14 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "25f5bbd6d10f7d392db2d839ceea2a924ae046ca6de00429115564d87d577fbf",
+      "sha256": "7fd4c91e0005beb1a0875c540824111c25f7254eab86761036b79b7e4022cf75",
       "headings": [
         "Always Transfer-Ready State Standard",
         "Purpose",
         "Zero-State vs Active Execution",
         "Core Rule",
+        "Durable Interim Checkpoint Rule",
+        "Interim Checkpoint Minimum Content",
         "Minimal Continuity Loop",
         "Active Minimum Set",
         "Maintenance Rule",
