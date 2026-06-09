@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "bc0ce4ed688ec6cf8db30215627afd6243fdae8b",
-  "generated_at": "2026-06-09T19:14:50-04:00",
-  "artifact_count": 430,
+  "repository_commit": "750cd4b6a2e78712d313675c9d5acb0e3eb2424d",
+  "generated_at": "2026-06-09T19:26:05-04:00",
+  "artifact_count": 431,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2029,6 +2029,28 @@
         "Naming Rule",
         "Permission Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/server-rental/AWS_FIRST_ROUTE.md",
+      "title": "AWS-First VPS Route",
+      "type": "domain-block-artifact",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "9a124349a9e2b9efeba83bec1bc8a99fb717258a163474e7a25be4f851327d40",
+      "headings": [
+        "AWS-First VPS Route",
+        "Purpose",
+        "Decision",
+        "Recommended First Runtime",
+        "Why Not Lightsail First",
+        "Initial Responsibilities Of The Head Node",
+        "Minimal Phase 1 Stack",
+        "Security Baseline",
+        "Naming",
+        "Next Route After Validation",
+        "Important Boundary"
       ]
     },
     {
