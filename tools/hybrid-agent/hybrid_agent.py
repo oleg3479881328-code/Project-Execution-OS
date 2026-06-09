@@ -581,14 +581,46 @@ def run_local_stage(
     project_id: str | None,
     selected_route: str,
     log_path: Path,
-) -> dict[str, Any]:
+) -> dict[str, Any] | None:
+    """Run the local preprocessing stage with graceful degradation.
+
+    Returns a result dict on success, or None on any failure (timeout,
+    invalid JSON, schema violation, hallucinated paths, etc.).
+    The caller is responsible for logging the failure and falling back.
+    """
     system_prompt = "You are a precise local preprocessing worker."
     prompt = make_local_prompt(input_payload)
     input_metrics = json_size_metrics({"system": system_prompt, "user": prompt})
-    response, latency_ms = call_chat_completion(config, system_prompt=system_prompt, user_prompt=prompt)
-    text, usage = response_text_and_usage(response)
-    parsed = validate_local_payload(extract_json_object(text))
-    parsed = validate_local_references(parsed, input_payload)
+    try:
+        response, latency_ms = call_chat_completion(config, system_prompt=system_prompt, user_prompt=prompt)
+    except (RuntimeError, TimeoutError, OSError) as exc:
+        _log_local_failure(log_path, config, input_payload, input_metrics, f"call_failed: {exc}")
+        return None
+
+    try:
+        text, usage = response_text_and_usage(response)
+    except (ValueError, KeyError, TypeError) as exc:
+        _log_local_failure(log_path, config, input_payload, input_metrics, f"response_parse_failed: {exc}")
+        return None
+
+    try:
+        parsed = extract_json_object(text)
+    except (ValueError, json.JSONDecodeError) as exc:
+        _log_local_failure(log_path, config, input_payload, input_metrics, f"json_parse_failed: {exc}")
+        return None
+
+    try:
+        parsed = validate_local_payload(parsed)
+    except ValueError as exc:
+        _log_local_failure(log_path, config, input_payload, input_metrics, f"schema_validation_failed: {exc}")
+        return None
+
+    try:
+        parsed = validate_local_references(parsed, input_payload)
+    except ValueError as exc:
+        _log_local_failure(log_path, config, input_payload, input_metrics, f"reference_validation_failed: {exc}")
+        return None
+
     output_metrics = json_size_metrics(parsed)
     log_entry = build_log_entry(
         stage="local_preprocess",
@@ -613,6 +645,33 @@ def run_local_stage(
         "latency_ms": latency_ms,
         "request_id": response.get("id"),
     }
+
+
+def _log_local_failure(
+    log_path: Path,
+    config: EndpointConfig,
+    input_payload: dict[str, Any],
+    input_metrics: dict[str, int],
+    reason: str,
+) -> None:
+    """Write a failure log entry for a local preprocessing stage that did not complete."""
+    failure_entry = build_log_entry(
+        stage="local_preprocess",
+        provider=config.provider,
+        model=config.model,
+        task_id=None,
+        project_id="project-execution-os",
+        selected_route=DEFAULT_SELECTED_ROUTE,
+        loaded_modules=[item["path"] for item in input_payload.get("evidence", [])],
+        request_id=None,
+        usage={},
+        input_metrics=input_metrics,
+        output_metrics={"bytes": 0, "chars": 0},
+        latency_ms=0.0,
+        status="failed_fallback_to_cloud",
+        notes=reason,
+    )
+    write_log_entry(log_path, failure_entry)
 
 
 def run_cloud_stage(
@@ -733,38 +792,21 @@ def run_hybrid_agent(
     local_payload = None
     fallback_reason = None
     if local_config is not None:
-        try:
-            local_result = run_local_stage(
-                config=local_config,
-                input_payload=input_payload,
-                task_id=task_id,
-                project_id=project_id,
-                selected_route=selected_route,
-                log_path=log_path,
-            )
+        local_result = run_local_stage(
+            config=local_config,
+            input_payload=input_payload,
+            task_id=task_id,
+            project_id=project_id,
+            selected_route=selected_route,
+            log_path=log_path,
+        )
+        if local_result is not None:
             result["local"] = local_result
             local_payload = local_result["payload"]
-        except Exception as exc:  # noqa: BLE001
-            fallback_reason = f"local_preprocess_failed: {exc}"
+        else:
+            fallback_reason = "local_preprocess_failed: run_local_stage returned None"
             result["fallback_used"] = True
-            failure_entry = build_log_entry(
-                stage="local_preprocess",
-                provider=local_config.provider,
-                model=local_config.model,
-                task_id=task_id,
-                project_id=project_id,
-                selected_route=selected_route,
-                loaded_modules=[item["path"] for item in input_payload["evidence"]],
-                request_id=None,
-                usage={},
-                input_metrics=json_size_metrics(input_payload),
-                output_metrics={"bytes": 0, "chars": 0},
-                latency_ms=0.0,
-                status="failed_fallback_to_cloud",
-                notes=fallback_reason,
-            )
-            write_log_entry(log_path, failure_entry)
-            result["local_error"] = str(exc)
+            result["local_error"] = fallback_reason
     else:
         result["fallback_used"] = True
         fallback_reason = "local_preprocess_skipped: no local configuration provided"
