@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "320725741bf9604c547eae49157cebd79da51380",
-  "generated_at": "2026-06-09T18:12:58-04:00",
-  "artifact_count": 426,
+  "repository_commit": "420d28e102145c3c641bceb100f0dd9ab8b1fc2a",
+  "generated_at": "2026-06-09T18:13:14-04:00",
+  "artifact_count": 427,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2115,6 +2115,29 @@
         "Official Model Documentation",
         "Regional Documentation",
         "Rule"
+      ]
+    },
+    {
+      "path": "blocks/server-rental/RESEARCH_REPORT_2026-06-09.md",
+      "title": "Server Rental Research Report — 2026-06-09",
+      "type": "domain-block-artifact",
+      "domain": "server-rental",
+      "status": null,
+      "date": null,
+      "sha256": "5e42b1af27ca655ae741cb7e0bd2b3118214ba59393b983c7f766520034d9b23",
+      "headings": [
+        "Server Rental Research Report — 2026-06-09",
+        "Purpose",
+        "Confirmed Internal Insight",
+        "Initial Architecture Conclusion",
+        "Why This Matters",
+        "Key Use Cases",
+        "Video Generation",
+        "Open-Source LLM Cost Layer",
+        "China Research",
+        "Important Correction",
+        "Research Still Required",
+        "Status"
       ]
     },
     {
