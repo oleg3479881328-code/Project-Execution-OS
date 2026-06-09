@@ -63,3 +63,19 @@ Event:
 
 Next Step:
 - For future `02`, open Issue #35, inspect the latest executor report or blocker, and continue from actual repository evidence.
+
+## 2026-06-09 — Mandatory executor progress heartbeat added
+
+Type: System rule update
+Project: Project Execution OS
+Active Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/35
+
+Event:
+- Updated `docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md`.
+- Added mandatory progress heartbeats for all executors during long-running tasks.
+- Required first heartbeat after 20 minutes, then at least every 20 minutes until completion or blocker.
+- Required immediate heartbeat on major phase completion, validation start, long benchmark start, PR creation, material ETA change, non-blocking fallback, or in-scope implementation-plan change.
+- Required compact structured heartbeat fields and owner-visible linked receipt.
+
+Next Step:
+- Apply the heartbeat rule to all current and future bounded handoffs.
