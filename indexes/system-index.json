@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d46dc8d6a45e741773f64620f69d3d9a3616474a",
-  "generated_at": "2026-06-08T19:25:59-04:00",
+  "repository_commit": "c5dcf5d80df84f6cc360b37d56bf4056ba3d6794",
+  "generated_at": "2026-06-09T08:18:26-04:00",
   "artifact_count": 379,
   "artifacts": [
     {
@@ -22,12 +22,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "d45e6462233662d35cbdf186cbf72cf5ae02ab2b8f3bfd5b4e76f302641c0e5c",
+      "sha256": "852c055df636fc5171458a13843d0625d6b505262746081c80448af6fe03e12b",
       "headings": [
         "AI Coordination Log",
         "2026-06-08 — Active coordination snapshot created",
         "2026-06-08 — Clean integration branch required",
-        "2026-06-08 — PR #30 review corrections requested"
+        "2026-06-08 — PR #30 review corrections requested",
+        "2026-06-09 — Hybrid fallback hardening and model comparison opened"
       ]
     },
     {
@@ -37,11 +38,12 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "a8551a8a163718dac7d2fb77e6c455b26ef814047b518bdbe441e4211ce8de71",
+      "sha256": "c935a430ace89527fd3ceb6bb84331ab5a78d926b904cb278a85bdc774db32d3",
       "headings": [
         "AI Coordination State",
         "Project",
         "Active Channel",
+        "Previous Channels",
         "Current Task",
         "Current State",
         "Next Step"
@@ -4282,13 +4284,17 @@
       "type": "system-standard",
       "domain": "system",
       "status": "active",
-      "date": "2026-06-06",
-      "sha256": "f27327f4b491fe228aaf12c9576f0063b1de11d3d2231b700482c9004bb838c4",
+      "date": "2026-06-09",
+      "sha256": "09f4ef76eb38d03fc06863cadaa160267aadcf01cc3459166036843531559aa8",
       "headings": [
         "Executor Channel Acknowledgement And Publication Standard",
         "Purpose",
         "Mandatory Acknowledgement",
         "Active Reply Surface",
+        "Mandatory Progress Heartbeat",
+        "Required Heartbeat Fields",
+        "Short Task Rule",
+        "Owner Visibility Rule For Heartbeats",
         "Mandatory Owner-Visible Receipt",
         "Default Publication Rule",
         "Stop Boundary",
