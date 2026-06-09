@@ -94,6 +94,20 @@ Current status:
 
 `candidate`
 
+### Notion Agent Workspace Block
+
+Path:
+
+`blocks/notion/`
+
+Purpose:
+
+Provide a reusable Notion workspace layer for stable `PROJECT_ID` routing, agent-compatible project pages, shared project databases, MCP/API access design, GitHub coordination boundaries, and fresh-agent re-entry.
+
+Current status:
+
+`candidate`
+
 ### Skill Creator Block
 
 Path:

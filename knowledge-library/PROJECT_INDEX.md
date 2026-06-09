@@ -31,6 +31,7 @@ knowledge-library/
 | AI music creation stack | candidate | music deep research | knowledge-library/architecture-decisions/AI_MUSIC_CREATION_STACK.md |
 | US legal research stack | candidate | US law deep research | knowledge-library/architecture-decisions/US_LEGAL_RESEARCH_STACK.md |
 | Telegram product stack | candidate | Telegram deep research | knowledge-library/architecture-decisions/TELEGRAM_PRODUCT_STACK.md |
+| Notion agent workspace stack | candidate | Notion donor research and live pilot | knowledge-library/architecture-decisions/NOTION_AGENT_WORKSPACE_STACK.md |
 
 ## Current Workflow Lesson Entries
 
