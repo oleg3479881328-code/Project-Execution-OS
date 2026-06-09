@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6c4d63b208e74530980523898804ef6fa66dfc22",
-  "generated_at": "2026-06-09T13:24:04-04:00",
-  "artifact_count": 401,
+  "repository_commit": "c4a5d4f805990f3719280c1d5fc5e108fe121200",
+  "generated_at": "2026-06-09T13:24:28-04:00",
+  "artifact_count": 402,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3084,6 +3084,26 @@
         "Information Returns",
         "Escalation",
         "Output"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/READY_SOLUTIONS.md",
+      "title": "Ready Solutions",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "c831fb053e5b7968b32687a90d5faa7b28697ff06023c80b2b887423ad9d4fed",
+      "headings": [
+        "Ready Solutions",
+        "Purpose",
+        "Gig Economy Side Income",
+        "Solo SaaS Founder",
+        "Small Service Business With Employees",
+        "Ecommerce or Digital Products",
+        "Catch-Up Bookkeeping",
+        "Notice Triage",
+        "Final Rule"
       ]
     },
     {
