@@ -192,6 +192,20 @@ Current status:
 
 `candidate`
 
+#### Ohio Tax and Accounting Sub-Block
+
+Path:
+
+`blocks/us-tax-accounting/ohio/`
+
+Purpose:
+
+Provide an Ohio-specific route for state tax, municipal income tax, RITA, CCA, gig-economy income, Ohio LLC and small-business workflows, payroll, unemployment tax, sales tax, deadlines, and portal selection.
+
+Current status:
+
+`candidate`
+
 ### Video Production Block
 
 Path:
