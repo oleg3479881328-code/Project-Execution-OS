@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "62e79c7049997f9efec4240fc1f69b8d3a1f3ade",
-  "generated_at": "2026-06-09T13:53:23-04:00",
-  "artifact_count": 414,
+  "repository_commit": "01ef4705bceac105b37075eb5eea3a6106c91f9b",
+  "generated_at": "2026-06-09T13:53:57-04:00",
+  "artifact_count": 415,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3422,6 +3422,23 @@
         "Intake",
         "Workflow",
         "Output"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/ohio/OHIO_SALES_TAX.md",
+      "title": "Ohio Sales Tax",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "c2d981acf0512801052a7a8a436c7bcfe62621a680c51365dab23c15af12b56b",
+      "headings": [
+        "Ohio Sales Tax",
+        "Purpose",
+        "Core Rule",
+        "Required Inputs",
+        "Output",
+        "Expansion Rule"
       ]
     },
     {
