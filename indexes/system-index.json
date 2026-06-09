@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "53541b9edbe396534af713f30289c4772f483b9f",
-  "generated_at": "2026-06-09T13:21:33-04:00",
-  "artifact_count": 395,
+  "repository_commit": "0cabe32239e1ffbec0c3a3bc8c4d0ebeebf25a95",
+  "generated_at": "2026-06-09T13:22:05-04:00",
+  "artifact_count": 396,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3020,6 +3020,26 @@
         "Local Review",
         "Nexus Rule",
         "Marketplace Rule",
+        "Output"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/PAYROLL_CONTRACTORS_AND_INFORMATION_RETURNS.md",
+      "title": "Payroll, Contractors, and Information Returns",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "0aa249f98c4f766197d5d7e199b4805d97ad8d11ab488e41697c275b0342f5b1",
+      "headings": [
+        "Payroll, Contractors, and Information Returns",
+        "Purpose",
+        "Core Rule",
+        "Worker Intake",
+        "Payroll Workflow",
+        "Contractor Workflow",
+        "Information Returns",
+        "Escalation",
         "Output"
       ]
     },
