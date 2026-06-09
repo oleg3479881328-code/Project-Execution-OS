@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4747ba9f18ad7fa388d8bdd52c01ad79b8dfbab1",
-  "generated_at": "2026-06-09T13:23:17-04:00",
-  "artifact_count": 399,
+  "repository_commit": "a0583641576e083000ae91a72ac688b328823b94",
+  "generated_at": "2026-06-09T13:23:44-04:00",
+  "artifact_count": 400,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3084,6 +3084,29 @@
         "Information Returns",
         "Escalation",
         "Output"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/REVIEW_AND_ESCALATION.md",
+      "title": "Review and Escalation",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "b3c0e0d62c90bf5c3e3ccca6ac0a398932ce6bf443930cc3dd46f1bd2eb8d022",
+      "headings": [
+        "Review and Escalation",
+        "Purpose",
+        "Review Checklist",
+        "Escalation Matrix",
+        "Bookkeeper",
+        "Accountant or CPA",
+        "EA",
+        "Payroll Specialist",
+        "Sales-Tax Specialist",
+        "Tax Attorney",
+        "Red Flags",
+        "Final Rule"
       ]
     },
     {
