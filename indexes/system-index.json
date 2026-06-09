@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "592763aba22ef759d3e70131d28ed3812c8315c3",
-  "generated_at": "2026-06-09T13:22:47-04:00",
-  "artifact_count": 398,
+  "repository_commit": "4747ba9f18ad7fa388d8bdd52c01ad79b8dfbab1",
+  "generated_at": "2026-06-09T13:23:17-04:00",
+  "artifact_count": 399,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2999,6 +2999,31 @@
         "Questions To Resolve",
         "Decision Boundary",
         "Escalation",
+        "Output"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/CPA_EA_BOOKKEEPER_HANDOFF.md",
+      "title": "CPA, EA, Bookkeeper, Payroll Specialist, and Tax Attorney Handoff",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "8f33d64bea0755d2eafdd91ec8c1a2c5ebe49fbeb8184fa63733b26df0344f66",
+      "headings": [
+        "CPA, EA, Bookkeeper, Payroll Specialist, and Tax Attorney Handoff",
+        "Purpose",
+        "Role Separation",
+        "Bookkeeper",
+        "Accountant",
+        "Tax Preparer",
+        "CPA",
+        "EA",
+        "Payroll Specialist",
+        "Tax Attorney",
+        "Handoff Summary",
+        "Document Checklist",
+        "Handoff Rule",
         "Output"
       ]
     },
