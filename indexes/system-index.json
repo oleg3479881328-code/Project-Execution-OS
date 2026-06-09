@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "31cf9f8a34f71bed02ef78664e5f1cac693f689d",
-  "generated_at": "2026-06-09T13:50:41-04:00",
-  "artifact_count": 407,
+  "repository_commit": "3655db647c8e329d51238f0cb3eedcfbcea244ec",
+  "generated_at": "2026-06-09T13:51:04-04:00",
+  "artifact_count": 408,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3334,6 +3334,23 @@
         "Typical Outputs",
         "Boundary",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/ohio/OHIO_INTAKE.md",
+      "title": "Ohio Tax and Accounting Intake",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "5a4b4b88721dfb4e1801164aca172653755ceb321241cdb4fc38f342c88d7787",
+      "headings": [
+        "Ohio Tax and Accounting Intake",
+        "Purpose",
+        "Intake",
+        "Municipal Questions",
+        "Gig-Economy Questions",
+        "Stop Conditions"
       ]
     },
     {
