@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "0cabe32239e1ffbec0c3a3bc8c4d0ebeebf25a95",
-  "generated_at": "2026-06-09T13:22:05-04:00",
-  "artifact_count": 396,
+  "repository_commit": "8f915481f2772c0ef61a5073ce49cce3e4a9bcd9",
+  "generated_at": "2026-06-09T13:22:29-04:00",
+  "artifact_count": 397,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3039,6 +3039,26 @@
         "Payroll Workflow",
         "Contractor Workflow",
         "Information Returns",
+        "Escalation",
+        "Output"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/SALES_TAX_AND_INDIRECT_TAX.md",
+      "title": "Sales Tax and Indirect Tax",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "dddbd18a4d996e3e6cd3a7d9c978d59484504cd2ba2e270616e255cd4a9e5912",
+      "headings": [
+        "Sales Tax and Indirect Tax",
+        "Purpose",
+        "Core Rule",
+        "Intake",
+        "Review Categories",
+        "SaaS and Digital Products",
+        "Marketplace Rule",
         "Escalation",
         "Output"
       ]
