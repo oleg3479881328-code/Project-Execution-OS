@@ -32,6 +32,7 @@ Do not append an unrelated next-project question after answering the active requ
 - music generation, soundtrack design, adaptive music, real-time music, music-agent behavior, generated-music rights review, or music-tool evaluation -> `blocks/music/BLOCK.md`
 - Telegram bots, Telegram Mini Apps, Telegram Business or Secretary Bots, Managed Bots, Telegram Login, Telegram Gateway, Telegram Stars, Bot API, TDLib, MTProto, or Telegram integrations -> `blocks/telegram/BLOCK.md`
 - Notion workspace architecture, Notion project registry, Notion project template, PROJECT_ID routing, Notion agent re-entry, Notion MCP, Notion API, Notion database schema, Notion and GitHub coordination, or Notion synchronization design -> `blocks/notion/BLOCK.md`
+- United States taxation, bookkeeping, accounting operations, self-employment income, gig-economy income, estimated taxes, LLC tax classification, payroll, contractors, W-2, 1099, sales tax, monthly close, year-end close, CPA handoff, EA handoff, or tax-accounting tool selection -> `blocks/us-tax-accounting/BLOCK.md`
 - immigration law, USCIS, Form I-485, marriage-based adjustment of status, consular processing, immigration interviews, RFEs, NOIDs, immigration travel risk, or USCIS PM-602-0199 -> `blocks/us-law/immigration/BLOCK.md`
 - United States law, federal or state legal research, statutes, regulations, court rules, case law, legal deadlines, legal-risk triage, attorney handoff preparation, or legal-source automation -> `blocks/us-law/BLOCK.md`
 - indexing or repository catalog work -> `docs/INDEXING_STANDARD.md`
