@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b93b3c4655977465fdfb15ea7a74af37e5b03a27",
-  "generated_at": "2026-06-09T13:52:44-04:00",
-  "artifact_count": 412,
+  "repository_commit": "62e79c7049997f9efec4240fc1f69b8d3a1f3ade",
+  "generated_at": "2026-06-09T13:53:23-04:00",
+  "artifact_count": 414,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -3371,6 +3371,23 @@
       ]
     },
     {
+      "path": "blocks/us-tax-accounting/ohio/OHIO_LLC_AND_SMALL_BUSINESS.md",
+      "title": "Ohio LLC and Small Business",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "23467d6033f3fa25b163b0f9e1a54bdbe175eebf87aed421483d6f6ca634560f",
+      "headings": [
+        "Ohio LLC and Small Business",
+        "Purpose",
+        "Core Rule",
+        "Intake",
+        "Workflow",
+        "Output"
+      ]
+    },
+    {
       "path": "blocks/us-tax-accounting/ohio/OHIO_MUNICIPAL_INCOME_TAX.md",
       "title": "Ohio Municipal Income Tax",
       "type": "domain-block-artifact",
@@ -3388,6 +3405,23 @@
         "Verification",
         "Output",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/us-tax-accounting/ohio/OHIO_PAYROLL_AND_UNEMPLOYMENT.md",
+      "title": "Ohio Payroll and Unemployment",
+      "type": "domain-block-artifact",
+      "domain": "us-tax-accounting",
+      "status": null,
+      "date": null,
+      "sha256": "fd5c5f55bd6ce83374400668299a16fdc669b9ff09056cfe0df721c0cf4f220b",
+      "headings": [
+        "Ohio Payroll and Unemployment",
+        "Purpose",
+        "Core Rule",
+        "Intake",
+        "Workflow",
+        "Output"
       ]
     },
     {
