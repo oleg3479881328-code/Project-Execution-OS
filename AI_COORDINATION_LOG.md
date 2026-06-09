@@ -79,3 +79,19 @@ Event:
 
 Next Step:
 - Apply the heartbeat rule to all current and future bounded handoffs.
+
+## 2026-06-09 — Durable interim checkpoint rule added
+
+Type: System rule update
+Project: Project Execution OS
+Active Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/35
+
+Event:
+- Updated `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`.
+- Added mandatory durable interim checkpoints for long-running, multi-phase, benchmark-heavy, research-heavy, integration-heavy, and review-heavy work.
+- Required preservation after meaningful phase completion, reusable partial results, provisional rankings, path-changing fallback decisions, implementation-complete / validation-pending state, validation-complete / publication-pending state, channel transitions, and in-scope reviewer corrections.
+- Required checkpoints to remain repository-visible or channel-visible and linked from the active issue or PR when needed.
+- Required new executors to be able to identify completed work, do-not-repeat steps, measured evidence, and the next safe action without reconstructing context from chat.
+
+Next Step:
+- Apply durable interim checkpoint preservation automatically whenever reconstruction cost becomes material.
