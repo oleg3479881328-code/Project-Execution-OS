@@ -15,6 +15,7 @@ Examples:
 - GitHub repositories;
 - open-source examples;
 - RFCs or standards;
+- YouTube demonstrations, tutorials, walkthroughs, reviews, and product/interface videos;
 - other public evidence sources appropriate to the domain.
 
 ## Research Order
@@ -32,13 +33,20 @@ For design, architecture, implementation, debugging, integration, tool setup, or
 3. relevant GitHub repositories or open-source projects;
 4. GitHub Issues or Discussions with real fixes;
 5. manuals or technical guides;
-6. community discussions such as Reddit only as supporting practical evidence.
+6. YouTube demonstrations, tutorials, walkthroughs, reviews, and interface videos when practical usage, UX, workflows, or closed-source competitor behavior matters;
+7. community discussions such as Reddit only as supporting practical evidence.
+
+For UX/UI, product-discovery, workflow-discovery, competitor review, no-code tools, creator tools, video tools, design tools, AI product tools, browser extensions, Telegram apps, YouTube systems, and user-facing SaaS ideas, YouTube is a first-class research source.
+
+YouTube evidence does not replace official documentation or source code when implementation correctness, API behavior, licensing, or security is being decided. It is strongest for product behavior, UX, market examples, practical workflows, and discovery of closed-source solutions.
 
 ## Output Requirements
 
 Research artifacts should separate:
 - confirmed facts;
 - existing solutions checked;
+- YouTube videos or channels checked when YouTube research was relevant;
+- observed UX/workflow patterns;
 - donor patterns selected if any;
 - assumptions;
 - recommendations;
