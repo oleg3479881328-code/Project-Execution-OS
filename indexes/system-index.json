@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "821a3bad4354c3800be2576d151a6bca79460bba",
-  "generated_at": "2026-06-10T07:43:10-04:00",
+  "repository_commit": "52fe852a1299cd2c6dd7e64683f2923df13d6f6f",
+  "generated_at": "2026-06-10T07:43:38-04:00",
   "artifact_count": 432,
   "artifacts": [
     {
@@ -706,7 +706,7 @@
       "domain": "communication-channel",
       "status": null,
       "date": null,
-      "sha256": "43638930c59be0c3c8097dd147981936faf99c37464261d7099d2e28c23ddbbc",
+      "sha256": "ae06ef0def8215ddd6959f1b9c0ccbad0f82f08817845f34bade8b5748807f1b",
       "headings": [
         "Communication Channel Block",
         "Display Name",
@@ -715,6 +715,7 @@
         "Core Rule",
         "Route",
         "Nested Routes",
+        "Active write/read pointer",
         "General channel selection or coordination policy",
         "Universal executor reply surface",
         "Compact coordination state",
