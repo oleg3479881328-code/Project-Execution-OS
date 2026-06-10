@@ -25,9 +25,18 @@ Do not route these cases directly from `docs/ROUTER.md` into a channel-specific 
 
 ## Core Rule
 
-First select the active communication channel.
+First read:
 
-Only after the channel is selected, open the narrowest relevant nested standard or protocol.
+`blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`
+
+This file answers only:
+
+- where to write;
+- where to read.
+
+Use it as the first routing pointer before any durable agent-to-agent communication.
+
+Only after the active route is known, open the narrowest relevant nested standard or protocol.
 
 When an active GitHub-backed project contains `AI_COORDINATION_STATE.md`, treat that file as the compact operational snapshot for channel continuation.
 
@@ -47,11 +56,27 @@ For every execution agent, apply:
 START_HERE.md
 → docs/ROUTER.md
 → blocks/communication-channel/BLOCK.md
+→ blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md
 → docs/AI_COORDINATION_HUB_STANDARD.md
 → selected active channel
 ```
 
 ## Nested Routes
+
+### Active write/read pointer
+
+Open first:
+
+`blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`
+
+Use it to answer:
+
+- `Write Here`
+- `Read Here`
+
+Do not guess the active issue, pull request, Notion page, or hub thread.
+
+Do not write elsewhere until the pointer is updated.
 
 ### General channel selection or coordination policy
 
@@ -108,7 +133,8 @@ Never switch channels silently.
 A new issue, PR, review thread, or coordination hub becomes active only after:
 
 ```text
-redirect notice in previous active channel
+ACTIVE_CHANNEL_ROUTE.md update
+→ redirect notice in previous active channel
 → origin notice in new channel
 → AI_COORDINATION_STATE.md Active Channel update
 → Previous Channels update
@@ -171,6 +197,14 @@ Do not reinterpret them based on role, model, project, or nearby numbered option
 
 Meaning: `write / send`.
 
+Before sending:
+
+```text
+read ACTIVE_CHANNEL_ROUTE.md
+→ write to Write Here
+→ report exact destination used
+```
+
 Send the relevant current message to the targeted connected AI participant through that participant's registered active channel.
 
 Use signed polite message format for durable channel messages.
@@ -181,6 +215,15 @@ Use signed polite message format for durable channel messages.
 
 Meaning: `read / check`.
 
+Before checking:
+
+```text
+read ACTIVE_CHANNEL_ROUTE.md
+→ open Read Here
+→ read latest relevant incoming comment
+→ respond from actual content
+```
+
 Read the latest relevant incoming message from the targeted connected AI participant through the registered active channel and respond based on its actual content.
 
 If the latest incoming message contains an already-authorized actionable request that is within the approved scope, continue with that request immediately after reading it. Do not stop to ask for a separate `01` command.
@@ -190,9 +233,10 @@ Ask for a new explicit approval only when the newly discovered action is destruc
 When the active project contains `AI_COORDINATION_STATE.md`, use this order:
 
 ```text
-read AI_COORDINATION_STATE.md
-→ open its Active Channel
-→ read latest relevant incoming comments
+read ACTIVE_CHANNEL_ROUTE.md
+→ read AI_COORDINATION_STATE.md
+→ open Read Here / Active Channel
+→ read latest relevant comments
 → inspect latest repository commit or PR state
 → read AI_COORDINATION_LOG.md only when historical context is required
 → continue from Next Step
@@ -212,7 +256,7 @@ Keep detailed channel policy, agent registry, channel registry, technical protoc
 
 `Канал связи` is the one top-level communication route.
 
-Select the transport first.
+Read `ACTIVE_CHANNEL_ROUTE.md` first.
 
 Then open only the narrowest nested protocol required by the selected channel and the active work.
 
