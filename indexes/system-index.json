@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "500ab2b56627582e5fc0cc6050473a86ad68e230",
-  "generated_at": "2026-06-10T11:47:58-04:00",
+  "repository_commit": "baf8b35cfab622d84b8e538e6fc3950cc2f7e265",
+  "generated_at": "2026-06-10T12:58:22-04:00",
   "artifact_count": 436,
   "artifacts": [
     {
@@ -8493,7 +8493,7 @@
       "domain": "reels-factory-mvp",
       "status": null,
       "date": null,
-      "sha256": "995e7cbf5374c877d28bbfc83a2db50e2daca9a981f54aa2203cd10a554de178",
+      "sha256": "e3a7afce94e7f09eac7787f30affa3ddd6d9b24e64389d80206809cf32f3c3bb",
       "headings": [
         "PROJECT — Reels Factory MVP",
         "1. Project",
@@ -8502,9 +8502,12 @@
         "4. Current Status",
         "5. Done So Far",
         "6. Current Focus",
-        "7. Next Practical Step",
-        "8. Key Decisions And Constraints",
-        "9. Read Next"
+        "7. Functional Requirements",
+        "7.1 Storyboard Mode",
+        "7.2 Donor Video Analysis Mode",
+        "8. Next Practical Step",
+        "9. Key Decisions And Constraints",
+        "10. Read Next"
       ]
     },
     {
