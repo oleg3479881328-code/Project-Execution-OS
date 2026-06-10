@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1056f50bfba9fd47119a6a206994476a89e67e4b",
-  "generated_at": "2026-06-10T16:45:41-04:00",
+  "repository_commit": "5cf8c2f7353ce26501cafe6c37925723bf4d7365",
+  "generated_at": "2026-06-10T19:59:28-04:00",
   "artifact_count": 438,
   "artifacts": [
     {
@@ -8517,15 +8517,25 @@
       "domain": "reels-factory-mvp",
       "status": "active / MVP validation",
       "date": "2026-06-10",
-      "sha256": "2462576200459880c7b2799e18b7bb365a8c4d8ce1847e3fb00ac4ef2a83c4e1",
+      "sha256": "bca6da91108da74cc8a4587c0de7c2cdf895358260bfcb33a81b7e5dc7856f82",
       "headings": [
         "PROJECT STATE — Reels Factory MVP",
+        "Current Phase",
         "Current Goal",
-        "Current Infrastructure Decision",
-        "AWS EC2 GPU Quota Check",
+        "Completed",
+        "Project Decisions",
+        "RunPod Evaluation",
+        "AWS Account And Credits",
+        "AWS EC2 GPU Quota",
+        "In Progress",
+        "Still Pending",
+        "Measured Interim Results",
+        "Known Failures Or Fallbacks",
+        "Validated",
+        "Not Yet Validated",
+        "Next Safe Action",
+        "Do-Not-Repeat Work",
         "Direct Links",
-        "RunPod Check",
-        "Next Step",
         "Cost-Control Rules"
       ]
     },
