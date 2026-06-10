@@ -15,11 +15,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Write Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/42`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/43`
 
 ### Read Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/42`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/43`
 
 ### Transport Type
 
@@ -27,7 +27,7 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Scope
 
-`Project Execution OS server-rental / AWS head-node follow-up`
+`Project Execution OS server-rental / temporary Windows EC2 experiment for Vadim`
 
 ### Last Confirmed At
 
