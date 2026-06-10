@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-06-10
+
+- added `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` for measuring agent quality by successful outcomes, cost, latency, context efficiency, tool-use quality, regression protection, observability, safety and transferability
+- routed agent-quality, eval and orchestration-complexity work through `docs/ROUTER.md`
+- updated `SYSTEM_CONTEXT_MANIFEST.md` to `system-context-manifest-v10` / `knowledge-aware-core-v10`
+- recorded the change in `logs/2026-06-10-agent-quality-scorecard-standard.md`
+
 ## 2026-06-01
 
 - added root `PROJECT_STATE.md` and `logs/latest.md` so the central repository complies with its own active transfer-readiness standard
