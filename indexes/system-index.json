@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1a8094b8748726e575453ea3e938e551080f51b6",
-  "generated_at": "2026-06-10T16:45:30-04:00",
-  "artifact_count": 437,
+  "repository_commit": "1056f50bfba9fd47119a6a206994476a89e67e4b",
+  "generated_at": "2026-06-10T16:45:41-04:00",
+  "artifact_count": 438,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8527,6 +8527,23 @@
         "RunPod Check",
         "Next Step",
         "Cost-Control Rules"
+      ]
+    },
+    {
+      "path": "projects/reels-factory-mvp/logs/latest.md",
+      "title": "Latest Log — Reels Factory MVP",
+      "type": "project-artifact",
+      "domain": "reels-factory-mvp",
+      "status": null,
+      "date": "2026-06-10",
+      "sha256": "cfeafbb91a7ad946e7dd39fcd36e1d484cd556d33d099c2c13a27056c54386a5",
+      "headings": [
+        "Latest Log — Reels Factory MVP",
+        "Session Summary",
+        "RunPod",
+        "AWS",
+        "Current Decision",
+        "Next Re-entry Link"
       ]
     },
     {
