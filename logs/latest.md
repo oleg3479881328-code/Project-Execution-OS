@@ -2,43 +2,26 @@
 
 ## Current Recorded State
 
-`Project Execution OS` has been brought into compliance with its active transfer-readiness standard.
+`Project Execution OS` remains transfer-ready after adding the agent-quality measurement standard.
 
 ## Latest Confirmed Events
 
-- PR `#6` was merged into `main`.
-- Merge commit: `8c86466fa6394bcaf9d833a5ca29d7464893eeba`.
-- Canonical local project entrypoint is now `PROJECT.md`.
-- Minimal bootstrap for standalone external project folders is:
+- PR `#44` was merged into `main`.
+- Merge commit: `41d4db314141b00146d84a15bc81ac0ebfe2174d`.
+- Created `docs/AGENT_QUALITY_SCORECARD_STANDARD.md`.
+- Added the corresponding route to `docs/ROUTER.md`.
+- Updated `SYSTEM_CONTEXT_MANIFEST.md` to `system-context-manifest-v10` / `knowledge-aware-core-v10` because the routed stable context changed.
+- GitHub Actions integrity validation passed before merge.
+- Added durable execution evidence in `logs/2026-06-10-agent-quality-scorecard-standard.md`.
 
-```text
-git init
-AGENTS.md
-PROJECT.md
-```
+## What The New Standard Establishes
 
-- Internal subprojects inside existing repositories inherit the parent Git layer and must not receive nested `git init` without a separate explicit decision.
-- Zero-state bootstrap and active execution state are separated.
-- GitHub Actions validates both project structure and system-context manifest integrity.
-- The bootstrap model was manually smoke-tested with temporary project `Test123`.
-- The owner reports that `Test123` has been fully deleted after the successful test.
-
-## Transfer-Readiness Update
-
-Created the root continuity files required for an active project:
-
-```text
-PROJECT_STATE.md
-logs/latest.md
-```
-
-The central project now has the required active minimum set:
-
-```text
-PROJECT.md
-PROJECT_STATE.md
-logs/latest.md
-```
+- measure cost per successful outcome rather than tokens per request in isolation;
+- use the least complex reliable architecture;
+- add multi-agent separation only when evidence justifies it;
+- evaluate outcome quality, cost, latency, retries, context efficiency, tool-use quality, regression protection, observability, safety and transferability;
+- keep scorecard evidence in the layer that owns the workflow;
+- do not create empty artifacts by ritual.
 
 ## Current Next Safe Action
 
@@ -54,6 +37,6 @@ Await the owner's next bounded central-system task. On re-entry, read:
 
 Then load only the minimum routed files needed for the task.
 
-## Known Blockers
+## Known Blocker
 
-None currently recorded.
+`PROJECT_INDEX.md` still needs a curated canonical-documents entry for `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` during the next safe large-index maintenance pass. Generated indexing already detects the new document automatically.
