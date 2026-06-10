@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a3dd97c274bc1b053a6791dec255ddf30f5305dd",
-  "generated_at": "2026-06-10T07:45:44-04:00",
-  "artifact_count": 432,
+  "repository_commit": "b4f57c069a8fbf3bd2a422dffd521f901caac32a",
+  "generated_at": "2026-06-10T08:35:05-04:00",
+  "artifact_count": 433,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -4786,6 +4786,43 @@
         "Anti-Patterns",
         "Initial Validation Target",
         "Source Record",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/AGENT_QUALITY_SCORECARD_STANDARD.md",
+      "title": "Agent Quality Scorecard Standard v1",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "2a909a36d43ecd231acdeefbc93a5fd52c30d2f74031d99d6f103cf665273a0e",
+      "headings": [
+        "Agent Quality Scorecard Standard v1",
+        "Purpose",
+        "Scope",
+        "Core Principle",
+        "Architecture Rule",
+        "Scorecard Dimensions",
+        "1. Outcome Quality",
+        "2. Cost And Latency",
+        "3. Context Efficiency",
+        "4. Tool Use",
+        "5. Reliability And Regression Protection",
+        "6. Observability",
+        "7. Safety And Permissions",
+        "8. Transferability",
+        "Required Minimum Scorecard",
+        "Comparison Rule",
+        "Promotion Levels",
+        "Level 0 — One-Off",
+        "Level 1 — Repeated Experiment",
+        "Level 2 — Operational Workflow",
+        "Level 3 — High-Risk Or Business-Critical Workflow",
+        "Relationship To MCP",
+        "Storage Rule",
+        "Warning Conditions",
+        "Related Nodes",
         "Final Rule"
       ]
     },
