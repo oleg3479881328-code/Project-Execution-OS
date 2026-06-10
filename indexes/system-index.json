@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b4f57c069a8fbf3bd2a422dffd521f901caac32a",
-  "generated_at": "2026-06-10T08:35:05-04:00",
-  "artifact_count": 433,
+  "repository_commit": "41d4db314141b00146d84a15bc81ac0ebfe2174d",
+  "generated_at": "2026-06-10T08:39:41-04:00",
+  "artifact_count": 434,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -185,13 +185,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "df61a7d93f29d815355b746754302df17ef4a5ff521ab929f3b6c9b9f217340e",
+      "sha256": "92c12d184715eb3bb33efd5eae3f886500fcffc76a431f87d8f1f1bc31e18565",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v9`",
+        "Profile: `knowledge-aware-core-v10`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -6078,7 +6078,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "4dc40acc22db8a0f60e33e92b2bdb54ca9f5faf048c6d1a4738f857ab938f94c",
+      "sha256": "5f09340d6139ce23a902d7ef40b0265c5f194b32893009c44bee675369e94dd3",
       "headings": [
         "Project Execution OS Router",
         "Purpose",
@@ -7043,6 +7043,24 @@
         "6. Architecture decision recorded",
         "State Separation",
         "Next Action"
+      ]
+    },
+    {
+      "path": "logs/2026-06-10-agent-quality-scorecard-standard.md",
+      "title": "Agent Quality Scorecard Standard Added",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": "2026-06-10",
+      "sha256": "146abc6681d6056ec84f2e477a524f941611844b44fa7e1041ae1719319c4f02",
+      "headings": [
+        "Agent Quality Scorecard Standard Added",
+        "Purpose",
+        "Trigger",
+        "Executed Changes",
+        "Key Decision",
+        "Deferred Maintenance",
+        "Related Files"
       ]
     },
     {
