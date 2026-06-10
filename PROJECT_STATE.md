@@ -2,7 +2,7 @@
 project_name: Project Execution OS
 project_mode: compact
 status: transfer_ready
-updated_at: 2026-06-01
+updated_at: 2026-06-10
 source_of_truth: repository
 active_branch: main
 ---
@@ -13,7 +13,7 @@ active_branch: main
 
 `Project Execution OS` is an active central project and is prepared for transfer to another executor.
 
-The repository now uses the minimum active continuity set required by `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`:
+The repository uses the minimum active continuity set required by `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`:
 
 ```text
 PROJECT.md
@@ -23,15 +23,12 @@ logs/latest.md
 
 ## Latest Confirmed Milestone
 
-- PR `#6` was merged into `main`.
-- Merge commit: `8c86466fa6394bcaf9d833a5ca29d7464893eeba`.
-- Canonical local project entrypoint: `PROJECT.md`.
-- New standalone real project folders bootstrap with local Git, `AGENTS.md`, and `PROJECT.md`.
-- Internal subprojects inside an existing repository inherit the parent Git layer and do not receive nested `git init` unless separately authorized.
-- Zero-state and active-state project structures are explicitly separated.
-- Project index maintenance, stable-prefix behavior, communication-channel routing, and executor continuity are part of the active standards.
-- GitHub Actions validates both project structure and system-context manifest integrity.
-- The bootstrap model was smoke-tested with temporary project `Test123`; the owner reports that the temporary test project has been deleted.
+- PR `#44` was merged into `main`.
+- Merge commit: `41d4db314141b00146d84a15bc81ac0ebfe2174d`.
+- Added `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` as the reusable standard for measuring agent quality by successful outcomes, cost, latency, context efficiency, tool-use quality, regression protection, safety and transferability.
+- Routed agent-quality, eval, observability and orchestration-complexity work through `docs/ROUTER.md`.
+- Updated `SYSTEM_CONTEXT_MANIFEST.md` to `system-context-manifest-v10` / `knowledge-aware-core-v10` after the router changed.
+- GitHub Actions validation passed before merge.
 
 ## Current Focus
 
@@ -63,7 +60,7 @@ Read in this order when resuming central-project work:
 
 ## Known Blockers
 
-None currently recorded.
+- `PROJECT_INDEX.md` still needs a curated canonical-documents entry for `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` during the next safe large-index maintenance pass. Generated indexes already detect the new document automatically.
 
 ## Do-Not-Break Rules
 
