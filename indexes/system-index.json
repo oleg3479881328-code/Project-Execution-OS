@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "750cd4b6a2e78712d313675c9d5acb0e3eb2424d",
-  "generated_at": "2026-06-09T19:26:05-04:00",
-  "artifact_count": 431,
+  "repository_commit": "821a3bad4354c3800be2576d151a6bca79460bba",
+  "generated_at": "2026-06-10T07:43:10-04:00",
+  "artifact_count": 432,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -675,6 +675,28 @@
         "Product Pattern Validation",
         "Known Unvalidated Assumptions",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md",
+      "title": "Active Coordination Channel Route",
+      "type": "domain-block-artifact",
+      "domain": "communication-channel",
+      "status": null,
+      "date": null,
+      "sha256": "0981b0844bc8a14463bf0dcddaacfcc4189178a862ca4b8e2ad75a2576a495d1",
+      "headings": [
+        "Active Coordination Channel Route",
+        "Purpose",
+        "Current Active Route",
+        "Write Here",
+        "Read Here",
+        "Transport Type",
+        "Scope",
+        "Last Confirmed At",
+        "Rule For Every Agent",
+        "Channel Change Rule",
+        "Boundary"
       ]
     },
     {
