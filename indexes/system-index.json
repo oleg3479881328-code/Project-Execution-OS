@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "41d4db314141b00146d84a15bc81ac0ebfe2174d",
-  "generated_at": "2026-06-10T08:39:41-04:00",
-  "artifact_count": 434,
+  "repository_commit": "3be9ddd44b437b9258a9724e2645df5a4cba96d0",
+  "generated_at": "2026-06-10T11:14:10-04:00",
+  "artifact_count": 435,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -58,9 +58,10 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "f0557346ba7d8f6183a2bfb002721258a8233a6ce4635d69bdd1d202c474c015",
+      "sha256": "9630bc0c22bba0cf39f03250e41cc6f3ec32393cabd83c90fd81aa282c62b44a",
       "headings": [
         "Changelog",
+        "2026-06-10",
         "2026-06-01",
         "2026-05-21"
       ]
@@ -116,7 +117,7 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "e802e21df8387821ddd8a5553a615fb022d5d8cc9c855f42eff8dc4fa6d9f42a",
+      "sha256": "43b30a05daf7a5287ccba0f976806b7168808e1908238f70282a278e81736b69",
       "headings": [
         "PROJECT_STATE.md",
         "Current State",
@@ -6877,6 +6878,42 @@
       ]
     },
     {
+      "path": "knowledge-library/workflow-lessons/2026-06-10-owner-working-context-summary.md",
+      "title": "Owner Working Context Summary — Oleg Povalyukhin",
+      "type": "knowledge-entry",
+      "domain": "knowledge:workflow-lessons",
+      "status": null,
+      "date": null,
+      "sha256": "ccd2d1dd45e1c1a682b8d42795b8b0751970c217bc6f0c8774cc3a7ebb083068",
+      "headings": [
+        "Owner Working Context Summary — Oleg Povalyukhin",
+        "Purpose",
+        "Owner Profile",
+        "Communication Preferences",
+        "Project Execution OS Preferences",
+        "Active And Recurring Workstreams",
+        "1. Project Execution OS",
+        "2. AI Agent Quality And Cost Control",
+        "3. Server Rental And Compute Strategy",
+        "4. Video Factory / Reels Factory",
+        "5. Telegram Products",
+        "6. QuizLight / Language Learning By Video",
+        "7. Chrome Extension Block",
+        "8. Design Catalog / Design Block",
+        "9. Notion Agent Re-entry System",
+        "10. DoorDash And Gig-Economy Operations",
+        "11. Immigration And USCIS Research",
+        "English Learning Preferences",
+        "Technical Context",
+        "Operational Rules For Future Agents",
+        "Risks And Limitations",
+        "Applies To",
+        "Triggers",
+        "Do Not Load When",
+        "Related Standards"
+      ]
+    },
+    {
       "path": "knowledge-library/workflow-lessons/MARRIAGE_BASED_I485_PM_602_0199.md",
       "title": "Marriage-Based I-485 After USCIS PM-602-0199",
       "type": "knowledge-entry",
@@ -7513,14 +7550,14 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "6f460fcfc9a798de845445c95ca2828f8e933156c13a074cf7678fd74950cde7",
+      "sha256": "70a3f5a88f49fd4a634b1f2a741468fefcb01344d671220aaeaf926492e35192",
       "headings": [
         "Latest Project Log — Project Execution OS",
         "Current Recorded State",
         "Latest Confirmed Events",
-        "Transfer-Readiness Update",
+        "What The New Standard Establishes",
         "Current Next Safe Action",
-        "Known Blockers"
+        "Known Blocker"
       ]
     },
     {
