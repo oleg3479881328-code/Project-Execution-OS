@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "baf8b35cfab622d84b8e538e6fc3950cc2f7e265",
-  "generated_at": "2026-06-10T12:58:22-04:00",
-  "artifact_count": 436,
+  "repository_commit": "1a8094b8748726e575453ea3e938e551080f51b6",
+  "generated_at": "2026-06-10T16:45:30-04:00",
+  "artifact_count": 437,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8508,6 +8508,25 @@
         "8. Next Practical Step",
         "9. Key Decisions And Constraints",
         "10. Read Next"
+      ]
+    },
+    {
+      "path": "projects/reels-factory-mvp/PROJECT_STATE.md",
+      "title": "PROJECT STATE — Reels Factory MVP",
+      "type": "project-artifact",
+      "domain": "reels-factory-mvp",
+      "status": "active / MVP validation",
+      "date": "2026-06-10",
+      "sha256": "2462576200459880c7b2799e18b7bb365a8c4d8ce1847e3fb00ac4ef2a83c4e1",
+      "headings": [
+        "PROJECT STATE — Reels Factory MVP",
+        "Current Goal",
+        "Current Infrastructure Decision",
+        "AWS EC2 GPU Quota Check",
+        "Direct Links",
+        "RunPod Check",
+        "Next Step",
+        "Cost-Control Rules"
       ]
     },
     {
