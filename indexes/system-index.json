@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3be9ddd44b437b9258a9724e2645df5a4cba96d0",
-  "generated_at": "2026-06-10T11:14:10-04:00",
-  "artifact_count": 435,
+  "repository_commit": "500ab2b56627582e5fc0cc6050473a86ad68e230",
+  "generated_at": "2026-06-10T11:47:58-04:00",
+  "artifact_count": 436,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8484,6 +8484,27 @@
         "Verification",
         "Issues",
         "Next Action"
+      ]
+    },
+    {
+      "path": "projects/reels-factory-mvp/PROJECT.md",
+      "title": "PROJECT — Reels Factory MVP",
+      "type": "project-artifact",
+      "domain": "reels-factory-mvp",
+      "status": null,
+      "date": null,
+      "sha256": "995e7cbf5374c877d28bbfc83a2db50e2daca9a981f54aa2203cd10a554de178",
+      "headings": [
+        "PROJECT — Reels Factory MVP",
+        "1. Project",
+        "2. Purpose",
+        "3. Source Of Truth",
+        "4. Current Status",
+        "5. Done So Far",
+        "6. Current Focus",
+        "7. Next Practical Step",
+        "8. Key Decisions And Constraints",
+        "9. Read Next"
       ]
     },
     {
