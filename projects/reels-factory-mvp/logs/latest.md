@@ -1,108 +1,109 @@
 # Latest Log — Reels Factory MVP
 
-Date: 2026-06-10
+Date: 2026-06-11
 
 ## Session Summary
 
-Completed the infrastructure preparation phase for the first Reels Factory MVP smoke test. Created a complete AWS ComfyUI + Wan Image-to-Video execution kit.
+The first AWS infrastructure smoke-test attempt was executed and then intentionally stopped by owner command before video generation.
 
 ## RunPod
 
-- Opened RunPod onboarding.
-- Selected `Pods` as the relevant product.
-- Confirmed that GPU deployment requires prepaid credits.
-- Verified preset funding packages: `$150`, `$200`, `$250`, `$500`.
-- Verified that `Other` allows a custom funding amount.
-- Verified minimum custom funding amount: `$10`.
-- No payment was made.
+- RunPod onboarding was checked earlier.
+- Minimum custom funding amount confirmed: `$10`.
+- No RunPod payment was made.
+- RunPod remains fallback only.
 
-Decision:
-
-- Keep RunPod as fallback only.
-- Do not fund RunPod while AWS credits are available and AWS GPU quota is enabled.
-
-## AWS
-
-The owner reported an existing AWS account with:
+## AWS Account
 
 - Account ID: `102885960265`
-- Plan: `AWS Free Plan`
-- Remaining credits: `$74.57`
-- Credit expiration: `2026-10-04`
-
-AWS EC2 was opened in region:
-
-- `United States (Ohio)` / `us-east-2`
-
-Quota checked:
-
-- Name: `Running On-Demand G and VT instances`
-- Quota code: `L-DB2E81BA`
-- Initial value: `0`
-- Utilization: `0`
-
-Quota increase request submitted:
-
-- Requested value: `4` vCPU
+- Region: `United States (Ohio)` / `us-east-2`
+- GPU quota: `Running On-Demand G and VT instances` increased from `0` to `4` vCPU.
 - AWS Support case: `178112387200526`
-- Initial request status: `Case Opened`
+- Owner upgraded account from AWS Free Plan to paid plan.
+- Credits reported before attempt: `$74.57`
+- Approximate credits after stop: `$73.90`
 
-AWS Support email received and read:
+## Canonical Execution Kit
 
-- Result: approved
-- Approved limit: `4`
-- Applied account-level quota value later confirmed in console: `4`
+Final reviewed kit commit:
 
-## Instance Selection (NEW)
+`3f7a245605a3afed5f7cd0c6c3758e68d3a8f282`
 
-- **Recommended:** g4dn.xlarge (4 vCPU, 16 GB VRAM T4, $0.526/hr)
-- **Alternatives compared:** g5.xlarge ($1.006/hr), g6.xlarge (~$0.70/hr)
-- **Wan model:** Wan2.1-I2V-1.3B (~6-8 GB VRAM, ~3 GB download)
-- **Deployment route:** Deep Learning AMI GPU PyTorch 2.x + ComfyUI + ComfyUI-WanVideoWrapper
-- **Existing solutions checked:** ComfyUI official, ComfyUI-WanVideoWrapper (kijai), Wan2.1 official repo
-- **Solution reused:** ComfyUI + ComfyUI-WanVideoWrapper (established community route)
+Canonical route:
 
-## Execution Kit Created (NEW)
+- Instance: `g5.xlarge`
+- GPU: NVIDIA A10G, 24 GB VRAM
+- Model: `Wan2.1-I2V-14B-480P` FP16 Diffusers
+- Workflow: `wanvideo_2_1_14B_I2V_example_03.json`
+- Root volume: `100 GB gp3`
+- Security: source-IP only; SSH tunneling preferred
 
-Three artifacts created under `projects/reels-factory-mvp/`:
+Artifacts:
 
-1. `AWS_INSTANCE_SELECTION.md` — instance comparison, pricing, quota validation
-2. `AWS_WAN_SMOKE_TEST_RUNBOOK.md` — 13-step runbook with copy-ready commands, cleanup checklist, troubleshooting, and fallback
-3. `COST_TRACKING_TEMPLATE.md` — measurement template for setup time, generation time, runtime, and cost
+1. `AWS_INSTANCE_SELECTION.md`
+2. `AWS_WAN_SMOKE_TEST_RUNBOOK.md`
+3. `COST_TRACKING_TEMPLATE.md`
 
-## First Smoke Test Scope
+## First AWS Smoke-Test Attempt
 
-The first execution test was intentionally narrowed:
+Execution channel:
 
-`ChatGPT-generated start image -> Wan Image-to-Video -> 3-second 480p low-quality clip -> download result -> record cost and runtime -> terminate GPU`
+https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47
 
-First concept:
+Resources:
 
-- one simple vehicle-motion scene;
-- objective: confirm that the car moves and a video file is produced;
-- no Flux test yet;
-- no 15-second reel yet;
-- no multi-scene storyboard yet.
+- EC2 instance: `i-090c7666371f00d68`
+- Instance type: `g5.xlarge`
+- Public IP during runtime: `3.144.84.183`
+- Root volume: `100 GB gp3`
+
+Validated:
+
+- Paid-plan upgrade removed GPU launch blocker.
+- `g5.xlarge` launched successfully.
+- NVIDIA A10G detected.
+- SSH worked.
+- ComfyUI installed.
+- WanVideoWrapper installed.
+- Wan model download started.
+
+Owner stop command:
+
+- Owner ordered all active processes stopped before generation.
+- Model download interrupted.
+- Video generation not performed.
+
+Cleanup:
+
+- EC2 instance `i-090c7666371f00d68` terminated.
+- EBS root volume cleaned up through `DeleteOnTermination=true`.
+- No active smoke-test AWS processes remain.
+
+Measured interim result:
+
+- Runtime: approximately `40 minutes`.
+- Approximate cost: `$0.67`.
 
 ## Current Decision
 
-Proceed with AWS first because promotional credits already exist and the G-family quota blocker is resolved. Use g4dn.xlarge at $0.526/hr.
+Project is paused. No AWS GPU runtime is active.
 
-## Next Safe Action
+Before restarting, choose whether to:
 
-Execute the first smoke test using the runbook. Launch a g4dn.xlarge instance, install ComfyUI + Wan, generate one 3-second 480p clip, record results, and terminate.
+1. restart immediately from scratch using the existing runbook;
+2. first add a persistence strategy to avoid repeating environment setup and model download cost.
 
 ## Do-Not-Repeat Work
 
 - Do not re-request AWS G/VT quota.
-- Do not pay RunPod yet.
-- Do not start with 15 seconds.
-- Do not add Flux to the first smoke test.
-- Do not re-research instance selection.
+- Do not repeat Free Plan diagnosis; paid-plan upgrade is complete.
+- Do not use `g4dn.xlarge` as the canonical route.
+- Do not refer to `Wan2.1-I2V-1.3B`; that was an incorrect earlier assumption.
+- Do not restart AWS runtime without explicit owner approval.
 
 ## Re-entry Links
 
-- EC2 Launch Instance page: https://console.aws.amazon.com/ec2/home?region=us-east-2#LaunchInstances:
+- Active coordination channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47
+- EC2 Launch page: https://console.aws.amazon.com/ec2/home?region=us-east-2#LaunchInstances:
 - Approved quota page: https://console.aws.amazon.com/servicequotas/home/services/ec2/quotas/L-DB2E81BA?region=us-east-2
 - AWS Support case: https://console.aws.amazon.com/support/home#/case/?displayId=178112387200526&language=en
-- Runbook: `projects/reels-factory-mvp/AWS_WAN_SMOKE_TEST_RUNBOOK.md`
