@@ -1,6 +1,7 @@
 # Latest Log — Reels Factory MVP
 
 Date: 2026-06-11
+Checkpoint: saved before separate Mailbox Dispatcher session
 
 ## Current Status
 
@@ -65,15 +66,28 @@ Artifact:
 
 - `projects/reels-factory-mvp/AWS_PERSISTENCE_STRATEGY.md`
 
-Reviewed candidate commit:
+Accepted report commit:
 
 - `e04e88e105375b148731b3f1d2861d56c36b6b67`
 
-Current correction channel:
+State-sync commits:
+
+- `a6dfdb4a61277404e708aed4610ca5f428d751ab`
+- `df159f36b4db5dccddd69c01e2918fba38971102`
+
+Persistence correction channel:
 
 - https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48
 
-## Next Safe Action
+## Separate System Task
+
+Mailbox Dispatcher implementation is a separate Project Execution OS task:
+
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
+
+Do not confuse it with the next Reels Factory AWS run.
+
+## Next Safe Reels Factory Action
 
 Wait for explicit owner approval before launching a second AWS run.
 
