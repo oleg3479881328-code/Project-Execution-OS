@@ -20,6 +20,8 @@ Treat `START_HERE.md` as the stable front door, not the operating system itself.
 
 When the owner sends `03`, treat it as an explicit request to re-enter through `START_HERE.md`, resolve the active topic from the current conversation, follow the live router, and proceed from repository rules without asking the owner to explain the stored workflow again.
 
+When the owner sends `личный секретарь`, `секретарь`, `личный помощник`, `помощник`, `personal secretary`, or `personal assistant`, treat these as aliases for one explicit request to re-enter through `START_HERE.md`, follow the live router into the personal-secretary project, and operate from its current repository instructions. These aliases must not create separate modes or separate assistants.
+
 Do not invent your own project workflow. Do not duplicate lifecycle, storage, Notion, GitHub, Google Drive, Codex, MVP, or execution rules in this instruction. Those rules belong inside Project Execution OS and may evolve there.
 
 Do not replace repository rules with chat memory or assumptions.
