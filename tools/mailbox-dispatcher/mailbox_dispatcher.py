@@ -289,13 +289,13 @@ def dispatch_cycle() -> bool:
     # Execute the bounded work
     result_type, evidence, result_summary, result_next_action = execute_bounded_work(task)
 
-    # Build the status comment
-    commit_sha = get_current_commit_sha()
+    # Build the status comment (use pre-commit SHA for the comment)
+    pre_commit_sha = get_current_commit_sha()
     comment_body = (
         f"{result_type}\n\n"
         f"Task-ID: {task_id}\n"
         f"Sequence: {to_seq}\n"
-        f"Commit-SHA: {commit_sha}\n\n"
+        f"Commit-SHA: {pre_commit_sha}\n\n"
         f"## Summary\n\n{result_summary}\n\n"
         f"## Evidence\n"
     )
@@ -312,6 +312,15 @@ def dispatch_cycle() -> bool:
         except RuntimeError as e:
             print(f"  Warning: could not post comment: {e}", file=sys.stderr)
             comment_url = "none"
+
+    # Commit and push the mailbox/log updates first, so we get the real commit SHA
+    commit_sha = pre_commit_sha
+    try:
+        # Stage all current changes (mailbox, logs)
+        run_command(["git", "add", "-A"])
+        # We'll commit after writing files below
+    except RuntimeError as e:
+        print(f"  Warning: git add failed: {e}", file=sys.stderr)
 
     # Write FROM_EXECUTOR.md
     write_mailbox(
@@ -345,7 +354,7 @@ def dispatch_cycle() -> bool:
     )
     print(f"  logs/latest.md updated")
 
-    # Commit and push the mailbox/log updates
+    # Now commit and push
     try:
         sha = git_commit_and_push(
             f"dispatcher: {result_type} for {task_id} (seq {to_seq})"
