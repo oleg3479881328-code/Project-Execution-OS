@@ -1,22 +1,22 @@
 # AI Coordination State
 
 ## Project
-Reels Factory MVP
+Project Execution OS
 
 ## Purpose
-Coordinate the AWS persistence-strategy correction through one bounded reply surface and compact bidirectional mailbox files.
+Implement and validate an automatic mailbox dispatcher so routine executor coordination no longer depends on manual owner relay.
 
 ## Active Channel
-https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48
+https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
 
 ## Mailboxes
-- Reviewer to executor: `projects/reels-factory-mvp/coordination/TO_EXECUTOR.md`
-- Executor to reviewer: `projects/reels-factory-mvp/coordination/FROM_EXECUTOR.md`
+- Reviewer to executor: `coordination/TO_EXECUTOR.md`
+- Executor to reviewer: `coordination/FROM_EXECUTOR.md`
 
 ## Previous Channels
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47 — AWS smoke-test execution and first persistence draft
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48 — Reels Factory persistence-strategy correction completed
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47 — Reels Factory AWS smoke-test execution and first persistence draft
 - https://github.com/oleg3479881328-code/Project-Execution-OS/issues/46 — execution-kit preparation and review iterations
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/35 — previous unrelated Project Execution OS coordination
 
 ## Active Participants
 - Oleg Povalyukhin — Project Owner
@@ -24,38 +24,38 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48
 - Executor Agent — Infrastructure Executor
 
 ## Current Task
-Correct the AWS persistence strategy report and validate the new mailbox communication path.
+Implement the smallest reliable polling or webhook mailbox dispatcher described in Issue #49.
 
 ## Current Repository State
-- Initial persistence draft: `a2fd8ba43340a26e24468c2e0194bd3c7e622e28`
-- Corrected persistence report candidate: `b8774ebeb027f887f0d6026fcbe9b318be481e65`
-- Active mailbox protocol: `docs/EXECUTOR_MAILBOX_STANDARD.md`
-- No AWS runtime is active.
+- Global mailbox standard: `docs/EXECUTOR_MAILBOX_STANDARD.md`
+- Active outbound mailbox: `coordination/TO_EXECUTOR.md`
+- Active inbound mailbox: `coordination/FROM_EXECUTOR.md`
+- Reels Factory persistence route accepted: Custom AMI primary, EBS snapshot fallback
+- No AWS GPU runtime is active.
 
 ## Accepted Changes
-- Issue #48 is the only active durable reply surface for the current correction task.
-- Compact mailboxes are now the primary latest-message readback layer.
-- Issue comments remain the audit trail.
+- Issue #49 is the only active durable reply surface for the dispatcher task.
+- Root mailboxes are the latest-message readback layer for the dispatcher implementation.
+- GitHub issue comments remain the audit trail.
 
 ## Open Review Items
-- `PROJECT_STATE.md` and `logs/latest.md` still need persistence-strategy updates.
-- AMI workflow still needs a wait-for-availability checkpoint before source termination.
-- ComfyUI restart guidance must use localhost binding with SSH tunneling rather than public port exposure.
-- Executor must acknowledge Issue #48 and update `FROM_EXECUTOR.md`.
+- Await executor ACK in Issue #49.
+- Determine available runtime for polling or webhook bridge.
+- Require implementation or exact deployable specification, security boundary, restart behavior, and failure recovery.
 
 ## Next Step
 When `02` is received:
 1. read `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`;
-2. read `projects/reels-factory-mvp/coordination/FROM_EXECUTOR.md`;
-3. read Issue #48 for supporting evidence;
-4. inspect any reported commit;
+2. read `coordination/FROM_EXECUTOR.md`;
+3. read Issue #49 for supporting evidence;
+4. inspect any reported commit or PR;
 5. continue from the latest mailbox sequence.
 
 ## Required Validation
-- Verify executor ACK in Issue #48.
-- Verify `FROM_EXECUTOR.md` sequence increment.
-- Verify final corrected commit includes the requested project-state updates.
-- Verify no AWS resources are launched.
+- Verify executor ACK in Issue #49.
+- Verify inbound mailbox sequence increment.
+- Verify no secrets are stored in repository.
+- Verify the dispatcher can recover after restart and does not duplicate tasks.
 
 ## Update Rule
 Update this snapshot only after meaningful state transitions.
