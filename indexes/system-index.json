@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6cbe2b364074a4fe3c59a1417ad9139cd5791a42",
-  "generated_at": "2026-06-11T11:01:30-04:00",
-  "artifact_count": 455,
+  "repository_commit": "3c91acd1cbacaba4f43938ad637dc807cbf9ee97",
+  "generated_at": "2026-06-11T13:51:26-04:00",
+  "artifact_count": 456,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -6948,6 +6948,33 @@
         "Why This Exists",
         "When to Use",
         "When Not to Use"
+      ]
+    },
+    {
+      "path": "knowledge-library/pimenov-ai-system-patterns.md",
+      "title": "Pimenov.ai — reusable system patterns for Project Execution OS",
+      "type": "knowledge-entry",
+      "domain": "knowledge:pimenov-ai-system-patterns.md",
+      "status": null,
+      "date": null,
+      "sha256": "b9980854cbd1f6567242d70c8422dc7cd0f5eafc994368de2444af24898648b3",
+      "headings": [
+        "Pimenov.ai — reusable system patterns for Project Execution OS",
+        "Purpose",
+        "Core patterns worth adopting",
+        "1. Agent-ready systems",
+        "2. Separate design from execution",
+        "3. Use eval loops instead of endlessly expanding prompts",
+        "4. Separate generator and reviewer roles",
+        "5. Read-only infrastructure audit before changes",
+        "6. Human approval gates for external actions",
+        "7. Knowledge systems must be machine-readable and maintained",
+        "Project-specific applications",
+        "Website design block",
+        "Reels factory",
+        "Personal secretary",
+        "Explicit non-actions for now",
+        "Immediate recommended next step"
       ]
     },
     {
