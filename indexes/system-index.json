@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "df159f36b4db5dccddd69c01e2918fba38971102",
-  "generated_at": "2026-06-11T08:38:48-04:00",
-  "artifact_count": 447,
+  "repository_commit": "4a7582570e68fd5bf6d72d633b2419c0e8639ff7",
+  "generated_at": "2026-06-11T08:56:04-04:00",
+  "artifact_count": 449,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -694,7 +694,7 @@
       "domain": "communication-channel",
       "status": null,
       "date": null,
-      "sha256": "71c02a6b47106be7cf7f337a5652c6d58b049839ba57283f924f106883ae0e86",
+      "sha256": "e7be5713aa767998a2bd7335e5d78ce34fc29334311af88f06ba9a300744c28a",
       "headings": [
         "Active Coordination Channel Route",
         "Purpose",
@@ -4603,6 +4603,32 @@
         "Related Video Production Validation",
         "Known Unvalidated Assumptions",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "coordination/FROM_EXECUTOR.md",
+      "title": "FROM_EXECUTOR",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "2d52babbf5305e111e9a2aa0c317460dc8589a182b8750493d4e90eb59e6f838",
+      "headings": [
+        "FROM_EXECUTOR",
+        "Summary"
+      ]
+    },
+    {
+      "path": "coordination/TO_EXECUTOR.md",
+      "title": "TO_EXECUTOR",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "0885f884c2883fb016afc2bfebab03433c04bc0022795c53ed12e5e3a411b113",
+      "headings": [
+        "TO_EXECUTOR",
+        "Summary"
       ]
     },
     {
