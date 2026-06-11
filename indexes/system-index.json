@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a6dfdb4a61277404e708aed4610ca5f428d751ab",
-  "generated_at": "2026-06-11T08:38:33-04:00",
+  "repository_commit": "df159f36b4db5dccddd69c01e2918fba38971102",
+  "generated_at": "2026-06-11T08:38:48-04:00",
   "artifact_count": 447,
   "artifacts": [
     {
@@ -8789,17 +8789,16 @@
       "domain": "reels-factory-mvp",
       "status": null,
       "date": "2026-06-11",
-      "sha256": "3cdc4a2556d796adb6acdbbf88f6bc74737c20e2eea8b86ff6b2d5657c111bab",
+      "sha256": "eaad0e7e87af22d604686cf8e5a88a79b766577eb7e4cc12dd21ef6f118cb652",
       "headings": [
         "Latest Log — Reels Factory MVP",
-        "Session Summary",
-        "RunPod",
+        "Current Status",
         "AWS Account",
-        "Canonical Execution Kit",
-        "First AWS Smoke-Test Attempt",
-        "Current Decision",
-        "Do-Not-Repeat Work",
-        "Re-entry Links"
+        "Canonical Route",
+        "First AWS Attempt",
+        "Persistence Report",
+        "Next Safe Action",
+        "Do-Not-Repeat Work"
       ]
     },
     {
