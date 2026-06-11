@@ -4,7 +4,10 @@ Automatic polling bridge between `coordination/TO_EXECUTOR.md` and `coordination
 
 ## Purpose
 
-Removes the need for the owner to manually relay routine messages between a reasoning agent (reviewer) and an execution agent. The dispatcher watches the reviewer-to-executor mailbox for sequence changes, reads the active GitHub issue, executes approved bounded work, writes the executor-to-reviewer mailbox, and posts matching status comments.
+Removes the need for the owner to manually relay routine messages between a reasoning agent (reviewer) and an execution agent. The dispatcher has two modes:
+
+- **Notifier** — watches `TO_EXECUTOR.md` for sequence changes, validates the active route, reads the active issue, posts `ACK`, writes `FROM_EXECUTOR.md`, and waits for an external executor.
+- **Runner** — invokes one explicitly configured external command or adapter, captures its result, then posts `COMPLETE` or `BLOCKER`.
 
 ## How It Works
 
@@ -12,74 +15,96 @@ Removes the need for the owner to manually relay routine messages between a reas
 Reviewer writes TO_EXECUTOR.md (new sequence)
         │
         ▼
-Dispatcher polls (every N seconds)
+Notifier polls (every N seconds)
         │
         ├─ Reads TO_EXECUTOR.md
-        ├─ Compares sequence with FROM_EXECUTOR.md
-        ├─ If new: parses task envelope
-        ├─ Executes bounded work
-        ├─ Posts status comment to active GitHub issue
-        ├─ Writes FROM_EXECUTOR.md with result
+        ├─ Validates active route against ACTIVE_CHANNEL_ROUTE.md
+        ├─ Reads the active issue body
+        ├─ Posts ACK comment to active GitHub issue
+        ├─ Writes FROM_EXECUTOR.md (Type: ACK)
         ├─ Updates logs/latest.md
-        └─ Commits and pushes changes
+        ├─ Stages only allowed files, rejects dirty-tree
+        └─ Commits and pushes
+                │
+                ▼
+Runner (invoked separately with --command "...")
+        │
+        ├─ Validates active route
+        ├─ Reads the active issue body
+        ├─ Executes the external command
+        ├─ Posts COMPLETE or BLOCKER comment
+        ├─ Writes FROM_EXECUTOR.md
+        ├─ Updates logs/latest.md
+        └─ Stages only allowed files, commits, pushes
 ```
 
 ## Requirements
 
 - **Python 3.8+**
 - **gh CLI** — authenticated with a GitHub token that has `issues:write` permission on the repository
-- **Git** — configured with user.name and user.email for automated commits
+- **Git** — configured with `user.name` and `user.email` for automated commits
 
 ## Installation
 
 ```bash
-# Navigate to the dispatcher directory
 cd tools/mailbox-dispatcher
-
-# No dependencies beyond Python standard library
-# Verify Python and gh are available
 python --version
 gh --version
 ```
 
+No dependencies beyond Python standard library.
+
 ## Usage
 
-### Single cycle (for testing or cron)
+### Notifier mode (continuous polling)
 
 ```bash
-python mailbox_dispatcher.py --once
+python mailbox_dispatcher.py notifier --poll-interval 30
 ```
 
-### Continuous polling (for long-running sessions)
+Detects new sequences in `TO_EXECUTOR.md`, posts `ACK`, and waits for a runner.
+
+### Runner mode (single execution)
 
 ```bash
-python mailbox_dispatcher.py --poll-interval 30
+python mailbox_dispatcher.py runner --command "python my_script.py" --timeout 300
 ```
 
-The default poll interval is 30 seconds. Adjust based on your latency requirements.
+Executes the command, captures stdout/stderr/exit code, posts `COMPLETE` or `BLOCKER`.
 
 ### Arguments
+
+#### Notifier
 
 | Argument | Default | Description |
 |---|---|---|
 | `--poll-interval SECONDS` | `30` | Polling interval in seconds |
-| `--once` | `false` | Run a single dispatch cycle and exit |
+
+#### Runner
+
+| Argument | Default | Description |
+|---|---|---|
+| `--command COMMAND` | (required) | External command to execute |
+| `--timeout SECONDS` | `300` | Command timeout in seconds |
 
 ## Security Boundary
 
-1. **No secrets in repository.** The dispatcher uses `gh` CLI, which stores its authentication token outside the repository (in the system credential store or GitHub CLI config).
+1. **No secrets in repository.** The dispatcher uses `gh` CLI, which stores its authentication token outside the repository.
 2. **Bounded execution only.** The dispatcher only executes safe operations:
    - Reading and writing mailbox files (`coordination/TO_EXECUTOR.md`, `coordination/FROM_EXECUTOR.md`)
    - Posting comments to GitHub issues via `gh`
-   - Running `git add`, `git commit`, `git push`
-3. **No destructive actions.** The dispatcher does not delete files, modify repository settings, change visibility, deploy to production, or execute arbitrary code from task envelopes.
-4. **No external network access** beyond the GitHub API (via `gh`).
+   - Running `git add` on explicitly allowed paths only
+   - Running `git commit` and `git push`
+3. **No destructive actions.** The dispatcher does not delete files, modify repository settings, change visibility, deploy to production, or execute arbitrary code from mailbox text.
+4. **Dirty-tree protection.** If uncommitted changes exist outside the allowed paths, the dispatcher refuses to proceed and posts a `BLOCKER`.
+5. **Active route validation.** Before any action, the dispatcher reads `ACTIVE_CHANNEL_ROUTE.md` and verifies it matches `TO_EXECUTOR.md`'s `Active-Channel`. Mismatch produces a `BLOCKER`.
+6. **No external network access** beyond the GitHub API (via `gh`).
 
 ## Restart Behavior
 
 - **Idempotent.** If the dispatcher restarts, it reads the current sequence from `FROM_EXECUTOR.md` and compares it with `TO_EXECUTOR.md`. Already-processed sequences are skipped.
 - **No duplicate comments.** The dispatcher checks the sequence before posting. If `FROM_EXECUTOR.md` sequence >= `TO_EXECUTOR.md` sequence, no action is taken.
-- **Crash recovery.** On restart after a crash, the dispatcher resumes from the last committed state. Uncommitted local changes are detected by `git status` and reported.
+- **Crash recovery.** On restart after a crash, the dispatcher resumes from the last committed state.
 
 ## Failure Recovery
 
@@ -89,6 +114,8 @@ The default poll interval is 30 seconds. Adjust based on your latency requiremen
 | Git push fails (network) | Local commit is made. Next cycle will attempt push again. |
 | Mailbox file missing | Dispatcher logs warning and continues polling. |
 | Invalid sequence value | Dispatcher logs error and continues polling. |
+| Active route mismatch | `BLOCKER` is posted. Dispatcher waits for corrected route. |
+| Dirty tree outside allowed paths | `BLOCKER` is posted. Dispatcher waits for clean tree. |
 | Python exception | Caught by main loop. Error is logged. Polling continues. |
 
 ## Process Management
@@ -96,18 +123,18 @@ The default poll interval is 30 seconds. Adjust based on your latency requiremen
 ### Windows (PowerShell)
 
 ```powershell
-# Start in background
-Start-Process -NoNewWindow python "mailbox_dispatcher.py --poll-interval 30"
+# Start notifier in background
+Start-Process -NoNewWindow python "mailbox_dispatcher.py notifier --poll-interval 30"
 
-# Stop (find and kill the process)
+# Stop
 Get-Process -Name python | Where-Object { $_.CommandLine -like "*mailbox_dispatcher*" } | Stop-Process
 ```
 
 ### Linux / macOS
 
 ```bash
-# Start in background with nohup
-nohup python mailbox_dispatcher.py --poll-interval 30 > dispatcher.log 2>&1 &
+# Start notifier in background
+nohup python mailbox_dispatcher.py notifier --poll-interval 30 > dispatcher.log 2>&1 &
 
 # Stop
 pkill -f "mailbox_dispatcher.py"
@@ -117,13 +144,13 @@ pkill -f "mailbox_dispatcher.py"
 
 ```ini
 [Unit]
-Description=Project Execution OS Mailbox Dispatcher
+Description=Project Execution OS Mailbox Dispatcher (Notifier)
 After=network.target
 
 [Service]
 Type=simple
 WorkingDirectory=/path/to/Project-Execution-OS
-ExecStart=/usr/bin/python3 /path/to/Project-Execution-OS/tools/mailbox-dispatcher/mailbox_dispatcher.py --poll-interval 30
+ExecStart=/usr/bin/python3 /path/to/Project-Execution-OS/tools/mailbox-dispatcher/mailbox_dispatcher.py notifier --poll-interval 30
 Restart=always
 RestartSec=10
 User=your-user
@@ -137,7 +164,7 @@ WantedBy=multi-user.target
 ```
 Project-Execution-OS/
 ├── coordination/
-│   ├── TO_EXECUTOR.md        # Reviewer → Executor (watched by dispatcher)
+│   ├── TO_EXECUTOR.md        # Reviewer → Executor (watched by notifier)
 │   ├── FROM_EXECUTOR.md      # Executor → Reviewer (written by dispatcher)
 │   └── CHECKPOINT.md         # Safe checkpoint state
 ├── logs/
@@ -145,7 +172,9 @@ Project-Execution-OS/
 └── tools/
     └── mailbox-dispatcher/
         ├── mailbox_dispatcher.py   # The dispatcher script
-        └── README.md               # This file
+        ├── README.md               # This file
+        └── tests/
+            └── test_dispatcher.py  # Unit tests
 ```
 
 ## Mailbox Envelope Format
