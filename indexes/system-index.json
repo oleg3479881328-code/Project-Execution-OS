@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "446678c966e8ece8681e2a65c6f080b61fbf7395",
-  "generated_at": "2026-06-11T09:06:06-04:00",
+  "repository_commit": "20aff0f22f1c5addc05932fe60da57adef210082",
+  "generated_at": "2026-06-11T09:06:49-04:00",
   "artifact_count": 449,
   "artifacts": [
     {
@@ -8814,7 +8814,7 @@
       "domain": "reels-factory-mvp",
       "status": null,
       "date": "2026-06-11",
-      "sha256": "eaad0e7e87af22d604686cf8e5a88a79b766577eb7e4cc12dd21ef6f118cb652",
+      "sha256": "16bd9dcf920a812c586a3297d730c09ff698bc580e40465f5e976270eb913f2a",
       "headings": [
         "Latest Log — Reels Factory MVP",
         "Current Status",
@@ -8822,7 +8822,8 @@
         "Canonical Route",
         "First AWS Attempt",
         "Persistence Report",
-        "Next Safe Action",
+        "Separate System Task",
+        "Next Safe Reels Factory Action",
         "Do-Not-Repeat Work"
       ]
     },
