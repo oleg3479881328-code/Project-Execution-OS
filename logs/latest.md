@@ -1,11 +1,11 @@
 # Latest Executor Status
 
-Timestamp: 2026-06-11T23:50:23Z
-Marker: ACK
+Timestamp: 2026-06-11T23:52:00Z
+Marker: COMPLETE
 Task-ID: project-execution-os-mailbox-dispatcher-v2
-Status: Handoff received. Waiting for runner.
+Status: Implemented corrected mailbox dispatcher with notifier/runner mode split, active route validation, issue reading, staged-only git, post-commit SHA, real ACK/BLOCKER/COMPLETE states, accurate documentation, and 24 tests.
 Reply-Surface: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686078817
-Commit-SHA: 46532f9d835a6a0c66e0c0294b264ca8128602e6
-Next-Automatic-Action: Read the review request in Issue #49, post ACK, implement the corrected notifier and runner architecture, add tests, publish a new commit SHA, and post COMPLETE.
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686088124
+Commit-SHA: 8234efa
+Next-Automatic-Action: Review the implementation. All 9 corrections addressed.
 Owner-Action-Required: none
