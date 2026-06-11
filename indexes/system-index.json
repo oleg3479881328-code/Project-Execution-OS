@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2eefc0286d49ef7735af6fd6ac03a3597bb13eb3",
-  "generated_at": "2026-06-11T07:21:08-04:00",
+  "repository_commit": "4f02727e0655909bfdb8123b99e5eb43d5106f70",
+  "generated_at": "2026-06-11T07:21:36-04:00",
   "artifact_count": 442,
   "artifacts": [
     {
@@ -715,7 +715,7 @@
       "domain": "communication-channel",
       "status": null,
       "date": null,
-      "sha256": "ae06ef0def8215ddd6959f1b9c0ccbad0f82f08817845f34bade8b5748807f1b",
+      "sha256": "8d89c9aaa25bad257f468fcf286e06645cc751a800d1fd34d19213c0ae41fb3f",
       "headings": [
         "Communication Channel Block",
         "Display Name",
@@ -727,6 +727,7 @@
         "Active write/read pointer",
         "General channel selection or coordination policy",
         "Universal executor reply surface",
+        "Reliable readback route",
         "Compact coordination state",
         "Channel transition handshake",
         "Signed polite coordination messages",
