@@ -17,6 +17,14 @@ AI_COORDINATION_LOG.md
 
 Use these files when two or more participants coordinate technical work through GitHub or another durable project channel and the active thread may become too long, fragmented, or hard to resume reliably.
 
+When the active project contains a fast project-scoped mirror, also use:
+
+```text
+projects/<project>/logs/latest.md
+```
+
+for the newest executor status snapshot.
+
 ## Core Split
 
 ```text
@@ -30,6 +38,10 @@ AI_COORDINATION_STATE.md
 AI_COORDINATION_LOG.md
 -> append-only chronological event journal
 -> append meaningful events at the bottom only
+
+projects/<project>/logs/latest.md
+-> fast project-scoped status mirror
+-> newest ACK / HEARTBEAT / BLOCKER / COMPLETE state
 ```
 
 Do not use `AI_COORDINATION_STATE.md` as a full transcript.
@@ -71,6 +83,33 @@ Update `AI_COORDINATION_STATE.md` only after a meaningful state transition:
 
 Do not update it for every short coordination message.
 
+## Fast Status Mirror Rule
+
+When `projects/<project>/logs/latest.md` exists, treat it as the first project-scoped readback surface for the newest executor status.
+
+Update it after every executor:
+
+```text
+ACK
+HEARTBEAT
+BLOCKER
+COMPLETE
+```
+
+The update should include:
+
+- timestamp;
+- active task;
+- status marker;
+- short factual state;
+- active channel URL;
+- direct comment URL when available;
+- current commit SHA when available;
+- next automatic action;
+- owner action required or `none`.
+
+The fast mirror does not replace the issue comment. It exists to survive connector truncation, stale comment reads, or long-thread omission.
+
 ## Append-Only Log Rule
 
 `AI_COORDINATION_LOG.md` is governed by:
@@ -92,12 +131,15 @@ After a meaningful transition:
 ```text
 append event to AI_COORDINATION_LOG.md
 -> update AI_COORDINATION_STATE.md if the current operational state changed
+-> update projects/<project>/logs/latest.md with newest status
 -> keep the active Issue / PR / review thread as message transport
 ```
 
 The log is chronological history.
 
 The snapshot is current operational state.
+
+The project mirror is the newest execution status.
 
 The GitHub thread is the durable discussion trail.
 
@@ -108,7 +150,9 @@ Do not merge these roles.
 Before resuming AI-to-AI coordination in an existing project, especially when processing shorthand command `02`, read in this order when the files exist:
 
 ```text
-AI_COORDINATION_STATE.md
+blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md
+-> projects/<project>/logs/latest.md
+-> AI_COORDINATION_STATE.md
 -> Active Channel
 -> latest relevant comments in the active channel
 -> latest repository commit or PR state
@@ -118,7 +162,14 @@ AI_COORDINATION_STATE.md
 
 Do not read the whole append-only log by default when the snapshot is sufficient.
 
-Do not assume the newest issue or the longest thread is the active channel. Use the snapshot's `Active Channel` field.
+Do not assume the newest issue or the longest thread is the active channel. Use the active route and snapshot.
+
+If the connector response is truncated, stale, or missing the newest comment:
+
+- do not claim that no reply exists;
+- report that the connector read is inconclusive;
+- use `logs/latest.md`, issue metadata, and latest commit evidence as fallback;
+- ask for manual relay only as the last resort.
 
 ## Channel Migration Rule
 
@@ -143,7 +194,9 @@ A snapshot update proves that the snapshot exists in repository history.
 
 A log append proves that an event record exists in repository history.
 
-Neither proves that code changes, validations, or runtime behavior are correct.
+A fast-mirror update proves that the newest status snapshot exists in repository history.
+
+None of these alone proves that code changes, validations, or runtime behavior are correct.
 
 Record commit SHAs and validation evidence separately.
 
@@ -168,6 +221,8 @@ Use `AI_COORDINATION_STATE.md` only for current operational coordination state.
 
 Use `AI_COORDINATION_LOG.md` only for meaningful chronological coordination events.
 
+Use `projects/<project>/logs/latest.md` only for the newest project-scoped status mirror.
+
 Do not store:
 
 - secrets;
@@ -187,6 +242,7 @@ Use together with:
 - `blocks/communication-channel/BLOCK.md`;
 - `docs/AI_COORDINATION_HUB_STANDARD.md`;
 - `docs/CHATGPT_CODEX_GITHUB_PROTOCOL.md`;
+- `docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md`;
 - `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md` when durable handoff readiness matters.
 
 ## Final Rule
@@ -196,5 +252,7 @@ Use GitHub threads for transport.
 Use `AI_COORDINATION_STATE.md` for compact current state.
 
 Use `AI_COORDINATION_LOG.md` for append-only chronological history.
+
+Use `projects/<project>/logs/latest.md` for newest executor status.
 
 Do not allow a long message thread to become the only resumable project memory.
