@@ -125,11 +125,14 @@ aws ec2 wait instance-stopped --instance-ids i-xxxxxxxx --region us-east-2
 # 2. Create the AMI (this also creates the backing EBS snapshots)
 aws ec2 create-image --instance-id i-xxxxxxxx --name "reels-factory-smoke-test-ami" --description "Reels Factory MVP: ComfyUI + Wan2.1-I2V-14B-480P" --region us-east-2
 
-# 3. Verify the AMI and snapshot
+# 3. Wait until the AMI is available before terminating the source instance
+aws ec2 wait image-available --image-ids ami-xxxxxxxx --region us-east-2
+
+# 4. Verify the AMI and snapshot
 aws ec2 describe-images --image-ids ami-xxxxxxxx --region us-east-2
 aws ec2 describe-snapshots --filters "Name=description,Values=*reels-factory-smoke-test-ami*" --region us-east-2
 
-# 4. Terminate the temporary GPU instance (no longer needed)
+# 5. Terminate the temporary GPU instance (no longer needed)
 aws ec2 terminate-instances --instance-ids i-xxxxxxxx --region us-east-2
 ```
 
@@ -139,11 +142,13 @@ aws ec2 terminate-instances --instance-ids i-xxxxxxxx --region us-east-2
 # 1. Launch new instance from the AMI
 aws ec2 run-instances --image-id ami-xxxxxxxx --instance-type g5.xlarge --key-name reels-factory-smoke-key --security-group-ids sg-xxxxxxxx --block-device-mappings "[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"VolumeSize\":100,\"VolumeType\":\"gp3\",\"DeleteOnTermination\":true}}]" --region us-east-2
 
-# 2. SSH in and start ComfyUI
-ssh -i reels-factory-smoke-key.pem ubuntu@<IP>
-cd ~/ComfyUI && source venv/bin/activate && python main.py --listen 0.0.0.0 --port 8188
+# 2. SSH in with tunnel and start ComfyUI on localhost only
+ssh -i reels-factory-smoke-key.pem -L 8188:localhost:8188 ubuntu@<IP>
+# In the SSH session:
+cd ~/ComfyUI && source venv/bin/activate && python main.py --listen 127.0.0.1 --port 8188
 
-# 3. Generate and download output
+# 3. Open http://localhost:8188 in your browser (traffic goes through SSH tunnel)
+#    Generate and download output
 
 # 4. Terminate after test (volume auto-deletes with DeleteOnTermination=true)
 aws ec2 terminate-instances --instance-ids i-xxxxxxxx --region us-east-2
