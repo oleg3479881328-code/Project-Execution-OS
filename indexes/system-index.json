@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a18fd6e868f86e46ba71caca71c643961833418c",
-  "generated_at": "2026-06-11T10:50:02-04:00",
+  "repository_commit": "1da078c9e9eb363dc15116bc427796446a75165d",
+  "generated_at": "2026-06-11T10:51:20-04:00",
   "artifact_count": 455,
   "artifacts": [
     {
@@ -8690,10 +8690,11 @@
       "domain": "personal-secretary-os",
       "status": null,
       "date": null,
-      "sha256": "27cc01df3561efe86dad8c8974c7381f270431186d8e967d83ed373d042cc35f",
+      "sha256": "eb9c02b10ed0f5b7857bb7ec74809d699281fd6579b055be0836494d8c0820ea",
       "headings": [
         "Personal Secretary OS — V0 Manual Operating Contract",
         "Purpose",
+        "Router Entry",
         "Current Working Surface",
         "Owner Intake Rule",
         "Secretary Processing Rule",
@@ -8704,7 +8705,7 @@
         "Persistence Boundary",
         "Validation Period",
         "Deferred Decisions",
-        "Dedicated Chat Start Command"
+        "Minimal Invocation"
       ]
     },
     {
