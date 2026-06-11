@@ -1,0 +1,4 @@
+# Fill these only in Cloudflare deployment UI or local .dev.vars.
+# Never commit real values.
+NOTION_ACCESS_TOKEN=
+BRIDGE_ACCESS_KEY=
