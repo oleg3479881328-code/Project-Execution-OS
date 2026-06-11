@@ -21,10 +21,17 @@ It receives only the selected Notion page ID, reads the `Промпт` field thr
 
 - `src/index.js` — Worker implementation.
 - `wrangler.toml` — Worker configuration.
+- `.dev.vars.example` — placeholder names only, with no real secrets.
 - `.gitignore` — excludes local secrets.
 - `../prompt-launcher/index.html` — static browser UI.
 
-## One-time activation
+## Recommended one-click deployment
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/oleg3479881328-code/Project-Execution-OS/tree/main/prompt-bridge-worker)
+
+Cloudflare will clone the public Worker source and guide the account owner through deployment. Enter real secret values only inside Cloudflare. Do not place them in GitHub files, issues, comments, or chat.
+
+## Manual one-time activation
 
 ### 1. Create or deploy the Worker
 
