@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4a7582570e68fd5bf6d72d633b2419c0e8639ff7",
-  "generated_at": "2026-06-11T08:56:04-04:00",
+  "repository_commit": "446678c966e8ece8681e2a65c6f080b61fbf7395",
+  "generated_at": "2026-06-11T09:06:06-04:00",
   "artifact_count": 449,
   "artifacts": [
     {
@@ -41,7 +41,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "fc7a799dc58619207796dd058f9fa874ef6546ccf84a31dea6ff660e94c1107e",
+      "sha256": "3c7aeae193889250a4dc18375444c3264fae71973485de9860686acc9e5f1155",
       "headings": [
         "AI Coordination State",
         "Project",
@@ -8738,21 +8738,20 @@
       "domain": "reels-factory-mvp",
       "status": null,
       "date": null,
-      "sha256": "e3a7afce94e7f09eac7787f30affa3ddd6d9b24e64389d80206809cf32f3c3bb",
+      "sha256": "6b4affaba77118be29f7441299f25348ac31c06443e5f1f837d27008fc2307f6",
       "headings": [
         "PROJECT — Reels Factory MVP",
         "1. Project",
-        "2. Purpose",
-        "3. Source Of Truth",
-        "4. Current Status",
-        "5. Done So Far",
-        "6. Current Focus",
-        "7. Functional Requirements",
-        "7.1 Storyboard Mode",
-        "7.2 Donor Video Analysis Mode",
-        "8. Next Practical Step",
-        "9. Key Decisions And Constraints",
-        "10. Read Next"
+        "2. Current Status",
+        "3. Current MVP Target",
+        "4. Confirmed Technical Route",
+        "5. Persistence Decision",
+        "6. Completed Evidence",
+        "7. Still Pending",
+        "8. Separate System Task",
+        "9. Durable Source Of Truth",
+        "10. Do-Not-Repeat Work",
+        "11. Direct Links"
       ]
     },
     {
