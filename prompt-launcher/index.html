@@ -7,21 +7,26 @@
   <style>
     :root { color-scheme: light dark; font-family: Inter, system-ui, Arial, sans-serif; }
     * { box-sizing: border-box; }
-    body { margin:0; padding:24px; max-width:820px; margin-inline:auto; background:#f6f7f9; color:#111; }
+    body { margin:0; padding:24px; max-width:860px; margin-inline:auto; background:#f6f7f9; color:#111; }
     .card { background:white; border-radius:18px; padding:20px; box-shadow:0 8px 30px rgba(0,0,0,.08); }
     h1 { font-size:24px; margin:0 0 8px; }
+    h2 { font-size:18px; margin:22px 0 8px; }
     p { line-height:1.45; }
-    textarea { width:100%; min-height:360px; padding:14px; border-radius:12px; border:1px solid #ccd1d7; font:inherit; resize:vertical; background:#fff; color:#111; }
+    textarea, input { width:100%; padding:14px; border-radius:12px; border:1px solid #ccd1d7; font:inherit; background:#fff; color:#111; }
+    textarea { min-height:360px; resize:vertical; }
     .row { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
     button, a.btn { border:0; border-radius:12px; padding:12px 16px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
     .primary { background:#111; color:white; }
     .secondary { background:#e9edf2; color:#111; }
-    .hint { font-size:13px; color:#667085; margin-top:12px; }
-    .status { font-size:14px; margin-top:10px; min-height:20px; }
+    .hint { font-size:13px; color:#667085; margin-top:12px; line-height:1.45; }
+    .status { font-size:14px; margin-top:10px; min-height:20px; white-space:pre-line; }
+    details { margin-top:18px; }
+    summary { cursor:pointer; font-weight:700; }
+    label { display:block; margin:12px 0 6px; font-size:14px; font-weight:700; }
     @media (prefers-color-scheme: dark) {
       body { background:#17191c; color:#f4f4f4; }
       .card { background:#23262b; }
-      textarea { background:#17191c; color:#f4f4f4; border-color:#49505a; }
+      textarea, input { background:#17191c; color:#f4f4f4; border-color:#49505a; }
       .secondary { background:#3b414a; color:#fff; }
       .hint { color:#b6bdc8; }
     }
@@ -32,15 +37,32 @@
     <h1>🎨 Prompt Launcher</h1>
     <p>Проверь промпт, затем нажми кнопку. Текст будет скопирован, а ChatGPT откроется в новой вкладке. Вставь промпт и при необходимости добавь reference — референс.</p>
 
-    <textarea id="prompt" placeholder="Промпт появится здесь автоматически из ссылки Notion. Можно отредактировать его перед запуском."></textarea>
+    <textarea id="prompt" placeholder="Промпт появится здесь автоматически после загрузки карточки Notion. Можно отредактировать его перед запуском."></textarea>
 
     <div class="row">
       <button class="primary" id="copyOpen">📋 Скопировать и открыть ChatGPT</button>
       <button class="secondary" id="copy">📋 Только скопировать</button>
+      <button class="secondary" id="load">↻ Загрузить промпт</button>
       <a class="btn secondary" href="https://chatgpt.com/" target="_blank" rel="noopener">↗ Открыть ChatGPT</a>
     </div>
 
     <div class="status" id="status"></div>
+
+    <details>
+      <summary>⚙ Настройка bridge-сервиса</summary>
+      <label for="bridgeUrl">URL Cloudflare Worker</label>
+      <input id="bridgeUrl" placeholder="https://prompt-launcher-bridge.example.workers.dev" />
+
+      <label for="bridgeKey">Ключ доступа bridge</label>
+      <input id="bridgeKey" type="password" autocomplete="off" placeholder="Введи ключ один раз на этом устройстве" />
+
+      <div class="row">
+        <button class="secondary" id="saveSettings">Сохранить настройки</button>
+        <button class="secondary" id="clearSettings">Очистить настройки</button>
+      </div>
+      <div class="hint">URL Worker и ключ доступа сохраняются только локально в браузере этого устройства. Токен Notion сюда вводить нельзя.</div>
+    </details>
+
     <div class="hint">
       Автоматическая отправка сообщения отключена намеренно: финальную вставку и запуск подтверждает пользователь.
     </div>
@@ -50,37 +72,113 @@
   const params = new URLSearchParams(location.search);
   const promptBox = document.getElementById('prompt');
   const status = document.getElementById('status');
+  const bridgeUrlInput = document.getElementById('bridgeUrl');
+  const bridgeKeyInput = document.getElementById('bridgeKey');
+  const pageId = params.get('page');
   const title = params.get('title');
   const queryPrompt = params.get('prompt');
   const hashPrompt = location.hash ? decodeURIComponent(location.hash.slice(1)) : '';
 
+  const SETTINGS = {
+    url: 'promptLauncher.bridgeUrl',
+    key: 'promptLauncher.bridgeKey'
+  };
+
   if (title) document.title = title + ' → ChatGPT';
   if (hashPrompt || queryPrompt) promptBox.value = hashPrompt || queryPrompt;
+
+  bridgeUrlInput.value = localStorage.getItem(SETTINGS.url) || '';
+  bridgeKeyInput.value = localStorage.getItem(SETTINGS.key) || '';
+
+  function normalizeBridgeUrl(value) {
+    return value.trim().replace(/\/+$/, '');
+  }
+
+  function setStatus(message) {
+    status.textContent = message;
+  }
+
+  async function loadPrompt() {
+    if (!pageId) {
+      setStatus('В ссылке нет ID карточки Notion. Вставь промпт вручную или открой Launcher через поле «🎨 Запустить ChatGPT» в библиотеке.');
+      return false;
+    }
+
+    const bridgeUrl = normalizeBridgeUrl(bridgeUrlInput.value);
+    const bridgeKey = bridgeKeyInput.value.trim();
+
+    if (!bridgeUrl || !bridgeKey) {
+      setStatus('Нужно один раз открыть «⚙ Настройка bridge-сервиса», указать URL Worker и ключ доступа, затем нажать «Загрузить промпт».');
+      return false;
+    }
+
+    setStatus('Загружаю промпт из Notion…');
+
+    try {
+      const response = await fetch(`${bridgeUrl}/api/prompt?page=${encodeURIComponent(pageId)}`, {
+        method: 'GET',
+        headers: { 'X-Bridge-Key': bridgeKey },
+        cache: 'no-store'
+      });
+
+      const body = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(body.error || `Ошибка bridge: ${response.status}`);
+      }
+
+      promptBox.value = body.prompt || '';
+      if (body.title) document.title = `${body.title} → ChatGPT`;
+      setStatus('Готово: выбранный промпт загружен из Notion.');
+      return true;
+    } catch (error) {
+      setStatus(`Не удалось загрузить промпт автоматически.\n${error.message}\nМожно вставить текст вручную или проверить настройки bridge.`);
+      return false;
+    }
+  }
 
   async function copyPrompt() {
     const text = promptBox.value.trim();
     if (!text) {
-      status.textContent = 'Промпт пустой. Вернись в карточку Notion и открой запускатель из строки с заполненным полем «Промпт».';
+      setStatus('Промпт пустой. Загрузить его автоматически не удалось: проверь bridge или вставь текст вручную.');
       return false;
     }
     try {
       await navigator.clipboard.writeText(text);
-      status.textContent = 'Готово: промпт скопирован.';
+      setStatus('Готово: промпт скопирован.');
       return true;
     } catch (e) {
       promptBox.focus();
       promptBox.select();
       document.execCommand('copy');
-      status.textContent = 'Готово: промпт выделен и скопирован.';
+      setStatus('Готово: промпт выделен и скопирован.');
       return true;
     }
   }
 
   document.getElementById('copy').addEventListener('click', copyPrompt);
+  document.getElementById('load').addEventListener('click', loadPrompt);
   document.getElementById('copyOpen').addEventListener('click', async () => {
+    if (!promptBox.value.trim() && pageId) await loadPrompt();
     const ok = await copyPrompt();
     if (ok) window.open('https://chatgpt.com/', '_blank', 'noopener');
   });
+
+  document.getElementById('saveSettings').addEventListener('click', () => {
+    localStorage.setItem(SETTINGS.url, normalizeBridgeUrl(bridgeUrlInput.value));
+    localStorage.setItem(SETTINGS.key, bridgeKeyInput.value.trim());
+    setStatus('Настройки bridge сохранены локально на этом устройстве.');
+  });
+
+  document.getElementById('clearSettings').addEventListener('click', () => {
+    localStorage.removeItem(SETTINGS.url);
+    localStorage.removeItem(SETTINGS.key);
+    bridgeUrlInput.value = '';
+    bridgeKeyInput.value = '';
+    setStatus('Локальные настройки bridge удалены.');
+  });
+
+  if (pageId && !promptBox.value.trim()) loadPrompt();
 </script>
 </body>
 </html>
