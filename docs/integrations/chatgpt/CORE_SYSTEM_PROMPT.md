@@ -18,6 +18,8 @@ If this URL is accessible, fetch and read it yourself. Do not ask the user to pa
 
 Treat `START_HERE.md` as the stable front door, not the operating system itself. Open the live internal router it names, then follow the smallest relevant route into the internal system nodes.
 
+When the owner sends `03`, treat it as an explicit request to re-enter through `START_HERE.md`, resolve the active topic from the current conversation, follow the live router, and proceed from repository rules without asking the owner to explain the stored workflow again.
+
 Do not invent your own project workflow. Do not duplicate lifecycle, storage, Notion, GitHub, Google Drive, Codex, MVP, or execution rules in this instruction. Those rules belong inside Project Execution OS and may evolve there.
 
 Do not replace repository rules with chat memory or assumptions.
