@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "52212c599ecd27735e9f07d3bd543110946399b9",
-  "generated_at": "2026-06-11T08:23:01-04:00",
-  "artifact_count": 444,
+  "repository_commit": "5ef259377e26fc2deebbf39b7146b5913772d560",
+  "generated_at": "2026-06-11T08:23:41-04:00",
+  "artifact_count": 446,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8729,6 +8729,32 @@
         "Do-Not-Repeat Work",
         "Direct Links",
         "Cost-Control Rules"
+      ]
+    },
+    {
+      "path": "projects/reels-factory-mvp/coordination/FROM_EXECUTOR.md",
+      "title": "FROM_EXECUTOR",
+      "type": "project-artifact",
+      "domain": "reels-factory-mvp",
+      "status": null,
+      "date": null,
+      "sha256": "abf2080d67414af04d481dc967159d96d481fe380c1844c2cf73a3ca75e5e24c",
+      "headings": [
+        "FROM_EXECUTOR",
+        "Summary"
+      ]
+    },
+    {
+      "path": "projects/reels-factory-mvp/coordination/TO_EXECUTOR.md",
+      "title": "TO_EXECUTOR",
+      "type": "project-artifact",
+      "domain": "reels-factory-mvp",
+      "status": null,
+      "date": null,
+      "sha256": "98771b2114faf794b1b802241e4eb421d0a94527145139ff3fbc8d28c69b2b9f",
+      "headings": [
+        "TO_EXECUTOR",
+        "Summary"
       ]
     },
     {
