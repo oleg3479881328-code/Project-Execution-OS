@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4f02727e0655909bfdb8123b99e5eb43d5106f70",
-  "generated_at": "2026-06-11T07:21:36-04:00",
+  "repository_commit": "af6c48ac249490ea6730e89ab176474464a1d259",
+  "generated_at": "2026-06-11T07:21:59-04:00",
   "artifact_count": 442,
   "artifacts": [
     {
@@ -4948,7 +4948,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "3431a57f2975b0fa8944f06840ddee43c1d592b4414ac98071c24fee7b73e40e",
+      "sha256": "c222a7f03636bcb7cd6071a40230a93b3af6e5180f0bb5808b5edbea8e717c09",
       "headings": [
         "AI Coordination State Standard",
         "Purpose",
@@ -4956,6 +4956,7 @@
         "Core Split",
         "Snapshot Contents",
         "Snapshot Update Triggers",
+        "Fast Status Mirror Rule",
         "Append-Only Log Rule",
         "Event And Snapshot Write Order",
         "Reading Rule",
