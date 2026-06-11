@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "cd8641cf0d1517b3f765dfe5f392088f9500fe12",
-  "generated_at": "2026-06-11T10:59:19-04:00",
+  "repository_commit": "6e632df318d736cfdf389e90fb579bee5d591335",
+  "generated_at": "2026-06-11T10:59:54-04:00",
   "artifact_count": 455,
   "artifacts": [
     {
@@ -8691,11 +8691,12 @@
       "domain": "personal-secretary-os",
       "status": null,
       "date": null,
-      "sha256": "eb9c02b10ed0f5b7857bb7ec74809d699281fd6579b055be0836494d8c0820ea",
+      "sha256": "cc78d65d066fce22a59b61beec24a588a7060383d351f3ad2c86d293a3e3fb6d",
       "headings": [
         "Personal Secretary OS — V0 Manual Operating Contract",
         "Purpose",
         "Router Entry",
+        "ChatGPT Propagation Boundary",
         "Current Working Surface",
         "Owner Intake Rule",
         "Secretary Processing Rule",
