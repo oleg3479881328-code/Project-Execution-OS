@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "29514a71657f5879edee958ef5c20004dbd2459f",
-  "generated_at": "2026-06-10T21:03:19-04:00",
-  "artifact_count": 441,
+  "repository_commit": "90ff958dba4e168e9a9b19df358d56005a075053",
+  "generated_at": "2026-06-11T06:57:41-04:00",
+  "artifact_count": 442,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -22,7 +22,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "da4370f107903a5b08bc074fd851c45c5a48e369d3030766afab1f1bb3608da2",
+      "sha256": "c74a29e433cc9b3e5ff321e2c1539ac1a705f5231f632d7d3987ebb79efae60c",
       "headings": [
         "AI Coordination Log",
         "2026-06-08 — Active coordination snapshot created",
@@ -30,7 +30,8 @@
         "2026-06-08 — PR #30 review corrections requested",
         "2026-06-09 — Hybrid fallback hardening and model comparison opened",
         "2026-06-09 — Mandatory executor progress heartbeat added",
-        "2026-06-09 — Durable interim checkpoint rule added"
+        "2026-06-09 — Durable interim checkpoint rule added",
+        "2026-06-10 — Reels Factory AWS coordination moved to Issue #47"
       ]
     },
     {
@@ -40,15 +41,22 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "c935a430ace89527fd3ceb6bb84331ab5a78d926b904cb278a85bdc774db32d3",
+      "sha256": "4f1ee0010f2caa009af14a96c9b324190d3e3d3c4f1943c14b36a122e30d5d0c",
       "headings": [
         "AI Coordination State",
         "Project",
+        "Purpose",
         "Active Channel",
         "Previous Channels",
+        "Active Participants",
         "Current Task",
-        "Current State",
-        "Next Step"
+        "Current Repository State",
+        "Accepted Changes",
+        "Open Review Items",
+        "Next Step",
+        "Required Validation",
+        "Update Rule",
+        "Reading Rule"
       ]
     },
     {
@@ -5267,6 +5275,26 @@
       "sha256": "7cdc5726d8bc224c21cb9b448bb421e4768f27240892f6703226e56dc830a738",
       "headings": [
         "Codex Response Channel"
+      ]
+    },
+    {
+      "path": "docs/COMMAND_03_START_HERE_LOOKUP_STANDARD.md",
+      "title": "Command `03` — START_HERE Topic Lookup Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "93a111e03d4682b8a4453784dba36ae0040212425c9e3f317a9365f941bd1105",
+      "headings": [
+        "Command `03` — START_HERE Topic Lookup Standard",
+        "Purpose",
+        "Meaning",
+        "Core Rule",
+        "Topic Resolution",
+        "Required Behavior",
+        "Boundary",
+        "Relationship to Automatic Routing",
+        "Final Rule"
       ]
     },
     {
