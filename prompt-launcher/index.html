@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prompt Launcher → ChatGPT</title>
+  <style>
+    :root { color-scheme: light dark; font-family: Inter, system-ui, Arial, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin:0; padding:24px; max-width:820px; margin-inline:auto; background:#f6f7f9; color:#111; }
+    .card { background:white; border-radius:18px; padding:20px; box-shadow:0 8px 30px rgba(0,0,0,.08); }
+    h1 { font-size:24px; margin:0 0 8px; }
+    p { line-height:1.45; }
+    textarea { width:100%; min-height:360px; padding:14px; border-radius:12px; border:1px solid #ccd1d7; font:inherit; resize:vertical; background:#fff; color:#111; }
+    .row { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    button, a.btn { border:0; border-radius:12px; padding:12px 16px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+    .primary { background:#111; color:white; }
+    .secondary { background:#e9edf2; color:#111; }
+    .hint { font-size:13px; color:#667085; margin-top:12px; }
+    .status { font-size:14px; margin-top:10px; min-height:20px; }
+    @media (prefers-color-scheme: dark) {
+      body { background:#17191c; color:#f4f4f4; }
+      .card { background:#23262b; }
+      textarea { background:#17191c; color:#f4f4f4; border-color:#49505a; }
+      .secondary { background:#3b414a; color:#fff; }
+      .hint { color:#b6bdc8; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎨 Prompt Launcher</h1>
+    <p>Проверь промпт, затем нажми кнопку. Текст будет скопирован, а ChatGPT откроется в новой вкладке. Вставь промпт и при необходимости добавь reference — референс.</p>
+
+    <textarea id="prompt" placeholder="Промпт появится здесь автоматически из ссылки Notion. Можно отредактировать его перед запуском."></textarea>
+
+    <div class="row">
+      <button class="primary" id="copyOpen">📋 Скопировать и открыть ChatGPT</button>
+      <button class="secondary" id="copy">📋 Только скопировать</button>
+      <a class="btn secondary" href="https://chatgpt.com/" target="_blank" rel="noopener">↗ Открыть ChatGPT</a>
+    </div>
+
+    <div class="status" id="status"></div>
+    <div class="hint">
+      Автоматическая отправка сообщения отключена намеренно: финальную вставку и запуск подтверждает пользователь.
+    </div>
+  </div>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const promptBox = document.getElementById('prompt');
+  const status = document.getElementById('status');
+  const title = params.get('title');
+  const queryPrompt = params.get('prompt');
+  const hashPrompt = location.hash ? decodeURIComponent(location.hash.slice(1)) : '';
+
+  if (title) document.title = title + ' → ChatGPT';
+  if (hashPrompt || queryPrompt) promptBox.value = hashPrompt || queryPrompt;
+
+  async function copyPrompt() {
+    const text = promptBox.value.trim();
+    if (!text) {
+      status.textContent = 'Промпт пустой. Вернись в карточку Notion и открой запускатель из строки с заполненным полем «Промпт».';
+      return false;
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      status.textContent = 'Готово: промпт скопирован.';
+      return true;
+    } catch (e) {
+      promptBox.focus();
+      promptBox.select();
+      document.execCommand('copy');
+      status.textContent = 'Готово: промпт выделен и скопирован.';
+      return true;
+    }
+  }
+
+  document.getElementById('copy').addEventListener('click', copyPrompt);
+  document.getElementById('copyOpen').addEventListener('click', async () => {
+    const ok = await copyPrompt();
+    if (ok) window.open('https://chatgpt.com/', '_blank', 'noopener');
+  });
+</script>
+</body>
+</html>
