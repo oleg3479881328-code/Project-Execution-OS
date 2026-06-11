@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b8774ebeb027f887f0d6026fcbe9b318be481e65",
-  "generated_at": "2026-06-11T08:22:36-04:00",
-  "artifact_count": 443,
+  "repository_commit": "52212c599ecd27735e9f07d3bd543110946399b9",
+  "generated_at": "2026-06-11T08:23:01-04:00",
+  "artifact_count": 444,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -5468,6 +5468,36 @@
         "Required Companion Standard",
         "Mandatory Handoff Fields",
         "Default Publication Mode",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/EXECUTOR_MAILBOX_STANDARD.md",
+      "title": "Executor Mailbox Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "active",
+      "date": "2026-06-11",
+      "sha256": "43185a0fc89da428c20cd745945625338e910df34ce6123f80bf0b11586d8819",
+      "headings": [
+        "Executor Mailbox Standard",
+        "Purpose",
+        "Core Model",
+        "One Writer Per Mailbox",
+        "Canonical Mailbox Paths",
+        "Envelope Format",
+        "Executor Mailbox Envelope",
+        "Summary",
+        "Evidence",
+        "Sequence Rule",
+        "Write Rule",
+        "Read Rule",
+        "Stale Or Truncated Connector Rule",
+        "One Task, One Reply Surface",
+        "Channel Transition Rule",
+        "Stop Order Rule",
+        "Owner Visibility Rule",
+        "Boundary",
         "Final Rule"
       ]
     },
