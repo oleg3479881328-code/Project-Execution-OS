@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "071addc23c25e201487aac055b2a47dc434c0fdb",
-  "generated_at": "2026-06-11T10:52:08-04:00",
+  "repository_commit": "cdac663200efeaca7a9467b3829ca5d752c802ad",
+  "generated_at": "2026-06-11T10:52:33-04:00",
   "artifact_count": 455,
   "artifacts": [
     {
@@ -8645,12 +8645,13 @@
       "domain": "personal-secretary-os",
       "status": null,
       "date": null,
-      "sha256": "15bd653928e55adfa4f8655da04c2316b730400073683b9e22b05e9e1dfe7426",
+      "sha256": "dc24dfd65b5ad078fdabc5409fb32d54702b3bbe66b2461fcb07ee5b7390ce62",
       "headings": [
         "Personal Secretary OS",
         "Project",
         "Purpose",
         "System Entry Point",
+        "Router Entry",
         "Operating Principle",
         "Source Of Truth",
         "Current Status",
