@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ecfd3a0ec69c99c15fc21fc20a8afdf73e11a4aa",
-  "generated_at": "2026-06-11T08:23:56-04:00",
-  "artifact_count": 446,
+  "repository_commit": "fc4b705ee64d6568b70a3097391e25e3daab16ee",
+  "generated_at": "2026-06-11T08:24:49-04:00",
+  "artifact_count": 447,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8551,6 +8551,29 @@
         "Verification",
         "Issues",
         "Next Action"
+      ]
+    },
+    {
+      "path": "projects/personal-secretary-os/PROJECT.md",
+      "title": "Personal Secretary OS",
+      "type": "project-artifact",
+      "domain": "personal-secretary-os",
+      "status": null,
+      "date": null,
+      "sha256": "c38665885fa81109c0f3039cb3edabe482921c03cb68c8dd97227576f1a72487",
+      "headings": [
+        "Personal Secretary OS",
+        "Project",
+        "Purpose",
+        "System Entry Point",
+        "Operating Principle",
+        "Source Of Truth",
+        "Current Status",
+        "Done So Far",
+        "Current Focus",
+        "Next Practical Step",
+        "Key Decisions And Constraints",
+        "Read Next"
       ]
     },
     {
