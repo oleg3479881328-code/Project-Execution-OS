@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c6942eaf9192591fbbf7a904e1c836f66528cc53",
-  "generated_at": "2026-06-11T07:08:31-04:00",
+  "repository_commit": "b613558e44a44822524f13fba65d947fb3aaeb01",
+  "generated_at": "2026-06-11T07:08:48-04:00",
   "artifact_count": 442,
   "artifacts": [
     {
@@ -8661,18 +8661,16 @@
       "type": "project-artifact",
       "domain": "reels-factory-mvp",
       "status": null,
-      "date": "2026-06-10",
-      "sha256": "0172d94c00286a7deaf0906a8e0b5de0c30270b150339cd909bf0550d7594a67",
+      "date": "2026-06-11",
+      "sha256": "3cdc4a2556d796adb6acdbbf88f6bc74737c20e2eea8b86ff6b2d5657c111bab",
       "headings": [
         "Latest Log — Reels Factory MVP",
         "Session Summary",
         "RunPod",
-        "AWS",
-        "Instance Selection (NEW)",
-        "Execution Kit Created (NEW)",
-        "First Smoke Test Scope",
+        "AWS Account",
+        "Canonical Execution Kit",
+        "First AWS Smoke-Test Attempt",
         "Current Decision",
-        "Next Safe Action",
         "Do-Not-Repeat Work",
         "Re-entry Links"
       ]
