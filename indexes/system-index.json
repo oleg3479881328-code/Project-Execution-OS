@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "524621e4ec70300565a7299b97ce24b2de139849",
-  "generated_at": "2026-06-11T10:43:27-04:00",
-  "artifact_count": 453,
+  "repository_commit": "83d6758e2a9e1c6e4cedeebc8e4ad82f0e068003",
+  "generated_at": "2026-06-11T10:43:53-04:00",
+  "artifact_count": 454,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8659,6 +8659,28 @@
         "Next Practical Step",
         "Key Decisions And Constraints",
         "Read Next"
+      ]
+    },
+    {
+      "path": "projects/personal-secretary-os/PROJECT_STATE.md",
+      "title": "Personal Secretary OS — Project State",
+      "type": "project-artifact",
+      "domain": "personal-secretary-os",
+      "status": null,
+      "date": null,
+      "sha256": "0b7769eaf41f10811b067a416022dd801be4a93b634781550ba64ee90b44e0f4",
+      "headings": [
+        "Personal Secretary OS — Project State",
+        "Current Phase",
+        "Completed",
+        "In Progress",
+        "Still Pending",
+        "Current Constraints",
+        "Active Files",
+        "Validated",
+        "Not Yet Validated",
+        "Next Safe Action",
+        "Do Not Repeat Work"
       ]
     },
     {
