@@ -42,6 +42,8 @@ When an active GitHub-backed project contains `AI_COORDINATION_STATE.md`, treat 
 
 When the project also contains `AI_COORDINATION_LOG.md`, treat it as the append-only chronological journal of meaningful coordination events.
 
+When the current project contains `projects/<project>/logs/latest.md`, treat it as the fast durable status mirror for the newest executor `ACK`, `HEARTBEAT`, `BLOCKER`, or `COMPLETE` state.
+
 For every durable coordination note, letter, request, review, report, or acknowledgement, use signed polite message format from:
 
 `docs/AI_COORDINATION_MESSAGE_STANDARD.md`
@@ -102,7 +104,29 @@ blocks/communication-channel/EXECUTOR_REPLY_SURFACE_ADDENDUM.md
 
 This applies to Codex, DeepSeek, Claude, local models, specialized agents, future connected executors, and human-assisted executor workflows.
 
-The executor must acknowledge immediately in the named durable reply surface, report blockers there without waiting for the owner, publish a reviewable result according to the selected mode, and post structured evidence in the same channel.
+The executor must acknowledge immediately in the named durable reply surface, report blockers there without waiting for the owner, publish a reviewable result according to the selected mode, update the durable project mirror, and post structured evidence in the same channel.
+
+### Reliable readback route
+
+For every `02`, status check, or executor-reply inspection, use:
+
+```text
+read ACTIVE_CHANNEL_ROUTE.md
+→ read current project's logs/latest.md when it exists
+→ read AI_COORDINATION_STATE.md when it exists
+→ open Read Here / Active Channel
+→ inspect latest relevant comments
+→ inspect latest commit or PR state when reported
+→ reconcile transport comments with durable mirror
+→ continue from actual current state
+```
+
+If the connector response is truncated, stale, or missing the newest comment:
+
+- do not claim that no reply exists;
+- report that the connector read is inconclusive;
+- use the durable mirror and issue metadata as fallback evidence;
+- ask for manual relay only as the last resort.
 
 ### Compact coordination state
 
@@ -219,8 +243,12 @@ Before checking:
 
 ```text
 read ACTIVE_CHANNEL_ROUTE.md
+→ read current project's logs/latest.md when it exists
+→ read AI_COORDINATION_STATE.md when it exists
 → open Read Here
-→ read latest relevant incoming comment
+→ inspect latest relevant incoming comment
+→ inspect latest commit or PR state when reported
+→ reconcile comment trail and durable mirror
 → respond from actual content
 ```
 
@@ -230,17 +258,7 @@ If the latest incoming message contains an already-authorized actionable request
 
 Ask for a new explicit approval only when the newly discovered action is destructive, expands scope, changes repository visibility, publishes externally, deploys to production, causes irreversible data migration, or otherwise requires owner approval under an existing standard.
 
-When the active project contains `AI_COORDINATION_STATE.md`, use this order:
-
-```text
-read ACTIVE_CHANNEL_ROUTE.md
-→ read AI_COORDINATION_STATE.md
-→ open Read Here / Active Channel
-→ read latest relevant comments
-→ inspect latest repository commit or PR state
-→ read AI_COORDINATION_LOG.md only when historical context is required
-→ continue from Next Step
-```
+If the issue read appears stale or truncated, do not claim there is no reply. Use `logs/latest.md`, `PROJECT_STATE.md`, issue metadata, and latest commit evidence as fallback.
 
 `01` and `02` control communication only.
 
