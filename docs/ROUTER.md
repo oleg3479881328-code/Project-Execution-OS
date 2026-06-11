@@ -19,6 +19,7 @@ Do not append an unrelated next-project question after answering the active requ
 ## Routes
 
 - possible new project or new initiative -> `Start New Project.md`
+- `личный секретарь`, `секретарь`, `личный помощник`, `помощник`, personal secretary, or personal assistant -> `projects/personal-secretary-os/PROJECT.md`
 - operating-mode uncertainty -> `docs/MODE_CLASSIFIER.md`
 - `03`, explicit START_HERE re-entry, instruction to look up repository rules by active topic, or correction that the agent should not rely on chat memory -> `docs/COMMAND_03_START_HERE_LOOKUP_STANDARD.md`
 - explicit preservation intent such as save, capture, record, remember, add to library, add to project, or do not lose this -> `docs/AUTOMATIC_CAPTURE_STANDARD.md`
