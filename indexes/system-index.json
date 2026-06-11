@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "20aff0f22f1c5addc05932fe60da57adef210082",
-  "generated_at": "2026-06-11T09:06:49-04:00",
-  "artifact_count": 449,
+  "repository_commit": "524621e4ec70300565a7299b97ce24b2de139849",
+  "generated_at": "2026-06-11T10:43:27-04:00",
+  "artifact_count": 453,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -392,6 +392,51 @@
         "Constraints and Stop Conditions",
         "Evidence / References",
         "Validation Status"
+      ]
+    },
+    {
+      "path": "benchmark_report.md",
+      "title": "BENCHMARK REPORT",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "4aac4501efb9b904f9e373e699c0178e07de55e559daefdb8e31cac930568e51",
+      "headings": [
+        "BENCHMARK REPORT",
+        "Status",
+        "Workstation Access",
+        "Repository Commit Tested",
+        "Ollama Version",
+        "Local Model",
+        "Cloud Configuration",
+        "Test Matrix Summary",
+        "Per-Run Results",
+        "Workload A — Tiny Prompt (no evidence)",
+        "Workload B — Medium Repetitive Log",
+        "Workload C — Large Repetitive Log (3 warm reps)",
+        "Workload D — Real Repository Evidence",
+        "Warm vs Cold Timing",
+        "Workload C (Large Log) — 3 warm repetitions",
+        "Workload B (Medium Log)",
+        "Compression Summary",
+        "Quality Review",
+        "Workload B — Medium Log (sqlite lock failures)",
+        "Workload C — Large Log (webpack failures)",
+        "Workload D — Real Evidence",
+        "Fallback Validation",
+        "Test: Ollama timeout (5-second timeout)",
+        "Test: Invalid local reference (model hallucinated path)",
+        "Test: Invalid escalation_recommendation",
+        "Runtime Log Evidence",
+        "Measured Savings",
+        "Projected Savings",
+        "Limitations",
+        "Recommended Default Policy",
+        "Recommended Next Step",
+        "Files Changed",
+        "Branch / PR",
+        "Blockers"
       ]
     },
     {
@@ -4606,16 +4651,34 @@
       ]
     },
     {
+      "path": "coordination/CHECKPOINT.md",
+      "title": "Coordination Checkpoint",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": "safe checkpoint before separate Mailbox Dispatcher session",
+      "date": "2026-06-11",
+      "sha256": "a773ae3af180e56f90f9f3fd363df194b1feb1aea82b789f8118db71fb9da48b",
+      "headings": [
+        "Coordination Checkpoint",
+        "Active System Task",
+        "Reels Factory MVP State",
+        "Accepted Evidence",
+        "Do Not Break",
+        "Next Safe Action"
+      ]
+    },
+    {
       "path": "coordination/FROM_EXECUTOR.md",
       "title": "FROM_EXECUTOR",
       "type": "repository-artifact",
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "2d52babbf5305e111e9a2aa0c317460dc8589a182b8750493d4e90eb59e6f838",
+      "sha256": "9c5c372e586f32db4b62d32397b20f3ca076d31e01320dc70f4b9681ef9e9e8b",
       "headings": [
         "FROM_EXECUTOR",
-        "Summary"
+        "Summary",
+        "Evidence"
       ]
     },
     {
@@ -7639,19 +7702,14 @@
     },
     {
       "path": "logs/latest.md",
-      "title": "Latest Project Log — Project Execution OS",
+      "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": null,
+      "status": "Implement the automatic mailbox dispatcher described in Issue #49 and `docs/EXECUTOR_MAILBOX_STANDARD.md`.",
       "date": null,
-      "sha256": "70a3f5a88f49fd4a634b1f2a741468fefcb01344d671220aaeaf926492e35192",
+      "sha256": "f936ef5b9902a0e307f9ccc7d92ba6eadcce0cb4c76489107b19f479a9e11f83",
       "headings": [
-        "Latest Project Log — Project Execution OS",
-        "Current Recorded State",
-        "Latest Confirmed Events",
-        "What The New Standard Establishes",
-        "Current Next Safe Action",
-        "Known Blocker"
+        "Latest Executor Status"
       ]
     },
     {
@@ -8601,6 +8659,30 @@
         "Next Practical Step",
         "Key Decisions And Constraints",
         "Read Next"
+      ]
+    },
+    {
+      "path": "projects/personal-secretary-os/V0_MANUAL_OPERATING_CONTRACT.md",
+      "title": "Personal Secretary OS — V0 Manual Operating Contract",
+      "type": "project-artifact",
+      "domain": "personal-secretary-os",
+      "status": null,
+      "date": null,
+      "sha256": "27cc01df3561efe86dad8c8974c7381f270431186d8e967d83ed373d042cc35f",
+      "headings": [
+        "Personal Secretary OS — V0 Manual Operating Contract",
+        "Purpose",
+        "Current Working Surface",
+        "Owner Intake Rule",
+        "Secretary Processing Rule",
+        "V0 Categories",
+        "Minimal Response Format",
+        "Owner Interaction Rules",
+        "Safety Boundary",
+        "Persistence Boundary",
+        "Validation Period",
+        "Deferred Decisions",
+        "Dedicated Chat Start Command"
       ]
     },
     {
@@ -9722,6 +9804,43 @@
         "Runtime Logging",
         "Structured Local Output Shape",
         "Limitations"
+      ]
+    },
+    {
+      "path": "tools/mailbox-dispatcher/README.md",
+      "title": "Mailbox Dispatcher",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "eadbd01e458e5e693cc9d9476f6469209f2bb74ea93b1d1f8eaa89d5ed713926",
+      "headings": [
+        "Mailbox Dispatcher",
+        "Purpose",
+        "How It Works",
+        "Requirements",
+        "Installation",
+        "Navigate to the dispatcher directory",
+        "No dependencies beyond Python standard library",
+        "Verify Python and gh are available",
+        "Usage",
+        "Single cycle (for testing or cron)",
+        "Continuous polling (for long-running sessions)",
+        "Arguments",
+        "Security Boundary",
+        "Restart Behavior",
+        "Failure Recovery",
+        "Process Management",
+        "Windows (PowerShell)",
+        "Start in background",
+        "Stop (find and kill the process)",
+        "Linux / macOS",
+        "Start in background with nohup",
+        "Stop",
+        "Systemd (Linux)",
+        "File Layout",
+        "Mailbox Envelope Format",
+        "Related Standards"
       ]
     },
     {
