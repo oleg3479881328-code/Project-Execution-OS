@@ -24,24 +24,30 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
 - Executor Agent — Infrastructure Executor
 
 ## Current Task
-Implement the smallest reliable polling or webhook mailbox dispatcher described in Issue #49.
+Correct the mailbox dispatcher architecture after review rejection of commit `1725f3471a37629b40a3640348832c5b390eb0ae`.
 
 ## Current Repository State
 - Global mailbox standard: `docs/EXECUTOR_MAILBOX_STANDARD.md`
 - Active outbound mailbox: `coordination/TO_EXECUTOR.md`
 - Active inbound mailbox: `coordination/FROM_EXECUTOR.md`
+- Latest correction mailbox sequence: `2`
+- Review request: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4685396329
 - Reels Factory persistence route accepted: Custom AMI primary, EBS snapshot fallback
 - No AWS GPU runtime is active.
 
 ## Accepted Changes
-- Issue #49 is the only active durable reply surface for the dispatcher task.
-- Root mailboxes are the latest-message readback layer for the dispatcher implementation.
+- Issue #49 remains the only active durable reply surface for the dispatcher task.
+- Root mailboxes remain the latest-message readback layer.
 - GitHub issue comments remain the audit trail.
 
 ## Open Review Items
-- Await executor ACK in Issue #49.
-- Determine available runtime for polling or webhook bridge.
-- Require implementation or exact deployable specification, security boundary, restart behavior, and failure recovery.
+- Current dispatcher is rejected because it echoes mailbox text and reports `COMPLETE` without actual execution.
+- Require notifier mode and explicitly configured runner mode.
+- Require active-route validation and active-issue readback.
+- Require explicit-file staging instead of `git add -A`.
+- Require correct post-commit SHA reporting.
+- Require real `ACK`, `BLOCKER`, and `COMPLETE` state handling.
+- Require accurate README claims and tests.
 
 ## Next Step
 When `02` is received:
@@ -49,13 +55,17 @@ When `02` is received:
 2. read `coordination/FROM_EXECUTOR.md`;
 3. read Issue #49 for supporting evidence;
 4. inspect any reported commit or PR;
-5. continue from the latest mailbox sequence.
+5. continue from mailbox sequence `2`.
 
 ## Required Validation
-- Verify executor ACK in Issue #49.
+- Verify executor ACK for sequence `2` in Issue #49.
 - Verify inbound mailbox sequence increment.
+- Verify notifier mode does not claim work completion.
+- Verify runner mode executes only an explicitly configured adapter.
+- Verify unrelated dirty-tree changes block execution.
+- Verify duplicate sequence is a no-op.
+- Verify post-commit SHA is accurate.
 - Verify no secrets are stored in repository.
-- Verify the dispatcher can recover after restart and does not duplicate tasks.
 
 ## Update Rule
 Update this snapshot only after meaningful state transitions.
