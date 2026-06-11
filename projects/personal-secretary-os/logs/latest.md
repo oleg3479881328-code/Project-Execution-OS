@@ -1,22 +1,25 @@
 # Latest Log — Personal Secretary OS
 
-- Timestamp: `2026-06-11 10:50 America/New_York`
-- Phase: `v0 manual secretary validation`
+- Timestamp: `2026-06-11 11:02 America/New_York`
+- Phase: `v0 manual secretary routing validation`
 
 ## Completed This Step
 
-- Added one secretary route to `docs/ROUTER.md`.
-- Added natural aliases for the same mode: `личный секретарь`, `секретарь`, `личный помощник`, `помощник`, `personal secretary`, and `personal assistant`.
-- Removed the long startup prompt requirement.
+- Tested secretary-mode entry in a fresh ChatGPT conversation using `Режим секретаря`.
+- Confirmed that the fresh chat did not open the repository route and instead interpreted the phrase generically.
+- Identified the cause: updating `docs/ROUTER.md` alone does not rewrite the active ChatGPT Custom Instructions field.
+- Added `режим секретаря`, `режим личного секретаря`, and `режим помощника` as aliases for the same secretary route.
+- Updated `docs/ROUTER.md`.
+- Updated `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`.
 - Updated the project entrypoint, operating contract, and project state.
 
 ## Current Result
 
-Secretary mode can now be entered with a short natural phrase such as `Личный секретарь`.
+The repository configuration is corrected. One manual propagation step remains inside the ChatGPT app before a fresh-chat re-test.
 
 ## Next Safe Action
 
-Write `Личный секретарь` and send the first real unsorted intake batch.
+Add the secretary routing sentence from `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md` to the active ChatGPT Custom Instructions field. Then open a fresh conversation and write `Режим секретаря`.
 
 ## Deferred
 
