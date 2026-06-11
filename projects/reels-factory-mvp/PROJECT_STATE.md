@@ -79,14 +79,32 @@ Interpretation:
 
 - AWS GPU access for G and VT families is now enabled in Ohio for one small 4-vCPU instance.
 
+### AWS Instance Selection (NEW)
+
+- **Recommended instance:** `g4dn.xlarge` (4 vCPU, 16 GB VRAM T4, 16 GB RAM, 125 GB NVMe)
+- **Hourly price:** $0.526/hr (On-Demand, Linux, us-east-2)
+- **Why:** Cheapest G-family instance that fits the 4 vCPU quota and has sufficient VRAM for Wan I2V 1.3B (~6-8 GB)
+- **Alternatives considered:** g5.xlarge ($1.006/hr), g6.xlarge (~$0.70/hr)
+- **Wan model:** Wan2.1-I2V-1.3B (smallest practical I2V variant, ~3 GB download)
+- **Deployment route:** Deep Learning AMI GPU PyTorch 2.x + manual ComfyUI install + ComfyUI-WanVideoWrapper custom node
+- **Existing solutions checked:** ComfyUI official, ComfyUI-WanVideoWrapper (kijai), Wan2.1 official repo
+- **Solution reused:** ComfyUI + ComfyUI-WanVideoWrapper (established community route, no custom scripting needed)
+
+### Execution Kit Created (NEW)
+
+The following artifacts are now available under `projects/reels-factory-mvp/`:
+
+1. `AWS_INSTANCE_SELECTION.md` — justified instance recommendation with pricing and quota validation
+2. `AWS_WAN_SMOKE_TEST_RUNBOOK.md` — complete step-by-step runbook with copy-ready commands
+3. `COST_TRACKING_TEMPLATE.md` — measurement template for setup time, generation time, runtime, and cost
+
 ## In Progress
 
-- Select the concrete EC2 GPU instance for the first smoke test.
-- Confirm the cheapest practical AWS instance profile that fits Wan Image-to-Video with the current `4 vCPU` quota.
+- Ready for owner to execute the first smoke test using the runbook.
 
 ## Still Pending
 
-1. Choose a specific EC2 GPU instance.
+1. ~~Choose a specific EC2 GPU instance.~~ ✅ Done
 2. Launch one temporary GPU instance only.
 3. Deploy or install ComfyUI and the Wan model path.
 4. Generate one start image in ChatGPT.
@@ -109,6 +127,8 @@ Interpretation:
 - RunPod minimum custom preload: `$10`.
 - AWS promotional credit balance available: `$74.57`.
 - AWS GPU quota successfully raised from `0` to `4` vCPU.
+- Recommended instance: g4dn.xlarge at $0.526/hr.
+- Estimated test cost: ~$0.53-1.60 (1-3 hours).
 
 ## Known Failures Or Fallbacks
 
@@ -122,10 +142,12 @@ Interpretation:
 - AWS EC2 GPU quota increase request was approved.
 - Applied quota now shows `4`.
 - RunPod custom minimum was verified from the UI.
+- g4dn.xlarge fits the 4 vCPU quota.
+- g4dn.xlarge has sufficient VRAM (16 GB) for Wan I2V 1.3B.
 
 ## Not Yet Validated
 
-- Exact AWS instance type to use.
+- ~~Exact AWS instance type to use.~~ ✅ Done
 - Actual AWS GPU runtime cost for Wan.
 - Actual Wan install path and model download time on AWS.
 - Actual generation time for a 3-second 480p clip.
@@ -134,7 +156,7 @@ Interpretation:
 
 ## Next Safe Action
 
-Open AWS EC2 in `us-east-2`, inspect launch options, and select the cheapest practical GPU instance that fits within the approved `4 vCPU` G-family quota. Do not launch anything until the instance type and estimated hourly cost are reviewed.
+Execute the first smoke test using the runbook in `AWS_WAN_SMOKE_TEST_RUNBOOK.md`. Launch a g4dn.xlarge instance, install ComfyUI + Wan, generate one 3-second 480p clip, record results, and terminate.
 
 ## Do-Not-Repeat Work
 
@@ -143,6 +165,7 @@ Open AWS EC2 in `us-east-2`, inspect launch options, and select the cheapest pra
 - Do not pay RunPod while AWS credits are still the preferred first route.
 - Do not test Flux during the first smoke test; ChatGPT supplies the input image.
 - Do not start with 15 seconds or multi-scene output; first test is one 3-second low-quality clip.
+- Do not re-research instance selection; g4dn.xlarge is already selected and justified.
 
 ## Direct Links
 
@@ -151,6 +174,9 @@ Open AWS EC2 in `us-east-2`, inspect launch options, and select the cheapest pra
 - EC2 Service Quotas: https://console.aws.amazon.com/servicequotas/home/services/ec2/quotas?region=us-east-2
 - Specific G and VT quota page: https://console.aws.amazon.com/servicequotas/home/services/ec2/quotas/L-DB2E81BA?region=us-east-2
 - AWS Support case: https://console.aws.amazon.com/support/home#/case/?displayId=178112387200526&language=en
+- Runbook: `projects/reels-factory-mvp/AWS_WAN_SMOKE_TEST_RUNBOOK.md`
+- Instance selection: `projects/reels-factory-mvp/AWS_INSTANCE_SELECTION.md`
+- Cost template: `projects/reels-factory-mvp/COST_TRACKING_TEMPLATE.md`
 
 ## Cost-Control Rules
 

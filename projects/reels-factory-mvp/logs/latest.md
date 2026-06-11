@@ -4,7 +4,7 @@ Date: 2026-06-10
 
 ## Session Summary
 
-The owner completed the infrastructure-access phase for the first Reels Factory MVP smoke test.
+Completed the infrastructure preparation phase for the first Reels Factory MVP smoke test. Created a complete AWS ComfyUI + Wan Image-to-Video execution kit.
 
 ## RunPod
 
@@ -53,6 +53,23 @@ AWS Support email received and read:
 - Approved limit: `4`
 - Applied account-level quota value later confirmed in console: `4`
 
+## Instance Selection (NEW)
+
+- **Recommended:** g4dn.xlarge (4 vCPU, 16 GB VRAM T4, $0.526/hr)
+- **Alternatives compared:** g5.xlarge ($1.006/hr), g6.xlarge (~$0.70/hr)
+- **Wan model:** Wan2.1-I2V-1.3B (~6-8 GB VRAM, ~3 GB download)
+- **Deployment route:** Deep Learning AMI GPU PyTorch 2.x + ComfyUI + ComfyUI-WanVideoWrapper
+- **Existing solutions checked:** ComfyUI official, ComfyUI-WanVideoWrapper (kijai), Wan2.1 official repo
+- **Solution reused:** ComfyUI + ComfyUI-WanVideoWrapper (established community route)
+
+## Execution Kit Created (NEW)
+
+Three artifacts created under `projects/reels-factory-mvp/`:
+
+1. `AWS_INSTANCE_SELECTION.md` — instance comparison, pricing, quota validation
+2. `AWS_WAN_SMOKE_TEST_RUNBOOK.md` — 13-step runbook with copy-ready commands, cleanup checklist, troubleshooting, and fallback
+3. `COST_TRACKING_TEMPLATE.md` — measurement template for setup time, generation time, runtime, and cost
+
 ## First Smoke Test Scope
 
 The first execution test was intentionally narrowed:
@@ -69,11 +86,11 @@ First concept:
 
 ## Current Decision
 
-Proceed with AWS first because promotional credits already exist and the G-family quota blocker is resolved.
+Proceed with AWS first because promotional credits already exist and the G-family quota blocker is resolved. Use g4dn.xlarge at $0.526/hr.
 
 ## Next Safe Action
 
-Open the AWS EC2 launch page in Ohio, inspect available G-family GPU instances, and review hourly pricing before launching anything.
+Execute the first smoke test using the runbook. Launch a g4dn.xlarge instance, install ComfyUI + Wan, generate one 3-second 480p clip, record results, and terminate.
 
 ## Do-Not-Repeat Work
 
@@ -81,9 +98,11 @@ Open the AWS EC2 launch page in Ohio, inspect available G-family GPU instances, 
 - Do not pay RunPod yet.
 - Do not start with 15 seconds.
 - Do not add Flux to the first smoke test.
+- Do not re-research instance selection.
 
 ## Re-entry Links
 
 - EC2 Launch Instance page: https://console.aws.amazon.com/ec2/home?region=us-east-2#LaunchInstances:
 - Approved quota page: https://console.aws.amazon.com/servicequotas/home/services/ec2/quotas/L-DB2E81BA?region=us-east-2
 - AWS Support case: https://console.aws.amazon.com/support/home#/case/?displayId=178112387200526&language=en
+- Runbook: `projects/reels-factory-mvp/AWS_WAN_SMOKE_TEST_RUNBOOK.md`
