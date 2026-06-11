@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "af6c48ac249490ea6730e89ab176474464a1d259",
-  "generated_at": "2026-06-11T07:21:59-04:00",
-  "artifact_count": 442,
+  "repository_commit": "a2fd8ba43340a26e24468c2e0194bd3c7e622e28",
+  "generated_at": "2026-06-11T08:12:00-04:00",
+  "artifact_count": 443,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8537,6 +8537,27 @@
         "Quota",
         "Storage Breakdown (100 GB gp3)",
         "Direct Links"
+      ]
+    },
+    {
+      "path": "projects/reels-factory-mvp/AWS_PERSISTENCE_STRATEGY.md",
+      "title": "AWS Persistence Strategy — Reels Factory MVP",
+      "type": "project-artifact",
+      "domain": "reels-factory-mvp",
+      "status": null,
+      "date": "2026-06-11",
+      "sha256": "d4692fdc83dd868b5806ed0d2918f99d66477c081bed3325ca81bde636b3274b",
+      "headings": [
+        "AWS Persistence Strategy — Reels Factory MVP",
+        "Purpose",
+        "Options Comparison",
+        "A: Keep EBS (Stop)",
+        "B: EBS Snapshot",
+        "C: Custom AMI (Recommended)",
+        "D: S3 Restore",
+        "Recommendation: Custom AMI",
+        "Restart Workflow",
+        "What Stays Stopped vs Stored"
       ]
     },
     {
