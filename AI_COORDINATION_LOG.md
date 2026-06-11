@@ -95,3 +95,23 @@ Event:
 
 Next Step:
 - Apply durable interim checkpoint preservation automatically whenever reconstruction cost becomes material.
+
+## 2026-06-10 — Reels Factory AWS coordination moved to Issue #47
+
+Type: Channel Transition
+Project: Reels Factory MVP
+Previous Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/46
+Active Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47
+
+Event:
+- Created Issue #47 as the single active reply surface for the AWS ComfyUI + Wan Image-to-Video smoke-test execution phase.
+- Posted redirect notice in Issue #46.
+- Posted origin notice in Issue #47.
+- Updated `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md` to Issue #47.
+- Updated `AI_COORDINATION_STATE.md` to the Reels Factory MVP execution phase.
+- Canonical execution kit commit is `3f7a245605a3afed5f7cd0c6c3758e68d3a8f282`.
+- Accepted route: `g5.xlarge` + `Wan2.1-I2V-14B-480P` FP16 Diffusers + `wanvideo_2_1_14B_I2V_example_03.json` + `100 GB gp3` + source-IP-only security.
+
+Next Step:
+- Wait for executor acknowledgement and explicit AWS access status in Issue #47.
+- Do not launch AWS resources until owner explicitly authorizes runtime execution.
