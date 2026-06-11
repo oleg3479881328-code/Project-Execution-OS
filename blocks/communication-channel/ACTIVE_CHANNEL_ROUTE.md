@@ -16,19 +16,19 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Write Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49`
 
 ### Read Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49`
 
 ### Reviewer To Executor Mailbox
 
-`projects/reels-factory-mvp/coordination/TO_EXECUTOR.md`
+`coordination/TO_EXECUTOR.md`
 
 ### Executor To Reviewer Mailbox
 
-`projects/reels-factory-mvp/coordination/FROM_EXECUTOR.md`
+`coordination/FROM_EXECUTOR.md`
 
 ### Transport Type
 
@@ -36,7 +36,7 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Scope
 
-`Reels Factory MVP / AWS persistence-strategy correction`
+`Project Execution OS / automatic mailbox dispatcher implementation`
 
 ### Last Confirmed At
 
