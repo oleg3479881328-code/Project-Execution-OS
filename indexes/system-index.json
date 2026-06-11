@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "91b8095216165888424aee144e9361651a95ee0d",
-  "generated_at": "2026-06-11T06:58:18-04:00",
+  "repository_commit": "c6942eaf9192591fbbf7a904e1c836f66528cc53",
+  "generated_at": "2026-06-11T07:08:31-04:00",
   "artifact_count": 442,
   "artifacts": [
     {
@@ -8629,9 +8629,9 @@
       "title": "PROJECT STATE — Reels Factory MVP",
       "type": "project-artifact",
       "domain": "reels-factory-mvp",
-      "status": "active / MVP validation",
-      "date": "2026-06-10",
-      "sha256": "59cce107139fa7beff8af62693accf08622de37ca11223071e091a1d702e7355",
+      "status": "active / paused after controlled AWS smoke-test stop",
+      "date": "2026-06-11",
+      "sha256": "a4747610315f0425624b2003824db0bad09c683c4a837ad713618e22fbf3f085",
       "headings": [
         "PROJECT STATE — Reels Factory MVP",
         "Current Phase",
@@ -8641,8 +8641,8 @@
         "RunPod Evaluation",
         "AWS Account And Credits",
         "AWS EC2 GPU Quota",
-        "AWS Instance Selection (NEW)",
-        "Execution Kit Created (NEW)",
+        "Canonical Execution Kit",
+        "First AWS Smoke-Test Attempt",
         "In Progress",
         "Still Pending",
         "Measured Interim Results",
