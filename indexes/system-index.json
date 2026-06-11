@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b613558e44a44822524f13fba65d947fb3aaeb01",
-  "generated_at": "2026-06-11T07:08:48-04:00",
+  "repository_commit": "2eefc0286d49ef7735af6fd6ac03a3597bb13eb3",
+  "generated_at": "2026-06-11T07:21:08-04:00",
   "artifact_count": 442,
   "artifacts": [
     {
@@ -5427,13 +5427,15 @@
       "type": "system-standard",
       "domain": "system",
       "status": "active",
-      "date": "2026-06-09",
-      "sha256": "09f4ef76eb38d03fc06863cadaa160267aadcf01cc3459166036843531559aa8",
+      "date": "2026-06-11",
+      "sha256": "b1743d43426cf99d5ae34a00b2d505de5fd66279894e15d41e27581f036e6c93",
       "headings": [
         "Executor Channel Acknowledgement And Publication Standard",
         "Purpose",
         "Mandatory Acknowledgement",
         "Active Reply Surface",
+        "Durable Status Snapshot Mirror",
+        "Mandatory Status Markers",
         "Mandatory Progress Heartbeat",
         "Required Heartbeat Fields",
         "Short Task Rule",
@@ -5442,7 +5444,10 @@
         "Default Publication Rule",
         "Stop Boundary",
         "Blocker Rule",
+        "Completion Rule",
         "Review Continuation Rule",
+        "Readback Reliability Rule",
+        "Automatic Continuation Rule",
         "Owner Trigger Rule",
         "Final Rule"
       ]
