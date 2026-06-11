@@ -2,150 +2,140 @@
 
 ## 1. Project
 
-- Project name: Reels Factory MVP
-- Short description: Validate a minimal repeatable pipeline for creating one original short-form animated reel using temporary rented GPU compute only.
-- Project type: video-production / server-rental / AI media MVP
+- Project name: `Reels Factory MVP`
+- Project type: `video-production / server-rental / AI media MVP`
+- Purpose: validate a repeatable low-cost pipeline for creating one original short animated reel using temporary rented GPU compute only.
 
-## 2. Purpose
+## 2. Current Status
 
-This project exists to test whether Oleg can produce a short original animated visual reel without buying hardware, without permanent GPU rental, and without expensive SaaS video-generation platforms.
+- Status: `active / paused safely`
+- Current phase: prepare the second AWS smoke-test attempt
+- AWS GPU runtime: `stopped`
+- Persistent AMI: `not created yet`
+- Owner approval required before any new AWS GPU launch
 
-Current-stage success means producing one complete MVP video and recording the practical workflow, cost, time, and quality outcome.
+## 3. Current MVP Target
 
-## 3. Source Of Truth
+Validate the narrowest possible pipeline:
 
-Durable source of truth: this GitHub repository under:
+`generated start image -> Wan Image-to-Video -> 3-second 480p low-quality clip -> download result -> record runtime and cost -> preserve reusable AMI -> terminate GPU runtime`
 
-`projects/reels-factory-mvp/`
+First test concept:
 
-The project operates under Project Execution OS.
+- simple car-motion scene;
+- verify that the vehicle visibly moves;
+- verify that a video file is produced;
+- measure setup time, generation time, total runtime, cost, and output quality.
 
-## 4. Current Status
+## 4. Confirmed Technical Route
 
-- Status: active / initialized
-- Current mode: MVP validation
-- Current phase: define and execute first visual-only animated video test
-- Confidence: concept approved; technical stack not yet selected
+AWS region:
 
-## 5. Done So Far
+- `us-east-2` / Ohio
 
-Confirmed decisions:
+Canonical GPU worker:
 
-- Build a real Project Execution OS project for the Reels Factory MVP.
-- Start with a visual-only animated short, not voice-first content.
-- Use a 15-second MVP before attempting a 30-second version.
-- Treat compute as temporary rented runtime only.
-- Include storyboard-oriented scene control.
-- Include donor-video analysis as a future factory capability.
+- `g5.xlarge`
+- NVIDIA A10G, 24 GB VRAM
 
-## 6. Current Focus
+Canonical model route:
 
-Create one short original vertical animated video:
+- `Wan2.1-I2V-14B-480P` FP16 Diffusers
+- workflow: `wanvideo_2_1_14B_I2V_example_03.json`
 
-- duration: 15 seconds;
-- structure: 3 scenes x 5 seconds;
-- format: vertical 9:16;
-- style: animated / cartoon;
-- content type: visual scenes only;
-- voiceover: not required for MVP;
-- publishing: not required for MVP.
+Security:
 
-## 7. Functional Requirements
+- source-IP-only SSH;
+- ComfyUI bound to `127.0.0.1`;
+- use SSH tunneling;
+- do not expose port `8188` publicly.
 
-### 7.1 Storyboard Mode
+## 5. Persistence Decision
 
-Each generated scene should be representable as a controllable storyboard unit:
+Primary route:
 
-`start frame -> textual scene description -> end frame`
+- create a custom EBS-backed AMI after the next successful setup and generation run;
+- terminate temporary GPU workers between tests;
+- retain only the AMI and its backing snapshots;
+- expected storage estimate: about `$4/month` if stored snapshot blocks are about `80 GB`;
+- measure actual billed snapshot size after AMI creation.
 
-For each scene, the pipeline should be able to store:
+Fallback:
 
-- scene ID;
-- intended duration;
-- start frame reference;
-- end frame reference;
-- textual description of what happens between the frames;
-- subject and character continuity notes;
-- camera movement notes;
-- motion intensity;
-- visual style notes;
-- seed and model metadata;
-- generation result and accept/reject decision.
+- EBS snapshot-only restore route.
 
-The purpose is to reduce random generation and improve repeatability, visual continuity, and cost control.
+Temporary convenience route:
 
-### 7.2 Donor Video Analysis Mode
+- keep a stopped instance only when the next test is expected within days and the owner explicitly accepts the higher ongoing EBS cost.
 
-The future factory should support automated analysis of a donor or reference video.
+## 6. Completed Evidence
 
-Allowed purpose:
+First AWS smoke-test attempt validated:
 
-- extract production mechanics;
-- understand why a video holds attention;
-- generate a reusable structural blueprint for a new original video.
+- paid-plan upgrade removed the Free Plan GPU blocker;
+- GPU quota increase to `4 vCPU` was approved;
+- `g5.xlarge` launched successfully;
+- NVIDIA A10G was detected;
+- SSH worked;
+- ComfyUI installed successfully;
+- WanVideoWrapper installed successfully;
+- Wan model download started successfully;
+- controlled termination and EBS cleanup worked.
 
-The analysis should be able to extract:
+The first attempt was stopped by owner command before generation.
 
-- total duration;
-- scene boundaries and shot lengths;
-- opening hook;
-- pacing pattern;
-- visual composition;
-- camera movement;
-- subject movement;
-- transitions;
-- text overlays and captions;
-- audio events when relevant;
-- recurring visual motifs;
-- probable retention triggers;
-- scene-by-scene storyboard draft;
-- reusable structural pattern.
+Measured interim result:
 
-Required boundary:
+- runtime: approximately `40 minutes`;
+- approximate cost: `$0.67`;
+- no active AWS smoke-test resources remain.
 
-`donor video -> structural analysis -> abstract blueprint -> new original concept -> original assets -> original output`
+## 7. Still Pending
 
-Do not use this mode to republish, clone, or closely recreate protected source footage.
+1. owner approval for the second AWS run;
+2. launch fresh `g5.xlarge`;
+3. complete model and support-file downloads;
+4. generate one start image in ChatGPT;
+5. run one `3-second`, `480p` I2V clip;
+6. record runtime, cost, quality, retries, and failures;
+7. stop instance;
+8. create custom AMI;
+9. wait until AMI is available;
+10. record AMI ID, backing snapshots, actual stored size, and monthly cost;
+11. terminate GPU worker;
+12. verify cleanup.
 
-## 8. Next Practical Step
+## 8. Separate System Task
 
-Select the first test concept and visual style, then choose the simplest open-source AI video generation route that can run on temporary rented GPU compute.
+Mailbox Dispatcher implementation is a separate Project Execution OS task:
 
-For the first MVP, prepare three storyboard units with:
+- active system issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
 
-- one start frame;
-- one scene description;
-- one end frame;
-- one five-second generated clip.
+Do not confuse the dispatcher task with the next Reels Factory AWS execution step.
 
-## 9. Key Decisions And Constraints
+## 9. Durable Source Of Truth
 
-Hard constraints:
+Read in this order:
 
-- Do not consider buying owned hardware.
-- Do not consider permanent rental of expensive GPU servers.
-- Do not use SaaS video-generation platforms for the MVP.
-- Use temporary rented GPU only when needed.
-- Shut down rented GPU runtime after the generation job.
-- Track real generation cost and time.
-- Avoid copyright-dependent source footage for the MVP.
-- Donor-video analysis must produce an abstract production blueprint, not a clone.
+1. `projects/reels-factory-mvp/PROJECT.md`
+2. `projects/reels-factory-mvp/PROJECT_STATE.md`
+3. `projects/reels-factory-mvp/logs/latest.md`
+4. `projects/reels-factory-mvp/AWS_PERSISTENCE_STRATEGY.md`
+5. `projects/reels-factory-mvp/AWS_WAN_SMOKE_TEST_RUNBOOK.md`
 
-Architecture assumption for this MVP:
+## 10. Do-Not-Repeat Work
 
-`concept -> 3 storyboard units -> temporary GPU generation -> download outputs -> assemble/export -> record cost/time/quality`
+- Do not re-request AWS GPU quota.
+- Do not repeat Free Plan diagnosis; paid-plan upgrade is complete.
+- Do not use `g4dn.xlarge` as the canonical route.
+- Do not refer to `Wan2.1-I2V-1.3B`; it was an incorrect earlier assumption.
+- Do not expose ComfyUI port `8188` publicly.
+- Do not launch AWS runtime without explicit owner approval.
+- Do not leave temporary GPU resources active after tests.
 
-Future donor-analysis extension:
+## 11. Direct Links
 
-`donor video -> automated structural analysis -> storyboard blueprint -> new original concept -> original storyboard units -> original generated reel`
-
-## 10. Read Next
-
-Minimum relevant Project Execution OS nodes:
-
-- `START_HERE.md`
-- `docs/ROUTER.md`
-- `blocks/video-production/BLOCK.md`
-- `blocks/server-rental/BLOCK.md`
-
-No additional project artifacts exist yet. Create `PROJECT_STATE.md` and `logs/latest.md` only after the first meaningful execution step begins.
+- Persistence correction issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48
+- Previous AWS execution issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47
+- Separate dispatcher task: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
+- EC2 Console: https://console.aws.amazon.com/ec2/home?region=us-east-2
