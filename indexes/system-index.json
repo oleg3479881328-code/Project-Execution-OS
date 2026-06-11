@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "5ef259377e26fc2deebbf39b7146b5913772d560",
-  "generated_at": "2026-06-11T08:23:41-04:00",
+  "repository_commit": "ecfd3a0ec69c99c15fc21fc20a8afdf73e11a4aa",
+  "generated_at": "2026-06-11T08:23:56-04:00",
   "artifact_count": 446,
   "artifacts": [
     {
@@ -693,13 +693,15 @@
       "domain": "communication-channel",
       "status": null,
       "date": null,
-      "sha256": "4a48ae28c164472e688d2d6471bc8fb36a92463e9e2b61e8e55eabd9673e61c0",
+      "sha256": "71c02a6b47106be7cf7f337a5652c6d58b049839ba57283f924f106883ae0e86",
       "headings": [
         "Active Coordination Channel Route",
         "Purpose",
         "Current Active Route",
         "Write Here",
         "Read Here",
+        "Reviewer To Executor Mailbox",
+        "Executor To Reviewer Mailbox",
         "Transport Type",
         "Scope",
         "Last Confirmed At",
