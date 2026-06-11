@@ -14,14 +14,23 @@ Any of these phrases must route to this project:
 
 - `личный секретарь`
 - `секретарь`
+- `режим секретаря`
+- `режим личного секретаря`
 - `личный помощник`
 - `помощник`
+- `режим помощника`
 - `personal secretary`
 - `personal assistant`
 
 These are aliases for one route, not separate assistants or separate entrypoints.
 
 The owner does not need to paste a long startup prompt.
+
+## ChatGPT Propagation Boundary
+
+- `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md` is the canonical repository copy of the ChatGPT routing instruction.
+- Editing that GitHub file does not automatically rewrite the active Custom Instructions field inside the ChatGPT app.
+- When the core prompt changes, propagate the updated instruction into ChatGPT Custom Instructions before testing a fresh conversation.
 
 ## Current Working Surface
 
@@ -150,7 +159,7 @@ Do not decide these prematurely:
 In a new conversation, the owner may simply write:
 
 ```text
-Личный секретарь
+Режим секретаря
 ```
 
 or use any router alias listed above.
