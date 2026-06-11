@@ -2,108 +2,98 @@
 
 Date: 2026-06-11
 
-## Session Summary
+## Current Status
 
-The first AWS infrastructure smoke-test attempt was executed and then intentionally stopped by owner command before video generation.
+Persistence strategy selected. No AWS GPU runtime is active.
 
-## RunPod
+Primary route:
 
-- RunPod onboarding was checked earlier.
-- Minimum custom funding amount confirmed: `$10`.
-- No RunPod payment was made.
-- RunPod remains fallback only.
+- create a custom EBS-backed AMI after the next successful setup and generation run;
+- terminate temporary GPU workers between tests;
+- retain only the AMI and its backing snapshots;
+- expected storage estimate: about `$4/month` if stored snapshot blocks are about `80 GB`;
+- measure actual snapshot size after AMI creation.
+
+Fallback:
+
+- EBS snapshot-only restore route.
 
 ## AWS Account
 
 - Account ID: `102885960265`
-- Region: `United States (Ohio)` / `us-east-2`
-- GPU quota: `Running On-Demand G and VT instances` increased from `0` to `4` vCPU.
-- AWS Support case: `178112387200526`
-- Owner upgraded account from AWS Free Plan to paid plan.
-- Credits reported before attempt: `$74.57`
-- Approximate credits after stop: `$73.90`
+- Region: `us-east-2` / Ohio
+- Paid-plan upgrade completed.
+- GPU quota: `4 vCPU` for `Running On-Demand G and VT instances`.
+- Credits before first attempt: `$74.57`
+- Approximate credits after first attempt: `$73.90`
 
-## Canonical Execution Kit
-
-Final reviewed kit commit:
-
-`3f7a245605a3afed5f7cd0c6c3758e68d3a8f282`
-
-Canonical route:
+## Canonical Route
 
 - Instance: `g5.xlarge`
 - GPU: NVIDIA A10G, 24 GB VRAM
 - Model: `Wan2.1-I2V-14B-480P` FP16 Diffusers
 - Workflow: `wanvideo_2_1_14B_I2V_example_03.json`
 - Root volume: `100 GB gp3`
-- Security: source-IP only; SSH tunneling preferred
+- Security: source-IP-only SSH; ComfyUI bound to `127.0.0.1`; use SSH tunnel for local access
 
-Artifacts:
-
-1. `AWS_INSTANCE_SELECTION.md`
-2. `AWS_WAN_SMOKE_TEST_RUNBOOK.md`
-3. `COST_TRACKING_TEMPLATE.md`
-
-## First AWS Smoke-Test Attempt
+## First AWS Attempt
 
 Execution channel:
 
-https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47
-
-Resources:
-
-- EC2 instance: `i-090c7666371f00d68`
-- Instance type: `g5.xlarge`
-- Public IP during runtime: `3.144.84.183`
-- Root volume: `100 GB gp3`
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47
 
 Validated:
 
-- Paid-plan upgrade removed GPU launch blocker.
-- `g5.xlarge` launched successfully.
-- NVIDIA A10G detected.
-- SSH worked.
-- ComfyUI installed.
-- WanVideoWrapper installed.
+- `g5.xlarge` launched successfully;
+- A10G detected;
+- SSH worked;
+- ComfyUI installed;
+- WanVideoWrapper installed;
 - Wan model download started.
 
-Owner stop command:
+Stopped by owner before generation:
 
-- Owner ordered all active processes stopped before generation.
-- Model download interrupted.
-- Video generation not performed.
+- EC2 instance `i-090c7666371f00d68` terminated;
+- EBS cleanup confirmed;
+- no active smoke-test AWS resources remain;
+- runtime approximately `40 minutes`;
+- approximate cost `$0.67`.
 
-Cleanup:
+## Persistence Report
 
-- EC2 instance `i-090c7666371f00d68` terminated.
-- EBS root volume cleaned up through `DeleteOnTermination=true`.
-- No active smoke-test AWS processes remain.
+Artifact:
 
-Measured interim result:
+- `projects/reels-factory-mvp/AWS_PERSISTENCE_STRATEGY.md`
 
-- Runtime: approximately `40 minutes`.
-- Approximate cost: `$0.67`.
+Reviewed candidate commit:
 
-## Current Decision
+- `e04e88e105375b148731b3f1d2861d56c36b6b67`
 
-Project is paused. No AWS GPU runtime is active.
+Current correction channel:
 
-Before restarting, choose whether to:
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48
 
-1. restart immediately from scratch using the existing runbook;
-2. first add a persistence strategy to avoid repeating environment setup and model download cost.
+## Next Safe Action
+
+Wait for explicit owner approval before launching a second AWS run.
+
+On the approved run:
+
+1. launch fresh `g5.xlarge`;
+2. complete setup and downloads;
+3. generate one `3-second`, `480p` clip;
+4. stop the instance;
+5. create the custom AMI;
+6. wait until AMI state is available;
+7. record AMI and snapshot IDs;
+8. terminate the GPU worker;
+9. verify cleanup and measure real monthly snapshot storage cost.
 
 ## Do-Not-Repeat Work
 
-- Do not re-request AWS G/VT quota.
-- Do not repeat Free Plan diagnosis; paid-plan upgrade is complete.
+- Do not re-request GPU quota.
+- Do not repeat Free Plan diagnosis.
 - Do not use `g4dn.xlarge` as the canonical route.
-- Do not refer to `Wan2.1-I2V-1.3B`; that was an incorrect earlier assumption.
-- Do not restart AWS runtime without explicit owner approval.
-
-## Re-entry Links
-
-- Active coordination channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47
-- EC2 Launch page: https://console.aws.amazon.com/ec2/home?region=us-east-2#LaunchInstances:
-- Approved quota page: https://console.aws.amazon.com/servicequotas/home/services/ec2/quotas/L-DB2E81BA?region=us-east-2
-- AWS Support case: https://console.aws.amazon.com/support/home#/case/?displayId=178112387200526&language=en
+- Do not refer to `Wan2.1-I2V-1.3B`.
+- Do not expose ComfyUI port `8188` publicly.
+- Do not restart AWS runtime without owner approval.
