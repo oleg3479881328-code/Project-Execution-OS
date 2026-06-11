@@ -1,6 +1,6 @@
 # AWS Instance Selection — Reels Factory MVP Smoke Test
 
-Date: 2026-06-10
+Date: 2026-06-10 (corrected)
 Region: us-east-2 (Ohio)
 Author: Infrastructure executor
 
@@ -12,8 +12,21 @@ Author: Infrastructure executor
 | Available AWS credits | $74.57 |
 | Credit expiration | 2026-10-04 |
 | Workload | Single 3-second 480p Wan I2V generation |
-| GPU VRAM required (Wan I2V 1.3B 480p) | ~6-8 GB |
-| GPU VRAM required (Wan I2V 14B 480p) | ~18-20 GB |
+| Wan I2V model | **Wan2.1-I2V-14B-480P** (only I2V variant available) |
+
+## Important Correction: No I2V-1.3B Model Exists
+
+After verifying the official Wan2.1 repository (https://github.com/Wan-Video/Wan2.1), the available models are:
+
+| Model | Type | VRAM Estimate |
+|---|---|---|
+| T2V-1.3B | Text-to-Video | ~8 GB |
+| T2V-14B | Text-to-Video | ~20+ GB |
+| **I2V-14B-480P** | **Image-to-Video** | **~18-22 GB** |
+| I2V-14B-720P | Image-to-Video | ~22-26 GB |
+| FLF2V-14B | First-Last-Frame-to-Video | ~20+ GB |
+
+**There is no I2V-1.3B model.** The smallest I2V model is 14B. This changes the instance selection calculus significantly.
 
 ## Candidates Compared
 
@@ -23,55 +36,87 @@ Author: Infrastructure executor
 | g5.xlarge | 4 | A10G | 24 GB | 16 GB | 250 GB NVMe | $1.006/hr |
 | g6.xlarge | 4 | L4 | 24 GB | 16 GB | EBS only | ~$0.70/hr (est.) |
 
-## Recommendation: g4dn.xlarge
+## VRAM Analysis for I2V-14B-480P
 
-**Why g4dn.xlarge is the best choice for the first smoke test:**
+The I2V-14B model requires approximately 18-22 GB VRAM at FP16 for 480p generation.
 
-1. **Fits the 4 vCPU quota** — all three candidates fit, but g4dn is cheapest.
-2. **16 GB VRAM is sufficient** — Wan I2V 1.3B (the smallest practical I2V variant) requires ~6-8 GB VRAM at 480p. Even the larger 14B variant fits in 16 GB at 480p with optimizations (FP16, tiling).
-3. **Lowest hourly cost** — $0.526/hr is ~48% cheaper than g5.xlarge and ~25% cheaper than g6.xlarge.
-4. **Local NVMe storage included** — 125 GB is enough for ComfyUI, Wan model weights (~5-10 GB), and temporary output files.
-5. **T4 GPU is well-supported** — ComfyUI and PyTorch have mature T4/CUDA support. Community ComfyUI/Wan workflows are tested on T4.
-6. **Proven for ComfyUI** — g4dn.xlarge is the most common "entry-level" GPU instance for ComfyUI in the AWS ecosystem.
+**g4dn.xlarge (16 GB VRAM):**
+- ❌ Insufficient for FP16 I2V-14B at full precision
+- ⚠️ **May work with FP8 quantized models** — the ComfyUI-WanVideoWrapper supports FP8 scaled models from Kijai (https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled)
+- ⚠️ **May work with block swapping** — the wrapper supports offloading blocks to system RAM. With 20/40 blocks offloaded, VRAM usage drops to ~12-14 GB
+- **Verdict:** Possible but unvalidated. Risk of OOM or very slow generation due to swapping.
 
-**When to consider g5.xlarge instead:**
-- If the 14B Wan model is needed and FP16 doesn't fit in 16 GB.
-- If generation speed is critical (A10G is ~1.5-2x faster than T4 for inference).
-- For the first 3-second 480p smoke test, g4dn.xlarge is sufficient.
+**g5.xlarge (24 GB VRAM):**
+- ✅ Sufficient for FP16 I2V-14B-480P
+- ✅ A10G is ~1.5-2x faster than T4 for inference
+- ❌ Costs $1.006/hr — nearly 2x g4dn
+- **Verdict:** Safe choice, but expensive for a smoke test.
+
+**g6.xlarge (24 GB VRAM):**
+- ✅ Sufficient VRAM
+- ✅ L4 is more power-efficient than A10G
+- ❌ No local NVMe storage (EBS only)
+- **Verdict:** Good middle ground if available.
+
+## Recommendation
+
+### First Launch Candidate: g5.xlarge
+
+**Why:** The I2V-14B model is the only I2V option. g4dn.xlarge (16 GB VRAM) may not be sufficient for reliable FP16 inference. g5.xlarge (24 GB VRAM) provides headroom and is the safest first choice.
+
+**Cost impact:** At $1.006/hr, a 2-hour test costs ~$2.01 — still well within the $74.57 credit budget.
+
+### Alternative: Try g4dn.xlarge with FP8 first
+
+If the owner wants to minimize cost, try g4dn.xlarge with:
+- FP8 quantized model from Kijai (https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled)
+- Block swapping enabled (offload 20-30 blocks to RAM)
+- Reduced resolution (640x360 instead of 854x480)
+
+If this fails (OOM or too slow), terminate and relaunch on g5.xlarge.
 
 ## Quota Validation
 
 - Quota name: `Running On-Demand G and VT instances`
 - Quota code: `L-DB2E81BA`
 - Applied limit: **4 vCPU**
-- g4dn.xlarge uses: **4 vCPU**
+- g4dn.xlarge / g5.xlarge / g6.xlarge all use: **4 vCPU**
 - Utilization after launch: **4 / 4 (100%)**
 - Result: **Fits exactly.** No other G-family instances can run simultaneously.
 
-## Pricing Breakdown (g4dn.xlarge, us-east-2, Linux)
+## Pricing Breakdown
 
-| Component | Price |
-|---|---|
-| Compute (On-Demand) | $0.526/hr |
-| EBS root volume (30 GB gp3) | ~$2.40/month ($0.0033/hr) |
-| Public IPv4 | $0.005/hr |
-| **Total hourly (running)** | **~$0.534/hr** |
-| **Estimated 1-hour test** | **~$0.53** |
-| **Estimated 2-hour test** | **~$1.07** |
-| **Estimated 3-hour test** | **~$1.60** |
+| Instance | Compute/hr | EBS/hr | IPv4/hr | Total/hr | 2hr test |
+|---|---|---|---|---|---|
+| g4dn.xlarge | $0.526 | $0.0033 | $0.005 | ~$0.534 | ~$1.07 |
+| **g5.xlarge** | **$1.006** | **$0.0033** | **$0.005** | **~$1.014** | **~$2.03** |
+| g6.xlarge | ~$0.70 | $0.0033 | $0.005 | ~$0.708 | ~$1.42 |
 
 ## Charges After Stop/Terminate
 
 | Resource | After Stop | After Terminate |
 |---|---|---|
 | Compute | Stopped (no charge) | Removed |
-| EBS root volume | Charged (~$2.40/month) | Removed (if DeleteOnTermination=true) |
+| EBS root volume | Charged (~$2.40/month for 30GB) | Removed (if DeleteOnTermination=true) |
 | Public IPv4 | Released (no charge) | Released |
 | Local NVMe storage | Data persists (charged via instance) | Lost |
+
+## Storage Recommendation
+
+**Minimum: 50 GB gp3 root volume** (not 30 GB)
+
+The Deep Learning AMI GPU PyTorch (~15 GB) + ComfyUI + dependencies + pip caches + model weights (I2V-14B is ~30 GB) + temporary output files can easily exceed 30 GB.
+
+Recommended: **50 GB gp3** (costs ~$4/month or $0.0055/hr — negligible).
 
 ## Direct Links
 
 - EC2 Launch: https://console.aws.amazon.com/ec2/home?region=us-east-2#LaunchInstances:
 - g4dn.xlarge pricing: https://aws.amazon.com/ec2/pricing/on-demand/
-- ComfyUI on AWS: https://github.com/comfyanonymous/ComfyUI
-- Wan GitHub: https://github.com/Wan-Video/Wan2.1
+- g5.xlarge pricing: https://aws.amazon.com/ec2/pricing/on-demand/
+- ComfyUI: https://github.com/comfyanonymous/ComfyUI
+- ComfyUI-WanVideoWrapper: https://github.com/kijai/ComfyUI-WanVideoWrapper
+- Wan2.1 GitHub: https://github.com/Wan-Video/Wan2.1
+- Wan models (official): https://huggingface.co/Wan-AI
+- WanVideo ComfyUI models (Kijai): https://huggingface.co/Kijai/WanVideo_comfy
+- WanVideo FP8 scaled (Kijai): https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled
