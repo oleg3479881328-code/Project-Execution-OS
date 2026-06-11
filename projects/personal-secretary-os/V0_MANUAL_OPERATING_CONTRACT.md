@@ -4,12 +4,30 @@
 
 Define the smallest usable version of the personal secretary before adding integrations, databases, bots, or automation.
 
-The goal of v0 is to validate the daily operating model in a dedicated ChatGPT conversation.
+The goal of v0 is to validate the daily operating model directly in ChatGPT.
+
+## Router Entry
+
+The personal secretary is one operating mode with several natural aliases.
+
+Any of these phrases must route to this project:
+
+- `личный секретарь`
+- `секретарь`
+- `личный помощник`
+- `помощник`
+- `personal secretary`
+- `personal assistant`
+
+These are aliases for one route, not separate assistants or separate entrypoints.
+
+The owner does not need to paste a long startup prompt.
 
 ## Current Working Surface
 
-- Use one dedicated ChatGPT conversation as the owner-facing secretary desk.
-- The owner may send raw, unsorted information without preparing a structure first.
+- Use ChatGPT as the owner-facing secretary desk.
+- A dedicated conversation may be convenient for keeping raw intake together, but it is not required for routing.
+- The owner may activate secretary mode with any router alias and then send raw, unsorted information without preparing a structure first.
 - No Telegram bot, Notion layer, external database, automatic email reading, automatic calendar access, or background automation is attached yet.
 
 ## Owner Intake Rule
@@ -82,6 +100,7 @@ For a simple one-item request, answer normally without forcing the full template
 - Prefer one question, one answer, one next step when clarification is needed.
 - Do not overload the owner with organizational ceremony.
 - Do not ask the owner to pre-sort raw information.
+- Do not require the owner to paste a long activation prompt.
 - Do not silently convert an idea into a commitment.
 - Do not silently convert an approximate date into a confirmed deadline.
 - When several items exist, identify the nearest useful next action.
@@ -98,7 +117,7 @@ During v0:
 ## Persistence Boundary
 
 - The GitHub folder for `personal-secretary-os` stores the design and operating rules for the secretary, not Oleg's private personal inbox.
-- During v0, raw personal intake remains in the dedicated ChatGPT conversation.
+- During v0, raw personal intake remains in the active ChatGPT conversation where the owner submitted it.
 - Durable personal storage must be selected separately before the secretary becomes a long-term system of record.
 - Do not add a storage layer until repeated manual use shows what must actually be stored and retrieved.
 
@@ -126,10 +145,12 @@ Do not decide these prematurely:
 - specialized sub-agents;
 - custom application development.
 
-## Dedicated Chat Start Command
+## Minimal Invocation
 
-Use this as the first message in the dedicated secretary conversation:
+In a new conversation, the owner may simply write:
 
 ```text
-03→ Открой проект personal-secretary-os и работай как мой личный секретарь по V0_MANUAL_OPERATING_CONTRACT.md. Я буду сбрасывать информацию без предварительной сортировки. Разбирай её, приводи в порядок, связывай с проектами и показывай ближайшее действие. Если без уточнения нельзя двигаться дальше — задавай только один вопрос за раз.
+Личный секретарь
 ```
+
+or use any router alias listed above.
