@@ -4,15 +4,19 @@
 Reels Factory MVP
 
 ## Purpose
-Coordinate the AWS ComfyUI + Wan Image-to-Video smoke-test execution through one durable channel.
+Coordinate the AWS persistence-strategy correction through one bounded reply surface and compact bidirectional mailbox files.
 
 ## Active Channel
-https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47
+https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48
+
+## Mailboxes
+- Reviewer to executor: `projects/reels-factory-mvp/coordination/TO_EXECUTOR.md`
+- Executor to reviewer: `projects/reels-factory-mvp/coordination/FROM_EXECUTOR.md`
 
 ## Previous Channels
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/46 — completed execution-kit preparation and review iterations
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/35 — previous unrelated Project Execution OS coordination channel
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/43 — previous unrelated server-rental coordination route
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47 — AWS smoke-test execution and first persistence draft
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/46 — execution-kit preparation and review iterations
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/35 — previous unrelated Project Execution OS coordination
 
 ## Active Participants
 - Oleg Povalyukhin — Project Owner
@@ -20,39 +24,41 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47
 - Executor Agent — Infrastructure Executor
 
 ## Current Task
-Confirm executor AWS access state, then continue only the already-approved Reels Factory MVP AWS smoke-test workflow after explicit owner authorization.
+Correct the AWS persistence strategy report and validate the new mailbox communication path.
 
 ## Current Repository State
-- Canonical execution kit commit: `3f7a245605a3afed5f7cd0c6c3758e68d3a8f282`
-- Accepted route: `g5.xlarge` + `Wan2.1-I2V-14B-480P` FP16 Diffusers + `wanvideo_2_1_14B_I2V_example_03.json`
-- Root volume: `100 GB gp3`
-- Security: source-IP only; SSH tunneling preferred
-- AWS GPU quota: `4 vCPU` approved in `us-east-2`
-- AWS credits: `$74.57`, expire `2026-10-04`
+- Initial persistence draft: `a2fd8ba43340a26e24468c2e0194bd3c7e622e28`
+- Corrected persistence report candidate: `b8774ebeb027f887f0d6026fcbe9b318be481e65`
+- Active mailbox protocol: `docs/EXECUTOR_MAILBOX_STANDARD.md`
+- No AWS runtime is active.
 
 ## Accepted Changes
-- Final preflight kit accepted for the next phase.
-- Issue #47 is the only active durable reply surface for this phase.
+- Issue #48 is the only active durable reply surface for the current correction task.
+- Compact mailboxes are now the primary latest-message readback layer.
+- Issue comments remain the audit trail.
 
 ## Open Review Items
-- Await executor acknowledgement in Issue #47.
-- Await explicit AWS access status: `AWS_ACCESS_READY`, `AWS_ACCESS_NOT_AVAILABLE`, or `AWS_ACCESS_NEEDS_IAM_SETUP`.
-- Do not launch AWS resources until owner explicitly authorizes runtime execution.
+- `PROJECT_STATE.md` and `logs/latest.md` still need persistence-strategy updates.
+- AMI workflow still needs a wait-for-availability checkpoint before source termination.
+- ComfyUI restart guidance must use localhost binding with SSH tunneling rather than public port exposure.
+- Executor must acknowledge Issue #48 and update `FROM_EXECUTOR.md`.
 
 ## Next Step
 When `02` is received:
-1. read Issue #47;
-2. inspect the latest executor acknowledgement and AWS access status;
-3. continue from actual evidence;
-4. ask the owner only for a real blocker or explicit launch approval.
+1. read `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`;
+2. read `projects/reels-factory-mvp/coordination/FROM_EXECUTOR.md`;
+3. read Issue #48 for supporting evidence;
+4. inspect any reported commit;
+5. continue from the latest mailbox sequence.
 
 ## Required Validation
-- Verify executor acknowledgement in Issue #47.
-- Verify no AWS resource has been launched before owner authorization.
-- After any runtime execution, require cost, runtime, output, and cleanup evidence in Issue #47.
+- Verify executor ACK in Issue #48.
+- Verify `FROM_EXECUTOR.md` sequence increment.
+- Verify final corrected commit includes the requested project-state updates.
+- Verify no AWS resources are launched.
 
 ## Update Rule
-Update this snapshot only after a meaningful state transition.
+Update this snapshot only after meaningful state transitions.
 
 ## Reading Rule
-Read this file first, then Issue #47, then inspect latest repository state if required.
+Read the active route, then the inbound mailbox, then the active issue and repository evidence.
