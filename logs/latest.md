@@ -1,11 +1,11 @@
 # Latest Executor Status
 
-Timestamp: 2026-06-12T01:24:00Z
-Marker: BLOCKER
-Task-ID: coordination-route-recovery-issue-51
-Status: Mailbox Dispatcher v4 commit `b893038c222a4926ac37ae55d67254b0dc14e683` is published but rejected in review. Its development handoff overwrote the root outbound mailbox while Issue #51 remained the active route. The Issue #51 mailbox has been restored with sequence `6`. Dispatcher v5 is queued separately in Issue #52 and must not overwrite the active route until Issue #51 completes.
+Timestamp: 2026-06-12T12:00:00Z
+Marker: COMPLETE
+Task-ID: project-execution-os-markitdown-intake-adapter-mvp-v1-recovery
+Status: The MarkItDown local document intake adapter MVP is implemented, validated, committed, pushed to the dedicated review branch, and published as Draft PR #53.
 Reply-Surface: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4690906540
-Commit-SHA: e5e9baf10b7d752f68e5d002efb7138615ac1f98
-Next-Automatic-Action: Codex should read restored `coordination/TO_EXECUTOR.md` sequence `6`, post ACK in Issue #51, update `coordination/FROM_EXECUTOR.md`, and continue the bounded MarkItDown adapter task. Mailbox Dispatcher v5 remains queued in Issue #52.
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
+Commit-SHA: 8ee0e407aee142885915339c5710ae37b9a5b9ff
+Next-Automatic-Action: Publish the structured COMPLETE execution report in Issue #51 and hand off for review.
 Owner-Action-Required: none

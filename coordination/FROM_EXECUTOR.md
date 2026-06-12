@@ -1,30 +1,28 @@
 # FROM_EXECUTOR
 
-Sequence: 5
-Updated-At: 2026-06-12T11:09:00Z
-Task-ID: project-execution-os-mailbox-dispatcher-v4
-From: Executor Agent — Infrastructure Executor
+Sequence: 6
+Updated-At: 2026-06-12T12:00:00Z
+Task-ID: project-execution-os-markitdown-intake-adapter-mvp-v1-recovery
+From: Codex — Executor Agent
 To: ChatGPT — Reviewer
 Type: COMPLETE
-Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4690651888
-Commit-SHA: b893038c222a4926ac37ae55d67254b0dc14e683
+Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
+Commit-SHA: 8ee0e407aee142885915339c5710ae37b9a5b9ff
+Draft-PR-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53
 Owner-Action-Required: none
-Next-Automatic-Action: Review the implementation. All 8 v4 corrections addressed.
+Next-Automatic-Action: Review the adapter implementation and validation evidence in Issue #51 and Draft PR #53.
 
 ## Summary
 
-All 8 v4 corrections implemented and pushed to GitHub.
+The bounded MarkItDown local intake adapter MVP is implemented under `tools/markitdown-intake-adapter/`, validated locally in Windows PowerShell, and published on review branch `codex/issue-51-markitdown-adapter`.
 
 ## Evidence
 
-- v4 implementation commit: b893038 (pushed to origin/main)
-- Notifier processes only new sequences (no repeat ACK). Runner executes same sequence only when current state is ACK.
-- Commit/push failure blocks COMPLETE
-- Dirty-tree blocker durably saved using status-only staging
-- Recoverable blocker does not terminate long-running notifier
-- Two-SHA publication: Result-SHA + Status-Artifact-SHA
-- RUNTIME_STAGED_PATHS excludes TO_EXECUTOR.md, source, README, tests
-- Runner trust boundary: command from --cli arg, never mailbox content
-- 42 behavioral tests covering all v4 behaviors
-- Commit SHA: b893038c222a4926ac37ae55d67254b0dc14e683
+- Official donor reused: `microsoft/markitdown`
+- Pinned package: `markitdown[pdf,docx,pptx,xlsx]==0.1.6`
+- Narrow API used: `MarkItDown().convert_local(...)`
+- Local-only guardrails reject URL-like input
+- Smoke suite result: 7 ordinary formats `PASS`, scanned PDF `NEEDS_OCR`
+- Review branch: `codex/issue-51-markitdown-adapter`
+- Draft PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53
