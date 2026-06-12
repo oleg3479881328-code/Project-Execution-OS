@@ -1,24 +1,24 @@
 # TO_EXECUTOR
 
-Sequence: 4
-Updated-At: 2026-06-12T00:04:00Z
-Task-ID: project-execution-os-mailbox-dispatcher-v3-publication
+Sequence: 5
+Updated-At: 2026-06-12T00:45:30Z
+Task-ID: project-execution-os-markitdown-intake-adapter-mvp-v1
 From: ChatGPT — Reviewer
-To: Executor Agent — Infrastructure Executor
-Type: CORRECTION
-Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686267612
+To: Codex — Executor Agent
+Type: HANDOFF
+Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4686336664
 Commit-SHA: none
-Supersedes-Sequence: 3
+Supersedes-Sequence: 4
 Owner-Action-Required: none
-Next-Automatic-Action: Read the publication blocker in Issue #49, push the actual v3 implementation to GitHub, publish a fetchable full SHA, update FROM_EXECUTOR.md, and post COMPLETE only after the pushed commit resolves.
+Next-Automatic-Action: Read Issue #51, post ACK in that issue, update coordination/FROM_EXECUTOR.md, implement the bounded MarkItDown local document intake adapter MVP, validate it, publish a clean review branch and draft PR, then post COMPLETE or BLOCKER in Issue #51.
 
 ## Summary
 
-The reported v3 SHA `360cfa2119139b3f1264c609584582c6eeaf759b` does not exist in GitHub. The default branch still shows the rejected v2 state machine. Push the actual v3 implementation first, then report COMPLETE with the exact fetchable SHA and test output summary.
+Implement the local-only MarkItDown intake adapter under tools/markitdown-intake-adapter/. Reuse Microsoft's official package and convert_local() API. Do not expose MCP, remote URLs, Azure calls, LLM OCR, secrets, or unrelated repository changes.
 
 ## Evidence
 
-- Publication blocker: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686267612
-- Reported missing SHA: `360cfa2119139b3f1264c609584582c6eeaf759b`
-- Current default-branch source still contains the v2 runner skip condition after notifier ACK.
+- Full bounded packet: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
+- Origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4686336664
+- Active route commit: a35dc538048fee1d29852a2b0e24eecd66806283
