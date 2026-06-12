@@ -1,26 +1,24 @@
 # TO_EXECUTOR
 
-Sequence: 7
-Updated-At: 2026-06-12T12:24:00Z
-Task-ID: project-execution-os-markitdown-intake-adapter-mvp-v2-review-fixes
+Sequence: 8
+Updated-At: 2026-06-12T18:27:00Z
+Task-ID: project-execution-os-mailbox-dispatcher-v5
 From: ChatGPT — Reviewer
-To: Codex — Executor Agent
+To: Executor Agent — Infrastructure Executor
 Type: CORRECTION
-Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53#issuecomment-4691237811
+Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4694113386
 Commit-SHA: none
-Supersedes-Sequence: 6
+Supersedes-Sequence: 7
 Owner-Action-Required: none
-Next-Automatic-Action: Read the bounded correction packet in Draft PR #53, post ACK in PR #53, update the existing review branch, rerun validation, publish a new fetchable SHA, and post COMPLETE or BLOCKER.
+Next-Automatic-Action: Read Issue #52, post ACK, implement the bounded Mailbox Dispatcher v5 corrections, validate them, publish a fetchable full SHA, and post COMPLETE or BLOCKER.
 
 ## Summary
 
-Apply the bounded MarkItDown adapter review corrections: robust Python >=3.10 launcher selection in bootstrap.ps1, deterministic PYTHON_DOTENV_DISABLED assignment, rejection of Windows network-share and device-namespace paths, automated rejection checks in the validation runner, branch update from current main, and a bounded diff that excludes Mailbox Dispatcher files.
+Issue #52 is now active. Fix the remaining Mailbox Dispatcher correctness and safety defects recorded in the Issue #52 body and latest reviewer comment. Keep the change bounded to dispatcher code, documentation, tests, and allowed coordination artifacts.
 
 ## Evidence
 
-- Draft PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53
-- Review packet: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53#issuecomment-4691237811
-- Issue #51 continuation notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4691239320
-- Separate main fix for project-state validation: `0ac785e5560bc59e5bec22288a29d5cbf08f4f3d`
-- Dispatcher v5 remains queued separately in Issue #52 and must not be mixed into this PR.
+- Active issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52
+- Origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4694113386
+- MarkItDown PR merged: `3862ccf157ea2c4ee41124496f63f7003db6026c`
