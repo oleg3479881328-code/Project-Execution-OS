@@ -11,12 +11,13 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52
 - Executor to reviewer: `coordination/FROM_EXECUTOR.md`
 
 ## Current Task
-Complete the bounded Mailbox Dispatcher v6 correction described in Issue #52.
+Complete the minimal Mailbox Dispatcher v7 correction described in Issue #52.
 
 ## Current Repository State
-- Active outbound mailbox sequence: `9`
-- Rejected v5 commit: `7f094010864d95fe0d4238b6d6a071548ab952da`
-- Review request: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4694350514
+- Active outbound mailbox sequence: `10`
+- Rejected v6 implementation SHA: `f30672fcb4bd4ab92aa17c29bb64d40a5b7f773d`
+- Rejected v6 status artifact SHA: `7c65b7187243e5ffbea641ab3da97323aed96f7b`
+- Review request: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4695116184
 - MarkItDown adapter PR #53 was accepted and merged.
 - No AWS runtime is active.
 
@@ -26,15 +27,14 @@ When `02` is received:
 2. read `coordination/FROM_EXECUTOR.md`;
 3. read Issue #52 comments;
 4. inspect any reported commit or PR;
-5. continue from mailbox sequence `9`.
+5. continue from mailbox sequence `10`.
 
 ## Required Validation
-- Verify executor ACK for sequence `9`.
-- Verify same-sequence runner execution is allowed only from `ACK`.
-- Verify structured adapter result semantics.
-- Verify durable `Result-SHA`, `Status-Artifact-SHA`, and final `Comment-URL` fields.
-- Verify post-run dirty-tree validation.
-- Verify honest local blocker marker on push failure.
+- Verify executor ACK for sequence `10`.
+- Verify timeout path publishes BLOCKER without `UnboundLocalError`.
+- Verify immutable linkback artifact semantics without self-reference.
+- Verify strict git-status failure handling.
+- Verify adapter result SHA accepts only `none` or full 40-hex SHA.
 - Verify behavioral tests exercise the production paths.
 
 ## Reading Rule
