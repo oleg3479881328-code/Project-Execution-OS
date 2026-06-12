@@ -51,7 +51,7 @@ Do not append an unrelated next-project question after answering the active requ
 - research task -> `docs/RESEARCH_STANDARD.md`
 - review task -> `docs/REVIEW_STANDARD.md`
 - already-decided Codex execution handoff -> `docs/CODEX_HANDOFF_ENTRYPOINT.md`
-- communication channel, connected-agent communication, message transport, `01`, `02`, channel selection, or coordination-path uncertainty -> `blocks/communication-channel/BLOCK.md`
+- communication channel, connected-agent communication, message transport, `01`, `02`, `10`, channel selection, route recovery, or coordination-path uncertainty -> `blocks/communication-channel/BLOCK.md`
 - stable ChatGPT system-layer configuration -> `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
 - central knowledge capture, promotion, review, selective loading or retirement -> `docs/KNOWLEDGE_SYSTEM.md`
 - repository-memory question for this system or a GitHub-backed project -> `docs/REPOSITORY_MEMORY_STANDARD.md`

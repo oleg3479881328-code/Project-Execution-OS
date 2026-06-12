@@ -1,3 +1,8 @@
+---
+status: active
+project_mode: lightweight
+---
+
 # PROJECT STATE — Reels Factory MVP
 
 Date: 2026-06-11

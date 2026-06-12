@@ -7,7 +7,7 @@ import re
 import sys
 from pathlib import Path
 
-os.environ.setdefault("PYTHON_DOTENV_DISABLED", "1")
+os.environ["PYTHON_DOTENV_DISABLED"] = "1"
 
 from markitdown import MarkItDown
 
@@ -15,6 +15,10 @@ DEFAULT_MAX_BYTES = 50 * 1024 * 1024
 MEANINGFUL_TEXT_MIN_CHARS = 20
 URL_LIKE_PATTERN = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*:")
 WINDOWS_DRIVE_PATTERN = re.compile(r"^[a-zA-Z]:[\\/]")
+
+
+def is_windows_non_local_path(path_text: str) -> bool:
+    return path_text.startswith("\\\\") or path_text.startswith("//")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -64,6 +68,12 @@ def main() -> int:
     input_text = str(input_path)
     if URL_LIKE_PATTERN.match(input_text) and not WINDOWS_DRIVE_PATTERN.match(input_text):
         return error_result("URL-like inputs are not allowed. Local files only.", input_path, output_path)
+    if is_windows_non_local_path(input_text):
+        return error_result(
+            "Windows network-share and device-namespace paths are not allowed. Local files only.",
+            input_path,
+            output_path,
+        )
 
     try:
         resolved_input = input_path.resolve(strict=True)

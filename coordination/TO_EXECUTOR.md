@@ -1,25 +1,26 @@
 # TO_EXECUTOR
 
-Sequence: 6
-Updated-At: 2026-06-12T01:24:00Z
-Task-ID: project-execution-os-markitdown-intake-adapter-mvp-v1-recovery
+Sequence: 7
+Updated-At: 2026-06-12T12:24:00Z
+Task-ID: project-execution-os-markitdown-intake-adapter-mvp-v2-review-fixes
 From: ChatGPT — Reviewer
 To: Codex — Executor Agent
-Type: HANDOFF
+Type: CORRECTION
 Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4686336664
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53#issuecomment-4691237811
 Commit-SHA: none
-Supersedes-Sequence: 5
+Supersedes-Sequence: 6
 Owner-Action-Required: none
-Next-Automatic-Action: Read Issue #51, post ACK in that issue, update coordination/FROM_EXECUTOR.md, implement the bounded MarkItDown local document intake adapter MVP, validate it, publish a clean review branch and draft PR, then post COMPLETE or BLOCKER in Issue #51.
+Next-Automatic-Action: Read the bounded correction packet in Draft PR #53, post ACK in PR #53, update the existing review branch, rerun validation, publish a new fetchable SHA, and post COMPLETE or BLOCKER.
 
 ## Summary
 
-Recover the active MarkItDown adapter handoff after an unrelated Mailbox Dispatcher v4 development commit overwrote the root outbound mailbox. Implement the local-only MarkItDown intake adapter under tools/markitdown-intake-adapter/. Reuse Microsoft's official package and convert_local() API. Do not expose MCP, remote URLs, Azure calls, LLM OCR, secrets, or unrelated repository changes.
+Apply the bounded MarkItDown adapter review corrections: robust Python >=3.10 launcher selection in bootstrap.ps1, deterministic PYTHON_DOTENV_DISABLED assignment, rejection of Windows network-share and device-namespace paths, automated rejection checks in the validation runner, branch update from current main, and a bounded diff that excludes Mailbox Dispatcher files.
 
 ## Evidence
 
-- Full bounded packet: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
-- Origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4686336664
-- Active route remains Issue #51: blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md
-- Dispatcher v5 correction is queued separately in Issue #52 and must not overwrite this mailbox until Issue #51 is complete.
+- Draft PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53
+- Review packet: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53#issuecomment-4691237811
+- Issue #51 continuation notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4691239320
+- Separate main fix for project-state validation: `0ac785e5560bc59e5bec22288a29d5cbf08f4f3d`
+- Dispatcher v5 remains queued separately in Issue #52 and must not be mixed into this PR.

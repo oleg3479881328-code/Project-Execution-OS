@@ -42,6 +42,12 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 `2026-06-11`
 
+## Permanent Backup Recovery Pointer
+
+For command `10`, open:
+
+`blocks/communication-channel/BACKUP_CHANNEL_ROUTE.md`
+
 ## Rule For Every Agent
 
 Before sending a durable coordination message:

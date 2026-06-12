@@ -20,6 +20,7 @@ $venvPython = Join-Path $scriptDir '.venv\Scripts\python.exe'
 $runner = Join-Path $scriptDir 'scripts\convert_local.py'
 $urlLikePattern = '^[a-zA-Z][a-zA-Z0-9+.-]*:'
 $windowsDrivePattern = '^[a-zA-Z]:[\\/]'
+$windowsNonLocalPattern = '^(\\\\|//)'
 
 if (-not (Test-Path -LiteralPath $venvPython)) {
     throw "Virtual environment not found at $venvPython. Run bootstrap.ps1 first."
@@ -27,6 +28,10 @@ if (-not (Test-Path -LiteralPath $venvPython)) {
 
 if ($InputFile -match $urlLikePattern -and $InputFile -notmatch $windowsDrivePattern) {
     throw 'URL-like inputs are not allowed. Local files only.'
+}
+
+if ($InputFile -match $windowsNonLocalPattern) {
+    throw 'Windows network-share and device-namespace paths are not allowed. Local files only.'
 }
 
 $resolvedInput = [System.IO.Path]::GetFullPath($InputFile)
