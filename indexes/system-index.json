@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "17a73e8736300e83507c0c44ff1f806d61948cfb",
-  "generated_at": "2026-06-12T08:28:00-04:00",
+  "repository_commit": "d7a3962c9b7f509bdd34abed4270c99982fc12cb",
+  "generated_at": "2026-06-12T08:28:49-04:00",
   "artifact_count": 459,
   "artifacts": [
     {
@@ -743,7 +743,7 @@
       "domain": "communication-channel",
       "status": null,
       "date": null,
-      "sha256": "c36f2ba07cf290d4148be6591ba6954ea8f4cccd84f51f3084ea146a7f485791",
+      "sha256": "95fd5d3d5d4c27c0c53758f54cbbf4ba8d3cab65b17ac479d24c1cc517f253cc",
       "headings": [
         "Active Coordination Channel Route",
         "Purpose",
@@ -755,6 +755,7 @@
         "Transport Type",
         "Scope",
         "Last Confirmed At",
+        "Permanent Backup Recovery Pointer",
         "Rule For Every Agent",
         "Channel Change Rule",
         "Boundary"
