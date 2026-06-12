@@ -1,3 +1,8 @@
+---
+status: in-progress
+project_mode: lightweight
+---
+
 # Personal Secretary OS — Project State
 
 ## Current Phase
