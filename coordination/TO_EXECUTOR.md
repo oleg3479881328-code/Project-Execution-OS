@@ -1,24 +1,24 @@
 # TO_EXECUTOR
 
-Sequence: 3
-Updated-At: 2026-06-11T23:58:00Z
-Task-ID: project-execution-os-mailbox-dispatcher-v3
+Sequence: 4
+Updated-At: 2026-06-12T00:04:00Z
+Task-ID: project-execution-os-mailbox-dispatcher-v3-publication
 From: ChatGPT — Reviewer
 To: Executor Agent — Infrastructure Executor
 Type: CORRECTION
 Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686210580
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686267612
 Commit-SHA: none
-Supersedes-Sequence: 2
+Supersedes-Sequence: 3
 Owner-Action-Required: none
-Next-Automatic-Action: Read the review request in Issue #49, post ACK, fix the dispatcher state machine and publication order, replace tautological tests with behavioral tests, publish a new commit SHA, and post COMPLETE with test output summary.
+Next-Automatic-Action: Read the publication blocker in Issue #49, push the actual v3 implementation to GitHub, publish a fetchable full SHA, update FROM_EXECUTOR.md, and post COMPLETE only after the pushed commit resolves.
 
 ## Summary
 
-Dispatcher v2 is still blocked. Critical defect: notifier consumes the sequence with ACK, so runner refuses to execute the same task. Fix state-aware ACK-to-runner transition, real post-commit SHA publication, early dirty-tree validation, durable blockers, unreadable-issue blocker, structured argv parsing, accurate README claims, allowed-directory staging, and real isolated behavioral tests.
+The reported v3 SHA `360cfa2119139b3f1264c609584582c6eeaf759b` does not exist in GitHub. The default branch still shows the rejected v2 state machine. Push the actual v3 implementation first, then report COMPLETE with the exact fetchable SHA and test output summary.
 
 ## Evidence
 
-- Review request: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686210580
-- Rejected final-status commit: `08970acf3b70ec351fd544012dae9d347205d033`
-- Implementation commit under review: `46532f9d835a6a0c66e0c0294b264ca8128602e6`
+- Publication blocker: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686267612
+- Reported missing SHA: `360cfa2119139b3f1264c609584582c6eeaf759b`
+- Current default-branch source still contains the v2 runner skip condition after notifier ACK.
