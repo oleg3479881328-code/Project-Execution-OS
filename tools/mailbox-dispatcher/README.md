@@ -6,7 +6,7 @@ Automatic polling bridge between `coordination/TO_EXECUTOR.md` and `coordination
 
 Removes the need for the owner to manually relay routine messages between a reasoning agent (reviewer) and an execution agent. The dispatcher has two modes:
 
-- **Notifier** — watches `TO_EXECUTOR.md` for sequence changes, validates the active route, reads the active issue, posts `ACK`, writes `FROM_EXECUTOR.md`, and waits for an external executor.
+- **Notifier** — watches `TO_EXECUTOR.md` for sequence changes, validates the active route and dirty tree **before any mutation**, reads the active issue body (BLOCKER on failure), posts `ACK`, writes `FROM_EXECUTOR.md`, and waits for an external executor.
 - **Runner** — invokes one explicitly configured external command or adapter, captures its result, then posts `COMPLETE` or `BLOCKER`.
 
 ## How It Works
@@ -19,24 +19,68 @@ Notifier polls (every N seconds)
         │
         ├─ Reads TO_EXECUTOR.md
         ├─ Validates active route against ACTIVE_CHANNEL_ROUTE.md
-        ├─ Reads the active issue body
+        ├─ Checks dirty tree (rejects changes outside allowed paths)
+        ├─ Reads the active issue body (BLOCKER on failure)
         ├─ Posts ACK comment to active GitHub issue
         ├─ Writes FROM_EXECUTOR.md (Type: ACK)
         ├─ Updates logs/latest.md
         ├─ Stages only allowed files, rejects dirty-tree
-        └─ Commits and pushes
+        └─ Two-phase commit: commit → get real SHA → post comment/mailbox/log → commit artifacts
                 │
                 ▼
 Runner (invoked separately with --command "...")
         │
         ├─ Validates active route
-        ├─ Reads the active issue body
+        ├─ Checks dirty tree
+        ├─ Reads the active issue body (BLOCKER on failure)
+        ├─ Parses command with shlex.split() (supports quoted arguments)
         ├─ Executes the external command
         ├─ Posts COMPLETE or BLOCKER comment
         ├─ Writes FROM_EXECUTOR.md
         ├─ Updates logs/latest.md
-        └─ Stages only allowed files, commits, pushes
+        └─ Two-phase commit: commit → get real SHA → post comment/mailbox/log → commit artifacts
 ```
+
+## Key Design Decisions
+
+### Two-Phase SHA Publication
+
+The dispatcher uses a two-phase approach to ensure the commit SHA is real:
+
+1. **Phase 1**: Stage allowed files, commit, push
+2. **Phase 2**: Get the real post-commit SHA via `git rev-parse HEAD`, then post the GitHub comment and write mailbox/log files with the real SHA
+3. **Phase 3**: Stage the mailbox/log artifacts, commit, push
+
+This guarantees the SHA in the comment and mailbox is the actual committed SHA, not a pre-commit prediction.
+
+### Pre-Mutation Validation
+
+Before any mutation (posting comments, writing files, executing commands), the dispatcher validates:
+
+1. **Active route**: Reads `ACTIVE_CHANNEL_ROUTE.md` and verifies it matches `TO_EXECUTOR.md`'s `Active-Channel`. Mismatch produces a `BLOCKER`.
+2. **Dirty tree**: Checks for uncommitted changes outside allowed paths. If found, produces a `BLOCKER`.
+
+### Terminal States
+
+- `COMPLETE` — terminal state. Dispatcher skips already-processed sequences.
+- `BLOCKER` — terminal state. Dispatcher waits for corrected input.
+- `ACK` — NOT terminal. Allows re-processing the same sequence (e.g., after restart).
+
+### Issue Read Failure = BLOCKER
+
+If the active issue body cannot be read (network error, invalid URL, empty body), the dispatcher posts a `BLOCKER` and exits — it does not silently continue with a warning.
+
+### Quoted Argument Support
+
+The runner uses `shlex.split()` instead of `str.split()` to parse the command, supporting quoted arguments:
+
+```bash
+python mailbox_dispatcher.py runner --command 'git commit -m "fix: resolve timeout"'
+```
+
+### Directory Staging
+
+Paths ending with `/` in `ALLOWED_STAGED_PATHS` (e.g., `tools/mailbox-dispatcher/tests/`) are treated as directory prefixes — all files inside are staged via `git add -- <dir>`.
 
 ## Requirements
 
@@ -103,7 +147,8 @@ Executes the command, captures stdout/stderr/exit code, posts `COMPLETE` or `BLO
 ## Restart Behavior
 
 - **Idempotent.** If the dispatcher restarts, it reads the current sequence from `FROM_EXECUTOR.md` and compares it with `TO_EXECUTOR.md`. Already-processed sequences are skipped.
-- **No duplicate comments.** The dispatcher checks the sequence before posting. If `FROM_EXECUTOR.md` sequence >= `TO_EXECUTOR.md` sequence, no action is taken.
+- **No duplicate comments.** The dispatcher checks the sequence before posting. If `FROM_EXECUTOR.md` sequence >= `TO_EXECUTOR.md` sequence and the type is terminal (`COMPLETE` or `BLOCKER`), no action is taken.
+- **ACK re-processing.** If the state is `ACK` (not terminal), the dispatcher will re-process the same sequence on restart.
 - **Crash recovery.** On restart after a crash, the dispatcher resumes from the last committed state.
 
 ## Failure Recovery
@@ -116,6 +161,8 @@ Executes the command, captures stdout/stderr/exit code, posts `COMPLETE` or `BLO
 | Invalid sequence value | Dispatcher logs error and continues polling. |
 | Active route mismatch | `BLOCKER` is posted. Dispatcher waits for corrected route. |
 | Dirty tree outside allowed paths | `BLOCKER` is posted. Dispatcher waits for clean tree. |
+| Issue read failure | `BLOCKER` is posted (not a warning). |
+| Command timeout | `BLOCKER` is posted with timeout details. |
 | Python exception | Caught by main loop. Error is logged. Polling continues. |
 
 ## Process Management
@@ -174,7 +221,7 @@ Project-Execution-OS/
         ├── mailbox_dispatcher.py   # The dispatcher script
         ├── README.md               # This file
         └── tests/
-            └── test_dispatcher.py  # Unit tests
+            └── test_dispatcher.py  # 29 behavioral tests
 ```
 
 ## Mailbox Envelope Format

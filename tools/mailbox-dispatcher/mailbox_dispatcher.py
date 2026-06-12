@@ -11,7 +11,6 @@ Two modes:
 Usage:
     python mailbox_dispatcher.py notifier [--poll-interval SECONDS]
     python mailbox_dispatcher.py runner --command "..." [--timeout SECONDS]
-    python mailbox_dispatcher.py runner --once
 
 Requirements:
     - Python 3.8+
@@ -22,6 +21,7 @@ Requirements:
 import argparse
 import os
 import re
+import shlex
 import subprocess
 import sys
 import time
@@ -53,6 +53,9 @@ ALLOWED_STAGED_PATHS = {
 
 DEFAULT_POLL_INTERVAL = 30  # seconds
 DEFAULT_RUNNER_TIMEOUT = 300  # seconds
+
+TERMINAL_STATES = {"COMPLETE", "BLOCKER"}
+
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -184,6 +187,17 @@ def read_current_sequence(path: Path) -> int:
     return 0
 
 
+def read_current_type(path: Path) -> str:
+    """Read the current Type value from a mailbox file."""
+    if not path.exists():
+        return ""
+    content = path.read_text(encoding="utf-8")
+    match = re.search(r"^Type:\s*(\S+)", content, re.MULTILINE)
+    if match:
+        return match.group(1)
+    return ""
+
+
 def update_latest_log(
     marker: str,
     task_id: str,
@@ -246,14 +260,17 @@ def stage_allowed_files() -> None:
             + "\n".join(dirty)
         )
 
-    # Stage only the specific allowed files that exist or are tracked
+    # Stage allowed files explicitly
     for allowed in ALLOWED_STAGED_PATHS:
-        # If it ends with /, it's a directory prefix — skip for now
         if allowed.endswith("/"):
-            continue
-        p = REPO_ROOT / allowed
-        if p.exists():
-            run_command(["git", "add", "--", allowed], check=False)
+            # Directory prefix — stage all files inside it
+            p = REPO_ROOT / allowed
+            if p.exists():
+                run_command(["git", "add", "--", allowed.rstrip("/")], check=False)
+        else:
+            p = REPO_ROOT / allowed
+            if p.exists():
+                run_command(["git", "add", "--", allowed], check=False)
 
 
 def validate_active_route() -> str:
@@ -279,12 +296,204 @@ def validate_active_route() -> str:
 
 
 def read_active_issue_body(issue_url: str) -> str:
-    """Read the body of the active GitHub issue."""
+    """Read the body of the active GitHub issue. Raises RuntimeError on failure."""
     result = run_command(
         ["gh", "issue", "view", issue_url, "--json", "body", "--jq", ".body"],
         timeout=30,
     )
-    return result.stdout.strip()
+    body = result.stdout.strip()
+    if not body:
+        raise RuntimeError(f"Issue {issue_url} has empty body or could not be read")
+    return body
+
+
+def validate_before_mutation(task: dict, to_seq: int) -> str:
+    """Validate active route and dirty tree before any mutation.
+
+    Returns the validated route URL. Raises RuntimeError on failure.
+    """
+    # 1. Validate active route
+    active_channel = task.get("Active-Channel", "")
+    route_url = validate_active_route()
+    if active_channel and active_channel.rstrip("/") != route_url:
+        raise RuntimeError(
+            f"Active channel mismatch: TO_EXECUTOR says {active_channel}, "
+            f"ACTIVE_CHANNEL_ROUTE.md says {route_url}"
+        )
+
+    # 2. Check dirty tree
+    dirty = check_dirty_tree()
+    if dirty:
+        raise RuntimeError(
+            f"Dirty tree: found {len(dirty)} uncommitted change(s) outside allowed paths.\n"
+            + "\n".join(dirty)
+        )
+
+    return route_url
+
+
+def post_blocker_and_exit(
+    task: dict,
+    to_seq: int,
+    error_msg: str,
+    active_channel: str,
+) -> None:
+    """Post a BLOCKER comment and write FROM_EXECUTOR.md, then exit."""
+    task_id = task.get("Task-ID", "unknown")
+    from_role = task.get("From", "Reviewer")
+
+    blocker_comment = (
+        f"BLOCKER\n\n"
+        f"Task-ID: {task_id}\n"
+        f"Sequence: {to_seq}\n\n"
+        f"## Summary\n\n"
+        f"Pre-mutation validation failed.\n\n"
+        f"## Evidence\n\n"
+        f"- Error: {error_msg}\n"
+    )
+
+    comment_url = "none"
+    if active_channel:
+        try:
+            comment_url = post_issue_comment(active_channel, blocker_comment)
+        except RuntimeError:
+            pass
+
+    write_mailbox(
+        path=FROM_EXECUTOR_PATH,
+        sequence=to_seq,
+        task_id=task_id,
+        from_role="Executor Agent — Infrastructure Executor",
+        to_role=from_role,
+        msg_type="BLOCKER",
+        active_channel=active_channel,
+        comment_url=comment_url,
+        commit_sha=get_current_commit_sha(),
+        supersedes_sequence=None,
+        owner_action_required="fix validation error",
+        next_automatic_action="wait for corrected TO_EXECUTOR",
+        summary=f"Pre-mutation validation failed: {error_msg}",
+        evidence=[f"Error: {error_msg}"],
+    )
+
+    update_latest_log(
+        marker="BLOCKER",
+        task_id=task_id,
+        status=f"Pre-mutation validation failed: {error_msg}",
+        reply_surface_url=active_channel,
+        comment_url=comment_url,
+        commit_sha=get_current_commit_sha(),
+        next_action="wait for corrected TO_EXECUTOR",
+        owner_required="fix validation error",
+    )
+
+    # Stage and commit BLOCKER state
+    try:
+        stage_allowed_files()
+        run_command(
+            ["git", "commit", "-m", f"dispatcher: BLOCKER for {task_id} (seq {to_seq})"],
+            check=False,
+        )
+        run_command(["git", "push"], check=False)
+    except RuntimeError:
+        pass
+
+    print(f"  BLOCKER posted — {error_msg}")
+    sys.exit(1)
+
+
+def commit_and_publish(
+    task: dict,
+    to_seq: int,
+    msg_type: str,
+    comment_body: str,
+    summary_text: str,
+    evidence: list[str],
+    active_channel: str,
+    next_auto: str,
+    owner_required: str,
+) -> None:
+    """Two-phase publication: commit first, then post comment/mailbox with real SHA."""
+    task_id = task.get("Task-ID", "unknown")
+    from_role = task.get("From", "Reviewer")
+
+    # Phase 1: Stage and commit allowed files first
+    try:
+        stage_allowed_files()
+        run_command(
+            [
+                "git",
+                "commit",
+                "-m",
+                f"dispatcher: {msg_type} for {task_id} (seq {to_seq})",
+            ],
+            check=False,
+        )
+        run_command(["git", "push"], check=False)
+        print(f"  Changes committed and pushed")
+    except RuntimeError as e:
+        print(f"  Warning: git operation failed: {e}", file=sys.stderr)
+
+    # Phase 2: Get real post-commit SHA
+    commit_sha = get_current_commit_sha()
+
+    # Post comment with real SHA
+    comment_url = "none"
+    if active_channel:
+        try:
+            comment_url = post_issue_comment(active_channel, comment_body)
+            print(f"  {msg_type} posted: {comment_url}")
+        except RuntimeError as e:
+            print(f"  Warning: could not post comment: {e}", file=sys.stderr)
+
+    # Write FROM_EXECUTOR.md with real SHA
+    write_mailbox(
+        path=FROM_EXECUTOR_PATH,
+        sequence=to_seq,
+        task_id=task_id,
+        from_role="Executor Agent — Infrastructure Executor",
+        to_role=from_role,
+        msg_type=msg_type,
+        active_channel=active_channel,
+        comment_url=comment_url,
+        commit_sha=commit_sha,
+        supersedes_sequence=None,
+        owner_action_required=owner_required,
+        next_automatic_action=next_auto,
+        summary=summary_text,
+        evidence=evidence + [f"Commit SHA: {commit_sha}"],
+    )
+    print(f"  FROM_EXECUTOR.md updated (sequence {to_seq}, {msg_type})")
+
+    # Update logs/latest.md with real SHA
+    update_latest_log(
+        marker=msg_type,
+        task_id=task_id,
+        status=summary_text,
+        reply_surface_url=active_channel,
+        comment_url=comment_url,
+        commit_sha=commit_sha,
+        next_action=next_auto,
+        owner_required=owner_required,
+    )
+    print(f"  logs/latest.md updated")
+
+    # Stage the mailbox/log updates too
+    try:
+        stage_allowed_files()
+        run_command(
+            [
+                "git",
+                "commit",
+                "-m",
+                f"dispatcher: publish {msg_type} artifacts for {task_id} (seq {to_seq})",
+            ],
+            check=False,
+        )
+        run_command(["git", "push"], check=False)
+        print(f"  Artifacts committed and pushed")
+    except RuntimeError as e:
+        print(f"  Warning: git operation failed: {e}", file=sys.stderr)
 
 
 # ---------------------------------------------------------------------------
@@ -302,6 +511,7 @@ def notifier_cycle() -> bool:
         return False
 
     current_from_seq = read_current_sequence(FROM_EXECUTOR_PATH)
+    current_from_type = read_current_type(FROM_EXECUTOR_PATH)
     to_seq = read_current_sequence(TO_EXECUTOR_PATH)
 
     task = parse_mailbox(TO_EXECUTOR_PATH)
@@ -313,7 +523,14 @@ def notifier_cycle() -> bool:
         except ValueError:
             pass
 
-    if to_seq <= current_from_seq:
+    # Skip if already in terminal state for this sequence
+    if to_seq <= current_from_seq and current_from_type in TERMINAL_STATES:
+        return False
+
+    # Allow re-processing if current state is ACK (not yet terminal)
+    if to_seq <= current_from_seq and current_from_type not in TERMINAL_STATES:
+        pass  # Continue to re-process
+    elif to_seq <= current_from_seq:
         return False
 
     print(f"[{timestamp_iso()}] New sequence detected: TO_EXECUTOR sequence {to_seq}")
@@ -328,61 +545,26 @@ def notifier_cycle() -> bool:
     print(f"  Task-ID: {task_id}")
     print(f"  Type: {msg_type}")
 
-    # Validate active route
+    # Validate before mutation (dirty tree + route)
     try:
-        route_url = validate_active_route()
-        if active_channel and active_channel.rstrip("/") != route_url:
-            raise RuntimeError(
-                f"Active channel mismatch: TO_EXECUTOR says {active_channel}, "
-                f"ACTIVE_CHANNEL_ROUTE.md says {route_url}"
-            )
+        validate_before_mutation(task, to_seq)
     except RuntimeError as e:
-        # Post BLOCKER
-        blocker_comment = (
-            f"BLOCKER\n\n"
-            f"Task-ID: {task_id}\n"
-            f"Sequence: {to_seq}\n\n"
-            f"## Summary\n\n"
-            f"Active route validation failed.\n\n"
-            f"## Evidence\n\n"
-            f"- Error: {e}\n"
-        )
-        comment_url = "none"
-        if active_channel:
-            try:
-                comment_url = post_issue_comment(active_channel, blocker_comment)
-            except RuntimeError:
-                pass
-
-        write_mailbox(
-            path=FROM_EXECUTOR_PATH,
-            sequence=to_seq,
-            task_id=task_id,
-            from_role="Executor Agent — Infrastructure Executor",
-            to_role=from_role,
-            msg_type="BLOCKER",
-            active_channel=active_channel,
-            comment_url=comment_url,
-            commit_sha=get_current_commit_sha(),
-            supersedes_sequence=None,
-            owner_action_required="fix active channel route",
-            next_automatic_action="wait for corrected TO_EXECUTOR",
-            summary=f"Active route mismatch: {e}",
-            evidence=[f"Error: {e}"],
-        )
-        print(f"  BLOCKER posted — route mismatch")
+        post_blocker_and_exit(task, to_seq, str(e), active_channel)
         return True
 
     # Read the active issue body for context
-    issue_body = ""
     if active_channel:
         try:
             issue_body = read_active_issue_body(active_channel)
             print(f"  Read issue body ({len(issue_body)} chars)")
         except RuntimeError as e:
-            print(f"  Warning: could not read issue body: {e}", file=sys.stderr)
+            # Issue read failure is a blocker
+            post_blocker_and_exit(
+                task, to_seq, f"Could not read active issue: {e}", active_channel
+            )
+            return True
 
-    # Post ACK comment
+    # Build ACK comment
     ack_body = (
         f"ACK\n\n"
         f"Task-ID: {task_id}\n"
@@ -395,63 +577,25 @@ def notifier_cycle() -> bool:
         f"Waiting for runner mode to execute the bounded work."
     )
 
-    comment_url = "none"
-    if active_channel:
-        try:
-            comment_url = post_issue_comment(active_channel, ack_body)
-            print(f"  ACK posted: {comment_url}")
-        except RuntimeError as e:
-            print(f"  Warning: could not post ACK: {e}", file=sys.stderr)
-            comment_url = "none"
+    evidence_items = [
+        f"Task-ID: {task_id}",
+        f"Sequence: {to_seq}",
+        f"Type: {msg_type}",
+        f"Active channel validated: {active_channel}",
+    ]
 
-    # Write FROM_EXECUTOR.md with ACK
-    write_mailbox(
-        path=FROM_EXECUTOR_PATH,
-        sequence=to_seq,
-        task_id=task_id,
-        from_role="Executor Agent — Infrastructure Executor",
-        to_role=from_role,
+    # Two-phase publication: commit first, then post with real SHA
+    commit_and_publish(
+        task=task,
+        to_seq=to_seq,
         msg_type="ACK",
+        comment_body=ack_body,
+        summary_text=f"Handoff received. Waiting for runner mode to execute: {summary}",
+        evidence=evidence_items,
         active_channel=active_channel,
-        comment_url=comment_url,
-        commit_sha=get_current_commit_sha(),
-        supersedes_sequence=None,
-        owner_action_required="none",
-        next_automatic_action=next_action,
-        summary=f"Handoff received. Waiting for runner mode to execute: {summary}",
-        evidence=[
-            f"Task-ID: {task_id}",
-            f"Sequence: {to_seq}",
-            f"Type: {msg_type}",
-            f"Active channel validated: {active_channel}",
-        ],
-    )
-    print(f"  FROM_EXECUTOR.md updated (sequence {to_seq}, ACK)")
-
-    # Update logs/latest.md
-    update_latest_log(
-        marker="ACK",
-        task_id=task_id,
-        status=f"Handoff received. Waiting for runner.",
-        reply_surface_url=active_channel,
-        comment_url=comment_url,
-        commit_sha=get_current_commit_sha(),
-        next_action=next_action,
+        next_auto=next_action,
         owner_required="none",
     )
-    print(f"  logs/latest.md updated")
-
-    # Stage and commit only allowed files
-    try:
-        stage_allowed_files()
-        run_command(
-            ["git", "commit", "-m", f"dispatcher: ACK for {task_id} (seq {to_seq})"],
-            check=False,
-        )
-        run_command(["git", "push"], check=False)
-        print(f"  Changes committed and pushed")
-    except RuntimeError as e:
-        print(f"  Warning: git operation failed: {e}", file=sys.stderr)
 
     return True
 
@@ -496,9 +640,16 @@ def run_runner(command: str, timeout: int) -> None:
     task = parse_mailbox(TO_EXECUTOR_PATH)
     to_seq = read_current_sequence(TO_EXECUTOR_PATH)
     current_from_seq = read_current_sequence(FROM_EXECUTOR_PATH)
+    current_from_type = read_current_type(FROM_EXECUTOR_PATH)
 
-    if to_seq <= current_from_seq:
-        print("No new sequence to execute. Already processed.")
+    # Runner allows execution when:
+    # 1. New sequence (to_seq > current_from_seq), OR
+    # 2. Same sequence but current state is ACK (not yet terminal)
+    if to_seq < current_from_seq:
+        print("No new sequence to execute. Older sequence already processed.")
+        return
+    elif to_seq == current_from_seq and current_from_type in TERMINAL_STATES:
+        print("No new sequence to execute. Already in terminal state.")
         return
 
     task_id = task.get("Task-ID", "unknown")
@@ -509,57 +660,41 @@ def run_runner(command: str, timeout: int) -> None:
 
     print(f"  Task-ID: {task_id}")
     print(f"  Sequence: {to_seq}")
+    print(f"  Current state: {current_from_type}")
 
-    # Validate active route
+    # Validate before mutation (dirty tree + route)
     try:
-        route_url = validate_active_route()
-        if active_channel and active_channel.rstrip("/") != route_url:
-            raise RuntimeError(
-                f"Active channel mismatch: TO_EXECUTOR says {active_channel}, "
-                f"ACTIVE_CHANNEL_ROUTE.md says {route_url}"
-            )
+        validate_before_mutation(task, to_seq)
     except RuntimeError as e:
-        print(f"BLOCKER: {e}")
-        comment_url = "none"
-        if active_channel:
-            try:
-                comment_url = post_issue_comment(
-                    active_channel,
-                    f"BLOCKER\n\nActive route validation failed.\n\nError: {e}",
-                )
-            except RuntimeError:
-                pass
-        write_mailbox(
-            path=FROM_EXECUTOR_PATH,
-            sequence=to_seq,
-            task_id=task_id,
-            from_role="Executor Agent — Infrastructure Executor",
-            to_role=from_role,
-            msg_type="BLOCKER",
-            active_channel=active_channel,
-            comment_url=comment_url,
-            commit_sha=get_current_commit_sha(),
-            supersedes_sequence=None,
-            owner_action_required="fix active channel route",
-            next_automatic_action="wait for corrected TO_EXECUTOR",
-            summary=f"Active route mismatch: {e}",
-            evidence=[f"Error: {e}"],
-        )
+        post_blocker_and_exit(task, to_seq, str(e), active_channel)
         return
 
-    # Read the active issue body for context
+    # Read the active issue body for context (BLOCKER on failure)
     if active_channel:
         try:
             issue_body = read_active_issue_body(active_channel)
             print(f"  Read issue body ({len(issue_body)} chars)")
         except RuntimeError as e:
-            print(f"  Warning: could not read issue body: {e}", file=sys.stderr)
+            post_blocker_and_exit(
+                task, to_seq, f"Could not read active issue: {e}", active_channel
+            )
+            return
+
+    # Parse command with shlex for quoted argument support
+    try:
+        cmd_parts = shlex.split(command)
+    except ValueError as e:
+        print(f"BLOCKER: invalid command syntax: {e}")
+        post_blocker_and_exit(
+            task, to_seq, f"Invalid command syntax: {e}", active_channel
+        )
+        return
 
     # Execute the external command
-    print(f"  Executing: {command}")
+    print(f"  Executing: {cmd_parts}")
     try:
         result = run_command(
-            command.split(),
+            cmd_parts,
             timeout=timeout,
             check=False,
         )
@@ -581,8 +716,9 @@ def run_runner(command: str, timeout: int) -> None:
             evidence = [
                 f"Command: {command}",
                 f"Exit code: {exit_code}",
-                f"Stdout: {stdout[:500]}" if stdout else "Stdout: (empty)",
             ]
+            if stdout:
+                evidence.append(f"Stdout: {stdout[:500]}")
             if stderr:
                 evidence.append(f"Stderr: {stderr[:500]}")
             summary_text = f"Runner command completed successfully: {command}"
@@ -594,8 +730,9 @@ def run_runner(command: str, timeout: int) -> None:
             evidence = [
                 f"Command: {command}",
                 f"Exit code: {exit_code}",
-                f"Stderr: {stderr[:500]}" if stderr else "Stderr: (empty)",
             ]
+            if stderr:
+                evidence.append(f"Stderr: {stderr[:500]}")
             if stdout:
                 evidence.append(f"Stdout: {stdout[:500]}")
             summary_text = f"Runner command failed (exit {exit_code}): {command}"
@@ -603,7 +740,7 @@ def run_runner(command: str, timeout: int) -> None:
             owner_required = "review failure"
             print(f"  BLOCKER: command failed (exit {exit_code})")
 
-    # Post result comment
+    # Build result comment
     comment_body = (
         f"{msg_type}\n\n"
         f"Task-ID: {task_id}\n"
@@ -615,62 +752,18 @@ def run_runner(command: str, timeout: int) -> None:
         comment_body += f"\n- {item}"
     comment_body += f"\n\n## Next Automatic Action\n\n{next_auto}"
 
-    comment_url = "none"
-    if active_channel:
-        try:
-            comment_url = post_issue_comment(active_channel, comment_body)
-            print(f"  {msg_type} posted: {comment_url}")
-        except RuntimeError as e:
-            print(f"  Warning: could not post comment: {e}", file=sys.stderr)
-
-    # Write FROM_EXECUTOR.md
-    write_mailbox(
-        path=FROM_EXECUTOR_PATH,
-        sequence=to_seq,
-        task_id=task_id,
-        from_role="Executor Agent — Infrastructure Executor",
-        to_role=from_role,
+    # Two-phase publication: commit first, then post with real SHA
+    commit_and_publish(
+        task=task,
+        to_seq=to_seq,
         msg_type=msg_type,
-        active_channel=active_channel,
-        comment_url=comment_url,
-        commit_sha=get_current_commit_sha(),
-        supersedes_sequence=None,
-        owner_action_required=owner_required,
-        next_automatic_action=next_auto,
-        summary=summary_text,
+        comment_body=comment_body,
+        summary_text=summary_text,
         evidence=evidence,
-    )
-    print(f"  FROM_EXECUTOR.md updated (sequence {to_seq}, {msg_type})")
-
-    # Update logs/latest.md
-    update_latest_log(
-        marker=msg_type,
-        task_id=task_id,
-        status=summary_text,
-        reply_surface_url=active_channel,
-        comment_url=comment_url,
-        commit_sha=get_current_commit_sha(),
-        next_action=next_auto,
+        active_channel=active_channel,
+        next_auto=next_auto,
         owner_required=owner_required,
     )
-    print(f"  logs/latest.md updated")
-
-    # Stage and commit only allowed files
-    try:
-        stage_allowed_files()
-        run_command(
-            [
-                "git",
-                "commit",
-                "-m",
-                f"dispatcher: {msg_type} for {task_id} (seq {to_seq})",
-            ],
-            check=False,
-        )
-        run_command(["git", "push"], check=False)
-        print(f"  Changes committed and pushed")
-    except RuntimeError as e:
-        print(f"  Warning: git operation failed: {e}", file=sys.stderr)
 
 
 # ---------------------------------------------------------------------------
