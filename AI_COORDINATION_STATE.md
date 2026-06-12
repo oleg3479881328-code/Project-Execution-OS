@@ -14,7 +14,8 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
 - Executor to reviewer: `coordination/FROM_EXECUTOR.md`
 
 ## Previous Channels
-- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49 — mailbox dispatcher v3 publication checkpoint reached; reported SHA `aed415635ec277dc3737fa6d13553b3b17d614c4`
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52 — queued Mailbox Dispatcher v5 correction; do not activate until Issue #51 completes
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49 — previous mailbox dispatcher review thread
 - https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48 — Reels Factory persistence-strategy correction completed
 - https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47 — Reels Factory AWS smoke-test execution and first persistence draft
 - https://github.com/oleg3479881328-code/Project-Execution-OS/issues/46 — execution-kit preparation and review iterations
@@ -28,12 +29,14 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
 Implement the bounded internal MarkItDown intake adapter MVP under `tools/markitdown-intake-adapter/` according to Issue #51.
 
 ## Current Repository State
-- Active outbound mailbox sequence: `5`
+- Active outbound mailbox sequence: `6`
 - Active handoff packet: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
 - Active origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4686336664
-- Active route commit: `a35dc538048fee1d29852a2b0e24eecd66806283`
-- Outbound mailbox commit: `4a9ffa8b5f7f2c493745a5771c8c83fda6fd9abc`
-- Prior mailbox dispatcher v3 report: `aed415635ec277dc3737fa6d13553b3b17d614c4`
+- Recovery notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4690906540
+- Restored outbound mailbox commit: `e5e9baf10b7d752f68e5d002efb7138615ac1f98`
+- Active route remains Issue #51.
+- Mailbox Dispatcher v4 report commit `b893038c222a4926ac37ae55d67254b0dc14e683` is published but rejected in review.
+- Mailbox Dispatcher v5 correction is queued in Issue #52: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4690902781
 - No paid cloud services or external runtime resources are authorized for the MarkItDown task.
 
 ## Accepted Changes
@@ -43,9 +46,10 @@ Implement the bounded internal MarkItDown intake adapter MVP under `tools/markit
 - Reject URL-like inputs.
 - Treat OCR, Azure, MCP, external URL fetching, and paid services as out of scope.
 - Use one dedicated reply surface: Issue #51.
+- Keep Mailbox Dispatcher v5 queued separately until Issue #51 is complete.
 
 ## Open Review Items
-- Wait for executor `ACK` in Issue #51 and matching `coordination/FROM_EXECUTOR.md` update.
+- Wait for executor `ACK` in Issue #51 and matching `coordination/FROM_EXECUTOR.md` update for sequence `6`.
 - Verify official package metadata and pinned version.
 - Verify clean adapter-only implementation scope.
 - Verify URL rejection and local-only conversion path.
@@ -53,13 +57,16 @@ Implement the bounded internal MarkItDown intake adapter MVP under `tools/markit
 - Verify native Windows PowerShell validation or explicit disclosure that it was not performed.
 - Review draft PR and commit evidence.
 
+## Queued Follow-Up
+Mailbox Dispatcher v5 remains queued in Issue #52 after Issue #51 completes. Required fixes include strict git return-code handling, route preservation, structured adapter result semantics, explicit `Result-SHA` and `Status-Artifact-SHA`, runtime-only dirty-tree policy, accurate trust-boundary documentation, and isolated behavioral tests.
+
 ## Next Step
 When `02` is received:
 1. read `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`;
 2. read `coordination/FROM_EXECUTOR.md`;
 3. read Issue #51 for supporting evidence;
 4. inspect the reported commit and draft PR when available;
-5. continue review from mailbox sequence `5`.
+5. continue review from mailbox sequence `6`.
 
 ## Required Validation
 - Verify `MarkItDown().convert_local(...)` is used, not permissive `convert(...)`.
