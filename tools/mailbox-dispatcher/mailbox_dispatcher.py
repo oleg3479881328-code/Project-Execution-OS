@@ -78,7 +78,7 @@ class DispatchResult:
     result_sha: str
     status_artifact_sha: str
     comment_url: str
-    linkback_sha: Optional[str]
+    linkback_artifact_sha: Optional[str]
     summary_text: str
     evidence: list[str]
 
@@ -289,7 +289,7 @@ def update_latest_log(
 
 def get_dirty_entries() -> list[str]:
     """Return all dirty git entries from porcelain status."""
-    result = run_command(["git", "status", "--porcelain"], check=False)
+    result = run_command(["git", "status", "--porcelain"], check=True)
     entries = []
     for line in result.stdout.splitlines():
         if not line.strip():
@@ -585,7 +585,7 @@ def finalize_comment_linkback(
     result_sha: str,
     status_artifact_sha: str,
 ) -> str:
-    """Persist final comment URL and return the linkback commit SHA."""
+    """Persist final comment URL and return the immutable linkback artifact SHA."""
     write_mailbox(
         path=FROM_EXECUTOR_PATH,
         sequence=sequence,
@@ -597,9 +597,9 @@ def finalize_comment_linkback(
         comment_url=comment_url,
         result_sha=result_sha,
         status_artifact_sha=status_artifact_sha,
-        linkback_sha="pending",
+        linkback_sha=None,
         local_status_sha=None,
-        remote_push="pending",
+        remote_push="ok",
         supersedes_sequence=None,
         owner_action_required=owner_required,
         next_automatic_action=next_action,
@@ -614,9 +614,9 @@ def finalize_comment_linkback(
         comment_url=comment_url,
         result_sha=result_sha,
         status_artifact_sha=status_artifact_sha,
-        linkback_sha="pending",
+        linkback_sha=None,
         local_status_sha=None,
-        remote_push="pending",
+        remote_push="ok",
         next_action=next_action,
         owner_required=owner_required,
     )
@@ -625,85 +625,7 @@ def finalize_comment_linkback(
         ["git", "commit", "-m", f"dispatcher: linkback {msg_type} status for {task_id} (seq {sequence})"],
         check=True,
     )
-    linkback_sha = get_current_commit_sha()
-    write_mailbox(
-        path=FROM_EXECUTOR_PATH,
-        sequence=sequence,
-        task_id=task_id,
-        from_role="Executor Agent — Infrastructure Executor",
-        to_role="ChatGPT — Reviewer",
-        msg_type=msg_type,
-        active_channel=active_channel,
-        comment_url=comment_url,
-        result_sha=result_sha,
-        status_artifact_sha=status_artifact_sha,
-        linkback_sha=linkback_sha,
-        local_status_sha=None,
-        remote_push="pending",
-        supersedes_sequence=None,
-        owner_action_required=owner_required,
-        next_automatic_action=next_action,
-        summary=summary,
-        evidence=evidence + [f"Linkback-SHA: {linkback_sha}"],
-    )
-    update_latest_log(
-        marker=msg_type,
-        task_id=task_id,
-        status=summary,
-        reply_surface_url=active_channel,
-        comment_url=comment_url,
-        result_sha=result_sha,
-        status_artifact_sha=status_artifact_sha,
-        linkback_sha=linkback_sha,
-        local_status_sha=None,
-        remote_push="ok",
-        next_action=next_action,
-        owner_required=owner_required,
-    )
-    stage_runtime_files()
-    run_command(
-        ["git", "commit", "--amend", "--no-edit"],
-        check=True,
-    )
     final_linkback_sha = get_current_commit_sha()
-    if final_linkback_sha != linkback_sha:
-        write_mailbox(
-            path=FROM_EXECUTOR_PATH,
-            sequence=sequence,
-            task_id=task_id,
-            from_role="Executor Agent — Infrastructure Executor",
-            to_role="ChatGPT — Reviewer",
-            msg_type=msg_type,
-            active_channel=active_channel,
-            comment_url=comment_url,
-            result_sha=result_sha,
-            status_artifact_sha=status_artifact_sha,
-            linkback_sha=final_linkback_sha,
-            local_status_sha=None,
-            remote_push="ok",
-            supersedes_sequence=None,
-            owner_action_required=owner_required,
-            next_automatic_action=next_action,
-            summary=summary,
-            evidence=evidence + [f"Linkback-SHA: {final_linkback_sha}"],
-        )
-        update_latest_log(
-            marker=msg_type,
-            task_id=task_id,
-            status=summary,
-            reply_surface_url=active_channel,
-            comment_url=comment_url,
-            result_sha=result_sha,
-            status_artifact_sha=status_artifact_sha,
-            linkback_sha=final_linkback_sha,
-            local_status_sha=None,
-            remote_push="ok",
-            next_action=next_action,
-            owner_required=owner_required,
-        )
-        stage_runtime_files()
-        run_command(["git", "commit", "--amend", "--no-edit"], check=True)
-        final_linkback_sha = get_current_commit_sha()
     run_command(["git", "push"], check=True)
     return final_linkback_sha
 
@@ -731,13 +653,18 @@ def parse_adapter_result(stdout: str) -> AdapterResult:
         result_sha = "none"
     if not isinstance(result_sha, str):
         raise RuntimeError("Adapter output field 'result_sha' must be a string or null")
+    normalized_result_sha = result_sha.strip() or "none"
+    if normalized_result_sha != "none" and not re.fullmatch(r"[0-9a-f]{40}", normalized_result_sha):
+        raise RuntimeError(
+            "Adapter output field 'result_sha' must be 'none' or a full 40-character hexadecimal SHA"
+        )
     if not isinstance(evidence, list) or any(not isinstance(item, str) for item in evidence):
         raise RuntimeError("Adapter output field 'evidence' must be a list of strings")
 
     return AdapterResult(
         status=status,
         summary=summary.strip(),
-        result_sha=result_sha.strip() or "none",
+        result_sha=normalized_result_sha,
         evidence=evidence,
     )
 
@@ -885,7 +812,7 @@ def commit_and_publish(
         post_blocker_and_exit(task, to_seq, error_msg, active_channel, recoverable=False)
         raise
 
-    linkback_sha = finalize_comment_linkback(
+    linkback_artifact_sha = finalize_comment_linkback(
         task_id=task_id,
         sequence=to_seq,
         active_channel=active_channel,
@@ -906,12 +833,12 @@ def commit_and_publish(
         result_sha=result_sha_hint,
         status_artifact_sha=status_artifact_sha,
         comment_url=comment_url,
-        linkback_sha=linkback_sha,
+        linkback_artifact_sha=linkback_artifact_sha,
         summary_text=summary_text,
         evidence=evidence + [
             f"Result-SHA: {result_sha_hint}",
             f"Status-Artifact-SHA: {status_artifact_sha}",
-            f"Linkback-SHA: {linkback_sha}",
+            f"Linkback-Artifact-SHA: {linkback_artifact_sha}",
         ],
     )
 
@@ -1079,6 +1006,7 @@ def run_runner(command: str, timeout: int) -> None:
         return
 
     print(f"  Executing: {cmd_parts}")
+    exit_code = -1
     adapter_result = AdapterResult(
         status="BLOCKER",
         summary="Adapter result not available",
@@ -1163,7 +1091,7 @@ def run_runner(command: str, timeout: int) -> None:
         active_channel=active_channel,
         next_auto=next_auto,
         owner_required=owner_required,
-        result_sha_hint=adapter_result.result_sha if exit_code == 0 else "none",
+        result_sha_hint=adapter_result.result_sha if msg_type == "COMPLETE" else "none",
     )
 
 

@@ -37,10 +37,10 @@ Runner (invoked separately with --command "...")
         ├─ Parses adapter JSON: status, summary, result_sha, evidence
         ├─ Fails closed if COMPLETE leaves dirty non-runtime files behind
         ├─ Persists COMPLETE or BLOCKER locally and pushes it
-        └─ Posts issue comment with Result-SHA, Status-Artifact-SHA, and durable linkback
+        └─ Posts issue comment, then writes one immutable linkback artifact commit
 ```
 
-## v6 Design Decisions
+## v7 Design Decisions
 
 ### Same-sequence runner gate
 
@@ -54,7 +54,7 @@ On successful runner execution, the external adapter must emit JSON to stdout:
 {
   "status": "COMPLETE",
   "summary": "Short human-readable result",
-  "result_sha": "abc123 or none",
+  "result_sha": "40-char hex SHA or none",
   "evidence": ["fact one", "fact two"]
 }
 ```
@@ -63,7 +63,7 @@ Rules:
 
 - `status` must be `COMPLETE` or `BLOCKER`
 - `summary` must be a non-empty string
-- `result_sha` may be a fetchable external result SHA or `none`
+- `result_sha` must be `none` or a full 40-character hexadecimal SHA
 - `evidence` must be a list of strings
 
 The dispatcher never re-labels its own mailbox/log status commit as an external work-result SHA.
@@ -75,13 +75,18 @@ Runtime publication durably records:
 1. **Result-SHA** — the commit containing the result state.
 2. **Status-Artifact-SHA** — the status-artifact publication commit.
 3. **Comment-URL** — the final issue comment URL after publication.
-4. **Linkback-SHA** — optional third commit used to durably write the final comment URL back into mailbox/log artifacts.
 
 These fields are written to the GitHub comment, mailbox, and latest status mirror with matching semantics.
 
+### Immutable linkback artifact
+
+After the GitHub comment is published, the dispatcher writes one final immutable linkback artifact commit containing the final `Comment-URL`, `Result-SHA`, and `Status-Artifact-SHA`, then pushes it once.
+
+A commit cannot durably contain its own final SHA. Because of that, the dispatcher does not try to store the linkback commit's own SHA inside mailbox or log contents. If that SHA needs to be reported, it is reported externally as `Linkback-Artifact-SHA`.
+
 ### Strict git return-code handling
 
-Publication paths use strict command checking for `git add`, `git commit`, and `git push`. A non-zero result is a `BLOCKER`, not a warning.
+Publication paths use strict command checking for `git status`, `git add`, `git commit`, and `git push`. A non-zero result is a `BLOCKER`, not a warning.
 
 ### Runtime dirty-tree policy is narrower than development policy
 

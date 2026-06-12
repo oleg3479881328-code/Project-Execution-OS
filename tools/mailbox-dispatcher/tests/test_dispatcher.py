@@ -21,6 +21,7 @@ from mailbox_dispatcher import (
     build_comment_body,
     check_dirty_tree_runtime,
     filter_dirty_entries,
+    finalize_comment_linkback,
     notifier_cycle,
     parse_adapter_result,
     parse_mailbox,
@@ -120,6 +121,14 @@ class TestRouteValidation(unittest.TestCase):
 
 
 class TestDirtyTreeFiltering(unittest.TestCase):
+    def test_get_dirty_entries_fails_closed_on_git_status_error(self):
+        with patch(
+            "mailbox_dispatcher.run_command",
+            side_effect=RuntimeError("git status failed"),
+        ):
+            with self.assertRaises(RuntimeError):
+                check_dirty_tree_runtime()
+
     def test_filter_dirty_entries_blocks_source_at_runtime(self):
         offending = filter_dirty_entries(
             [" M tools/mailbox-dispatcher/mailbox_dispatcher.py"],
@@ -220,7 +229,7 @@ class TestRunnerBehavior(unittest.TestCase):
             "mailbox_dispatcher.run_command",
             return_value=MagicMock(
                 returncode=0,
-                stdout='{"status":"COMPLETE","summary":"done","result_sha":"abc123","evidence":["ok"]}',
+                stdout='{"status":"COMPLETE","summary":"done","result_sha":"' + ("a" * 40) + '","evidence":["ok"]}',
                 stderr="",
             ),
         ) as mock_run, patch(
@@ -230,7 +239,7 @@ class TestRunnerBehavior(unittest.TestCase):
             mock_to.exists.return_value = True
             run_runner("python --version", 30)
             self.assertEqual(mock_run.call_count, 1)
-            self.assertEqual(mock_publish.call_args.kwargs["result_sha_hint"], "abc123")
+            self.assertEqual(mock_publish.call_args.kwargs["result_sha_hint"], "a" * 40)
 
     def test_runner_same_sequence_nonterminal_non_ack_does_not_execute(self):
         with patch("mailbox_dispatcher.TO_EXECUTOR_PATH") as mock_to, patch(
@@ -294,7 +303,7 @@ class TestRunnerBehavior(unittest.TestCase):
             "mailbox_dispatcher.run_command",
             return_value=MagicMock(
                 returncode=0,
-                stdout='{"status":"COMPLETE","summary":"done","result_sha":"abc123","evidence":["ok"]}',
+                stdout='{"status":"COMPLETE","summary":"done","result_sha":"' + ("a" * 40) + '","evidence":["ok"]}',
                 stderr="",
             ),
         ), patch(
@@ -309,9 +318,35 @@ class TestRunnerBehavior(unittest.TestCase):
                 "\n".join(mock_publish.call_args.kwargs["evidence"]),
             )
 
+    def test_timeout_produces_blocker_without_unboundlocalerror(self):
+        with patch("mailbox_dispatcher.TO_EXECUTOR_PATH") as mock_to, patch(
+            "mailbox_dispatcher.read_current_sequence",
+            side_effect=[8, 8],
+        ), patch(
+            "mailbox_dispatcher.read_current_type",
+            return_value="ACK",
+        ), patch(
+            "mailbox_dispatcher.parse_mailbox",
+            return_value=self._runner_task(),
+        ), patch("mailbox_dispatcher.validate_before_mutation"), patch(
+            "mailbox_dispatcher.read_active_issue_body",
+            return_value="body",
+        ), patch(
+            "mailbox_dispatcher.run_command",
+            side_effect=RuntimeError("timed out"),
+        ), patch("mailbox_dispatcher.commit_and_publish") as mock_publish:
+            mock_to.exists.return_value = True
+            run_runner("python --version", 30)
+            self.assertEqual(mock_publish.call_args.kwargs["msg_type"], "BLOCKER")
+            self.assertEqual(mock_publish.call_args.kwargs["result_sha_hint"], "none")
+            self.assertIn(
+                "timed out",
+                "\n".join(mock_publish.call_args.kwargs["evidence"]),
+            )
+
 
 class TestStructuredResults(unittest.TestCase):
-    def test_parse_adapter_result_supports_optional_result_sha(self):
+    def test_parse_adapter_result_accepts_none(self):
         parsed = parse_adapter_result(
             '{"status":"COMPLETE","summary":"done","result_sha":null,"evidence":["one"]}'
         )
@@ -324,6 +359,24 @@ class TestStructuredResults(unittest.TestCase):
                 evidence=["one"],
             ),
         )
+
+    def test_parse_adapter_result_accepts_full_hex_sha(self):
+        parsed = parse_adapter_result(
+            '{"status":"COMPLETE","summary":"done","result_sha":"' + ("a" * 40) + '","evidence":["one"]}'
+        )
+        self.assertEqual(parsed.result_sha, "a" * 40)
+
+    def test_parse_adapter_result_rejects_short_sha(self):
+        with self.assertRaises(RuntimeError):
+            parse_adapter_result(
+                '{"status":"COMPLETE","summary":"done","result_sha":"abc123","evidence":["one"]}'
+            )
+
+    def test_parse_adapter_result_rejects_malformed_sha(self):
+        with self.assertRaises(RuntimeError):
+            parse_adapter_result(
+                '{"status":"COMPLETE","summary":"done","result_sha":"' + ("g" * 40) + '","evidence":["one"]}'
+            )
 
     def test_comment_body_includes_two_shas(self):
         body = build_comment_body(
@@ -344,11 +397,11 @@ class TestStructuredResults(unittest.TestCase):
             result_sha="a" * 40,
             status_artifact_sha="b" * 40,
             comment_url="https://github.com/test/issues/52#issuecomment-1",
-            linkback_sha="c" * 40,
+            linkback_artifact_sha="c" * 40,
             summary_text="done",
             evidence=["x"],
         )
-        self.assertEqual(result.linkback_sha, "c" * 40)
+        self.assertEqual(result.linkback_artifact_sha, "c" * 40)
 
 
 class TestDurableArtifacts(unittest.TestCase):
@@ -371,7 +424,7 @@ class TestDurableArtifacts(unittest.TestCase):
                     comment_url="https://github.com/test/issues/52#issuecomment-2",
                     result_sha="a" * 40,
                     status_artifact_sha="b" * 40,
-                    linkback_sha="c" * 40,
+                    linkback_sha=None,
                     local_status_sha=None,
                     remote_push="ok",
                     supersedes_sequence=None,
@@ -388,7 +441,7 @@ class TestDurableArtifacts(unittest.TestCase):
                     comment_url="https://github.com/test/issues/52#issuecomment-2",
                     result_sha="a" * 40,
                     status_artifact_sha="b" * 40,
-                    linkback_sha="c" * 40,
+                    linkback_sha=None,
                     local_status_sha=None,
                     remote_push="ok",
                     next_action="wait",
@@ -401,10 +454,49 @@ class TestDurableArtifacts(unittest.TestCase):
                     "Result-SHA: " + "a" * 40,
                     "Status-Artifact-SHA: " + "b" * 40,
                     "Comment-URL: https://github.com/test/issues/52#issuecomment-2",
-                    "Linkback-SHA: " + "c" * 40,
                 ):
                     self.assertIn(text, mailbox)
                     self.assertIn(text, log)
+
+    def test_linkback_publication_is_one_immutable_commit(self):
+        with patch("mailbox_dispatcher.write_mailbox") as mock_write, patch(
+            "mailbox_dispatcher.update_latest_log"
+        ), patch("mailbox_dispatcher.stage_runtime_files"), patch(
+            "mailbox_dispatcher.run_command"
+        ) as mock_run, patch(
+            "mailbox_dispatcher.get_current_commit_sha",
+            return_value="d" * 40,
+        ):
+            mock_run.side_effect = [MagicMock(returncode=0), MagicMock(returncode=0)]
+            linkback_sha = finalize_comment_linkback(
+                task_id="dispatcher-v7",
+                sequence=9,
+                active_channel="https://github.com/test/issues/52",
+                comment_url="https://github.com/test/issues/52#issuecomment-3",
+                summary="done",
+                evidence=["one"],
+                next_action="wait",
+                owner_required="none",
+                msg_type="COMPLETE",
+                result_sha="a" * 40,
+                status_artifact_sha="b" * 40,
+            )
+            self.assertEqual(linkback_sha, "d" * 40)
+            commands = [call.args[0] for call in mock_run.call_args_list]
+            self.assertEqual(commands[0][:3], ["git", "commit", "-m"])
+            self.assertEqual(commands[1], ["git", "push"])
+            self.assertEqual(mock_write.call_count, 1)
+
+    def test_externally_reported_linkback_artifact_sha_matches_final_commit(self):
+        with patch("mailbox_dispatcher.persist_runtime_status", return_value=("x" * 40, "b" * 40)), patch(
+            "mailbox_dispatcher.post_issue_comment",
+            return_value="https://github.com/test/issues/52#issuecomment-4",
+        ), patch(
+            "mailbox_dispatcher.finalize_comment_linkback",
+            return_value="d" * 40,
+        ):
+            result = build_dispatch_result_for_test()
+            self.assertEqual(result.linkback_artifact_sha, "d" * 40)
 
     def test_blocker_push_failure_writes_local_pending_marker(self):
         with patch("mailbox_dispatcher.write_mailbox") as mock_write, patch(
@@ -448,6 +540,22 @@ class TestDurableArtifacts(unittest.TestCase):
         )
         self.assertIn("- Result-SHA: none", body)
         self.assertIn("- Status-Artifact-SHA: " + "b" * 40, body)
+
+
+def build_dispatch_result_for_test():
+    from mailbox_dispatcher import commit_and_publish
+
+    return commit_and_publish(
+        task={"Task-ID": "dispatcher-v7"},
+        to_seq=9,
+        msg_type="COMPLETE",
+        summary_text="done",
+        evidence=["one"],
+        active_channel="https://github.com/test/issues/52",
+        next_auto="wait",
+        owner_required="none",
+        result_sha_hint="a" * 40,
+    )
 
 
 if __name__ == "__main__":
