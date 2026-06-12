@@ -1,0 +1,5 @@
+.venv/
+.tmp-smoke/
+.debug-samples/
+.validation/
+scripts/__pycache__/
