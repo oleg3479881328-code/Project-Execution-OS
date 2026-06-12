@@ -1,5 +1,5 @@
 """
-Behavioral tests for mailbox_dispatcher.py
+Behavioral tests for mailbox_dispatcher.py (v4)
 
 Run with: python -m unittest tools/mailbox-dispatcher/tests/test_dispatcher.py -v
 """
@@ -21,8 +21,9 @@ from mailbox_dispatcher import (
     check_dirty_tree,
     validate_active_route,
     validate_before_mutation,
-    stage_allowed_files,
+    stage_runtime_files,
     ALLOWED_STAGED_PATHS,
+    RUNTIME_STAGED_PATHS,
     REPO_ROOT,
     ACTIVE_CHANNEL_ROUTE_PATH,
     TERMINAL_STATES,
@@ -149,6 +150,34 @@ class TestCheckDirtyTree(unittest.TestCase):
         self.assertIn("tools/mailbox-dispatcher/tests/", ALLOWED_STAGED_PATHS)
 
 
+class TestRuntimeStagingPaths(unittest.TestCase):
+    """Test RUNTIME_STAGED_PATHS (v4)."""
+
+    def test_runtime_staging_excludes_to_executor(self):
+        """RUNTIME_STAGED_PATHS excludes TO_EXECUTOR.md."""
+        self.assertNotIn("coordination/TO_EXECUTOR.md", RUNTIME_STAGED_PATHS)
+
+    def test_runtime_staging_excludes_source(self):
+        """RUNTIME_STAGED_PATHS excludes dispatcher source."""
+        self.assertNotIn("tools/mailbox-dispatcher/mailbox_dispatcher.py", RUNTIME_STAGED_PATHS)
+
+    def test_runtime_staging_excludes_readme(self):
+        """RUNTIME_STAGED_PATHS excludes README."""
+        self.assertNotIn("tools/mailbox-dispatcher/README.md", RUNTIME_STAGED_PATHS)
+
+    def test_runtime_staging_excludes_tests(self):
+        """RUNTIME_STAGED_PATHS excludes tests directory."""
+        self.assertNotIn("tools/mailbox-dispatcher/tests/", RUNTIME_STAGED_PATHS)
+
+    def test_runtime_staging_includes_from_executor(self):
+        """RUNTIME_STAGED_PATHS includes FROM_EXECUTOR.md."""
+        self.assertIn("coordination/FROM_EXECUTOR.md", RUNTIME_STAGED_PATHS)
+
+    def test_runtime_staging_includes_latest_log(self):
+        """RUNTIME_STAGED_PATHS includes logs/latest.md."""
+        self.assertIn("logs/latest.md", RUNTIME_STAGED_PATHS)
+
+
 class TestValidateActiveRoute(unittest.TestCase):
     """Test active route validation."""
 
@@ -197,20 +226,19 @@ class TestValidateBeforeMutation(unittest.TestCase):
             validate_before_mutation(task, 3)
 
 
-class TestStageAllowedFiles(unittest.TestCase):
-    """Test staging of allowed files."""
+class TestStageRuntimeFiles(unittest.TestCase):
+    """Test staging of runtime files (v4)."""
 
-    def test_stage_allowed_files_runs(self):
-        """stage_allowed_files runs without error in clean repo."""
+    def test_stage_runtime_files_runs(self):
+        """stage_runtime_files runs without error in clean repo."""
         try:
-            stage_allowed_files()
+            stage_runtime_files()
         except RuntimeError as e:
-            # May fail if dirty tree, but should not crash
             pass
 
 
 class TestNotifierACKBehavior(unittest.TestCase):
-    """Behavioral tests for notifier ACK logic."""
+    """Behavioral tests for notifier ACK logic (v4)."""
 
     def test_notifier_skips_terminal_state(self):
         """Notifier skips when FROM_EXECUTOR is already COMPLETE for same seq."""
@@ -231,8 +259,26 @@ class TestNotifierACKBehavior(unittest.TestCase):
             result = notifier_cycle()
             self.assertFalse(result)
 
-    def test_notifier_processes_ack_state(self):
-        """Notifier processes when FROM_EXECUTOR is ACK for same seq."""
+    def test_notifier_skips_same_sequence_ack(self):
+        """v4: Notifier skips when same sequence even if ACK (no repeat ACK)."""
+        from mailbox_dispatcher import notifier_cycle
+
+        with patch("mailbox_dispatcher.read_current_sequence") as mock_seq, \
+             patch("mailbox_dispatcher.read_current_type") as mock_type, \
+             patch("mailbox_dispatcher.TO_EXECUTOR_PATH") as mock_path, \
+             patch("mailbox_dispatcher.parse_mailbox") as mock_parse:
+
+            mock_path.exists.return_value = True
+            mock_seq.side_effect = [2, 2]  # from_seq=2, to_seq=2
+            mock_type.return_value = "ACK"
+            mock_parse.return_value = {"Supersedes-Sequence": None}
+
+            # v4: Notifier does NOT repeat ACK for same sequence
+            result = notifier_cycle()
+            self.assertFalse(result)
+
+    def test_notifier_processes_new_sequence(self):
+        """v4: Notifier processes when to_seq > from_seq (new sequence)."""
         from mailbox_dispatcher import notifier_cycle
 
         with patch("mailbox_dispatcher.read_current_sequence") as mock_seq, \
@@ -244,8 +290,8 @@ class TestNotifierACKBehavior(unittest.TestCase):
              patch("mailbox_dispatcher.commit_and_publish") as mock_pub:
 
             mock_path.exists.return_value = True
-            mock_seq.side_effect = [2, 2]  # from_seq=2, to_seq=2
-            mock_type.return_value = "ACK"
+            mock_seq.side_effect = [2, 3]  # from_seq=2, to_seq=3 (new!)
+            mock_type.return_value = "COMPLETE"
             mock_parse.return_value = {
                 "Supersedes-Sequence": None,
                 "Task-ID": "test",
@@ -264,7 +310,7 @@ class TestNotifierACKBehavior(unittest.TestCase):
 
 
 class TestRunnerACKTransition(unittest.TestCase):
-    """Behavioral tests for runner ACK-to-execution transition."""
+    """Behavioral tests for runner ACK-to-execution transition (v4)."""
 
     def test_runner_allows_ack_state(self):
         """Runner allows execution when FROM_EXECUTOR Type is ACK."""
@@ -355,7 +401,7 @@ class TestPostCommitSHA(unittest.TestCase):
 
 
 class TestIdempotency(unittest.TestCase):
-    """Test restart idempotency logic."""
+    """Test restart idempotency logic (v4)."""
 
     def test_same_sequence_skipped(self):
         """If FROM_EXECUTOR sequence >= TO_EXECUTOR sequence and terminal, no action."""
@@ -371,13 +417,201 @@ class TestIdempotency(unittest.TestCase):
         from_seq = 2
         self.assertGreater(to_seq, from_seq)
 
-    def test_ack_state_allows_rerun(self):
-        """ACK state allows re-processing same sequence."""
+    def test_ack_state_allows_runner_rerun(self):
+        """v4: ACK state allows runner to re-process same sequence."""
         to_seq = 2
         from_seq = 2
         from_type = "ACK"
-        # Should NOT skip (ACK is not terminal)
+        # Should NOT skip for runner (ACK is not terminal)
         self.assertFalse(from_type in TERMINAL_STATES)
+
+    def test_notifier_skips_ack_state(self):
+        """v4: Notifier skips same sequence even if ACK (no repeat ACK)."""
+        to_seq = 2
+        from_seq = 2
+        # Notifier only processes NEW sequences (to_seq > from_seq)
+        self.assertFalse(to_seq > from_seq)
+
+
+class TestRecoverableBlocker(unittest.TestCase):
+    """Test recoverable blocker behavior (v4)."""
+
+    def test_post_blocker_recoverable_does_not_exit(self):
+        """post_blocker_and_exit with recoverable=True does not call sys.exit."""
+        from mailbox_dispatcher import post_blocker_and_exit
+
+        with patch("mailbox_dispatcher.post_issue_comment") as mock_comment, \
+             patch("mailbox_dispatcher.write_mailbox"), \
+             patch("mailbox_dispatcher.update_latest_log"), \
+             patch("mailbox_dispatcher.stage_runtime_files"), \
+             patch("mailbox_dispatcher.run_command"):
+
+            mock_comment.return_value = "https://github.com/test/issues/1#comment-1"
+
+            task = {
+                "Task-ID": "test",
+                "From": "Reviewer",
+            }
+
+            # Should NOT call sys.exit(1) — returns normally
+            try:
+                post_blocker_and_exit(task, 5, "test error", "https://github.com/test/issues/1", recoverable=True)
+            except SystemExit:
+                self.fail("post_blocker_and_exit with recoverable=True should not exit")
+
+
+class TestCommitAndPublishFailure(unittest.TestCase):
+    """Test commit/push failure behavior (v4)."""
+
+    def test_commit_failure_blocks_complete(self):
+        """v4: Commit failure blocks COMPLETE and posts BLOCKER."""
+        from mailbox_dispatcher import commit_and_publish
+
+        with patch("mailbox_dispatcher.stage_runtime_files"), \
+             patch("mailbox_dispatcher.run_command") as mock_run, \
+             patch("mailbox_dispatcher.post_blocker_and_exit") as mock_blocker:
+
+            # Make git push fail
+            mock_run.side_effect = RuntimeError("git push failed: network error")
+
+            task = {
+                "Task-ID": "test",
+                "From": "Reviewer",
+            }
+
+            commit_and_publish(
+                task=task,
+                to_seq=5,
+                msg_type="COMPLETE",
+                comment_body="test",
+                summary_text="test",
+                evidence=[],
+                active_channel="https://github.com/test/issues/1",
+                next_auto="none",
+                owner_required="none",
+            )
+
+            # Should have called post_blocker_and_exit
+            mock_blocker.assert_called_once()
+
+
+class TestDurableDirtyTreeBlocker(unittest.TestCase):
+    """Test durable dirty-tree blocker (v4)."""
+
+    def test_blocker_saves_from_executor_and_logs(self):
+        """v4: BLOCKER saves FROM_EXECUTOR.md and logs/latest.md via stage_runtime_files."""
+        from mailbox_dispatcher import post_blocker_and_exit
+
+        with patch("mailbox_dispatcher.post_issue_comment") as mock_comment, \
+             patch("mailbox_dispatcher.write_mailbox"), \
+             patch("mailbox_dispatcher.update_latest_log"), \
+             patch("mailbox_dispatcher.stage_runtime_files") as mock_stage, \
+             patch("mailbox_dispatcher.run_command"):
+
+            mock_comment.return_value = "https://github.com/test/issues/1#comment-1"
+
+            task = {
+                "Task-ID": "test",
+                "From": "Reviewer",
+            }
+
+            try:
+                post_blocker_and_exit(task, 5, "dirty tree", "https://github.com/test/issues/1", recoverable=True)
+            except SystemExit:
+                pass
+
+            # stage_runtime_files should have been called to durably save blocker state
+            mock_stage.assert_called_once()
+
+
+class TestSHAPublication(unittest.TestCase):
+    """Test SHA publication (v4)."""
+
+    def test_result_sha_in_evidence(self):
+        """v4: Result-SHA is included in evidence."""
+        from mailbox_dispatcher import commit_and_publish
+
+        with patch("mailbox_dispatcher.stage_runtime_files"), \
+             patch("mailbox_dispatcher.run_command") as mock_run, \
+             patch("mailbox_dispatcher.post_issue_comment") as mock_comment, \
+             patch("mailbox_dispatcher.write_mailbox") as mock_write, \
+             patch("mailbox_dispatcher.update_latest_log"), \
+             patch("mailbox_dispatcher.get_current_commit_sha") as mock_sha:
+
+            # First push succeeds, second push (artifacts) also succeeds
+            mock_run.return_value = MagicMock(returncode=0)
+            mock_comment.return_value = "https://github.com/test/issues/1#comment-1"
+            mock_sha.side_effect = ["abc123def456", "789ghi"]  # result_sha, then artifact_sha
+
+            task = {
+                "Task-ID": "test",
+                "From": "Reviewer",
+            }
+
+            commit_and_publish(
+                task=task,
+                to_seq=5,
+                msg_type="COMPLETE",
+                comment_body="test",
+                summary_text="test",
+                evidence=["some evidence"],
+                active_channel="https://github.com/test/issues/1",
+                next_auto="none",
+                owner_required="none",
+            )
+
+            # Check that write_mailbox was called with evidence containing Result-SHA
+            call_args = mock_write.call_args
+            self.assertIsNotNone(call_args)
+            _, kwargs = call_args
+            evidence_list = kwargs.get("evidence", [])
+            self.assertTrue(any("Result-SHA" in e for e in evidence_list))
+
+
+class TestSecurityBoundary(unittest.TestCase):
+    """Test security boundary (v4)."""
+
+    def test_never_execute_mailbox_content(self):
+        """v4: Runner never executes command text from mailbox content."""
+        from mailbox_dispatcher import run_runner
+
+        # The command comes from --command CLI argument, not from mailbox content.
+        # Verify that run_runner uses its 'command' parameter, not task data.
+        with patch("mailbox_dispatcher.read_current_sequence") as mock_seq, \
+             patch("mailbox_dispatcher.read_current_type") as mock_type, \
+             patch("mailbox_dispatcher.TO_EXECUTOR_PATH") as mock_to, \
+             patch("mailbox_dispatcher.FROM_EXECUTOR_PATH") as mock_from, \
+             patch("mailbox_dispatcher.parse_mailbox") as mock_parse, \
+             patch("mailbox_dispatcher.validate_before_mutation") as mock_val, \
+             patch("mailbox_dispatcher.read_active_issue_body") as mock_issue, \
+             patch("mailbox_dispatcher.commit_and_publish") as mock_pub, \
+             patch("mailbox_dispatcher.run_command") as mock_run:
+
+            mock_to.exists.return_value = True
+            mock_seq.side_effect = [2, 2]
+            mock_type.return_value = "ACK"
+            mock_parse.return_value = {
+                "Task-ID": "test",
+                "Active-Channel": "https://github.com/test/issues/1",
+                "From": "Reviewer",
+                "Next-Automatic-Action": "test",
+                "Summary": "test",
+                # Malicious command in mailbox — should NOT be executed
+                "Command": "rm -rf /",
+            }
+            mock_val.return_value = "https://github.com/test/issues/1"
+            mock_issue.return_value = "issue body"
+            mock_run.return_value = MagicMock(returncode=0, stdout="", stderr="")
+
+            # The command passed to run_runner is the CLI argument, not from mailbox
+            run_runner("python --version", 30)
+
+            # Verify the executed command is the CLI argument, not mailbox content
+            call_args = mock_run.call_args
+            self.assertIsNotNone(call_args)
+            args, _ = call_args
+            executed_cmd = args[0] if args else []
+            self.assertEqual(executed_cmd, ["python", "--version"])
 
 
 if __name__ == "__main__":

@@ -42,6 +42,17 @@ ACTIVE_CHANNEL_ROUTE_PATH = (
     REPO_ROOT / "blocks" / "communication-channel" / "ACTIVE_CHANNEL_ROUTE.md"
 )
 
+# v4: Runtime staging excludes TO_EXECUTOR.md, source, README, and tests.
+# Only mailbox/log artifacts are staged during runtime publication.
+# Development commits are explicit executor commits.
+RUNTIME_STAGED_PATHS = {
+    "coordination/FROM_EXECUTOR.md",
+    "logs/latest.md",
+}
+
+# Full allowed paths for dirty-tree checking (all paths the dispatcher may touch).
+# This is broader than RUNTIME_STAGED_PATHS because dirty-tree check must allow
+# any path the dispatcher legitimately works with, even if not staged at runtime.
 ALLOWED_STAGED_PATHS = {
     "coordination/TO_EXECUTOR.md",
     "coordination/FROM_EXECUTOR.md",
@@ -251,26 +262,16 @@ def check_dirty_tree() -> list[str]:
     return dirty
 
 
-def stage_allowed_files() -> None:
-    """Stage only the explicitly allowed files. Refuse if dirty-tree."""
-    dirty = check_dirty_tree()
-    if dirty:
-        raise RuntimeError(
-            f"Dirty tree: found {len(dirty)} uncommitted change(s) outside allowed paths.\n"
-            + "\n".join(dirty)
-        )
+def stage_runtime_files() -> None:
+    """Stage only runtime mailbox/log artifacts (FROM_EXECUTOR.md, logs/latest.md).
 
-    # Stage allowed files explicitly
-    for allowed in ALLOWED_STAGED_PATHS:
-        if allowed.endswith("/"):
-            # Directory prefix — stage all files inside it
-            p = REPO_ROOT / allowed
-            if p.exists():
-                run_command(["git", "add", "--", allowed.rstrip("/")], check=False)
-        else:
-            p = REPO_ROOT / allowed
-            if p.exists():
-                run_command(["git", "add", "--", allowed], check=False)
+    v4: Runtime staging excludes TO_EXECUTOR.md, source, README, and tests.
+    Development commits are explicit executor commits.
+    """
+    for allowed in RUNTIME_STAGED_PATHS:
+        p = REPO_ROOT / allowed
+        if p.exists():
+            run_command(["git", "add", "--", allowed], check=False)
 
 
 def validate_active_route() -> str:
@@ -337,8 +338,16 @@ def post_blocker_and_exit(
     to_seq: int,
     error_msg: str,
     active_channel: str,
+    recoverable: bool = False,
 ) -> None:
-    """Post a BLOCKER comment and write FROM_EXECUTOR.md, then exit."""
+    """Post a BLOCKER comment and write FROM_EXECUTOR.md.
+
+    If recoverable=True, does NOT exit — returns to caller so the long-running
+    notifier can continue polling. Used for recoverable blockers like dirty tree
+    or route mismatch that may be resolved by external action.
+
+    If recoverable=False, exits the process after posting (used for fatal errors).
+    """
     task_id = task.get("Task-ID", "unknown")
     from_role = task.get("From", "Reviewer")
 
@@ -387,9 +396,10 @@ def post_blocker_and_exit(
         owner_required="fix validation error",
     )
 
-    # Stage and commit BLOCKER state
+    # v4: Durable dirty-tree blocker — save FROM_EXECUTOR.md and logs/latest.md
+    # using status-only staging (git add of only those two files).
     try:
-        stage_allowed_files()
+        stage_runtime_files()
         run_command(
             ["git", "commit", "-m", f"dispatcher: BLOCKER for {task_id} (seq {to_seq})"],
             check=False,
@@ -399,7 +409,9 @@ def post_blocker_and_exit(
         pass
 
     print(f"  BLOCKER posted — {error_msg}")
-    sys.exit(1)
+
+    if not recoverable:
+        sys.exit(1)
 
 
 def commit_and_publish(
@@ -413,13 +425,19 @@ def commit_and_publish(
     next_auto: str,
     owner_required: str,
 ) -> None:
-    """Two-phase publication: commit first, then post comment/mailbox with real SHA."""
+    """Two-phase publication: commit first, then post comment/mailbox with real SHA.
+
+    v4 changes:
+    - Commit/push failure blocks COMPLETE (raises RuntimeError instead of warning).
+    - Runtime staging uses RUNTIME_STAGED_PATHS only (excludes TO_EXECUTOR.md, source, README, tests).
+    - Reports Result-SHA (pushed commit) and Status-Artifact-SHA (artifacts commit) separately.
+    """
     task_id = task.get("Task-ID", "unknown")
     from_role = task.get("From", "Reviewer")
 
-    # Phase 1: Stage and commit allowed files first
+    # Phase 1: Stage and commit runtime files only, then push
     try:
-        stage_allowed_files()
+        stage_runtime_files()
         run_command(
             [
                 "git",
@@ -432,10 +450,16 @@ def commit_and_publish(
         run_command(["git", "push"], check=False)
         print(f"  Changes committed and pushed")
     except RuntimeError as e:
-        print(f"  Warning: git operation failed: {e}", file=sys.stderr)
+        # v4: Commit/push failure blocks COMPLETE
+        error_msg = f"Git commit/push failed: {e}"
+        print(f"  BLOCKER: {error_msg}", file=sys.stderr)
+        post_blocker_and_exit(
+            task, to_seq, error_msg, active_channel, recoverable=False
+        )
+        return  # unreachable, but defensive
 
-    # Phase 2: Get real post-commit SHA
-    commit_sha = get_current_commit_sha()
+    # Phase 2: Get real post-commit SHA (this is the pushed Result-SHA)
+    result_sha = get_current_commit_sha()
 
     # Post comment with real SHA
     comment_url = "none"
@@ -444,7 +468,13 @@ def commit_and_publish(
             comment_url = post_issue_comment(active_channel, comment_body)
             print(f"  {msg_type} posted: {comment_url}")
         except RuntimeError as e:
-            print(f"  Warning: could not post comment: {e}", file=sys.stderr)
+            # v4: Comment post failure is a blocker
+            error_msg = f"Could not post comment: {e}"
+            print(f"  BLOCKER: {error_msg}", file=sys.stderr)
+            post_blocker_and_exit(
+                task, to_seq, error_msg, active_channel, recoverable=False
+            )
+            return
 
     # Write FROM_EXECUTOR.md with real SHA
     write_mailbox(
@@ -456,12 +486,12 @@ def commit_and_publish(
         msg_type=msg_type,
         active_channel=active_channel,
         comment_url=comment_url,
-        commit_sha=commit_sha,
+        commit_sha=result_sha,
         supersedes_sequence=None,
         owner_action_required=owner_required,
         next_automatic_action=next_auto,
         summary=summary_text,
-        evidence=evidence + [f"Commit SHA: {commit_sha}"],
+        evidence=evidence + [f"Result-SHA: {result_sha}"],
     )
     print(f"  FROM_EXECUTOR.md updated (sequence {to_seq}, {msg_type})")
 
@@ -472,28 +502,40 @@ def commit_and_publish(
         status=summary_text,
         reply_surface_url=active_channel,
         comment_url=comment_url,
-        commit_sha=commit_sha,
+        commit_sha=result_sha,
         next_action=next_auto,
         owner_required=owner_required,
     )
     print(f"  logs/latest.md updated")
 
-    # Stage the mailbox/log updates too
+    # Phase 3: Stage the mailbox/log artifacts (status artifacts), commit, push
+    status_artifact_sha = None
     try:
-        stage_allowed_files()
+        stage_runtime_files()
         run_command(
             [
                 "git",
                 "commit",
                 "-m",
-                f"dispatcher: publish {msg_type} artifacts for {task_id} (seq {to_seq})",
+                f"dispatcher: publish {msg_type} status artifacts for {task_id} (seq {to_seq})",
             ],
             check=False,
         )
         run_command(["git", "push"], check=False)
-        print(f"  Artifacts committed and pushed")
+        status_artifact_sha = get_current_commit_sha()
+        print(f"  Status artifacts committed and pushed")
     except RuntimeError as e:
-        print(f"  Warning: git operation failed: {e}", file=sys.stderr)
+        # v4: Artifact commit failure is a blocker
+        error_msg = f"Git status artifact commit/push failed: {e}"
+        print(f"  BLOCKER: {error_msg}", file=sys.stderr)
+        post_blocker_and_exit(
+            task, to_seq, error_msg, active_channel, recoverable=False
+        )
+        return
+
+    # v4: Report Status-Artifact-SHA separately if it differs from Result-SHA
+    if status_artifact_sha and status_artifact_sha != result_sha:
+        print(f"  Status-Artifact-SHA: {status_artifact_sha}")
 
 
 # ---------------------------------------------------------------------------
@@ -504,6 +546,9 @@ def commit_and_publish(
 def notifier_cycle() -> bool:
     """
     One notifier cycle: check TO_EXECUTOR, post ACK if new sequence.
+
+    v4: Notifier processes only new sequences (no repeat ACK).
+    Runner may execute the same sequence only when current state is ACK.
 
     Returns True if work was detected, False if no new work.
     """
@@ -523,14 +568,10 @@ def notifier_cycle() -> bool:
         except ValueError:
             pass
 
-    # Skip if already in terminal state for this sequence
-    if to_seq <= current_from_seq and current_from_type in TERMINAL_STATES:
-        return False
-
-    # Allow re-processing if current state is ACK (not yet terminal)
-    if to_seq <= current_from_seq and current_from_type not in TERMINAL_STATES:
-        pass  # Continue to re-process
-    elif to_seq <= current_from_seq:
+    # v4: Notifier processes only NEW sequences (to_seq > current_from_seq).
+    # If same sequence, notifier does NOT repeat ACK.
+    # Runner may execute the same sequence only when current state is ACK.
+    if to_seq <= current_from_seq:
         return False
 
     print(f"[{timestamp_iso()}] New sequence detected: TO_EXECUTOR sequence {to_seq}")
@@ -549,7 +590,8 @@ def notifier_cycle() -> bool:
     try:
         validate_before_mutation(task, to_seq)
     except RuntimeError as e:
-        post_blocker_and_exit(task, to_seq, str(e), active_channel)
+        # v4: Recoverable blocker — does not terminate the long-running notifier
+        post_blocker_and_exit(task, to_seq, str(e), active_channel, recoverable=True)
         return True
 
     # Read the active issue body for context
@@ -558,9 +600,10 @@ def notifier_cycle() -> bool:
             issue_body = read_active_issue_body(active_channel)
             print(f"  Read issue body ({len(issue_body)} chars)")
         except RuntimeError as e:
-            # Issue read failure is a blocker
+            # Issue read failure is a blocker — recoverable for notifier
             post_blocker_and_exit(
-                task, to_seq, f"Could not read active issue: {e}", active_channel
+                task, to_seq, f"Could not read active issue: {e}", active_channel,
+                recoverable=True,
             )
             return True
 
@@ -642,9 +685,10 @@ def run_runner(command: str, timeout: int) -> None:
     current_from_seq = read_current_sequence(FROM_EXECUTOR_PATH)
     current_from_type = read_current_type(FROM_EXECUTOR_PATH)
 
-    # Runner allows execution when:
+    # v4: Runner allows execution when:
     # 1. New sequence (to_seq > current_from_seq), OR
     # 2. Same sequence but current state is ACK (not yet terminal)
+    # Notifier does NOT repeat ACK for same sequence — only runner re-processes ACK.
     if to_seq < current_from_seq:
         print("No new sequence to execute. Older sequence already processed.")
         return
@@ -666,7 +710,7 @@ def run_runner(command: str, timeout: int) -> None:
     try:
         validate_before_mutation(task, to_seq)
     except RuntimeError as e:
-        post_blocker_and_exit(task, to_seq, str(e), active_channel)
+        post_blocker_and_exit(task, to_seq, str(e), active_channel, recoverable=False)
         return
 
     # Read the active issue body for context (BLOCKER on failure)
@@ -676,7 +720,8 @@ def run_runner(command: str, timeout: int) -> None:
             print(f"  Read issue body ({len(issue_body)} chars)")
         except RuntimeError as e:
             post_blocker_and_exit(
-                task, to_seq, f"Could not read active issue: {e}", active_channel
+                task, to_seq, f"Could not read active issue: {e}", active_channel,
+                recoverable=False,
             )
             return
 
@@ -686,7 +731,8 @@ def run_runner(command: str, timeout: int) -> None:
     except ValueError as e:
         print(f"BLOCKER: invalid command syntax: {e}")
         post_blocker_and_exit(
-            task, to_seq, f"Invalid command syntax: {e}", active_channel
+            task, to_seq, f"Invalid command syntax: {e}", active_channel,
+            recoverable=False,
         )
         return
 
