@@ -41,14 +41,15 @@
 - Project definition and operating design: this project folder inside the central `Project Execution OS` repository.
 - Current active execution state: `PROJECT_STATE.md`.
 - Latest execution log: `logs/latest.md`.
+- Standard procedure for personal documents: `DOCUMENT_SAVING_STANDARD.md`.
 - Raw private personal intake during v0: the active ChatGPT secretary conversation only.
-- No separate GitHub repository, Notion workspace, Telegram bot, or external automation layer has been attached yet.
+- A lightweight Notion document index is attached for validated document cards. It is not yet the general durable storage layer for all personal intake.
 
 ## Current Status
 
-- Status: `active — routing propagation pending`
-- Mode: `manual secretary routing validation`
-- Implementation state: the operating contract and repository routes exist; active ChatGPT Custom Instructions still need the updated routing sentence before re-test.
+- Status: `active — first real document workflow validated`
+- Mode: `manual secretary routing and intake validation`
+- Implementation state: routing works in the active ChatGPT conversation; the first personal-document intake workflow has been validated and recorded as a reusable standard.
 
 ## Done So Far
 
@@ -60,16 +61,21 @@
 - Added one router entry with natural aliases and removed the requirement to paste a long startup command.
 - Tested `Режим секретаря` in a fresh conversation and found that repository changes do not self-apply to ChatGPT app settings.
 - Updated the canonical core prompt with explicit secretary-mode aliases.
+- Processed the first real document intake: an Ohio vehicle registration card for a Mazda CX-5.
+- Created a scan-style derivative without regenerating or changing document text.
+- Created a Notion vehicle record and a user-facing document-saving procedure page.
+- Added `DOCUMENT_SAVING_STANDARD.md` as the reusable default procedure for future document intake.
 
 ## Current Focus
 
-- Propagate the updated secretary routing sentence into active ChatGPT Custom Instructions.
-- Re-test routing in a fresh conversation.
+- Continue manual validation with real intake batches.
+- Apply the document-saving standard automatically for future document photographs and scans.
+- Observe which additional categories and storage patterns are actually needed.
 
 ## Next Practical Step
 
-- Update the active ChatGPT Custom Instructions field with the secretary routing sentence from `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`.
-- Open a fresh conversation and write `Режим секретаря`.
+- Process additional real secretary intake batches.
+- When a personal document is submitted, apply `DOCUMENT_SAVING_STANDARD.md` automatically and mention only exceptions or the next action needed from the owner.
 
 ## Key Decisions And Constraints
 
@@ -80,17 +86,19 @@
 - Do not add broad automation before repeated manual use proves the need.
 - Do not create a parallel operating system that duplicates `Project Execution OS`.
 - Keep the owner interaction simple: the owner should be able to drop raw information without pre-sorting it.
-- Keep private intake out of this GitHub project folder.
+- Keep raw private intake out of this GitHub project folder.
+- A lightweight Notion index may store confirmed document cards; do not treat it as the storage layer for all personal intake yet.
 - Any future external actions such as sending messages, deleting information, or making commitments on the owner's behalf require explicit approval unless a narrower safe rule is later confirmed.
 - Apply `Existing Solution First` before introducing custom architecture, code, integrations, databases, or agent workflows.
 
 ## Read Next
 
 1. `V0_MANUAL_OPERATING_CONTRACT.md`
-2. `PROJECT_STATE.md`
-3. `logs/latest.md`
-4. `../../docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
-5. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
-6. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_LIFECYCLE_MODEL.md`
-7. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
-8. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
+2. `DOCUMENT_SAVING_STANDARD.md`
+3. `PROJECT_STATE.md`
+4. `logs/latest.md`
+5. `../../docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+6. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
+7. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_LIFECYCLE_MODEL.md`
+8. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
+9. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
