@@ -1,19 +1,20 @@
 # AI Coordination State
 
 ## Project
-Project Execution OS
+Project Execution OS / MarkItDown Intake Adapter
 
 ## Purpose
-Implement and validate an automatic mailbox dispatcher so routine executor coordination no longer depends on manual owner relay.
+Implement and validate a local-only Windows-first MarkItDown document intake adapter for agent and knowledge-pipeline use without exposing remote fetching, paid OCR, Azure calls, or MCP services.
 
 ## Active Channel
-https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
+https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
 
 ## Mailboxes
 - Reviewer to executor: `coordination/TO_EXECUTOR.md`
 - Executor to reviewer: `coordination/FROM_EXECUTOR.md`
 
 ## Previous Channels
+- https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49 — mailbox dispatcher v3 publication checkpoint reached; reported SHA `aed415635ec277dc3737fa6d13553b3b17d614c4`
 - https://github.com/oleg3479881328-code/Project-Execution-OS/issues/48 — Reels Factory persistence-strategy correction completed
 - https://github.com/oleg3479881328-code/Project-Execution-OS/issues/47 — Reels Factory AWS smoke-test execution and first persistence draft
 - https://github.com/oleg3479881328-code/Project-Execution-OS/issues/46 — execution-kit preparation and review iterations
@@ -21,57 +22,54 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
 ## Active Participants
 - Oleg Povalyukhin — Project Owner
 - ChatGPT — Reviewer
-- Executor Agent — Infrastructure Executor
+- Codex — Executor Agent
 
 ## Current Task
-Publish the real mailbox dispatcher v3 implementation after the reported SHA failed GitHub resolution.
+Implement the bounded internal MarkItDown intake adapter MVP under `tools/markitdown-intake-adapter/` according to Issue #51.
 
 ## Current Repository State
-- Global mailbox standard: `docs/EXECUTOR_MAILBOX_STANDARD.md`
-- Active outbound mailbox: `coordination/TO_EXECUTOR.md`
-- Active inbound mailbox: `coordination/FROM_EXECUTOR.md`
-- Latest correction mailbox sequence: `4`
-- Publication blocker: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686267612
-- Reported missing SHA: `360cfa2119139b3f1264c609584582c6eeaf759b`
-- GitHub fetch result for reported SHA: not found
-- Current default branch still exposes the rejected v2 state machine
-- Reels Factory persistence route accepted: Custom AMI primary, EBS snapshot fallback
-- No AWS GPU runtime is active.
+- Active outbound mailbox sequence: `5`
+- Active handoff packet: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
+- Active origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4686336664
+- Active route commit: `a35dc538048fee1d29852a2b0e24eecd66806283`
+- Outbound mailbox commit: `4a9ffa8b5f7f2c493745a5771c8c83fda6fd9abc`
+- Prior mailbox dispatcher v3 report: `aed415635ec277dc3737fa6d13553b3b17d614c4`
+- No paid cloud services or external runtime resources are authorized for the MarkItDown task.
 
 ## Accepted Changes
-- Issue #49 remains the only active durable reply surface for the dispatcher task.
-- Root mailboxes remain the latest-message readback layer.
-- GitHub issue comments remain the audit trail.
+- Reuse Microsoft's official `microsoft/markitdown` package instead of building a parser from scratch.
+- Use the narrow local-only `convert_local()` API for the MVP.
+- Keep implementation isolated under `tools/markitdown-intake-adapter/`.
+- Reject URL-like inputs.
+- Treat OCR, Azure, MCP, external URL fetching, and paid services as out of scope.
+- Use one dedicated reply surface: Issue #51.
 
 ## Open Review Items
-- Push the real v3 implementation to GitHub.
-- Publish one exact fetchable 40-character SHA.
-- Confirm runner executes the same sequence after notifier writes ACK and skips only terminal states.
-- Confirm final pushed files include dispatcher, behavioral tests, README, inbound mailbox, and latest log.
-- Publish exact test command and short output summary.
-- Update `coordination/FROM_EXECUTOR.md` with the real published SHA.
+- Wait for executor `ACK` in Issue #51 and matching `coordination/FROM_EXECUTOR.md` update.
+- Verify official package metadata and pinned version.
+- Verify clean adapter-only implementation scope.
+- Verify URL rejection and local-only conversion path.
+- Verify smoke-test results for seven ordinary formats plus one `NEEDS_OCR` scan.
+- Verify native Windows PowerShell validation or explicit disclosure that it was not performed.
+- Review draft PR and commit evidence.
 
 ## Next Step
 When `02` is received:
 1. read `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`;
 2. read `coordination/FROM_EXECUTOR.md`;
-3. read Issue #49 for supporting evidence;
-4. fetch the newly reported full SHA;
-5. inspect current dispatcher source and tests;
-6. continue from mailbox sequence `4`.
+3. read Issue #51 for supporting evidence;
+4. inspect the reported commit and draft PR when available;
+5. continue review from mailbox sequence `5`.
 
 ## Required Validation
-- Verify GitHub resolves the reported v3 SHA.
-- Verify inbound mailbox sequence increments to `4` or later.
-- Verify ACK-to-runner transition executes exactly once.
-- Verify duplicate terminal sequence is a no-op.
-- Verify dirty-tree blocker before side effects.
-- Verify unreadable-issue blocker.
-- Verify real committed SHA publication.
-- Verify quoted argv behavior.
-- Verify failed push handling.
-- Verify behavioral tests actually call dispatcher paths.
-- Verify no secrets are stored in repository.
+- Verify `MarkItDown().convert_local(...)` is used, not permissive `convert(...)`.
+- Verify remote URL-like inputs are rejected.
+- Verify Python `>=3.10` requirement and pinned official dependency.
+- Verify PowerShell scripts resolve relative to their own location.
+- Verify no network conversion, Azure, OCR plugin, MCP exposure, or secrets are introduced.
+- Verify smoke tests cover PDF text, PDF scan, DOCX, PPTX, XLSX, HTML, CSV, and ZIP.
+- Verify ordinary samples pass and scan yields `NEEDS_OCR` or a documented official-library equivalent.
+- Verify repository diff contains only allowed adapter and coordination files.
 
 ## Update Rule
 Update this snapshot only after meaningful state transitions.
