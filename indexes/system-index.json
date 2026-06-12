@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a35dc538048fee1d29852a2b0e24eecd66806283",
-  "generated_at": "2026-06-11T20:46:14-04:00",
+  "repository_commit": "0ac785e5560bc59e5bec22288a29d5cbf08f4f3d",
+  "generated_at": "2026-06-12T08:24:11-04:00",
   "artifact_count": 457,
   "artifacts": [
     {
@@ -22,7 +22,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "c74a29e433cc9b3e5ff321e2c1539ac1a705f5231f632d7d3987ebb79efae60c",
+      "sha256": "745c5d34eaeb775036369b16937d7baa977d20491fc2ffddaa860349e05bb0f4",
       "headings": [
         "AI Coordination Log",
         "2026-06-08 — Active coordination snapshot created",
@@ -31,7 +31,9 @@
         "2026-06-09 — Hybrid fallback hardening and model comparison opened",
         "2026-06-09 — Mandatory executor progress heartbeat added",
         "2026-06-09 — Durable interim checkpoint rule added",
-        "2026-06-10 — Reels Factory AWS coordination moved to Issue #47"
+        "2026-06-10 — Reels Factory AWS coordination moved to Issue #47",
+        "2026-06-11 — MarkItDown adapter coordination moved to Issue #51",
+        "2026-06-12 — Restored Issue #51 mailbox after dispatcher v4 route clobber"
       ]
     },
     {
@@ -41,12 +43,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "7fa2bedd03059919a18f82096be254dc80ce6d3915284069af36c04349eddaac",
+      "sha256": "c4442c11642ab2b242992f2d9ed5170d9dbde4f49ef63331704b9f77e5653ff1",
       "headings": [
         "AI Coordination State",
         "Project",
         "Purpose",
         "Active Channel",
+        "Review Surface",
         "Mailboxes",
         "Previous Channels",
         "Active Participants",
@@ -54,6 +57,7 @@
         "Current Repository State",
         "Accepted Changes",
         "Open Review Items",
+        "Queued Follow-Up",
         "Next Step",
         "Required Validation",
         "Update Rule",
@@ -4674,7 +4678,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "b7a4f273793ab280f8fe73deb5d52c32fba08f326565735a8618acdb5dbe99e3",
+      "sha256": "53687403344e98a2fbcf591da594654717bf85411f7396c62dd7265aad60f0e8",
       "headings": [
         "FROM_EXECUTOR",
         "Summary",
@@ -4688,7 +4692,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "71ea2a5acc2de58aa20ee175cce64f08475e75f8176f2dcad83f5ca3e55dc794",
+      "sha256": "5b299d5d89d732606b286a6bbc6dbbdc61e04403f492d60d9e6a8bbe9c58e93c",
       "headings": [
         "TO_EXECUTOR",
         "Summary",
@@ -7750,9 +7754,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "v3 mailbox dispatcher pushed to GitHub with SHA aed4156. All 8 corrections applied and published.",
+      "status": "Codex completed the bounded MarkItDown local intake adapter MVP and published Draft PR #53 for review. The authoritative COMPLETE report is in Issue #51. The root inbound mailbox on main is stale at sequence 5 because the sequence 6 COMPLETE mirror exists only in the PR branch diff.",
       "date": null,
-      "sha256": "c8dbb4a888b5040dd73a1f66cc1a101ec1d9ff1f2aed6089a6f5e43e4ebc05dd",
+      "sha256": "554a3cdfa1ff3b8f57323f5fce774a1e717ead81b3ed044e70aa062eff7758fd",
       "headings": [
         "Latest Executor Status"
       ]
@@ -8928,9 +8932,9 @@
       "title": "PROJECT STATE — Reels Factory MVP",
       "type": "project-artifact",
       "domain": "reels-factory-mvp",
-      "status": "active / persistence strategy selected / AWS runtime stopped",
+      "status": "active",
       "date": "2026-06-11",
-      "sha256": "c98e9b74ed1e66220084d63d1e678d79872ce48b83a23f0560c8b4611ba6f768",
+      "sha256": "6842109b5619e4d931217a4a39a740b2e8c3f66df30fe9e0fdd5c2fed79232a1",
       "headings": [
         "PROJECT STATE — Reels Factory MVP",
         "Current Phase",
@@ -9925,18 +9929,24 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "0728d03c0524e9776d06592b50f2b43fe2b87c55f337741a94f0cce20c0df043",
+      "sha256": "e95e82f9c2437394ee5c6061e2edcc953251e77ef397d579d29c09c6fec8d1af",
       "headings": [
         "Mailbox Dispatcher",
         "Purpose",
         "How It Works",
         "Key Design Decisions",
+        "v4: Notifier Processes Only New Sequences",
+        "v4: Commit/Push Failure Blocks COMPLETE",
+        "v4: Durable Dirty-Tree Blocker",
+        "v4: Recoverable Blocker Does Not Terminate Notifier",
+        "v4: Two-SHA Publication",
+        "v4: Runtime Staging Boundary",
+        "v4: Runner Trust Boundary",
         "Two-Phase SHA Publication",
         "Pre-Mutation Validation",
         "Terminal States",
         "Issue Read Failure = BLOCKER",
         "Quoted Argument Support",
-        "Directory Staging",
         "Requirements",
         "Installation",
         "Usage",
