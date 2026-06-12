@@ -16,11 +16,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Write Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51`
 
 ### Read Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51`
 
 ### Reviewer To Executor Mailbox
 
@@ -36,7 +36,7 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Scope
 
-`Project Execution OS / automatic mailbox dispatcher implementation`
+`Project Execution OS / MarkItDown local document intake adapter MVP`
 
 ### Last Confirmed At
 
