@@ -29,56 +29,62 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53
 - Codex — Executor Agent
 
 ## Current Task
-Review the bounded MarkItDown local intake adapter MVP published in Draft PR #53.
+Apply bounded review fixes for the MarkItDown local intake adapter MVP in Draft PR #53.
 
 ## Current Repository State
-- Active outbound mailbox sequence on `main`: `6`
+- Active outbound mailbox sequence on `main`: `7`
 - Active handoff packet: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
-- Recovery notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4690906540
-- Completion report: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4691080594
-- Review receipt: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4691203230
 - Draft PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53
+- Review packet: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/53#issuecomment-4691237811
+- Issue #51 continuation notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4691239320
 - Review branch: `codex/issue-51-markitdown-adapter`
-- Review branch head SHA: `1daacf39abbcc5558ae6ddcbb5461a38e09a714a`
+- Previous review branch head SHA: `1daacf39abbcc5558ae6ddcbb5461a38e09a714a`
 - PR state: open / draft / mergeable
-- Root inbound mailbox on `main` is stale at sequence `5`; the sequence `6` COMPLETE mirror exists in Draft PR #53 branch diff and the authoritative completion report is in Issue #51.
-- Mailbox Dispatcher v4 report commit `b893038c222a4926ac37ae55d67254b0dc14e683` is published but rejected in review.
+- Root inbound mailbox on `main` remains stale at sequence `5`; authoritative replies are read from Issue #51 and Draft PR #53 until Codex publishes the next update.
+- Reels Factory project-state validation frontmatter was repaired separately on `main` in commit `0ac785e5560bc59e5bec22288a29d5cbf08f4f3d`.
 - Mailbox Dispatcher v5 correction remains queued in Issue #52: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4690902781
 - No paid cloud services or external runtime resources are authorized for the MarkItDown task.
 
 ## Accepted Changes
 - Reuse Microsoft's official `microsoft/markitdown` package instead of building a parser from scratch.
-- Use the narrow local-only `convert_local()` API for the MVP.
+- Pin verified `markitdown 0.1.6`.
+- Use the narrow local-only `convert_local()` API.
 - Keep implementation isolated under `tools/markitdown-intake-adapter/`.
-- Reject URL-like inputs.
 - Treat OCR, Azure, MCP, external URL fetching, and paid services as out of scope.
-- Use Issue #51 as the active coordination surface until PR review feedback is posted.
+- Use Issue #51 as the active coordination surface and Draft PR #53 as the review surface.
 - Keep Mailbox Dispatcher v5 queued separately until Issue #51 review completes.
 
 ## Open Review Items
-- Review Draft PR #53 diff and validation evidence.
-- Verify official package metadata and pinned version.
-- Verify clean adapter-only implementation scope.
-- Verify URL rejection and local-only conversion path.
-- Verify smoke-test results for seven ordinary formats plus one `NEEDS_OCR` scan.
-- Verify native Windows PowerShell validation disclosure.
-- Decide whether to accept PR #53 or post bounded correction feedback.
+- Wait for Codex `ACK` for mailbox sequence `7` in Draft PR #53.
+- Fix `bootstrap.ps1` interpreter selection so installed Python `>=3.10` works without unsafe array slicing or 3.12-only behavior.
+- Force deterministic `PYTHON_DOTENV_DISABLED=1` before importing `markitdown`.
+- Reject Windows network-share and device-namespace paths in both wrappers.
+- Add automated rejection checks to the validation report.
+- Update the branch from current `main` and rerun CI.
+- Verify corrected diff remains bounded and excludes Mailbox Dispatcher files.
 
 ## Queued Follow-Up
 Mailbox Dispatcher v5 remains queued in Issue #52 after Issue #51 review completes. Required fixes include strict git return-code handling, route preservation, structured adapter result semantics, explicit `Result-SHA` and `Status-Artifact-SHA`, runtime-only dirty-tree policy, accurate trust-boundary documentation, and isolated behavioral tests.
 
 ## Next Step
-Review Draft PR #53. Do not ask the owner to relay anything unless review finds a correction that must be sent to Codex.
+When `02` is received:
+1. read `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`;
+2. read `coordination/FROM_EXECUTOR.md`;
+3. read Issue #51 and Draft PR #53 comments;
+4. inspect the newly reported branch SHA and workflow result;
+5. continue review from mailbox sequence `7`.
 
 ## Required Validation
-- Verify `MarkItDown().convert_local(...)` is used, not permissive `convert(...)`.
-- Verify remote URL-like inputs are rejected.
-- Verify Python `>=3.10` requirement and pinned official dependency.
-- Verify PowerShell scripts resolve relative to their own location.
+- Verify robust Python `>=3.10` PowerShell selection.
+- Verify `MarkItDown().convert_local(...)` remains the only conversion API used.
+- Verify URL-like, Windows network-share, and device-namespace inputs are rejected.
+- Verify deterministic `.env` suppression before `markitdown` import.
+- Verify PowerShell scripts resolve paths relative to their own location.
 - Verify no network conversion, Azure, OCR plugin, MCP exposure, or secrets are introduced.
-- Verify smoke tests cover PDF text, PDF scan, DOCX, PPTX, XLSX, HTML, CSV, and ZIP.
-- Verify ordinary samples pass and scan yields `NEEDS_OCR` or a documented official-library equivalent.
+- Verify smoke tests cover PDF text, PDF scan, DOCX, PPTX, XLSX, HTML, CSV, ZIP, and rejection cases.
+- Verify ordinary samples pass and scan yields `NEEDS_OCR`.
 - Verify repository diff contains only allowed adapter and coordination files.
+- Verify CI passes after branch update.
 
 ## Update Rule
 Update this snapshot only after meaningful state transitions.
