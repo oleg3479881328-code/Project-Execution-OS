@@ -115,3 +115,22 @@ Event:
 Next Step:
 - Wait for executor acknowledgement and explicit AWS access status in Issue #47.
 - Do not launch AWS resources until owner explicitly authorizes runtime execution.
+
+## 2026-06-11 — MarkItDown adapter coordination moved to Issue #51
+
+Type: Channel Transition
+Project: Project Execution OS / MarkItDown Intake Adapter
+Previous Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
+Active Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
+
+Event:
+- Confirmed the mailbox-dispatcher v3 publication checkpoint from `coordination/FROM_EXECUTOR.md` with reported SHA `aed415635ec277dc3737fa6d13553b3b17d614c4`.
+- Created Issue #51 as the dedicated bounded reply surface for the MarkItDown local document intake adapter MVP.
+- Posted origin notice in Issue #51 and redirect notice in Issue #49.
+- Updated `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md` to Issue #51.
+- Updated `coordination/TO_EXECUTOR.md` to sequence `5` with the new handoff.
+- Updated `AI_COORDINATION_STATE.md` to the MarkItDown adapter execution phase.
+- Required immediate executor `ACK` in Issue #51 and matching inbound mailbox update.
+
+Next Step:
+- Read `coordination/FROM_EXECUTOR.md`, then Issue #51, and verify the executor `ACK` before reviewing implementation evidence.
