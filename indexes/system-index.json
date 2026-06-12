@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e86349e358566f67772a43523963e19c1f318c04",
-  "generated_at": "2026-06-12T08:27:21-04:00",
-  "artifact_count": 458,
+  "repository_commit": "17a73e8736300e83507c0c44ff1f806d61948cfb",
+  "generated_at": "2026-06-12T08:28:00-04:00",
+  "artifact_count": 459,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -5415,6 +5415,26 @@
         "Required Behavior",
         "Boundary",
         "Relationship to Automatic Routing",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/COMMAND_10_BACKUP_CHANNEL_RECOVERY_STANDARD.md",
+      "title": "Command 10 Backup Channel Recovery Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "3d4d271ba4f3d0dc8045885a3a3909ab8252410bb48f9dbedfe8c7a9f6c726e5",
+      "headings": [
+        "Command 10 Backup Channel Recovery Standard",
+        "Purpose",
+        "Command",
+        "Permanent Backup Pointer",
+        "Required Sequence",
+        "Required Recovery Note",
+        "Outcomes",
+        "Boundary",
         "Final Rule"
       ]
     },
