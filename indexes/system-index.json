@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "5377a4b2b54654bbe61845c5980454e7a757741f",
-  "generated_at": "2026-06-11T13:52:37-04:00",
-  "artifact_count": 456,
+  "repository_commit": "a35dc538048fee1d29852a2b0e24eecd66806283",
+  "generated_at": "2026-06-11T20:46:14-04:00",
+  "artifact_count": 457,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -41,7 +41,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "3c7aeae193889250a4dc18375444c3264fae71973485de9860686acc9e5f1155",
+      "sha256": "7fa2bedd03059919a18f82096be254dc80ce6d3915284069af36c04349eddaac",
       "headings": [
         "AI Coordination State",
         "Project",
@@ -739,7 +739,7 @@
       "domain": "communication-channel",
       "status": null,
       "date": null,
-      "sha256": "e7be5713aa767998a2bd7335e5d78ce34fc29334311af88f06ba9a300744c28a",
+      "sha256": "c36f2ba07cf290d4148be6591ba6954ea8f4cccd84f51f3084ea146a7f485791",
       "headings": [
         "Active Coordination Channel Route",
         "Purpose",
@@ -4674,7 +4674,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "9c5c372e586f32db4b62d32397b20f3ca076d31e01320dc70f4b9681ef9e9e8b",
+      "sha256": "b7a4f273793ab280f8fe73deb5d52c32fba08f326565735a8618acdb5dbe99e3",
       "headings": [
         "FROM_EXECUTOR",
         "Summary",
@@ -4688,10 +4688,11 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "0885f884c2883fb016afc2bfebab03433c04bc0022795c53ed12e5e3a411b113",
+      "sha256": "71ea2a5acc2de58aa20ee175cce64f08475e75f8176f2dcad83f5ca3e55dc794",
       "headings": [
         "TO_EXECUTOR",
-        "Summary"
+        "Summary",
+        "Evidence"
       ]
     },
     {
@@ -7749,9 +7750,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Implement the automatic mailbox dispatcher described in Issue #49 and `docs/EXECUTOR_MAILBOX_STANDARD.md`.",
+      "status": "v3 mailbox dispatcher pushed to GitHub with SHA aed4156. All 8 corrections applied and published.",
       "date": null,
-      "sha256": "f936ef5b9902a0e307f9ccc7d92ba6eadcce0cb4c76489107b19f479a9e11f83",
+      "sha256": "c8dbb4a888b5040dd73a1f66cc1a101ec1d9ff1f2aed6089a6f5e43e4ebc05dd",
       "headings": [
         "Latest Executor Status"
       ]
@@ -8996,6 +8997,31 @@
       ]
     },
     {
+      "path": "prompt-bridge-worker/README.md",
+      "title": "Prompt Launcher Bridge — Cloudflare Worker",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "b469120ed58ee01d697f0882aabfd3ba842e246d1b2944645b945ac63f73a0e9",
+      "headings": [
+        "Prompt Launcher Bridge — Cloudflare Worker",
+        "Purpose",
+        "Security model",
+        "Files",
+        "Recommended one-click deployment",
+        "Manual one-time activation",
+        "1. Create or deploy the Worker",
+        "2. Add Worker secrets",
+        "3. Verify the Worker",
+        "4. Configure the browser once",
+        "Optional GitHub Actions deployment",
+        "API",
+        "Health check",
+        "Retrieve prompt"
+      ]
+    },
+    {
       "path": "skills/PROJECT_INDEX.md",
       "title": "Skills — Project Index",
       "type": "skill-artifact",
@@ -9899,29 +9925,35 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "eadbd01e458e5e693cc9d9476f6469209f2bb74ea93b1d1f8eaa89d5ed713926",
+      "sha256": "0728d03c0524e9776d06592b50f2b43fe2b87c55f337741a94f0cce20c0df043",
       "headings": [
         "Mailbox Dispatcher",
         "Purpose",
         "How It Works",
+        "Key Design Decisions",
+        "Two-Phase SHA Publication",
+        "Pre-Mutation Validation",
+        "Terminal States",
+        "Issue Read Failure = BLOCKER",
+        "Quoted Argument Support",
+        "Directory Staging",
         "Requirements",
         "Installation",
-        "Navigate to the dispatcher directory",
-        "No dependencies beyond Python standard library",
-        "Verify Python and gh are available",
         "Usage",
-        "Single cycle (for testing or cron)",
-        "Continuous polling (for long-running sessions)",
+        "Notifier mode (continuous polling)",
+        "Runner mode (single execution)",
         "Arguments",
+        "Notifier",
+        "Runner",
         "Security Boundary",
         "Restart Behavior",
         "Failure Recovery",
         "Process Management",
         "Windows (PowerShell)",
-        "Start in background",
-        "Stop (find and kill the process)",
+        "Start notifier in background",
+        "Stop",
         "Linux / macOS",
-        "Start in background with nohup",
+        "Start notifier in background",
         "Stop",
         "Systemd (Linux)",
         "File Layout",
