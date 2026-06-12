@@ -134,3 +134,23 @@ Event:
 
 Next Step:
 - Read `coordination/FROM_EXECUTOR.md`, then Issue #51, and verify the executor `ACK` before reviewing implementation evidence.
+
+## 2026-06-12 — Restored Issue #51 mailbox after dispatcher v4 route clobber
+
+Type: Coordination recovery and review blocker
+Project: Project Execution OS
+Active Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51
+Queued Follow-Up: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52
+
+Event:
+- Verified published Mailbox Dispatcher v4 commit `b893038c222a4926ac37ae55d67254b0dc14e683`.
+- Rejected v4 after code review because commit/push failures remain unchecked, SHA publication remains misleading, runtime dirty-tree policy remains too permissive, and trust-boundary documentation remains inaccurate.
+- Detected that the dispatcher-development commit overwrote `coordination/TO_EXECUTOR.md` for Issue #52 while `ACTIVE_CHANNEL_ROUTE.md` and `AI_COORDINATION_STATE.md` still identified Issue #51 as the active task.
+- Restored the active Issue #51 outbound mailbox with sequence `6` in commit `e5e9baf10b7d752f68e5d002efb7138615ac1f98`.
+- Posted Issue #51 recovery notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/51#issuecomment-4690906540
+- Queued Mailbox Dispatcher v5 correction in Issue #52 without overwriting the active route: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4690902781
+- Updated `AI_COORDINATION_STATE.md` and `logs/latest.md` to preserve the recovered route and queued follow-up.
+
+Next Step:
+- Wait for Codex `ACK` in Issue #51 for outbound mailbox sequence `6`.
+- Keep Mailbox Dispatcher v5 queued in Issue #52 until Issue #51 completes and the route is intentionally migrated.
