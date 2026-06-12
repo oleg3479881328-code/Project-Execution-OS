@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "49422b1a68a2f2b35a80a1964e40cefc91ef44e7",
-  "generated_at": "2026-06-12T08:46:04-04:00",
-  "artifact_count": 459,
+  "repository_commit": "ff78868db8abf2e90ccd0499da1940d1192fd750",
+  "generated_at": "2026-06-12T13:26:18-04:00",
+  "artifact_count": 460,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -199,13 +199,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "92c12d184715eb3bb33efd5eae3f886500fcffc76a431f87d8f1f1bc31e18565",
+      "sha256": "d0bb55c09b9ed3f63c15f8610be59da8969b0e2d5ad267ad7ffbfc0514f1b4db",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v10`",
+        "Profile: `knowledge-aware-core-v11`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -8728,6 +8728,25 @@
         "Verification",
         "Issues",
         "Next Action"
+      ]
+    },
+    {
+      "path": "projects/personal-secretary-os/DOCUMENT_SAVING_STANDARD.md",
+      "title": "Personal Secretary OS — Document Saving Standard",
+      "type": "project-artifact",
+      "domain": "personal-secretary-os",
+      "status": null,
+      "date": null,
+      "sha256": "13ac459a36c7c3aae922b968e9285b08c9b9002ba9165917b6e5d71d0dfc15ae",
+      "headings": [
+        "Personal Secretary OS — Document Saving Standard",
+        "Purpose",
+        "Trigger",
+        "Default Workflow",
+        "Text Card Minimum Fields",
+        "Data Handling Rule",
+        "Current Tool Boundary",
+        "Interaction Rule"
       ]
     },
     {
