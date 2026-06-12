@@ -24,16 +24,17 @@ https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49
 - Executor Agent — Infrastructure Executor
 
 ## Current Task
-Correct the mailbox dispatcher state machine after review rejection of dispatcher v2.
+Publish the real mailbox dispatcher v3 implementation after the reported SHA failed GitHub resolution.
 
 ## Current Repository State
 - Global mailbox standard: `docs/EXECUTOR_MAILBOX_STANDARD.md`
 - Active outbound mailbox: `coordination/TO_EXECUTOR.md`
 - Active inbound mailbox: `coordination/FROM_EXECUTOR.md`
-- Latest correction mailbox sequence: `3`
-- Review request: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686210580
-- Rejected v2 final-status commit: `08970acf3b70ec351fd544012dae9d347205d033`
-- Implementation commit under review: `46532f9d835a6a0c66e0c0294b264ca8128602e6`
+- Latest correction mailbox sequence: `4`
+- Publication blocker: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/49#issuecomment-4686267612
+- Reported missing SHA: `360cfa2119139b3f1264c609584582c6eeaf759b`
+- GitHub fetch result for reported SHA: not found
+- Current default branch still exposes the rejected v2 state machine
 - Reels Factory persistence route accepted: Custom AMI primary, EBS snapshot fallback
 - No AWS GPU runtime is active.
 
@@ -43,35 +44,33 @@ Correct the mailbox dispatcher state machine after review rejection of dispatche
 - GitHub issue comments remain the audit trail.
 
 ## Open Review Items
-- Critical: notifier writes ACK using sequence N, then runner incorrectly skips the same sequence as already processed.
-- Post-commit SHA publication order remains incorrect.
-- Dirty-tree validation runs after side effects instead of before them.
-- Route-mismatch and dirty-tree blockers are not durably mirrored consistently.
-- Runner must block when the active issue cannot be read.
-- Quoted runner arguments require structured parsing.
-- Current tests are mostly tautological and do not exercise the state machine.
-- README claims must match implemented recovery behavior.
-- Allowed-directory staging must include new test files.
+- Push the real v3 implementation to GitHub.
+- Publish one exact fetchable 40-character SHA.
+- Confirm runner executes the same sequence after notifier writes ACK and skips only terminal states.
+- Confirm final pushed files include dispatcher, behavioral tests, README, inbound mailbox, and latest log.
+- Publish exact test command and short output summary.
+- Update `coordination/FROM_EXECUTOR.md` with the real published SHA.
 
 ## Next Step
 When `02` is received:
 1. read `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`;
 2. read `coordination/FROM_EXECUTOR.md`;
 3. read Issue #49 for supporting evidence;
-4. inspect any reported commit or PR;
-5. continue from mailbox sequence `3`.
+4. fetch the newly reported full SHA;
+5. inspect current dispatcher source and tests;
+6. continue from mailbox sequence `4`.
 
 ## Required Validation
-- Verify executor ACK for sequence `3` in Issue #49.
-- Verify inbound mailbox sequence increment.
+- Verify GitHub resolves the reported v3 SHA.
+- Verify inbound mailbox sequence increments to `4` or later.
 - Verify ACK-to-runner transition executes exactly once.
 - Verify duplicate terminal sequence is a no-op.
 - Verify dirty-tree blocker before side effects.
-- Verify active-route mismatch blocker.
 - Verify unreadable-issue blocker.
-- Verify comments and mailboxes reference the real committed result SHA.
+- Verify real committed SHA publication.
 - Verify quoted argv behavior.
 - Verify failed push handling.
+- Verify behavioral tests actually call dispatcher paths.
 - Verify no secrets are stored in repository.
 
 ## Update Rule
