@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "955d6eab76093f1dd88a2286e1538f575bd71fa5",
-  "generated_at": "2026-06-12T13:58:43-04:00",
-  "artifact_count": 460,
+  "repository_commit": "0079c82f7f8f4ad666f91f02e1134f5e03419202",
+  "generated_at": "2026-06-12T14:26:44-04:00",
+  "artifact_count": 464,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -743,7 +743,7 @@
       "domain": "communication-channel",
       "status": null,
       "date": null,
-      "sha256": "95fd5d3d5d4c27c0c53758f54cbbf4ba8d3cab65b17ac479d24c1cc517f253cc",
+      "sha256": "deeb65597100fbb63a6c37ad3913fc38429ac9e482d282997f535f4c8d67efa6",
       "headings": [
         "Active Coordination Channel Route",
         "Purpose",
@@ -4701,7 +4701,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "53687403344e98a2fbcf591da594654717bf85411f7396c62dd7265aad60f0e8",
+      "sha256": "60172205b72e420b1154e8235dc5be3c4a6e4222b46d846e2af75803239910db",
       "headings": [
         "FROM_EXECUTOR",
         "Summary",
@@ -7797,9 +7797,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Draft PR #53 was reviewed and requires bounded corrections before acceptance: robust Python >=3.10 bootstrap selection, deterministic PYTHON_DOTENV_DISABLED assignment, stricter Windows local-only path guards, automated rejection checks, branch update from current main, and CI rerun. Mailbox Dispatcher v5 remains queued separately in Issue #52.",
+      "status": "PR #53 was refreshed from current main with the manifest v11 repair, pushed as head `49c5d7574e3ceba7dc2ed129867ce00239f63bd0`, and the new Validate Project OS Integrity run passed successfully.",
       "date": null,
-      "sha256": "a40997fb9b9f585e43a2176633c1ddbc1f597be16d7a1731f111ab95b28b4e20",
+      "sha256": "c69c88d194556590e302845887a1875825a4a272e4c778bb02e1480409af7cc3",
       "headings": [
         "Latest Executor Status"
       ]
@@ -10031,6 +10031,67 @@
         "File Layout",
         "Mailbox Envelope Format",
         "Related Standards"
+      ]
+    },
+    {
+      "path": "tools/markitdown-intake-adapter/PROJECT.md",
+      "title": "MarkItDown Intake Adapter",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "23771d307a055b7035cc816718e76f20a6c6083c0bc8ff80c7613a19d29b557f",
+      "headings": [
+        "MarkItDown Intake Adapter",
+        "Purpose",
+        "Scope",
+        "Out Of Scope",
+        "First Run",
+        "Main Conversion Command"
+      ]
+    },
+    {
+      "path": "tools/markitdown-intake-adapter/PROJECT_STATE.md",
+      "title": "Project State",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": "complete_pending_review",
+      "date": null,
+      "sha256": "2ef00a7d110944949cf269410c77d3d17551799a0a47824f031407e808059524",
+      "headings": [
+        "Project State"
+      ]
+    },
+    {
+      "path": "tools/markitdown-intake-adapter/README_RU.md",
+      "title": "MarkItDown Intake Adapter MVP",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "dda91f96f30a9222d387fe932f9aeb4d9ac9e47bf2de9b47dcd7d98045a168b8",
+      "headings": [
+        "MarkItDown Intake Adapter MVP",
+        "Что делает",
+        "Граница безопасности",
+        "Первый запуск",
+        "Пример конвертации",
+        "Как обрабатывать `NEEDS_OCR`",
+        "Что валидируется smoke test",
+        "Что было и не было проверено"
+      ]
+    },
+    {
+      "path": "tools/markitdown-intake-adapter/logs/latest.md",
+      "title": "MarkItDown Intake Adapter Smoke Test",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "534db0185d2bc7a3aab3092327826fcafbdf7447685418f5220a53c11a10b74c",
+      "headings": [
+        "MarkItDown Intake Adapter Smoke Test",
+        "Rejection Checks"
       ]
     },
     {
