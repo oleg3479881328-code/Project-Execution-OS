@@ -7,7 +7,7 @@ Automatic polling bridge between `coordination/TO_EXECUTOR.md` and `coordination
 Removes the need for the owner to manually relay routine messages between a reasoning agent (reviewer) and an execution agent. The dispatcher has two modes:
 
 - **Notifier** — watches `TO_EXECUTOR.md` for **new** sequence changes, validates the active route and runtime dirty tree before any mutation, reads the active issue body, posts `ACK`, writes `FROM_EXECUTOR.md`, and waits for an external executor. Recoverable blockers do not terminate the long-running notifier.
-- **Runner** — invokes one explicitly configured external command, captures its result, then posts `COMPLETE` or `BLOCKER`. The command comes from the `--command` CLI argument, **never from mailbox content**.
+- **Runner** — invokes one explicitly configured external command, expects a structured JSON adapter result, then posts `COMPLETE` or `BLOCKER`. The command comes from the `--command` CLI argument, **never from mailbox content**.
 
 ## How It Works
 
@@ -31,26 +31,57 @@ Runner (invoked separately with --command "...")
         ├─ Validates active route
         ├─ Checks dirty tree against runtime-owned files only
         ├─ Reads the active issue body (BLOCKER on failure)
+        ├─ Allows same-sequence execution only from ACK state
         ├─ Parses command with shlex.split() (supports quoted arguments)
         ├─ Executes the external command (from CLI arg, NOT mailbox content)
+        ├─ Parses adapter JSON: status, summary, result_sha, evidence
+        ├─ Fails closed if COMPLETE leaves dirty non-runtime files behind
         ├─ Persists COMPLETE or BLOCKER locally and pushes it
-        └─ Posts issue comment with Result-SHA and Status-Artifact-SHA
+        └─ Posts issue comment with Result-SHA, Status-Artifact-SHA, and durable linkback
 ```
 
-## v5 Design Decisions
+## v6 Design Decisions
+
+### Same-sequence runner gate
+
+The runner may execute the current `TO_EXECUTOR.Sequence` only when `FROM_EXECUTOR.Sequence` matches and `FROM_EXECUTOR.Type == ACK`. Any other same-sequence state is skipped, including nonterminal states.
+
+### Structured runner-adapter contract
+
+On successful runner execution, the external adapter must emit JSON to stdout:
+
+```json
+{
+  "status": "COMPLETE",
+  "summary": "Short human-readable result",
+  "result_sha": "abc123 or none",
+  "evidence": ["fact one", "fact two"]
+}
+```
+
+Rules:
+
+- `status` must be `COMPLETE` or `BLOCKER`
+- `summary` must be a non-empty string
+- `result_sha` may be a fetchable external result SHA or `none`
+- `evidence` must be a list of strings
+
+The dispatcher never re-labels its own mailbox/log status commit as an external work-result SHA.
+
+### Durable publication fields
+
+Runtime publication durably records:
+
+1. **Result-SHA** — the commit containing the result state.
+2. **Status-Artifact-SHA** — the status-artifact publication commit.
+3. **Comment-URL** — the final issue comment URL after publication.
+4. **Linkback-SHA** — optional third commit used to durably write the final comment URL back into mailbox/log artifacts.
+
+These fields are written to the GitHub comment, mailbox, and latest status mirror with matching semantics.
 
 ### Strict git return-code handling
 
 Publication paths use strict command checking for `git add`, `git commit`, and `git push`. A non-zero result is a `BLOCKER`, not a warning.
-
-### Structured publication result
-
-Runtime publication reports two durable SHA fields:
-
-1. **Result-SHA** — the commit containing the result state.
-2. **Status-Artifact-SHA** — the follow-up artifact commit, when it differs.
-
-Both fields are written to the GitHub comment, mailbox evidence, and status mirror.
 
 ### Runtime dirty-tree policy is narrower than development policy
 
@@ -65,9 +96,18 @@ Source files, tests, README, and `coordination/TO_EXECUTOR.md` are development a
 
 The dispatcher validates `ACTIVE_CHANNEL_ROUTE.md` against the mailbox `Active-Channel` before any mutation. A mismatch is a `BLOCKER`.
 
+### Post-run dirty-tree enforcement
+
+The runner validates the dirty tree both before external execution and after adapter success. If non-runtime files become dirty after the adapter reports `COMPLETE`, the dispatcher fails closed and publishes a `BLOCKER` instead.
+
 ### Honest blocker persistence
 
-If remote push fails while persisting a blocker, the dispatcher keeps the locally committed pending state and surfaces that the remote durable write did not succeed. It does not falsely imply that the blocker was published remotely.
+If remote push fails while persisting a blocker, the dispatcher keeps a local pending marker with:
+
+- `Local-Status-SHA`
+- `Remote-Push: failed`
+
+It does not falsely imply that the blocker was durably published remotely.
 
 ## Requirements
 

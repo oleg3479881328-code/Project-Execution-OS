@@ -19,6 +19,7 @@ Requirements:
 """
 
 import argparse
+import json
 import re
 import shlex
 import subprocess
@@ -77,7 +78,18 @@ class DispatchResult:
     result_sha: str
     status_artifact_sha: str
     comment_url: str
+    linkback_sha: Optional[str]
     summary_text: str
+    evidence: list[str]
+
+
+@dataclass
+class AdapterResult:
+    """Structured runner-adapter result contract."""
+
+    status: str
+    summary: str
+    result_sha: str
     evidence: list[str]
 
 
@@ -151,7 +163,11 @@ def write_mailbox(
     msg_type: str,
     active_channel: str,
     comment_url: str,
-    commit_sha: str,
+    result_sha: str,
+    status_artifact_sha: str,
+    linkback_sha: Optional[str],
+    local_status_sha: Optional[str],
+    remote_push: Optional[str],
     supersedes_sequence: Optional[int],
     owner_action_required: str,
     next_automatic_action: str,
@@ -170,8 +186,15 @@ def write_mailbox(
         f"Type: {msg_type}",
         f"Active-Channel: {active_channel}",
         f"Comment-URL: {comment_url}",
-        f"Commit-SHA: {commit_sha}",
+        f"Result-SHA: {result_sha}",
+        f"Status-Artifact-SHA: {status_artifact_sha}",
     ]
+    if linkback_sha is not None:
+        lines.append(f"Linkback-SHA: {linkback_sha}")
+    if local_status_sha is not None:
+        lines.append(f"Local-Status-SHA: {local_status_sha}")
+    if remote_push is not None:
+        lines.append(f"Remote-Push: {remote_push}")
     if supersedes_sequence is not None:
         lines.append(f"Supersedes-Sequence: {supersedes_sequence}")
     lines.append(f"Owner-Action-Required: {owner_action_required}")
@@ -232,7 +255,11 @@ def update_latest_log(
     status: str,
     reply_surface_url: str,
     comment_url: str,
-    commit_sha: str,
+    result_sha: str,
+    status_artifact_sha: str,
+    linkback_sha: Optional[str],
+    local_status_sha: Optional[str],
+    remote_push: Optional[str],
     next_action: str,
     owner_required: str,
 ) -> None:
@@ -246,10 +273,17 @@ def update_latest_log(
         f"Status: {status}\n"
         f"Reply-Surface: {reply_surface_url}\n"
         f"Comment-URL: {comment_url}\n"
-        f"Commit-SHA: {commit_sha}\n"
+        f"Result-SHA: {result_sha}\n"
+        f"Status-Artifact-SHA: {status_artifact_sha}\n"
         f"Next-Automatic-Action: {next_action}\n"
         f"Owner-Action-Required: {owner_required}\n"
     )
+    if linkback_sha is not None:
+        content += f"Linkback-SHA: {linkback_sha}\n"
+    if local_status_sha is not None:
+        content += f"Local-Status-SHA: {local_status_sha}\n"
+    if remote_push is not None:
+        content += f"Remote-Push: {remote_push}\n"
     LATEST_LOG_PATH.write_text(content, encoding="utf-8")
 
 
@@ -354,8 +388,9 @@ def persist_runtime_status(
     next_action: str,
     owner_required: str,
     msg_type: str,
+    result_sha_hint: str,
 ) -> tuple[str, str]:
-    """Write runtime status artifacts and return their SHAs after durable push."""
+    """Write runtime status artifacts and return status commit SHAs after durable push."""
     write_mailbox(
         path=FROM_EXECUTOR_PATH,
         sequence=sequence,
@@ -365,7 +400,11 @@ def persist_runtime_status(
         msg_type=msg_type,
         active_channel=active_channel,
         comment_url=comment_url,
-        commit_sha="pending",
+        result_sha=result_sha_hint,
+        status_artifact_sha="pending",
+        linkback_sha=None,
+        local_status_sha=None,
+        remote_push="pending",
         supersedes_sequence=None,
         owner_action_required=owner_required,
         next_automatic_action=next_action,
@@ -378,7 +417,11 @@ def persist_runtime_status(
         status=summary,
         reply_surface_url=active_channel,
         comment_url=comment_url,
-        commit_sha="pending",
+        result_sha=result_sha_hint,
+        status_artifact_sha="pending",
+        linkback_sha=None,
+        local_status_sha=None,
+        remote_push="pending",
         next_action=next_action,
         owner_required=owner_required,
     )
@@ -386,7 +429,7 @@ def persist_runtime_status(
     stage_runtime_files()
     commit_message = f"dispatcher: persist {msg_type} status for {task_id} (seq {sequence})"
     run_command(["git", "commit", "-m", commit_message], check=True)
-    result_sha = get_current_commit_sha()
+    status_commit_sha = get_current_commit_sha()
 
     write_mailbox(
         path=FROM_EXECUTOR_PATH,
@@ -397,12 +440,20 @@ def persist_runtime_status(
         msg_type=msg_type,
         active_channel=active_channel,
         comment_url=comment_url,
-        commit_sha=result_sha,
+        result_sha=result_sha_hint,
+        status_artifact_sha=status_commit_sha,
+        linkback_sha=None,
+        local_status_sha=None,
+        remote_push="pending",
         supersedes_sequence=None,
         owner_action_required=owner_required,
         next_automatic_action=next_action,
         summary=summary,
-        evidence=evidence + [f"Result-SHA: {result_sha}"],
+        evidence=evidence
+        + [
+            f"Result-SHA: {result_sha_hint}",
+            f"Status-Artifact-SHA: {status_commit_sha}",
+        ],
     )
     update_latest_log(
         marker=msg_type,
@@ -410,7 +461,11 @@ def persist_runtime_status(
         status=summary,
         reply_surface_url=active_channel,
         comment_url=comment_url,
-        commit_sha=result_sha,
+        result_sha=result_sha_hint,
+        status_artifact_sha=status_commit_sha,
+        linkback_sha=None,
+        local_status_sha=None,
+        remote_push="pending",
         next_action=next_action,
         owner_required=owner_required,
     )
@@ -421,7 +476,7 @@ def persist_runtime_status(
     run_command(["git", "commit", "-m", artifact_commit_message], check=True)
     status_artifact_sha = get_current_commit_sha()
     run_command(["git", "push"], check=True)
-    return result_sha, status_artifact_sha
+    return status_commit_sha, status_artifact_sha
 
 
 def persist_blocker_locally(
@@ -444,7 +499,11 @@ def persist_blocker_locally(
         msg_type="BLOCKER",
         active_channel=active_channel,
         comment_url=comment_url,
-        commit_sha="pending",
+        result_sha="none",
+        status_artifact_sha="pending",
+        linkback_sha=None,
+        local_status_sha=None,
+        remote_push="pending",
         supersedes_sequence=None,
         owner_action_required=owner_required,
         next_automatic_action=next_action,
@@ -457,7 +516,11 @@ def persist_blocker_locally(
         status=summary,
         reply_surface_url=active_channel,
         comment_url=comment_url,
-        commit_sha="pending",
+        result_sha="none",
+        status_artifact_sha="pending",
+        linkback_sha=None,
+        local_status_sha=None,
+        remote_push="pending",
         next_action=next_action,
         owner_required=owner_required,
     )
@@ -472,7 +535,211 @@ def persist_blocker_locally(
         run_command(["git", "push"], check=True)
     except RuntimeError as exc:
         push_error = str(exc)
+        write_mailbox(
+            path=FROM_EXECUTOR_PATH,
+            sequence=sequence,
+            task_id=task_id,
+            from_role="Executor Agent — Infrastructure Executor",
+            to_role="ChatGPT — Reviewer",
+            msg_type="BLOCKER",
+            active_channel=active_channel,
+            comment_url=comment_url,
+            result_sha="none",
+            status_artifact_sha="pending",
+            linkback_sha=None,
+            local_status_sha=local_sha,
+            remote_push="failed",
+            supersedes_sequence=None,
+            owner_action_required=owner_required,
+            next_automatic_action=next_action,
+            summary=summary,
+            evidence=evidence + [f"Local-Status-SHA: {local_sha}", "Remote-Push: failed"],
+        )
+        update_latest_log(
+            marker="BLOCKER",
+            task_id=task_id,
+            status=summary,
+            reply_surface_url=active_channel,
+            comment_url=comment_url,
+            result_sha="none",
+            status_artifact_sha="pending",
+            linkback_sha=None,
+            local_status_sha=local_sha,
+            remote_push="failed",
+            next_action=next_action,
+            owner_required=owner_required,
+        )
     return local_sha, push_error
+
+
+def finalize_comment_linkback(
+    task_id: str,
+    sequence: int,
+    active_channel: str,
+    comment_url: str,
+    summary: str,
+    evidence: list[str],
+    next_action: str,
+    owner_required: str,
+    msg_type: str,
+    result_sha: str,
+    status_artifact_sha: str,
+) -> str:
+    """Persist final comment URL and return the linkback commit SHA."""
+    write_mailbox(
+        path=FROM_EXECUTOR_PATH,
+        sequence=sequence,
+        task_id=task_id,
+        from_role="Executor Agent — Infrastructure Executor",
+        to_role="ChatGPT — Reviewer",
+        msg_type=msg_type,
+        active_channel=active_channel,
+        comment_url=comment_url,
+        result_sha=result_sha,
+        status_artifact_sha=status_artifact_sha,
+        linkback_sha="pending",
+        local_status_sha=None,
+        remote_push="pending",
+        supersedes_sequence=None,
+        owner_action_required=owner_required,
+        next_automatic_action=next_action,
+        summary=summary,
+        evidence=evidence,
+    )
+    update_latest_log(
+        marker=msg_type,
+        task_id=task_id,
+        status=summary,
+        reply_surface_url=active_channel,
+        comment_url=comment_url,
+        result_sha=result_sha,
+        status_artifact_sha=status_artifact_sha,
+        linkback_sha="pending",
+        local_status_sha=None,
+        remote_push="pending",
+        next_action=next_action,
+        owner_required=owner_required,
+    )
+    stage_runtime_files()
+    run_command(
+        ["git", "commit", "-m", f"dispatcher: linkback {msg_type} status for {task_id} (seq {sequence})"],
+        check=True,
+    )
+    linkback_sha = get_current_commit_sha()
+    write_mailbox(
+        path=FROM_EXECUTOR_PATH,
+        sequence=sequence,
+        task_id=task_id,
+        from_role="Executor Agent — Infrastructure Executor",
+        to_role="ChatGPT — Reviewer",
+        msg_type=msg_type,
+        active_channel=active_channel,
+        comment_url=comment_url,
+        result_sha=result_sha,
+        status_artifact_sha=status_artifact_sha,
+        linkback_sha=linkback_sha,
+        local_status_sha=None,
+        remote_push="pending",
+        supersedes_sequence=None,
+        owner_action_required=owner_required,
+        next_automatic_action=next_action,
+        summary=summary,
+        evidence=evidence + [f"Linkback-SHA: {linkback_sha}"],
+    )
+    update_latest_log(
+        marker=msg_type,
+        task_id=task_id,
+        status=summary,
+        reply_surface_url=active_channel,
+        comment_url=comment_url,
+        result_sha=result_sha,
+        status_artifact_sha=status_artifact_sha,
+        linkback_sha=linkback_sha,
+        local_status_sha=None,
+        remote_push="ok",
+        next_action=next_action,
+        owner_required=owner_required,
+    )
+    stage_runtime_files()
+    run_command(
+        ["git", "commit", "--amend", "--no-edit"],
+        check=True,
+    )
+    final_linkback_sha = get_current_commit_sha()
+    if final_linkback_sha != linkback_sha:
+        write_mailbox(
+            path=FROM_EXECUTOR_PATH,
+            sequence=sequence,
+            task_id=task_id,
+            from_role="Executor Agent — Infrastructure Executor",
+            to_role="ChatGPT — Reviewer",
+            msg_type=msg_type,
+            active_channel=active_channel,
+            comment_url=comment_url,
+            result_sha=result_sha,
+            status_artifact_sha=status_artifact_sha,
+            linkback_sha=final_linkback_sha,
+            local_status_sha=None,
+            remote_push="ok",
+            supersedes_sequence=None,
+            owner_action_required=owner_required,
+            next_automatic_action=next_action,
+            summary=summary,
+            evidence=evidence + [f"Linkback-SHA: {final_linkback_sha}"],
+        )
+        update_latest_log(
+            marker=msg_type,
+            task_id=task_id,
+            status=summary,
+            reply_surface_url=active_channel,
+            comment_url=comment_url,
+            result_sha=result_sha,
+            status_artifact_sha=status_artifact_sha,
+            linkback_sha=final_linkback_sha,
+            local_status_sha=None,
+            remote_push="ok",
+            next_action=next_action,
+            owner_required=owner_required,
+        )
+        stage_runtime_files()
+        run_command(["git", "commit", "--amend", "--no-edit"], check=True)
+        final_linkback_sha = get_current_commit_sha()
+    run_command(["git", "push"], check=True)
+    return final_linkback_sha
+
+
+def parse_adapter_result(stdout: str) -> AdapterResult:
+    """Parse structured JSON emitted by the external runner adapter."""
+    try:
+        payload = json.loads(stdout)
+    except json.JSONDecodeError as exc:
+        raise RuntimeError(f"Adapter output is not valid JSON: {exc}")
+
+    if not isinstance(payload, dict):
+        raise RuntimeError("Adapter output must be a JSON object")
+
+    status = payload.get("status")
+    summary = payload.get("summary")
+    result_sha = payload.get("result_sha", "none")
+    evidence = payload.get("evidence", [])
+
+    if status not in {"COMPLETE", "BLOCKER"}:
+        raise RuntimeError("Adapter output field 'status' must be COMPLETE or BLOCKER")
+    if not isinstance(summary, str) or not summary.strip():
+        raise RuntimeError("Adapter output field 'summary' must be a non-empty string")
+    if result_sha is None:
+        result_sha = "none"
+    if not isinstance(result_sha, str):
+        raise RuntimeError("Adapter output field 'result_sha' must be a string or null")
+    if not isinstance(evidence, list) or any(not isinstance(item, str) for item in evidence):
+        raise RuntimeError("Adapter output field 'evidence' must be a list of strings")
+
+    return AdapterResult(
+        status=status,
+        summary=summary.strip(),
+        result_sha=result_sha.strip() or "none",
+        evidence=evidence,
+    )
 
 
 def post_blocker_and_exit(
@@ -570,12 +837,12 @@ def commit_and_publish(
     task: dict,
     to_seq: int,
     msg_type: str,
-    comment_body: str,
     summary_text: str,
     evidence: list[str],
     active_channel: str,
     next_auto: str,
     owner_required: str,
+    result_sha_hint: str,
 ) -> DispatchResult:
     """Persist runtime status first, then publish a comment with durable SHA fields."""
     task_id = task.get("Task-ID", "unknown")
@@ -591,6 +858,7 @@ def commit_and_publish(
             next_action=next_auto,
             owner_required=owner_required,
             msg_type=msg_type,
+            result_sha_hint=result_sha_hint,
         )
     except RuntimeError as exc:
         error_msg = f"Git commit/push failed before publication: {exc}"
@@ -605,7 +873,7 @@ def commit_and_publish(
         summary_text=summary_text,
         evidence=evidence,
         next_auto=next_auto,
-        result_sha=result_sha,
+        result_sha=result_sha_hint,
         status_artifact_sha=status_artifact_sha,
     )
 
@@ -617,14 +885,33 @@ def commit_and_publish(
         post_blocker_and_exit(task, to_seq, error_msg, active_channel, recoverable=False)
         raise
 
+    linkback_sha = finalize_comment_linkback(
+        task_id=task_id,
+        sequence=to_seq,
+        active_channel=active_channel,
+        comment_url=comment_url,
+        summary=summary_text,
+        evidence=evidence + [
+            f"Result-SHA: {result_sha_hint}",
+            f"Status-Artifact-SHA: {status_artifact_sha}",
+        ],
+        next_action=next_auto,
+        owner_required=owner_required,
+        msg_type=msg_type,
+        result_sha=result_sha_hint,
+        status_artifact_sha=status_artifact_sha,
+    )
+
     return DispatchResult(
-        result_sha=result_sha,
+        result_sha=result_sha_hint,
         status_artifact_sha=status_artifact_sha,
         comment_url=comment_url,
+        linkback_sha=linkback_sha,
         summary_text=summary_text,
         evidence=evidence + [
-            f"Result-SHA: {result_sha}",
+            f"Result-SHA: {result_sha_hint}",
             f"Status-Artifact-SHA: {status_artifact_sha}",
+            f"Linkback-SHA: {linkback_sha}",
         ],
     )
 
@@ -697,12 +984,12 @@ def notifier_cycle() -> bool:
         task=task,
         to_seq=to_seq,
         msg_type="ACK",
-        comment_body="ACK",
         summary_text=ack_summary,
         evidence=evidence_items,
         active_channel=active_channel,
         next_auto=next_action,
         owner_required="none",
+        result_sha_hint="none",
     )
 
     return True
@@ -752,8 +1039,8 @@ def run_runner(command: str, timeout: int) -> None:
     if to_seq < current_from_seq:
         print("No new sequence to execute. Older sequence already processed.")
         return
-    elif to_seq == current_from_seq and current_from_type in TERMINAL_STATES:
-        print("No new sequence to execute. Already in terminal state.")
+    elif to_seq == current_from_seq and current_from_type != "ACK":
+        print("No new sequence to execute. Same sequence may run only from ACK state.")
         return
 
     task_id = task.get("Task-ID", "unknown")
@@ -792,6 +1079,12 @@ def run_runner(command: str, timeout: int) -> None:
         return
 
     print(f"  Executing: {cmd_parts}")
+    adapter_result = AdapterResult(
+        status="BLOCKER",
+        summary="Adapter result not available",
+        result_sha="none",
+        evidence=[],
+    )
     try:
         result = run_command(
             cmd_parts,
@@ -810,18 +1103,40 @@ def run_runner(command: str, timeout: int) -> None:
         owner_required = "review timeout"
     else:
         if exit_code == 0:
-            msg_type = "COMPLETE"
-            evidence = [
-                f"Command: {command}",
-                f"Exit code: {exit_code}",
-            ]
-            if stdout:
-                evidence.append(f"Stdout: {stdout[:500]}")
-            if stderr:
-                evidence.append(f"Stderr: {stderr[:500]}")
-            summary_text = f"Runner command completed successfully: {command}"
-            next_auto = next_action
-            owner_required = "none"
+            try:
+                adapter_result = parse_adapter_result(stdout)
+                if adapter_result.status == "COMPLETE":
+                    post_run_dirty = check_dirty_tree_runtime()
+                    if post_run_dirty:
+                        raise RuntimeError(
+                            "Post-run dirty tree outside runtime-owned paths:\n"
+                            + "\n".join(post_run_dirty)
+                        )
+                msg_type = adapter_result.status
+                evidence = [
+                    f"Command: {command}",
+                    f"Exit code: {exit_code}",
+                    f"Adapter-Result-SHA: {adapter_result.result_sha}",
+                ] + adapter_result.evidence
+                if stderr:
+                    evidence.append(f"Stderr: {stderr[:500]}")
+                summary_text = adapter_result.summary
+                next_auto = (
+                    next_action if msg_type == "COMPLETE" else "review blocker and retry"
+                )
+                owner_required = "none" if msg_type == "COMPLETE" else "review blocker"
+            except RuntimeError as exc:
+                msg_type = "BLOCKER"
+                evidence = [
+                    f"Command: {command}",
+                    f"Exit code: {exit_code}",
+                    f"Runner validation error: {exc}",
+                ]
+                if stderr:
+                    evidence.append(f"Stderr: {stderr[:500]}")
+                summary_text = f"Runner adapter contract failed: {command}"
+                next_auto = "review adapter output and retry"
+                owner_required = "review adapter output"
         else:
             msg_type = "BLOCKER"
             evidence = [
@@ -843,12 +1158,12 @@ def run_runner(command: str, timeout: int) -> None:
         task=task,
         to_seq=to_seq,
         msg_type=msg_type,
-        comment_body=msg_type,
         summary_text=summary_text,
         evidence=evidence,
         active_channel=active_channel,
         next_auto=next_auto,
         owner_required=owner_required,
+        result_sha_hint=adapter_result.result_sha if exit_code == 0 else "none",
     )
 
 
