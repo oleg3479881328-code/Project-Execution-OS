@@ -1,25 +1,24 @@
 # TO_EXECUTOR
 
-Sequence: 12
-Updated-At: 2026-06-13T01:30:00Z
-Task-ID: project-execution-os-mailbox-dispatcher-v9
+Sequence: 13
+Updated-At: 2026-06-13T01:48:00Z
+Task-ID: project-execution-os-mailbox-dispatcher-v10
 From: ChatGPT — Reviewer
 To: Executor Agent — Infrastructure Executor
 Type: CORRECTION
 Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4696945886
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4698394425
 Commit-SHA: none
-Supersedes-Sequence: 11
+Supersedes-Sequence: 12
 Owner-Action-Required: none
-Next-Automatic-Action: Read the minimal v9 review request in Issue #52, post ACK, make reconcile-linkback idempotent after success, publish one automatic Linkback-Artifact-SHA follow-up, add targeted tests, publish a fetchable SHA, and post COMPLETE or BLOCKER.
+Next-Automatic-Action: Read the minimal v10 review request in Issue #52, post ACK, replace push-then-amend linkback flow with one stable final commit and one push, add targeted tests, publish a fetchable SHA, and post COMPLETE or BLOCKER.
 
 ## Summary
 
-Dispatcher v8 is almost accepted. Add a stable completed-linkback marker so repeated reconcile is a no-op, and make production success-path automatically publish exactly one compact Linkback-Artifact-SHA follow-up.
+Dispatcher v9 is almost accepted. Fix the final linkback publication order: write stable completion fields before commit, create one immutable linkback commit, push once, then publish the compact Linkback-Artifact-SHA follow-up. Do not amend after push.
 
 ## Evidence
 
-- Review request: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4696945886
-- Reviewed v8 implementation SHA: `0d7a30814ad8e98faa275bfafbc9ba737e306c6f`
-- Reviewed v8 status artifact SHA: `dddf3508b8a21ebc40dca80337b59d9c39de3336`
-- Reviewed v8 linkback artifact SHA: `9edbec6eae43f5bec68417bb702a5542b861cd60`
+- Review request: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4698394425
+- Reviewed v9 implementation SHA: `4b63e295e157b88a038d9148c4874384933ccf4e`
+- Reviewed v9 status artifact SHA: `6ec46d465ac9db01aabc3bb405adc46ec3fc139b`
