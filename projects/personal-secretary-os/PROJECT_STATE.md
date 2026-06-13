@@ -25,11 +25,13 @@ project_mode: lightweight
 - Created a lightweight Notion document index and a Mazda CX-5 vehicle-registration card.
 - Created a user-facing Notion page for the reusable document workflow.
 - Added `DOCUMENT_SAVING_STANDARD.md` as the canonical reusable procedure for personal-document intake.
+- Validated contact intake by photo-to-vCard: extract contact/business-card data from a photo, create a `.vcf` file, and give Oleg a download link for one-tap Android/Google Contacts import.
 
 ## In Progress
 
 - Continue manual validation with real intake batches.
 - Apply the document-saving standard automatically for future document photographs and scans.
+- Use the validated `.vcf` file method for contact/business-card intake when Oleg wants an item added to contacts.
 - Observe which additional storage and reminder patterns are repeatedly needed.
 
 ## Still Pending
@@ -72,6 +74,7 @@ project_mode: lightweight
 - The reusable personal-document saving workflow is now recorded.
 - Phone photographs can be converted into scan-style files without rewriting document text.
 - Confirmed document cards can be stored in the lightweight Notion index.
+- Contact/business-card photos can be converted into `.vcf` files for direct import into Android/Google Contacts.
 
 ## Not Yet Validated
 
@@ -82,7 +85,7 @@ project_mode: lightweight
 
 ## Next Safe Action
 
-Process the next real intake batch. When Oleg submits a personal document photograph or scan, apply `DOCUMENT_SAVING_STANDARD.md` automatically and mention only blockers or the nearest manual action.
+Process the next real intake batch. When Oleg submits a personal document photograph or scan, apply `DOCUMENT_SAVING_STANDARD.md` automatically and mention only blockers or the nearest manual action. When Oleg submits a business card/contact photo and asks to add it to contacts, extract the fields and create a downloadable `.vcf` contact file for import.
 
 ## Do Not Repeat Work
 
