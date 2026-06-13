@@ -742,10 +742,7 @@ def finalize_comment_linkback(
         )
         return LinkbackState(None, True, pending_evidence)
 
-    success_evidence = evidence + [
-        f"Linkback-Artifact-SHA: {final_linkback_sha}",
-        "Linkback-State: complete",
-    ]
+    success_evidence = evidence + ["Linkback-State: complete"]
     write_mailbox(
         path=FROM_EXECUTOR_PATH,
         sequence=sequence,
@@ -780,13 +777,11 @@ def finalize_comment_linkback(
         next_action=next_action,
         owner_required=owner_required,
     )
-    stage_runtime_files()
-    run_command(["git", "commit", "--amend", "--no-edit"], check=True)
-    final_linkback_sha = get_current_commit_sha()
-    success_evidence = [
-        item for item in success_evidence if not item.startswith("Linkback-Artifact-SHA: ")
-    ] + [f"Linkback-Artifact-SHA: {final_linkback_sha}", "Linkback-State: complete"]
-    return LinkbackState(final_linkback_sha, False, success_evidence)
+    return LinkbackState(
+        final_linkback_sha,
+        False,
+        success_evidence + [f"Linkback-Artifact-SHA: {final_linkback_sha}"],
+    )
 
 
 def reconcile_pending_linkback() -> Optional[LinkbackState]:

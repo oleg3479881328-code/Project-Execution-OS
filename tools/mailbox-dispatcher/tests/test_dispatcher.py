@@ -481,11 +481,7 @@ class TestDurableArtifacts(unittest.TestCase):
             "mailbox_dispatcher.get_current_commit_sha",
             return_value="d" * 40,
         ):
-            mock_run.side_effect = [
-                MagicMock(returncode=0),
-                MagicMock(returncode=0),
-                MagicMock(returncode=0),
-            ]
+            mock_run.side_effect = [MagicMock(returncode=0), MagicMock(returncode=0)]
             linkback_state = finalize_comment_linkback(
                 task_id="dispatcher-v7",
                 sequence=9,
@@ -505,8 +501,10 @@ class TestDurableArtifacts(unittest.TestCase):
             commands = [call.args[0] for call in mock_run.call_args_list]
             self.assertEqual(commands[0][:3], ["git", "commit", "-m"])
             self.assertEqual(commands[1], ["git", "push"])
-            self.assertEqual(commands[2][:3], ["git", "commit", "--amend"])
             self.assertEqual(mock_write.call_count, 2)
+            written_evidence = mock_write.call_args_list[-1].kwargs["evidence"]
+            self.assertIn("Linkback-State: complete", written_evidence)
+            self.assertNotIn("Linkback-Artifact-SHA: " + ("d" * 40), written_evidence)
 
     def test_linkback_commit_failure_leaves_honest_pending_state(self):
         with patch("mailbox_dispatcher.write_mailbox") as mock_write, patch(
@@ -657,6 +655,7 @@ class TestDurableArtifacts(unittest.TestCase):
             build_dispatch_result_for_test()
             self.assertEqual(mock_comment.call_count, 2)
             self.assertIn("Linkback-Artifact-SHA", mock_comment.call_args_list[1].args[1])
+            self.assertIn("d" * 40, mock_comment.call_args_list[1].args[1])
 
     def test_externally_reported_linkback_artifact_sha_matches_final_commit(self):
         with patch("mailbox_dispatcher.persist_runtime_status", return_value=("x" * 40, "b" * 40)), patch(
