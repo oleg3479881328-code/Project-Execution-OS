@@ -16,11 +16,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Write Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55`
 
 ### Read Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55`
 
 ### Reviewer To Executor Mailbox
 
@@ -36,7 +36,7 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Scope
 
-`Project Execution OS / Mailbox Dispatcher v11 accepted / idle until next routed task`
+`Reels Factory MVP / AWS smoke test #2 / 3-second I2V generation / AMI capture`
 
 ### Last Confirmed At
 
