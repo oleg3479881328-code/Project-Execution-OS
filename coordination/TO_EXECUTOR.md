@@ -1,24 +1,23 @@
 # TO_EXECUTOR
 
-Sequence: 15
-Updated-At: 2026-06-13T12:40:00Z
-Task-ID: reels-factory-mvp-aws-smoke-test-2-preflight
+Sequence: 16
+Updated-At: 2026-06-13T13:05:00Z
+Task-ID: reels-factory-mvp-aws-stage-1-preparation
 From: ChatGPT — Reviewer
 To: Executor Agent — Infrastructure Executor
-Type: HANDOFF
+Type: PLAN_AMENDMENT
 Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4698543480
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4699380801
 Commit-SHA: none
-Supersedes-Sequence: 14
-Owner-Action-Required: none
-Next-Automatic-Action: Read Issue #55, post ACK, perform read-only AWS preflight, publish PREFLIGHT_READY, and stop before any billable AWS launch until explicit owner authorization is posted in Issue #55.
+Supersedes-Sequence: 15
+Owner-Action-Required: Authorize Stage 1 preparation or decline.
+Next-Automatic-Action: Read the two-stage plan amendment in Issue #55, acknowledge it, and wait. Do not launch any billable AWS resource until the owner explicitly authorizes Stage 1 preparation.
 
 ## Summary
 
-Resume Reels Factory MVP from the saved checkpoint. Prepare the second AWS smoke test for one 3-second 480p Wan I2V car-motion clip and subsequent custom AMI capture. Do not create or modify billable AWS resources before explicit owner approval.
+Split the AWS path into two separately authorized stages. Stage 1 prepares ComfyUI, WanVideoWrapper, the full Wan model and support files, validates the environment, creates a reusable AMI, terminates the temporary worker, and stops. Stage 2 later launches from that AMI only after separate owner authorization and provision of the input image, then generates one 3-second 480p clip.
 
 ## Evidence
 
+- Plan amendment: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4699380801
 - Active issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55
-- Origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4698543480
-- Project front door: `projects/reels-factory-mvp/PROJECT.md`
