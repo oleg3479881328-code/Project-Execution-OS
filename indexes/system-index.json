@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "507796bb834ff3a929e042981817b144b26bd216",
-  "generated_at": "2026-06-12T18:38:56-04:00",
-  "artifact_count": 465,
+  "repository_commit": "b7de6ac4d71b1a9f087a436067f3dea7ca276d43",
+  "generated_at": "2026-06-13T08:20:40-04:00",
+  "artifact_count": 466,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -4693,7 +4693,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "6c3dd5b9cbfd4c0f310d9a3909fc0180b804b2e89617e9e2f6769cdf3304e658",
+      "sha256": "2b4f6e28698d0a103117cd972b693d64469f2a8a3e20cc56cf29e149abce6905",
       "headings": [
         "FROM_EXECUTOR",
         "Summary",
@@ -4707,7 +4707,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "c62759970409cb41680db40af74334b91e8a6da60ea56363223515326cd5a6d3",
+      "sha256": "0769e406c73bd778dffd1b284759e45c9e4d3ac416f37a27b44733bfad93a633",
       "headings": [
         "TO_EXECUTOR",
         "Summary",
@@ -5652,6 +5652,26 @@
         "When Custom Work Is Allowed",
         "Evidence Shape",
         "Required Propagation"
+      ]
+    },
+    {
+      "path": "docs/FILE_ORGANIZATION_STANDARD.md",
+      "title": "File Organization Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "92e01e6d970ec6246ec5ef24f31e998360f204c6c40b32f39b5f3dbfdb4cb3c0",
+      "headings": [
+        "File Organization Standard",
+        "Purpose",
+        "Scope",
+        "Core Rule",
+        "Canonical Placement Rules",
+        "Non-Project Work",
+        "Tool Limitation Rule",
+        "Temporary Workspace Rule",
+        "Final Rule"
       ]
     },
     {
@@ -7809,9 +7829,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Mailbox Dispatcher v7 correction is implemented and validated locally by the bounded behavioral test suite.",
+      "status": "Final bounded completion-marker persistence correction queued in Issue #52.",
       "date": null,
-      "sha256": "ac585a8a874631b1abcb7a43dbac2d9e5af9bcd17130ec29695bfb644a8048d9",
+      "sha256": "33fbce8ba1cb7d83b5685ed56e345dbfb575b0edb3a854d202cc1180c6211984",
       "headings": [
         "Latest Executor Status"
       ]
@@ -10003,7 +10023,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "89f5861b3249517b2a3ac11d342503c236bac1db197dc67fc22e8621e3e14601",
+      "sha256": "0562e7dc54d9c1bced62e3edf518774b39776b2c1949decc10fd9369f2cd8028",
       "headings": [
         "Mailbox Dispatcher",
         "Purpose",
@@ -10022,6 +10042,7 @@
         "Usage",
         "Notifier mode",
         "Runner mode",
+        "Reconcile pending linkback only",
         "Tests",
         "Security Boundary",
         "File Layout",
