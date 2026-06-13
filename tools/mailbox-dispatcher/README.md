@@ -84,6 +84,8 @@ After the GitHub comment is published, the dispatcher writes one final immutable
 
 A commit cannot durably contain its own final SHA. Because of that, the dispatcher does not try to store the linkback commit's own SHA inside mailbox or log contents. If that SHA needs to be reported, it is reported externally as `Linkback-Artifact-SHA`.
 
+If the final linkback commit or push does not succeed, the dispatcher leaves an honest pending status in the mailbox/log and can later retry only the linkback step without rerunning the external adapter.
+
 ### Strict git return-code handling
 
 Publication paths use strict command checking for `git status`, `git add`, `git commit`, and `git push`. A non-zero result is a `BLOCKER`, not a warning.
@@ -132,6 +134,12 @@ python mailbox_dispatcher.py notifier --poll-interval 30
 
 ```bash
 python mailbox_dispatcher.py runner --command "python my_script.py" --timeout 300
+```
+
+### Reconcile pending linkback only
+
+```bash
+python mailbox_dispatcher.py reconcile-linkback
 ```
 
 ### Tests

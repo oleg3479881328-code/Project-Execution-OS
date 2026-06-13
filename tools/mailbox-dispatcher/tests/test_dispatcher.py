@@ -22,6 +22,7 @@ from mailbox_dispatcher import (
     check_dirty_tree_runtime,
     filter_dirty_entries,
     finalize_comment_linkback,
+    reconcile_pending_linkback,
     notifier_cycle,
     parse_adapter_result,
     parse_mailbox,
@@ -468,7 +469,7 @@ class TestDurableArtifacts(unittest.TestCase):
             return_value="d" * 40,
         ):
             mock_run.side_effect = [MagicMock(returncode=0), MagicMock(returncode=0)]
-            linkback_sha = finalize_comment_linkback(
+            linkback_state = finalize_comment_linkback(
                 task_id="dispatcher-v7",
                 sequence=9,
                 active_channel="https://github.com/test/issues/52",
@@ -481,11 +482,106 @@ class TestDurableArtifacts(unittest.TestCase):
                 result_sha="a" * 40,
                 status_artifact_sha="b" * 40,
             )
-            self.assertEqual(linkback_sha, "d" * 40)
+            self.assertEqual(linkback_state.linkback_artifact_sha, "d" * 40)
+            self.assertFalse(linkback_state.pending)
             commands = [call.args[0] for call in mock_run.call_args_list]
             self.assertEqual(commands[0][:3], ["git", "commit", "-m"])
             self.assertEqual(commands[1], ["git", "push"])
             self.assertEqual(mock_write.call_count, 1)
+
+    def test_linkback_commit_failure_leaves_honest_pending_state(self):
+        with patch("mailbox_dispatcher.write_mailbox") as mock_write, patch(
+            "mailbox_dispatcher.update_latest_log"
+        ) as mock_log, patch("mailbox_dispatcher.stage_runtime_files"), patch(
+            "mailbox_dispatcher.run_command",
+            side_effect=RuntimeError("commit failed"),
+        ):
+            linkback_state = finalize_comment_linkback(
+                task_id="dispatcher-v8",
+                sequence=10,
+                active_channel="https://github.com/test/issues/52",
+                comment_url="https://github.com/test/issues/52#issuecomment-5",
+                summary="done",
+                evidence=["one"],
+                next_action="wait",
+                owner_required="none",
+                msg_type="COMPLETE",
+                result_sha="a" * 40,
+                status_artifact_sha="b" * 40,
+            )
+            self.assertTrue(linkback_state.pending)
+            self.assertIsNone(linkback_state.linkback_artifact_sha)
+            self.assertIn("commit failed", "\n".join(linkback_state.evidence))
+            final_write = mock_write.call_args_list[-1].kwargs
+            self.assertEqual(final_write["remote_push"], "pending")
+            final_log = mock_log.call_args_list[-1].kwargs
+            self.assertEqual(final_log["remote_push"], "pending")
+
+    def test_linkback_push_failure_leaves_honest_pending_state(self):
+        with patch("mailbox_dispatcher.write_mailbox") as mock_write, patch(
+            "mailbox_dispatcher.update_latest_log"
+        ) as mock_log, patch("mailbox_dispatcher.stage_runtime_files"), patch(
+            "mailbox_dispatcher.run_command"
+        ) as mock_run, patch(
+            "mailbox_dispatcher.get_current_commit_sha",
+            return_value="d" * 40,
+        ):
+            mock_run.side_effect = [MagicMock(returncode=0), RuntimeError("push failed")]
+            linkback_state = finalize_comment_linkback(
+                task_id="dispatcher-v8",
+                sequence=10,
+                active_channel="https://github.com/test/issues/52",
+                comment_url="https://github.com/test/issues/52#issuecomment-5",
+                summary="done",
+                evidence=["one"],
+                next_action="wait",
+                owner_required="none",
+                msg_type="COMPLETE",
+                result_sha="a" * 40,
+                status_artifact_sha="b" * 40,
+            )
+            self.assertTrue(linkback_state.pending)
+            self.assertIsNone(linkback_state.linkback_artifact_sha)
+            self.assertIn("push failed", "\n".join(linkback_state.evidence))
+            final_write = mock_write.call_args_list[-1].kwargs
+            self.assertEqual(final_write["remote_push"], "failed")
+            self.assertEqual(final_write["local_status_sha"], "d" * 40)
+            final_log = mock_log.call_args_list[-1].kwargs
+            self.assertEqual(final_log["remote_push"], "failed")
+
+    def test_reconcile_path_retries_only_linkback_step(self):
+        pending_mailbox = (
+            "# FROM_EXECUTOR\n\n"
+            "Sequence: 10\n"
+            "Task-ID: dispatcher-v8\n"
+            "Type: COMPLETE\n"
+            "Active-Channel: https://github.com/test/issues/52\n"
+            "Comment-URL: https://github.com/test/issues/52#issuecomment-5\n"
+            "Result-SHA: " + ("a" * 40) + "\n"
+            "Status-Artifact-SHA: " + ("b" * 40) + "\n"
+            "Owner-Action-Required: none\n"
+            "Next-Automatic-Action: reconcile final linkback only\n\n"
+            "## Summary\n\n"
+            "done\n\n"
+            "## Evidence\n\n"
+            "- one\n"
+            "- Linkback-Pending-Reason: push failed\n"
+        )
+        with tempfile.TemporaryDirectory() as tmpdir:
+            mailbox_path = Path(tmpdir) / "FROM_EXECUTOR.md"
+            mailbox_path.write_text(pending_mailbox, encoding="utf-8")
+            with patch("mailbox_dispatcher.FROM_EXECUTOR_PATH", mailbox_path), patch(
+                "mailbox_dispatcher.finalize_comment_linkback",
+                return_value=MagicMock(
+                    linkback_artifact_sha="d" * 40,
+                    pending=False,
+                    evidence=["one", "Linkback-Artifact-SHA: " + ("d" * 40)],
+                ),
+            ) as mock_finalize:
+                result = reconcile_pending_linkback()
+                self.assertEqual(result.linkback_artifact_sha, "d" * 40)
+                self.assertFalse(result.pending)
+                mock_finalize.assert_called_once()
 
     def test_externally_reported_linkback_artifact_sha_matches_final_commit(self):
         with patch("mailbox_dispatcher.persist_runtime_status", return_value=("x" * 40, "b" * 40)), patch(
@@ -493,7 +589,11 @@ class TestDurableArtifacts(unittest.TestCase):
             return_value="https://github.com/test/issues/52#issuecomment-4",
         ), patch(
             "mailbox_dispatcher.finalize_comment_linkback",
-            return_value="d" * 40,
+            return_value=MagicMock(
+                linkback_artifact_sha="d" * 40,
+                pending=False,
+                evidence=["one", "Linkback-Artifact-SHA: " + ("d" * 40)],
+            ),
         ):
             result = build_dispatch_result_for_test()
             self.assertEqual(result.linkback_artifact_sha, "d" * 40)

@@ -93,6 +93,15 @@ class AdapterResult:
     evidence: list[str]
 
 
+@dataclass
+class LinkbackState:
+    """Result of post-comment linkback persistence."""
+
+    linkback_artifact_sha: Optional[str]
+    pending: bool
+    evidence: list[str]
+
+
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -285,6 +294,17 @@ def update_latest_log(
     if remote_push is not None:
         content += f"Remote-Push: {remote_push}\n"
     LATEST_LOG_PATH.write_text(content, encoding="utf-8")
+
+
+def extract_linkback_artifact_sha(evidence: list[str]) -> Optional[str]:
+    """Extract Linkback-Artifact-SHA from evidence lines when present."""
+    prefix = "Linkback-Artifact-SHA: "
+    for item in evidence:
+        if item.startswith(prefix):
+            value = item[len(prefix):].strip()
+            if value:
+                return value
+    return None
 
 
 def get_dirty_entries() -> list[str]:
@@ -584,8 +604,8 @@ def finalize_comment_linkback(
     msg_type: str,
     result_sha: str,
     status_artifact_sha: str,
-) -> str:
-    """Persist final comment URL and return the immutable linkback artifact SHA."""
+) -> LinkbackState:
+    """Persist final comment URL and return immutable linkback state."""
     write_mailbox(
         path=FROM_EXECUTOR_PATH,
         sequence=sequence,
@@ -621,13 +641,127 @@ def finalize_comment_linkback(
         owner_required=owner_required,
     )
     stage_runtime_files()
-    run_command(
-        ["git", "commit", "-m", f"dispatcher: linkback {msg_type} status for {task_id} (seq {sequence})"],
-        check=True,
+    try:
+        run_command(
+            ["git", "commit", "-m", f"dispatcher: linkback {msg_type} status for {task_id} (seq {sequence})"],
+            check=True,
+        )
+        final_linkback_sha = get_current_commit_sha()
+    except RuntimeError as exc:
+        pending_evidence = evidence + [f"Linkback-Pending-Reason: commit failed: {exc}"]
+        write_mailbox(
+            path=FROM_EXECUTOR_PATH,
+            sequence=sequence,
+            task_id=task_id,
+            from_role="Executor Agent — Infrastructure Executor",
+            to_role="ChatGPT — Reviewer",
+            msg_type=msg_type,
+            active_channel=active_channel,
+            comment_url=comment_url,
+            result_sha=result_sha,
+            status_artifact_sha=status_artifact_sha,
+            linkback_sha=None,
+            local_status_sha=None,
+            remote_push="pending",
+            supersedes_sequence=None,
+            owner_action_required=owner_required,
+            next_automatic_action="reconcile final linkback only",
+            summary=summary,
+            evidence=pending_evidence,
+        )
+        update_latest_log(
+            marker=msg_type,
+            task_id=task_id,
+            status=summary,
+            reply_surface_url=active_channel,
+            comment_url=comment_url,
+            result_sha=result_sha,
+            status_artifact_sha=status_artifact_sha,
+            linkback_sha=None,
+            local_status_sha=None,
+            remote_push="pending",
+            next_action="reconcile final linkback only",
+            owner_required=owner_required,
+        )
+        return LinkbackState(None, True, pending_evidence)
+
+    try:
+        run_command(["git", "push"], check=True)
+    except RuntimeError as exc:
+        pending_evidence = evidence + [
+            f"Linkback-Pending-Reason: push failed: {exc}",
+            f"Linkback-Local-Status-SHA: {final_linkback_sha}",
+        ]
+        write_mailbox(
+            path=FROM_EXECUTOR_PATH,
+            sequence=sequence,
+            task_id=task_id,
+            from_role="Executor Agent — Infrastructure Executor",
+            to_role="ChatGPT — Reviewer",
+            msg_type=msg_type,
+            active_channel=active_channel,
+            comment_url=comment_url,
+            result_sha=result_sha,
+            status_artifact_sha=status_artifact_sha,
+            linkback_sha=None,
+            local_status_sha=final_linkback_sha,
+            remote_push="failed",
+            supersedes_sequence=None,
+            owner_action_required=owner_required,
+            next_automatic_action="reconcile final linkback only",
+            summary=summary,
+            evidence=pending_evidence,
+        )
+        update_latest_log(
+            marker=msg_type,
+            task_id=task_id,
+            status=summary,
+            reply_surface_url=active_channel,
+            comment_url=comment_url,
+            result_sha=result_sha,
+            status_artifact_sha=status_artifact_sha,
+            linkback_sha=None,
+            local_status_sha=final_linkback_sha,
+            remote_push="failed",
+            next_action="reconcile final linkback only",
+            owner_required=owner_required,
+        )
+        return LinkbackState(None, True, pending_evidence)
+
+    success_evidence = evidence + [f"Linkback-Artifact-SHA: {final_linkback_sha}"]
+    return LinkbackState(final_linkback_sha, False, success_evidence)
+
+
+def reconcile_pending_linkback() -> Optional[LinkbackState]:
+    """Retry only the final linkback persistence from durable mailbox state."""
+    state = parse_mailbox(FROM_EXECUTOR_PATH)
+    if not state:
+        return None
+    if state.get("Comment-URL") in {"", "pending", "none"}:
+        return None
+    if extract_linkback_artifact_sha(state.get("Evidence", "").splitlines()):
+        return None
+
+    evidence_lines = []
+    raw_evidence = state.get("Evidence", "")
+    for line in raw_evidence.splitlines():
+        cleaned = line.strip()
+        if cleaned.startswith("- "):
+            evidence_lines.append(cleaned[2:])
+
+    return finalize_comment_linkback(
+        task_id=state.get("Task-ID", "unknown"),
+        sequence=int(state.get("Sequence", "0") or "0"),
+        active_channel=state.get("Active-Channel", ""),
+        comment_url=state.get("Comment-URL", "none"),
+        summary=state.get("Summary", ""),
+        evidence=evidence_lines,
+        next_action=state.get("Next-Automatic-Action", "review linkback persistence"),
+        owner_required=state.get("Owner-Action-Required", "none"),
+        msg_type=state.get("Type", "COMPLETE"),
+        result_sha=state.get("Result-SHA", "none"),
+        status_artifact_sha=state.get("Status-Artifact-SHA", "pending"),
     )
-    final_linkback_sha = get_current_commit_sha()
-    run_command(["git", "push"], check=True)
-    return final_linkback_sha
 
 
 def parse_adapter_result(stdout: str) -> AdapterResult:
@@ -812,7 +946,7 @@ def commit_and_publish(
         post_blocker_and_exit(task, to_seq, error_msg, active_channel, recoverable=False)
         raise
 
-    linkback_artifact_sha = finalize_comment_linkback(
+    linkback_state = finalize_comment_linkback(
         task_id=task_id,
         sequence=to_seq,
         active_channel=active_channel,
@@ -833,13 +967,9 @@ def commit_and_publish(
         result_sha=result_sha_hint,
         status_artifact_sha=status_artifact_sha,
         comment_url=comment_url,
-        linkback_artifact_sha=linkback_artifact_sha,
+        linkback_artifact_sha=linkback_state.linkback_artifact_sha,
         summary_text=summary_text,
-        evidence=evidence + [
-            f"Result-SHA: {result_sha_hint}",
-            f"Status-Artifact-SHA: {status_artifact_sha}",
-            f"Linkback-Artifact-SHA: {linkback_artifact_sha}",
-        ],
+        evidence=linkback_state.evidence,
     )
 
 
@@ -1132,12 +1262,26 @@ def main():
         help=f"Command timeout in seconds (default: {DEFAULT_RUNNER_TIMEOUT})",
     )
 
+    subparsers.add_parser(
+        "reconcile-linkback",
+        help="Retry only the final linkback persistence without rerunning the adapter",
+    )
+
     args = parser.parse_args()
 
     if args.mode == "notifier":
         run_notifier(args.poll_interval)
     elif args.mode == "runner":
         run_runner(args.command, args.timeout)
+    elif args.mode == "reconcile-linkback":
+        result = reconcile_pending_linkback()
+        if result is None:
+            print("No pending linkback reconciliation required.")
+        elif result.pending:
+            print("Linkback reconciliation still pending.")
+            sys.exit(1)
+        else:
+            print(f"Linkback reconciliation complete: {result.linkback_artifact_sha}")
     else:
         parser.print_help()
         sys.exit(1)
