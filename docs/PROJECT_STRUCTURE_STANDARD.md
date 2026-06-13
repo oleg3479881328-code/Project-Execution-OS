@@ -14,6 +14,10 @@ For the exact contract of the first project-read artifact, use:
 
 `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 
+For every file-placement decision, also follow:
+
+`docs/FILE_ORGANIZATION_STANDARD.md`
+
 ## Constitutional Entry Order
 
 For file-based projects, the entry order stays:
@@ -122,3 +126,9 @@ The project entrypoint must remove ambiguity by stating these boundaries explici
 Important durable state must not exist only in chat.
 
 Write it into the correct active layer of the project: project files, GitHub, Notion, or Google Drive linkage, depending on what kind of truth it is.
+
+## No Scattered Durable Files
+
+Persistent files must not be left in Drive roots, computer roots, temporary folders, random folders, or unrelated project trees.
+
+Choose the correct destination before creation. Keep temporary generation, editable sources, exports, and backups separated according to `docs/FILE_ORGANIZATION_STANDARD.md`.
