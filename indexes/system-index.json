@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1ed31096558233e8f966324bf1663ef43b530426",
-  "generated_at": "2026-06-13T08:20:58-04:00",
+  "repository_commit": "f5893886000210a1145833a7c719e32767429324",
+  "generated_at": "2026-06-13T08:21:35-04:00",
   "artifact_count": 466,
   "artifacts": [
     {
@@ -6175,7 +6175,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "a6a59e6655a47107d784fa317e4f16bfd9f69f2441695c44e77be33b6c7d09b4",
+      "sha256": "58651d1f89a33b5f27cffead3be27eb8c6997cd956d500622c60415a2f141687",
       "headings": [
         "Project Lifecycle Model",
         "Purpose",
@@ -6196,7 +6196,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "da399dabc5d9a4537c41e72496d6189b5b124449d2be9111b0993cec5eebf205",
+      "sha256": "4320a93f02789cd7d41347858955911f914a154b48ed559bfe44bd6322876ed1",
       "headings": [
         "Project Structure Standard v2",
         "Purpose",
@@ -6209,7 +6209,8 @@
         "Fuller File-Execution Mode",
         "Internal Subprojects",
         "Source-Of-Truth Rule",
-        "No Hidden Durable State"
+        "No Hidden Durable State",
+        "No Scattered Durable Files"
       ]
     },
     {
@@ -6613,7 +6614,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "c073bc96d592a5c6422e9040fbb2ba57005d656c3ccb9b93ab95dc4a898f9cea",
+      "sha256": "1306de8a2026d371fa0d507faa2ac22799f1099bf2e5b6cb73f7331f2b331166",
       "headings": [
         "ChatGPT Core System Prompt",
         "Purpose",
