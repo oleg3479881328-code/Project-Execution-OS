@@ -41,6 +41,7 @@ Do not automatically create files merely because a folder or Codex Desktop proje
 6. Internal subprojects inside an existing Git repository must not receive nested `git init` unless there is a separate explicit decision.
 7. `PROJECT.md` is the local front door for a project, but `START_HERE.md` remains the top-level system door.
 8. Apply `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` before new architecture, implementation, workflow invention, or custom tooling.
+9. Every durable artifact must follow `docs/FILE_ORGANIZATION_STANDARD.md`: choose the correct folder before creating the file, keep project files inside the project tree, and never scatter persistent files in Drive roots or random locations.
 
 ## Real Project Bootstrap
 
@@ -68,6 +69,7 @@ Thought or request
 → attach GitHub only if versioned execution or shared review is required
 → attach Notion only if readable project management is needed
 → attach Google Drive only if heavy source files or assets are needed
+→ place every durable artifact into the correct project folder or subfolder before continuing
 ```
 
 ## Source-of-Truth Rule
@@ -99,5 +101,6 @@ A project entrypoint, when one exists, must state which layers exist and where e
 - `docs/MODE_CLASSIFIER.md` — choose the lightest operating mode
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md` — per-project front door when used
 - `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md` — preserve ideas that are not projects yet
+- `docs/FILE_ORGANIZATION_STANDARD.md` — global canonical placement rule for all durable artifacts
 - `docs/RESEARCH_STANDARD.md` — evidence-backed reuse-first research
 - `docs/CODEX_HANDOFF_STANDARD.md` — bounded execution transfer to Codex
