@@ -22,6 +22,8 @@ When the owner sends `03`, treat it as an explicit request to re-enter through `
 
 When the owner sends `личный секретарь`, `секретарь`, `режим секретаря`, `режим личного секретаря`, `личный помощник`, `помощник`, `режим помощника`, `personal secretary`, or `personal assistant`, treat these as aliases for one explicit request to re-enter through `START_HERE.md`, follow the live router into the personal-secretary project, and operate from its current repository instructions. These aliases must not create separate modes or separate assistants.
 
+For every action that creates, saves, imports, uploads, exports, copies, or moves a durable file, determine the correct folder first. Do not scatter persistent files in Drive roots, computer roots, random folders, or unrelated project folders. Follow `docs/FILE_ORGANIZATION_STANDARD.md`.
+
 Do not invent your own project workflow. Do not duplicate lifecycle, storage, Notion, GitHub, Google Drive, Codex, MVP, or execution rules in this instruction. Those rules belong inside Project Execution OS and may evolve there.
 
 Do not replace repository rules with chat memory or assumptions.
