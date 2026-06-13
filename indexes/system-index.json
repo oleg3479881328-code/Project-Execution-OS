@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fa8be00bc9d71e18bbc0d5d179ccf038ac77daf4",
-  "generated_at": "2026-06-13T16:32:24-04:00",
+  "repository_commit": "7d0b74bea65f3f319ecba7ce6ef04535cb774477",
+  "generated_at": "2026-06-13T17:41:59-04:00",
   "artifact_count": 466,
   "artifacts": [
     {
@@ -9033,8 +9033,8 @@
       "type": "project-artifact",
       "domain": "reels-factory-mvp",
       "status": "active",
-      "date": "2026-06-11",
-      "sha256": "6842109b5619e4d931217a4a39a740b2e8c3f66df30fe9e0fdd5c2fed79232a1",
+      "date": "2026-06-13",
+      "sha256": "602537c70ab8ba5b0adced7c7b7520336d5a0243f471a9d49652ee5ec6cf4a0d",
       "headings": [
         "PROJECT STATE — Reels Factory MVP",
         "Current Phase",
@@ -9087,15 +9087,16 @@
       "domain": "reels-factory-mvp",
       "status": null,
       "date": "2026-06-13",
-      "sha256": "ef76c7cf739533fd1cfbd3b1c6909eab6d33cbfc0db06d080a41988d7b5a709f",
+      "sha256": "59eb1677c10e243f1e7fe765a23abb5a83b7c9b679140f55631b84f82847d318",
       "headings": [
         "Latest Log — Reels Factory MVP",
         "Current Status",
-        "Stage 1 — Authorized",
-        "Stage 1 Boundaries",
-        "Stage 2 — Later",
-        "Preflight Evidence",
-        "Next Safe Action"
+        "Active Reply Surface",
+        "Direct Comment URLs",
+        "Stage 1 Summary",
+        "Runtime And Cost",
+        "Next Safe Reels Factory Action",
+        "Do-Not-Repeat Work"
       ]
     },
     {
