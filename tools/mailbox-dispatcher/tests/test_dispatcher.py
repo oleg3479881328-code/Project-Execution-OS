@@ -501,7 +501,7 @@ class TestDurableArtifacts(unittest.TestCase):
             commands = [call.args[0] for call in mock_run.call_args_list]
             self.assertEqual(commands[0][:3], ["git", "commit", "-m"])
             self.assertEqual(commands[1], ["git", "push"])
-            self.assertEqual(mock_write.call_count, 2)
+            self.assertEqual(mock_write.call_count, 1)
             written_evidence = mock_write.call_args_list[-1].kwargs["evidence"]
             self.assertIn("Linkback-State: complete", written_evidence)
             self.assertNotIn("Linkback-Artifact-SHA: " + ("d" * 40), written_evidence)
