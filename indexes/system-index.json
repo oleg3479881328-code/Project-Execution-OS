@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "685963ce24e360361cc99060173c32de58bc48e2",
-  "generated_at": "2026-06-13T08:21:51-04:00",
+  "repository_commit": "a25493e8d3195dcb7e0707ee3b6dd907b193d86b",
+  "generated_at": "2026-06-13T08:34:26-04:00",
   "artifact_count": 466,
   "artifacts": [
     {
@@ -43,16 +43,17 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "56d0ef385a8dc736e5abbdac223a244756e1f025f15f5a19dee6420661914380",
+      "sha256": "c2af695a50aeaf65437f9790cb9bccfd3f0a027bcc430c53c034472b72c5ab42",
       "headings": [
         "AI Coordination State",
         "Project",
         "Active Channel",
+        "Status",
         "Mailboxes",
-        "Current Task",
+        "Completed Task",
+        "Accepted Evidence",
         "Current Repository State",
         "Next Step",
-        "Required Validation",
         "Reading Rule"
       ]
     },
@@ -735,7 +736,7 @@
       "domain": "communication-channel",
       "status": null,
       "date": null,
-      "sha256": "deeb65597100fbb63a6c37ad3913fc38429ac9e482d282997f535f4c8d67efa6",
+      "sha256": "02ad826ae0c2ad567b065e8c5de58f5da2e024b005810a62ba18eca6ad4c851b",
       "headings": [
         "Active Coordination Channel Route",
         "Purpose",
@@ -4693,7 +4694,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "2b4f6e28698d0a103117cd972b693d64469f2a8a3e20cc56cf29e149abce6905",
+      "sha256": "17415c341052574fef7c95633ae5e7a8ada4bf95b224d7e66f8e9baed53a7201",
       "headings": [
         "FROM_EXECUTOR",
         "Summary",
@@ -7831,9 +7832,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Final bounded completion-marker persistence correction queued in Issue #52.",
+      "status": "Mailbox Dispatcher v11 accepted. Durable linkback state verified and Issue #52 closed as completed.",
       "date": null,
-      "sha256": "33fbce8ba1cb7d83b5685ed56e345dbfb575b0edb3a854d202cc1180c6211984",
+      "sha256": "72307a7ab647ff820ebef4864ea8ddd6038094a787de81ac8e19ee8ef22eedca",
       "headings": [
         "Latest Executor Status"
       ]
