@@ -36,11 +36,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Scope
 
-`Project Execution OS / Mailbox Dispatcher v5 correction`
+`Project Execution OS / Mailbox Dispatcher v11 accepted / idle until next routed task`
 
 ### Last Confirmed At
 
-`2026-06-12`
+`2026-06-13`
 
 ## Permanent Backup Recovery Pointer
 
