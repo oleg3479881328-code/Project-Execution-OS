@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3f2d58f2ddf6de3a12cd5e61a2be37251e449cd7",
-  "generated_at": "2026-06-13T12:10:11-04:00",
+  "repository_commit": "58db4af0e5e69ff458f0eb3feb038abdc9f08860",
+  "generated_at": "2026-06-13T14:25:35-04:00",
   "artifact_count": 466,
   "artifacts": [
     {
@@ -43,7 +43,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "c169f8bc82ecf7ac6df54130b0485a8316b701ccea60b26378d5c23c39ea0c61",
+      "sha256": "6ba228c7ddee6b1ef3139f541407586c2bfe094335a954b8f73a5d16fd2cc3dd",
       "headings": [
         "AI Coordination State",
         "Project",
@@ -52,9 +52,10 @@
         "Mailboxes",
         "Current Task",
         "Current Repository State",
-        "Approval Gate",
+        "Approval Gates",
+        "Stage 1 Required Validation",
+        "Stage 2 Later",
         "Next Step",
-        "Required Validation After Authorization",
         "Reading Rule"
       ]
     },
@@ -4709,7 +4710,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "3033f59da48fb5297cacc2d9d67882d6d0e59e76d13158a4408caae459a81064",
+      "sha256": "5c6476fd62591baf04588f2acfde70b23cbd97ba60d335601a65e121c6064ecb",
       "headings": [
         "TO_EXECUTOR",
         "Summary",
@@ -7833,9 +7834,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Read-only AWS preflight completed successfully. No Reels Factory GPU runtime is active. Exact bounded launch and cleanup plan is ready. Live AWS launch remains blocked until explicit owner authorization in Issue #55.",
+      "status": "Owner authorized Stage 1 AWS preparation only. Stage 2 generation remains blocked. Executor should prepare the environment, download the full model and support files, validate localhost-only ComfyUI, create and verify a reusable AMI, terminate the temporary worker, verify cleanup, publish STAGE_1_COMPLETE or BLOCKER, and stop.",
       "date": null,
-      "sha256": "cc0295a1f01b5064aab3755159f7335dfe1de1b3ecda13ab44decf3d8fff9d7c",
+      "sha256": "02e745fc35bd7dd1f4ef7eb06595385e089a2998ebfb4a5b3e85ed62daa05b3d",
       "headings": [
         "Latest Executor Status"
       ]
@@ -9085,18 +9086,16 @@
       "type": "project-artifact",
       "domain": "reels-factory-mvp",
       "status": null,
-      "date": "2026-06-11",
-      "sha256": "16bd9dcf920a812c586a3297d730c09ff698bc580e40465f5e976270eb913f2a",
+      "date": "2026-06-13",
+      "sha256": "ef76c7cf739533fd1cfbd3b1c6909eab6d33cbfc0db06d080a41988d7b5a709f",
       "headings": [
         "Latest Log — Reels Factory MVP",
         "Current Status",
-        "AWS Account",
-        "Canonical Route",
-        "First AWS Attempt",
-        "Persistence Report",
-        "Separate System Task",
-        "Next Safe Reels Factory Action",
-        "Do-Not-Repeat Work"
+        "Stage 1 — Authorized",
+        "Stage 1 Boundaries",
+        "Stage 2 — Later",
+        "Preflight Evidence",
+        "Next Safe Action"
       ]
     },
     {
