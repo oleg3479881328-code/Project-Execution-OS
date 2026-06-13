@@ -84,7 +84,7 @@ After the GitHub comment is published, the dispatcher writes one final immutable
 
 A commit cannot durably contain its own final SHA. Because of that, the dispatcher does not try to store the linkback commit's own SHA inside mailbox or log contents. If that SHA needs to be reported, it is reported externally as `Linkback-Artifact-SHA`.
 
-If the final linkback commit or push does not succeed, the dispatcher leaves an honest pending status in the mailbox/log and can later retry only the linkback step without rerunning the external adapter.
+If the final linkback commit or push does not succeed, the dispatcher leaves an honest pending status in the mailbox/log and can later retry only the linkback step without rerunning the external adapter. After success, the durable artifacts mark `Linkback-State: complete`, which makes repeated `reconcile-linkback` runs a no-op.
 
 ### Strict git return-code handling
 

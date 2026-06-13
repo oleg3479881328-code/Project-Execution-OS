@@ -307,6 +307,20 @@ def extract_linkback_artifact_sha(evidence: list[str]) -> Optional[str]:
     return None
 
 
+def has_linkback_completion_marker(evidence: list[str]) -> bool:
+    """Return True when durable evidence marks linkback as complete."""
+    return "Linkback-State: complete" in evidence
+
+
+def build_linkback_followup(linkback_artifact_sha: str) -> str:
+    """Build a compact durable follow-up for linkback artifact reporting."""
+    return (
+        "Automatic linkback report\n\n"
+        f"- Linkback-Artifact-SHA: `{linkback_artifact_sha}`\n"
+        "- Linkback-State: complete\n"
+    )
+
+
 def get_dirty_entries() -> list[str]:
     """Return all dirty git entries from porcelain status."""
     result = run_command(["git", "status", "--porcelain"], check=True)
@@ -728,7 +742,50 @@ def finalize_comment_linkback(
         )
         return LinkbackState(None, True, pending_evidence)
 
-    success_evidence = evidence + [f"Linkback-Artifact-SHA: {final_linkback_sha}"]
+    success_evidence = evidence + [
+        f"Linkback-Artifact-SHA: {final_linkback_sha}",
+        "Linkback-State: complete",
+    ]
+    write_mailbox(
+        path=FROM_EXECUTOR_PATH,
+        sequence=sequence,
+        task_id=task_id,
+        from_role="Executor Agent — Infrastructure Executor",
+        to_role="ChatGPT — Reviewer",
+        msg_type=msg_type,
+        active_channel=active_channel,
+        comment_url=comment_url,
+        result_sha=result_sha,
+        status_artifact_sha=status_artifact_sha,
+        linkback_sha=None,
+        local_status_sha=None,
+        remote_push="ok",
+        supersedes_sequence=None,
+        owner_action_required=owner_required,
+        next_automatic_action=next_action,
+        summary=summary,
+        evidence=success_evidence,
+    )
+    update_latest_log(
+        marker=msg_type,
+        task_id=task_id,
+        status=summary,
+        reply_surface_url=active_channel,
+        comment_url=comment_url,
+        result_sha=result_sha,
+        status_artifact_sha=status_artifact_sha,
+        linkback_sha=None,
+        local_status_sha=None,
+        remote_push="ok",
+        next_action=next_action,
+        owner_required=owner_required,
+    )
+    stage_runtime_files()
+    run_command(["git", "commit", "--amend", "--no-edit"], check=True)
+    final_linkback_sha = get_current_commit_sha()
+    success_evidence = [
+        item for item in success_evidence if not item.startswith("Linkback-Artifact-SHA: ")
+    ] + [f"Linkback-Artifact-SHA: {final_linkback_sha}", "Linkback-State: complete"]
     return LinkbackState(final_linkback_sha, False, success_evidence)
 
 
@@ -739,7 +796,12 @@ def reconcile_pending_linkback() -> Optional[LinkbackState]:
         return None
     if state.get("Comment-URL") in {"", "pending", "none"}:
         return None
-    if extract_linkback_artifact_sha(state.get("Evidence", "").splitlines()):
+    normalized_evidence = []
+    for line in state.get("Evidence", "").splitlines():
+        cleaned = line.strip()
+        if cleaned.startswith("- "):
+            normalized_evidence.append(cleaned[2:])
+    if has_linkback_completion_marker(normalized_evidence):
         return None
 
     evidence_lines = []
@@ -962,6 +1024,11 @@ def commit_and_publish(
         result_sha=result_sha_hint,
         status_artifact_sha=status_artifact_sha,
     )
+    if not linkback_state.pending and linkback_state.linkback_artifact_sha and active_channel:
+        post_issue_comment(
+            active_channel,
+            build_linkback_followup(linkback_state.linkback_artifact_sha),
+        )
 
     return DispatchResult(
         result_sha=result_sha_hint,
