@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f4d818aadcc4b5b89eac08c8a74fc9e39c228c0a",
-  "generated_at": "2026-06-13T08:39:40-04:00",
+  "repository_commit": "e8e7b77fb9a4db8f75b56f032d2bfe701a8f5da0",
+  "generated_at": "2026-06-13T12:07:55-04:00",
   "artifact_count": 466,
   "artifacts": [
     {
@@ -43,17 +43,18 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "c2af695a50aeaf65437f9790cb9bccfd3f0a027bcc430c53c034472b72c5ab42",
+      "sha256": "c169f8bc82ecf7ac6df54130b0485a8316b701ccea60b26378d5c23c39ea0c61",
       "headings": [
         "AI Coordination State",
         "Project",
         "Active Channel",
         "Status",
         "Mailboxes",
-        "Completed Task",
-        "Accepted Evidence",
+        "Current Task",
         "Current Repository State",
+        "Approval Gate",
         "Next Step",
+        "Required Validation After Authorization",
         "Reading Rule"
       ]
     },
@@ -4708,7 +4709,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "0769e406c73bd778dffd1b284759e45c9e4d3ac416f37a27b44733bfad93a633",
+      "sha256": "3033f59da48fb5297cacc2d9d67882d6d0e59e76d13158a4408caae459a81064",
       "headings": [
         "TO_EXECUTOR",
         "Summary",
@@ -7832,9 +7833,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Mailbox Dispatcher v11 accepted. Durable linkback state verified and Issue #52 closed as completed.",
+      "status": "Read-only AWS preflight completed successfully. No Reels Factory GPU runtime is active. Exact bounded launch and cleanup plan is ready. Live AWS launch remains blocked until explicit owner authorization in Issue #55.",
       "date": null,
-      "sha256": "72307a7ab647ff820ebef4864ea8ddd6038094a787de81ac8e19ee8ef22eedca",
+      "sha256": "cc0295a1f01b5064aab3755159f7335dfe1de1b3ecda13ab44decf3d8fff9d7c",
       "headings": [
         "Latest Executor Status"
       ]
@@ -8838,7 +8839,7 @@
       "domain": "personal-secretary-os",
       "status": null,
       "date": null,
-      "sha256": "cc78d65d066fce22a59b61beec24a588a7060383d351f3ad2c86d293a3e3fb6d",
+      "sha256": "d69e62b8c8c42ff135a06f340b0a6a663a50bcb2bbccbad81665c9ce5a3e2808",
       "headings": [
         "Personal Secretary OS — V0 Manual Operating Contract",
         "Purpose",
@@ -8847,6 +8848,7 @@
         "Current Working Surface",
         "Owner Intake Rule",
         "Secretary Processing Rule",
+        "Partner Mode And Critical Judgment",
         "V0 Categories",
         "Minimal Response Format",
         "Owner Interaction Rules",
