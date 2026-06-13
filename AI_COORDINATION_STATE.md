@@ -6,36 +6,32 @@ Project Execution OS / Mailbox Dispatcher
 ## Active Channel
 https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52
 
+## Status
+completed / accepted / waiting for next routed task
+
 ## Mailboxes
 - Reviewer to executor: `coordination/TO_EXECUTOR.md`
 - Executor to reviewer: `coordination/FROM_EXECUTOR.md`
 
-## Current Task
-Complete the minimal Mailbox Dispatcher v7 correction described in Issue #52.
+## Completed Task
+Mailbox Dispatcher v11 accepted and Issue #52 closed as completed.
+
+## Accepted Evidence
+- Result-SHA: `365ec7926bd38b329bedc4a0dba571fe5a751000`
+- Status-Artifact-SHA: `f8398488523dccfd33a3d6ee14344d64b1f6c128`
+- Linkback-Artifact-SHA: `7d6f0baaf6c3d4ce4c963060dbc1e61e16e42f8d`
+- Acceptance comment: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4698529996
+- Issue state: closed / completed
+- Test evidence: `Ran 39 tests` / `OK`
 
 ## Current Repository State
-- Active outbound mailbox sequence: `10`
-- Rejected v6 implementation SHA: `f30672fcb4bd4ab92aa17c29bb64d40a5b7f773d`
-- Rejected v6 status artifact SHA: `7c65b7187243e5ffbea641ab3da97323aed96f7b`
-- Review request: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4695116184
-- MarkItDown adapter PR #53 was accepted and merged.
+- Mailbox Dispatcher is accepted.
+- MarkItDown adapter PR #53 was accepted and merged earlier.
 - No AWS runtime is active.
+- No executor action is pending.
 
 ## Next Step
-When `02` is received:
-1. read `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`;
-2. read `coordination/FROM_EXECUTOR.md`;
-3. read Issue #52 comments;
-4. inspect any reported commit or PR;
-5. continue from mailbox sequence `10`.
-
-## Required Validation
-- Verify executor ACK for sequence `10`.
-- Verify timeout path publishes BLOCKER without `UnboundLocalError`.
-- Verify immutable linkback artifact semantics without self-reference.
-- Verify strict git-status failure handling.
-- Verify adapter result SHA accepts only `none` or full 40-hex SHA.
-- Verify behavioral tests exercise the production paths.
+Wait for the owner to select the next routed task.
 
 ## Reading Rule
-Read the active route, then the inbound mailbox, then Issue #52 and repository evidence.
+Until a new route is created, read the active route, then `coordination/FROM_EXECUTOR.md`, then Issue #52 as the last completed durable channel.
