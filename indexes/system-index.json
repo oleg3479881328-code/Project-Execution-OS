@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "58db4af0e5e69ff458f0eb3feb038abdc9f08860",
-  "generated_at": "2026-06-13T14:25:35-04:00",
+  "repository_commit": "d9d52719f43b920fa5b3cb8020eb0c2679adffcc",
+  "generated_at": "2026-06-13T16:31:41-04:00",
   "artifact_count": 466,
   "artifacts": [
     {
@@ -4710,7 +4710,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "5c6476fd62591baf04588f2acfde70b23cbd97ba60d335601a65e121c6064ecb",
+      "sha256": "3778b3b9c34f3fff71dc60dcdb33fa02f724ee0c44cc209fe7e879f9dc862dd1",
       "headings": [
         "TO_EXECUTOR",
         "Summary",
@@ -7834,9 +7834,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Owner authorized Stage 1 AWS preparation only. Stage 2 generation remains blocked. Executor should prepare the environment, download the full model and support files, validate localhost-only ComfyUI, create and verify a reusable AMI, terminate the temporary worker, verify cleanup, publish STAGE_1_COMPLETE or BLOCKER, and stop.",
+      "status": "Stage 1 with 100 GB gp3 hit a storage blocker and was cleaned up. Do not retry with 100 GB. Recommended revised route is one temporary g5.xlarge with 200 GB gp3, DeleteOnTermination=true, environment preparation only, AMI capture, cleanup, and stop. Stage 2 remains blocked.",
       "date": null,
-      "sha256": "02e745fc35bd7dd1f4ef7eb06595385e089a2998ebfb4a5b3e85ed62daa05b3d",
+      "sha256": "d05a5f1a343d278ca20e3064de7eb9479cbd4f6fb7522044ef1586d5435fe2db",
       "headings": [
         "Latest Executor Status"
       ]
@@ -8818,7 +8818,7 @@
       "domain": "personal-secretary-os",
       "status": "in-progress",
       "date": null,
-      "sha256": "df819a179ee6005e4a86f960223610c83e11e7b61cd0c60a9fe714a4e211c792",
+      "sha256": "b7145ce754795e899c5d10de21ba5ce40f5c672f0d45bffc094dc1a37def319f",
       "headings": [
         "Personal Secretary OS — Project State",
         "Current Phase",
