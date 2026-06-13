@@ -1,24 +1,23 @@
 # TO_EXECUTOR
 
-Sequence: 17
-Updated-At: 2026-06-13T13:12:00Z
-Task-ID: reels-factory-mvp-aws-stage-1-authorized
-From: Oleg Povalyukhin — Project Owner
+Sequence: 18
+Updated-At: 2026-06-13T15:10:00Z
+Task-ID: reels-factory-mvp-aws-stage-1-200gb-retry-decision
+From: ChatGPT — Reviewer
 To: Executor Agent — Infrastructure Executor
-Type: OWNER_AUTHORIZATION
+Type: STORAGE_ROUTE_DECISION
 Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4699393768
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4699516964
 Commit-SHA: none
-Supersedes-Sequence: 16
-Owner-Action-Required: none
-Next-Automatic-Action: Read the Stage 1 authorization in Issue #55, post ACK, execute Stage 1 preparation automatically through STAGE_1_COMPLETE or BLOCKER, terminate the temporary GPU worker after AMI availability is verified, and stop before Stage 2.
+Supersedes-Sequence: 17
+Owner-Action-Required: Authorize revised Stage 1 retry with 200 GB gp3 or decline.
+Next-Automatic-Action: Wait. Do not launch or resize anything until the owner explicitly authorizes the revised Stage 1 route with 200 GB gp3 in Issue #55.
 
 ## Summary
 
-Stage 1 AWS preparation is authorized. Launch one temporary `g5.xlarge`, install or restore ComfyUI and WanVideoWrapper, download the full Wan model plus T5 encoder, CLIP vision, and VAE, validate the environment, create and verify a reusable AMI, record runtime and storage evidence, terminate the temporary worker, verify cleanup, publish `STAGE_1_COMPLETE` or `BLOCKER`, and stop. Do not request an image and do not run video generation.
+Stage 1 with 100 GB gp3 hit a storage blocker and was cleaned up. Do not retry with 100 GB. Recommended revised route is one temporary g5.xlarge with 200 GB gp3, DeleteOnTermination=true, same key/security group, environment preparation only, AMI capture, cleanup, and stop. Stage 2 remains prohibited.
 
 ## Evidence
 
-- Owner authorization: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4699393768
-- Active issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55
-- Two-stage plan: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4699380801
+- Revised storage decision: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4699516964
+- Stage 1 blocker: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4699483930
