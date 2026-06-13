@@ -84,6 +84,12 @@ logs/latest.md
 
 Use `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md` for the continuity rules that begin after zero-state bootstrap.
 
+## File Placement Rule
+
+Every file created during bootstrap or later execution must follow `docs/FILE_ORGANIZATION_STANDARD.md`.
+
+Determine the correct project folder or subfolder before creating a durable artifact. Do not scatter persistent files into Drive roots, computer roots, temporary locations, or unrelated folders.
+
 ## Template Rule
 
 Project bootstrap templates are stored as passive templates under:
@@ -117,6 +123,7 @@ If created, `AGENTS.md` must reinforce:
 - minimum-context reading;
 - index check before mass scanning;
 - continuity and transfer-readiness standards;
+- canonical file placement under `docs/FILE_ORGANIZATION_STANDARD.md`;
 - official communication-channel routing;
 - legacy migration from `PROJECT_ENTRYPOINT.md` to `PROJECT.md` when needed.
 
@@ -142,5 +149,6 @@ For projects outside this repository, central-system references must use canonic
 - `docs/PROJECT_LIFECYCLE_MODEL.md` — layer and persistence decisions
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md` — ongoing entrypoint contract
 - `docs/PROJECT_STRUCTURE_STANDARD.md` — file or versioned structure when justified
+- `docs/FILE_ORGANIZATION_STANDARD.md` — global canonical placement rule for every durable artifact
 - `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md` — continuity after zero-state bootstrap
 - `docs/EXISTING_SOLUTION_FIRST_STANDARD.md` — mandatory reuse-first rule for relevant project work
