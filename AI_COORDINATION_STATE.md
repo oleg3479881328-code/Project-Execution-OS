@@ -1,37 +1,46 @@
 # AI Coordination State
 
 ## Project
-Project Execution OS / Mailbox Dispatcher
+Reels Factory MVP / AWS smoke test #2
 
 ## Active Channel
-https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52
+https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55
 
 ## Status
-completed / accepted / waiting for next routed task
+active / read-only preflight pending / live AWS launch gated by owner approval
 
 ## Mailboxes
 - Reviewer to executor: `coordination/TO_EXECUTOR.md`
 - Executor to reviewer: `coordination/FROM_EXECUTOR.md`
 
-## Completed Task
-Mailbox Dispatcher v11 accepted and Issue #52 closed as completed.
-
-## Accepted Evidence
-- Result-SHA: `365ec7926bd38b329bedc4a0dba571fe5a751000`
-- Status-Artifact-SHA: `f8398488523dccfd33a3d6ee14344d64b1f6c128`
-- Linkback-Artifact-SHA: `7d6f0baaf6c3d4ce4c963060dbc1e61e16e42f8d`
-- Acceptance comment: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/52#issuecomment-4698529996
-- Issue state: closed / completed
-- Test evidence: `Ran 39 tests` / `OK`
+## Current Task
+Prepare the second AWS Wan I2V smoke test for one 3-second 480p car-motion clip and custom AMI capture.
 
 ## Current Repository State
-- Mailbox Dispatcher is accepted.
-- MarkItDown adapter PR #53 was accepted and merged earlier.
-- No AWS runtime is active.
-- No executor action is pending.
+- Active outbound mailbox sequence: `15`
+- Active issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55
+- Origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55#issuecomment-4698543480
+- Mailbox Dispatcher v11 is accepted and Issue #52 is closed.
+- No AWS GPU runtime is active.
+- No persistent AMI exists yet.
+
+## Approval Gate
+- Executor may perform read-only AWS preflight now.
+- Executor must not launch or modify billable AWS resources before explicit owner authorization in Issue #55.
 
 ## Next Step
-Wait for the owner to select the next routed task.
+When `02` is received:
+1. read `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md`;
+2. read `coordination/FROM_EXECUTOR.md`;
+3. read Issue #55 comments;
+4. inspect any preflight evidence;
+5. continue from mailbox sequence `15`.
+
+## Required Validation
+- Verify executor ACK for sequence `15`.
+- Verify read-only preflight confirms no old GPU runtime is active.
+- Verify exact launch plan and cleanup plan.
+- Wait for owner authorization before live AWS launch.
 
 ## Reading Rule
-Until a new route is created, read the active route, then `coordination/FROM_EXECUTOR.md`, then Issue #52 as the last completed durable channel.
+Read the active route, then the inbound mailbox, then Issue #55 and repository evidence.
