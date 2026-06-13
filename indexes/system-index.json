@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f5893886000210a1145833a7c719e32767429324",
-  "generated_at": "2026-06-13T08:21:35-04:00",
+  "repository_commit": "685963ce24e360361cc99060173c32de58bc48e2",
+  "generated_at": "2026-06-13T08:21:51-04:00",
   "artifact_count": 466,
   "artifacts": [
     {
@@ -6098,7 +6098,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "319cf9661daef4b93dfd299793997bf5d1ebfcafe098bb13da15648d6c8c021b",
+      "sha256": "bfe1e999adb2df5f915f9f5adcc215a551dc660974569c3e095c6da52662c59e",
       "headings": [
         "Project Bootstrap Standard",
         "Purpose",
@@ -6109,6 +6109,7 @@
         "Internal subproject inside an existing Git repository",
         "Zero-State Bootstrap",
         "First Meaningful Execution Step",
+        "File Placement Rule",
         "Template Rule",
         "Required Zero-State Content",
         "Required Bootstrap Sequence",
