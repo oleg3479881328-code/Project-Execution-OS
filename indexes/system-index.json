@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d3022b457d920e4d79d481ee0efe6abeb15d99fa",
-  "generated_at": "2026-06-14T09:36:41-04:00",
-  "artifact_count": 466,
+  "repository_commit": "91f723489cd20bdf7b1c2399b3c481416ebbc943",
+  "generated_at": "2026-06-14T09:39:33-04:00",
+  "artifact_count": 467,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8784,6 +8784,32 @@
         "Data Handling Rule",
         "Current Tool Boundary",
         "Interaction Rule"
+      ]
+    },
+    {
+      "path": "projects/personal-secretary-os/PERSONAL_KNOWLEDGE_STANDARD.md",
+      "title": "Personal Secretary OS — Personal Knowledge Standard",
+      "type": "project-artifact",
+      "domain": "personal-secretary-os",
+      "status": null,
+      "date": null,
+      "sha256": "25873a732549167ed80df17f96fa341084010046e7f19ec2bc31d1354640541e",
+      "headings": [
+        "Personal Secretary OS — Personal Knowledge Standard",
+        "Purpose",
+        "Scope",
+        "Core Rule",
+        "Knowledge Classes",
+        "Default Capture Behavior",
+        "Privacy Boundary",
+        "Storage Boundary",
+        "Review Rule",
+        "Accumulating Work Knowledge",
+        "Anti-Dump Rule",
+        "Owner Control",
+        "Interaction Rule",
+        "Relationship To Central Knowledge System",
+        "Final Rule"
       ]
     },
     {
