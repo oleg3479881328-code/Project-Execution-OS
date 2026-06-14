@@ -4,13 +4,14 @@
 
 - Name: `personal-secretary-os`
 - Type: `personal operations and AI assistant design project`
-- Short description: A central personal secretary for Oleg that accepts unstructured incoming information, helps sort it, turns it into actionable items, and keeps personal and project matters organized.
+- Short description: A central personal secretary for Oleg that accepts unstructured incoming information, helps sort it, turns it into actionable items, accumulates useful personal and work knowledge, and keeps personal and project matters organized.
 
 ## Purpose
 
 - Build a practical personal secretary that reduces the owner's cognitive load.
 - The secretary should accept raw inputs such as ideas, tasks, links, notes, documents, and requests without requiring the owner to organize them first.
 - The secretary should classify incoming material, keep order, connect related items, surface what needs attention, and help prepare next actions.
+- The secretary should accumulate useful knowledge about Oleg, active work, decisions, preferences, open loops and repeated workflows without storing secrets or turning memory into a dump.
 - Current-stage success means validating a simple manual operating model before adding integrations or automation.
 
 ## System Entry Point
@@ -35,6 +36,7 @@
 - This project is governed by `Project Execution OS`.
 - `Existing Solution First` is mandatory before designing custom tooling or integrations.
 - Start simple, validate repeated manual use, and add automation only when it solves an observed problem.
+- Knowledge accumulation must follow `PERSONAL_KNOWLEDGE_STANDARD.md` and must not bypass privacy or storage boundaries.
 
 ## Source Of Truth
 
@@ -42,14 +44,15 @@
 - Current active execution state: `PROJECT_STATE.md`.
 - Latest execution log: `logs/latest.md`.
 - Standard procedure for personal documents: `DOCUMENT_SAVING_STANDARD.md`.
+- Standard procedure for personal/work knowledge: `PERSONAL_KNOWLEDGE_STANDARD.md`.
 - Raw private personal intake during v0: the active ChatGPT secretary conversation only.
 - A lightweight Notion document index is attached for validated document cards. It is not yet the general durable storage layer for all personal intake.
 
 ## Current Status
 
-- Status: `active — first real document workflow validated`
-- Mode: `manual secretary routing and intake validation`
-- Implementation state: routing works in the active ChatGPT conversation; the first personal-document intake workflow has been validated and recorded as a reusable standard.
+- Status: `active — first real document workflow validated; personal knowledge standard added`
+- Mode: `manual secretary routing, intake validation, and controlled knowledge accumulation`
+- Implementation state: routing works in the active ChatGPT conversation; the first personal-document intake workflow has been validated and recorded as a reusable standard; personal/work knowledge accumulation now has a project standard.
 
 ## Done So Far
 
@@ -61,21 +64,25 @@
 - Added one router entry with natural aliases and removed the requirement to paste a long startup command.
 - Tested `Режим секретаря` in a fresh conversation and found that repository changes do not self-apply to ChatGPT app settings.
 - Updated the canonical core prompt with explicit secretary-mode aliases.
+- Updated the canonical core prompt so personal secretary mode is the default for personal-operations intake.
 - Processed the first real document intake: an Ohio vehicle registration card for a Mazda CX-5.
 - Created a scan-style derivative without regenerating or changing document text.
 - Created a Notion vehicle record and a user-facing document-saving procedure page.
 - Added `DOCUMENT_SAVING_STANDARD.md` as the reusable default procedure for future document intake.
+- Added `PERSONAL_KNOWLEDGE_STANDARD.md` as the reusable default procedure for accumulating useful knowledge about Oleg and ongoing work.
 
 ## Current Focus
 
 - Continue manual validation with real intake batches.
 - Apply the document-saving standard automatically for future document photographs and scans.
+- Apply the personal knowledge standard when incoming information has future value.
 - Observe which additional categories and storage patterns are actually needed.
 
 ## Next Practical Step
 
 - Process additional real secretary intake batches.
 - When a personal document is submitted, apply `DOCUMENT_SAVING_STANDARD.md` automatically and mention only exceptions or the next action needed from the owner.
+- When reusable personal/work knowledge appears, apply `PERSONAL_KNOWLEDGE_STANDARD.md` and mention compactly what should be remembered.
 
 ## Key Decisions And Constraints
 
@@ -87,6 +94,7 @@
 - Do not create a parallel operating system that duplicates `Project Execution OS`.
 - Keep the owner interaction simple: the owner should be able to drop raw information without pre-sorting it.
 - Keep raw private intake out of this GitHub project folder.
+- Keep secrets, raw personal documents, unredacted scans and sensitive identifiers out of GitHub project files.
 - A lightweight Notion index may store confirmed document cards; do not treat it as the storage layer for all personal intake yet.
 - Any future external actions such as sending messages, deleting information, or making commitments on the owner's behalf require explicit approval unless a narrower safe rule is later confirmed.
 - Apply `Existing Solution First` before introducing custom architecture, code, integrations, databases, or agent workflows.
@@ -94,11 +102,13 @@
 ## Read Next
 
 1. `V0_MANUAL_OPERATING_CONTRACT.md`
-2. `DOCUMENT_SAVING_STANDARD.md`
-3. `PROJECT_STATE.md`
-4. `logs/latest.md`
-5. `../../docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
-6. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
-7. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_LIFECYCLE_MODEL.md`
-8. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
-9. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
+2. `PERSONAL_KNOWLEDGE_STANDARD.md`
+3. `DOCUMENT_SAVING_STANDARD.md`
+4. `PROJECT_STATE.md`
+5. `logs/latest.md`
+6. `../../docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+7. `../../docs/KNOWLEDGE_SYSTEM.md`
+8. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
+9. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_LIFECYCLE_MODEL.md`
+10. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
+11. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
