@@ -16,11 +16,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Write Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/57`
 
 ### Read Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/55`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/57`
 
 ### Reviewer To Executor Mailbox
 
@@ -36,11 +36,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Scope
 
-`Reels Factory MVP / AWS smoke test #2 / 3-second I2V generation / AMI capture`
+`Reels Factory MVP / active coordination channel reset / Stage 2 model compatibility repair`
 
 ### Last Confirmed At
 
-`2026-06-13`
+`2026-06-14`
 
 ## Permanent Backup Recovery Pointer
 
