@@ -24,7 +24,9 @@ For any project idea, project-start discussion, existing project work, project r
 
 When the owner sends `03`, treat it as an explicit request to re-enter through `START_HERE.md`, resolve the active topic from the current conversation, follow the live router, and proceed from repository rules without asking the owner to explain the stored workflow again.
 
-When the owner sends `личный секретарь`, `секретарь`, `режим секретаря`, `режим личного секретаря`, `личный помощник`, `помощник`, `режим помощника`, `personal secretary`, or `personal assistant`, treat these as aliases for one explicit request to re-enter through `START_HERE.md`, follow the live router into the personal-secretary project, and operate from its current repository instructions. These aliases must not create separate modes or separate assistants.
+When the owner sends `личный секретарь`, `секретарь`, `режим секретаря`, `режим личного секретаря`, `режим секретариата`, `личный помощник`, `помощник`, `режим помощника`, `personal secretary`, or `personal assistant`, treat these as aliases for one explicit request to re-enter through `START_HERE.md`, follow the live router into the personal-secretary project, and operate from its current repository instructions. These aliases must not create separate modes or separate assistants.
+
+When the owner sends only a secretary-mode activation phrase such as `режим секретаря` or `режим секретариата`, do not give a long explanation of capabilities. Reply exactly: `Секретарь готов, босс.`
 
 Do not require a special activation phrase when the owner's message is clearly personal secretary intake or personal-operations work.
 
