@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2a617729f0ab053fec7b3bf2d0ce1fd6ec422bf6",
-  "generated_at": "2026-06-15T14:44:53-04:00",
-  "artifact_count": 468,
+  "repository_commit": "67ea7e3192f3daf7081845e969dc5582a149ded5",
+  "generated_at": "2026-06-15T19:58:56-04:00",
+  "artifact_count": 469,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2132,6 +2132,31 @@
         "Naming Rule",
         "Permission Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/osint/BLOCK.md",
+      "title": "OSINT Block — Aggressive Legal Open-Source Intelligence",
+      "type": "domain-block-entrypoint",
+      "domain": "osint",
+      "status": null,
+      "date": null,
+      "sha256": "3a74b9abeb35d623cb96bbefc24b597952d5aac06e6fe5ac7ee3adf3ec1513fc",
+      "headings": [
+        "OSINT Block — Aggressive Legal Open-Source Intelligence",
+        "Purpose",
+        "Scope",
+        "Hard Boundary",
+        "Default Intelligence Question",
+        "Core Workflow",
+        "Source Map Categories",
+        "Evidence Labels",
+        "Fact / Inference / Hypothesis Rule",
+        "Output Formats",
+        "Minimum Output Template",
+        "Review Standard",
+        "Relationship To Other Blocks",
+        "Read Next"
       ]
     },
     {
