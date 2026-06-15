@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "67ea7e3192f3daf7081845e969dc5582a149ded5",
-  "generated_at": "2026-06-15T19:58:56-04:00",
-  "artifact_count": 469,
+  "repository_commit": "c90d54ed87703a8507c87f3a1e02f4e6c0465dff",
+  "generated_at": "2026-06-15T19:59:14-04:00",
+  "artifact_count": 470,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2157,6 +2157,31 @@
         "Review Standard",
         "Relationship To Other Blocks",
         "Read Next"
+      ]
+    },
+    {
+      "path": "blocks/osint/RESEARCH_REPORT_2026-06-15.md",
+      "title": "OSINT Research Report — 2026-06-15",
+      "type": "domain-block-artifact",
+      "domain": "osint",
+      "status": null,
+      "date": null,
+      "sha256": "f13607689d631324de6882b3f90e4999bcb27eb5254de91a3d3416b4c308fca1",
+      "headings": [
+        "OSINT Research Report — 2026-06-15",
+        "Purpose",
+        "Why This Block Exists",
+        "Donor Categories",
+        "1. Intelligence-cycle methodology",
+        "2. Investigative journalism and public-source verification",
+        "3. Open-source investigation evidence handling",
+        "4. OSINT tool ecosystems",
+        "Core Block Decision",
+        "Safety Boundary Decision",
+        "Initial Use Cases",
+        "Initial Files",
+        "Open Questions",
+        "Recommendation"
       ]
     },
     {
