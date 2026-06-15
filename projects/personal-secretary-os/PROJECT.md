@@ -25,6 +25,7 @@
 - These are synonyms for one entrypoint, not separate assistants.
 - A long startup prompt is not required.
 - When the owner sends only a secretary activation phrase, the startup response is exactly: `Секретарь готов босс` Do not list capabilities or explain the mode in that activation reply.
+- Do not reply `Секретарь готов пост`, `Секретарь готов. Пост.`, or any other variant containing `пост`.
 
 ## ChatGPT Propagation Boundary
 
