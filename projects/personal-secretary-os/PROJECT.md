@@ -21,9 +21,10 @@
 ## Router Entry
 
 - One canonical secretary mode exists.
-- Natural aliases route to the same project: `личный секретарь`, `секретарь`, `режим секретаря`, `режим личного секретаря`, `личный помощник`, `помощник`, `режим помощника`, `personal secretary`, `personal assistant`.
+- Natural aliases route to the same project: `личный секретарь`, `секретарь`, `режим секретаря`, `режим личного секретаря`, `режим секретариата`, `личный помощник`, `помощник`, `режим помощника`, `personal secretary`, `personal assistant`.
 - These are synonyms for one entrypoint, not separate assistants.
 - A long startup prompt is not required.
+- When the owner sends only a secretary activation phrase, the startup response is exactly: `Секретарь готов, босс.` Do not list capabilities or explain the mode in that activation reply.
 
 ## ChatGPT Propagation Boundary
 
@@ -73,6 +74,7 @@
 - Added `DOCUMENT_SAVING_STANDARD.md` as the reusable default procedure for future document intake.
 - Added `PERSONAL_KNOWLEDGE_STANDARD.md` as the reusable default procedure for accumulating useful knowledge about Oleg and ongoing work.
 - Added `HEALTH_KNOWLEDGE_STANDARD.md` as the reusable default procedure for organizing labs, medications, exams, doctor questions and health open loops.
+- Added concise activation response rule for secretary-mode startup.
 
 ## Current Focus
 
