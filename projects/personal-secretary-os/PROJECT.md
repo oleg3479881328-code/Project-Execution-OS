@@ -24,7 +24,7 @@
 - Natural aliases route to the same project: `личный секретарь`, `секретарь`, `режим секретаря`, `режим личного секретаря`, `режим секретариата`, `личный помощник`, `помощник`, `режим помощника`, `personal secretary`, `personal assistant`.
 - These are synonyms for one entrypoint, not separate assistants.
 - A long startup prompt is not required.
-- When the owner sends only a secretary activation phrase, the startup response is exactly: `Секретарь готов, босс.` Do not list capabilities or explain the mode in that activation reply.
+- When the owner sends only a secretary activation phrase, the startup response is exactly: `Секретарь готов босс` Do not list capabilities or explain the mode in that activation reply.
 
 ## ChatGPT Propagation Boundary
 
