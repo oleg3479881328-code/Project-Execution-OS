@@ -29,6 +29,14 @@ The exact wording is not important. The preservation intent is the trigger.
 
 A chat summary alone does not count as durable capture.
 
+ChatGPT memory alone does not count as durable capture.
+
+If the owner asks to record, save, preserve, capture, remember, or not lose a finding, decision, lesson, source, project insight, or reusable note, the default action is durable storage in the appropriate Project Execution OS layer, not only a ChatGPT memory update.
+
+ChatGPT memory may be used only as an auxiliary convenience layer after durable capture, or for lightweight personal preference memory when the owner is not asking for repository/project/library preservation.
+
+Never report a ChatGPT memory update as if it were the system record, project record, knowledge-library record, file, Notion record, Drive record, issue, or other durable artifact.
+
 ## Reporting Rule
 
 After any successful durable capture, the final user-facing response must include:
@@ -52,6 +60,8 @@ Do not require the owner to separately remind the assistant to save first to the
 
 Do not require the owner to ask where the material was saved after a capture action. The location and link belong in the completion report by default.
 
+Do not satisfy preservation intent only by updating ChatGPT memory when the material should live in a repository, project library, central knowledge library, Notion, Drive, issue, or other durable storage layer.
+
 ## Example
 
 Owner request:
@@ -63,5 +73,6 @@ Expected result:
 - classify the material;
 - save central reusable knowledge when applicable;
 - save project-specific knowledge when applicable;
+- optionally update ChatGPT memory only as auxiliary convenience, when appropriate;
 - report storage locations and completion status;
 - end with direct links to every created or updated durable record.
