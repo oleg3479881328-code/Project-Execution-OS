@@ -1,5 +1,21 @@
 # DoorDash / Dasher App Outage Evidence Note
 
+## Кратко по-русски
+
+16 июня 2026 около 10:24 AM ET у владельца возникли проблемы с DoorDash / Dasher App. По совокупности признаков это выглядело как массовый сбой DoorDash на стороне приложения/логина, а не как локальная проблема телефона или интернета.
+
+Зафиксированные признаки:
+
+- Dasher App показывал `Dash Paused`;
+- кнопка `Resume dash` была нестабильной: то красная/активная, то серая/недоступная;
+- DoorDash показывал ошибку входа: `Sorry, there was a problem logging you in. Please check your connection and try again.`;
+- Downdetector показывал резкий всплеск жалоб, основное: App и Login;
+- Reddit `r/doordash_drivers` показывал свежие сообщения водителей: людей одновременно разлогинило, у некоторых зависли drop-off, mark as delivered, фото подтверждения и завершение заказа.
+
+Вывод: наиболее вероятно, это был DoorDash-side App/Login outage. Практическая рекомендация при таком сбое: не нажимать `End Dash`, не переустанавливать приложение во время login outage, сохранять скриншоты, фиксировать время, после восстановления проверить earnings и при необходимости писать в поддержку, чтобы сбой не повлиял на ratings, completion rate, acceptance rate или dash status.
+
+---
+
 Date: 2026-06-16
 Approx. time observed: around 10:24 AM ET
 Project/context: personal secretary intake; DoorDash/gig-work operational continuity
