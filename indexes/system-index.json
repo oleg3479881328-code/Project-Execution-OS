@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f9d17cee8c3944046b6ce6430af893da6d07ac7b",
-  "generated_at": "2026-06-16T10:40:23-04:00",
+  "repository_commit": "13e4b214cf91ed87d8d998c1a4bc38573bc74f70",
+  "generated_at": "2026-06-16T10:41:46-04:00",
   "artifact_count": 474,
   "artifacts": [
     {
@@ -9030,9 +9030,10 @@
       "domain": "personal-secretary-os",
       "status": "captured",
       "date": "2026-06-16",
-      "sha256": "444ae304760483bd3904994d0ad0586d46881b01722562c71279b6db06375857",
+      "sha256": "b5c7edab4a317956f9ea25d862052bdf074a912b6f845387f77c4a262eba663a",
       "headings": [
         "DoorDash / Dasher App Outage Evidence Note",
+        "Кратко по-русски",
         "Summary",
         "User-Observed Symptoms",
         "External Evidence Captured In Conversation",
