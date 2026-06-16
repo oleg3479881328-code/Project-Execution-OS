@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b6e0574190d7dc670c0fe04da400fab75f28361e",
-  "generated_at": "2026-06-15T20:13:07-04:00",
-  "artifact_count": 471,
+  "repository_commit": "4b818677c1b1ba448c2d4317cfcc1d3ef3650057",
+  "generated_at": "2026-06-16T10:21:08-04:00",
+  "artifact_count": 473,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7011,6 +7011,29 @@
       ]
     },
     {
+      "path": "knowledge-library/patterns/ponytail-minimal-coding-agent-mode.md",
+      "title": "Ponytail Minimal Coding Agent Mode",
+      "type": "knowledge-entry",
+      "domain": "knowledge:patterns",
+      "status": "candidate",
+      "date": "2026-06-16",
+      "sha256": "c278da0b891d1027d3293e3a55d78c3a278984efe7ef0d2347bfa40e25cff8f7",
+      "headings": [
+        "Ponytail Minimal Coding Agent Mode",
+        "Source And Evidence",
+        "Problem",
+        "Reusable Pattern",
+        "Applies To",
+        "Triggers",
+        "Do Not Load When",
+        "When To Use",
+        "When Not To Use",
+        "Adaptation Notes For Project Execution OS",
+        "Risks",
+        "Review Status"
+      ]
+    },
+    {
       "path": "knowledge-library/patterns/product-monetization-through-automation-and-fake-door-validation.md",
       "title": "Product Monetization Through Automation And Fake-Door Validation",
       "type": "knowledge-entry",
@@ -8997,6 +9020,24 @@
         "Current Result",
         "Next Safe Action",
         "Deferred"
+      ]
+    },
+    {
+      "path": "projects/personal-secretary-os/project-library/lessons/2026-06-16-pony-tail-capture-boundary.md",
+      "title": "Lesson: Ponytail Research Must Be Captured Durably, Not Only In ChatGPT Memory",
+      "type": "project-artifact",
+      "domain": "personal-secretary-os",
+      "status": "captured",
+      "date": "2026-06-16",
+      "sha256": "86b4bf1223d95d95deeb10c3d82d5b5f8ef349239004e9fd12c6c491304931ca",
+      "headings": [
+        "Lesson: Ponytail Research Must Be Captured Durably, Not Only In ChatGPT Memory",
+        "Context",
+        "Lesson",
+        "Correct Handling",
+        "Applied Fix",
+        "Reuse Trigger",
+        "Boundary"
       ]
     },
     {
