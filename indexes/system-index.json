@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "63e200e9c7f9e9bc6735044ad5263d8218c0718d",
-  "generated_at": "2026-06-16T10:23:05-04:00",
-  "artifact_count": 473,
+  "repository_commit": "f9d17cee8c3944046b6ce6430af893da6d07ac7b",
+  "generated_at": "2026-06-16T10:40:23-04:00",
+  "artifact_count": 474,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -9021,6 +9021,28 @@
         "Current Result",
         "Next Safe Action",
         "Deferred"
+      ]
+    },
+    {
+      "path": "projects/personal-secretary-os/project-library/incidents/2026-06-16-doordash-dasher-app-outage.md",
+      "title": "DoorDash / Dasher App Outage Evidence Note",
+      "type": "project-artifact",
+      "domain": "personal-secretary-os",
+      "status": "captured",
+      "date": "2026-06-16",
+      "sha256": "444ae304760483bd3904994d0ad0586d46881b01722562c71279b6db06375857",
+      "headings": [
+        "DoorDash / Dasher App Outage Evidence Note",
+        "Summary",
+        "User-Observed Symptoms",
+        "External Evidence Captured In Conversation",
+        "Downdetector screenshot",
+        "Reddit screenshot",
+        "Assessment",
+        "Practical Guidance Preserved",
+        "Support Message Draft",
+        "Reuse Trigger",
+        "Boundary"
       ]
     },
     {
