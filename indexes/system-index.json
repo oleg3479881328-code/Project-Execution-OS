@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "41dab9bf914f7a38eaf747689286905f6a5efab0",
-  "generated_at": "2026-06-17T19:32:19-04:00",
-  "artifact_count": 478,
+  "repository_commit": "9895773c3c70c74a1856de5288161426ac73b1a3",
+  "generated_at": "2026-06-17T19:32:37-04:00",
+  "artifact_count": 479,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2278,6 +2278,29 @@
         "Red-Team Format",
         "Acceptance Review Format",
         "Tone Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/reviewer/REVIEW_PATTERNS.md",
+      "title": "Review Patterns",
+      "type": "domain-block-artifact",
+      "domain": "reviewer",
+      "status": null,
+      "date": null,
+      "sha256": "39743a49a575be83fcb1a666375646450c114efb9dbefb80e08a215f8f1ffa8c",
+      "headings": [
+        "Review Patterns",
+        "Purpose",
+        "Pattern 1 — Idea Review",
+        "Pattern 2 — Project Plan Review",
+        "Pattern 3 — Agent / Prompt Review",
+        "Pattern 4 — Technical Architecture Review",
+        "Pattern 5 — Design / UX Review",
+        "Pattern 6 — Content / Writing Review",
+        "Pattern 7 — Research Review",
+        "Pattern 8 — Execution Result Review",
+        "Pattern 9 — Secretary Intake Review",
         "Final Rule"
       ]
     },
