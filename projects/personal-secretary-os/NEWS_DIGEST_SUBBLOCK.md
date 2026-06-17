@@ -49,6 +49,30 @@ When a claim is legally, financially, medically, immigration-related, or otherwi
 
 For immigration news, distinguish public reporting from legal advice. Recommend attorney verification when action may affect a case.
 
+## AI Product Coverage Rule
+
+For important AI tools that Oleg may actually use, do not rely only on broad AI news. Check the product's own release surface.
+
+For OpenAI Codex specifically, every serious digest or follow-up about Codex should check:
+
+- official Codex changelog on `developers.openai.com/codex/changelog`;
+- official Codex docs for app, CLI, IDE, Chrome extension, Computer Use, Memories, Chronicle, Sites, plugins, Skills, Subagents, GitHub integration, pricing and feature availability when relevant;
+- official OpenAI status page for outages, elevated errors, capacity problems and recovery;
+- official GitHub release or PR links when the changelog points to them.
+
+Classify Codex news into practical buckets:
+
+- availability and geography;
+- new user-facing capabilities;
+- CLI/IDE/app releases;
+- limits, pricing and rate-limit changes;
+- outages and reliability;
+- integrations and deployment;
+- privacy, security and permissions;
+- workflow impact for Oleg and his projects.
+
+Do not treat rumors, Reddit summaries, YouTube summaries, unsourced user claims or other AI summaries as confirmed. Use them as leads only, then verify with official sources or mark as unconfirmed.
+
 ## Digest Style
 
 Default style is voice-friendly because Oleg is often driving and listening through voice playback.
@@ -121,6 +145,7 @@ When Oleg corrects the format, treat the correction as a candidate rule. If it a
 - Keep ordinary conversation and digest explanations voice-friendly, not block-heavy.
 - The digest should be useful for Oleg personally, not a generic newspaper summary.
 - Practical signals matter: AI tools to test, immigration risks to verify, Trump/policy changes to watch, and CDL/FMCSA items that affect drivers or carriers.
+- When covering a named AI tool like Codex, include product-release details if they materially affect Oleg's workflow.
 
 ## Boundary
 
