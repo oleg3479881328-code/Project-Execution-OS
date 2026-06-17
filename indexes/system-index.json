@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "9910b8425634ea141c6535eb5804b1b459e17005",
-  "generated_at": "2026-06-17T09:08:39-04:00",
-  "artifact_count": 475,
+  "repository_commit": "601d6b01986152655afe67e5560155dbfec1c691",
+  "generated_at": "2026-06-17T19:31:23-04:00",
+  "artifact_count": 476,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2204,6 +2204,36 @@
         "Validation Tasks",
         "Known Risks",
         "Current Status"
+      ]
+    },
+    {
+      "path": "blocks/reviewer/BLOCK.md",
+      "title": "Reviewer Block",
+      "type": "domain-block-entrypoint",
+      "domain": "reviewer",
+      "status": null,
+      "date": null,
+      "sha256": "7203cc329373cfbaf60cf442749d3e0d3ee6a13ad23d7a5e17d0608291c1af8f",
+      "headings": [
+        "Reviewer Block",
+        "Purpose",
+        "Status",
+        "Core Principle",
+        "When To Use",
+        "When Not To Use",
+        "Required Review Chain",
+        "Required Reading Inside This Block",
+        "Review Levels",
+        "Level 0 — Micro Review",
+        "Level 1 — Standard Hard Review",
+        "Level 2 — Formal Acceptance Review",
+        "Level 3 — High-Risk Review",
+        "Verdicts",
+        "Reviewer Behavior",
+        "Typical Outputs",
+        "Relationship To `docs/REVIEW_STANDARD.md`",
+        "Boundary",
+        "Final Rule"
       ]
     },
     {
