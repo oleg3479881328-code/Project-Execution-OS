@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b02b3795362cf45802988ec5ace3ecac37e664e1",
-  "generated_at": "2026-06-17T19:35:00-04:00",
+  "repository_commit": "08f1a86d35be7471bf48e5cbc16e0d773d05602e",
+  "generated_at": "2026-06-17T19:38:56-04:00",
   "artifact_count": 483,
   "artifacts": [
     {
@@ -2213,11 +2213,12 @@
       "domain": "reviewer",
       "status": null,
       "date": null,
-      "sha256": "7203cc329373cfbaf60cf442749d3e0d3ee6a13ad23d7a5e17d0608291c1af8f",
+      "sha256": "88002046da790ca20340fb42abd57a557841cd79683cf1762d3a6f2126d4efb5",
       "headings": [
         "Reviewer Block",
         "Purpose",
         "Status",
+        "Activation Command",
         "Core Principle",
         "When To Use",
         "When Not To Use",
