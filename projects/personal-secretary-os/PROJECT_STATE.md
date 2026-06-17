@@ -7,7 +7,7 @@ project_mode: lightweight
 
 ## Current Phase
 
-`v0 manual secretary routing and intake validation`
+`v0 manual secretary routing and intake validation with reusable subblocks`
 
 ## Completed
 
@@ -26,21 +26,27 @@ project_mode: lightweight
 - Created a user-facing Notion page for the reusable document workflow.
 - Added `DOCUMENT_SAVING_STANDARD.md` as the canonical reusable procedure for personal-document intake.
 - Validated contact creation by vCard: when Oleg provides contact details from any source, create a `.vcf` file and give Oleg a download link for one-tap Android/Google Contacts import.
+- Created the Notion database `Утренние дайджесты новостей` for saved news digest issues.
+- Created the first saved news digest issue for `2026-06-17`.
+- Added `NEWS_DIGEST_SUBBLOCK.md` as the canonical reusable subblock for recurring news digest work inside secretary mode.
 
 ## In Progress
 
 - Continue manual validation with real intake batches.
 - Apply the document-saving standard automatically for future document photographs and scans.
 - Use the validated `.vcf` file method whenever Oleg asks to create/add/save a contact from any source: photo, business card, website, search result, copied text, chat message, address, phone number, or email.
+- Apply `NEWS_DIGEST_SUBBLOCK.md` when Oleg asks for news, morning digest, AI tools news, immigration policy, US politics, Trump, CDL or trucking news.
+- Improve the news digest format through repeated use and owner corrections.
 - Observe which additional storage and reminder patterns are repeatedly needed.
 
 ## Still Pending
 
 - Process at least 10 real intake batches.
 - Record friction, repeated needs, and classification failures.
-- Decide which information requires durable storage beyond the lightweight Notion document index.
+- Decide which information requires durable storage beyond the lightweight Notion document index and news digest archive.
 - Select a general durable personal storage layer only after manual use proves the need.
 - Evaluate integrations and automation only after repeated patterns are visible.
+- Validate whether the news digest format remains useful after multiple issues.
 
 ## Current Constraints
 
@@ -49,9 +55,12 @@ project_mode: lightweight
 - Treat all secretary aliases as one route, not separate assistants or entrypoints.
 - Keep raw private intake out of this GitHub project folder.
 - A lightweight Notion index may store confirmed personal-document cards.
+- The Notion database `Утренние дайджесты новостей` may store completed public-news digest pages and compact source notes.
 - External actions require explicit owner approval during v0.
 - Ask only one clarification question at a time when a blocking ambiguity exists.
 - For document photos, preserve original text and do not use text regeneration as a cleanup method.
+- For ordinary conversation and digest explanation, default to voice-friendly prose because Oleg is often driving.
+- Do not add scheduled/background news monitoring until repeated manual use proves the need and Oleg explicitly approves it.
 
 ## Active Files
 
@@ -60,8 +69,9 @@ project_mode: lightweight
 3. `logs/latest.md`
 4. `V0_MANUAL_OPERATING_CONTRACT.md`
 5. `DOCUMENT_SAVING_STANDARD.md`
-6. `../../docs/ROUTER.md`
-7. `../../docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+6. `NEWS_DIGEST_SUBBLOCK.md`
+7. `../../docs/ROUTER.md`
+8. `../../docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
 
 ## Validated
 
@@ -75,17 +85,20 @@ project_mode: lightweight
 - Phone photographs can be converted into scan-style files without rewriting document text.
 - Confirmed document cards can be stored in the lightweight Notion index.
 - Contact data from any source can be converted into `.vcf` files for direct import into Android/Google Contacts.
+- A news digest can be created from current web sources and saved as a Notion database entry.
 
 ## Not Yet Validated
 
 - Whether the current categories are sufficient for at least 10 real daily-use batches.
-- Which general storage layer is appropriate for durable memory beyond document cards.
+- Which general storage layer is appropriate for durable memory beyond document cards and news digests.
 - Which integrations provide enough value to justify complexity.
 - Whether reminder automation is needed for expiring documents.
+- Whether scheduled delivery or background monitoring is needed for news digests.
+- Whether the current news topics and digest style stay useful after repeated issues.
 
 ## Next Safe Action
 
-Process the next real intake batch. When Oleg submits a personal document photograph or scan, apply `DOCUMENT_SAVING_STANDARD.md` automatically and mention only blockers or the nearest manual action. When Oleg asks to create/add/save a contact from any source, extract or use the available fields and create a downloadable `.vcf` contact file for import.
+Process the next real intake batch. When Oleg submits a personal document photograph or scan, apply `DOCUMENT_SAVING_STANDARD.md` automatically and mention only blockers or the nearest manual action. When Oleg asks to create/add/save a contact from any source, extract or use the available fields and create a downloadable `.vcf` contact file for import. When Oleg asks for news, apply `NEWS_DIGEST_SUBBLOCK.md`, browse current sources, write a voice-friendly digest, save it to Notion, and treat format corrections as candidate durable rules.
 
 ## Do Not Repeat Work
 
@@ -96,3 +109,4 @@ Process the next real intake batch. When Oleg submits a personal document photog
 - Do not add integrations merely because they are technically available.
 - Do not renegotiate the document-saving workflow for each document.
 - Do not repeatedly explain ordinary personal-data handling unless a real exception exists.
+- Do not recreate the news digest database unless the existing Notion database is unusable.
