@@ -118,6 +118,8 @@ Use these properties when available:
 
 Store the full digest text inside the Notion page body.
 
+After every successful Notion save or update, always give Oleg the direct Notion page URL at the end of the response. This is mandatory because the owner needs to inspect the saved result quickly.
+
 If Notion saving fails, still provide the digest and say explicitly that saving failed.
 
 ## Improvement Loop
@@ -135,7 +137,8 @@ After each real digest, watch for friction:
 - too much political noise;
 - not enough practical output;
 - sources not suitable for NotebookLM or later research;
-- Notion schema missing a useful property.
+- Notion schema missing a useful property;
+- missing Notion page link after save or update.
 
 When Oleg corrects the format, treat the correction as a candidate rule. If it affects every future digest, update this file or the relevant project state rather than relying only on chat memory.
 
@@ -146,6 +149,7 @@ When Oleg corrects the format, treat the correction as a candidate rule. If it a
 - The digest should be useful for Oleg personally, not a generic newspaper summary.
 - Practical signals matter: AI tools to test, immigration risks to verify, Trump/policy changes to watch, and CDL/FMCSA items that affect drivers or carriers.
 - When covering a named AI tool like Codex, include product-release details if they materially affect Oleg's workflow.
+- After saving or updating a digest in Notion, always include the direct Notion page link in the final response.
 
 ## Boundary
 
