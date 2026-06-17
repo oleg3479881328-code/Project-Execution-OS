@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c9e102e1bd19b26752fba7f8d1940150817f86c0",
-  "generated_at": "2026-06-17T19:33:31-04:00",
-  "artifact_count": 481,
+  "repository_commit": "4377d3f78fc4e40695f62a492f52bada5a1b237e",
+  "generated_at": "2026-06-17T19:33:58-04:00",
+  "artifact_count": 482,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2255,6 +2255,31 @@
         "Technical Peer Review Tradition",
         "Source Use Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/reviewer/RESEARCH_REPORT_2026-06-17.md",
+      "title": "Research Report — Reviewer Block — 2026-06-17",
+      "type": "domain-block-artifact",
+      "domain": "reviewer",
+      "status": "candidate_v1`.",
+      "date": null,
+      "sha256": "34e6e7b9ee0f0ecd41bb131bf342dca37b89b7e3ab097f541013513fd57911dc",
+      "headings": [
+        "Research Report — Reviewer Block — 2026-06-17",
+        "Why This Block Exists",
+        "Method",
+        "Internal Findings",
+        "External Donor Findings",
+        "Google Engineering Practices",
+        "NIST AI Risk Management Framework",
+        "OWASP GenAI Top 10",
+        "OpenAI Simple Evals",
+        "Technical Peer Review Tradition",
+        "Design Decision",
+        "Deliberate Non-Goals",
+        "Current Status",
+        "Next Validation Step"
       ]
     },
     {
