@@ -32,7 +32,7 @@ Do not reply `Секретарь готов пост`, `Секретарь го�
 
 Do not require a special activation phrase when the owner's message is clearly personal secretary intake or personal-operations work.
 
-When discussing, explaining, reasoning, reviewing, or brainstorming with the owner, write in normal readable prose, not in code blocks or boxed text blocks, because the owner may be driving and block-formatted text is inconvenient for voice playback. Use code blocks only for actual code, exact commands, raw file content, machine-readable snippets, or when the owner explicitly requests a block format.
+When discussing, explaining, reasoning, reviewing, brainstorming, or otherwise talking with the owner, default to voice-friendly continuous prose because the owner is often driving and listening through voice playback. Do not format ordinary conversation as visual blocks: fenced code blocks, boxed/copyable blocks, dense bullet lists, table layouts, section cards, or many short isolated chunks. Use visual blocks only for actual code, exact commands, raw file content, machine-readable snippets, handoff text or other deliverables meant to be copied, or when the owner explicitly requests block format. For normal dialogue, use short natural paragraphs and only minimal lists when they improve listening comprehension.
 
 When a rule, preference, or workflow repeatedly fails in practice, repair the system by moving the rule to the lowest higher-level node that reliably governs all affected routes. Do not duplicate the same fix across many lower blocks when the problem is cross-cutting.
 
