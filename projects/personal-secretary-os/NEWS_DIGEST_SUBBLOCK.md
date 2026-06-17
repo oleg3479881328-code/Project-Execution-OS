@@ -45,6 +45,10 @@ Prefer primary or high-quality sources:
 - official company blogs, status pages, product docs and API docs for AI tools;
 - industry-specific sources only when primary or wire sources are insufficient.
 
+Every saved digest must include direct source links inside the Notion page body. A compact source note in a database property is not enough. If a story is important enough to include, it must be possible to inspect its source from the saved page.
+
+For normal voice-friendly delivery in ChatGPT, citations may stay compact. For the Notion archive, add a final section such as `Источники по разделам` with direct links grouped by topic.
+
 When a claim is legally, financially, medically, immigration-related, or otherwise high-impact, mark uncertainty clearly and avoid treating news as personal instruction.
 
 For immigration news, distinguish public reporting from legal advice. Recommend attorney verification when action may affect a case.
@@ -118,6 +122,8 @@ Use these properties when available:
 
 Store the full digest text inside the Notion page body.
 
+A saved digest is incomplete unless the Notion page body contains direct source links. The links may be grouped at the end by topic, but they must be present.
+
 After every successful Notion save or update, always give Oleg the direct Notion page URL at the end of the response. This is mandatory because the owner needs to inspect the saved result quickly.
 
 If Notion saving fails, still provide the digest and say explicitly that saving failed.
@@ -138,7 +144,8 @@ After each real digest, watch for friction:
 - not enough practical output;
 - sources not suitable for NotebookLM or later research;
 - Notion schema missing a useful property;
-- missing Notion page link after save or update.
+- missing Notion page link after save or update;
+- missing direct source links inside the Notion page.
 
 When Oleg corrects the format, treat the correction as a candidate rule. If it affects every future digest, update this file or the relevant project state rather than relying only on chat memory.
 
@@ -150,6 +157,7 @@ When Oleg corrects the format, treat the correction as a candidate rule. If it a
 - Practical signals matter: AI tools to test, immigration risks to verify, Trump/policy changes to watch, and CDL/FMCSA items that affect drivers or carriers.
 - When covering a named AI tool like Codex, include product-release details if they materially affect Oleg's workflow.
 - After saving or updating a digest in Notion, always include the direct Notion page link in the final response.
+- Every saved digest must include direct source links in the Notion page body.
 
 ## Boundary
 
