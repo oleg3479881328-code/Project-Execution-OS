@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4377d3f78fc4e40695f62a492f52bada5a1b237e",
-  "generated_at": "2026-06-17T19:33:58-04:00",
-  "artifact_count": 482,
+  "repository_commit": "b02b3795362cf45802988ec5ace3ecac37e664e1",
+  "generated_at": "2026-06-17T19:35:00-04:00",
+  "artifact_count": 483,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2348,6 +2348,22 @@
         "Pattern 8 — Execution Result Review",
         "Pattern 9 — Secretary Intake Review",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/reviewer/ROUTER_PATCH.md",
+      "title": "Router Patch — Reviewer Block",
+      "type": "domain-block-artifact",
+      "domain": "reviewer",
+      "status": null,
+      "date": null,
+      "sha256": "cc74339178ae2350efb7fdd809677d3d16b2c8b7495b194c64d1da1b4a6f177b",
+      "headings": [
+        "Router Patch — Reviewer Block",
+        "Intended Router Entry",
+        "Reason",
+        "Manual Check",
+        "Intended Behavior"
       ]
     },
     {
