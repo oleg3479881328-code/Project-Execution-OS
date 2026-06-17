@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8e6ebb1f0f9ed8dabfa2bb38fdf03626b7e049de",
-  "generated_at": "2026-06-17T19:32:49-04:00",
-  "artifact_count": 480,
+  "repository_commit": "c9e102e1bd19b26752fba7f8d1940150817f86c0",
+  "generated_at": "2026-06-17T19:33:31-04:00",
+  "artifact_count": 481,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2322,6 +2322,29 @@
         "Pattern 7 — Research Review",
         "Pattern 8 — Execution Result Review",
         "Pattern 9 — Secretary Intake Review",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/reviewer/VALIDATION_BACKLOG.md",
+      "title": "Reviewer Block Validation Backlog",
+      "type": "domain-block-artifact",
+      "domain": "reviewer",
+      "status": "not_checked",
+      "date": null,
+      "sha256": "23e799aec317e97a4ec3b08d90d602bb114d97b48c304785337eb45103dc6f23",
+      "headings": [
+        "Reviewer Block Validation Backlog",
+        "Purpose",
+        "Checks To Run",
+        "V1 — Verdict usefulness",
+        "V2 — Severity usefulness",
+        "V3 — Small-task fit",
+        "V4 — Pattern coverage",
+        "V5 — Tone fit",
+        "Known Risks",
+        "Candidate Improvements",
+        "Promotion Criteria",
         "Final Rule"
       ]
     },
