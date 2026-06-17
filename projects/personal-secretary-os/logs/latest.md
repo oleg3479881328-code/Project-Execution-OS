@@ -1,35 +1,32 @@
 # Latest Log — Personal Secretary OS
 
-- Timestamp: `2026-06-12 13:25 America/New_York`
-- Phase: `v0 manual secretary routing and intake validation`
+- Timestamp: `2026-06-17 America/New_York`
+- Phase: `v0 manual secretary routing and reusable subblock validation`
 
 ## Completed This Step
 
-- Activated secretary mode through the canonical repository route.
-- Processed the first real intake batch: an Ohio vehicle registration card for a Mazda CX-5.
-- Extracted a compact vehicle-registration text card.
-- Created a lightweight Notion document index and saved the Mazda CX-5 card there.
-- Identified the current tool boundary: Notion text cards can be created and edited, but local chat images cannot be attached directly through the connected Notion tool surface.
-- Identified the Drive boundary: connected Drive tools support reading and search, but not direct upload.
-- Created a scan-style PNG derivative from the phone photograph by correcting perspective, cropping the background, and improving legibility without regenerating or changing printed text.
-- Created a user-facing Notion procedure page: `Standard Procedure — Saving Personal Documents`.
-- Added the canonical reusable workflow file: `DOCUMENT_SAVING_STANDARD.md`.
-- Updated `PROJECT.md` and `PROJECT_STATE.md` so the workflow is loaded and reused automatically.
+- Continued secretary-mode work through the canonical repository route.
+- Designed the first working news digest format through real conversation.
+- Created the Notion database `Утренние дайджесты новостей` to archive completed digest issues.
+- Created the first saved digest issue for `2026-06-17`, covering AI tools, US immigration policy, US politics/Trump, and CDL/trucking.
+- Captured Oleg's correction that normal conversation and digest explanation must be voice-friendly because he is often driving; ordinary responses should not be formatted as visual blocks unless the output is code, commands, handoff text, machine-readable content, or explicitly requested block format.
+- Strengthened the ChatGPT core prompt with this voice-friendly conversation rule.
+- Created `NEWS_DIGEST_SUBBLOCK.md` inside `projects/personal-secretary-os/`.
+- Updated `PROJECT.md` and `PROJECT_STATE.md` so news digest work routes to `NEWS_DIGEST_SUBBLOCK.md`.
 
 ## Current Result
 
-The personal-document workflow is now fixed as a reusable standard. For future documents, do not renegotiate the process. Accept the raw photo, create a scan-style derivative when needed, extract the text card, save the confirmed Notion record, provide a download file when manual attachment is required, and mention only exceptions or the nearest owner action.
+The personal secretary now has a dedicated news-digest subblock. It covers default topics, source rules, voice-friendly style, Notion saving, and an improvement loop. The subblock is intentionally lightweight and should be improved through real use instead of over-designed in advance.
 
 ## Next Safe Action
 
-Process the next real secretary intake batch. Apply `DOCUMENT_SAVING_STANDARD.md` automatically whenever Oleg submits a personal document photograph or scan.
+When Oleg asks for another news digest, apply `NEWS_DIGEST_SUBBLOCK.md`: browse current sources, prioritize AI tools, US immigration policy, US politics/Trump, and CDL/trucking unless Oleg changes the topic set, write in voice-friendly prose, save the completed issue to Notion, and treat format corrections as candidate durable rules.
 
 ## Deferred
 
-- Telegram
-- general durable personal storage selection beyond the lightweight Notion document index
-- automatic upload of local chat files into Notion or Google Drive until connector capabilities support it
-- email and calendar integration
-- background automation
-- specialized agents
-- custom application development
+- Telegram delivery
+- email delivery
+- scheduled/background news monitoring
+- automatic scraping or source pipelines
+- general durable personal storage selection beyond current lightweight Notion layers
+- custom news application development
