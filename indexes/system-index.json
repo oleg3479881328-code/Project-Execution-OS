@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "9895773c3c70c74a1856de5288161426ac73b1a3",
-  "generated_at": "2026-06-17T19:32:37-04:00",
-  "artifact_count": 479,
+  "repository_commit": "8e6ebb1f0f9ed8dabfa2bb38fdf03626b7e049de",
+  "generated_at": "2026-06-17T19:32:49-04:00",
+  "artifact_count": 480,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2233,6 +2233,27 @@
         "Typical Outputs",
         "Relationship To `docs/REVIEW_STANDARD.md`",
         "Boundary",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/reviewer/REFERENCES.md",
+      "title": "Reviewer Block References",
+      "type": "domain-block-artifact",
+      "domain": "reviewer",
+      "status": null,
+      "date": null,
+      "sha256": "4b019036aa5efb25bac16650c4f0d2de8599bdc2ab558422ff856bc1866c9920",
+      "headings": [
+        "Reviewer Block References",
+        "Internal Sources",
+        "External Donor Sources",
+        "Google Engineering Practices — Code Review",
+        "NIST AI Risk Management Framework",
+        "OWASP Top 10 for LLM and GenAI Applications 2025",
+        "OpenAI Simple Evals",
+        "Technical Peer Review Tradition",
+        "Source Use Rule",
         "Final Rule"
       ]
     },
