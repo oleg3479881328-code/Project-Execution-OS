@@ -40,6 +40,7 @@
 - Start simple, validate repeated manual use, and add automation only when it solves an observed problem.
 - Knowledge accumulation must follow `PERSONAL_KNOWLEDGE_STANDARD.md` and must not bypass privacy or storage boundaries.
 - Health-related knowledge must follow `HEALTH_KNOWLEDGE_STANDARD.md`; the secretary organizes health information but does not diagnose, prescribe, or replace a clinician.
+- Recurring news-digest work must follow `NEWS_DIGEST_SUBBLOCK.md` and improve through real use.
 
 ## Source Of Truth
 
@@ -49,14 +50,16 @@
 - Standard procedure for personal documents: `DOCUMENT_SAVING_STANDARD.md`.
 - Standard procedure for personal/work knowledge: `PERSONAL_KNOWLEDGE_STANDARD.md`.
 - Standard procedure for health knowledge: `HEALTH_KNOWLEDGE_STANDARD.md`.
+- News digest subblock: `NEWS_DIGEST_SUBBLOCK.md`.
 - Raw private personal intake during v0: the active ChatGPT secretary conversation only.
 - A lightweight Notion document index is attached for validated document cards. It is not yet the general durable storage layer for all personal intake.
+- A Notion database `Утренние дайджесты новостей` stores completed news-digest pages.
 
 ## Current Status
 
-- Status: `active — first real document workflow validated; personal and health knowledge standards added`
-- Mode: `manual secretary routing, intake validation, controlled knowledge accumulation, and health-continuity organization`
-- Implementation state: routing works in the active ChatGPT conversation; the first personal-document intake workflow has been validated and recorded as a reusable standard; personal/work knowledge accumulation and health knowledge tracking now have project standards.
+- Status: `active — manual secretary workflows validated; news digest subblock added`
+- Mode: `manual secretary routing, intake validation, controlled knowledge accumulation, health-continuity organization, and recurring news-digest operation`
+- Implementation state: routing works in the active ChatGPT conversation; document, personal/work knowledge, health knowledge, contact creation, and news digest workflows now have reusable standards or subblocks.
 
 ## Done So Far
 
@@ -76,6 +79,8 @@
 - Added `PERSONAL_KNOWLEDGE_STANDARD.md` as the reusable default procedure for accumulating useful knowledge about Oleg and ongoing work.
 - Added `HEALTH_KNOWLEDGE_STANDARD.md` as the reusable default procedure for organizing labs, medications, exams, doctor questions and health open loops.
 - Added concise activation response rule for secretary-mode startup.
+- Created the Notion database `Утренние дайджесты новостей` for completed digest archive.
+- Created `NEWS_DIGEST_SUBBLOCK.md` as the reusable secretary subblock for recurring news digests.
 
 ## Current Focus
 
@@ -83,6 +88,7 @@
 - Apply the document-saving standard automatically for future document photographs and scans.
 - Apply the personal knowledge standard when incoming information has future value.
 - Apply the health knowledge standard when incoming material concerns labs, medications, symptoms, appointments, screenings, doctor instructions or medical follow-ups.
+- Apply the news digest subblock when Oleg requests news, morning digest, AI/news tracking, immigration-policy news, Trump/politics updates, or CDL/trucking news.
 - Observe which additional categories and storage patterns are actually needed.
 
 ## Next Practical Step
@@ -91,6 +97,7 @@
 - When a personal document is submitted, apply `DOCUMENT_SAVING_STANDARD.md` automatically and mention only exceptions or the next action needed from the owner.
 - When reusable personal/work knowledge appears, apply `PERSONAL_KNOWLEDGE_STANDARD.md` and mention compactly what should be remembered.
 - When health information appears, apply `HEALTH_KNOWLEDGE_STANDARD.md`, separate facts from assumptions, identify the next action, and mark what must be verified with a clinician or pharmacist.
+- When a news digest is requested, apply `NEWS_DIGEST_SUBBLOCK.md`, browse current sources, write voice-friendly prose, save the completed digest to Notion, and record format corrections as candidate rules.
 
 ## Key Decisions And Constraints
 
@@ -103,8 +110,9 @@
 - Keep the owner interaction simple: the owner should be able to drop raw information without pre-sorting it.
 - Keep raw private intake out of this GitHub project folder.
 - Keep secrets, raw personal documents, unredacted scans, sensitive identifiers and raw health data out of GitHub project files.
-- A lightweight Notion index may store confirmed document cards; do not treat it as the storage layer for all personal intake yet.
+- A lightweight Notion index may store confirmed personal-document cards; do not treat it as the storage layer for all personal intake yet.
 - Durable health storage requires an owner-approved private layer; GitHub stores only health workflow rules, not personal medical records.
+- A Notion digest archive may store completed public-news digests and compact source notes.
 - Any future external actions such as sending messages, deleting information, creating medical appointments, changing information, or making commitments on the owner's behalf require explicit approval unless a narrower safe rule is later confirmed.
 - Apply `Existing Solution First` before introducing custom architecture, code, integrations, databases, or agent workflows.
 
@@ -114,11 +122,12 @@
 2. `PERSONAL_KNOWLEDGE_STANDARD.md`
 3. `HEALTH_KNOWLEDGE_STANDARD.md`
 4. `DOCUMENT_SAVING_STANDARD.md`
-5. `PROJECT_STATE.md`
-6. `logs/latest.md`
-7. `../../docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
-8. `../../docs/KNOWLEDGE_SYSTEM.md`
-9. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
-10. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_LIFECYCLE_MODEL.md`
-11. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
-12. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
+5. `NEWS_DIGEST_SUBBLOCK.md`
+6. `PROJECT_STATE.md`
+7. `logs/latest.md`
+8. `../../docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
+9. `../../docs/KNOWLEDGE_SYSTEM.md`
+10. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
+11. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_LIFECYCLE_MODEL.md`
+12. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
+13. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
