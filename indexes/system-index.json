@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a66afcb7956e95c5432680654c4a62471a07bee9",
-  "generated_at": "2026-06-17T08:34:56-04:00",
+  "repository_commit": "14f171674dc890a8d8e29694f6ff42ae3d8fd81d",
+  "generated_at": "2026-06-17T08:39:15-04:00",
   "artifact_count": 475,
   "artifacts": [
     {
@@ -8914,7 +8914,7 @@
       "domain": "personal-secretary-os",
       "status": null,
       "date": null,
-      "sha256": "a41c919ac8b52bd4904b88d3ee3042a230d1ba7a466f87a28eca089e930a66a2",
+      "sha256": "a357b9fd3ba8901c77111a13374b6191ee0bb8eeaa58daced4bba04f441ef9d7",
       "headings": [
         "News Digest Subblock — Personal Secretary OS",
         "Purpose",
@@ -8922,6 +8922,7 @@
         "Scope",
         "Default Topics",
         "Source Rules",
+        "AI Product Coverage Rule",
         "Digest Style",
         "Default Output Shape",
         "Notion Saving Rule",
