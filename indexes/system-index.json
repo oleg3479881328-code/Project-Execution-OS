@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "34f958813eb68813997316ea86767297294b4bd9",
-  "generated_at": "2026-06-17T08:12:16-04:00",
-  "artifact_count": 474,
+  "repository_commit": "3b22b1aa293869e73e8c95c92358a7bc4db6f04c",
+  "generated_at": "2026-06-17T08:33:49-04:00",
+  "artifact_count": 475,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8905,6 +8905,30 @@
         "Suggested Private Health Record Structure",
         "Owner Commands",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "projects/personal-secretary-os/NEWS_DIGEST_SUBBLOCK.md",
+      "title": "News Digest Subblock — Personal Secretary OS",
+      "type": "project-artifact",
+      "domain": "personal-secretary-os",
+      "status": null,
+      "date": null,
+      "sha256": "a41c919ac8b52bd4904b88d3ee3042a230d1ba7a466f87a28eca089e930a66a2",
+      "headings": [
+        "News Digest Subblock — Personal Secretary OS",
+        "Purpose",
+        "Status",
+        "Scope",
+        "Default Topics",
+        "Source Rules",
+        "Digest Style",
+        "Default Output Shape",
+        "Notion Saving Rule",
+        "Improvement Loop",
+        "Current Known Preferences",
+        "Boundary",
+        "Next Practical Step"
       ]
     },
     {
