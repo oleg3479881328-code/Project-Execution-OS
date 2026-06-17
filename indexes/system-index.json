@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ffb7b6c012afd3b6d0337e586490d92584ed37e0",
-  "generated_at": "2026-06-17T19:32:07-04:00",
-  "artifact_count": 477,
+  "repository_commit": "41dab9bf914f7a38eaf747689286905f6a5efab0",
+  "generated_at": "2026-06-17T19:32:19-04:00",
+  "artifact_count": 478,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -2260,6 +2260,24 @@
         "8. Leave One Next Action",
         "Review Dimensions",
         "Direct Review Rules",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/reviewer/REVIEW_OUTPUT_FORMAT.md",
+      "title": "Review Output Format",
+      "type": "domain-block-artifact",
+      "domain": "reviewer",
+      "status": null,
+      "date": null,
+      "sha256": "d135d341f88afa60802b65e7ab58fd736c76eb41cd0ec3472dba3fe1807c9cb5",
+      "headings": [
+        "Review Output Format",
+        "Default Hard Review Format",
+        "Micro Review Format",
+        "Red-Team Format",
+        "Acceptance Review Format",
+        "Tone Rule",
         "Final Rule"
       ]
     },
