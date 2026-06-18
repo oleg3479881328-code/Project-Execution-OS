@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "aafe8826e5c077cce84ecd500a290748fe0d88ca",
-  "generated_at": "2026-06-18T08:02:38-04:00",
+  "repository_commit": "292b6adce2a14205617df28ed7f8e2b6e554021d",
+  "generated_at": "2026-06-18T08:03:19-04:00",
   "artifact_count": 484,
   "artifacts": [
     {
@@ -6384,7 +6384,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "00f5b90f69e2924e05e26b00afa10548b18a364439cbf3a6b61b4af2b5e63c55",
+      "sha256": "87799ac4ad207f3977c18413229ed103c1fa098ace0040bfe4f948f361007f99",
       "headings": [
         "Project Entrypoint Standard",
         "Purpose",
@@ -6396,20 +6396,20 @@
         "1. Project",
         "2. Purpose",
         "3. Source Of Truth",
-        "4. Current Status",
-        "5. Done So Far",
-        "6. Current Focus",
-        "7. Next Practical Step",
-        "8. Key Decisions And Constraints",
-        "9. Read Next",
+        "4. Source Trail",
+        "5. Current Status",
+        "6. Done So Far",
+        "7. Current Focus",
+        "8. Next Practical Step",
+        "9. Key Decisions And Constraints",
+        "10. Read Next",
         "What The Entrypoint Must Not Become",
         "Environment-Specific Guidance",
         "GitHub Form",
         "Legacy Migration Rule",
         "Notion Form",
         "Maintenance Rule",
-        "Minimum Quality Standard",
-        "Related Standards"
+        "Final Rule"
       ]
     },
     {
