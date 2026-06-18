@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b31c4ab435f7d7fd0b79a094fcd76e772c656b41",
-  "generated_at": "2026-06-17T19:39:36-04:00",
-  "artifact_count": 483,
+  "repository_commit": "953e71508514bffc676519c2f18477884852e1c5",
+  "generated_at": "2026-06-18T08:02:22-04:00",
+  "artifact_count": 484,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -6737,6 +6737,26 @@
         "Utility / Narrow Capability Skills",
         "Immediate Next Migration Wave",
         "Rules For The Universe"
+      ]
+    },
+    {
+      "path": "docs/SOURCE_TRACEABILITY_STANDARD.md",
+      "title": "Source Traceability Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "d4efa6e66af4a1aac5aa3e47426b33ce35ca25b1d7c2dc154814f2e060e0c953",
+      "headings": [
+        "Source Traceability Standard",
+        "Purpose",
+        "Core Rule",
+        "Required Source Block",
+        "Minimum Acceptable Source Pointer",
+        "Raw Package Rule",
+        "Failure Rule",
+        "Applies To",
+        "Final Rule"
       ]
     },
     {
