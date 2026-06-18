@@ -43,6 +43,28 @@ Short rule:
 - decide second;
 - record only by explicit user command.
 
+## Source Traceability Requirement
+
+Every durable reference capture must follow:
+
+`docs/SOURCE_TRACEABILITY_STANDARD.md`
+
+A saved idea card is incomplete unless it includes a recoverable source trail.
+
+Minimum acceptable source trail:
+
+- direct source URL; or
+- source file attachment / Drive URL / Notion URL; or
+- repository path; or
+- raw package path plus SHA256; or
+- source list with filenames and hashes.
+
+If a card says that a full package, raw bundle, archive, or research pack exists, the card must include the direct URL or path to that package.
+
+Do not save only a summary with a vague note like "full package saved separately" unless the actual package location is included.
+
+If the package exists only in the chat workspace and has not been uploaded to durable storage, say that explicitly and do not present the capture as fully durable.
+
 ## When To Use
 
 Use this standard instead of project startup when:
@@ -70,6 +92,8 @@ If the user only wants discussion, discussion is enough.
 
 Record only when the user explicitly wants the idea preserved.
 
+When recording, include source traceability before calling the record complete.
+
 ## Promotion Paths
 
 Useful records may later be promoted into:
@@ -87,3 +111,5 @@ Useful records may later be promoted into:
 Capture-before-forget is good.
 
 Premature formalization is not.
+
+No source trail, no complete capture.
