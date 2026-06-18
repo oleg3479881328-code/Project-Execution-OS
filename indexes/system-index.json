@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "953e71508514bffc676519c2f18477884852e1c5",
-  "generated_at": "2026-06-18T08:02:22-04:00",
+  "repository_commit": "aafe8826e5c077cce84ecd500a290748fe0d88ca",
+  "generated_at": "2026-06-18T08:02:38-04:00",
   "artifact_count": 484,
   "artifacts": [
     {
@@ -6482,12 +6482,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "b603d39829a28933136809e7bfcec2cd60c0585fcb8fa7f7a36abcc15d1808be",
+      "sha256": "6c0c6916298648c8451b689b0dc7c30879218399f4d425d25b7868f4eb8fcb7c",
       "headings": [
         "Reference Idea Capture Standard",
         "Purpose",
         "Canonical External Library",
         "Core Workflow",
+        "Source Traceability Requirement",
         "When To Use",
         "When Not To Use",
         "Operating Rule",
