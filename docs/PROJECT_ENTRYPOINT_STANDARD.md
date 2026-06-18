@@ -101,7 +101,27 @@ Examples:
 
 This section must remove ambiguity.
 
-### 4. Current Status
+### 4. Source Trail
+
+Follow `docs/SOURCE_TRACEABILITY_STANDARD.md`.
+
+State where the underlying sources, references, uploaded files, raw packets, or research inputs can be opened again.
+
+This section should include at least one recoverable pointer such as:
+
+- source URL;
+- Notion page URL;
+- Google Drive file URL;
+- GitHub repository path;
+- attached file link;
+- raw package path plus SHA256;
+- source list with filenames and checksums.
+
+If no durable external source exists yet, say so explicitly.
+
+Do not imply that a source package is saved if the artifact only contains a summary.
+
+### 5. Current Status
 
 Summarize:
 
@@ -109,23 +129,23 @@ Summarize:
 - current phase or step;
 - current health or confidence if relevant.
 
-### 5. Done So Far
+### 6. Done So Far
 
 List only the most important completed work or milestones.
 
 Do not turn this into a full chronology.
 
-### 6. Current Focus
+### 7. Current Focus
 
 State what is actively being worked on now.
 
-### 7. Next Practical Step
+### 8. Next Practical Step
 
 State the next useful action as clearly as possible.
 
 This should be concrete enough that a new participant can continue without guessing.
 
-### 8. Key Decisions And Constraints
+### 9. Key Decisions And Constraints
 
 Record only decisions and constraints that materially affect future work.
 
@@ -135,10 +155,11 @@ Examples:
 - forbidden scope;
 - visibility or privacy rule;
 - source-of-truth rule;
+- source-traceability rule;
 - review or handoff rule.
 - `Existing Solution First` when the project must search for adequate existing solutions before custom work.
 
-### 9. Read Next
+### 10. Read Next
 
 Point to the minimum deeper artifacts needed for deeper context.
 
@@ -180,6 +201,7 @@ This form should point to:
 - `PROJECT_RULES.md` if present
 - latest workflow run
 - latest project log
+- source trail / raw input package when relevant
 
 In initialization-only state, those deeper artifacts may legitimately not exist yet.
 
@@ -203,7 +225,8 @@ This form should point to:
 - the project page itself;
 - the current state block or status field;
 - the relevant task or notes databases if they matter;
-- the next working area to open.
+- the next working area to open;
+- the source trail / raw input package when relevant.
 
 In `Notion`, the entrypoint should usually sit near the top of the page so a new participant does not need to scroll through raw notes first.
 
@@ -212,6 +235,7 @@ In `Notion`, the entrypoint should usually sit near the top of the page so a new
 Update the project entrypoint whenever one of these changes:
 
 - the source of truth changes;
+- the source trail changes;
 - the current mode changes;
 - the current focus changes;
 - the next practical step changes;
@@ -219,22 +243,6 @@ Update the project entrypoint whenever one of these changes:
 
 If the project evolves but the entrypoint does not, re-entry cost rises and the entrypoint stops doing its job.
 
-## Minimum Quality Standard
+## Final Rule
 
-A good project entrypoint is:
-
-- short;
-- explicit;
-- current;
-- easy to scan;
-- strong enough that a new human or AI can continue with minimal confusion.
-
-It must also be honest about unknowns.
-
-## Related Standards
-
-- `docs/PROJECT_STRUCTURE_STANDARD.md`
-- `docs/REPOSITORY_MEMORY_STANDARD.md`
-- `docs/WORKFLOW_CONTRACT.md`
-- `docs/integrations/notion/README.md`
-- `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
+A project entrypoint without a recoverable source trail is incomplete.
