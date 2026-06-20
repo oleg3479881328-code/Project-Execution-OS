@@ -1,0 +1,22 @@
+{
+  "timestamp_utc": "2026-06-20T20:59:08.640607+00:00",
+  "web_search_enabled": false,
+  "search_provider": null,
+  "sources_attempted": [
+    "customer_website_fetch"
+  ],
+  "sources_succeeded": [
+    "customer_website_fetch"
+  ],
+  "sources_failed": [],
+  "assumptions": [
+    "Live web search disabled by --no-web."
+  ],
+  "competitor_query_plan": [
+    "\"Example Domain\" competitors",
+    "\"Example Domain\" alternatives",
+    "best Example Domain",
+    "\"Example Domain\" reviews",
+    "\"Example Domain\" vs competitor"
+  ]
+}

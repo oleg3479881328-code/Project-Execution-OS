@@ -1,0 +1,283 @@
+{
+  "customer_input": {
+    "url": "https://example.com/",
+    "country": null,
+    "language": null,
+    "known_competitors": [],
+    "goal": null,
+    "max_competitors": 5,
+    "no_web": true
+  },
+  "execution": {
+    "timestamp_utc": "2026-06-20T20:59:08.640607+00:00",
+    "web_search_enabled": false,
+    "search_provider": null,
+    "sources_attempted": [
+      "customer_website_fetch"
+    ],
+    "sources_succeeded": [
+      "customer_website_fetch"
+    ],
+    "sources_failed": [],
+    "assumptions": [
+      "Live web search disabled by --no-web."
+    ],
+    "competitor_query_plan": [
+      "\"Example Domain\" competitors",
+      "\"Example Domain\" alternatives",
+      "best Example Domain",
+      "\"Example Domain\" reviews",
+      "\"Example Domain\" vs competitor"
+    ]
+  },
+  "extracted_website": {
+    "requested_url": "https://example.com/",
+    "final_url": "https://example.com/",
+    "fetch_status": "http_200",
+    "title": "Example Domain",
+    "meta_description": null,
+    "headings": [
+      "Example Domain"
+    ],
+    "links": [
+      "https://iana.org/domains/example"
+    ],
+    "social_links": [],
+    "cta_texts": [
+      "Learn more"
+    ],
+    "contact_emails": [],
+    "contact_phones": [],
+    "addresses": [],
+    "service_pages": [],
+    "pricing_pages": [],
+    "contact_pages": [],
+    "legal_pages": [],
+    "language_hints": [
+      "en"
+    ],
+    "geography_hints": [],
+    "currency_hints": [],
+    "json_ld": [],
+    "raw_text_excerpt": "Example Domain Example Domain This domain is for use in documentation examples without needing permission. Avoid use in operations. Learn more",
+    "trust_signals": []
+  },
+  "inferred_context": {
+    "company_name": {
+      "field": "company_name",
+      "value": "Example Domain",
+      "confidence": "high",
+      "source": "website",
+      "reasoning_note": "Derived from page title, heading, schema name, or domain stem.",
+      "evidence": [
+        {
+          "source": "website",
+          "detail": "Candidate name: Example Domain",
+          "url": "https://example.com/"
+        }
+      ]
+    },
+    "country": null,
+    "region_or_city": null,
+    "language": {
+      "field": "language",
+      "value": "en",
+      "confidence": "medium",
+      "source": "website",
+      "reasoning_note": "Taken from language hint metadata.",
+      "evidence": [
+        {
+          "source": "website",
+          "detail": "Language hint: en",
+          "url": "https://example.com/"
+        }
+      ]
+    },
+    "business_model": {
+      "field": "business_model",
+      "value": "General Service Business",
+      "confidence": "low",
+      "source": "website",
+      "reasoning_note": "Weak heuristic fallback.",
+      "evidence": [
+        {
+          "source": "website",
+          "detail": "Weak heuristic fallback.",
+          "url": "https://example.com/"
+        }
+      ]
+    },
+    "main_offer": {
+      "field": "main_offer",
+      "value": "Example Domain",
+      "confidence": "medium",
+      "source": "website",
+      "reasoning_note": "Best public-facing offer candidate from heading or metadata.",
+      "evidence": [
+        {
+          "source": "website",
+          "detail": "Example Domain",
+          "url": "https://example.com/"
+        }
+      ]
+    },
+    "target_customer": {
+      "field": "target_customer",
+      "value": "Target audience not explicit; likely broad buyer set",
+      "confidence": "low",
+      "source": "website",
+      "reasoning_note": "Weak heuristic fallback.",
+      "evidence": [
+        {
+          "source": "website",
+          "detail": "Weak heuristic fallback.",
+          "url": "https://example.com/"
+        }
+      ]
+    },
+    "conversion_goal": {
+      "field": "conversion_goal",
+      "value": "Primary conversion path unclear; likely contact-led",
+      "confidence": "low",
+      "source": "website",
+      "reasoning_note": "Weak heuristic fallback.",
+      "evidence": [
+        {
+          "source": "website",
+          "detail": "Weak heuristic fallback.",
+          "url": "https://example.com/"
+        }
+      ]
+    },
+    "summary": "Commercial context inferred from public website evidence and confidence-tagged heuristics."
+  },
+  "competitors_discovered": [],
+  "competitor_analyses": [],
+  "customer_voice": [],
+  "offer_diagnosis": {
+    "current_offer_summary": "Example Domain",
+    "problems": [
+      "Public proof signals are thin or absent.",
+      "Pricing or budget expectation is not obvious from the inspected pages.",
+      "Contact path is weak or hard to verify."
+    ],
+    "stronger_angles": [
+      "Make the outcome of Example Domain concrete for Target audience not explicit; likely broad buyer set.",
+      "Reduce buyer risk with a clear process, proof, and next-step expectation.",
+      "State who the offer is for and who it is not for.",
+      "Translate generic benefits into measurable or observable outcomes.",
+      "Tie the CTA to the buyer's current intent level, not a vague contact ask."
+    ],
+    "headline_ideas": [
+      "Example Domain: a clearer way for Target audience not explicit; likely broad buyer set to achieve the desired result",
+      "Get Example Domain without the usual friction, guesswork, or delays",
+      "See whether Example Domain is the right fit before you commit",
+      "Trusted support for Target audience not explicit; likely broad buyer set who need results, not just promises",
+      "Start with a focused next step instead of a generic inquiry"
+    ],
+    "cta_ideas": [
+      "Book a strategy call with Example Domain",
+      "Get a tailored quote for Target audience not explicit; likely broad buyer set",
+      "See if Example Domain fits your situation"
+    ],
+    "trust_improvements": [
+      "Add customer testimonials close to the primary CTA.",
+      "Show outcome-focused proof such as case studies, before/after, or metrics.",
+      "Surface certifications, awards, or notable clients if available."
+    ],
+    "guarantee_ideas": [
+      "Offer a low-risk first step such as a short audit, fit call, or scoped review.",
+      "Explain turnaround time, process clarity, and what happens after the CTA."
+    ]
+  },
+  "funnel_issues": [
+    {
+      "issue": "Insufficient trust proof",
+      "reason": "Buyers cannot quickly verify credibility or expected outcomes.",
+      "fix": "Add testimonials, case studies, and trust badges on the homepage and offer pages.",
+      "priority": "high"
+    },
+    {
+      "issue": "Low budget clarity",
+      "reason": "Unclear pricing creates friction and low-intent leads.",
+      "fix": "Publish pricing ranges, starting prices, or qualification criteria.",
+      "priority": "medium"
+    },
+    {
+      "issue": "Fragile contact path",
+      "reason": "Potential buyers may not find a reliable way to reach the business.",
+      "fix": "Add a dedicated contact page with multiple contact methods and expected response time.",
+      "priority": "high"
+    }
+  ],
+  "distribution_opportunities": [
+    {
+      "channel": "Local SEO / Google Business Profile",
+      "fit": "high",
+      "why_now": "Location and contact-path clarity matter for lead capture.",
+      "first_test": "Improve Google Business Profile, service pages, and location trust signals.",
+      "priority": "high"
+    },
+    {
+      "channel": "SEO service and comparison pages",
+      "fit": "high",
+      "why_now": "The site can capture intent-driven buyers if offer pages match search language.",
+      "first_test": "Create one high-intent service page and one comparison/problem page.",
+      "priority": "high"
+    },
+    {
+      "channel": "Case-study-led content",
+      "fit": "medium",
+      "why_now": "Proof content reduces friction for mid-intent buyers.",
+      "first_test": "Publish one short case-study page tied to a common buying objection.",
+      "priority": "medium"
+    }
+  ],
+  "growth_actions": [
+    {
+      "week": "Week 1",
+      "action": "Rewrite the homepage hero and primary CTA for Example Domain.",
+      "owner": "owner",
+      "evidence_to_collect": "Before/after screenshot and CTA click or inquiry-rate change.",
+      "expected_impact": "Higher clarity and more qualified first-step conversions.",
+      "confidence": "high"
+    },
+    {
+      "week": "Week 2",
+      "action": "Publish or improve one high-intent service page and add proof near the CTA.",
+      "owner": "owner",
+      "evidence_to_collect": "Search impressions, session quality, and conversion events on the page.",
+      "expected_impact": "Better search relevance and stronger buyer trust.",
+      "confidence": "medium"
+    },
+    {
+      "week": "Week 3-4",
+      "action": "Run one distribution experiment from the highest-fit channel list.",
+      "owner": "owner",
+      "evidence_to_collect": "Lead quality, volume, and cost or effort per qualified conversation.",
+      "expected_impact": "Validate the best short-term acquisition channel.",
+      "confidence": "medium"
+    }
+  ],
+  "confirmed_facts": [
+    "Fetched customer website successfully: https://example.com/",
+    "Detected 1 CTA candidates.",
+    "Detected 0 contact-path links.",
+    "Detected 0 service/product-like links."
+  ],
+  "assumptions": [
+    "Live web search disabled by --no-web.",
+    "Country could not be confirmed from the inspected website evidence alone.",
+    "Competitor map is partial because live discovery may not have executed."
+  ],
+  "recommendations": [
+    "Tighten the first-screen promise so the buyer immediately understands the result and next step.",
+    "Match service pages and CTAs to the inferred purchase intent rather than using one generic contact ask everywhere.",
+    "Add trust proof close to conversion points before scaling traffic acquisition."
+  ],
+  "risks": [
+    "V1 uses public-page heuristics and may miss important context behind deeper pages.",
+    "Competitor discovery quality depends on geography and offer inference quality.",
+    "No guarantee of market completeness or revenue impact."
+  ]
+}
