@@ -13,6 +13,22 @@ def _format_inferred(value: InferredValue | None) -> str:
 
 
 def render_markdown(report: CommercialIntelligenceReport) -> str:
+    seed_rows = [
+        "| Field | Value | Confidence | Source | Note |",
+        "| --- | --- | --- | --- | --- |",
+        f"| seed_type | {report.seed_resolution.seed.seed_type.value} | {report.seed_resolution.seed.confidence.value} | {report.seed_resolution.seed.source.value} | normalized from user input |",
+    ]
+    for item in (
+        report.seed_resolution.entity_name,
+        report.seed_resolution.website_url,
+        report.seed_resolution.email_domain,
+        report.seed_resolution.phone_hint,
+        report.seed_resolution.location_hint,
+        report.seed_resolution.profile_hint,
+    ):
+        if item:
+            seed_rows.append(_format_inferred(item))
+
     competitor_patterns = [
         f"- {analysis.competitor.name}: {analysis.positioning}" for analysis in report.competitor_analyses
     ]
@@ -88,12 +104,17 @@ def render_markdown(report: CommercialIntelligenceReport) -> str:
 
     return "\n".join(
         [
-            f"# Commercial Intelligence Report — {report.extracted_website.final_url}",
+            f"# Commercial Intelligence Report — {report.seed_resolution.seed.normalized_value}",
             "",
             "## Input Received",
-            f"- URL: `{report.customer_input.url}`",
+            f"- Seed: `{report.customer_input.seed}`",
+            f"- Seed type override: `{report.customer_input.seed_type.value if report.customer_input.seed_type else 'auto-detect'}`",
             f"- Goal: `{report.customer_input.goal or 'not provided'}`",
             f"- Live web search enabled: `{report.execution.web_search_enabled}`",
+            "",
+            "## Seed Resolution",
+            report.seed_resolution.summary,
+            *seed_rows,
             "",
             "## Inference Summary",
             report.inferred_context.summary,
@@ -122,6 +143,7 @@ def render_markdown(report: CommercialIntelligenceReport) -> str:
             *(f"- {item}" for item in report.offer_diagnosis.headline_ideas + report.offer_diagnosis.cta_ideas),
             "",
             "## Website / Funnel Audit",
+            f"- Website execution status: `{report.extracted_website.fetch_status}`",
             *funnel_rows,
             "",
             "## Distribution Opportunities",
@@ -140,7 +162,7 @@ def render_markdown(report: CommercialIntelligenceReport) -> str:
             *(f"- Risk: {item}" for item in report.risks),
             "",
             "## Suggested Next Test",
-            "- Run the same audit on one real customer site and compare inferred context with owner-confirmed facts.",
+            "- Run the same audit on one real customer seed and compare inferred context with owner-confirmed facts.",
         ]
     )
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Any
 
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field
 
 
 class ConfidenceLevel(str, Enum):
@@ -22,6 +22,20 @@ class SourceType(str, Enum):
     SYSTEM = "system"
 
 
+class SeedType(str, Enum):
+    WEBSITE_URL = "website_url"
+    PHONE_NUMBER = "phone_number"
+    EMAIL = "email"
+    PERSON_NAME = "person_name"
+    COMPANY_NAME = "company_name"
+    ADDRESS = "address"
+    SOCIAL_PROFILE = "social_profile"
+    MARKETPLACE_PROFILE = "marketplace_profile"
+    GOOGLE_BUSINESS_PROFILE = "google_business_profile"
+    SHORT_DESCRIPTION = "short_description"
+    UNKNOWN = "unknown"
+
+
 class EvidenceItem(BaseModel):
     source: SourceType
     detail: str
@@ -37,8 +51,30 @@ class InferredValue(BaseModel):
     evidence: list[EvidenceItem] = Field(default_factory=list)
 
 
+class CustomerSeed(BaseModel):
+    raw_value: str = Field(min_length=1)
+    seed_type: SeedType
+    normalized_value: str
+    confidence: ConfidenceLevel
+    source: SourceType = SourceType.USER_INPUT
+    evidence: list[EvidenceItem] = Field(default_factory=list)
+
+
+class ResolvedEntity(BaseModel):
+    seed: CustomerSeed
+    entity_name: InferredValue | None = None
+    website_url: InferredValue | None = None
+    email_domain: InferredValue | None = None
+    phone_hint: InferredValue | None = None
+    location_hint: InferredValue | None = None
+    profile_hint: InferredValue | None = None
+    summary: str
+
+
 class CustomerInput(BaseModel):
-    url: HttpUrl
+    seed: str = Field(min_length=1)
+    seed_type: SeedType | None = None
+    url_alias: str | None = None
     country: str | None = None
     language: str | None = None
     known_competitors: list[str] = Field(default_factory=list)
@@ -165,6 +201,7 @@ class ExecutionMetadata(BaseModel):
 
 class CommercialIntelligenceReport(BaseModel):
     customer_input: CustomerInput
+    seed_resolution: ResolvedEntity
     execution: ExecutionMetadata
     extracted_website: ExtractedWebsite
     inferred_context: InferredContext

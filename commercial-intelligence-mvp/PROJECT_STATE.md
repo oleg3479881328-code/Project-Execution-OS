@@ -24,16 +24,22 @@ logs/latest.md
 
 - MVP scaffold created under `commercial-intelligence-mvp/`.
 - Deterministic-first CLI architecture selected.
-- Website extraction, context inference, competitor query planning, report rendering, and model tests were implemented.
-- Validation passed for `python -m compileall src`, `pytest`, and `python -m src.cli audit --url https://example.com --out reports/example --no-web`.
+- Seed-first CLI architecture selected with backward-compatible `--url` alias.
+- Seed resolution, optional website extraction, context inference, competitor query planning, report rendering, and model tests were implemented.
+- Validation passed for:
+  `python -m compileall src`
+  `pytest`
+  `python -m src.cli audit --seed https://example.com --out reports/example --no-web`
+  `python -m src.cli audit --seed "ACME Dental, Mason Ohio" --seed-type company_name --out reports/acme --no-web`
+  `python -m src.cli audit --seed "+1 513 555 1212" --seed-type phone_number --out reports/phone --no-web`
 
 ## Current Focus
 
-Preserve verified execution evidence and prepare the MVP for review or a real-site validation pass.
+Preserve validated seed-first execution evidence and prepare the updated MVP for review.
 
 ## Current Next Safe Action
 
-Run the CLI against a real customer site, compare inferred context with known facts, and tighten heuristics where confidence is weak.
+Publish the updated execution report in issue `#65`, then review whether the next pass should deepen entity resolution or competitor discovery.
 
 ## Active Files For Re-entry
 
@@ -47,7 +53,7 @@ Run the CLI against a real customer site, compare inferred context with known fa
 ## Known Blockers
 
 - Live competitor discovery depends on an external search API key such as `TAVILY_API_KEY`.
-- V1 extracts only the initial website page plus linked key pages; it is not a full crawler.
+- V1 extracts only the initial website page plus linked key pages when a website exists; it is not a full crawler.
 
 ## Do-Not-Break Rules
 

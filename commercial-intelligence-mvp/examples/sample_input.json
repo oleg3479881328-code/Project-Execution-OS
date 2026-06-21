@@ -1,5 +1,6 @@
 {
-  "url": "https://example.com",
+  "seed": "ACME Dental, Mason Ohio",
+  "seed_type": "company_name",
   "goal": "more qualified inbound leads",
   "max_competitors": 5,
   "no_web": true

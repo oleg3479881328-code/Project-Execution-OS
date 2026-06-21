@@ -5,11 +5,23 @@ from urllib.parse import urlparse
 
 import requests
 
-from .models import ConfidenceLevel, CompetitorCandidate, CustomerInput, ExecutionMetadata, InferredContext, SourceType
+from .models import (
+    ConfidenceLevel,
+    CompetitorCandidate,
+    CustomerInput,
+    ExecutionMetadata,
+    InferredContext,
+    ResolvedEntity,
+    SourceType,
+)
 
 
-def build_query_plan(customer: CustomerInput, context: InferredContext) -> list[str]:
-    company = context.company_name.value if context.company_name else urlparse(str(customer.url)).netloc
+def build_query_plan(customer: CustomerInput, resolved_entity: ResolvedEntity, context: InferredContext) -> list[str]:
+    if resolved_entity.website_url:
+        fallback_company = urlparse(resolved_entity.website_url.value).netloc
+    else:
+        fallback_company = resolved_entity.entity_name.value if resolved_entity.entity_name else customer.seed
+    company = context.company_name.value if context.company_name else fallback_company
     offer = context.main_offer.value if context.main_offer else "service"
     country = customer.country or (context.country.value if context.country else "")
     language = customer.language or (context.language.value if context.language else "")
@@ -58,10 +70,11 @@ def _search_tavily(query: str, max_results: int) -> dict:
 
 def discover_competitors(
     customer: CustomerInput,
+    resolved_entity: ResolvedEntity,
     context: InferredContext,
     execution: ExecutionMetadata,
 ) -> list[CompetitorCandidate]:
-    query_plan = build_query_plan(customer, context)
+    query_plan = build_query_plan(customer, resolved_entity, context)
     execution.competitor_query_plan = query_plan
 
     candidates: list[CompetitorCandidate] = []
@@ -103,7 +116,10 @@ def discover_competitors(
         for result in payload.get("results", []):
             url = result.get("url", "")
             domain = urlparse(url).netloc.replace("www.", "")
-            if not domain or domain in urlparse(str(customer.url)).netloc:
+            customer_domain = ""
+            if resolved_entity.website_url:
+                customer_domain = urlparse(resolved_entity.website_url.value).netloc
+            if not domain or (customer_domain and domain in customer_domain):
                 continue
             candidates.append(
                 CompetitorCandidate(

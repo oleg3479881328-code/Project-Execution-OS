@@ -3,7 +3,16 @@ from __future__ import annotations
 import re
 from urllib.parse import urlparse
 
-from .models import ConfidenceLevel, EvidenceItem, ExtractedWebsite, InferredContext, InferredValue, SourceType
+from .models import (
+    ConfidenceLevel,
+    EvidenceItem,
+    ExtractedWebsite,
+    InferredContext,
+    InferredValue,
+    ResolvedEntity,
+    SeedType,
+    SourceType,
+)
 
 COUNTRY_BY_SUFFIX = {
     "uk": "United Kingdom",
@@ -109,12 +118,25 @@ def _match_keywords(text: str, groups: dict[str, tuple[str, ...]], fallback: str
 
 
 def infer_context(
+    resolved_entity: ResolvedEntity,
     website: ExtractedWebsite,
     known_country: str | None = None,
     known_language: str | None = None,
     goal: str | None = None,
 ) -> InferredContext:
-    evidence_text = " ".join(filter(None, [website.title or "", website.meta_description or "", " ".join(website.headings), website.raw_text_excerpt]))
+    seed_text = resolved_entity.seed.normalized_value
+    evidence_text = " ".join(
+        filter(
+            None,
+            [
+                seed_text,
+                website.title or "",
+                website.meta_description or "",
+                " ".join(website.headings),
+                website.raw_text_excerpt,
+            ],
+        )
+    )
 
     business_model_value, business_confidence, business_note = _match_keywords(
         evidence_text,
@@ -159,7 +181,7 @@ def infer_context(
         )
         conversion_source = SourceType.WEBSITE
 
-    company_name = _company_name(website)
+    company_name = _company_name(website) or resolved_entity.entity_name
     country = _country(website, known_country)
     language = _language(website, known_language)
 
@@ -183,6 +205,26 @@ def infer_context(
             evidence=[EvidenceItem(source=SourceType.WEBSITE, detail=website.geography_hints[0], url=website.final_url)],
         )
 
+    if not country and resolved_entity.location_hint:
+        country = InferredValue(
+            field="country",
+            value=resolved_entity.location_hint.value,
+            confidence=ConfidenceLevel.LOW,
+            source=SourceType.USER_INPUT,
+            reasoning_note="Fallback from address-like seed because website evidence was unavailable or weak.",
+            evidence=resolved_entity.location_hint.evidence,
+        )
+
+    if not language and resolved_entity.seed.seed_type == SeedType.SHORT_DESCRIPTION:
+        language = InferredValue(
+            field="language",
+            value="unknown",
+            confidence=ConfidenceLevel.LOW,
+            source=SourceType.ASSUMPTION,
+            reasoning_note="No language evidence available from seed-only execution.",
+            evidence=resolved_entity.seed.evidence,
+        )
+
     context = InferredContext(
         company_name=company_name,
         country=country,
@@ -200,17 +242,29 @@ def infer_context(
             field="main_offer",
             value=offer_value,
             confidence=ConfidenceLevel.MEDIUM if website.headings else ConfidenceLevel.LOW,
-            source=SourceType.WEBSITE,
-            reasoning_note="Best public-facing offer candidate from heading or metadata.",
-            evidence=[EvidenceItem(source=SourceType.WEBSITE, detail=offer_value, url=website.final_url)],
+            source=SourceType.WEBSITE if website.fetch_status != "not_executed" else SourceType.ASSUMPTION,
+            reasoning_note="Best public-facing offer candidate from heading, metadata, or seed fallback.",
+            evidence=[
+                EvidenceItem(
+                    source=SourceType.WEBSITE if website.fetch_status != "not_executed" else SourceType.ASSUMPTION,
+                    detail=offer_value,
+                    url=website.final_url if website.fetch_status != "not_executed" else None,
+                )
+            ],
         ),
         target_customer=InferredValue(
             field="target_customer",
             value=target_value,
             confidence=target_confidence,
-            source=SourceType.WEBSITE,
+            source=SourceType.WEBSITE if website.fetch_status != "not_executed" else SourceType.ASSUMPTION,
             reasoning_note=target_note,
-            evidence=[EvidenceItem(source=SourceType.WEBSITE, detail=target_note, url=website.final_url)],
+            evidence=[
+                EvidenceItem(
+                    source=SourceType.WEBSITE if website.fetch_status != "not_executed" else SourceType.ASSUMPTION,
+                    detail=target_note,
+                    url=website.final_url if website.fetch_status != "not_executed" else None,
+                )
+            ],
         ),
         conversion_goal=InferredValue(
             field="conversion_goal",
@@ -220,6 +274,6 @@ def infer_context(
             reasoning_note=conversion_note,
             evidence=[EvidenceItem(source=conversion_source, detail=conversion_note, url=website.final_url)],
         ),
-        summary="Commercial context inferred from public website evidence and confidence-tagged heuristics.",
+        summary="Commercial context inferred from seed resolution, public website evidence when available, and confidence-tagged heuristics.",
     )
     return context
