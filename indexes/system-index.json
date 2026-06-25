@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a92924a83ac2896fc9df72f2012a40427326c9c0",
-  "generated_at": "2026-06-25T12:43:58-04:00",
-  "artifact_count": 486,
+  "repository_commit": "813b341e2a6b6b56346ab731e4a5cb6a0174ad75",
+  "generated_at": "2026-06-25T12:44:16-04:00",
+  "artifact_count": 487,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -5650,6 +5650,24 @@
       "sha256": "7cdc5726d8bc224c21cb9b448bb421e4768f27240892f6703226e56dc830a738",
       "headings": [
         "Codex Response Channel"
+      ]
+    },
+    {
+      "path": "docs/COMMAND_02_EXECUTOR_REPLY_CHECK_STANDARD.md",
+      "title": "Command 0.2 / 02 — Executor Reply Check Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "554e72ee422b64351ded5d3d0aab8267d8e18f02b7da1d6b1c80ea6dfe5d6a6b",
+      "headings": [
+        "Command 0.2 / 02 — Executor Reply Check Standard",
+        "Purpose",
+        "Command Aliases",
+        "Required Behavior",
+        "No Clarification Rule",
+        "Routing",
+        "Scope Boundary"
       ]
     },
     {
