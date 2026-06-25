@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "27b857c7848fcc0983d75f02981f30d2d68a3f96",
-  "generated_at": "2026-06-25T12:56:56-04:00",
+  "repository_commit": "e21fc7ad17899a3153db0391ac8b118324294848",
+  "generated_at": "2026-06-25T13:35:13-04:00",
   "artifact_count": 487,
   "artifacts": [
     {
@@ -5659,12 +5659,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "530d2462d6274488abba4cba412dddc9235942f99b70cd2a5d9e06730e4bc888",
+      "sha256": "8189039a8c479393b4116e7ccf48bd5c08b8814761bd362ba39f67b154cc4d3d",
       "headings": [
         "Command 0.2 / 02 — Executor Reply Check Standard",
         "Purpose",
         "Command Aliases",
         "Required Behavior",
+        "Multi-Surface Readback Rule",
         "Bidirectional Conversation Rule",
         "No Clarification Rule",
         "Routing",
