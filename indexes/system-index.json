@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f23e90ea38a325dd8bc6ae4f577ece1bd9d510db",
-  "generated_at": "2026-06-24T21:16:59-04:00",
+  "repository_commit": "1314371e7edb1aec9577b42ad2e4d206a3e147aa",
+  "generated_at": "2026-06-25T12:43:36-04:00",
   "artifact_count": 486,
   "artifacts": [
     {
@@ -125,7 +125,7 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "43b30a05daf7a5287ccba0f976806b7168808e1908238f70282a278e81736b69",
+      "sha256": "83432184507a68927483cc30dd23360afa745d925f8eca0369232ebfe4c20f96",
       "headings": [
         "PROJECT_STATE.md",
         "Current State",
@@ -6580,7 +6580,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "f8c7181a90d244bb8d253023718ec193678a92f2c739bfbd0944ff3755273058",
+      "sha256": "1590a0531cd7e3e7dcf2129796deb2dd181eab9da6f368707d14d001c8d25ccb",
       "headings": [
         "Project Execution OS Router",
         "Purpose",
@@ -8136,9 +8136,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Stage 1 with 100 GB gp3 hit a storage blocker and was cleaned up. Do not retry with 100 GB. Recommended revised route is one temporary g5.xlarge with 200 GB gp3, DeleteOnTermination=true, environment preparation only, AMI capture, cleanup, and stop. Stage 2 remains blocked.",
+      "status": "Added candidate central skill `gemini-tts-speech-generation` for Gemini API scripted text-to-speech generation. Created `SKILL.md`, created `references.md`, updated `skills/registry.md`, and updated `PROJECT_STATE.md`. The skill remains `candidate` / `not_reviewed` and must not be treated as active until reviewed under Project Execution OS governance.",
       "date": null,
-      "sha256": "d05a5f1a343d278ca20e3064de7eb9479cbd4f6fb7522044ef1586d5435fe2db",
+      "sha256": "97b997100cf228ea5438baf1402265025575979c816fe38edc8dd1f71c81b38c",
       "headings": [
         "Latest Executor Status"
       ]
