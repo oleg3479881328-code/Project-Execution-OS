@@ -32,6 +32,24 @@ When the owner sends `0.2` or `02` in a project/executor context:
 6. Compare the result against the handoff packet / acceptance criteria.
 7. Respond to the owner with a concise review: accepted, needs fixes, blocked, or no executor reply yet.
 
+## Multi-Surface Readback Rule
+
+When a task has more than one active surface, such as a coordination issue plus an implementation PR, `02` / `0.2` means check all active surfaces before answering.
+
+Minimum readback for a GitHub-backed execution task:
+
+1. coordination issue comments;
+2. PR metadata and state;
+3. PR comments and review comments;
+4. latest branch/head commit;
+5. reported artifact and validation state.
+
+Do not stop after reading only the original issue when a PR exists.
+
+Do not stop after reading only the PR when the coordination issue contains task history, owner instructions, or artifact notes.
+
+If the active surfaces are ambiguous, infer them from the current issue/PR links, branch names, project state, and recent comments before asking the owner.
+
 ## Bidirectional Conversation Rule
 
 `02` / `0.2` is also the standing connected-agent check-in signal.
