@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "292b6adce2a14205617df28ed7f8e2b6e554021d",
-  "generated_at": "2026-06-18T08:03:19-04:00",
-  "artifact_count": 484,
+  "repository_commit": "c5cf946a37cf21084af3af9703833bd646de67d5",
+  "generated_at": "2026-06-24T21:16:26-04:00",
+  "artifact_count": 485,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -9612,6 +9612,35 @@
         "Verdict",
         "Status Recommendation",
         "Activation Note"
+      ]
+    },
+    {
+      "path": "skills/audio/gemini-tts-speech-generation/SKILL.md",
+      "title": "Gemini TTS Speech Generation",
+      "type": "skill-artifact",
+      "domain": "audio",
+      "status": "candidate",
+      "date": null,
+      "sha256": "44106e93679033352cc3baf98698278238c495cbfac41256e5ed3a9adb254f47",
+      "headings": [
+        "Gemini TTS Speech Generation",
+        "Purpose",
+        "When To Use",
+        "When Not To Use",
+        "Required Inputs",
+        "Outputs",
+        "Workflow",
+        "Prompt Packet Template",
+        "AUDIO PROFILE: <speaker name or narrator profile>",
+        "<short voice archetype>",
+        "THE SCENE",
+        "DIRECTOR'S NOTES",
+        "SAMPLE CONTEXT",
+        "TRANSCRIPT",
+        "Constraints",
+        "Failure Modes",
+        "Validation Checklist",
+        "References"
       ]
     },
     {
