@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c5cf946a37cf21084af3af9703833bd646de67d5",
-  "generated_at": "2026-06-24T21:16:26-04:00",
-  "artifact_count": 485,
+  "repository_commit": "b90d66355b287b606b9e12a4a5f03ed9af252a5b",
+  "generated_at": "2026-06-24T21:16:41-04:00",
+  "artifact_count": 486,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -9641,6 +9641,23 @@
         "Failure Modes",
         "Validation Checklist",
         "References"
+      ]
+    },
+    {
+      "path": "skills/audio/gemini-tts-speech-generation/references.md",
+      "title": "Gemini TTS Speech Generation — References",
+      "type": "skill-artifact",
+      "domain": "audio",
+      "status": null,
+      "date": null,
+      "sha256": "95cba9923937d9a760ae5226a6632f7c08b48b6f0b1539a5c5fea799ff039556",
+      "headings": [
+        "Gemini TTS Speech Generation — References",
+        "Official Source",
+        "Source Snapshot",
+        "Extracted Operating Facts",
+        "Related Official Sources To Re-check When Implementing",
+        "Governance Notes"
       ]
     },
     {
