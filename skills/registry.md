@@ -67,6 +67,7 @@ Allowed review states:
 | project-documentation-architect | documentation | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/documentation/project-documentation-architect/SKILL.md |
 | chrome-web-store-publication-readiness | documentation | candidate | not_reviewed | chatgpt, codex, claude | 0.1.0 | extracted_from_Voice-Button_issue_2 | skills/documentation/chrome-web-store-publication-readiness/SKILL.md |
 | logic-deconstruction | analysis | reviewed | approved | chatgpt, codex, claude | 0.1.0 | migrated_from_local_codex_skills | skills/analysis/logic-deconstruction/SKILL.md |
+| gemini-tts-speech-generation | audio | candidate | not_reviewed | chatgpt, codex, claude | 0.1.0 | google_gemini_api_speech_generation_docs | skills/audio/gemini-tts-speech-generation/SKILL.md |
 
 ## Governance Notes
 
