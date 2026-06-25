@@ -57,7 +57,7 @@ Before sending a durable coordination message:
 3. update the sender-owned mailbox when one is listed;
 4. report the exact destination used.
 
-Before processing command `02` or checking for an incoming message:
+Before processing command `0.2`, `02`, or checking for an incoming executor message:
 
 1. read this file;
 2. read the incoming mailbox listed above;
