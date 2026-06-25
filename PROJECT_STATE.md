@@ -2,7 +2,7 @@
 project_name: Project Execution OS
 project_mode: compact
 status: transfer_ready
-updated_at: 2026-06-10
+updated_at: 2026-06-24
 source_of_truth: repository
 active_branch: main
 ---
@@ -23,12 +23,16 @@ logs/latest.md
 
 ## Latest Confirmed Milestone
 
-- PR `#44` was merged into `main`.
-- Merge commit: `41d4db314141b00146d84a15bc81ac0ebfe2174d`.
-- Added `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` as the reusable standard for measuring agent quality by successful outcomes, cost, latency, context efficiency, tool-use quality, regression protection, safety and transferability.
-- Routed agent-quality, eval, observability and orchestration-complexity work through `docs/ROUTER.md`.
-- Updated `SYSTEM_CONTEXT_MANIFEST.md` to `system-context-manifest-v10` / `knowledge-aware-core-v10` after the router changed.
-- GitHub Actions validation passed before merge.
+- Added candidate central skill `gemini-tts-speech-generation`.
+- Skill path: `skills/audio/gemini-tts-speech-generation/SKILL.md`.
+- References path: `skills/audio/gemini-tts-speech-generation/references.md`.
+- Registry updated: `skills/registry.md`.
+- Source checked: Gemini API speech generation / TTS documentation, 2026-06-24.
+- Observed official source last-updated marker: 2026-06-22 UTC.
+- Lifecycle state: `candidate`.
+- Review state: `not_reviewed`.
+- The skill is not active until Project Execution OS review promotes it.
+- Creation commits: `c5cf946a37cf21084af3af9703833bd646de67d5`, `b90d66355b287b606b9e12a4a5f03ed9af252a5b`, `f23e90ea38a325dd8bc6ae4f577ece1bd9d510db`.
 
 ## Current Focus
 
@@ -38,7 +42,9 @@ Keep the central project internally consistent and transfer-ready after every me
 
 No implementation task is currently active.
 
-Await the owner's next bounded central-system task. When a new task arrives:
+Next safe action for the new skill is a formal review under `docs/SKILL_REVIEW_STANDARD.md`; until then, use it only as a candidate reference.
+
+When a new task arrives:
 
 1. enter through `START_HERE.md`;
 2. follow `docs/ROUTER.md`;
@@ -61,6 +67,7 @@ Read in this order when resuming central-project work:
 ## Known Blockers
 
 - `PROJECT_INDEX.md` still needs a curated canonical-documents entry for `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` during the next safe large-index maintenance pass. Generated indexes already detect the new document automatically.
+- `gemini-tts-speech-generation` is registered as `candidate` / `not_reviewed`; it must not be treated as active until reviewed.
 
 ## Do-Not-Break Rules
 
