@@ -40,7 +40,7 @@ Do not append an unrelated next-project question after answering the active requ
 - Ohio taxes, Ohio municipal income tax, RITA, CCA, Ohio gig-economy income, Ohio DoorDash income, Ohio LLC, Ohio small-business tax routing, Ohio payroll, Ohio unemployment tax, Ohio sales tax, or Ohio tax deadlines -> `blocks/us-tax-accounting/ohio/BLOCK.md`
 - United States taxation, bookkeeping, accounting operations, self-employment income, gig-economy income, estimated taxes, LLC tax classification, payroll, contractors, W-2, 1099, sales tax, monthly close, year-end close, CPA handoff, EA handoff, or tax-accounting tool selection -> `blocks/us-tax-accounting/BLOCK.md`
 - immigration law, USCIS, Form I-485, marriage-based adjustment of status, consular processing, immigration interviews, RFEs, NOIDs, immigration travel risk, or USCIS PM-602-0199 -> `blocks/us-law/immigration/BLOCK.md`
-- United States law, federal or state legal research, statutes, regulations, court rules, case law, legal deadlines, legal-risk triage, attorney handoff preparation, or legal-source automation -> `blocks/us-law/BLOCK.md`
+- United States law, federal or state legal research, statutes, regulations, court rules, case law, legal-risk triage, attorney handoff preparation, or legal-source automation -> `blocks/us-law/BLOCK.md`
 - indexing or repository catalog work -> `docs/INDEXING_STANDARD.md`
 - create, expand, review, or formalize a reusable domain block -> `skills/orchestration/domain-block-creation/SKILL.md`
 - current-project summary, status, orientation, or "where are we now?" question -> read the current project's entrypoint and only the minimum necessary current-state evidence; answer the question directly; stop after the answer; do not trigger `Start New Project.md` or ask which new project to create unless the owner explicitly requests a new project
@@ -53,7 +53,7 @@ Do not append an unrelated next-project question after answering the active requ
 - research task -> `docs/RESEARCH_STANDARD.md`
 - review task -> `docs/REVIEW_STANDARD.md`
 - already-decided Codex execution handoff -> `docs/CODEX_HANDOFF_ENTRYPOINT.md`
-- communication channel, connected-agent communication, message transport, `01`, `02`, `10`, channel selection, route recovery, or coordination-path uncertainty -> `blocks/communication-channel/BLOCK.md`
+- communication channel, connected-agent communication, message transport, `01`, `0.2`, `02`, `10`, `0.2 = check executor reply`, channel selection, route recovery, or coordination-path uncertainty -> `blocks/communication-channel/BLOCK.md`
 - stable ChatGPT system-layer configuration -> `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
 - central knowledge capture, promotion, review, selective loading or retirement -> `docs/KNOWLEDGE_SYSTEM.md`
 - repository-memory question for this system or a GitHub-backed project -> `docs/REPOSITORY_MEMORY_STANDARD.md`
