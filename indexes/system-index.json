@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c82a79e5f287d90d87b875e404a52d98199d1432",
-  "generated_at": "2026-07-02T10:23:15-04:00",
+  "repository_commit": "480758ddc598d9fae8903c1fcf8cf97ef535cc29",
+  "generated_at": "2026-07-02T10:24:05-04:00",
   "artifact_count": 488,
   "artifacts": [
     {
@@ -445,7 +445,7 @@
       "domain": "PROJECT_INDEX.md",
       "status": "candidate",
       "date": null,
-      "sha256": "54747f50031096f33bd765b6840d4a2d34c69b2dca6c9982310c047b60d2be8a",
+      "sha256": "0b3bf4b4334a0075fc925f3dfb99964d311fffc23553fa7cbc8842ef5b3b3bc4",
       "headings": [
         "Blocks Index",
         "Purpose",
@@ -6629,7 +6629,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "7ae5fa856f63505d78e969145c4869b035030a31cd6cd96857c965acf7ae5da2",
+      "sha256": "dc35aef3279924bcb92043add77cafc79f30a54de8e0691cf1d1364439ded156",
       "headings": [
         "Project Execution OS Router",
         "Purpose",
