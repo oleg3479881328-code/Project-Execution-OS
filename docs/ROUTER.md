@@ -27,6 +27,7 @@ Do not append an unrelated next-project question after answering the active requ
 - durable file creation, artifact storage destination, folder placement, cleanup, import, upload, export, backup, or concern about scattered files -> `docs/FILE_ORGANIZATION_STANDARD.md`
 - lifecycle or storage-layer decision -> `docs/PROJECT_LIFECYCLE_MODEL.md`
 - website design, landing-page design, page structure, wireframe, UI system, responsive UI spec, or website design review -> `blocks/design/BLOCK.md`
+- Impeccable, AI-coded frontend design QA, AI-slop review, frontend design detector, UI polish/audit after AI coding, or design quality gate for coded web UI -> `blocks/design/IMPECCABLE_DESIGN_QA_GATE.md`
 - Chrome Extension, browser extension, Manifest V3, extension content scripts, extension service workers, Chrome Web Store publishing, extension monetization, or extension payments -> `blocks/chrome-extension/BLOCK.md`
 - YouTube channel strategy, YouTube Shorts publishing strategy, YouTube long-form strategy, YouTube Partner Program, YPP, YouTube monetization, YouTube copyright, reused content, Content ID, YouTube analytics, YouTube playlists, YouTube Data API, YouTube uploads, or multilingual YouTube channels -> `blocks/youtube/BLOCK.md`
 - Video Production, video factory, reels factory, short-form editing, TikTok videos, yt-dlp, ffmpeg, CapCut, automated clipping, multilingual video production, AI voice, AI avatar, or QuizLight video-card extraction -> `blocks/video-production/BLOCK.md`
