@@ -46,11 +46,11 @@ Path:
 
 Purpose:
 
-Provide a reusable website and site-building design layer for donor research, page strategy, landing/SaaS patterns, UI systems, conversion, ready site stacks, implementation handoff, and review.
+Provide a reusable website and site-building design layer for donor research, page strategy, landing/SaaS patterns, UI systems, conversion, ready site stacks, implementation handoff, AI-coded frontend design QA, and review.
 
 Current status:
 
-`candidate_v2`
+`candidate_v3`
 
 ### Documentation Block
 
