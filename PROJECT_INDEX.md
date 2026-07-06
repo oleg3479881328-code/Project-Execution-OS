@@ -72,6 +72,8 @@ Status:
 - `docs/CONTEXT_ASSEMBLY_STANDARD.md`
 - `docs/SYSTEM_CONTEXT_VERSION_STANDARD.md`
 - `docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md`
+- `docs/HARNESS_ENGINEERING_STANDARD.md`
+- `docs/AGENT_QUALITY_SCORECARD_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
 - `docs/RESEARCH_STANDARD.md`
 - `docs/REVIEW_STANDARD.md`
@@ -165,4 +167,4 @@ The lightweight bootstrap model was smoke-tested with temporary project `Test123
 
 ## Next Required Action
 
-Await the owner's next bounded central-system task.
+Use `docs/HARNESS_ENGINEERING_STANDARD.md` as the architecture wrapper for reusable or operational agent workflows before applying `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` for measurement.

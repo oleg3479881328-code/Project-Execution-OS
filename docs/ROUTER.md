@@ -61,6 +61,7 @@ Do not append an unrelated next-project question after answering the active requ
 - repository-memory question for this system or a GitHub-backed project -> `docs/REPOSITORY_MEMORY_STANDARD.md`
 - system-context profile identity, fingerprint or compatibility question -> `docs/SYSTEM_CONTEXT_VERSION_STANDARD.md`
 - API token usage, cost or provider cache measurement -> `docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md`
+- harness engineering, agent harness, agent runtime scaffold, agent tool/context/permission design, sandbox/memory/verification scaffold, or reliability architecture before agent operation -> `docs/HARNESS_ENGINEERING_STANDARD.md`
 - agent quality, cost per successful outcome, evals, regression protection, observability, tool-use quality, orchestration complexity, or agent comparison -> `docs/AGENT_QUALITY_SCORECARD_STANDARD.md`
 
 ## Boundary
