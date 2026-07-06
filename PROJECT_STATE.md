@@ -4,7 +4,7 @@ project_mode: compact
 status: transfer_ready
 updated_at: 2026-07-06
 source_of_truth: repository
-active_branch: harness-engineering-standard-v1
+active_branch: main
 ---
 
 # PROJECT_STATE.md
@@ -28,7 +28,7 @@ logs/latest.md
 - Updated `PROJECT_INDEX.md` to include both `docs/HARNESS_ENGINEERING_STANDARD.md` and existing `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` in canonical documents.
 - Updated `PROJECT.md` so the central entrypoint records the new harness-engineering layer.
 - Source trail recorded in the new standard: `https://github.com/ai-boost/awesome-harness-engineering`.
-- Creation/update commits on branch `harness-engineering-standard-v1`: `dcfd166a67876ac94302bbf450ba739cd00ed76f`, `fd898db662c8f3687862a2e95b59eaa0e9498f02`, `c5562ebc3d23a4f40878bd15c34b5ec44ce8e39e`, `8de112b5494a2980dc5146d977223b9293d966ad`.
+- Creation/update commits on branch `harness-engineering-standard-v1`: `dcfd166a67876ac94302bbf450ba739cd00ed76f`, `fd898db662c8f3687862a2e95b59eaa0e9498f02`, `c5562ebc3d23a4f40878bd15c34b5ec44ce8e39e`, `8de112b5494a2980dc5146d977223b9293d966ad`, `8dfddd946090bd940993f09a3d1b9fc4d4227647`, `7a42b335d5db55f025824e967763dac497b8bd12`.
 
 ## Current Focus
 
