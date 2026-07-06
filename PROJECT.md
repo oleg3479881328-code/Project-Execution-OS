@@ -34,14 +34,16 @@
 - Confirmed separate handling for internal subprojects without nested Git by default.
 - Smoke-tested the bootstrap model with temporary project `Test123`; the owner reports that the test project was deleted after validation.
 - Added root `PROJECT_STATE.md` and `logs/latest.md` so this central project complies with its own active continuity standard.
+- Added `docs/HARNESS_ENGINEERING_STANDARD.md` as the architecture wrapper for reusable or operational agent workflows.
 
 ## Current Focus
 
 - Keep the central system internally consistent and transfer-ready after every meaningful change.
+- Apply harness engineering step by step by routing architecture/scaffold questions to `docs/HARNESS_ENGINEERING_STANDARD.md` before quality measurement.
 
 ## Next Practical Step
 
-- Await the owner's next bounded central-system task.
+- Use `docs/HARNESS_ENGINEERING_STANDARD.md` on the next real reusable agent or workflow before promoting it beyond one-off use.
 
 ## Key Decisions And Constraints
 
@@ -51,6 +53,7 @@
 - `PROJECT_INDEX.md` remains an index and must not replace the role of `PROJECT.md`.
 - Local Git is the default bootstrap for real project folders; GitHub, Notion, and Google Drive are attached only when they are actually needed.
 - Active projects must maintain `PROJECT_STATE.md` and `logs/latest.md` after meaningful changes.
+- Harness engineering is the architecture wrapper for reusable agents; `AGENT_QUALITY_SCORECARD_STANDARD.md` measures the resulting workflow after the scaffold is explicit.
 
 ## Read Next
 
