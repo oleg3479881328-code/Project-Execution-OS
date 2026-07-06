@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "480758ddc598d9fae8903c1fcf8cf97ef535cc29",
-  "generated_at": "2026-07-02T10:24:05-04:00",
-  "artifact_count": 488,
+  "repository_commit": "f2d3b6e7429676b2975b12bb54928a3724484a7b",
+  "generated_at": "2026-07-06T12:19:22-04:00",
+  "artifact_count": 489,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -81,7 +81,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "70e05210c07f7f589cccb214d3a36f3fd52fed77bd910edc442f85e260cb726c",
+      "sha256": "e608e7b7ab0e5c73197b3fbc3341cd061da1e714d4c927a92f7fd621053b0927",
       "headings": [
         "PROJECT.md",
         "Project",
@@ -102,7 +102,7 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "918ea7c7b24cc4a781353b6efef0f60a24efbe5f91e1c67fa697fffc7aaacfcc",
+      "sha256": "69b5c141d01d775e2a797cac91a70d0ecda10ff85f748307b5e02f5464333644",
       "headings": [
         "Project Index — Project Execution OS",
         "Repository",
@@ -125,7 +125,7 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "83432184507a68927483cc30dd23360afa745d925f8eca0369232ebfe4c20f96",
+      "sha256": "7f28031dbd17418d771332c23bd565d568f4a268231edf8517df09461605a0f8",
       "headings": [
         "PROJECT_STATE.md",
         "Current State",
@@ -6036,6 +6036,44 @@
       ]
     },
     {
+      "path": "docs/HARNESS_ENGINEERING_STANDARD.md",
+      "title": "Harness Engineering Standard v1",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "bd586c54a857456fa8002613349e836a81f6369f8aab69ff810c8c25e44b1277",
+      "headings": [
+        "Harness Engineering Standard v1",
+        "Purpose",
+        "Source Trail",
+        "Scope",
+        "Core Definition",
+        "Core Rule",
+        "Minimum Harness Questions",
+        "1. Task Shape",
+        "2. Entrypoint And Route",
+        "3. Context Delivery",
+        "4. Planning And State",
+        "5. Tools",
+        "6. Permissions",
+        "7. Sandbox And Execution Boundary",
+        "8. Memory",
+        "9. Verification",
+        "10. Observability And Handoff",
+        "Minimum Harness Package",
+        "Harness Change Protocol",
+        "Relationship To Existing Standards",
+        "Promotion Levels",
+        "Level 0 — One-Off",
+        "Level 1 — Repeated Experiment",
+        "Level 2 — Operational Workflow",
+        "Level 3 — High-Risk Or Business-Critical Workflow",
+        "Warning Conditions",
+        "Final Rule"
+      ]
+    },
+    {
       "path": "docs/HYBRID_OLLAMA_MODEL_COMPARISON_INTERIM_RESULTS_2026-06-09.md",
       "title": "Hybrid Ollama Model Comparison — Interim Results",
       "type": "system-standard",
@@ -6629,7 +6667,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "dc35aef3279924bcb92043add77cafc79f30a54de8e0691cf1d1364439ded156",
+      "sha256": "bcaa14c1168597a88816f3ee851357c26d079f2e02f28ef29d72442856efd084",
       "headings": [
         "Project Execution OS Router",
         "Purpose",
@@ -8185,9 +8223,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Added candidate central skill `gemini-tts-speech-generation` for Gemini API scripted text-to-speech generation. Created `SKILL.md`, created `references.md`, updated `skills/registry.md`, and updated `PROJECT_STATE.md`. The skill remains `candidate` / `not_reviewed` and must not be treated as active until reviewed under Project Execution OS governance.",
+      "status": "Added `docs/HARNESS_ENGINEERING_STANDARD.md` as the central architecture wrapper for reusable or operational AI-agent workflows. Updated `docs/ROUTER.md` with a direct harness-engineering route, updated `PROJECT_INDEX.md` to include the new standard and existing `docs/AGENT_QUALITY_SCORECARD_STANDARD.md`, updated `PROJECT.md`, and updated `PROJECT_STATE.md`.",
       "date": null,
-      "sha256": "97b997100cf228ea5438baf1402265025575979c816fe38edc8dd1f71c81b38c",
+      "sha256": "6eaa87da63b65f616379aa942f731de99dc2ddd2fa334197dca0b119b4ebbe50",
       "headings": [
         "Latest Executor Status"
       ]
