@@ -1,6 +1,11 @@
 import { browser } from 'wxt/browser';
-import { extractVideosFromDom, extractVideosFromPayload } from '../lib/tiktok-parser';
-import type { RuntimeMessage, ScanOptions, ScanState, VideoRecord } from '../lib/types';
+import {
+  extractProfileFromDom,
+  extractProfileFromPayload,
+  extractVideosFromDom,
+  extractVideosFromPayload,
+} from '../lib/tiktok-parser';
+import type { ProfileRecord, RuntimeMessage, ScanOptions, ScanState, VideoRecord } from '../lib/types';
 
 let scanning = false;
 let stopRequested = false;
@@ -10,12 +15,17 @@ function getProfileContext(): { username: string; profileUrl: string } | undefin
   const match = location.pathname.match(/^\/@([^/]+)/);
   const username = match?.[1]?.replace(/^@/, '');
   if (!username) return undefined;
-  return { username, profileUrl: `${location.origin}/@${username}` };
+  return { username, profileUrl: `https://www.tiktok.com/@${username}` };
 }
 
 function injectPageHook(): void {
-  if (document.documentElement.dataset.trsHookInjected === 'true') return;
-  document.documentElement.dataset.trsHookInjected = 'true';
+  const root = document.documentElement;
+  if (!root) {
+    document.addEventListener('readystatechange', injectPageHook, { once: true });
+    return;
+  }
+  if (root.dataset.trsHookInjected === 'true') return;
+  root.dataset.trsHookInjected = 'true';
   const script = document.createElement('script');
   script.src = browser.runtime.getURL('/page-hook.js');
   script.onload = () => script.remove();
@@ -25,6 +35,11 @@ function injectPageHook(): void {
 async function sendBatch(username: string, profileUrl: string, videos: VideoRecord[]): Promise<void> {
   if (!videos.length) return;
   await browser.runtime.sendMessage({ type: 'VIDEO_BATCH', username, profileUrl, videos } satisfies RuntimeMessage);
+}
+
+async function sendProfile(profile: ProfileRecord | undefined): Promise<void> {
+  if (!profile) return;
+  await browser.runtime.sendMessage({ type: 'PROFILE_DATA', profile } satisfies RuntimeMessage);
 }
 
 async function sendState(state: Omit<ScanState, 'updatedAt'>): Promise<void> {
@@ -52,11 +67,18 @@ async function collectEmbeddedJson(username: string, profileUrl: string): Promis
   for (const script of candidates) {
     try {
       const payload = JSON.parse(script.textContent ?? '{}');
-      await sendBatch(username, profileUrl, extractVideosFromPayload(payload, username, 'embedded-json'));
+      await Promise.all([
+        sendBatch(username, profileUrl, extractVideosFromPayload(payload, username, 'embedded-json')),
+        sendProfile(extractProfileFromPayload(payload, username, 'embedded-json')),
+      ]);
     } catch {
       // A changed or non-JSON bootstrap payload is not fatal.
     }
   }
+}
+
+async function collectProfileDom(username: string): Promise<void> {
+  await sendProfile(extractProfileFromDom(username));
 }
 
 async function startScan(options: ScanOptions): Promise<void> {
@@ -85,7 +107,10 @@ async function startScan(options: ScanOptions): Promise<void> {
     message: 'Сканирование профиля…',
   });
 
-  await collectEmbeddedJson(context.username, context.profileUrl);
+  await Promise.all([
+    collectEmbeddedJson(context.username, context.profileUrl),
+    collectProfileDom(context.username),
+  ]);
 
   while (!stopRequested) {
     if (detectChallenge()) {
@@ -102,7 +127,10 @@ async function startScan(options: ScanOptions): Promise<void> {
     }
 
     const domVideos = extractVideosFromDom(context.username);
-    await sendBatch(context.username, context.profileUrl, domVideos);
+    await Promise.all([
+      sendBatch(context.username, context.profileUrl, domVideos),
+      collectProfileDom(context.username),
+    ]);
     const dates = domVideos.map((video) => video.publishedAt).filter((value): value is number => Boolean(value));
     if (dates.length) oldestPublishedAt = Math.min(oldestPublishedAt ?? Infinity, ...dates);
 
@@ -154,9 +182,14 @@ async function startScan(options: ScanOptions): Promise<void> {
 }
 
 export default defineContentScript({
-  matches: ['https://www.tiktok.com/@*'],
+  matches: ['https://www.tiktok.com/@*', 'https://tiktok.com/@*'],
   runAt: 'document_start',
   main(ctx) {
+    const runtimeMarker = '__TIKTOK_RESEARCH_SORTER_CONTENT_READY__';
+    const globalObject = globalThis as typeof globalThis & Record<string, unknown>;
+    if (globalObject[runtimeMarker]) return;
+    globalObject[runtimeMarker] = true;
+
     injectPageHook();
 
     ctx.addEventListener(window, 'message', (event: MessageEvent) => {
@@ -166,10 +199,15 @@ export default defineContentScript({
       const context = getProfileContext();
       if (!context || context.username !== currentUsername) return;
       const videos = extractVideosFromPayload(data.payload, context.username, 'api');
-      void sendBatch(context.username, context.profileUrl, videos);
+      const profile = extractProfileFromPayload(data.payload, context.username, 'api');
+      void Promise.all([
+        sendBatch(context.username, context.profileUrl, videos),
+        sendProfile(profile),
+      ]);
     });
 
     browser.runtime.onMessage.addListener((message: RuntimeMessage) => {
+      if (message.type === 'PING') return Promise.resolve({ ok: true, context: getProfileContext() });
       if (message.type === 'START_SCAN') {
         void startScan(message.options);
         return Promise.resolve({ ok: true });
