@@ -42,10 +42,10 @@ Implementation sources and decisions are summarized in `docs/RESEARCH_AND_DECISI
 
 ## 5. Current Status
 
-- Mode: `implementation`
-- Phase: `MVP foundation`
-- Status: `buildable scaffold; live TikTok validation still required`
-- Confidence: high for extension architecture and local analytics; medium for long-term TikTok payload compatibility until browser testing is completed.
+- Mode: `implementation / validation handoff`
+- Phase: `desktop browser validation`
+- Status: `buildable MVP; real TikTok smoke test still required`
+- Confidence: high for extension architecture, build, unit-tested normalization, and local analytics; medium for long-term TikTok payload compatibility until real browser validation is completed.
 
 ## 6. Done So Far
 
@@ -54,8 +54,12 @@ Implementation sources and decisions are summarized in `docs/RESEARCH_AND_DECISI
 - Created the Manifest V3 WXT/React/TypeScript project.
 - Added a MAIN-world fetch/XHR observer for relevant TikTok responses.
 - Added an isolated collector with initial-state parsing, DOM fallback, controlled auto-scroll, stop handling, and CAPTCHA stop condition.
-- Added heuristic payload normalization, IndexedDB persistence, analytics, filters, CSV/JSON export, tests, and a Chrome side panel UI.
-- Kept the MVP local-only and backend-free.
+- Added heuristic payload normalization and per-profile deduplication.
+- Added local persistence through `chrome.storage.local`.
+- Added views/day, Engagement Rate, Outlier Score, filters, CSV/JSON export, and a Chrome side panel UI.
+- Added 5 passing unit tests.
+- Passed TypeScript validation, WXT production build, ZIP build, and runtime dependency audit.
+- Added a bounded desktop Chrome validation handoff.
 
 ## 7. Current Focus
 
@@ -63,7 +67,7 @@ Validate the built extension against real public TikTok profiles and harden pars
 
 ## 8. Next Practical Step
 
-Load the production build as an unpacked extension in Chrome, test it on several public profiles, save sanitized failing payload examples, and update the TikTok adapter without expanding permissions.
+Load the production build as an unpacked extension in Chrome, execute `docs/IMPLEMENTATION_HANDOFF.md`, save sanitized failing payload examples, and update the TikTok adapter without expanding permissions.
 
 ## 9. Key Decisions And Constraints
 
@@ -71,11 +75,12 @@ Load the production build as an unpacked extension in Chrome, test it on several
 - Stack: `WXT + TypeScript + React + Manifest V3`.
 - Architecture: local utility + content scripts + Chrome side panel.
 - No backend, accounts, AI calls, payments, or cloud sync in MVP.
-- Data remains in extension IndexedDB unless the user explicitly exports it.
+- Data remains in `chrome.storage.local` unless measured storage pressure or history requirements justify IndexedDB.
 - Host access is limited to `https://www.tiktok.com/*`.
 - Do not bypass login, private accounts, CAPTCHA, rate limits, or TikTok access controls.
 - Prefer structured JSON payloads; DOM selectors are fallback only.
-- Preserve raw sanitized fixtures during validation, but never commit cookies, tokens, headers, or personal account data.
+- Preserve raw sanitized fixtures during validation, but never commit cookies, tokens, headers, signatures, or personal account data.
+- The generated `package-lock.json` must be committed by the desktop executor because the current connector cannot upload the local lock file directly.
 
 ## 10. Read Next
 
