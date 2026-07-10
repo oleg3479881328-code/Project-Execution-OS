@@ -16,31 +16,31 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Write Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/57`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72`
 
 ### Read Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/57`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72`
 
 ### Reviewer To Executor Mailbox
 
-`coordination/TO_EXECUTOR.md`
+`projects/tiktok-research-sorter/coordination/TO_EXECUTOR.md`
 
 ### Executor To Reviewer Mailbox
 
-`coordination/FROM_EXECUTOR.md`
+`projects/tiktok-research-sorter/coordination/FROM_EXECUTOR.md`
 
 ### Transport Type
 
-`GitHub issue comments + compact repository mailboxes`
+`GitHub issue comments + compact project mailboxes`
 
 ### Scope
 
-`Reels Factory MVP / active coordination channel reset / Stage 2 model compatibility repair`
+`TikTok Research Sorter 0.2.0 / autonomous stabilization, automated validation, CI artifacts, and Windows updater hardening`
 
 ### Last Confirmed At
 
-`2026-06-14`
+`2026-07-10`
 
 ## Permanent Backup Recovery Pointer
 
@@ -81,7 +81,7 @@ When the active durable channel changes:
 4. post origin notice in the new channel;
 5. update `AI_COORDINATION_STATE.md` when the active project uses it;
 6. append channel transition event to `AI_COORDINATION_LOG.md` when present;
-7. update both mailbox files with the new task and channel;
+7. update the reviewer-owned mailbox and require the executor to update the executor-owned mailbox;
 8. require executor acknowledgement in the new channel.
 
 ## Boundary
