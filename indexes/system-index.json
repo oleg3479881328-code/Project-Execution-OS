@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "18d6ce3c50c522190bfac2eecbe671cefc403363",
-  "generated_at": "2026-07-10T16:13:11-04:00",
-  "artifact_count": 489,
+  "repository_commit": "a70232a892d74e8fb365f64c8f0915a58ccdfa67",
+  "generated_at": "2026-07-10T19:41:12-04:00",
+  "artifact_count": 490,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -9603,6 +9603,20 @@
         "Runtime And Cost",
         "Next Safe Reels Factory Action",
         "Do-Not-Repeat Work"
+      ]
+    },
+    {
+      "path": "projects/tiktok-research-sorter/coordination/TO_EXECUTOR.md",
+      "title": "Executor Mailbox Envelope",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": null,
+      "date": null,
+      "sha256": "a7fd70e48e62a48a6cd4b37ed181222567b14f7cf7d50174e19450e7c35c07cd",
+      "headings": [
+        "Executor Mailbox Envelope",
+        "Summary",
+        "Evidence"
       ]
     },
     {
