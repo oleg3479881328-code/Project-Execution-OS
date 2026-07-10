@@ -98,8 +98,11 @@ try {
     $lockPath = Join-Path $SourceRoot 'package-lock.json'
     $hashPath = Join-Path $WorkRoot 'package-lock.sha256'
     if (-not (Test-Path $lockPath)) {
-      throw 'В проекте отсутствует package-lock.json. Автоматическая воспроизводимая сборка невозможна.'
+      Write-Step 'Создаю lock-файл и устанавливаю зависимости'
+      & npm.cmd install --no-audit --no-fund
+      if ($LASTEXITCODE -ne 0) { throw "npm install завершился с ошибкой $LASTEXITCODE" }
     }
+
     $currentHash = (Get-FileHash $lockPath -Algorithm SHA256).Hash
     $storedHash = if (Test-Path $hashPath) { (Get-Content $hashPath -Raw).Trim() } else { '' }
 
