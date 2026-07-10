@@ -1,5 +1,5 @@
 import { parseCompactNumber } from './numbers';
-import type { VideoRecord } from './types';
+import type { ProfileRecord, VideoRecord } from './types';
 
 function asRecord(value: unknown): Record<string, unknown> | undefined {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -31,12 +31,16 @@ function firstNumber(...values: unknown[]): number | undefined {
   return undefined;
 }
 
+function extractUrl(value: unknown): string | undefined {
+  if (typeof value === 'string' && value.trim()) return value.trim();
+  const record = asRecord(value);
+  const list = record?.urlList ?? record?.url_list;
+  if (Array.isArray(list)) return firstString(list[0]);
+  return firstString(record?.url, record?.uri);
+}
+
 function extractCover(video: Record<string, unknown>): string | undefined {
-  const cover = video.cover;
-  if (typeof cover === 'string') return cover;
-  const coverRecord = asRecord(cover);
-  const urlList = coverRecord?.urlList;
-  return Array.isArray(urlList) ? firstString(urlList[0]) : firstString(coverRecord?.url);
+  return extractUrl(video.cover) ?? extractUrl(video.dynamicCover) ?? extractUrl(video.originCover);
 }
 
 function extractHashtags(item: Record<string, unknown>, description: string): string[] {
@@ -143,6 +147,124 @@ export function extractVideosFromPayload(
   return [...found.values()];
 }
 
+function normalizeProfileCandidate(
+  input: unknown,
+  fallbackUsername = '',
+  source: ProfileRecord['source'] = 'api',
+): ProfileRecord | undefined {
+  const container = asRecord(input);
+  if (!container) return undefined;
+
+  const userInfo = firstRecord(container.userInfo, container.user_info, container) ?? container;
+  const user = firstRecord(userInfo.user, userInfo.author, container.user, container.author, userInfo) ?? userInfo;
+  const stats = firstRecord(userInfo.stats, userInfo.statistics, container.stats, container.statistics, user.stats) ?? {};
+
+  const username = firstString(
+    user.uniqueId,
+    user.unique_id,
+    user.username,
+    user.handle,
+    container.uniqueId,
+    fallbackUsername,
+  )?.replace(/^@/, '');
+  if (!username) return undefined;
+  if (fallbackUsername && username.toLowerCase() !== fallbackUsername.toLowerCase()) return undefined;
+
+  const displayName = firstString(user.nickname, user.displayName, user.display_name, container.nickname);
+  const bio = firstString(user.signature, user.bio, user.description, container.signature);
+  const avatarUrl = extractUrl(user.avatarLarger)
+    ?? extractUrl(user.avatarMedium)
+    ?? extractUrl(user.avatarThumb)
+    ?? extractUrl(user.avatar)
+    ?? extractUrl(container.avatarLarger);
+  const followers = firstNumber(stats.followerCount, stats.follower_count, stats.followers);
+  const following = firstNumber(stats.followingCount, stats.following_count, stats.following);
+  const totalLikes = firstNumber(stats.heartCount, stats.heart_count, stats.heart, stats.diggCount, stats.likes);
+  const videoCount = firstNumber(stats.videoCount, stats.video_count, stats.videos);
+  const website = firstString(user.bioLink, user.bio_link, user.website, user.url);
+  const verified = Boolean(user.verified ?? user.isVerified ?? user.is_verified);
+
+  const hasIdentityDetails = Boolean(displayName || bio || avatarUrl || website || verified);
+  const hasProfileStats = [followers, following, totalLikes, videoCount].some((value) => value !== undefined);
+  if (!hasIdentityDetails && !hasProfileStats) return undefined;
+
+  return {
+    username,
+    profileUrl: `https://www.tiktok.com/@${username}`,
+    displayName,
+    bio,
+    avatarUrl,
+    followers,
+    following,
+    totalLikes,
+    videoCount,
+    verified,
+    website,
+    collectedAt: Date.now(),
+    source,
+  };
+}
+
+export function extractProfileFromPayload(
+  payload: unknown,
+  fallbackUsername = '',
+  source: ProfileRecord['source'] = 'api',
+): ProfileRecord | undefined {
+  const seen = new WeakSet<object>();
+  const candidates: ProfileRecord[] = [];
+
+  const visit = (value: unknown, depth: number): void => {
+    if (depth > 12 || value === null || typeof value !== 'object') return;
+    if (seen.has(value as object)) return;
+    seen.add(value as object);
+
+    const candidate = normalizeProfileCandidate(value, fallbackUsername, source);
+    if (candidate) candidates.push(candidate);
+
+    if (Array.isArray(value)) {
+      for (const child of value) visit(child, depth + 1);
+      return;
+    }
+    for (const child of Object.values(value as Record<string, unknown>)) visit(child, depth + 1);
+  };
+
+  visit(payload, 0);
+  return candidates.sort((a, b) => {
+    const score = (profile: ProfileRecord) =>
+      Number(profile.followers !== undefined) * 4
+      + Number(profile.videoCount !== undefined) * 3
+      + Number(Boolean(profile.avatarUrl)) * 2
+      + Number(Boolean(profile.bio))
+      + Number(Boolean(profile.displayName));
+    return score(b) - score(a);
+  })[0];
+}
+
+export function extractProfileFromDom(username: string): ProfileRecord {
+  const text = (selector: string) => document.querySelector<HTMLElement>(selector)?.textContent?.trim();
+  const avatar = document.querySelector<HTMLImageElement>(
+    '[data-e2e="user-avatar"] img, [data-e2e="user-avatar"] img[src], header img[src], main img[src]'
+  );
+  const websiteAnchor = document.querySelector<HTMLAnchorElement>(
+    '[data-e2e="user-bio"] a[href], [data-e2e="user-link"] a[href], a[data-e2e="user-link"]'
+  );
+
+  return {
+    username,
+    profileUrl: `https://www.tiktok.com/@${username}`,
+    displayName: text('[data-e2e="user-title"]') ?? text('h1'),
+    bio: text('[data-e2e="user-bio"]'),
+    avatarUrl: avatar?.currentSrc || avatar?.src || undefined,
+    followers: firstNumber(text('[data-e2e="followers-count"]')),
+    following: firstNumber(text('[data-e2e="following-count"]')),
+    totalLikes: firstNumber(text('[data-e2e="likes-count"]')),
+    verified: Boolean(document.querySelector('[data-e2e="user-title"] svg, [data-e2e="verified-badge"]')),
+    website: websiteAnchor?.href,
+    collectedAt: Date.now(),
+    source: 'dom',
+  };
+}
+
 export function extractVideosFromDom(username: string): VideoRecord[] {
   const found = new Map<string, VideoRecord>();
   const links = document.querySelectorAll<HTMLAnchorElement>(`a[href*="/@${CSS.escape(username)}/video/"]`);
@@ -170,7 +292,7 @@ export function extractVideosFromDom(username: string): VideoRecord[] {
       shares: 0,
       coverUrl: image?.currentSrc || image?.src || undefined,
       hashtags: Array.from(description.matchAll(/#([\p{L}\p{N}_]+)/gu), (entry) => entry[1] ?? '').filter(Boolean),
-      isPinned: Boolean(card?.textContent?.toLowerCase().includes('pinned')),
+      isPinned: Boolean(card?.textContent?.toLowerCase().includes('pinned') || card?.textContent?.toLowerCase().includes('закреплено')),
       collectedAt: Date.now(),
       source: 'dom',
     });
