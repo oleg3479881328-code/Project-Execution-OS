@@ -31,13 +31,28 @@ export interface EnrichedVideo extends VideoRecord {
   outlierScore?: number;
 }
 
-export interface ProfileSnapshot {
+export interface ProfileRecord {
   username: string;
   profileUrl: string;
   displayName?: string;
+  bio?: string;
+  avatarUrl?: string;
+  followers?: number;
+  following?: number;
+  totalLikes?: number;
+  videoCount?: number;
+  verified?: boolean;
+  website?: string;
+  collectedAt: number;
+  source: 'api' | 'embedded-json' | 'dom';
+}
+
+export interface ProfileSnapshot extends Omit<ProfileRecord, 'collectedAt' | 'source'> {
   videos: VideoRecord[];
   medianViews: number;
   lastScannedAt: number;
+  profileDataUpdatedAt?: number;
+  profileDataSource?: ProfileRecord['source'];
 }
 
 export interface ScanState {
@@ -58,10 +73,12 @@ export interface ScanOptions {
 }
 
 export type RuntimeMessage =
+  | { type: 'PING' }
   | { type: 'START_SCAN'; options: ScanOptions }
   | { type: 'STOP_SCAN' }
   | { type: 'GET_DASHBOARD' }
   | { type: 'CLEAR_PROFILE'; username: string }
+  | { type: 'PROFILE_DATA'; profile: ProfileRecord }
   | { type: 'VIDEO_BATCH'; username: string; profileUrl: string; videos: VideoRecord[] }
   | { type: 'SCAN_STATE'; state: ScanState };
 
