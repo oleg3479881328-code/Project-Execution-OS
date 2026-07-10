@@ -35,23 +35,19 @@ export default defineUnlistedScript(() => {
 
   const OriginalXhr = window.XMLHttpRequest;
   const originalOpen = OriginalXhr.prototype.open;
-  const originalSend = OriginalXhr.prototype.send;
 
   OriginalXhr.prototype.open = function(method: string, url: string | URL, ...rest: unknown[]) {
-    (this as XMLHttpRequest & { __trsUrl?: string }).__trsUrl = String(url);
+    const targetUrl = String(url);
+    if (shouldInspect(targetUrl)) {
+      this.addEventListener('load', () => {
+        try {
+          if (typeof this.responseText !== 'string') return;
+          emit(targetUrl, JSON.parse(this.responseText));
+        } catch {
+          // Ignore non-JSON or protected responses.
+        }
+      }, { once: true });
+    }
     return (originalOpen as (...args: unknown[]) => void).call(this, method, url, ...rest);
-  };
-
-  OriginalXhr.prototype.send = function(...args: Parameters<XMLHttpRequest['send']>) {
-    this.addEventListener('load', () => {
-      try {
-        const url = (this as XMLHttpRequest & { __trsUrl?: string }).__trsUrl ?? '';
-        if (!shouldInspect(url) || typeof this.responseText !== 'string') return;
-        emit(url, JSON.parse(this.responseText));
-      } catch {
-        // Ignore non-JSON or protected responses.
-      }
-    });
-    return originalSend.apply(this, args);
   };
 });
