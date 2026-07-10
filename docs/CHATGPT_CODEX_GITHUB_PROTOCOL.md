@@ -110,10 +110,17 @@ There is no required direct transport from one ChatGPT or Codex session into ano
 For repository-bound work, communication works as follows:
 
 1. ChatGPT creates or updates a GitHub issue, pull request, review thread, or repository handoff artifact.
-2. Codex reads that GitHub surface and executes locally within the allowed scope.
-3. Codex posts its `Execution Report`, clarification, blocker, commit SHA, or validation evidence as a comment in the exact GitHub surface identified in the handoff.
+2. Codex Desktop (local executor) reads that GitHub surface and executes locally within the allowed scope.
+3. Codex Desktop posts its `Execution Report`, clarification, blocker, commit SHA, or validation evidence as a comment in the exact GitHub surface identified in the handoff.
 4. ChatGPT reads the GitHub surface through the GitHub connector and responds there with approval, requested changes, or the next packet.
 5. The user is not the normal relay for AI-to-AI project coordination.
+
+Important routing distinction:
+
+- `Codex Desktop` / the local Codex executor is the canonical executor for this protocol.
+- A GitHub mention such as `@codex` may invoke a separate GitHub/cloud connector bot and is **not** the transport used to start or address the local desktop executor.
+- Handoff comments for the local executor must name the recipient in the signed message header, for example `TO: Codex Desktop — Local Executor`, without relying on `@codex` mentions.
+- A cloud-bot reply requesting a Codex cloud environment does not prove that the local desktop executor is unavailable or misconfigured.
 
 When Codex says it cannot send a message to a separate ChatGPT chat, that is not a blocker. The required reply channel is GitHub, not chat-to-chat messaging.
 
@@ -200,14 +207,14 @@ Minimum header:
 
 ```text
 FROM: ChatGPT
-TO: Codex
+TO: Codex Desktop — Local Executor
 TYPE: Handoff
 ```
 
 and for the return direction:
 
 ```text
-FROM: Codex
+FROM: Codex Desktop — Local Executor
 TO: ChatGPT
 TYPE: Execution Report
 ```
@@ -271,7 +278,7 @@ Codex must return a structured execution report **as a comment in the named GitH
 Minimum structure:
 
 ```text
-FROM: Codex
+FROM: Codex Desktop — Local Executor
 TO: ChatGPT
 TYPE: Execution Report
 
@@ -356,7 +363,8 @@ Do not:
 - treat stale local workspace state as authoritative when `main` has moved ahead;
 - treat Google Drive or other mirrors as execution authority;
 - claim that GitHub history replaces repository memory artifacts inside the project;
-- treat chat-only decisions as committed project state.
+- treat chat-only decisions as committed project state;
+- use `@codex` as the routing mechanism for Codex Desktop unless the project explicitly opts into the separate cloud-bot workflow.
 
 ## Practical Default
 
@@ -366,8 +374,8 @@ For software work, the safest default loop is:
 2. if no executor access is needed, complete the small safe step directly;
 3. if executor access is needed, create repository artifact or execution spec;
 4. create implementation handoff packet naming the exact GitHub reply surface;
-5. let Codex execute within explicit scope;
-6. require Codex to post its execution report in that same GitHub surface;
+5. let Codex Desktop execute within explicit scope;
+6. require Codex Desktop to post its execution report in that same GitHub surface;
 7. publish to a private branch and draft PR when GitHub diff review is needed;
 8. review against the original packet and GitHub-posted report;
 9. update repository memory after acceptance.
