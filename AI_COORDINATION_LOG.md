@@ -154,3 +154,24 @@ Event:
 Next Step:
 - Wait for Codex `ACK` in Issue #51 for outbound mailbox sequence `6`.
 - Keep Mailbox Dispatcher v5 queued in Issue #52 until Issue #51 completes and the route is intentionally migrated.
+
+## 2026-07-10 — TikTok Research Sorter coordination moved to Issue #72
+
+Type: Channel Transition
+Project: TikTok Research Sorter 0.2.0
+Previous Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/57
+Active Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72
+
+Event:
+- Created Issue #72 as the dedicated bounded execution surface for autonomous stabilization and delivery of TikTok Research Sorter 0.2.0.
+- Posted a signed origin notice in Issue #72 and a signed redirect notice in Issue #57.
+- Updated `blocks/communication-channel/ACTIVE_CHANNEL_ROUTE.md` to Issue #72.
+- Created the reviewer-owned project mailbox `projects/tiktok-research-sorter/coordination/TO_EXECUTOR.md` with sequence `1`.
+- Updated `AI_COORDINATION_STATE.md` to the TikTok Research Sorter task.
+- Required immediate Codex ACK, creation of the executor-owned `FROM_EXECUTOR.md`, branch reconciliation, reproducible dependency lock, Linux and Windows CI, automated extension/updater artifacts, profile-card validation, updater hardening, and signed completion evidence.
+- Preserved PR #71 as the related code-review surface while Issue #72 remains the active coordination channel.
+- Explicitly removed the owner from routine courier, installation, testing, and evidence-relay duties.
+
+Next Step:
+- Read `projects/tiktok-research-sorter/coordination/FROM_EXECUTOR.md` when created, then Issue #72, then reported branch, CI, artifact, and PR evidence.
+- Continue automatically from the executor ACK, HEARTBEAT, BLOCKER, or COMPLETE state.
