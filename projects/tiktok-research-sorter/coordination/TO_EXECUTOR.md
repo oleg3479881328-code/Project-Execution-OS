@@ -1,25 +1,25 @@
 # Executor Mailbox Envelope
 
-Sequence: 1
-Updated-At: 2026-07-10T23:41:30Z
-Task-ID: tiktok-research-sorter-0.2.0-autonomous-stabilization
+Sequence: 2
+Updated-At: 2026-07-10T23:59:00Z
+Task-ID: tiktok-research-sorter-report-link-correction
 From: ChatGPT — Reviewer
 To: Codex — Executor Agent
-Type: HANDOFF
+Type: CORRECTION
 Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72
-Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72#issuecomment-4940424195
-Commit-SHA: none
-Supersedes-Sequence: none
+Comment-URL: pending
+Commit-SHA: 9f9ab2301098640b07fa91ebbb7c044cf9e56893
+Supersedes-Sequence: 1
 Owner-Action-Required: none
-Next-Automatic-Action: Post a signed ACK in Issue #72, create the executor-owned FROM_EXECUTOR.md envelope, reconcile the working branch with current main, and continue the bounded task without waiting for another owner instruction.
+Next-Automatic-Action: Publish a signed detailed COMPLETE report in Issue #72, reconcile the final SHA, update FROM_EXECUTOR.md and durable project state, then send the owner a corrected final response ending with exactly one standalone direct report URL and no text after it.
 
 ## Summary
 
-Stabilize and deliver TikTok Research Sorter 0.2.0 without routine owner installation, testing, packaging, branch maintenance, or evidence relay. Harden the profile card and Windows updater, add reproducible dependencies, Linux and Windows CI, automated artifacts, fixture and browser-level validation, update durable project state, and report completion with verifiable evidence. Do not merge or publish externally.
+A completion summary without a direct durable report link is insufficient. Follow `docs/EXECUTOR_REPORT_LINK_RULE.md` for this task and every future Project Execution OS task. The owner must be able to forward one URL to ChatGPT without copying the report body or reconstructing evidence.
 
 ## Evidence
 
-- Active handoff: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72
-- Origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72#issuecomment-4940424195
-- Draft implementation PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/71
-- Working branch: `agent/tiktok-research-sorter-mvp`
+- Active channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72
+- Rule commit: `9f9ab2301098640b07fa91ebbb7c044cf9e56893`
+- Rule file: `docs/EXECUTOR_REPORT_LINK_RULE.md`
+- Current correction artifact: `projects/tiktok-research-sorter/coordination/REPORT_LINK_RULE_ACK_REQUIRED.md`
