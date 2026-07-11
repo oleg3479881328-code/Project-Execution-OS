@@ -1,0 +1,24 @@
+{
+  "itemList": [
+    {
+      "id": "999001",
+      "desc": "Video without stats",
+      "author": { "uniqueId": "testuser" },
+      "video": { "duration": 10000 }
+    },
+    {
+      "id": "999002",
+      "desc": "Video without author object",
+      "createTime": 1700000000,
+      "video": { "duration": 20000 },
+      "stats": { "playCount": 1000 }
+    },
+    {
+      "id": "999003",
+      "desc": "Video without video object",
+      "createTime": 1700000000,
+      "author": { "uniqueId": "testuser" },
+      "stats": { "playCount": 2000 }
+    }
+  ]
+}

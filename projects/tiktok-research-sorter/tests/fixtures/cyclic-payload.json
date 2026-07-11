@@ -1,0 +1,13 @@
+{
+  "itemList": [
+    {
+      "id": "cyclic001",
+      "desc": "Cyclic reference test",
+      "createTime": 1700000000,
+      "author": { "uniqueId": "testuser" },
+      "video": { "duration": 15000 },
+      "stats": { "playCount": 100, "diggCount": 10, "commentCount": 1, "shareCount": 0 }
+    }
+  ],
+  "selfRef": null
+}

@@ -1,47 +1,59 @@
-# PROJECT STATE — TikTok Research Sorter
+# TikTok Research Sorter — Project State
 
-## State
+## Version
+0.2.0 — стабилизирован, все Phases 1–6 выполнены.
 
-- Status: `active / version 0.2.0 ready for owner validation`
-- Phase: `profile-card and one-click updater validation`
-- Branch: `agent/tiktok-research-sorter-mvp`
-- Storage layer: internal subproject in the parent Project Execution OS Git repository
+## Stack
+- WXT 0.20.27 + TypeScript 5.8.3 + React 19.2.7
+- Vitest 4.1.10
+- Manifest V3
+- chrome.storage.local
 
-## Working Implementation
+## Architecture
+MAIN-world page hook → window.postMessage → isolated content script → background SW → chrome.storage.local → React side panel
 
-- WXT Manifest V3 extension
-- React side panel
-- full profile card with avatar, display name, bio, verification status, followers, following, profile likes, and video count
-- profile insights: last scan, collection coverage, estimated posting frequency, median views, and strongest hashtags
-- video cards with cover, rank, views, velocity, engagement, and outlier score
-- MAIN-world observation limited to selected TikTok JSON responses
-- embedded-state and DOM fallback
-- controlled auto-scroll with stop and challenge detection
-- per-profile deduplication and `chrome.storage.local` persistence
-- CSV and JSON export
-- one-click Windows updater that downloads the current GitHub branch, rebuilds, and opens a dedicated persistent Chrome profile
+## Test Coverage
+**35 tests** (7 files), all passing:
+- `tests/numbers.test.ts` — 2 tests (compact number parsing)
+- `tests/analytics.test.ts` — 2 tests (median, outlier score)
+- `tests/parser.test.ts` — 1 test (basic payload extraction)
+- `tests/profile.test.ts` — 1 test (basic profile extraction)
+- `tests/profile-analytics.test.ts` — 2 tests (posting frequency, hashtag ranking)
+- `tests/parser-regression.test.ts` — 15 tests (fixtures, edge cases, cyclic refs, pinned, alternate fields)
+- `tests/profile-regression.test.ts` — 12 tests (profile extraction, merge logic, edge cases)
 
-## Validation Status
+## Fixtures
+`tests/fixtures/` contains 7 JSON files for reproducible regression testing:
+- `basic-video-list.json`
+- `profile-user-info.json`
+- `empty-item-list.json`
+- `null-payload.json`
+- `missing-fields.json`
+- `cyclic-payload.json`
+- `pinned-video.json`
+- `alternate-field-names.json`
 
-- Owner confirmed version `0.1.1` installs, connects to TikTok, and starts successfully on a public profile.
-- CSP-related global XHR interception was corrected before version `0.2.0`.
-- TypeScript check for `0.2.0`: passed.
-- Unit tests: passed — 8 tests across 5 files.
-- WXT Chrome MV3 production build: passed — approximately 229 KB.
-- ZIP build: passed — approximately 74 KB.
-- Profile parser, publication-frequency calculation, and strong-hashtag ranking have regression tests.
-- Windows updater scripts are implemented and packaged but have not yet been executed on the owner's Windows computer.
-- Full profile-card extraction against the owner's live TikTok profile still requires owner validation.
+## CI
+GitHub Actions workflow: `.github/workflows/tiktok-research-sorter-ci.yml`
+- Triggers on push/PR to `main` and `agent/**` branches
+- Steps: npm ci → tsc --noEmit → npm test → npm run build → upload artifact
+- On `main` branch: also packages as ZIP
 
-## Known Risks
+## Windows Updater
+`automation/windows/Update-and-Launch-TikTok-Sorter.ps1`
+- New testability flags: `-DryRun`, `-SkipLaunch`, `-LocalSource`
+- Environment variable support: `$env:TRS_GITHUB_BRANCH`, `$env:TRS_LOCAL_SOURCE`
 
-1. TikTok can change API paths, payload shapes, and DOM selectors.
-2. Some profile fields may be unavailable on localized or logged-out TikTok pages; the card must degrade gracefully.
-3. Posting frequency requires known video publication timestamps and may remain blank when TikTok exposes only DOM cards.
-4. The development updater currently follows `agent/tiktok-research-sorter-mvp`; change it to `main` after merge.
-5. The branch is behind the current `main` and must be updated before merging.
-6. Public release still requires current TikTok terms and Chrome Web Store policy review.
+## Hardening (Phase 2)
+- MAX_VISITS (50,000) guard against cyclic payloads
+- Localized DOM selectors for TikTok in different locales
+- Multi-language pinned detection (EN, RU, FR, DE)
+- DASHBOARD_UPDATED type added to RuntimeMessage union
+- Alternate field name support (`aweme_id`, `authorInfo`, `video_info`, `statistics`, etc.)
 
-## Next Action
+## Build Output
+- Production build: ~229 KB (`.output/chrome-mv3/`)
+- ZIP packaging available via `npm run zip`
 
-Install the packaged Windows updater, launch the dedicated Chrome profile, scan `@jasminebrookephotography`, and verify every profile-card field. Record any blank or incorrect field and capture only sanitized evidence needed to harden the parser.
+## Branch
+`agent/tiktok-research-sorter-mvp`

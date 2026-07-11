@@ -1,6 +1,11 @@
 [CmdletBinding()]
 param(
-  [string]$Branch = $(if ($env:TRS_GITHUB_BRANCH) { $env:TRS_GITHUB_BRANCH } else { 'agent/tiktok-research-sorter-mvp' })
+  [string]$Branch = $(if ($env:TRS_GITHUB_BRANCH) { $env:TRS_GITHUB_BRANCH } else { 'agent/tiktok-research-sorter-mvp' }),
+
+  # Testability flags
+  [switch]$DryRun,
+  [switch]$SkipLaunch,
+  [string]$LocalSource = $(if ($env:TRS_LOCAL_SOURCE) { $env:TRS_LOCAL_SOURCE } else { '' })
 )
 
 $ErrorActionPreference = 'Stop'
@@ -70,19 +75,41 @@ function Find-Chrome {
 }
 
 try {
-  Write-Step "Проверяю обновления из GitHub: $Branch"
-  New-Item -ItemType Directory -Force -Path $TempRoot | Out-Null
-  $archivePath = Join-Path $TempRoot 'source.zip'
-  $extractRoot = Join-Path $TempRoot 'extracted'
-  $archiveUrl = "https://codeload.github.com/$RepoOwner/$RepoName/zip/refs/heads/$Branch"
-  Invoke-WebRequest -Uri $archiveUrl -OutFile $archivePath -UseBasicParsing
-  Expand-Archive -Path $archivePath -DestinationPath $extractRoot -Force
+  # ---- Dry-Run: только показать, что будет сделано ----
+  if ($DryRun) {
+    Write-Step "СУХОЙ ПРОГОН (DryRun). Реальные операции выполняться не будут."
+    Write-Host "  Branch:         $Branch" -ForegroundColor Gray
+    Write-Host "  WorkRoot:       $WorkRoot" -ForegroundColor Gray
+    Write-Host "  SourceRoot:     $SourceRoot" -ForegroundColor Gray
+    Write-Host "  ChromeProfile:  $ChromeProfileRoot" -ForegroundColor Gray
+    Write-Host "  SkipLaunch:     $SkipLaunch" -ForegroundColor Gray
+    Write-Host "  LocalSource:    $(if ($LocalSource) { $LocalSource } else { '(не указан — будет загрузка с GitHub)' })" -ForegroundColor Gray
+    Write-Host "`nDryRun завершён. Никаких изменений не внесено." -ForegroundColor Green
+    return
+  }
 
-  $projectSource = Get-ChildItem -Path $extractRoot -Directory -Recurse |
-    Where-Object { $_.FullName.EndsWith($ProjectRelativePath, [StringComparison]::OrdinalIgnoreCase) } |
-    Select-Object -First 1
-  if (-not $projectSource) {
-    throw "В скачанном архиве не найден $ProjectRelativePath"
+  # ---- Получение исходников ----
+  if ($LocalSource) {
+    Write-Step "Использую локальный источник: $LocalSource"
+    $projectSource = Get-Item -Path $LocalSource -ErrorAction Stop
+    if (-not (Test-Path (Join-Path $projectSource.FullName 'package.json'))) {
+      throw "Локальный источник не содержит package.json: $LocalSource"
+    }
+  } else {
+    Write-Step "Проверяю обновления из GitHub: $Branch"
+    New-Item -ItemType Directory -Force -Path $TempRoot | Out-Null
+    $archivePath = Join-Path $TempRoot 'source.zip'
+    $extractRoot = Join-Path $TempRoot 'extracted'
+    $archiveUrl = "https://codeload.github.com/$RepoOwner/$RepoName/zip/refs/heads/$Branch"
+    Invoke-WebRequest -Uri $archiveUrl -OutFile $archivePath -UseBasicParsing
+    Expand-Archive -Path $archivePath -DestinationPath $extractRoot -Force
+
+    $projectSource = Get-ChildItem -Path $extractRoot -Directory -Recurse |
+      Where-Object { $_.FullName.EndsWith($ProjectRelativePath, [StringComparison]::OrdinalIgnoreCase) } |
+      Select-Object -First 1
+    if (-not $projectSource) {
+      throw "В скачанном архиве не найден $ProjectRelativePath"
+    }
   }
 
   Write-Step 'Обновляю локальную рабочую копию'
@@ -129,26 +156,32 @@ try {
     throw "Сборка завершена, но manifest.json не найден: $manifestPath"
   }
 
-  $chromePath = Find-Chrome
-  Write-Step 'Перезапускаю отдельное окно Chrome с новой версией'
-  Get-CimInstance Win32_Process -Filter "Name='chrome.exe'" -ErrorAction SilentlyContinue |
-    Where-Object { $_.CommandLine -and $_.CommandLine.Contains($ChromeProfileRoot) } |
-    ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
-  Start-Sleep -Milliseconds 700
+  # ---- Launch (пропускается если SkipLaunch) ----
+  if (-not $SkipLaunch) {
+    $chromePath = Find-Chrome
+    Write-Step 'Перезапускаю отдельное окно Chrome с новой версией'
+    Get-CimInstance Win32_Process -Filter "Name='chrome.exe'" -ErrorAction SilentlyContinue |
+      Where-Object { $_.CommandLine -and $_.CommandLine.Contains($ChromeProfileRoot) } |
+      ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+    Start-Sleep -Milliseconds 700
 
-  New-Item -ItemType Directory -Force -Path $ChromeProfileRoot | Out-Null
-  $arguments = @(
-    "--user-data-dir=`"$ChromeProfileRoot`"",
-    "--disable-extensions-except=`"$extensionRoot`"",
-    "--load-extension=`"$extensionRoot`"",
-    '--no-first-run',
-    '--no-default-browser-check',
-    'https://www.tiktok.com/'
-  )
-  Start-Process -FilePath $chromePath -ArgumentList $arguments
+    New-Item -ItemType Directory -Force -Path $ChromeProfileRoot | Out-Null
+    $arguments = @(
+      "--user-data-dir=`"$ChromeProfileRoot`"",
+      "--disable-extensions-except=`"$extensionRoot`"",
+      "--load-extension=`"$extensionRoot`"",
+      '--no-first-run',
+      '--no-default-browser-check',
+      'https://www.tiktok.com/'
+    )
+    Start-Process -FilePath $chromePath -ArgumentList $arguments
 
-  Write-Host "`nГотово. Открыт отдельный Chrome с последней версией TikTok Research Sorter." -ForegroundColor Green
-  Write-Host "При первом запуске войдите в TikTok и закрепите значок расширения. Этот профиль сохранится." -ForegroundColor Yellow
+    Write-Host "`nГотово. Открыт отдельный Chrome с последней версией TikTok Research Sorter." -ForegroundColor Green
+    Write-Host "При первом запуске войдите в TikTok и закрепите значок расширения. Этот профиль сохранится." -ForegroundColor Yellow
+  } else {
+    Write-Step "SkipLaunch — Chrome не запущен."
+    Write-Host "Сборка готова: $extensionRoot" -ForegroundColor Green
+  }
 }
 catch {
   Write-Host "`nОШИБКА: $($_.Exception.Message)" -ForegroundColor Red

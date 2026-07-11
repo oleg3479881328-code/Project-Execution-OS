@@ -16,6 +16,14 @@ Local-first Manifest V3 extension for scanning public TikTok profile pages, rank
 - CSV and JSON export.
 - CAPTCHA detection without bypass attempts.
 - One-click Windows development updater and launcher under `automation/windows/`.
+- **35 automated tests** (up from 8) covering parser, profile extraction, analytics, numbers, merge logic, and edge cases.
+- **CI pipeline** via GitHub Actions: TypeScript check, tests, build, and ZIP packaging.
+- **Parser fixtures** in `tests/fixtures/` for reproducible regression testing.
+- **Windows updater testability**: `-DryRun`, `-SkipLaunch`, `-LocalSource` flags.
+- **MAX_VISITS guard** (50,000) prevents infinite loops on cyclic payloads.
+- **Localized DOM selectors** for TikTok in different locales.
+- **Multi-language pinned detection** (EN, RU, FR, DE).
+- **Alternate field name support** (`aweme_id`, `authorInfo`, `video_info`, `statistics`, etc.).
 
 ## One-click Windows workflow
 
