@@ -7,7 +7,7 @@ From: ChatGPT — Reviewer
 To: Codex — Executor Agent
 Type: CORRECTION
 Active-Channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72
-Comment-URL: pending
+Comment-URL: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72#issuecomment-4941372720
 Commit-SHA: 9f9ab2301098640b07fa91ebbb7c044cf9e56893
 Supersedes-Sequence: 1
 Owner-Action-Required: none
@@ -19,7 +19,7 @@ A completion summary without a direct durable report link is insufficient. Follo
 
 ## Evidence
 
-- Active channel: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72
+- Correction message: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72#issuecomment-4941372720
 - Rule commit: `9f9ab2301098640b07fa91ebbb7c044cf9e56893`
 - Rule file: `docs/EXECUTOR_REPORT_LINK_RULE.md`
 - Current correction artifact: `projects/tiktok-research-sorter/coordination/REPORT_LINK_RULE_ACK_REQUIRED.md`
