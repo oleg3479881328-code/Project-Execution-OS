@@ -124,11 +124,15 @@ export function extractVideosFromPayload(
 ): VideoRecord[] {
   const found = new Map<string, VideoRecord>();
   const seen = new WeakSet<object>();
+  let visitedCount = 0;
+  const MAX_VISITS = 50_000;
 
   const visit = (value: unknown, depth: number): void => {
     if (depth > 14 || value === null || typeof value !== 'object') return;
     if (seen.has(value as object)) return;
+    if (visitedCount > MAX_VISITS) return;
     seen.add(value as object);
+    visitedCount++;
 
     if (looksLikeVideoItem(value)) {
       const normalized = normalizeTikTokItem(value, fallbackAuthor, source);
@@ -212,11 +216,15 @@ export function extractProfileFromPayload(
 ): ProfileRecord | undefined {
   const seen = new WeakSet<object>();
   const candidates: ProfileRecord[] = [];
+  let visitedCount = 0;
+  const MAX_VISITS = 50_000;
 
   const visit = (value: unknown, depth: number): void => {
     if (depth > 12 || value === null || typeof value !== 'object') return;
     if (seen.has(value as object)) return;
+    if (visitedCount > MAX_VISITS) return;
     seen.add(value as object);
+    visitedCount++;
 
     const candidate = normalizeProfileCandidate(value, fallbackUsername, source);
     if (candidate) candidates.push(candidate);
@@ -241,7 +249,13 @@ export function extractProfileFromPayload(
 }
 
 export function extractProfileFromDom(username: string): ProfileRecord {
-  const text = (selector: string) => document.querySelector<HTMLElement>(selector)?.textContent?.trim();
+  const text = (...selectors: string[]) => {
+    for (const selector of selectors) {
+      const el = document.querySelector<HTMLElement>(selector);
+      if (el?.textContent?.trim()) return el.textContent.trim();
+    }
+    return undefined;
+  };
   const avatar = document.querySelector<HTMLImageElement>(
     '[data-e2e="user-avatar"] img, [data-e2e="user-avatar"] img[src], header img[src], main img[src]'
   );
@@ -252,13 +266,13 @@ export function extractProfileFromDom(username: string): ProfileRecord {
   return {
     username,
     profileUrl: `https://www.tiktok.com/@${username}`,
-    displayName: text('[data-e2e="user-title"]') ?? text('h1'),
-    bio: text('[data-e2e="user-bio"]'),
+    displayName: text('[data-e2e="user-title"]', 'h1', '[class*="share-title"]'),
+    bio: text('[data-e2e="user-bio"]', '[class*="user-bio"]', '[class*="signature"]'),
     avatarUrl: avatar?.currentSrc || avatar?.src || undefined,
-    followers: firstNumber(text('[data-e2e="followers-count"]')),
-    following: firstNumber(text('[data-e2e="following-count"]')),
-    totalLikes: firstNumber(text('[data-e2e="likes-count"]')),
-    verified: Boolean(document.querySelector('[data-e2e="user-title"] svg, [data-e2e="verified-badge"]')),
+    followers: firstNumber(text('[data-e2e="followers-count"]', '[class*="follower-count"]', '[class*="followers"] strong')),
+    following: firstNumber(text('[data-e2e="following-count"]', '[class*="following-count"]', '[class*="following"] strong')),
+    totalLikes: firstNumber(text('[data-e2e="likes-count"]', '[class*="like-count"]', '[class*="heart-count"]')),
+    verified: Boolean(document.querySelector('[data-e2e="user-title"] svg, [data-e2e="verified-badge"], [class*="verified"]')),
     website: websiteAnchor?.href,
     collectedAt: Date.now(),
     source: 'dom',
@@ -292,7 +306,12 @@ export function extractVideosFromDom(username: string): VideoRecord[] {
       shares: 0,
       coverUrl: image?.currentSrc || image?.src || undefined,
       hashtags: Array.from(description.matchAll(/#([\p{L}\p{N}_]+)/gu), (entry) => entry[1] ?? '').filter(Boolean),
-      isPinned: Boolean(card?.textContent?.toLowerCase().includes('pinned') || card?.textContent?.toLowerCase().includes('закреплено')),
+      isPinned: Boolean(
+        card?.textContent?.toLowerCase().includes('pinned') ||
+        card?.textContent?.toLowerCase().includes('закреплено') ||
+        card?.textContent?.toLowerCase().includes('fixé') ||
+        card?.textContent?.toLowerCase().includes('angeheftet')
+      ),
       collectedAt: Date.now(),
       source: 'dom',
     });

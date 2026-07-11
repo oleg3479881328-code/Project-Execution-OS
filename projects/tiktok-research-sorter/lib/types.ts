@@ -80,7 +80,8 @@ export type RuntimeMessage =
   | { type: 'CLEAR_PROFILE'; username: string }
   | { type: 'PROFILE_DATA'; profile: ProfileRecord }
   | { type: 'VIDEO_BATCH'; username: string; profileUrl: string; videos: VideoRecord[] }
-  | { type: 'SCAN_STATE'; state: ScanState };
+  | { type: 'SCAN_STATE'; state: ScanState }
+  | { type: 'DASHBOARD_UPDATED'; dashboard: DashboardData };
 
 export interface DashboardData {
   profiles: Record<string, ProfileSnapshot>;
