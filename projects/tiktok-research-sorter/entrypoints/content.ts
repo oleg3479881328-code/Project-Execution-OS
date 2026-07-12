@@ -29,6 +29,7 @@ function injectPageHook(): void {
   const script = document.createElement('script');
   script.src = browser.runtime.getURL('/page-hook.js');
   script.onload = () => script.remove();
+  script.onerror = () => script.remove();
   (document.head || document.documentElement).append(script);
 }
 
@@ -97,75 +98,75 @@ async function startScan(options: ScanOptions): Promise<void> {
   let lastCount = 0;
   let oldestPublishedAt: number | undefined;
 
-  injectPageHook();
-  await sendState({
-    status: 'scanning',
-    username: context.username,
-    profileUrl: context.profileUrl,
-    videosFound: 0,
-    startedAt,
-    message: 'Сканирование профиля…',
-  });
-
-  await Promise.all([
-    collectEmbeddedJson(context.username, context.profileUrl),
-    collectProfileDom(context.username),
-  ]);
-
-  while (!stopRequested) {
-    if (detectChallenge()) {
-      await sendState({
-        status: 'blocked',
-        username: context.username,
-        profileUrl: context.profileUrl,
-        videosFound: lastCount,
-        startedAt,
-        oldestPublishedAt,
-        message: 'TikTok запросил проверку. Пройдите её вручную и запустите сканирование снова.',
-      });
-      break;
-    }
-
-    const domVideos = extractVideosFromDom(context.username);
-    await Promise.all([
-      sendBatch(context.username, context.profileUrl, domVideos),
-      collectProfileDom(context.username),
-    ]);
-    const dates = domVideos.map((video) => video.publishedAt).filter((value): value is number => Boolean(value));
-    if (dates.length) oldestPublishedAt = Math.min(oldestPublishedAt ?? Infinity, ...dates);
-
-    const currentCount = new Set(domVideos.map((video) => video.id)).size;
-    idleRounds = currentCount <= lastCount ? idleRounds + 1 : 0;
-    lastCount = Math.max(lastCount, currentCount);
-
+  try {
+    injectPageHook();
     await sendState({
       status: 'scanning',
       username: context.username,
       profileUrl: context.profileUrl,
-      videosFound: lastCount,
+      videosFound: 0,
       startedAt,
-      oldestPublishedAt,
-      message: `Найдено на странице: ${lastCount}. Загружаю дальше…`,
+      message: 'Сканирование профиля…',
     });
 
-    if (lastCount >= options.maxVideos || idleRounds >= options.maxIdleRounds) {
+    await Promise.all([
+      collectEmbeddedJson(context.username, context.profileUrl),
+      collectProfileDom(context.username),
+    ]);
+
+    while (!stopRequested) {
+      if (detectChallenge()) {
+        await sendState({
+          status: 'blocked',
+          username: context.username,
+          profileUrl: context.profileUrl,
+          videosFound: lastCount,
+          startedAt,
+          oldestPublishedAt,
+          message: 'TikTok запросил проверку. Пройдите её вручную и запустите сканирование снова.',
+        });
+        return;
+      }
+
+      const domVideos = extractVideosFromDom(context.username);
+      await Promise.all([
+        sendBatch(context.username, context.profileUrl, domVideos),
+        collectProfileDom(context.username),
+      ]);
+      const dates = domVideos.map((video) => video.publishedAt).filter((value): value is number => Boolean(value));
+      if (dates.length) oldestPublishedAt = Math.min(oldestPublishedAt ?? Infinity, ...dates);
+
+      const currentCount = new Set(domVideos.map((video) => video.id)).size;
+      idleRounds = currentCount <= lastCount ? idleRounds + 1 : 0;
+      lastCount = Math.max(lastCount, currentCount);
+
       await sendState({
-        status: 'complete',
+        status: 'scanning',
         username: context.username,
         profileUrl: context.profileUrl,
         videosFound: lastCount,
         startedAt,
         oldestPublishedAt,
-        message: idleRounds >= options.maxIdleRounds ? 'Новые ролики перестали загружаться.' : 'Достигнут заданный лимит.',
+        message: `Найдено на странице: ${lastCount}. Загружаю дальше…`,
       });
-      break;
+
+      if (lastCount >= options.maxVideos || idleRounds >= options.maxIdleRounds) {
+        await sendState({
+          status: 'complete',
+          username: context.username,
+          profileUrl: context.profileUrl,
+          videosFound: lastCount,
+          startedAt,
+          oldestPublishedAt,
+          message: idleRounds >= options.maxIdleRounds ? 'Новые ролики перестали загружаться.' : 'Достигнут заданный лимит.',
+        });
+        return;
+      }
+
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+      await new Promise((resolve) => setTimeout(resolve, options.scrollDelayMs));
     }
 
-    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
-    await new Promise((resolve) => setTimeout(resolve, options.scrollDelayMs));
-  }
-
-  if (stopRequested) {
     await sendState({
       status: 'stopped',
       username: context.username,
@@ -175,10 +176,22 @@ async function startScan(options: ScanOptions): Promise<void> {
       oldestPublishedAt,
       message: 'Сканирование остановлено пользователем.',
     });
+  } catch (cause) {
+    const details = cause instanceof Error ? cause.message : String(cause);
+    await sendState({
+      status: 'error',
+      username: context.username,
+      profileUrl: context.profileUrl,
+      videosFound: lastCount,
+      startedAt,
+      oldestPublishedAt,
+      message: `Сканирование прервано: ${details}`,
+    }).catch(() => undefined);
+  } finally {
+    scanning = false;
+    stopRequested = false;
+    currentUsername = '';
   }
-
-  scanning = false;
-  stopRequested = false;
 }
 
 export default defineContentScript({
@@ -203,7 +216,7 @@ export default defineContentScript({
       void Promise.all([
         sendBatch(context.username, context.profileUrl, videos),
         sendProfile(profile),
-      ]);
+      ]).catch(() => undefined);
     });
 
     browser.runtime.onMessage.addListener((message: RuntimeMessage) => {
