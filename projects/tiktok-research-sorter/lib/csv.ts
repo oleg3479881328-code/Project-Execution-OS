@@ -1,8 +1,13 @@
 import type { EnrichedVideo } from './types';
 
+function protectSpreadsheetFormula(text: string): string {
+  return /^[\t\r\n ]*[=+\-@]/u.test(text) ? `'${text}` : text;
+}
+
 function escapeCsv(value: unknown): string {
-  const text = value === null || value === undefined ? '' : String(value);
-  return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+  const raw = value === null || value === undefined ? '' : String(value);
+  const text = protectSpreadsheetFormula(raw);
+  return /[",\n]/u.test(text) ? `"${text.replace(/"/gu, '""')}"` : text;
 }
 
 export function videosToCsv(videos: EnrichedVideo[]): string {
