@@ -31,7 +31,9 @@ export function enrichVideos(videos: VideoRecord[], nowSeconds = Math.floor(Date
 }
 
 export function summarize(videos: EnrichedVideo[]) {
-  const engagementRates = videos.map((video) => video.engagementRate ?? 0).filter((value) => value > 0);
+  const engagementRates = videos
+    .map((video) => video.engagementRate)
+    .filter((value): value is number => value !== undefined);
   const outliers = videos.map((video) => video.outlierScore ?? 0);
   return {
     count: videos.length,
@@ -49,8 +51,13 @@ export function publicationFrequencyPerWeek(videos: VideoRecord[]): number | und
     .filter((value): value is number => typeof value === 'number' && value > 0)
     .sort((a, b) => a - b);
   if (dates.length < 2) return undefined;
-  const spanWeeks = Math.max(1, ((dates.at(-1) ?? 0) - (dates[0] ?? 0)) / 604_800);
-  return dates.length / spanWeeks;
+
+  const first = dates[0];
+  const last = dates.at(-1);
+  if (first === undefined || last === undefined || last <= first) return undefined;
+
+  const spanWeeks = (last - first) / 604_800;
+  return (dates.length - 1) / spanWeeks;
 }
 
 export function strongestHashtags(videos: EnrichedVideo[], limit = 6): string[] {
