@@ -4,6 +4,7 @@ import { mergeVideoRecords } from './tiktok-parser';
 import type { DashboardData, ProfileRecord, ProfileSnapshot, ScanState, VideoRecord } from './types';
 
 const STORAGE_KEY = 'tiktokResearchSorter.dashboard.v1';
+const STALE_SCAN_MS = 2 * 60 * 1000;
 
 const initialState: DashboardData = {
   profiles: {},
@@ -14,10 +15,31 @@ const initialState: DashboardData = {
   },
 };
 
+const sourcePriority: Record<ProfileRecord['source'], number> = {
+  dom: 1,
+  'embedded-json': 2,
+  api: 3,
+};
+
 export async function loadDashboard(): Promise<DashboardData> {
   const stored = await browser.storage.local.get(STORAGE_KEY);
   const value = stored[STORAGE_KEY] as DashboardData | undefined;
-  return value ?? structuredClone(initialState);
+  const dashboard = value ?? structuredClone(initialState);
+
+  if (
+    dashboard.activeScan.status === 'scanning'
+    && Date.now() - dashboard.activeScan.updatedAt > STALE_SCAN_MS
+  ) {
+    dashboard.activeScan = {
+      ...dashboard.activeScan,
+      status: 'error',
+      updatedAt: Date.now(),
+      message: 'Предыдущее сканирование было прервано. Запустите его снова.',
+    };
+    await saveDashboard(dashboard);
+  }
+
+  return dashboard;
 }
 
 export async function saveDashboard(data: DashboardData): Promise<void> {
@@ -44,22 +66,29 @@ function emptyProfile(username: string, profileUrl: string): ProfileSnapshot {
 export async function mergeProfileData(profile: ProfileRecord): Promise<DashboardData> {
   const dashboard = await loadDashboard();
   const existing = dashboard.profiles[profile.username] ?? emptyProfile(profile.username, profile.profileUrl);
-  const preferIncoming = profile.source !== 'dom' || existing.profileDataSource === 'dom' || !existing.profileDataSource;
+  const existingPriority = existing.profileDataSource ? sourcePriority[existing.profileDataSource] : 0;
+  const incomingPriority = sourcePriority[profile.source];
+  const canReplace = incomingPriority >= existingPriority;
+
+  const choose = <T,>(incoming: T | undefined, current: T | undefined): T | undefined => {
+    if (canReplace) return incoming ?? current;
+    return current ?? incoming;
+  };
 
   dashboard.profiles[profile.username] = {
     ...existing,
-    profileUrl: profile.profileUrl || existing.profileUrl,
-    displayName: profile.displayName || existing.displayName,
-    bio: profile.bio || existing.bio,
-    avatarUrl: profile.avatarUrl || existing.avatarUrl,
-    followers: profile.followers ?? existing.followers,
-    following: profile.following ?? existing.following,
-    totalLikes: profile.totalLikes ?? existing.totalLikes,
-    videoCount: profile.videoCount ?? existing.videoCount,
-    verified: profile.verified ?? existing.verified,
-    website: profile.website || existing.website,
+    profileUrl: choose(profile.profileUrl, existing.profileUrl) ?? existing.profileUrl,
+    displayName: choose(profile.displayName, existing.displayName),
+    bio: choose(profile.bio, existing.bio),
+    avatarUrl: choose(profile.avatarUrl, existing.avatarUrl),
+    followers: choose(profile.followers, existing.followers),
+    following: choose(profile.following, existing.following),
+    totalLikes: choose(profile.totalLikes, existing.totalLikes),
+    videoCount: choose(profile.videoCount, existing.videoCount),
+    verified: choose(profile.verified, existing.verified),
+    website: choose(profile.website, existing.website),
     profileDataUpdatedAt: Math.max(profile.collectedAt, existing.profileDataUpdatedAt ?? 0),
-    profileDataSource: preferIncoming ? profile.source : existing.profileDataSource,
+    profileDataSource: canReplace || !existing.profileDataSource ? profile.source : existing.profileDataSource,
   };
 
   await saveDashboard(dashboard);
