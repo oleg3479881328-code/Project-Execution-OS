@@ -20,13 +20,21 @@ const record = (id: string, views: number, publishedAt: number, hashtags: string
 });
 
 describe('profile analytics', () => {
-  it('estimates posts per week from known publication dates', () => {
+  it('estimates publication intervals per week', () => {
     const videos = [
       record('1', 100, 1_700_000_000, []),
       record('2', 100, 1_700_604_800, []),
       record('3', 100, 1_701_209_600, []),
     ];
-    expect(publicationFrequencyPerWeek(videos)).toBeCloseTo(1.5);
+    expect(publicationFrequencyPerWeek(videos)).toBeCloseTo(1);
+  });
+
+  it('returns undefined when publication dates do not span time', () => {
+    const videos = [
+      record('1', 100, 1_700_000_000, []),
+      record('2', 100, 1_700_000_000, []),
+    ];
+    expect(publicationFrequencyPerWeek(videos)).toBeUndefined();
   });
 
   it('ranks hashtags by profile-relative performance', () => {
