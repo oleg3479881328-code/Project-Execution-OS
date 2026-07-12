@@ -1,0 +1,68 @@
+name: Reddit Photo AI CI
+
+on:
+  pull_request:
+    paths:
+      - 'projects/reddit-photo-response-bot/**'
+      - '.github/workflows/reddit-photo-ai-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  extension:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/reddit-photo-response-bot/extension
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: projects/reddit-photo-response-bot/extension/package.json
+      - run: npm install --no-audit --no-fund
+      - run: npm run compile
+      - run: npm run test:run
+      - run: npm run build
+      - name: Inspect generated manifest
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const manifest = JSON.parse(fs.readFileSync('.output/chrome-mv3/manifest.json', 'utf8'));
+          const required = ['storage', 'sidePanel'];
+          for (const permission of required) {
+            if (!manifest.permissions?.includes(permission)) throw new Error(`Missing ${permission}`);
+          }
+          if (manifest.side_panel?.default_path !== 'sidepanel.html') throw new Error('Missing side panel');
+          if (!manifest.optional_host_permissions?.includes('https://*/*')) throw new Error('Missing runtime HTTPS permission declaration');
+          if (manifest.host_permissions?.some((value) => !value.includes('/r/WedditNYC/'))) {
+            throw new Error('Unexpected required host permission');
+          }
+          NODE
+
+  worker:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/reddit-photo-response-bot/deepseek-worker
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: projects/reddit-photo-response-bot/deepseek-worker/package.json
+      - run: npm install --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run test
+      - name: Verify no committed secret files
+        shell: bash
+        run: |
+          if find . -maxdepth 2 -type f \( -name '.env*' -o -name '.dev.vars*' \) | grep -q .; then
+            echo 'Secret file found in repository.' >&2
+            exit 1
+          fi
