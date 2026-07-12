@@ -1,3 +1,4 @@
+import { browser } from 'wxt/browser';
 import type {
   AiAnalysisResult,
   AiRecommendedAction,
@@ -77,7 +78,7 @@ export function isAiConfigured(settings: AiSettings): boolean {
 export async function requestProxyPermission(proxyUrl: string): Promise<boolean> {
   const url = new URL(proxyUrl);
   if (url.protocol !== 'https:') throw new Error('AI proxy URL must use HTTPS.');
-  return chrome.permissions.request({ origins: [`${url.origin}/*`] });
+  return browser.permissions.request({ origins: [`${url.origin}/*`] });
 }
 
 export async function analyzePostWithAi(
