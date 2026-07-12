@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7c8d4f81969bd8d28d909db30a55e5f7b15f3cc1",
-  "generated_at": "2026-07-12T10:02:08-04:00",
-  "artifact_count": 492,
+  "repository_commit": "f960c2e49292df0a2ced312c0a7f4b0f51b87d5d",
+  "generated_at": "2026-07-12T10:32:00-04:00",
+  "artifact_count": 501,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -195,13 +195,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "d0bb55c09b9ed3f63c15f8610be59da8969b0e2d5ad267ad7ffbfc0514f1b4db",
+      "sha256": "b9aa042326c16ca9ccef5f2ac33ec3b476ec10c7355f36aaa75557e7a59c43c4",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v11`",
+        "Profile: `knowledge-aware-core-v12`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -9625,6 +9625,123 @@
       ]
     },
     {
+      "path": "projects/tiktok-research-sorter/AGENTS.md",
+      "title": "AGENTS — TikTok Research Sorter",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": null,
+      "date": null,
+      "sha256": "070457563868a156343e29889cfaf04bfb8ea08a3882d540e1371fdbc837f997",
+      "headings": [
+        "AGENTS — TikTok Research Sorter",
+        "Entry Order",
+        "Working Rules",
+        "Validation"
+      ]
+    },
+    {
+      "path": "projects/tiktok-research-sorter/PROJECT.md",
+      "title": "PROJECT — TikTok Research Sorter",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": null,
+      "date": null,
+      "sha256": "2f1108dba44c6deb6c5b6c9aa80985aedbfb5543500c7d5c19e3e4d274b64057",
+      "headings": [
+        "PROJECT — TikTok Research Sorter",
+        "1. Project",
+        "2. Purpose",
+        "3. Source Of Truth",
+        "4. Source Trail",
+        "5. Current Status",
+        "6. Done So Far",
+        "7. Current Focus",
+        "8. Next Practical Step",
+        "9. Key Decisions And Constraints",
+        "10. Read Next"
+      ]
+    },
+    {
+      "path": "projects/tiktok-research-sorter/PROJECT_STATE.md",
+      "title": "TikTok Research Sorter — Project State",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": "ready_for_merge_review",
+      "date": null,
+      "sha256": "336391323cecbe14e3b96e3e8c3e8fd6ed734fb2f7034a790f4092764e4feabd",
+      "headings": [
+        "TikTok Research Sorter — Project State",
+        "Current phase",
+        "Working implementation",
+        "Stabilization completed",
+        "Automated validation",
+        "Artifacts",
+        "Known external risks",
+        "Remaining gate"
+      ]
+    },
+    {
+      "path": "projects/tiktok-research-sorter/README.md",
+      "title": "TikTok Research Sorter",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": null,
+      "date": null,
+      "sha256": "5d916e432ce6e591d12e1cefdc435f2dd4de7e3e80567752ff9060bf0a86712d",
+      "headings": [
+        "TikTok Research Sorter",
+        "Version 0.2.0",
+        "One-click Windows workflow",
+        "Local development",
+        "CI artifacts",
+        "Product boundary"
+      ]
+    },
+    {
+      "path": "projects/tiktok-research-sorter/automation/windows/README-RU.md",
+      "title": "Автоматическое обновление и запуск — Windows 11",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": null,
+      "date": null,
+      "sha256": "b4abf50aba41b32feaeb5c67f7c5fb51b9be5df9ccb5ff5f203d16a2515e5457",
+      "headings": [
+        "Автоматическое обновление и запуск — Windows 11",
+        "Первый запуск",
+        "Каждый следующий запуск",
+        "Служебные режимы",
+        "Где находятся файлы",
+        "Важно"
+      ]
+    },
+    {
+      "path": "projects/tiktok-research-sorter/coordination/FROM_EXECUTOR.md",
+      "title": "FROM_EXECUTOR.md — Executor Mailbox",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": null,
+      "date": null,
+      "sha256": "78187ee617f653098331983e200bc73063a585ed8378c035847de9bd034a77c5",
+      "headings": [
+        "FROM_EXECUTOR.md — Executor Mailbox",
+        "ACK Envelope",
+        "ACK",
+        "First automatic action",
+        "Reporting",
+        "Execution Log",
+        "Phase 1: ACK and Reconnaissance (2026-07-10)",
+        "Phase 2: Audit and Harden (2026-07-10)",
+        "Phase 3: Automated Validation (2026-07-10)",
+        "Phase 4: Updater Testability (2026-07-10)",
+        "Phase 5: CI and Artifacts (2026-07-10)",
+        "Phase 6: Documentation (2026-07-10)",
+        "COMPLETE Report",
+        "Summary of changes",
+        "Known limitations",
+        "Final commit"
+      ]
+    },
+    {
       "path": "projects/tiktok-research-sorter/coordination/REPORT_LINK_RULE_ACK_REQUIRED.md",
       "title": "Report Link Rule — Executor Acknowledgement Required",
       "type": "project-artifact",
@@ -9648,6 +9765,64 @@
         "Executor Mailbox Envelope",
         "Summary",
         "Evidence"
+      ]
+    },
+    {
+      "path": "projects/tiktok-research-sorter/docs/IMPLEMENTATION_HANDOFF.md",
+      "title": "Implementation Handoff",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": null,
+      "date": null,
+      "sha256": "29cc9a347e365f23dbfc339678310c1f27f4501c4d7b007361e53ef9057c551c",
+      "headings": [
+        "Implementation Handoff",
+        "What is already complete",
+        "Executor task",
+        "Setup",
+        "Browser test matrix",
+        "Expected acceptance criteria",
+        "Failure evidence",
+        "Known boundaries",
+        "Completion report"
+      ]
+    },
+    {
+      "path": "projects/tiktok-research-sorter/docs/RESEARCH_AND_DECISIONS.md",
+      "title": "Research and Decisions",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": null,
+      "date": null,
+      "sha256": "ac111aec7d82a33faa795587a23779e2478932adf1a5d7bfb4a5471b157a5da0",
+      "headings": [
+        "Research and Decisions",
+        "Product decision",
+        "Existing solutions reviewed",
+        "Framework decision",
+        "Architecture decision",
+        "Analytics",
+        "Permissions",
+        "Dependency validation",
+        "Deferred scope"
+      ]
+    },
+    {
+      "path": "projects/tiktok-research-sorter/logs/latest.md",
+      "title": "Latest Log — TikTok Research Sorter",
+      "type": "project-artifact",
+      "domain": "tiktok-research-sorter",
+      "status": "stabilization complete / ready for merge review",
+      "date": "2026-07-12",
+      "sha256": "594523db3a014575a765cfec1de979d24601497f96a6811e4d43f62f68c0127d",
+      "headings": [
+        "Latest Log — TikTok Research Sorter",
+        "Completed",
+        "Final automated verification",
+        "Generated artifacts",
+        "Remaining boundaries",
+        "Owner action",
+        "Next repository action"
       ]
     },
     {
