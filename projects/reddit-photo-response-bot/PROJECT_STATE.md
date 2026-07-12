@@ -1,3 +1,10 @@
+---
+status: in-progress
+project_mode: compact
+last_updated: 2026-07-11
+next_action: Load the unpacked Chrome build, open the side panel, and validate live r/WedditNYC capture.
+---
+
 # Project State — Reddit Photo Response Bot
 
 ## Current Phase
