@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f960c2e49292df0a2ced312c0a7f4b0f51b87d5d",
-  "generated_at": "2026-07-12T10:32:00-04:00",
+  "repository_commit": "86b1a62749bbe1f9dfc2711ac26a403ed4f6a31d",
+  "generated_at": "2026-07-12T10:37:17-04:00",
   "artifact_count": 501,
   "artifacts": [
     {
@@ -9666,18 +9666,17 @@
       "title": "TikTok Research Sorter — Project State",
       "type": "project-artifact",
       "domain": "tiktok-research-sorter",
-      "status": "ready_for_merge_review",
+      "status": "stable",
       "date": null,
-      "sha256": "336391323cecbe14e3b96e3e8c3e8fd6ed734fb2f7034a790f4092764e4feabd",
+      "sha256": "32d574dec0202e2feed83aa749a4c25befd41cdfadf9745cc5992fe8f41ac69b",
       "headings": [
         "TikTok Research Sorter — Project State",
         "Current phase",
         "Working implementation",
         "Stabilization completed",
         "Automated validation",
-        "Artifacts",
-        "Known external risks",
-        "Remaining gate"
+        "Distribution",
+        "Remaining boundaries"
       ]
     },
     {
@@ -9704,14 +9703,13 @@
       "domain": "tiktok-research-sorter",
       "status": null,
       "date": null,
-      "sha256": "b4abf50aba41b32feaeb5c67f7c5fb51b9be5df9ccb5ff5f203d16a2515e5457",
+      "sha256": "ad353017683169e6f2f599af010b8d8f5c1388d24b30ea72d9095678faefdb73",
       "headings": [
         "Автоматическое обновление и запуск — Windows 11",
         "Первый запуск",
         "Каждый следующий запуск",
         "Служебные режимы",
-        "Где находятся файлы",
-        "Важно"
+        "Где находятся файлы"
       ]
     },
     {
@@ -9812,17 +9810,16 @@
       "title": "Latest Log — TikTok Research Sorter",
       "type": "project-artifact",
       "domain": "tiktok-research-sorter",
-      "status": "stabilization complete / ready for merge review",
+      "status": "integrated into `main`; automatic updater follows `main",
       "date": "2026-07-12",
-      "sha256": "594523db3a014575a765cfec1de979d24601497f96a6811e4d43f62f68c0127d",
+      "sha256": "b3c073d898cf282213438b74c852b191c04c8da9615da2e64ab991b1ad94b448",
       "headings": [
         "Latest Log — TikTok Research Sorter",
         "Completed",
         "Final automated verification",
-        "Generated artifacts",
+        "Distribution behavior",
         "Remaining boundaries",
-        "Owner action",
-        "Next repository action"
+        "Owner action"
       ]
     },
     {
