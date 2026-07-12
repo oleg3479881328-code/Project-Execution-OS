@@ -1,63 +1,65 @@
 # Latest Log — TikTok Research Sorter
 
-Date: 2026-07-10
+Date: 2026-07-12
 Branch: `agent/tiktok-research-sorter-mvp`
 Version: `0.2.0`
+Status: reviewer stabilization complete; final pull-request evidence refresh in progress
 
-## Completed
+## Implemented
 
-- Owner installed version `0.1.1` and confirmed that the extension connects to a public TikTok profile and works.
-- Corrected the earlier page-hook behavior so unrelated TikTok XHR requests are not globally wrapped.
-- Added a complete profile data model and merge path.
-- Added profile extraction from TikTok embedded JSON, selected API responses, and DOM fallback.
-- Added a full profile card with avatar, name, bio, verification, follower/following counts, profile likes, video count, scan time, coverage, posting frequency, typical views, and strongest hashtags.
-- Kept the existing video cards, filters, per-profile storage, and CSV/JSON export.
-- Added a Windows first-stage automation package:
-  - creates a desktop shortcut;
-  - downloads the current GitHub development branch on every launch;
-  - installs Node.js LTS through `winget` when required;
-  - updates dependencies only when needed;
-  - builds the extension;
-  - opens a dedicated persistent Chrome profile with the latest build.
-- Added profile parser and profile analytics regression tests.
-- Updated the extension version to `0.2.0`.
+- Full TikTok profile card and video-card research interface.
+- Serialized background mutations so concurrent profile, video, and scan-state messages cannot overwrite each other.
+- Automatic stale-scan recovery and guaranteed content-script cleanup through `try/catch/finally`.
+- Strict source priority: API data takes precedence over embedded JSON, which takes precedence over DOM fallback.
+- Narrower DOM selectors and HTTP(S)-only external profile/media URLs.
+- Corrected publication-frequency and average-engagement calculations.
+- Localized number parsing for decimal commas and Russian compact suffixes.
+- Safer duration normalization for seconds versus milliseconds.
+- CSV spreadsheet-formula neutralization.
+- Atomic Windows updater:
+  - builds in an isolated candidate directory;
+  - runs reproducible dependency installation, TypeScript checks, tests, build, and manifest validation;
+  - replaces the active build only after success;
+  - preserves one previous version for rollback;
+  - supports `DryRun`, `SkipLaunch`, `NonInteractive`, and `LocalSource`;
+  - closes only the dedicated Chrome profile.
+- Linux and Windows GitHub Actions validation.
+- Automatic extension, updater, and source packages.
+- Project Execution OS manifest and project-state integrity restored.
 
-## Verification performed
+## Automated verification
 
-Commands:
+The latest code-bearing validation completed successfully in GitHub Actions:
 
-```bash
-npm install --package-lock-only --ignore-scripts --no-audit --no-fund
-npm ci --no-audit --no-fund
-npm run check
-npm test
-npm run build
-npm run zip
-```
+- Project Execution OS structure and system-context manifest: passed.
+- Linux reproducible install: passed.
+- TypeScript strict check: passed.
+- 40 unit and regression tests: passed.
+- Chrome MV3 production build: passed.
+- Extension and package artifact upload: passed.
+- Windows zero-side-effect dry run: passed.
+- Windows full updater validation with local source and no browser launch: passed.
+- Generated manifest version check: passed.
 
-Results:
+## Generated packages
 
-- TypeScript: passed;
-- tests: 8 passed across 5 files;
-- Chrome MV3 production build: passed;
-- production bundle: approximately 229 KB;
-- ZIP: approximately 74 KB.
+- `tiktok-research-sorter-extension-0.2.0.zip`
+- `tiktok-sorter-auto-updater-setup-0.2.0.zip`
+- `tiktok-research-sorter-source-0.2.0.zip`
+- unpacked Chrome MV3 build artifact
 
-## Artifacts prepared
+## Remaining boundaries
 
-- extension build `tiktok-research-sorter-extension-0.2.0.zip`;
-- full source package `tiktok-research-sorter-source-0.2.0.zip`;
-- Windows updater setup `tiktok-sorter-auto-updater-setup-0.2.0.zip`.
+- No Chrome Web Store submission has been authorized.
+- No public GitHub Release has been created.
+- The updater intentionally follows `agent/tiktok-research-sorter-mvp` until the project is merged; switching it to `main` must happen only after merge.
+- TikTok can still change public payloads or DOM structure; fixture coverage and graceful fallbacks reduce but cannot eliminate that external risk.
+- Very large multi-profile datasets may eventually require IndexedDB instead of `chrome.storage.local`.
 
-## Still pending
+## Owner action
 
-- execute the Windows updater package on the owner's computer;
-- verify all live profile-card fields on `@jasminebrookephotography`;
-- verify that the dedicated Chrome profile preserves TikTok login and extension settings across launches;
-- update the branch from current `main` before merging;
-- switch the updater default branch from development branch to `main` after merge;
-- Chrome Web Store submission.
+None for stabilization, CI, packaging, or evidence collection.
 
-## Next action
+## Next repository action
 
-Owner installs the one-click updater package and performs one live profile scan. Use the resulting card to identify any TikTok localization or payload-field differences before adding more product features.
+Refresh the pull-request report against the final head, confirm all checks and artifacts, and then decide the separate merge gate. Do not publish externally.
