@@ -1,7 +1,18 @@
-export default defineBackground(() => {
-  if (!chrome.sidePanel?.setPanelBehavior) return;
+type SidePanelApi = {
+  setPanelBehavior(options: { openPanelOnActionClick: boolean }): Promise<void>;
+};
 
-  void chrome.sidePanel
+type ChromeRuntime = {
+  sidePanel?: SidePanelApi;
+};
+
+export default defineBackground(() => {
+  const chromeRuntime = (globalThis as typeof globalThis & { chrome?: ChromeRuntime }).chrome;
+  if (!chromeRuntime?.sidePanel) return;
+
+  void chromeRuntime.sidePanel
     .setPanelBehavior({ openPanelOnActionClick: true })
-    .catch((error) => console.error('Failed to configure side panel behavior', error));
+    .catch((error: unknown) =>
+      console.error('Failed to configure side panel behavior', error)
+    );
 });
