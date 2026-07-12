@@ -1,0 +1,12 @@
+{
+  "itemList": [
+    {
+      "aweme_id": "alt001",
+      "description": "Alternate field names test #alt",
+      "create_time": 1700000000,
+      "authorInfo": { "unique_id": "altuser" },
+      "video_info": { "duration": 25000, "originCover": "https://example.com/alt-cover.jpg" },
+      "statistics": { "viewCount": 7777, "likeCount": 444, "comment_count": 22, "share_count": 11 }
+    }
+  ]
+}

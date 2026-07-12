@@ -1,0 +1,17 @@
+{
+  "userInfo": {
+    "user": {
+      "uniqueId": "jasminebrookephotography",
+      "nickname": "Jasmine Brooke Photography",
+      "signature": "San Diego wedding photographer",
+      "avatarLarger": "https://example.com/avatar.jpg",
+      "verified": true
+    },
+    "stats": {
+      "followerCount": 1011,
+      "followingCount": 249,
+      "heartCount": 333600,
+      "videoCount": 87
+    }
+  }
+}
