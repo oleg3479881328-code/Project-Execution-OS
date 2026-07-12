@@ -7,17 +7,26 @@ on:
       - 'agent/**'
     paths:
       - 'projects/tiktok-research-sorter/**'
+      - '.github/workflows/tiktok-research-sorter-ci.yml'
   pull_request:
     branches:
       - main
     paths:
       - 'projects/tiktok-research-sorter/**'
+      - '.github/workflows/tiktok-research-sorter-ci.yml'
   workflow_dispatch:
     inputs:
       build-only:
-        description: 'Only run build (skip tests)'
+        description: 'Only run build (skip unit tests)'
         type: boolean
         default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tiktok-research-sorter-${{ github.ref }}
+  cancel-in-progress: true
 
 defaults:
   run:
@@ -25,7 +34,7 @@ defaults:
 
 jobs:
   validate:
-    name: Validate, Test & Build
+    name: Linux — check, test, build, package
     runs-on: ubuntu-latest
 
     steps:
@@ -35,53 +44,88 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
           cache-dependency-path: projects/tiktok-research-sorter/package-lock.json
 
-      - name: Install dependencies
+      - name: Install dependencies reproducibly
         run: npm ci --no-audit --no-fund
 
       - name: TypeScript check
-        run: npx tsc --noEmit
+        run: npm run check
 
-      - name: Run tests
+      - name: Run unit tests
         if: ${{ !inputs.build-only }}
         run: npm test
 
       - name: Build extension
         run: npm run build
 
-      - name: Upload build artifact
+      - name: Package downloadable artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd .output/chrome-mv3
+          zip -qr ../../tiktok-research-sorter-extension-0.2.0.zip .
+          cd ../..
+          zip -qr tiktok-sorter-auto-updater-setup-0.2.0.zip automation/windows
+          zip -qr tiktok-research-sorter-source-0.2.0.zip . \
+            -x 'node_modules/*' '.output/*' '.wxt/*' '*.zip'
+
+      - name: Upload unpacked extension
         uses: actions/upload-artifact@v4
         with:
-          name: tiktok-research-sorter-chrome-mv3
+          name: tiktok-research-sorter-chrome-mv3-${{ github.sha }}
           path: projects/tiktok-research-sorter/.output/chrome-mv3/
-          retention-days: 7
+          retention-days: 14
           if-no-files-found: error
 
-  package:
-    name: Package as ZIP
-    needs: validate
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: tiktok-research-sorter-chrome-mv3
-          path: chrome-mv3
-
-      - name: Create ZIP archive
-        run: |
-          cd chrome-mv3
-          zip -r ../tiktok-research-sorter.zip .
-
-      - name: Upload ZIP as release artifact
+      - name: Upload packaged files
         uses: actions/upload-artifact@v4
         with:
-          name: tiktok-research-sorter-zip
-          path: tiktok-research-sorter.zip
+          name: tiktok-research-sorter-packages-${{ github.sha }}
+          path: |
+            projects/tiktok-research-sorter/tiktok-research-sorter-extension-0.2.0.zip
+            projects/tiktok-research-sorter/tiktok-sorter-auto-updater-setup-0.2.0.zip
+            projects/tiktok-research-sorter/tiktok-research-sorter-source-0.2.0.zip
           retention-days: 30
           if-no-files-found: error
+
+  windows-updater:
+    name: Windows — updater dry-run and full validation
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: projects/tiktok-research-sorter/package-lock.json
+
+      - name: Validate zero-side-effect dry run
+        shell: pwsh
+        run: |
+          & ./automation/windows/Update-and-Launch-TikTok-Sorter.ps1 `
+            -DryRun `
+            -SkipLaunch `
+            -NonInteractive
+
+      - name: Validate updater against local source
+        shell: pwsh
+        run: |
+          & ./automation/windows/Update-and-Launch-TikTok-Sorter.ps1 `
+            -LocalSource (Get-Location).Path `
+            -SkipLaunch `
+            -NonInteractive
+
+      - name: Verify built manifest
+        shell: pwsh
+        run: |
+          $manifest = Join-Path $env:LOCALAPPDATA 'TikTokResearchSorterDev\source\.output\chrome-mv3\manifest.json'
+          if (-not (Test-Path $manifest)) { throw "Manifest not found: $manifest" }
+          $json = Get-Content $manifest -Raw | ConvertFrom-Json
+          if ($json.version -ne '0.2.0') { throw "Unexpected manifest version: $($json.version)" }
