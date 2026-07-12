@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-  [string]$Branch = $(if ($env:TRS_GITHUB_BRANCH) { $env:TRS_GITHUB_BRANCH } else { 'agent/tiktok-research-sorter-mvp' }),
+  [string]$Branch = $(if ($env:TRS_GITHUB_BRANCH) { $env:TRS_GITHUB_BRANCH } else { 'main' }),
   [switch]$DryRun,
   [switch]$SkipLaunch,
   [switch]$NonInteractive,
