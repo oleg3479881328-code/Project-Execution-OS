@@ -1,10 +1,9 @@
 [CmdletBinding()]
 param(
   [string]$Branch = $(if ($env:TRS_GITHUB_BRANCH) { $env:TRS_GITHUB_BRANCH } else { 'agent/tiktok-research-sorter-mvp' }),
-
-  # Testability flags
   [switch]$DryRun,
   [switch]$SkipLaunch,
+  [switch]$NonInteractive,
   [string]$LocalSource = $(if ($env:TRS_LOCAL_SOURCE) { $env:TRS_LOCAL_SOURCE } else { '' })
 )
 
@@ -15,14 +14,15 @@ $ProgressPreference = 'SilentlyContinue'
 $RepoOwner = 'oleg3479881328-code'
 $RepoName = 'Project-Execution-OS'
 $ProjectRelativePath = 'projects\tiktok-research-sorter'
-$WorkRoot = Join-Path $env:LOCALAPPDATA 'TikTokResearchSorterDev'
+$LocalAppData = if ($env:LOCALAPPDATA) { $env:LOCALAPPDATA } else { Join-Path $HOME 'AppData\Local' }
+$WorkRoot = Join-Path $LocalAppData 'TikTokResearchSorterDev'
 $SourceRoot = Join-Path $WorkRoot 'source'
+$PreviousRoot = Join-Path $WorkRoot 'previous'
+$CandidateRoot = Join-Path $WorkRoot ("candidate-" + [Guid]::NewGuid().ToString('N'))
 $ChromeProfileRoot = Join-Path $WorkRoot 'chrome-profile'
 $LogPath = Join-Path $WorkRoot 'launcher.log'
 $TempRoot = Join-Path $env:TEMP ("TikTokResearchSorter-" + [Guid]::NewGuid().ToString('N'))
-
-New-Item -ItemType Directory -Force -Path $WorkRoot | Out-Null
-Start-Transcript -Path $LogPath -Append | Out-Null
+$TranscriptStarted = $false
 
 function Write-Step([string]$Message) {
   Write-Host "`n==> $Message" -ForegroundColor Cyan
@@ -46,7 +46,7 @@ function Ensure-Node {
     Write-Step 'Устанавливаю Node.js LTS (нужно только один раз)'
     $winget = Get-Command winget.exe -ErrorAction SilentlyContinue
     if (-not $winget) {
-      throw 'Node.js 20+ не найден, а winget недоступен. Установите Node.js LTS с nodejs.org и запустите ярлык снова.'
+      throw 'Node.js 20+ не найден, а winget недоступен. Установите Node.js LTS и запустите ярлык снова.'
     }
     & winget.exe install --id OpenJS.NodeJS.LTS -e --accept-package-agreements --accept-source-agreements
     if ($LASTEXITCODE -ne 0) {
@@ -64,7 +64,7 @@ function Find-Chrome {
   $candidates = @(
     (Join-Path $env:ProgramFiles 'Google\Chrome\Application\chrome.exe'),
     (Join-Path ${env:ProgramFiles(x86)} 'Google\Chrome\Application\chrome.exe'),
-    (Join-Path $env:LOCALAPPDATA 'Google\Chrome\Application\chrome.exe')
+    (Join-Path $LocalAppData 'Google\Chrome\Application\chrome.exe')
   ) | Where-Object { $_ -and (Test-Path $_) }
 
   $chrome = $candidates | Select-Object -First 1
@@ -74,24 +74,39 @@ function Find-Chrome {
   return $chrome
 }
 
+function Stop-DedicatedChrome {
+  Get-CimInstance Win32_Process -Filter "Name='chrome.exe'" -ErrorAction SilentlyContinue |
+    Where-Object { $_.CommandLine -and $_.CommandLine.Contains($ChromeProfileRoot) } |
+    ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+  Start-Sleep -Milliseconds 700
+}
+
+if ($DryRun) {
+  Write-Step 'СУХОЙ ПРОГОН (DryRun). Реальные операции выполняться не будут.'
+  Write-Host "  Branch:         $Branch" -ForegroundColor Gray
+  Write-Host "  WorkRoot:       $WorkRoot" -ForegroundColor Gray
+  Write-Host "  SourceRoot:     $SourceRoot" -ForegroundColor Gray
+  Write-Host "  ChromeProfile:  $ChromeProfileRoot" -ForegroundColor Gray
+  Write-Host "  SkipLaunch:     $SkipLaunch" -ForegroundColor Gray
+  Write-Host "  LocalSource:    $(if ($LocalSource) { $LocalSource } else { '(не указан — будет загрузка с GitHub)' })" -ForegroundColor Gray
+  Write-Host "`nDryRun завершён. Никаких файлов и папок не создано." -ForegroundColor Green
+  exit 0
+}
+
 try {
-  # ---- Dry-Run: только показать, что будет сделано ----
-  if ($DryRun) {
-    Write-Step "СУХОЙ ПРОГОН (DryRun). Реальные операции выполняться не будут."
-    Write-Host "  Branch:         $Branch" -ForegroundColor Gray
-    Write-Host "  WorkRoot:       $WorkRoot" -ForegroundColor Gray
-    Write-Host "  SourceRoot:     $SourceRoot" -ForegroundColor Gray
-    Write-Host "  ChromeProfile:  $ChromeProfileRoot" -ForegroundColor Gray
-    Write-Host "  SkipLaunch:     $SkipLaunch" -ForegroundColor Gray
-    Write-Host "  LocalSource:    $(if ($LocalSource) { $LocalSource } else { '(не указан — будет загрузка с GitHub)' })" -ForegroundColor Gray
-    Write-Host "`nDryRun завершён. Никаких изменений не внесено." -ForegroundColor Green
-    return
+  New-Item -ItemType Directory -Force -Path $WorkRoot | Out-Null
+  try {
+    Start-Transcript -Path $LogPath -Append | Out-Null
+    $TranscriptStarted = $true
+  } catch {
+    Write-Warning "Не удалось запустить журнал: $($_.Exception.Message)"
   }
 
-  # ---- Получение исходников ----
+  New-Item -ItemType Directory -Force -Path $CandidateRoot | Out-Null
+
   if ($LocalSource) {
     Write-Step "Использую локальный источник: $LocalSource"
-    $projectSource = Get-Item -Path $LocalSource -ErrorAction Stop
+    $projectSource = Get-Item -LiteralPath $LocalSource -ErrorAction Stop
     if (-not (Test-Path (Join-Path $projectSource.FullName 'package.json'))) {
       throw "Локальный источник не содержит package.json: $LocalSource"
     }
@@ -112,37 +127,34 @@ try {
     }
   }
 
-  Write-Step 'Обновляю локальную рабочую копию'
-  New-Item -ItemType Directory -Force -Path $SourceRoot | Out-Null
-  & robocopy.exe $projectSource.FullName $SourceRoot /MIR /XD node_modules .output .wxt /XF launcher.log /NFL /NDL /NJH /NJS /NP | Out-Null
-  if ($LASTEXITCODE -gt 7) {
-    throw "robocopy завершился с ошибкой $LASTEXITCODE"
+  Write-Step 'Готовлю изолированную кандидатную сборку'
+  & robocopy.exe $projectSource.FullName $CandidateRoot /MIR /XD node_modules .output .wxt /XF launcher.log /NFL /NDL /NJH /NJS /NP | Out-Null
+  $robocopyCode = $LASTEXITCODE
+  if ($robocopyCode -gt 7) {
+    throw "robocopy завершился с ошибкой $robocopyCode"
   }
 
   Ensure-Node
-  Push-Location $SourceRoot
+  Push-Location $CandidateRoot
   try {
-    $lockPath = Join-Path $SourceRoot 'package-lock.json'
-    $hashPath = Join-Path $WorkRoot 'package-lock.sha256'
+    $lockPath = Join-Path $CandidateRoot 'package-lock.json'
     if (-not (Test-Path $lockPath)) {
-      Write-Step 'Создаю lock-файл и устанавливаю зависимости'
-      & npm.cmd install --no-audit --no-fund
-      if ($LASTEXITCODE -ne 0) { throw "npm install завершился с ошибкой $LASTEXITCODE" }
+      throw 'В проекте отсутствует package-lock.json. Обновление остановлено до воспроизводимой сборки.'
     }
 
-    $currentHash = (Get-FileHash $lockPath -Algorithm SHA256).Hash
-    $storedHash = if (Test-Path $hashPath) { (Get-Content $hashPath -Raw).Trim() } else { '' }
+    Write-Step 'Устанавливаю зависимости из lock-файла'
+    & npm.cmd ci --no-audit --no-fund
+    if ($LASTEXITCODE -ne 0) { throw "npm ci завершился с ошибкой $LASTEXITCODE" }
 
-    if (-not (Test-Path (Join-Path $SourceRoot 'node_modules')) -or $currentHash -ne $storedHash) {
-      Write-Step 'Устанавливаю или обновляю зависимости'
-      & npm.cmd ci --no-audit --no-fund
-      if ($LASTEXITCODE -ne 0) { throw "npm ci завершился с ошибкой $LASTEXITCODE" }
-      Set-Content -Path $hashPath -Value $currentHash -Encoding ASCII
-    } else {
-      Write-Step 'Зависимости не изменились'
-    }
+    Write-Step 'Проверяю TypeScript'
+    & npm.cmd run check
+    if ($LASTEXITCODE -ne 0) { throw "npm run check завершился с ошибкой $LASTEXITCODE" }
 
-    Write-Step 'Собираю последнюю версию расширения'
+    Write-Step 'Запускаю тесты'
+    & npm.cmd test
+    if ($LASTEXITCODE -ne 0) { throw "npm test завершился с ошибкой $LASTEXITCODE" }
+
+    Write-Step 'Собираю расширение'
     & npm.cmd run build
     if ($LASTEXITCODE -ne 0) { throw "npm run build завершился с ошибкой $LASTEXITCODE" }
   }
@@ -150,21 +162,44 @@ try {
     Pop-Location
   }
 
-  $extensionRoot = Join-Path $SourceRoot '.output\chrome-mv3'
-  $manifestPath = Join-Path $extensionRoot 'manifest.json'
-  if (-not (Test-Path $manifestPath)) {
-    throw "Сборка завершена, но manifest.json не найден: $manifestPath"
+  $candidateExtensionRoot = Join-Path $CandidateRoot '.output\chrome-mv3'
+  $candidateManifestPath = Join-Path $candidateExtensionRoot 'manifest.json'
+  if (-not (Test-Path $candidateManifestPath)) {
+    throw "Сборка завершена, но manifest.json не найден: $candidateManifestPath"
+  }
+  $null = Get-Content $candidateManifestPath -Raw | ConvertFrom-Json
+
+  if (-not $SkipLaunch) {
+    Write-Step 'Закрываю только специальное окно Chrome'
+    Stop-DedicatedChrome
   }
 
-  # ---- Launch (пропускается если SkipLaunch) ----
-  if (-not $SkipLaunch) {
-    $chromePath = Find-Chrome
-    Write-Step 'Перезапускаю отдельное окно Chrome с новой версией'
-    Get-CimInstance Win32_Process -Filter "Name='chrome.exe'" -ErrorAction SilentlyContinue |
-      Where-Object { $_.CommandLine -and $_.CommandLine.Contains($ChromeProfileRoot) } |
-      ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
-    Start-Sleep -Milliseconds 700
+  Write-Step 'Переключаюсь на проверенную сборку'
+  if (Test-Path $PreviousRoot) {
+    Remove-Item $PreviousRoot -Recurse -Force
+  }
 
+  $movedCurrent = $false
+  try {
+    if (Test-Path $SourceRoot) {
+      Move-Item -LiteralPath $SourceRoot -Destination $PreviousRoot
+      $movedCurrent = $true
+    }
+    Move-Item -LiteralPath $CandidateRoot -Destination $SourceRoot
+  } catch {
+    if (-not (Test-Path $SourceRoot) -and $movedCurrent -and (Test-Path $PreviousRoot)) {
+      Move-Item -LiteralPath $PreviousRoot -Destination $SourceRoot -ErrorAction SilentlyContinue
+    }
+    throw
+  }
+
+  $extensionRoot = Join-Path $SourceRoot '.output\chrome-mv3'
+
+  if ($SkipLaunch) {
+    Write-Step 'SkipLaunch — Chrome не запущен.'
+    Write-Host "Проверенная сборка готова: $extensionRoot" -ForegroundColor Green
+  } else {
+    $chromePath = Find-Chrome
     New-Item -ItemType Directory -Force -Path $ChromeProfileRoot | Out-Null
     $arguments = @(
       "--user-data-dir=`"$ChromeProfileRoot`"",
@@ -175,21 +210,20 @@ try {
       'https://www.tiktok.com/'
     )
     Start-Process -FilePath $chromePath -ArgumentList $arguments
-
-    Write-Host "`nГотово. Открыт отдельный Chrome с последней версией TikTok Research Sorter." -ForegroundColor Green
-    Write-Host "При первом запуске войдите в TikTok и закрепите значок расширения. Этот профиль сохранится." -ForegroundColor Yellow
-  } else {
-    Write-Step "SkipLaunch — Chrome не запущен."
-    Write-Host "Сборка готова: $extensionRoot" -ForegroundColor Green
+    Write-Host "`nГотово. Открыт отдельный Chrome с проверенной версией TikTok Research Sorter." -ForegroundColor Green
+    Write-Host 'Предыдущая рабочая версия сохранена в папке previous для отката.' -ForegroundColor Yellow
   }
 }
 catch {
   Write-Host "`nОШИБКА: $($_.Exception.Message)" -ForegroundColor Red
-  Write-Host "Журнал: $LogPath" -ForegroundColor Yellow
-  Read-Host 'Нажмите Enter, чтобы закрыть окно'
+  Write-Host "Рабочая версия не заменена. Журнал: $LogPath" -ForegroundColor Yellow
+  if (-not $NonInteractive -and -not $env:CI) {
+    Read-Host 'Нажмите Enter, чтобы закрыть окно'
+  }
   exit 1
 }
 finally {
   if (Test-Path $TempRoot) { Remove-Item $TempRoot -Recurse -Force -ErrorAction SilentlyContinue }
-  Stop-Transcript -ErrorAction SilentlyContinue | Out-Null
+  if (Test-Path $CandidateRoot) { Remove-Item $CandidateRoot -Recurse -Force -ErrorAction SilentlyContinue }
+  if ($TranscriptStarted) { Stop-Transcript -ErrorAction SilentlyContinue | Out-Null }
 }
