@@ -1,31 +1,22 @@
 # Latest Log — TikTok Research Sorter
 
 Date: 2026-07-12
-Branch: `agent/tiktok-research-sorter-mvp`
 Version: `0.2.0`
-Status: stabilization complete / ready for merge review
+Status: integrated into `main`; automatic updater follows `main`
 
 ## Completed
 
-- Full TikTok profile card and video-card research interface.
-- Serialized background mutations so concurrent profile, video, and scan-state messages cannot overwrite each other.
-- Automatic stale-scan recovery and guaranteed content-script cleanup through `try/catch/finally`.
-- Strict source priority: API data takes precedence over embedded JSON, which takes precedence over DOM fallback.
-- Narrower DOM fallback selectors and HTTP(S)-only external profile/media URLs.
-- Corrected publication-frequency and average-engagement calculations.
-- Localized number parsing for decimal commas and Russian compact suffixes.
-- Safer duration normalization for seconds versus milliseconds.
-- CSV spreadsheet-formula neutralization.
-- Atomic Windows updater:
-  - builds in an isolated candidate directory;
-  - runs reproducible dependency installation, TypeScript checks, tests, build, and manifest validation;
-  - replaces the active build only after success;
-  - preserves one previous version for rollback;
-  - supports `DryRun`, `SkipLaunch`, `NonInteractive`, and `LocalSource`;
-  - closes only the dedicated Chrome profile.
+- Full TikTok profile and video research interface.
+- Serialized background persistence and stale-scan recovery.
+- API → embedded JSON → DOM source precedence.
+- Corrected analytics, localized count parsing, duration normalization, and CSV formula safety.
+- Atomic Windows updater with candidate build, validation, rollback, dedicated Chrome profile, and non-interactive CI mode.
+- 40 unit and regression tests.
 - Linux and Windows GitHub Actions validation.
-- Automatic extension, updater, and source packages.
-- Project Execution OS structure and system-context manifest integrity restored.
+- Automatic unpacked extension, extension ZIP, updater ZIP, and source ZIP artifacts.
+- Project Execution OS structure and context-manifest integrity validation.
+- PR #71 merged into `main`.
+- Updater default branch changed from the development branch to `main`.
 
 ## Final automated verification
 
@@ -33,32 +24,24 @@ Status: stabilization complete / ready for merge review
 - System-context manifest validation: passed.
 - Linux reproducible install: passed.
 - TypeScript strict check: passed.
-- 40 unit and regression tests: passed.
+- 40 tests: passed.
 - Chrome MV3 production build: passed.
-- Extension and package artifact upload: passed.
+- Packaging and artifact upload: passed.
 - Windows zero-side-effect dry run: passed.
-- Windows full updater validation using local source and no browser launch: passed.
+- Windows full updater validation: passed.
 - Generated manifest version check: passed.
 
-## Generated artifacts
+## Distribution behavior
 
-- unpacked Chrome MV3 build;
-- `tiktok-research-sorter-extension-0.2.0.zip`;
-- `tiktok-sorter-auto-updater-setup-0.2.0.zip`;
-- `tiktok-research-sorter-source-0.2.0.zip`.
+The desktop shortcut now downloads `main`, validates the candidate build, preserves the active build on failure, retains one previous version, and launches the dedicated persistent Chrome profile only after success.
 
 ## Remaining boundaries
 
-- PR #71 is not merged yet.
-- The updater intentionally follows `agent/tiktok-research-sorter-mvp` until merge.
-- No Chrome Web Store submission or public GitHub Release is authorized.
-- TikTok can still change public payloads or DOM structure.
-- Large future datasets may require migration from `chrome.storage.local` to IndexedDB.
+- No Chrome Web Store submission is authorized.
+- No public GitHub Release is authorized.
+- TikTok can change its public APIs and DOM.
+- IndexedDB remains a future scaling option for very large datasets.
 
 ## Owner action
 
-No action is required for coding, validation, packaging, or evidence collection.
-
-## Next repository action
-
-Move PR #71 from draft to ready for review after final-head checks complete. Merge and external publication remain separate approval gates.
+None for installation updates, code validation, packaging, or repository integration.
