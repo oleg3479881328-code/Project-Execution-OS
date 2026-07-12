@@ -33,62 +33,56 @@ describe('extractVideosFromPayload — regression', () => {
   });
 
   it('returns empty array for empty itemList', () => {
-    const result = extractVideosFromPayload(emptyItemList);
-    expect(result).toEqual([]);
+    expect(extractVideosFromPayload(emptyItemList)).toEqual([]);
   });
 
   it('returns empty array for null payload', () => {
-    const result = extractVideosFromPayload(nullPayload);
-    expect(result).toEqual([]);
+    expect(extractVideosFromPayload(nullPayload)).toEqual([]);
   });
 
   it('handles missing fields gracefully', () => {
     const result = extractVideosFromPayload(missingFields, 'testuser');
-    // 999001: has id + author but no stats — should still be extracted with views=0
-    // 999002: has id + stats but no author object — should use fallbackAuthor
-    // 999003: has id + author + stats but no video — should still be extracted
     expect(result).toHaveLength(3);
 
-    const noStats = result.find((v) => v.id === '999001');
+    const noStats = result.find((video) => video.id === '999001');
     expect(noStats).toBeDefined();
-    expect(noStats!.views).toBe(0);
-    expect(noStats!.durationSeconds).toBe(10);
+    expect(noStats?.views).toBe(0);
+    expect(noStats?.durationSeconds).toBe(10);
 
-    const noAuthor = result.find((v) => v.id === '999002');
+    const noAuthor = result.find((video) => video.id === '999002');
     expect(noAuthor).toBeDefined();
-    expect(noAuthor!.author).toBe('testuser');
-    expect(noAuthor!.views).toBe(1000);
+    expect(noAuthor?.author).toBe('testuser');
+    expect(noAuthor?.views).toBe(1000);
 
-    const noVideo = result.find((v) => v.id === '999003');
+    const noVideo = result.find((video) => video.id === '999003');
     expect(noVideo).toBeDefined();
-    expect(noVideo!.views).toBe(2000);
-    expect(noVideo!.durationSeconds).toBeUndefined();
+    expect(noVideo?.views).toBe(2000);
+    expect(noVideo?.durationSeconds).toBeUndefined();
   });
 
   it('handles cyclic payload without infinite loop', () => {
-    // Create a cyclic reference
     const cyclic = JSON.parse(JSON.stringify(cyclicPayload)) as Record<string, unknown>;
-    (cyclic as Record<string, unknown>).selfRef = cyclic;
+    cyclic.selfRef = cyclic;
 
     const result = extractVideosFromPayload(cyclic, 'testuser');
     expect(result).toHaveLength(1);
-    expect(result[0].id).toBe('cyclic001');
+    expect(result[0]?.id).toBe('cyclic001');
   });
 
   it('detects pinned videos', () => {
     const result = extractVideosFromPayload(pinnedVideo, 'testuser');
     expect(result).toHaveLength(2);
 
-    const pinned = result.find((v) => v.id === 'pinned001');
+    const pinned = result.find((video) => video.id === 'pinned001');
     expect(pinned).toBeDefined();
-    expect(pinned!.isPinned).toBe(true);
+    expect(pinned?.isPinned).toBe(true);
 
-    const normal = result.find((v) => v.id === 'normal001');
+    const normal = result.find((video) => video.id === 'normal001');
     expect(normal).toBeDefined();
-    expect(normal!.isPinned).toBe(false);
+    expect(normal?.isPinned).toBe(false);
   });
 
-  it('handles alternate field names (aweme_id, authorInfo, video_info, statistics)', () => {
+  it('handles alternate field names', () => {
     const result = extractVideosFromPayload(alternateFieldNames, 'altuser');
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchObject({
@@ -105,11 +99,8 @@ describe('extractVideosFromPayload — regression', () => {
 });
 
 describe('normalizeTikTokItem — edge cases', () => {
-  it('returns undefined for null input', () => {
+  it('returns undefined for invalid input', () => {
     expect(normalizeTikTokItem(null)).toBeUndefined();
-  });
-
-  it('returns undefined for non-object input', () => {
     expect(normalizeTikTokItem('string')).toBeUndefined();
     expect(normalizeTikTokItem(42)).toBeUndefined();
     expect(normalizeTikTokItem([])).toBeUndefined();
@@ -124,12 +115,8 @@ describe('normalizeTikTokItem — edge cases', () => {
   });
 
   it('strips @ prefix from author', () => {
-    const result = normalizeTikTokItem({
-      id: '123',
-      author: { uniqueId: '@testuser' },
-    });
-    expect(result).toBeDefined();
-    expect(result!.author).toBe('testuser');
+    const result = normalizeTikTokItem({ id: '123', author: { uniqueId: '@testuser' } });
+    expect(result?.author).toBe('testuser');
   });
 
   it('normalizes timestamp from milliseconds to seconds', () => {
@@ -138,27 +125,32 @@ describe('normalizeTikTokItem — edge cases', () => {
       createTime: 1_700_000_000_000,
       author: { uniqueId: 'user' },
     });
-    expect(result).toBeDefined();
-    expect(result!.publishedAt).toBe(1_700_000_000);
+    expect(result?.publishedAt).toBe(1_700_000_000);
   });
 
-  it('handles saves/collectCount', () => {
+  it('distinguishes seconds from milliseconds for duration', () => {
+    const longVideo = normalizeTikTokItem({
+      id: 'long',
+      author: { uniqueId: 'user' },
+      video: { duration: 1200 },
+    });
+    const millisecondVideo = normalizeTikTokItem({
+      id: 'short',
+      author: { uniqueId: 'user' },
+      video: { duration: 15_000 },
+    });
+    expect(longVideo?.durationSeconds).toBe(1200);
+    expect(millisecondVideo?.durationSeconds).toBe(15);
+  });
+
+  it('handles saves and audio title', () => {
     const result = normalizeTikTokItem({
       id: '123',
       author: { uniqueId: 'user' },
       stats: { collectCount: 500 },
-    });
-    expect(result).toBeDefined();
-    expect(result!.saves).toBe(500);
-  });
-
-  it('handles audioTitle from music info', () => {
-    const result = normalizeTikTokItem({
-      id: '123',
-      author: { uniqueId: 'user' },
       music: { title: 'Original Sound' },
     });
-    expect(result).toBeDefined();
-    expect(result!.audioTitle).toBe('Original Sound');
+    expect(result?.saves).toBe(500);
+    expect(result?.audioTitle).toBe('Original Sound');
   });
 });
