@@ -1,19 +1,25 @@
 import { useEffect, useMemo, useState } from 'react';
 import { browser } from 'wxt/browser';
-import {
-  enrichVideos,
-  publicationFrequencyPerWeek,
-  strongestHashtags,
-  summarize,
-} from '../../lib/analytics';
+import { enrichVideos, publicationFrequencyPerWeek, strongestHashtags, summarize } from '../../lib/analytics';
 import { videosToCsv } from '../../lib/csv';
 import { formatCompactNumber } from '../../lib/numbers';
-import type { DashboardData, EnrichedVideo, ProfileSnapshot, RuntimeMessage, ScanOptions } from '../../lib/types';
+import { groupTopVideosPerAccount } from '../../lib/tag-research';
+import { APP_VERSION } from '../../lib/types';
+import type {
+  DashboardData,
+  EnrichedVideo,
+  ProfileSnapshot,
+  RuntimeMessage,
+  ScanOptions,
+  TikTokPageContext,
+} from '../../lib/types';
 
 type SortKey = 'views' | 'likes' | 'comments' | 'shares' | 'publishedAt' | 'viewsPerDay' | 'outlierScore' | 'engagementRate';
+type ViewMode = 'profile' | 'tag';
 
 const emptyDashboard: DashboardData = {
   profiles: {},
+  tagResearch: {},
   activeScan: { status: 'idle', videosFound: 0, updatedAt: Date.now() },
 };
 
@@ -21,11 +27,28 @@ const defaultOptions: ScanOptions = {
   maxVideos: 300,
   maxIdleRounds: 5,
   scrollDelayMs: 1200,
+  topVideosPerAccount: 1,
+  minViews: 0,
 };
 
 async function activeTabId(): Promise<number | undefined> {
   const tabs = await browser.tabs.query({ active: true, currentWindow: true });
   return tabs[0]?.id;
+}
+
+async function connectToActiveTikTokTab(): Promise<{ tabId: number; context?: TikTokPageContext }> {
+  const tabId = await activeTabId();
+  if (!tabId) throw new Error('Активная вкладка не найдена.');
+
+  try {
+    const response = await browser.tabs.sendMessage(tabId, { type: 'PING' } satisfies RuntimeMessage) as { context?: TikTokPageContext };
+    return { tabId, context: response?.context };
+  } catch {
+    await browser.scripting.executeScript({ target: { tabId }, files: ['/content-scripts/content.js'] });
+    await new Promise((resolve) => setTimeout(resolve, 180));
+    const response = await browser.tabs.sendMessage(tabId, { type: 'PING' } satisfies RuntimeMessage) as { context?: TikTokPageContext };
+    return { tabId, context: response?.context };
+  }
 }
 
 function downloadText(filename: string, content: string, type: string): void {
@@ -45,11 +68,7 @@ function percent(value: number | undefined): string {
 function formatDate(timestamp: number | undefined): string {
   if (!timestamp) return '—';
   return new Intl.DateTimeFormat('ru-RU', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+    day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
   }).format(new Date(timestamp));
 }
 
@@ -60,34 +79,63 @@ function initials(profile: ProfileSnapshot): string {
 
 export default function App() {
   const [dashboard, setDashboard] = useState<DashboardData>(emptyDashboard);
+  const [viewMode, setViewMode] = useState<ViewMode>('profile');
+  const [pageContext, setPageContext] = useState<TikTokPageContext>();
   const [selectedProfile, setSelectedProfile] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
   const [sortKey, setSortKey] = useState<SortKey>('outlierScore');
   const [query, setQuery] = useState('');
   const [minOutlier, setMinOutlier] = useState(0);
   const [maxVideos, setMaxVideos] = useState(defaultOptions.maxVideos);
+  const [topVideosPerAccount, setTopVideosPerAccount] = useState(defaultOptions.topVideosPerAccount);
+  const [minViews, setMinViews] = useState(defaultOptions.minViews);
   const [error, setError] = useState('');
 
   const refresh = async () => {
     const data = await browser.runtime.sendMessage({ type: 'GET_DASHBOARD' } satisfies RuntimeMessage) as DashboardData;
-    setDashboard(data ?? emptyDashboard);
+    setDashboard({ ...emptyDashboard, ...data, tagResearch: data?.tagResearch ?? {} });
+  };
+
+  const detectPageContext = async () => {
+    try {
+      const connection = await connectToActiveTikTokTab();
+      setPageContext(connection.context);
+      if (connection.context?.kind === 'tag') setViewMode('tag');
+      if (connection.context?.kind === 'profile') setViewMode('profile');
+    } catch {
+      setPageContext(undefined);
+    }
   };
 
   useEffect(() => {
     void refresh();
+    void detectPageContext();
     const listener = (message: { type?: string; dashboard?: DashboardData }) => {
-      if (message.type === 'DASHBOARD_UPDATED' && message.dashboard) setDashboard(message.dashboard);
+      if (message.type === 'DASHBOARD_UPDATED' && message.dashboard) {
+        setDashboard({ ...emptyDashboard, ...message.dashboard, tagResearch: message.dashboard.tagResearch ?? {} });
+      }
     };
     browser.runtime.onMessage.addListener(listener);
     return () => browser.runtime.onMessage.removeListener(listener);
   }, []);
 
   const usernames = Object.keys(dashboard.profiles).sort();
+  const tags = Object.keys(dashboard.tagResearch).sort();
+
   useEffect(() => {
     if (!selectedProfile && usernames[0]) setSelectedProfile(usernames[0]);
     if (dashboard.activeScan.username && dashboard.profiles[dashboard.activeScan.username]) {
       setSelectedProfile(dashboard.activeScan.username);
     }
   }, [dashboard.activeScan.username, usernames.join('|')]);
+
+  useEffect(() => {
+    if (!selectedTag && tags[0]) setSelectedTag(tags[0]);
+    if (dashboard.activeScan.tag && dashboard.tagResearch[dashboard.activeScan.tag.toLowerCase()]) {
+      setSelectedTag(dashboard.activeScan.tag.toLowerCase());
+      setViewMode('tag');
+    }
+  }, [dashboard.activeScan.tag, tags.join('|')]);
 
   const profile = selectedProfile ? dashboard.profiles[selectedProfile] : undefined;
   const enriched = useMemo(() => enrichVideos(profile?.videos ?? []), [profile?.videos]);
@@ -102,28 +150,36 @@ export default function App() {
   const frequency = useMemo(() => publicationFrequencyPerWeek(profile?.videos ?? []), [profile?.videos]);
   const topHashtags = useMemo(() => strongestHashtags(enriched), [enriched]);
 
+  const tagSnapshot = selectedTag ? dashboard.tagResearch[selectedTag] : undefined;
+  useEffect(() => {
+    if (!tagSnapshot) return;
+    setTopVideosPerAccount(tagSnapshot.topVideosPerAccount);
+    setMinViews(tagSnapshot.minViews);
+  }, [selectedTag]);
+
+  const tagGroups = useMemo(
+    () => groupTopVideosPerAccount(tagSnapshot?.videos ?? [], topVideosPerAccount, minViews),
+    [tagSnapshot?.videos, topVideosPerAccount, minViews],
+  );
+  const selectedTagVideos = useMemo(() => tagGroups.flatMap((group) => group.videos), [tagGroups]);
+  const enrichedTagVideos = useMemo(() => new Map(
+    enrichVideos(selectedTagVideos).map((video) => [`${video.author.toLowerCase()}:${video.id}`, video]),
+  ), [selectedTagVideos]);
+
   const start = async () => {
     setError('');
-    const tabId = await activeTabId();
-    if (!tabId) return setError('Активная вкладка не найдена.');
     try {
-      try {
-        await browser.tabs.sendMessage(tabId, { type: 'PING' } satisfies RuntimeMessage);
-      } catch {
-        await browser.scripting.executeScript({
-          target: { tabId },
-          files: ['/content-scripts/content.js'],
-        });
-        await new Promise((resolve) => setTimeout(resolve, 150));
-      }
-
+      const { tabId, context } = await connectToActiveTikTokTab();
+      setPageContext(context);
+      if (!context) throw new Error('Откройте публичный профиль TikTok или страницу хэштега TikTok.');
+      setViewMode(context.kind);
       await browser.tabs.sendMessage(tabId, {
         type: 'START_SCAN',
-        options: { ...defaultOptions, maxVideos },
+        options: { ...defaultOptions, maxVideos, topVideosPerAccount, minViews },
       } satisfies RuntimeMessage);
     } catch (cause) {
       const details = cause instanceof Error ? cause.message : String(cause);
-      setError(`Не удалось подключиться к вкладке TikTok. Перезагрузите страницу. ${details}`);
+      setError(`Не удалось подключиться к вкладке TikTok. ${details}`);
     }
   };
 
@@ -132,58 +188,204 @@ export default function App() {
     if (tabId) await browser.tabs.sendMessage(tabId, { type: 'STOP_SCAN' } satisfies RuntimeMessage).catch(() => undefined);
   };
 
-  const clear = async () => {
+  const clearProfileData = async () => {
     if (!selectedProfile) return;
     const data = await browser.runtime.sendMessage({ type: 'CLEAR_PROFILE', username: selectedProfile } satisfies RuntimeMessage) as DashboardData;
     setDashboard(data);
     setSelectedProfile('');
   };
 
-  const exportCsv = () => {
-    if (!profile) return;
-    downloadText(`${profile.username}-tiktok-analysis.csv`, `\uFEFF${videosToCsv(visible)}`, 'text/csv;charset=utf-8');
+  const clearTagData = async () => {
+    if (!selectedTag) return;
+    const data = await browser.runtime.sendMessage({ type: 'CLEAR_TAG_RESEARCH', tag: selectedTag } satisfies RuntimeMessage) as DashboardData;
+    setDashboard(data);
+    setSelectedTag('');
   };
 
-  const exportJson = () => {
+  const exportProfileCsv = () => {
     if (!profile) return;
-    downloadText(`${profile.username}-tiktok-analysis.json`, JSON.stringify({ profile, videos: visible }, null, 2), 'application/json');
+    downloadText(`${profile.username}-tiktok-analysis-v${APP_VERSION}.csv`, `\uFEFF${videosToCsv(visible)}`, 'text/csv;charset=utf-8');
   };
+
+  const exportProfileJson = () => {
+    if (!profile) return;
+    downloadText(
+      `${profile.username}-tiktok-analysis-v${APP_VERSION}.json`,
+      JSON.stringify({ version: APP_VERSION, profile, videos: visible }, null, 2),
+      'application/json',
+    );
+  };
+
+  const exportTagCsv = () => {
+    if (!tagSnapshot) return;
+    const enrichedVideos = selectedTagVideos.map((video) =>
+      enrichedTagVideos.get(`${video.author.toLowerCase()}:${video.id}`) ?? video as EnrichedVideo
+    );
+    downloadText(`${tagSnapshot.tag}-top-videos-v${APP_VERSION}.csv`, `\uFEFF${videosToCsv(enrichedVideos)}`, 'text/csv;charset=utf-8');
+  };
+
+  const exportTagJson = () => {
+    if (!tagSnapshot) return;
+    downloadText(
+      `${tagSnapshot.tag}-top-videos-v${APP_VERSION}.json`,
+      JSON.stringify({
+        version: APP_VERSION,
+        tag: tagSnapshot.tag,
+        tagUrl: tagSnapshot.tagUrl,
+        topVideosPerAccount,
+        minViews,
+        scannedVideos: tagSnapshot.scannedVideos,
+        accountsFound: tagSnapshot.accountsFound,
+        accounts: tagGroups,
+      }, null, 2),
+      'application/json',
+    );
+  };
+
+  const scanning = dashboard.activeScan.status === 'scanning';
+  const detectedLabel = pageContext?.kind === 'tag'
+    ? `Страница хэштега #${pageContext.tag}`
+    : pageContext?.kind === 'profile'
+      ? `Профиль @${pageContext.username}`
+      : 'Откройте профиль или страницу хэштега TikTok';
 
   return (
     <main className="app-shell">
       <header className="hero">
         <div>
-          <p className="eyebrow">LOCAL-FIRST RESEARCH TOOL</p>
+          <p className="eyebrow">LOCAL-FIRST RESEARCH TOOL · v{APP_VERSION}</p>
           <h1>TikTok Research Sorter</h1>
-          <p className="subtitle">Находит сильнейшие ролики профиля и считает вирусные выбросы.</p>
+          <p className="subtitle">Сканирует профили и страницы хэштегов, затем находит самые просматриваемые ролики каждого аккаунта.</p>
         </div>
         <span className={`status status-${dashboard.activeScan.status}`}>{dashboard.activeScan.status}</span>
       </header>
 
+      <section className="panel context-panel">
+        <span>Текущая вкладка</span>
+        <strong>{detectedLabel}</strong>
+        <button onClick={() => void detectPageContext()}>Обновить</button>
+      </section>
+
+      <section className="mode-tabs">
+        <button className={viewMode === 'profile' ? 'active' : ''} onClick={() => setViewMode('profile')}>Профили</button>
+        <button className={viewMode === 'tag' ? 'active' : ''} onClick={() => setViewMode('tag')}>Хэштеги</button>
+      </section>
+
       <section className="panel scan-panel">
         <div className="control-row">
           <label>
-            Лимит роликов
+            Сканировать роликов
             <select value={maxVideos} onChange={(event) => setMaxVideos(Number(event.target.value))}>
               {[50, 100, 300, 500, 1000].map((value) => <option key={value} value={value}>{value}</option>)}
             </select>
           </label>
-          <button className="primary" onClick={start} disabled={dashboard.activeScan.status === 'scanning'}>Сканировать профиль</button>
-          <button className="secondary" onClick={stop} disabled={dashboard.activeScan.status !== 'scanning'}>Стоп</button>
+          {viewMode === 'tag' && (
+            <>
+              <label>
+                Лучших с аккаунта
+                <select value={topVideosPerAccount} onChange={(event) => setTopVideosPerAccount(Number(event.target.value))}>
+                  {[1, 2, 3, 5, 10].map((value) => <option key={value} value={value}>{value}</option>)}
+                </select>
+              </label>
+              <label>
+                Минимум просмотров
+                <input type="number" min="0" step="1000" value={minViews} onChange={(event) => setMinViews(Math.max(0, Number(event.target.value)))} />
+              </label>
+            </>
+          )}
+          <button className="primary" onClick={start} disabled={scanning}>
+            {viewMode === 'tag' ? 'Сканировать хэштег' : 'Сканировать профиль'}
+          </button>
+          <button className="secondary" onClick={stop} disabled={!scanning}>Стоп</button>
         </div>
         <div className="progress-track"><div className="progress-fill" style={{ width: `${Math.min(100, (dashboard.activeScan.videosFound / maxVideos) * 100)}%` }} /></div>
-        <p className="scan-message">{dashboard.activeScan.message ?? 'Откройте профиль TikTok и нажмите «Сканировать профиль».'}</p>
+        <p className="scan-message">{dashboard.activeScan.message ?? 'Откройте нужную страницу TikTok и запустите сканирование.'}</p>
+        {viewMode === 'tag' && <p className="hint">Выбираются лучшие ролики каждого аккаунта среди роликов, найденных на открытой странице хэштега.</p>}
         {error && <p className="error">{error}</p>}
       </section>
 
-      {profile && (
-        <ProfileCard
+      {viewMode === 'profile' ? (
+        <ProfileResults
           profile={profile}
           summary={summary}
           frequency={frequency}
           topHashtags={topHashtags}
+          usernames={usernames}
+          selectedProfile={selectedProfile}
+          setSelectedProfile={setSelectedProfile}
+          sortKey={sortKey}
+          setSortKey={setSortKey}
+          query={query}
+          setQuery={setQuery}
+          minOutlier={minOutlier}
+          setMinOutlier={setMinOutlier}
+          visible={visible}
+          enrichedCount={enriched.length}
+          exportCsv={exportProfileCsv}
+          exportJson={exportProfileJson}
+          clear={clearProfileData}
+        />
+      ) : (
+        <TagResults
+          tags={tags}
+          selectedTag={selectedTag}
+          setSelectedTag={setSelectedTag}
+          snapshot={tagSnapshot}
+          groups={tagGroups}
+          enrichedVideos={enrichedTagVideos}
+          selectedCount={selectedTagVideos.length}
+          minViews={minViews}
+          exportCsv={exportTagCsv}
+          exportJson={exportTagJson}
+          clear={clearTagData}
         />
       )}
+    </main>
+  );
+}
+
+function ProfileResults({
+  profile,
+  summary,
+  frequency,
+  topHashtags,
+  usernames,
+  selectedProfile,
+  setSelectedProfile,
+  sortKey,
+  setSortKey,
+  query,
+  setQuery,
+  minOutlier,
+  setMinOutlier,
+  visible,
+  enrichedCount,
+  exportCsv,
+  exportJson,
+  clear,
+}: {
+  profile?: ProfileSnapshot;
+  summary: ReturnType<typeof summarize>;
+  frequency: number | undefined;
+  topHashtags: string[];
+  usernames: string[];
+  selectedProfile: string;
+  setSelectedProfile: (value: string) => void;
+  sortKey: SortKey;
+  setSortKey: (value: SortKey) => void;
+  query: string;
+  setQuery: (value: string) => void;
+  minOutlier: number;
+  setMinOutlier: (value: number) => void;
+  visible: EnrichedVideo[];
+  enrichedCount: number;
+  exportCsv: () => void;
+  exportJson: () => void;
+  clear: () => void;
+}) {
+  return (
+    <>
+      {profile && <ProfileCard profile={profile} summary={summary} frequency={frequency} topHashtags={topHashtags} />}
 
       <section className="panel toolbar">
         <label>
@@ -227,14 +429,91 @@ export default function App() {
         <button onClick={exportCsv} disabled={!visible.length}>CSV</button>
         <button onClick={exportJson} disabled={!visible.length}>JSON</button>
         <button className="danger" onClick={clear} disabled={!profile}>Удалить профиль</button>
-        <span>{visible.length} из {enriched.length}</span>
+        <span>{visible.length} из {enrichedCount}</span>
       </section>
 
       <section className="video-list">
-        {visible.map((video, index) => <VideoCard key={video.id} video={video} rank={index + 1} />)}
+        {visible.map((video, index) => <VideoCard key={video.id} video={video} rank={index + 1} showOutlier />)}
         {!visible.length && <div className="empty">Пока нет собранных роликов.</div>}
       </section>
-    </main>
+    </>
+  );
+}
+
+function TagResults({
+  tags,
+  selectedTag,
+  setSelectedTag,
+  snapshot,
+  groups,
+  enrichedVideos,
+  selectedCount,
+  minViews,
+  exportCsv,
+  exportJson,
+  clear,
+}: {
+  tags: string[];
+  selectedTag: string;
+  setSelectedTag: (value: string) => void;
+  snapshot: DashboardData['tagResearch'][string] | undefined;
+  groups: ReturnType<typeof groupTopVideosPerAccount>;
+  enrichedVideos: Map<string, EnrichedVideo>;
+  selectedCount: number;
+  minViews: number;
+  exportCsv: () => void;
+  exportJson: () => void;
+  clear: () => void;
+}) {
+  return (
+    <>
+      <section className="panel toolbar">
+        <label>
+          Хэштег
+          <select value={selectedTag} onChange={(event) => setSelectedTag(event.target.value)}>
+            <option value="">Нет данных</option>
+            {tags.map((tag) => <option key={tag} value={tag}>#{tag}</option>)}
+          </select>
+        </label>
+        {snapshot && <a className="source-link" href={snapshot.tagUrl} target="_blank" rel="noreferrer">Открыть #{snapshot.tag}</a>}
+      </section>
+
+      <section className="stats-grid">
+        <article><span>Просканировано</span><strong>{snapshot?.scannedVideos ?? 0}</strong></article>
+        <article><span>Аккаунтов</span><strong>{snapshot?.accountsFound ?? 0}</strong></article>
+        <article><span>Выбрано роликов</span><strong>{selectedCount}</strong></article>
+        <article><span>Минимум просмотров</span><strong>{formatCompactNumber(minViews)}</strong></article>
+      </section>
+
+      <section className="panel actions">
+        <button onClick={exportCsv} disabled={!selectedCount}>CSV</button>
+        <button onClick={exportJson} disabled={!selectedCount}>JSON</button>
+        <button className="danger" onClick={clear} disabled={!snapshot}>Удалить хэштег</button>
+        <span>{groups.length} аккаунтов</span>
+      </section>
+
+      <section className="account-groups">
+        {groups.map((group) => (
+          <section className="account-group" key={group.author}>
+            <header>
+              <a href={group.profileUrl} target="_blank" rel="noreferrer">@{group.author}</a>
+              <span>{group.videos.length} лучших · максимум {formatCompactNumber(group.topViews)}</span>
+            </header>
+            <div className="video-list">
+              {group.videos.map((video, index) => (
+                <VideoCard
+                  key={`${group.author}:${video.id}`}
+                  video={enrichedVideos.get(`${group.author.toLowerCase()}:${video.id}`) ?? video as EnrichedVideo}
+                  rank={index + 1}
+                  showAuthor={false}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
+        {!groups.length && <div className="empty">Нет роликов, подходящих под выбранный минимум просмотров.</div>}
+      </section>
+    </>
   );
 }
 
@@ -295,7 +574,17 @@ function ProfileCard({
   );
 }
 
-function VideoCard({ video, rank }: { video: EnrichedVideo; rank: number }) {
+function VideoCard({
+  video,
+  rank,
+  showOutlier = false,
+  showAuthor = true,
+}: {
+  video: EnrichedVideo;
+  rank: number;
+  showOutlier?: boolean;
+  showAuthor?: boolean;
+}) {
   return (
     <article className="video-card">
       <a className="cover" href={video.videoUrl} target="_blank" rel="noreferrer">
@@ -303,10 +592,11 @@ function VideoCard({ video, rank }: { video: EnrichedVideo; rank: number }) {
         <span className="rank">#{rank}</span>
       </a>
       <div className="video-copy">
+        {showAuthor && <a className="video-author" href={video.profileUrl} target="_blank" rel="noreferrer">@{video.author}</a>}
         <div className="metrics">
           <strong>{formatCompactNumber(video.views)} views</strong>
-          <span>{video.outlierScore?.toFixed(1) ?? '—'}× outlier</span>
-          <span>{formatCompactNumber(video.viewsPerDay ?? 0)}/day</span>
+          {showOutlier && <span>{video.outlierScore?.toFixed(1) ?? '—'}× outlier</span>}
+          {video.viewsPerDay !== undefined && <span>{formatCompactNumber(video.viewsPerDay)}/day</span>}
         </div>
         <p>{video.description || 'Без описания'}</p>
         <div className="micro-metrics">
