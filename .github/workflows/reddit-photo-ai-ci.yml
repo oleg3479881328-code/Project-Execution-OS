@@ -43,6 +43,18 @@ jobs:
             throw new Error('Unexpected required host permission');
           }
           NODE
+      - name: Package Chrome extension
+        shell: bash
+        run: |
+          cd .output/chrome-mv3
+          zip -r ../../reddit-photo-response-bot-chrome.zip .
+      - name: Upload Chrome extension ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: reddit-photo-response-bot-chrome
+          path: projects/reddit-photo-response-bot/extension/reddit-photo-response-bot-chrome.zip
+          if-no-files-found: error
+          retention-days: 30
 
   worker:
     runs-on: ubuntu-latest
