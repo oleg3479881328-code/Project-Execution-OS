@@ -1,13 +1,14 @@
 from __future__ import annotations
 
+from tusya_bot.db.engine import Database
 from tusya_bot.db.repositories import ResourceRepository
 from tusya_bot.domain.models import MonitoredResource
 from tusya_bot.monitoring.normalization import normalize_reddit_resource
 
 
 class ResourceService:
-    def __init__(self, repository: ResourceRepository) -> None:
-        self._repository = repository
+    def __init__(self, database: Database) -> None:
+        self._database = database
 
     async def add_resource(self, raw_value: str) -> MonitoredResource:
         normalized = normalize_reddit_resource(raw_value)
@@ -20,13 +21,17 @@ class ResourceService:
             search_query=normalized.search_query,
             sort_mode=normalized.sort_mode,
         )
-        return await self._repository.create(resource)
+        async with self._database.connect() as connection:
+            return await ResourceRepository(connection).create(resource)
 
     async def list_resources(self) -> list[MonitoredResource]:
-        return await self._repository.list_all()
+        async with self._database.connect() as connection:
+            return await ResourceRepository(connection).list_all()
 
     async def toggle_resource(self, resource_id: int, enabled: bool) -> None:
-        await self._repository.update_enabled(resource_id, enabled)
+        async with self._database.connect() as connection:
+            await ResourceRepository(connection).update_enabled(resource_id, enabled)
 
     async def delete_resource(self, resource_id: int) -> None:
-        await self._repository.delete(resource_id)
+        async with self._database.connect() as connection:
+            await ResourceRepository(connection).delete(resource_id)

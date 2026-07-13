@@ -1,9 +1,16 @@
 from __future__ import annotations
 
-from telegram import ReplyKeyboardMarkup, Update
+from telegram import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    ReplyKeyboardMarkup,
+    Update,
+)
 from telegram.ext import ContextTypes
 
 from tusya_bot.bot.auth import require_owner
+from tusya_bot.monitoring.engine import MonitoringEngine
+from tusya_bot.monitoring.models import MonitoringStatusSnapshot
 from tusya_bot.services.keyword_service import KeywordService
 from tusya_bot.services.resource_service import ResourceService
 
@@ -32,8 +39,35 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await require_owner(update, context)
     assert update.effective_message is not None
+    monitoring_engine: MonitoringEngine = context.application.bot_data["monitoring_engine"]
+    snapshot = await monitoring_engine.get_status_snapshot()
     await update.effective_message.reply_text(
-        "Monitoring MVP is configured. Live scheduler is not wired yet."
+        _render_status_text(snapshot),
+        reply_markup=_status_keyboard(),
+    )
+
+
+async def check_now(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await require_owner(update, context)
+    assert update.effective_message is not None
+    monitoring_engine: MonitoringEngine = context.application.bot_data["monitoring_engine"]
+    result = await monitoring_engine.run_cycle(trigger="manual")
+    await update.effective_message.reply_text(_render_check_now_result(result.emitted_candidates))
+
+
+async def check_now_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await require_owner(update, context)
+    query = update.callback_query
+    chat = update.effective_chat
+    assert query is not None
+    assert chat is not None
+    await query.answer()
+
+    monitoring_engine: MonitoringEngine = context.application.bot_data["monitoring_engine"]
+    result = await monitoring_engine.run_cycle(trigger="manual")
+    await context.bot.send_message(
+        chat_id=chat.id,
+        text=_render_check_now_result(result.emitted_candidates),
     )
 
 
@@ -123,3 +157,29 @@ async def delete_keyword(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     service: KeywordService = context.application.bot_data["keyword_service"]
     await service.delete_keyword(int(args[0]))
     await update.effective_message.reply_text("Слово удалено.")
+
+
+def _status_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        [[InlineKeyboardButton("Check now", callback_data="check_now")]]
+    )
+
+
+def _render_status_text(snapshot: MonitoringStatusSnapshot) -> str:
+    monitoring_state = "on" if snapshot.monitoring_enabled else "off"
+    return "\n".join(
+        [
+            f"Monitoring: {monitoring_state}",
+            f"Resources: {snapshot.resource_count}",
+            f"Keywords: {snapshot.keyword_count}",
+            f"Running now: {'yes' if snapshot.running else 'no'}",
+            f"Last cycle start: {snapshot.last_cycle_started_at or '-'}",
+            f"Last cycle finish: {snapshot.last_cycle_finished_at or '-'}",
+            f"Last error: {snapshot.last_cycle_error or '-'}",
+            f"Next cycle: {snapshot.next_cycle_at or '-'}",
+        ]
+    )
+
+
+def _render_check_now_result(emitted_candidates: int) -> str:
+    return f"Check now completed. New matching candidates: {emitted_candidates}."

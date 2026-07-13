@@ -7,9 +7,9 @@ from tusya_bot.ai.client import DeepSeekDraftClient, DraftRequest
 
 class _FakeCreate:
     def __init__(self) -> None:
-        self.kwargs = None
+        self.kwargs: dict[str, object] | None = None
 
-    async def create(self, **kwargs):
+    async def create(self, **kwargs: object) -> SimpleNamespace:
         self.kwargs = kwargs
         return SimpleNamespace(
             choices=[SimpleNamespace(message=SimpleNamespace(content="Draft reply text"))]

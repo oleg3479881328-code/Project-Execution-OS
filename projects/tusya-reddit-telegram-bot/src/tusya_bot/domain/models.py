@@ -20,6 +20,7 @@ class MonitoredResource:
     next_check_at: str | None = None
     last_success_at: str | None = None
     last_error: str | None = None
+    failure_count: int = 0
     created_at: str | None = None
     updated_at: str | None = None
 

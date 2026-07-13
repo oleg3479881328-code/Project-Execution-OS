@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     database_path: Path = Path("data/tusya.sqlite3")
     poll_interval_seconds: int = Field(default=300, ge=60, le=86_400)
     reddit_user_agent: str = "tusya-reddit-monitor/0.1 by owner"
+    reddit_timeout_seconds: float = Field(default=20.0, ge=5.0, le=120.0)
     log_level: str = "INFO"
 
     @field_validator("deepseek_base_url")

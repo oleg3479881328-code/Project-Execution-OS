@@ -41,6 +41,7 @@ def _row_to_resource(row: aiosqlite.Row) -> MonitoredResource:
         next_check_at=row["next_check_at"],
         last_success_at=row["last_success_at"],
         last_error=row["last_error"],
+        failure_count=int(row["failure_count"]),
         created_at=str(row["created_at"]),
         updated_at=str(row["updated_at"]),
     )
@@ -89,8 +90,8 @@ class ResourceRepository:
                 """
                 INSERT INTO monitored_resources (
                   original_input, canonical_url, subreddit, resource_type, search_query,
-                  sort_mode, enabled, baseline_completed, created_at, updated_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                  sort_mode, enabled, baseline_completed, failure_count, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     resource.original_input,
@@ -101,6 +102,7 @@ class ResourceRepository:
                     resource.sort_mode,
                     _bool_to_int(resource.enabled),
                     _bool_to_int(resource.baseline_completed),
+                    resource.failure_count,
                     now,
                     now,
                 ),
@@ -127,10 +129,73 @@ class ResourceRepository:
         ).fetchall()
         return [_row_to_resource(row) for row in rows]
 
+    async def list_enabled(self) -> list[MonitoredResource]:
+        rows = await (
+            await self._connection.execute(
+                "SELECT * FROM monitored_resources WHERE enabled = 1 ORDER BY id ASC"
+            )
+        ).fetchall()
+        return [_row_to_resource(row) for row in rows]
+
+    async def count_all(self) -> int:
+        row = await (
+            await self._connection.execute(
+                "SELECT COUNT(*) AS count FROM monitored_resources"
+            )
+        ).fetchone()
+        return int(row["count"]) if row is not None else 0
+
+    async def count_enabled(self) -> int:
+        row = await (
+            await self._connection.execute(
+                "SELECT COUNT(*) AS count FROM monitored_resources WHERE enabled = 1"
+            )
+        ).fetchone()
+        return int(row["count"]) if row is not None else 0
+
     async def update_enabled(self, resource_id: int, enabled: bool) -> None:
         await self._connection.execute(
             "UPDATE monitored_resources SET enabled = ?, updated_at = ? WHERE id = ?",
             (_bool_to_int(enabled), utc_now(), resource_id),
+        )
+
+    async def update_monitoring_state(
+        self,
+        resource_id: int,
+        *,
+        baseline_completed: bool | None = None,
+        last_checked_at: str | None = None,
+        next_check_at: str | None = None,
+        last_success_at: str | None = None,
+        last_error: str | None = None,
+        failure_count: int | None = None,
+    ) -> None:
+        assignments: list[str] = ["updated_at = ?"]
+        values: list[Any] = [utc_now()]
+
+        if baseline_completed is not None:
+            assignments.append("baseline_completed = ?")
+            values.append(_bool_to_int(baseline_completed))
+        if last_checked_at is not None:
+            assignments.append("last_checked_at = ?")
+            values.append(last_checked_at)
+        if next_check_at is not None:
+            assignments.append("next_check_at = ?")
+            values.append(next_check_at)
+        if last_success_at is not None:
+            assignments.append("last_success_at = ?")
+            values.append(last_success_at)
+        if last_error is not None:
+            assignments.append("last_error = ?")
+            values.append(last_error)
+        if failure_count is not None:
+            assignments.append("failure_count = ?")
+            values.append(failure_count)
+
+        values.append(resource_id)
+        await self._connection.execute(
+            f"UPDATE monitored_resources SET {', '.join(assignments)} WHERE id = ?",
+            tuple(values),
         )
 
     async def delete(self, resource_id: int) -> None:
@@ -181,6 +246,22 @@ class KeywordRepository:
         ).fetchall()
         return [_row_to_keyword(row) for row in rows]
 
+    async def list_enabled(self) -> list[Keyword]:
+        rows = await (
+            await self._connection.execute(
+                "SELECT * FROM monitored_keywords WHERE enabled = 1 ORDER BY id ASC"
+            )
+        ).fetchall()
+        return [_row_to_keyword(row) for row in rows]
+
+    async def count_all(self) -> int:
+        row = await (
+            await self._connection.execute(
+                "SELECT COUNT(*) AS count FROM monitored_keywords"
+            )
+        ).fetchone()
+        return int(row["count"]) if row is not None else 0
+
     async def update_enabled(self, keyword_id: int, enabled: bool) -> None:
         await self._connection.execute(
             "UPDATE monitored_keywords SET enabled = ?, updated_at = ? WHERE id = ?",
@@ -229,6 +310,28 @@ class PostRepository:
                 "first_seen_at": post.first_seen_at or now,
             }
         )
+
+    async def list_existing_reddit_ids(self, reddit_ids: list[str]) -> set[str]:
+        if not reddit_ids:
+            return set()
+
+        placeholders = ", ".join("?" for _ in reddit_ids)
+        rows = await (
+            await self._connection.execute(
+                f"SELECT reddit_id FROM reddit_posts WHERE reddit_id IN ({placeholders})",
+                tuple(reddit_ids),
+            )
+        ).fetchall()
+        return {str(row["reddit_id"]) for row in rows}
+
+    async def list_by_resource(self, resource_id: int) -> list[RedditPost]:
+        rows = await (
+            await self._connection.execute(
+                "SELECT * FROM reddit_posts WHERE resource_id = ? ORDER BY id ASC",
+                (resource_id,),
+            )
+        ).fetchall()
+        return [_row_to_post(row) for row in rows]
 
     async def get_by_reddit_id(self, reddit_id: str) -> RedditPost | None:
         row = await (
