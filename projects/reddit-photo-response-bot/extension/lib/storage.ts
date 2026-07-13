@@ -1,7 +1,21 @@
 import { browser } from 'wxt/browser';
-import type { DetectedPost, OwnerDecision, RelevanceLabel } from './types';
+import type {
+  AiAnalysisResult,
+  AiSettings,
+  DetectedPost,
+  OwnerDecision,
+  RelevanceLabel
+} from './types';
 
 export const POSTS_STORAGE_KEY = 'redditPhotoResponseBot.posts.v1';
+export const AI_SETTINGS_STORAGE_KEY = 'redditPhotoResponseBot.aiSettings.v1';
+
+export const DEFAULT_AI_SETTINGS: AiSettings = {
+  enabled: false,
+  autoAnalyzeCandidates: false,
+  proxyUrl: '',
+  accessKey: ''
+};
 
 export async function listStoredPosts(): Promise<DetectedPost[]> {
   const result = await browser.storage.local.get(POSTS_STORAGE_KEY);
@@ -22,6 +36,8 @@ export async function upsertDetectedPost(post: DetectedPost): Promise<DetectedPo
   const existing = posts[post.id];
   const merged: DetectedPost = {
     ...post,
+    aiAnalysis: existing?.aiAnalysis,
+    aiError: existing?.aiError,
     manualLabel: existing?.manualLabel,
     ownerDecision: existing?.ownerDecision ?? post.ownerDecision,
     detectedAt: existing?.detectedAt ?? post.detectedAt
@@ -32,9 +48,9 @@ export async function upsertDetectedPost(post: DetectedPost): Promise<DetectedPo
   return merged;
 }
 
-export async function updatePostDecision(
+async function updateStoredPost(
   id: string,
-  changes: { ownerDecision?: OwnerDecision; manualLabel?: RelevanceLabel }
+  changes: Partial<DetectedPost>
 ): Promise<DetectedPost | undefined> {
   const result = await browser.storage.local.get(POSTS_STORAGE_KEY);
   const posts = (result[POSTS_STORAGE_KEY] as Record<string, DetectedPost> | undefined) ?? {};
@@ -45,6 +61,33 @@ export async function updatePostDecision(
   posts[id] = next;
   await browser.storage.local.set({ [POSTS_STORAGE_KEY]: posts });
   return next;
+}
+
+export async function updatePostDecision(
+  id: string,
+  changes: { ownerDecision?: OwnerDecision; manualLabel?: RelevanceLabel }
+): Promise<DetectedPost | undefined> {
+  return updateStoredPost(id, changes);
+}
+
+export async function updatePostAiAnalysis(
+  id: string,
+  aiAnalysis: AiAnalysisResult | undefined,
+  aiError?: string
+): Promise<DetectedPost | undefined> {
+  return updateStoredPost(id, { aiAnalysis, aiError });
+}
+
+export async function getAiSettings(): Promise<AiSettings> {
+  const result = await browser.storage.local.get(AI_SETTINGS_STORAGE_KEY);
+  return {
+    ...DEFAULT_AI_SETTINGS,
+    ...((result[AI_SETTINGS_STORAGE_KEY] as Partial<AiSettings> | undefined) ?? {})
+  };
+}
+
+export async function saveAiSettings(settings: AiSettings): Promise<void> {
+  await browser.storage.local.set({ [AI_SETTINGS_STORAGE_KEY]: settings });
 }
 
 export async function clearHiddenPosts(): Promise<number> {

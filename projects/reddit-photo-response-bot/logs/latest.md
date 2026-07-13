@@ -1,54 +1,67 @@
 # Latest Project Log
 
-## 2026-07-11 — Chrome Side Panel MVP
+## 2026-07-12 — DeepSeek Semantic Analysis Stage
 
-Converted the initial popup-oriented Chrome extension into a side-panel-only operator workflow for reviewing `r/WedditNYC` posts.
+Added a secure second classification stage to the Chrome side panel without exposing the DeepSeek API key to the extension.
 
-### Implemented
+### Extension Changes
 
-- WXT + TypeScript + React + Manifest V3 project.
-- Native WXT `sidepanel` entrypoint.
-- Chrome Side Panel API permission and toolbar-icon opening behavior.
-- Persistent side panel with:
-  - total, strong-match, and unreviewed counts;
-  - classification filters;
-  - classification reason and matched signals;
-  - manual classification override;
-  - `Relevant`, `Irrelevant`, and `Hide` decisions;
-  - source-post opening;
-  - local storage updates in real time.
-- Narrow Reddit content script that only captures and classifies visible posts.
-- Support for current `shreddit-post`, common new-Reddit containers, and old-Reddit `.thing.link` containers.
-- MutationObserver processing for newly inserted posts.
-- Deterministic four-label classifier:
-  - `strong_match`
-  - `possible_match`
-  - `not_match`
-  - `skip_vendor_risk`
-- `chrome.storage.local` persistence.
-- Popup entrypoint removed.
-- Inline review controls and Reddit-page CSS removed.
+- Added local AI settings:
+  - enable/disable AI stage;
+  - optional automatic analysis, default off;
+  - Cloudflare Worker URL;
+  - separate Worker access key.
+- Added runtime permission request for only the configured HTTPS Worker origin.
+- Added per-post `Analyze with AI` and `Reanalyze with AI` actions.
+- Added batch analysis for local `Strong` and `Possible` candidates.
+- Added sequential optional automatic analysis to control request volume.
+- Added persistent AI result fields:
+  - label;
+  - confidence;
+  - customer intent;
+  - response risk;
+  - grounded reason;
+  - recommended action;
+  - analyzed timestamp;
+  - model.
+- Final displayed classification priority is:
+  - manual override;
+  - DeepSeek result;
+  - local rule result.
+- Added strict client-side response validation and visible error reporting.
 
-### Validation
+### Worker Changes
 
-- TypeScript: passed.
-- Tests: 6/6 passed.
-- Production build: passed.
-- Generated build contains `sidepanel.html`, background service worker, React side-panel bundle, and Reddit content script.
-- Generated manifest confirms:
-  - Manifest V3;
-  - minimum Chrome 114;
-  - permissions `storage` and `sidePanel`;
-  - side-panel default path;
-  - toolbar action;
-  - strict WedditNYC host allowlist.
+- Added `deepseek-worker/` Cloudflare Worker.
+- Added bearer access-key protection.
+- Added request-size and input-length limits.
+- Added 30-second DeepSeek timeout.
+- Added official OpenAI-compatible DeepSeek chat-completions call.
+- Default model: `deepseek-v4-flash`.
+- Thinking mode disabled.
+- JSON output mode enabled.
+- Added model-output schema validation and normalization.
+- Added `Cache-Control: no-store` and no intentional logging of content/secrets.
+- Added secret-safe Wrangler deployment instructions.
 
-### Not Validated
+### Tests Added
 
-- Real Chrome installation and toolbar behavior.
-- Current live Reddit DOM behavior.
-- Infinite-scroll capture and storage synchronization in a real browser session.
+- Extension AI response parser tests.
+- Worker semantic schema tests.
 
-### Next Action
+### Secrets Boundary
 
-Load the unpacked build in Chrome and perform the live acceptance pass. Browser-only failures belong in Issue #73 with the page URL, screenshot, and console error when available.
+- `DEEPSEEK_API_KEY`: Cloudflare Worker secret only.
+- `EXTENSION_ACCESS_KEY`: separate Worker secret and local extension credential.
+- Real secrets must never be pasted into GitHub, source code, PRs, issues, or chat.
+
+### Remaining External Validation
+
+- Run GitHub Actions extension/Worker checks.
+- Deploy Worker with the owner's Cloudflare account.
+- Add the owner's DeepSeek API key through `wrangler secret put`.
+- Load the extension in Chrome and run one controlled live analysis.
+
+### Active Channel
+
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/76`

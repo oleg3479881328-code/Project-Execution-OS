@@ -1,66 +1,72 @@
 ---
 status: in-progress
 project_mode: compact
-last_updated: 2026-07-11
-next_action: Load the unpacked Chrome build, open the side panel, and validate live r/WedditNYC capture.
+last_updated: 2026-07-12
+next_action: Validate extension and Worker CI, deploy the Worker with secrets, then run one live DeepSeek analysis from Chrome.
 ---
 
 # Project State — Reddit Photo Response Bot
 
 ## Current Phase
 
-`Chrome Side Panel MVP validation`
+`Chrome Side Panel + secure DeepSeek semantic analysis`
 
 ## Current State
 
 - A WXT/React/TypeScript Manifest V3 extension has been implemented.
-- The extension detects and classifies visible posts on `r/WedditNYC` with deterministic local rules.
-- Reddit page code only captures posts; it no longer injects review controls into Reddit cards.
-- The complete operator workflow now lives in a persistent Chrome side panel.
-- The side panel includes filters, classification reasons, matched signals, manual label overrides, owner decisions, source-post opening, and local persistence.
-- Clicking the extension toolbar icon is configured to open the side panel.
+- The extension detects visible posts on `r/WedditNYC` and performs immediate deterministic local classification.
+- The complete operator workflow lives in a persistent Chrome side panel.
+- A second-stage semantic analysis path has been added through a project-local Cloudflare Worker.
+- The DeepSeek API key exists only as a Worker secret and is never stored in the extension.
+- The side panel supports per-post analysis, batch analysis of local Strong/Possible candidates, and optional automatic analysis disabled by default.
+- DeepSeek results persist locally with label, confidence, intent, response risk, reason, action, timestamp, and model.
+- Manual classification remains the final priority.
 - No Reddit reply generation or publishing exists.
 
-## Validation Evidence
+## Implemented Security Boundary
 
-Completed locally on 2026-07-11:
+- Worker secret: `DEEPSEEK_API_KEY`.
+- Separate Worker caller secret: `EXTENSION_ACCESS_KEY`.
+- Extension stores only Worker URL and caller access key in `chrome.storage.local`.
+- Chrome requests runtime access only to the configured HTTPS Worker origin.
+- Worker rejects unauthorized, oversized, malformed, and non-POST requests.
+- Worker uses DeepSeek JSON output and validates every returned field before forwarding it.
+- Secrets, `.dev.vars`, and `.env` files are excluded from Git.
 
-- `npm run compile` — passed.
-- `npm run test:run` — 2 test files, 6 tests passed.
-- `npm run build` — passed with WXT 0.20.27.
-- Generated output contains:
-  - `sidepanel.html`
-  - `background.js`
-  - side-panel React bundle and CSS
-  - Reddit content script
-- Generated manifest confirmed:
-  - Manifest V3
-  - minimum Chrome version `114`
-  - permissions: `storage`, `sidePanel`
-  - `action.default_title` configured for opening the panel
-  - `side_panel.default_path` set to `sidepanel.html`
-  - background service worker present
-  - host access limited to `www.reddit.com/r/WedditNYC/*` and `old.reddit.com/r/WedditNYC/*`
-- Popup entrypoint and inline Reddit review controls were removed.
+## Automated Validation Target
+
+A dedicated GitHub Actions workflow validates:
+
+- extension TypeScript;
+- extension unit tests;
+- extension production build;
+- Worker TypeScript;
+- Worker schema tests.
+
+No live DeepSeek request is performed in CI because production secrets are intentionally absent.
 
 ## Validation Not Yet Performed
 
-- Loading the unpacked build in a real Chrome profile.
-- Clicking the toolbar icon and confirming the panel opens in real Chrome.
-- Verifying selectors against the current live Reddit DOM.
-- Verifying infinite-scroll capture and live storage updates on the subreddit.
+- Deploying the Worker in the owner's Cloudflare account.
+- Entering `DEEPSEEK_API_KEY` and `EXTENSION_ACCESS_KEY` as Worker secrets.
+- Loading the unpacked AI-enabled extension in a real Chrome profile.
+- Approving the exact Worker-origin permission.
+- Running one controlled live DeepSeek analysis and confirming usage/result quality.
+- Verifying selectors and infinite-scroll capture against the current live Reddit DOM.
 
 ## Current Risks
 
 - Reddit DOM changes may require parser maintenance.
-- This phase detects posts only while a matching Reddit page is open.
-- Deterministic classification needs tuning using real false positives and false negatives.
-- Chrome side-panel behavior still needs one real-browser acceptance pass.
+- AI classification can be wrong and must remain reviewable.
+- Enabling automatic analysis increases API usage.
+- The current shared Worker access key is appropriate only for one owner's internal tool.
+- Public/multi-user release would require identity, per-user authorization, rate limiting, and a privacy policy.
 
 ## Next Practical Step
 
-Load `extension/.output/chrome-mv3/` as an unpacked extension, open the side panel from the toolbar icon, test it against live `r/WedditNYC`, and report any browser-only issue in Issue #73.
+Deploy `deepseek-worker/`, set the two secrets locally through Wrangler, connect the returned HTTPS URL in the side panel, and analyze one known test post before enabling batch or automatic analysis.
 
-## Active Channel
+## Active Channels
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/73`
+- Chrome Side Panel MVP: `https://github.com/oleg3479881328-code/Project-Execution-OS/issues/73`
+- DeepSeek semantic analysis: `https://github.com/oleg3479881328-code/Project-Execution-OS/issues/76`

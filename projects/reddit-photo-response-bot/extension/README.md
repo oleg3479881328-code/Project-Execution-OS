@@ -1,18 +1,56 @@
-# WedditNYC Photo Lead Review — Chrome Side Panel MVP
+# WedditNYC Photo Lead Review — Chrome Side Panel
 
 Internal Manifest V3 extension that detects visible posts on `r/WedditNYC`, classifies them locally, and provides the complete review workflow inside Chrome's side panel.
+
+## Two-stage classification
+
+### Stage 1 — local rules
+
+Every detected post is immediately classified locally using deterministic phrases and weighted signals. This stage is fast, free, explainable, and requires no external request.
+
+### Stage 2 — DeepSeek semantic analysis
+
+When enabled, local `Strong` and `Possible` candidates can be sent through a secure Cloudflare Worker to DeepSeek for meaning-level review.
+
+The AI result includes:
+
+- final suggested label;
+- confidence from 0 to 100;
+- customer intent;
+- response risk;
+- short grounded reason;
+- recommended action: respond, review, or skip.
+
+A manual classification always has final priority over both automatic stages.
 
 ## Current scope
 
 - Runs only on `www.reddit.com/r/WedditNYC/*` and `old.reddit.com/r/WedditNYC/*`.
 - Detects loaded post cards, including newly inserted infinite-scroll items.
 - Applies a deterministic local classifier.
-- Stores detected posts and owner decisions in `chrome.storage.local`.
+- Supports optional per-post or batch DeepSeek analysis.
+- Automatic candidate analysis is available but disabled by default.
+- Stores detected posts, AI results, settings, and owner decisions in `chrome.storage.local`.
 - Uses a persistent Chrome side panel as the only operator interface.
 - Supports filters, manual classification changes, `Relevant`, `Irrelevant`, `Hide`, and source-post opening.
 - Does not inject review controls into Reddit post cards.
-- Does not call an external backend.
 - Cannot generate or publish Reddit comments.
+
+## Secure AI architecture
+
+```text
+Chrome side panel
+    -> HTTPS Cloudflare Worker
+        -> DeepSeek API
+```
+
+- The DeepSeek API key exists only as a Cloudflare Worker secret.
+- The extension stores only the Worker URL and a separate Worker access key.
+- The DeepSeek API key must never be pasted into the extension, chat, GitHub, or source code.
+- Chrome requests access only to the exact configured Worker origin.
+- Post title/body are sent only when an AI analysis is run.
+
+See `../deepseek-worker/README.md` for deployment.
 
 ## Side panel behavior
 
@@ -22,32 +60,14 @@ Internal Manifest V3 extension that detects visible posts on `r/WedditNYC`, clas
 - Visible Reddit posts are captured by the content script and appear in the panel automatically.
 - Changes made in the panel persist after reload.
 
-## Stack decision
-
-Selected: `WXT + TypeScript + React + Manifest V3`.
-
-Why:
-
-- WXT is the Project Execution OS default for serious extensions.
-- WXT supports a native `sidepanel` entrypoint.
-- Chrome's Side Panel API provides the persistent operator workspace requested for this project.
-- The product is expected to grow into a richer review and response interface.
-- Permissions remain narrow despite using a product-grade framework.
-
-Alternatives considered:
-
-- Plasmo: strong React option, but no advantage for this bounded MVP.
-- CRXJS: good Vite-first option, but WXT has a more complete extension workflow.
-- Extension.js: useful for zero-config work, but WXT better matches the planned growth path.
-- Minimal MV3 starter: smallest initial code, but weaker long-term handoff and testing structure.
-
 ## Permissions
 
-- `storage` — saves detected posts, classifications, and owner decisions locally.
+- `storage` — saves detected posts, classifications, AI settings/results, and owner decisions locally.
 - `sidePanel` — hosts the operator interface beside Reddit.
-- Host access is limited to the two `r/WedditNYC` URL patterns.
+- Required host access is limited to the two `r/WedditNYC` URL patterns.
+- Optional HTTPS host access is requested at runtime only for the configured AI Worker origin.
 
-No browsing-history permission, broad Reddit permission, external AI key, or server secret is included.
+No browsing-history permission, Reddit credentials, DeepSeek key, or server secret is included.
 
 ## Local development
 
@@ -67,19 +87,29 @@ npm run build
 
 Load `.output/chrome-mv3/` from `chrome://extensions` with Developer mode enabled.
 
+## AI setup after Worker deployment
+
+1. Open the side panel.
+2. Expand `DeepSeek semantic analysis`.
+3. Enable the AI stage.
+4. Enter the Worker URL.
+5. Enter the separate Worker access key — not the DeepSeek API key.
+6. Save and approve Chrome access to that exact Worker origin.
+7. Analyze one post or run batch analysis for new local candidates.
+
 ## Manual validation
 
 1. Build and load the unpacked extension.
-2. Pin the extension icon if desired.
-3. Click the extension icon and confirm the side panel opens.
-4. Open `https://www.reddit.com/r/WedditNYC/new/`.
-5. Confirm visible posts appear in the side panel.
-6. Scroll and confirm newly loaded posts appear without duplicates.
-7. Change a classification and owner decision in the side panel.
-8. Reload Reddit and confirm decisions persist.
-9. Confirm the extension does not add controls to Reddit cards.
+2. Click the extension icon and confirm the side panel opens.
+3. Open `https://www.reddit.com/r/WedditNYC/new/`.
+4. Confirm visible and infinite-scroll posts appear without duplicates.
+5. Confirm local classifications and manual decisions persist.
+6. Configure a deployed Worker and analyze one controlled post.
+7. Confirm the AI result includes label, confidence, intent, risk, reason, and action.
+8. Confirm the Network panel sends the request to the Worker, not directly to DeepSeek.
+9. Confirm no DeepSeek API key appears in extension storage, source, or built files.
 10. Confirm no comment or reply action exists.
 
 ## Known boundary
 
-This version detects posts only while a matching Reddit page is open. Reddit DOM changes may require parser maintenance. Real Chrome validation is still required before the draft PR is ready to merge.
+The extension detects posts only while a matching Reddit page is open. AI calls create external API usage and send the selected post title/body to DeepSeek through the Worker. Reddit DOM changes may require parser maintenance.
