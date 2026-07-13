@@ -47,7 +47,7 @@ Telegram-бот круглосуточно мониторит выбранные
 
 ## Security invariants
 
-- `TELEGRAM_BOT_TOKEN`, `OPENAI_API_KEY` и другие секреты существуют только в server-side environment/secrets.
+- `TELEGRAM_BOT_TOKEN`, `DEEPSEEK_API_KEY` и другие секреты существуют только в server-side environment/secrets.
 - Секреты не попадают в GitHub, Telegram, SQLite и логи.
 - Бот отвечает только разрешенному owner chat ID.
 - Никакого автоматического Reddit publishing.

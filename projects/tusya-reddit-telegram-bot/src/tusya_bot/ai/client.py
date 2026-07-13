@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Any, Protocol
 
 from openai import AsyncOpenAI
 
@@ -40,9 +40,10 @@ class DeepSeekDraftClient:
         base_url: str = "https://api.deepseek.com",
         model: str = "deepseek-v4-flash",
         timeout_seconds: float = 30.0,
+        client: Any | None = None,
     ) -> None:
         self._model = model
-        self._client = AsyncOpenAI(
+        self._client = client or AsyncOpenAI(
             api_key=api_key,
             base_url=base_url.rstrip("/"),
             timeout=timeout_seconds,

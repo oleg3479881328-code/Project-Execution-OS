@@ -1,0 +1,60 @@
+name: Tusya Reddit Telegram Bot CI
+
+on:
+  push:
+    paths:
+      - ".github/workflows/tusya-reddit-telegram-bot-ci.yml"
+      - "projects/tusya-reddit-telegram-bot/**"
+  pull_request:
+    paths:
+      - ".github/workflows/tusya-reddit-telegram-bot-ci.yml"
+      - "projects/tusya-reddit-telegram-bot/**"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/tusya-reddit-telegram-bot
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies
+        run: python -m pip install -e .[dev]
+
+      - name: Ruff
+        run: python -m ruff check .
+
+      - name: MyPy
+        run: python -m mypy src tests
+
+      - name: Pytest
+        run: python -m pytest -q
+
+      - name: Import smoke test
+        run: python -c "import tusya_bot; import tusya_bot.bot.application; import tusya_bot.db.repositories; print(tusya_bot.__version__)"
+
+      - name: Secret file check
+        run: python scripts/check_no_secret_files.py
+
+      - name: Fake end-to-end acceptance
+        run: python scripts/fake_acceptance.py
+
+      - name: Build Docker image
+        run: docker build -t tusya-reddit-telegram-bot:test .
+
+      - name: Build release zip
+        run: python scripts/build_release_zip.py
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tusya-reddit-telegram-bot-v0.1.0-alpha.zip
+          path: projects/tusya-reddit-telegram-bot/dist/tusya-reddit-telegram-bot-v0.1.0-alpha.zip

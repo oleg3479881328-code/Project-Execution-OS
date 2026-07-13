@@ -69,9 +69,9 @@ Tests:
 
 Exit criteria: a new matching fixture appears once in Telegram and can be opened.
 
-## Phase 4 — GPT drafts
+## Phase 4 — DeepSeek drafts
 
-- Implement OpenAI client behind protocol.
+- Implement DeepSeek client behind protocol.
 - Add prompt versioning.
 - Add configurable language, tone and length.
 - Add create, regenerate and refine flows.

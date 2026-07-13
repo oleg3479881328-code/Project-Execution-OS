@@ -1,0 +1,17 @@
+services:
+  tusya-bot:
+    build:
+      context: .
+    image: tusya-reddit-telegram-bot:0.1.0-alpha
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+    healthcheck:
+      test: ["CMD", "python", "-m", "tusya_bot", "healthcheck", "--database-path", "/app/data/tusya.sqlite3"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
