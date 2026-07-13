@@ -1,4 +1,21 @@
+export const APP_VERSION = '0.3.0';
+
 export type ScanStatus = 'idle' | 'scanning' | 'paused' | 'complete' | 'stopped' | 'blocked' | 'error';
+export type ScanMode = 'profile' | 'tag';
+
+export interface ProfilePageContext {
+  kind: 'profile';
+  username: string;
+  profileUrl: string;
+}
+
+export interface TagPageContext {
+  kind: 'tag';
+  tag: string;
+  tagUrl: string;
+}
+
+export type TikTokPageContext = ProfilePageContext | TagPageContext;
 
 export interface VideoRecord {
   id: string;
@@ -55,21 +72,38 @@ export interface ProfileSnapshot extends Omit<ProfileRecord, 'collectedAt' | 'so
   profileDataSource?: ProfileRecord['source'];
 }
 
-export interface ScanState {
-  status: ScanStatus;
-  username?: string;
-  profileUrl?: string;
-  videosFound: number;
-  startedAt?: number;
-  updatedAt: number;
-  oldestPublishedAt?: number;
-  message?: string;
-}
-
 export interface ScanOptions {
   maxVideos: number;
   maxIdleRounds: number;
   scrollDelayMs: number;
+  topVideosPerAccount: number;
+  minViews: number;
+}
+
+export interface TagResearchSnapshot {
+  tag: string;
+  tagUrl: string;
+  videos: VideoRecord[];
+  topVideosPerAccount: number;
+  minViews: number;
+  scannedVideos: number;
+  accountsFound: number;
+  lastScannedAt: number;
+}
+
+export interface ScanState {
+  status: ScanStatus;
+  mode?: ScanMode;
+  username?: string;
+  profileUrl?: string;
+  tag?: string;
+  tagUrl?: string;
+  videosFound: number;
+  accountsFound?: number;
+  startedAt?: number;
+  updatedAt: number;
+  oldestPublishedAt?: number;
+  message?: string;
 }
 
 export type RuntimeMessage =
@@ -78,12 +112,16 @@ export type RuntimeMessage =
   | { type: 'STOP_SCAN' }
   | { type: 'GET_DASHBOARD' }
   | { type: 'CLEAR_PROFILE'; username: string }
+  | { type: 'CLEAR_TAG_RESEARCH'; tag: string }
   | { type: 'PROFILE_DATA'; profile: ProfileRecord }
   | { type: 'VIDEO_BATCH'; username: string; profileUrl: string; videos: VideoRecord[] }
+  | { type: 'TAG_SCAN_BEGIN'; tag: string; tagUrl: string; options: ScanOptions }
+  | { type: 'TAG_VIDEO_BATCH'; tag: string; tagUrl: string; videos: VideoRecord[] }
   | { type: 'SCAN_STATE'; state: ScanState }
   | { type: 'DASHBOARD_UPDATED'; dashboard: DashboardData };
 
 export interface DashboardData {
   profiles: Record<string, ProfileSnapshot>;
+  tagResearch: Record<string, TagResearchSnapshot>;
   activeScan: ScanState;
 }
