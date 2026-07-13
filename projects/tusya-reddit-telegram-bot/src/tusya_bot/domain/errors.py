@@ -19,3 +19,7 @@ class DuplicateKeywordError(TusyaBotError):
 
 class NotFoundError(TusyaBotError):
     """Raised when a repository entity cannot be found."""
+
+
+class StaleCallbackError(TusyaBotError):
+    """Raised when a callback references an unavailable entity."""

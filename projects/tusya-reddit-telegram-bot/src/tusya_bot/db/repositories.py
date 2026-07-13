@@ -7,7 +7,7 @@ from typing import Any
 
 import aiosqlite
 
-from tusya_bot.domain.enums import MatchMode, PostStatus, ResourceType
+from tusya_bot.domain.enums import DeliveryStatus, MatchMode, PostStatus, ResourceType
 from tusya_bot.domain.errors import DuplicateKeywordError, DuplicateResourceError
 from tusya_bot.domain.models import (
     DeliveryEvent,
@@ -333,6 +333,47 @@ class PostRepository:
         ).fetchall()
         return [_row_to_post(row) for row in rows]
 
+    async def get_by_id(self, post_id: int) -> RedditPost | None:
+        row = await (
+            await self._connection.execute(
+                "SELECT * FROM reddit_posts WHERE id = ?",
+                (post_id,),
+            )
+        ).fetchone()
+        return None if row is None else _row_to_post(row)
+
+    async def list_recent_matching(
+        self,
+        *,
+        limit: int,
+        offset: int = 0,
+    ) -> list[RedditPost]:
+        rows = await (
+            await self._connection.execute(
+                """
+                SELECT *
+                FROM reddit_posts
+                WHERE matched_keywords_json <> '[]'
+                ORDER BY first_seen_at DESC, id DESC
+                LIMIT ? OFFSET ?
+                """,
+                (limit, offset),
+            )
+        ).fetchall()
+        return [_row_to_post(row) for row in rows]
+
+    async def count_matching(self) -> int:
+        row = await (
+            await self._connection.execute(
+                """
+                SELECT COUNT(*) AS count
+                FROM reddit_posts
+                WHERE matched_keywords_json <> '[]'
+                """
+            )
+        ).fetchone()
+        return int(row["count"]) if row is not None else 0
+
     async def get_by_reddit_id(self, reddit_id: str) -> RedditPost | None:
         row = await (
             await self._connection.execute(
@@ -346,6 +387,43 @@ class PostRepository:
         await self._connection.execute(
             "UPDATE reddit_posts SET status = ? WHERE id = ?",
             (status.value, post_id),
+        )
+
+    async def mark_opened(self, post_id: int, opened_at: str) -> None:
+        await self._connection.execute(
+            """
+            UPDATE reddit_posts
+            SET status = ?, opened_at = ?
+            WHERE id = ?
+            """,
+            (PostStatus.OPENED.value, opened_at, post_id),
+        )
+
+    async def mark_ignored(self, post_id: int) -> None:
+        await self._connection.execute(
+            "UPDATE reddit_posts SET status = ? WHERE id = ?",
+            (PostStatus.IGNORED.value, post_id),
+        )
+
+    async def mark_drafted(self, post_id: int) -> None:
+        await self._connection.execute(
+            "UPDATE reddit_posts SET status = ? WHERE id = ?",
+            (PostStatus.DRAFTED.value, post_id),
+        )
+
+    async def mark_delivered(
+        self,
+        post_id: int,
+        *,
+        delivered_at: str,
+    ) -> None:
+        await self._connection.execute(
+            """
+            UPDATE reddit_posts
+            SET delivered_at = ?
+            WHERE id = ?
+            """,
+            (delivered_at, post_id),
         )
 
 
@@ -436,3 +514,42 @@ class DeliveryEventRepository:
         if cursor.lastrowid is None:
             raise RuntimeError("SQLite did not return a row id for delivery_events")
         return DeliveryEvent(**{**asdict(event), "id": int(cursor.lastrowid), "created_at": now})
+
+    async def list_by_post_id(self, post_id: int) -> list[DeliveryEvent]:
+        rows = await (
+            await self._connection.execute(
+                """
+                SELECT *
+                FROM delivery_events
+                WHERE reddit_post_id = ?
+                ORDER BY id ASC
+                """,
+                (post_id,),
+            )
+        ).fetchall()
+        return [
+            DeliveryEvent(
+                id=int(row["id"]),
+                reddit_post_id=int(row["reddit_post_id"]),
+                telegram_chat_id=str(row["telegram_chat_id"]),
+                telegram_message_id=row["telegram_message_id"],
+                delivery_status=DeliveryStatus(str(row["delivery_status"])),
+                error=row["error"],
+                created_at=str(row["created_at"]),
+            )
+            for row in rows
+        ]
+
+    async def has_success_for_post(self, post_id: int) -> bool:
+        row = await (
+            await self._connection.execute(
+                """
+                SELECT 1 AS found
+                FROM delivery_events
+                WHERE reddit_post_id = ? AND delivery_status = 'delivered'
+                LIMIT 1
+                """,
+                (post_id,),
+            )
+        ).fetchone()
+        return row is not None

@@ -9,6 +9,7 @@ from telegram import (
 from telegram.ext import ContextTypes
 
 from tusya_bot.bot.auth import require_owner
+from tusya_bot.delivery.protocols import DeliveryService
 from tusya_bot.monitoring.engine import MonitoringEngine
 from tusya_bot.monitoring.models import MonitoringStatusSnapshot
 from tusya_bot.services.keyword_service import KeywordService
@@ -51,8 +52,12 @@ async def check_now(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await require_owner(update, context)
     assert update.effective_message is not None
     monitoring_engine: MonitoringEngine = context.application.bot_data["monitoring_engine"]
+    delivery_service: DeliveryService = context.application.bot_data["delivery_service"]
     result = await monitoring_engine.run_cycle(trigger="manual")
-    await update.effective_message.reply_text(_render_check_now_result(result.emitted_candidates))
+    failures = getattr(delivery_service, "last_batch_failures", 0)
+    await update.effective_message.reply_text(
+        _render_check_now_result(result.emitted_candidates, failures=failures)
+    )
 
 
 async def check_now_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -64,10 +69,12 @@ async def check_now_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
     await query.answer()
 
     monitoring_engine: MonitoringEngine = context.application.bot_data["monitoring_engine"]
+    delivery_service: DeliveryService = context.application.bot_data["delivery_service"]
     result = await monitoring_engine.run_cycle(trigger="manual")
+    failures = getattr(delivery_service, "last_batch_failures", 0)
     await context.bot.send_message(
         chat_id=chat.id,
-        text=_render_check_now_result(result.emitted_candidates),
+        text=_render_check_now_result(result.emitted_candidates, failures=failures),
     )
 
 
@@ -181,5 +188,8 @@ def _render_status_text(snapshot: MonitoringStatusSnapshot) -> str:
     )
 
 
-def _render_check_now_result(emitted_candidates: int) -> str:
-    return f"Check now completed. New matching candidates: {emitted_candidates}."
+def _render_check_now_result(emitted_candidates: int, *, failures: int = 0) -> str:
+    base = f"Check now completed. New matching candidates: {emitted_candidates}."
+    if failures:
+        return f"{base}\nНекоторые Telegram-доставки завершились с ошибкой."
+    return base
