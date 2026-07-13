@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
+from tusya_bot.domain.enums import ResourceType
 
 _TRANSIENT_QUERY_KEYS = {"cid", "iid", "utm_source", "utm_medium", "utm_campaign"}
 _SEMANTIC_QUERY_KEYS = {"q", "type", "sort", "t"}
@@ -13,7 +14,7 @@ class NormalizedResource:
     original_input: str
     canonical_url: str
     subreddit: str
-    resource_type: str
+    resource_type: ResourceType
     search_query: str | None
     sort_mode: str
 
@@ -63,11 +64,11 @@ def normalize_reddit_resource(raw_value: str) -> NormalizedResource:
                 ("sort", sort_mode),
             ]
         )
-        resource_type = "search"
+        resource_type = ResourceType.SEARCH
     else:
         canonical_path = f"/r/{subreddit}/new/"
         canonical_query = ""
-        resource_type = "subreddit"
+        resource_type = ResourceType.SUBREDDIT
         sort_mode = "new"
 
     canonical_url = urlunparse(
