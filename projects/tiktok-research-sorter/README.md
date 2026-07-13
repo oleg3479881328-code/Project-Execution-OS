@@ -1,25 +1,44 @@
 # TikTok Research Sorter
 
-Local-first Manifest V3 extension for scanning public TikTok profile pages, ranking videos, calculating outlier metrics, and exporting research data.
+Local-first Manifest V3 extension for scanning public TikTok profile pages and public TikTok hashtag pages, ranking videos, and exporting research data.
 
-## Version 0.2.0
+## Version 0.3.0
+
+### Profile research
 
 - Full profile card with avatar, display name, biography, verification status, followers, following, profile likes, and public video count.
 - Scan metadata: last scan, collected coverage, estimated posting frequency, median views, and strongest hashtags.
 - Video cards with cover, rank, views, views/day, outlier score, engagement, and hashtags.
+- Sorting, search, outlier filtering, CSV export, and JSON export.
+
+### Hashtag research
+
+Open a public page such as:
+
+```text
+https://www.tiktok.com/tag/weddingphotography
+```
+
+The side panel automatically detects hashtag mode. Choose:
+
+- how many videos to scan from the hashtag page;
+- how many highest-viewed videos to keep from each account: 1, 2, 3, 5, or 10;
+- the minimum required view count.
+
+The extension groups discovered videos by account and keeps the requested top videos from each account. Results can be adjusted after scanning because the locally stored hashtag snapshot retains all videos collected during that scan.
+
+Important: hashtag mode ranks videos found on the open hashtag page. It does not silently visit every creator profile or claim to inspect videos that TikTok did not load.
+
+### Reliability and safety
+
 - Side Panel interface opened from the extension toolbar.
-- User-initiated profile scan with automatic scrolling and explicit stop/error recovery.
+- User-initiated automatic scrolling with explicit stop, challenge detection, and error recovery.
 - Hybrid collection from embedded JSON, selected TikTok page requests, and loaded DOM cards.
-- Serialized per-profile persistence to prevent lost updates.
+- Serialized local persistence to prevent lost updates.
 - Strict data-source precedence: API → embedded JSON → DOM fallback.
-- Sorting by views, likes, comments, shares, date, views/day, engagement rate, and outlier score.
-- Text/hashtag filters.
-- CSV and JSON export with spreadsheet-formula protection.
-- CAPTCHA detection without bypass attempts.
-- One-click Windows updater and launcher under `automation/windows/`.
-- 40 automated tests covering parser, profile extraction, analytics, localized numbers, merge logic, duration normalization, cyclic payloads, and CSV safety.
-- Linux CI for TypeScript, tests, production build, and downloadable packages.
-- Windows CI for zero-side-effect dry run and full updater validation.
+- CSV export with spreadsheet-formula protection.
+- No login, CAPTCHA, private-profile, rate-limit, paywall, or access-control bypass.
+- Host permissions remain limited to TikTok.
 
 ## One-click Windows workflow
 
@@ -29,17 +48,9 @@ Open `automation/windows/README-RU.md` and run:
 Install-TikTok-Sorter.cmd
 ```
 
-The installer creates a desktop shortcut. Every shortcut launch:
+The installer creates a desktop shortcut. Every shortcut launch downloads `main`, builds in an isolated candidate directory, runs checks and tests, validates the generated manifest, preserves the current build on failure, keeps one previous build for rollback, and starts a dedicated persistent Chrome profile only after success.
 
-1. downloads or reads the selected source;
-2. builds in an isolated candidate directory;
-3. runs TypeScript checks and unit tests;
-4. validates the generated manifest;
-5. replaces the active build only after all checks pass;
-6. preserves the previous build for rollback;
-7. starts a dedicated persistent Chrome profile.
-
-Supported test and automation parameters:
+Supported automation parameters:
 
 ```powershell
 -DryRun
@@ -52,12 +63,6 @@ Supported test and automation parameters:
 
 ```bash
 npm ci
-npm run dev
-```
-
-Build and validate:
-
-```bash
 npm run check
 npm test
 npm run build
@@ -68,13 +73,13 @@ Load `.output/chrome-mv3` through `chrome://extensions` with Developer mode enab
 
 ## CI artifacts
 
-Each successful branch or pull-request run uploads:
+Each successful branch or pull-request run uploads versioned files:
 
 - unpacked Chrome MV3 extension;
-- `tiktok-research-sorter-extension-0.2.0.zip`;
-- `tiktok-sorter-auto-updater-setup-0.2.0.zip`;
-- `tiktok-research-sorter-source-0.2.0.zip`.
+- `tiktok-research-sorter-extension-v0.3.0.zip`;
+- `tiktok-sorter-auto-updater-setup-v0.3.0.zip`;
+- `tiktok-research-sorter-source-v0.3.0.zip`.
 
 ## Product boundary
 
-This project analyzes data already visible to the user on a public TikTok profile page. It does not bypass authentication, CAPTCHA, paywalls, private profiles, rate limits, or access controls. Data remains local in the browser unless the user explicitly exports it.
+This project analyzes data already visible to the user on public TikTok pages. Data remains local in the browser unless the user explicitly exports it. TikTok can change public payloads and page structure, so platform parsing remains isolated and regression-tested.
