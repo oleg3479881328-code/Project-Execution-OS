@@ -234,9 +234,9 @@ def render_draft_text(
     lines = [
         "<b>Черновик ответа</b>",
         "Черновик не опубликован.",
-        f"Provider: {escape_telegram_html(provider)}",
-        f"Model: {escape_telegram_html(model)}",
-        f"Prompt version: {escape_telegram_html(prompt_version)}",
+        f"Провайдер: {escape_telegram_html(provider)}",
+        f"Модель: {escape_telegram_html(model)}",
+        f"Версия промпта: {escape_telegram_html(prompt_version)}",
     ]
     if owner_instruction:
         lines.append(f"Уточнение: {escape_telegram_html(owner_instruction)}")

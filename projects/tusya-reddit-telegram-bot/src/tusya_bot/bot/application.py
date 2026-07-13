@@ -18,15 +18,22 @@ from tusya_bot.bot.commands import (
     check_now_callback,
     delete_keyword,
     delete_resource,
+    help_command,
     list_keywords,
     list_resources,
     menu,
+    monitoring_off,
+    monitoring_on,
     start,
     status,
     toggle_keyword,
     toggle_resource,
 )
-from tusya_bot.bot.conversations import build_conversations
+from tusya_bot.bot.conversations import (
+    add_keyword_start,
+    add_resource_start,
+    build_conversations,
+)
 from tusya_bot.bot.feed import (
     draft_create_callback,
     feed_callback,
@@ -41,7 +48,7 @@ from tusya_bot.db.engine import Database
 from tusya_bot.db.migrations import migrate
 from tusya_bot.delivery.telegram import TelegramDeliveryService
 from tusya_bot.domain.errors import StaleCallbackError, TusyaBotError
-from tusya_bot.logging_config import configure_logging
+from tusya_bot.logging_config import configure_logging, log_startup_diagnostics
 from tusya_bot.monitoring.engine import MonitoringEngine
 from tusya_bot.reddit.client import PublicRedditClient
 from tusya_bot.services.draft_service import DraftService
@@ -55,6 +62,7 @@ TelegramApplication = Application[Any, Any, Any, Any, Any, Any]
 async def build_application(settings: Settings) -> TelegramApplication:
     settings.prepare_directories()
     configure_logging(settings.log_level)
+    log_startup_diagnostics(settings.runtime_diagnostics())
 
     database = Database(settings.database_path)
     async with database.connect() as connection:
@@ -105,8 +113,11 @@ async def build_application(settings: Settings) -> TelegramApplication:
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("menu", menu))
+    application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("status", status))
     application.add_handler(CommandHandler("check_now", check_now))
+    application.add_handler(CommandHandler("monitoring_on", monitoring_on))
+    application.add_handler(CommandHandler("monitoring_off", monitoring_off))
     application.add_handler(CommandHandler("feed", show_feed))
     application.add_handler(CommandHandler("resources", list_resources))
     application.add_handler(CommandHandler("keywords", list_keywords))
@@ -122,6 +133,15 @@ async def build_application(settings: Settings) -> TelegramApplication:
     application.add_handler(CallbackQueryHandler(redraft_callback, pattern="^redraft:"))
     application.add_handler(CallbackQueryHandler(noop_callback, pattern="^noop:"))
     application.add_handler(MessageHandler(filters.Regex("^📡 Лента$"), show_feed))
+    application.add_handler(MessageHandler(filters.Regex("^⚙️ Настройки$"), help_command))
+    application.add_handler(MessageHandler(filters.Regex("^🗂 Ресурсы$"), list_resources))
+    application.add_handler(MessageHandler(filters.Regex("^🧾 Слова$"), list_keywords))
+    application.add_handler(
+        MessageHandler(filters.Regex("^➕ Добавить ресурс$"), add_resource_start)
+    )
+    application.add_handler(
+        MessageHandler(filters.Regex("^🔤 Добавить слово$"), add_keyword_start)
+    )
 
     for conversation in build_conversations():
         application.add_handler(conversation)
@@ -132,7 +152,7 @@ async def build_application(settings: Settings) -> TelegramApplication:
 
 async def _post_init(application: TelegramApplication) -> None:
     monitoring_engine: MonitoringEngine = application.bot_data["monitoring_engine"]
-    monitoring_engine.set_monitoring_enabled(application.job_queue is not None)
+    await monitoring_engine.initialize_runtime_state()
     if application.job_queue is not None:
         existing = application.job_queue.get_jobs_by_name("tusya-monitoring-cycle")
         if not existing:

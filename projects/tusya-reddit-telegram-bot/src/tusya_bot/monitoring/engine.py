@@ -8,7 +8,12 @@ from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 
 from tusya_bot.db.engine import Database
-from tusya_bot.db.repositories import KeywordRepository, PostRepository, ResourceRepository
+from tusya_bot.db.repositories import (
+    KeywordRepository,
+    PostRepository,
+    ResourceRepository,
+    SettingsRepository,
+)
 from tusya_bot.delivery.protocols import DeliveryService
 from tusya_bot.domain.models import Keyword, MonitoredResource, RedditPost
 from tusya_bot.monitoring.matcher import KeywordRule, find_matching_keywords
@@ -37,6 +42,8 @@ class BackoffPolicy:
 
 
 class MonitoringEngine:
+    SETTINGS_KEY = "monitoring_control"
+
     def __init__(
         self,
         *,
@@ -75,6 +82,20 @@ class MonitoringEngine:
                 self._now_fn() + timedelta(seconds=self._poll_interval_seconds)
             )
 
+    async def initialize_runtime_state(self) -> None:
+        async with self._database.connect() as connection:
+            payload = await SettingsRepository(connection).get_json(self.SETTINGS_KEY)
+        enabled = True if payload is None else bool(payload.get("enabled", True))
+        self.set_monitoring_enabled(enabled)
+
+    async def persist_monitoring_enabled(self, enabled: bool) -> None:
+        self.set_monitoring_enabled(enabled)
+        async with self._database.connect() as connection:
+            await SettingsRepository(connection).set_json(
+                self.SETTINGS_KEY,
+                {"enabled": enabled},
+            )
+
     async def get_status_snapshot(self) -> MonitoringStatusSnapshot:
         async with self._database.connect() as connection:
             resource_repo = ResourceRepository(connection)
@@ -94,6 +115,14 @@ class MonitoringEngine:
         )
 
     async def run_cycle(self, *, trigger: str) -> CycleResult:
+        if not self._monitoring_enabled:
+            return CycleResult(
+                trigger=trigger,
+                overlap_skipped=False,
+                processed_resources=0,
+                emitted_candidates=0,
+                failed_resources=0,
+            )
         if self._lock.locked():
             return CycleResult(
                 trigger=trigger,

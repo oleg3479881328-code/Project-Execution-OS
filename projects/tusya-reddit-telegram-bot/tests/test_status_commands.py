@@ -4,7 +4,7 @@ from types import SimpleNamespace
 from typing import cast
 
 import pytest
-from telegram import Update
+from telegram import InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 
 from tusya_bot.bot.commands import check_now_callback, status
@@ -65,6 +65,7 @@ def _context(*, owner_chat_id: int) -> SimpleNamespace:
             bot_data={
                 "owner_chat_id": owner_chat_id,
                 "monitoring_engine": _FakeEngine(),
+                "delivery_service": SimpleNamespace(last_batch_failures=0),
             }
         ),
         bot=_FakeBot(),
@@ -105,3 +106,42 @@ async def test_check_now_owner_authorization() -> None:
         )
 
     assert message.calls == [("Access denied.", None)]
+
+
+@pytest.mark.asyncio
+async def test_status_renders_russian_operator_text() -> None:
+    message = _FakeMessage()
+    update = SimpleNamespace(
+        effective_chat=SimpleNamespace(id=123),
+        effective_message=message,
+    )
+
+    await status(
+        cast(Update, update),
+        cast(ContextTypes.DEFAULT_TYPE, _context(owner_chat_id=123)),
+    )
+
+    assert message.calls
+    text, reply_markup = message.calls[0]
+    assert "Мониторинг: включен" in text
+    assert "Ресурсы: 2" in text
+    assert "Ключевые слова: 3" in text
+    keyboard = cast(InlineKeyboardMarkup, reply_markup)
+    assert keyboard.inline_keyboard[0][0].text == "Проверить сейчас"
+
+
+@pytest.mark.asyncio
+async def test_check_now_callback_renders_russian_result() -> None:
+    query = _FakeQuery()
+    update = SimpleNamespace(
+        effective_chat=SimpleNamespace(id=123),
+        effective_message=_FakeMessage(),
+        callback_query=query,
+    )
+    context = cast(ContextTypes.DEFAULT_TYPE, _context(owner_chat_id=123))
+
+    await check_now_callback(cast(Update, update), context)
+
+    assert query.answered is True
+    fake_bot = cast(_FakeBot, context.bot)
+    assert fake_bot.sent == [(123, "Ручная проверка завершена. Новых подходящих постов: 2.")]

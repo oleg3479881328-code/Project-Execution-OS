@@ -92,6 +92,17 @@ class _FakeJobQueue:
         self.jobs.append((name, callback, interval, first))
 
 
+class _FakeMonitoringEngine:
+    def __init__(self) -> None:
+        self.enabled = True
+
+    async def initialize_runtime_state(self) -> None:
+        return None
+
+    def set_monitoring_enabled(self, enabled: bool) -> None:
+        self.enabled = enabled
+
+
 @pytest.fixture
 async def feed_database(tmp_path: Path) -> Database:
     database = Database(tmp_path / "feed.sqlite3")
@@ -349,7 +360,7 @@ async def test_application_wiring_does_not_start_duplicate_schedulers() -> None:
     job_queue = _FakeJobQueue()
     application = SimpleNamespace(
         bot_data={
-            "monitoring_engine": SimpleNamespace(set_monitoring_enabled=lambda enabled: None),
+            "monitoring_engine": _FakeMonitoringEngine(),
             "settings": SimpleNamespace(poll_interval_seconds=300),
         },
         job_queue=job_queue,

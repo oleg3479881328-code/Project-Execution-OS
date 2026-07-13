@@ -33,7 +33,7 @@ jobs:
         run: python -m ruff check .
 
       - name: MyPy
-        run: python -m mypy src
+        run: python -m mypy src tests
 
       - name: Pytest
         run: python -m pytest -q
@@ -43,3 +43,18 @@ jobs:
 
       - name: Secret file check
         run: python scripts/check_no_secret_files.py
+
+      - name: Fake end-to-end acceptance
+        run: python scripts/fake_acceptance.py
+
+      - name: Build Docker image
+        run: docker build -t tusya-reddit-telegram-bot:test .
+
+      - name: Build release zip
+        run: python scripts/build_release_zip.py
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tusya-reddit-telegram-bot-v0.1.0-alpha.zip
+          path: projects/tusya-reddit-telegram-bot/dist/tusya-reddit-telegram-bot-v0.1.0-alpha.zip

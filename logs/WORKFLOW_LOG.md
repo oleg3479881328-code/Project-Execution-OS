@@ -2400,3 +2400,93 @@ Reinforced bootstrap continuity rules now also include:
 - legacy fallback for old `PROJECT_ENTRYPOINT.md` projects without keeping two active front doors.
 
 Updated `SYSTEM_CONTEXT_MANIFEST.md` to `system-context-manifest-v5` after the router and context-assembly profile changes, including refreshed blob SHAs and SHA-256 fingerprint.
+
+---
+
+# Tusya Reddit Telegram Bot - Issue 79 Phase 5 Hardening
+
+## Summary
+
+Completed the Phase 5 hardening and deployment-readiness pass for `projects/tusya-reddit-telegram-bot` on branch `codex/tusya-phase01-implementation` for PR #81.
+
+## Executed Repository Actions
+
+### Action 1 - Runtime hardening and operational controls
+
+Affected files:
+
+- `projects/tusya-reddit-telegram-bot/src/tusya_bot/config.py`
+- `projects/tusya-reddit-telegram-bot/src/tusya_bot/logging_config.py`
+- `projects/tusya-reddit-telegram-bot/src/tusya_bot/__main__.py`
+- `projects/tusya-reddit-telegram-bot/src/tusya_bot/monitoring/engine.py`
+- `projects/tusya-reddit-telegram-bot/src/tusya_bot/bot/application.py`
+- `projects/tusya-reddit-telegram-bot/src/tusya_bot/bot/commands.py`
+- `projects/tusya-reddit-telegram-bot/src/tusya_bot/bot/conversations.py`
+- `projects/tusya-reddit-telegram-bot/src/tusya_bot/delivery/rendering.py`
+
+Purpose:
+
+Add startup diagnostics without secrets, persisted monitoring ON/OFF state, Russian operator UX, and a restart-safe healthcheck path that initializes WAL on a fresh SQLite file.
+
+### Action 2 - Deployment, backup, and release packaging
+
+Affected files:
+
+- `projects/tusya-reddit-telegram-bot/Dockerfile`
+- `projects/tusya-reddit-telegram-bot/docker-compose.yml`
+- `projects/tusya-reddit-telegram-bot/.dockerignore`
+- `projects/tusya-reddit-telegram-bot/.gitignore`
+- `projects/tusya-reddit-telegram-bot/.env.example`
+- `projects/tusya-reddit-telegram-bot/scripts/backup_sqlite.py`
+- `projects/tusya-reddit-telegram-bot/scripts/build_release_zip.py`
+
+Purpose:
+
+Create a non-root Docker runtime, example compose deployment, timestamped SQLite backup flow, and a deterministic release archive build.
+
+### Action 3 - Deterministic acceptance and CI expansion
+
+Affected files:
+
+- `projects/tusya-reddit-telegram-bot/scripts/fake_acceptance.py`
+- `.github/workflows/tusya-reddit-telegram-bot-ci.yml`
+- `projects/tusya-reddit-telegram-bot/tests/test_runtime_ops.py`
+- `projects/tusya-reddit-telegram-bot/tests/test_status_commands.py`
+- `projects/tusya-reddit-telegram-bot/tests/test_feed_handlers.py`
+
+Purpose:
+
+Lock in local proof for baseline behavior, candidate delivery, draft lifecycle, restart persistence, backup readiness, Russian operator text, and Docker build coverage in CI.
+
+### Action 4 - Documentation and state handoff
+
+Affected files:
+
+- `projects/tusya-reddit-telegram-bot/README.md`
+- `projects/tusya-reddit-telegram-bot/PROJECT_STATE.md`
+- `projects/tusya-reddit-telegram-bot/LIVE_VALIDATION.md`
+- `logs/latest.md`
+
+Purpose:
+
+Document live validation steps, operational commands, restore procedure, current project state, and the latest executor evidence snapshot.
+
+## Validation Evidence
+
+- `python -m ruff check .`
+- `python -m mypy src tests`
+- `python -m pytest -q` -> `45 passed`
+- `python scripts/fake_acceptance.py`
+- `python scripts/backup_sqlite.py --database-path data\backup-proof.sqlite3 --backup-dir backups`
+- backup verification on created snapshot returned `ok`
+- `docker build -t tusya-reddit-telegram-bot:test .`
+- `docker image inspect tusya-reddit-telegram-bot:test --format "{{.Config.User}}|{{json .Config.Healthcheck.Test}}"` -> `tusya|["CMD-SHELL","python -m tusya_bot healthcheck --database-path /app/data/tusya.sqlite3"]`
+- `docker run --rm tusya-reddit-telegram-bot:test python -m tusya_bot healthcheck --database-path /app/data/tusya.sqlite3`
+
+## Remaining Live-Only Work
+
+- real Telegram bot token validation
+- real DeepSeek API validation
+- real owner chat validation on Telegram
+- live WedditNYC end-to-end monitoring with production secrets
+- GitHub Actions confirmation after push

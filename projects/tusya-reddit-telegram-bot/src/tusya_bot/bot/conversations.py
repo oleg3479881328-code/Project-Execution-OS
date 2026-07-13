@@ -149,7 +149,10 @@ async def draft_settings_save(update: Update, context: ContextTypes.DEFAULT_TYPE
 def build_conversations() -> list[ConversationHandler[Any]]:
     return [
         ConversationHandler(
-            entry_points=[CommandHandler("add_resource", add_resource_start)],
+            entry_points=[
+                CommandHandler("add_resource", add_resource_start),
+                MessageHandler(filters.Regex("^➕ Добавить ресурс$"), add_resource_start),
+            ],
             states={
                 ADD_RESOURCE_WAIT_INPUT: [
                     MessageHandler(filters.TEXT & ~filters.COMMAND, add_resource_save)
@@ -158,7 +161,10 @@ def build_conversations() -> list[ConversationHandler[Any]]:
             fallbacks=[CommandHandler("cancel", cancel)],
         ),
         ConversationHandler(
-            entry_points=[CommandHandler("add_keyword", add_keyword_start)],
+            entry_points=[
+                CommandHandler("add_keyword", add_keyword_start),
+                MessageHandler(filters.Regex("^🔤 Добавить слово$"), add_keyword_start),
+            ],
             states={
                 ADD_KEYWORD_WAIT_INPUT: [
                     MessageHandler(filters.TEXT & ~filters.COMMAND, add_keyword_save)

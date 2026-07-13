@@ -14,3 +14,8 @@ def configure_logging(level: str = "INFO") -> None:
             logging.StreamHandler(),
         ],
     )
+
+
+def log_startup_diagnostics(diagnostics: dict[str, str | int]) -> None:
+    logger = logging.getLogger("tusya_bot.startup")
+    logger.info("Startup diagnostics: %s", diagnostics)
