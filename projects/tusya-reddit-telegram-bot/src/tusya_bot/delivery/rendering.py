@@ -143,6 +143,16 @@ def build_post_navigation_keyboard(
                 callback_data=encode_callback("draft", post.id or 0, page=page),
             )
         ],
+        [
+            InlineKeyboardButton(
+                "🔁 Регенерировать",
+                callback_data=encode_callback("redraft", post.id or 0, page=page),
+            ),
+            InlineKeyboardButton(
+                "🛠 Уточнить",
+                callback_data=encode_callback("refine", post.id or 0, page=page),
+            ),
+        ],
     ]
     if page is not None:
         rows.append(
@@ -211,3 +221,49 @@ def _status_emoji(status: PostStatus) -> str:
         PostStatus.IGNORED: "🙈",
         PostStatus.DRAFTED: "✍️",
     }[status]
+
+
+def render_draft_text(
+    *,
+    draft_text: str,
+    provider: str,
+    model: str,
+    prompt_version: str,
+    owner_instruction: str | None,
+) -> str:
+    lines = [
+        "<b>Черновик ответа</b>",
+        "Черновик не опубликован.",
+        f"Provider: {escape_telegram_html(provider)}",
+        f"Model: {escape_telegram_html(model)}",
+        f"Prompt version: {escape_telegram_html(prompt_version)}",
+    ]
+    if owner_instruction:
+        lines.append(f"Уточнение: {escape_telegram_html(owner_instruction)}")
+    lines.extend(["", escape_telegram_html(draft_text)])
+    return "\n".join(lines)
+
+
+def build_draft_keyboard(post_id: int, *, page: int | None = None) -> InlineKeyboardMarkup:
+    rows = [
+        [
+            InlineKeyboardButton(
+                "🔁 Регенерировать",
+                callback_data=encode_callback("redraft", post_id, page=page),
+            ),
+            InlineKeyboardButton(
+                "🛠 Уточнить",
+                callback_data=encode_callback("refine", post_id, page=page),
+            ),
+        ]
+    ]
+    if page is not None:
+        rows.append(
+            [
+                InlineKeyboardButton(
+                    "← Назад к посту",
+                    callback_data=encode_callback("open", post_id, page=page),
+                )
+            ]
+        )
+    return InlineKeyboardMarkup(rows)

@@ -12,10 +12,11 @@ from telegram.ext import ContextTypes
 from tusya_bot.bot.application import _post_init
 from tusya_bot.bot.callbacks import encode_callback
 from tusya_bot.bot.feed import (
-    draft_placeholder_callback,
+    draft_create_callback,
     feed_callback,
     ignore_post_callback,
     open_post_callback,
+    redraft_callback,
     show_feed,
 )
 from tusya_bot.db.engine import Database
@@ -56,6 +57,21 @@ class _FakeBot:
 
     async def send_message(self, **kwargs: object) -> None:
         self.sent.append(kwargs)
+
+
+class _FakeDraftService:
+    async def create_draft(self, post_id: int):  # type: ignore[no-untyped-def]
+        return SimpleNamespace(
+            reddit_post_id=post_id,
+            draft_text="Draft reply",
+            provider="deepseek",
+            model="deepseek-v4-flash",
+            prompt_version="reddit-reply-v1",
+            user_instruction=None,
+        )
+
+    async def regenerate_draft(self, post_id: int):  # type: ignore[no-untyped-def]
+        return await self.create_draft(post_id)
 
 
 class _FakeJobQueue:
@@ -133,6 +149,7 @@ def _context(
             bot_data={
                 "owner_chat_id": owner_chat_id,
                 "post_service": PostService(database),
+                "draft_service": _FakeDraftService(),
                 "settings": SimpleNamespace(poll_interval_seconds=300),
             }
         ),
@@ -238,6 +255,37 @@ async def test_stale_deleted_callback(feed_database: Database) -> None:
 
 
 @pytest.mark.asyncio
+async def test_draft_create_and_regenerate_callbacks(feed_database: Database) -> None:
+    posts = await _persist_posts(feed_database, 1)
+    bot = _FakeBot()
+
+    create_update = SimpleNamespace(
+        effective_chat=SimpleNamespace(id=123),
+        effective_message=_FakeMessage(),
+        callback_query=_FakeQuery(encode_callback("draft", posts[0].id or 0, page=0)),
+    )
+    await draft_create_callback(
+        cast(Update, create_update),
+        cast(ContextTypes.DEFAULT_TYPE, _context(database=feed_database, bot=bot)),
+    )
+    assert bot.sent
+    assert "Черновик ответа" in str(bot.sent[0]["text"])
+
+    bot.sent.clear()
+    regenerate_update = SimpleNamespace(
+        effective_chat=SimpleNamespace(id=123),
+        effective_message=_FakeMessage(),
+        callback_query=_FakeQuery(encode_callback("redraft", posts[0].id or 0, page=0)),
+    )
+    await redraft_callback(
+        cast(Update, regenerate_update),
+        cast(ContextTypes.DEFAULT_TYPE, _context(database=feed_database, bot=bot)),
+    )
+    assert bot.sent
+    assert "Черновик ответа" in str(bot.sent[0]["text"])
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "handler,update_factory",
     [
@@ -265,11 +313,19 @@ async def test_stale_deleted_callback(feed_database: Database) -> None:
             ),
         ),
         (
-            draft_placeholder_callback,
+            draft_create_callback,
             lambda: SimpleNamespace(
                 effective_chat=SimpleNamespace(id=999),
                 effective_message=_FakeMessage(),
                 callback_query=_FakeQuery(encode_callback("draft", 1, page=0)),
+            ),
+        ),
+        (
+            redraft_callback,
+            lambda: SimpleNamespace(
+                effective_chat=SimpleNamespace(id=999),
+                effective_message=_FakeMessage(),
+                callback_query=_FakeQuery(encode_callback("redraft", 1, page=0)),
             ),
         ),
     ],

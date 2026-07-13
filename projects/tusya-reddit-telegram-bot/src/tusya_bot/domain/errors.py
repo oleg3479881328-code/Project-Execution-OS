@@ -23,3 +23,7 @@ class NotFoundError(TusyaBotError):
 
 class StaleCallbackError(TusyaBotError):
     """Raised when a callback references an unavailable entity."""
+
+
+class DraftGenerationError(TusyaBotError):
+    """Raised when a draft cannot be generated safely."""

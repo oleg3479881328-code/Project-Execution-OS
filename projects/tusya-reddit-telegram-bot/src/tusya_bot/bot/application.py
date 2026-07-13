@@ -12,6 +12,7 @@ from telegram.ext import (
     filters,
 )
 
+from tusya_bot.ai.client import DeepSeekDraftClient
 from tusya_bot.bot.commands import (
     check_now,
     check_now_callback,
@@ -27,11 +28,12 @@ from tusya_bot.bot.commands import (
 )
 from tusya_bot.bot.conversations import build_conversations
 from tusya_bot.bot.feed import (
-    draft_placeholder_callback,
+    draft_create_callback,
     feed_callback,
     ignore_post_callback,
     noop_callback,
     open_post_callback,
+    redraft_callback,
     show_feed,
 )
 from tusya_bot.config import Settings
@@ -42,6 +44,7 @@ from tusya_bot.domain.errors import StaleCallbackError, TusyaBotError
 from tusya_bot.logging_config import configure_logging
 from tusya_bot.monitoring.engine import MonitoringEngine
 from tusya_bot.reddit.client import PublicRedditClient
+from tusya_bot.services.draft_service import DraftService
 from tusya_bot.services.keyword_service import KeywordService
 from tusya_bot.services.post_service import PostService
 from tusya_bot.services.resource_service import ResourceService
@@ -59,6 +62,13 @@ async def build_application(settings: Settings) -> TelegramApplication:
     resource_service = ResourceService(database)
     keyword_service = KeywordService(database)
     post_service = PostService(database)
+    draft_client = DeepSeekDraftClient(
+        api_key=settings.deepseek_api_key.get_secret_value(),
+        base_url=settings.deepseek_base_url,
+        model=settings.deepseek_model,
+        timeout_seconds=settings.deepseek_timeout_seconds,
+    )
+    draft_service = DraftService(database=database, client=draft_client)
     reddit_client = PublicRedditClient(
         user_agent=settings.reddit_user_agent,
         timeout_seconds=float(settings.reddit_timeout_seconds),
@@ -88,6 +98,7 @@ async def build_application(settings: Settings) -> TelegramApplication:
     application.bot_data["resource_service"] = resource_service
     application.bot_data["keyword_service"] = keyword_service
     application.bot_data["post_service"] = post_service
+    application.bot_data["draft_service"] = draft_service
     application.bot_data["reddit_client"] = reddit_client
     application.bot_data["delivery_service"] = delivery_service
     application.bot_data["monitoring_engine"] = monitoring_engine
@@ -107,7 +118,8 @@ async def build_application(settings: Settings) -> TelegramApplication:
     application.add_handler(CallbackQueryHandler(feed_callback, pattern="^feed:"))
     application.add_handler(CallbackQueryHandler(open_post_callback, pattern="^open:"))
     application.add_handler(CallbackQueryHandler(ignore_post_callback, pattern="^ignore:"))
-    application.add_handler(CallbackQueryHandler(draft_placeholder_callback, pattern="^draft:"))
+    application.add_handler(CallbackQueryHandler(draft_create_callback, pattern="^draft:"))
+    application.add_handler(CallbackQueryHandler(redraft_callback, pattern="^redraft:"))
     application.add_handler(CallbackQueryHandler(noop_callback, pattern="^noop:"))
     application.add_handler(MessageHandler(filters.Regex("^📡 Лента$"), show_feed))
 

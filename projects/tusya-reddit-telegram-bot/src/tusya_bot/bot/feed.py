@@ -11,13 +11,17 @@ from tusya_bot.bot.auth import require_owner
 from tusya_bot.bot.callbacks import CallbackPayload, parse_callback
 from tusya_bot.delivery.rendering import (
     FEED_PAGE_SIZE,
+    build_draft_keyboard,
     build_feed_keyboard,
     build_post_navigation_keyboard,
     chunk_text,
+    render_draft_text,
     render_feed_page,
     render_full_post,
 )
-from tusya_bot.domain.errors import NotFoundError, StaleCallbackError
+from tusya_bot.domain.errors import DraftGenerationError, NotFoundError, StaleCallbackError
+from tusya_bot.domain.models import ReplyDraft
+from tusya_bot.services.draft_service import DraftService
 from tusya_bot.services.post_service import PostService
 
 
@@ -90,7 +94,7 @@ async def ignore_post_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     )
 
 
-async def draft_placeholder_callback(
+async def draft_create_callback(
     update: Update,
     context: ContextTypes.DEFAULT_TYPE,
 ) -> None:
@@ -99,19 +103,47 @@ async def draft_placeholder_callback(
     assert query is not None
     await query.answer()
     payload = _parse_callback_or_stale(query)
-    post_service: PostService = context.application.bot_data["post_service"]
     try:
-        post = await post_service.get_post(payload.subject_id)
-    except NotFoundError as error:
-        raise StaleCallbackError(str(error)) from error
-
-    await context.bot.send_message(
-        chat_id=query.message.chat_id,  # type: ignore[union-attr]
-        text=(
-            "Создание черновика будет добавлено в Phase 4.\n"
-            f"Пост сохранен: {post.title}\n"
-            "Черновик не опубликован."
+        draft = await _generate_draft(
+            context=context,
+            post_id=payload.subject_id,
+        )
+    except DraftGenerationError:
+        await context.bot.send_message(
+            chat_id=query.message.chat_id,  # type: ignore[union-attr]
+            text="Не удалось создать черновик. Попробуйте позже.",
         ),
+        return
+    await _send_draft_message(
+        context=context,
+        chat_id=query.message.chat_id,  # type: ignore[union-attr]
+        post_id=payload.subject_id,
+        page=payload.page,
+        draft=draft,
+    )
+
+
+async def redraft_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await require_owner(update, context)
+    query = update.callback_query
+    assert query is not None
+    await query.answer()
+    payload = _parse_callback_or_stale(query)
+    service: DraftService = context.application.bot_data["draft_service"]
+    try:
+        draft = await service.regenerate_draft(payload.subject_id)
+    except DraftGenerationError:
+        await context.bot.send_message(
+            chat_id=query.message.chat_id,  # type: ignore[union-attr]
+            text="Не удалось обновить черновик. Попробуйте позже.",
+        )
+        return
+    await _send_draft_message(
+        context=context,
+        chat_id=query.message.chat_id,  # type: ignore[union-attr]
+        post_id=payload.subject_id,
+        page=payload.page,
+        draft=draft,
     )
 
 
@@ -183,3 +215,45 @@ async def _edit_message_html(
         reply_markup=reply_markup,
         disable_web_page_preview=True,
     )
+
+
+async def _generate_draft(
+    *,
+    context: ContextTypes.DEFAULT_TYPE,
+    post_id: int,
+) -> ReplyDraft:
+    service: DraftService = context.application.bot_data["draft_service"]
+    return await service.create_draft(post_id)
+
+
+async def _send_draft_message(
+    *,
+    context: ContextTypes.DEFAULT_TYPE,
+    chat_id: int,
+    post_id: int,
+    page: int | None,
+    draft: ReplyDraft,
+) -> None:
+    chunks = chunk_text(
+        render_draft_text(
+            draft_text=draft.draft_text,
+            provider=draft.provider,
+            model=draft.model,
+            prompt_version=draft.prompt_version,
+            owner_instruction=draft.user_instruction,
+        )
+    )
+    await context.bot.send_message(
+        chat_id=chat_id,
+        text=chunks[0],
+        parse_mode=ParseMode.HTML,
+        reply_markup=build_draft_keyboard(post_id, page=page),
+        disable_web_page_preview=True,
+    )
+    for chunk in chunks[1:]:
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=chunk,
+            parse_mode=ParseMode.HTML,
+            disable_web_page_preview=True,
+        )

@@ -462,6 +462,60 @@ class DraftRepository:
             }
         )
 
+    async def list_by_post_id(self, post_id: int) -> list[ReplyDraft]:
+        rows = await (
+            await self._connection.execute(
+                """
+                SELECT *
+                FROM reply_drafts
+                WHERE reddit_post_id = ?
+                ORDER BY id ASC
+                """,
+                (post_id,),
+            )
+        ).fetchall()
+        return [
+            ReplyDraft(
+                id=int(row["id"]),
+                reddit_post_id=int(row["reddit_post_id"]),
+                provider=str(row["provider"]),
+                model=str(row["model"]),
+                prompt_version=str(row["prompt_version"]),
+                draft_text=str(row["draft_text"]),
+                user_instruction=row["user_instruction"],
+                created_at=str(row["created_at"]),
+                updated_at=str(row["updated_at"]),
+            )
+            for row in rows
+        ]
+
+    async def get_latest_by_post_id(self, post_id: int) -> ReplyDraft | None:
+        row = await (
+            await self._connection.execute(
+                """
+                SELECT *
+                FROM reply_drafts
+                WHERE reddit_post_id = ?
+                ORDER BY id DESC
+                LIMIT 1
+                """,
+                (post_id,),
+            )
+        ).fetchone()
+        if row is None:
+            return None
+        return ReplyDraft(
+            id=int(row["id"]),
+            reddit_post_id=int(row["reddit_post_id"]),
+            provider=str(row["provider"]),
+            model=str(row["model"]),
+            prompt_version=str(row["prompt_version"]),
+            draft_text=str(row["draft_text"]),
+            user_instruction=row["user_instruction"],
+            created_at=str(row["created_at"]),
+            updated_at=str(row["updated_at"]),
+        )
+
 
 class SettingsRepository:
     def __init__(self, connection: aiosqlite.Connection) -> None:
