@@ -11,8 +11,14 @@ interface DownloadTarget {
   videoUrl: string;
 }
 
-function targetSignature(targets: DownloadTarget[]): string {
-  return targets.map((target) => `${target.key}:${target.videoUrl}`).join('|');
+function sameTargets(current: DownloadTarget[], next: DownloadTarget[]): boolean {
+  return current.length === next.length && current.every((target, index) => {
+    const candidate = next[index];
+    return candidate !== undefined
+      && target.key === candidate.key
+      && target.videoUrl === candidate.videoUrl
+      && target.slot === candidate.slot;
+  });
 }
 
 function collectTargets(): DownloadTarget[] {
@@ -101,7 +107,7 @@ export default function VideoDownloadControls() {
       if (scheduled.current !== undefined) window.cancelAnimationFrame(scheduled.current);
       scheduled.current = window.requestAnimationFrame(() => {
         const next = collectTargets();
-        setTargets((current) => targetSignature(current) === targetSignature(next) ? current : next);
+        setTargets((current) => sameTargets(current, next) ? current : next);
       });
     };
 
