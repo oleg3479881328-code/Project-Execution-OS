@@ -29,7 +29,6 @@ Primary users:
 
 - Durable source: `projects/tiktok-research-sorter/` inside `oleg3479881328-code/Project-Execution-OS`.
 - Stable implementation and distribution branch: `main`.
-- Active feature branch: `agent/tiktok-research-sorter-channel-export-v0.5.0` until PR #87 is merged.
 - Version 0.5.0 delivery issue: `#86`.
 - Version 0.5.0 pull request: `#87`.
 
@@ -48,9 +47,9 @@ TikTok public page
 
 ## 5. Current status
 
-- Mode: `implementation / automated validation`
-- Phase: `v0.5.0 complete public channel information`
-- Status: implementation and tests are committed on PR #87; final Linux, Windows, integrity, artifact, and merge evidence are pending.
+- Mode: `stable / integrated`
+- Phase: `v0.5.0 complete public channel information delivered`
+- Status: profile, hashtag, favorites, public channel snapshots, enrichment, and channel-grouped selected HTML workflows are integrated into `main`; Linux, Windows, integrity, packaging, and archive validation are green.
 
 ## 6. Key decisions and constraints
 
@@ -69,15 +68,13 @@ TikTok public page
 - Preserve only sanitized fixtures. Never commit cookies, tokens, authorization headers, browser profiles, signatures, or raw identifying traffic.
 - Keep generated deliverables and exports versioned.
 
-## 7. Current validation gate
+## 7. Current validation baseline
 
-Before v0.5.0 is integrated:
-
-- Project Execution OS integrity validation passes;
-- Linux reproducible install, strict TypeScript check, all tests, production build, and versioned packaging pass;
-- Windows updater dry-run, full local-source validation, and manifest check pass;
-- installable extension archive contains root-level `manifest.json` with version `0.5.0`;
-- PR #87 is mergeable and merged into `main`.
+- Project Execution OS integrity validation passes.
+- Linux reproducible install, strict TypeScript check, all tests, production build, versioned packaging, and artifact upload pass.
+- Windows updater dry-run, full local-source validation, and manifest check pass.
+- Installable extension archive contains root-level `manifest.json` with version `0.5.0` and retains TikTok-only host permissions.
+- PR #87 is merged into `main` as `6a9817c923ed0e531ee7193b8e52ee986b5fe29d`.
 
 ## 8. Read next
 
