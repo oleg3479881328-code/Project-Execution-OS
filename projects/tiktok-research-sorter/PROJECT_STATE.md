@@ -1,8 +1,8 @@
 ---
 project_mode: internal
-status: active
+status: stable
 version: 0.5.0
-branch: agent/tiktok-research-sorter-channel-export-v0.5.0
+branch: main
 active_issue: 86
 pull_request: 87
 ---
@@ -11,7 +11,7 @@ pull_request: 87
 
 ## Current phase
 
-Version 0.5.0 adds complete public channel snapshots to Favorites and selected HTML exports while preserving the profile, hashtag, favorites, and checkbox-selection workflows. PR #87 is under final automated validation before integration into `main`.
+Version 0.5.0 is integrated into `main`. It adds complete public channel snapshots to Favorites and selected HTML exports while preserving the profile, hashtag, favorites, and checkbox-selection workflows. The Windows updater follows `main`.
 
 ## Working implementation
 
@@ -28,7 +28,7 @@ Version 0.5.0 adds complete public channel snapshots to Favorites and selected H
 - Selected-only standalone HTML grouped by channel.
 - Channel HTML includes identity, public IDs, counters, flags, locale, dates, website, source, channel analytics, links, and selected videos.
 - HTML escaping and HTTP(S)-only URL validation.
-- Atomic Windows one-click updater following `main` after merge.
+- Atomic Windows one-click updater following `main`.
 
 ## Supported public channel fields
 
@@ -50,19 +50,20 @@ Missing fields remain unavailable and are never inferred.
 - No additional host permissions beyond TikTok.
 - No backend, cloud sync, Chrome Web Store submission, or public GitHub Release.
 
-## Validation status
+## Final validation
 
-Implementation and regression coverage are committed on PR #87. Final evidence still required:
+For PR #87 head `4d12189a5509c9ced21b397d1e5be0d16ed584ab`:
 
-- Project Execution OS integrity validation;
-- Linux reproducible install, TypeScript, all tests, production build, packaging, and artifact upload;
-- Windows updater dry-run, full local-source validation, and manifest version check;
-- installable extension ZIP inspection;
-- PR merge into `main`.
+- Project Execution OS integrity run `29339387056`: passed.
+- TikTok Research Sorter CI run `29339387139`: passed.
+- Linux reproducible install, strict TypeScript, all tests, production build, packaging, and artifact upload: passed.
+- Windows updater dry-run, full local-source validation, and manifest version check: passed.
+- Installable ZIP inspected: root-level `manifest.json`, manifest version `0.5.0`, 10 extension files, and unchanged TikTok-only host permissions.
+- PR #87 merged into `main` as `6a9817c923ed0e531ee7193b8e52ee986b5fe29d`.
 
-## Distribution target
+## Distribution
 
-Successful v0.5.0 CI must produce:
+Successful v0.5.0 CI produced:
 
 - unpacked Chrome MV3 extension;
 - `tiktok-research-sorter-extension-v0.5.0.zip`;
