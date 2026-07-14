@@ -1,5 +1,6 @@
 import { browser } from 'wxt/browser';
 import { median } from './analytics';
+import { favoriteKey } from './favorites';
 import { mergeDiscoveredVideos } from './tag-research';
 import { mergeVideoRecords } from './tiktok-parser';
 import type {
@@ -18,6 +19,7 @@ const STALE_SCAN_MS = 2 * 60 * 1000;
 const initialState: DashboardData = {
   profiles: {},
   tagResearch: {},
+  favorites: {},
   activeScan: {
     status: 'idle',
     videosFound: 0,
@@ -35,18 +37,19 @@ function normalizeTagKey(tag: string): string {
   return tag.trim().replace(/^#/, '').toLowerCase();
 }
 
-function normalizeDashboard(value: DashboardData | undefined): DashboardData {
+function normalizeDashboard(value: Partial<DashboardData> | undefined): DashboardData {
   if (!value) return structuredClone(initialState);
   return {
     profiles: value.profiles ?? {},
     tagResearch: value.tagResearch ?? {},
+    favorites: value.favorites ?? {},
     activeScan: value.activeScan ?? structuredClone(initialState.activeScan),
   };
 }
 
 export async function loadDashboard(): Promise<DashboardData> {
   const stored = await browser.storage.local.get(STORAGE_KEY);
-  const dashboard = normalizeDashboard(stored[STORAGE_KEY] as DashboardData | undefined);
+  const dashboard = normalizeDashboard(stored[STORAGE_KEY] as Partial<DashboardData> | undefined);
 
   if (
     dashboard.activeScan.status === 'scanning'
@@ -185,6 +188,31 @@ export async function mergeTagVideoBatch(
   dashboard.activeScan.videosFound = existing.scannedVideos;
   dashboard.activeScan.accountsFound = existing.accountsFound;
   dashboard.activeScan.updatedAt = Date.now();
+  await saveDashboard(dashboard);
+  return dashboard;
+}
+
+export async function toggleFavorite(video: VideoRecord): Promise<DashboardData> {
+  const dashboard = await loadDashboard();
+  const key = favoriteKey(video);
+
+  if (dashboard.favorites[key]) {
+    delete dashboard.favorites[key];
+  } else {
+    dashboard.favorites[key] = {
+      key,
+      video: structuredClone(video),
+      favoritedAt: Date.now(),
+    };
+  }
+
+  await saveDashboard(dashboard);
+  return dashboard;
+}
+
+export async function removeFavorites(keys: string[]): Promise<DashboardData> {
+  const dashboard = await loadDashboard();
+  for (const key of new Set(keys)) delete dashboard.favorites[key];
   await saveDashboard(dashboard);
   return dashboard;
 }
