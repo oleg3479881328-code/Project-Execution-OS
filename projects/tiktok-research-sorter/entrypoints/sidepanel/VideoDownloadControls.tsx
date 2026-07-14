@@ -94,7 +94,7 @@ function DownloadButton({ videoUrl }: { videoUrl: string }) {
 
 export default function VideoDownloadControls() {
   const [targets, setTargets] = useState<DownloadTarget[]>([]);
-  const scheduled = useRef<number>();
+  const scheduled = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const refresh = () => {
