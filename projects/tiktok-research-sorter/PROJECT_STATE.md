@@ -1,17 +1,28 @@
 ---
 project_mode: internal
-status: stable
+status: design-preview
 version: 0.5.0
-branch: main
-active_issue: 86
-pull_request: 87
+branch: agent/tiktok-design-preview
+base_branch: main
+active_issue: null
+pull_request: pending
 ---
 
 # TikTok Research Sorter — Project State
 
 ## Current phase
 
-Version 0.5.0 is integrated into `main`. It adds complete public channel snapshots to Favorites and selected HTML exports while preserving the profile, hashtag, favorites, and checkbox-selection workflows. The Windows updater follows `main`.
+Version 0.5.0 remains integrated and validated in `main`. The bounded branch `agent/tiktok-design-preview` adds an autonomous HTML design stand for visual iteration without changing the Chrome Extension runtime, permissions, data model, scanning, persistence, analytics, or export logic.
+
+## Active design artifact
+
+- File: `design/sidepanel-design-preview.html`.
+- Format: one self-contained HTML file with embedded CSS, mock data, and minimal JavaScript.
+- Runtime dependencies: none.
+- Browser-extension APIs: none.
+- Supported preview states: profile analysis, hashtag research, and favorites grouped by channel.
+- Preview tools: fixed width presets, adjustable panel width, compact density, and layout outlines.
+- Intended workflow: open the file directly in a browser, iterate with Codex, then selectively transfer approved styling and markup to `entrypoints/sidepanel/App.tsx` and `entrypoints/sidepanel/style.css`.
 
 ## Working implementation
 
@@ -43,6 +54,8 @@ Missing fields remain unavailable and are never inferred.
 
 ## Boundaries
 
+- The design stand uses illustrative mock data only and must not be treated as collected TikTok data.
+- The design stand does not call the network, `chrome.*`, WXT, React, npm packages, or external fonts.
 - Data remains local unless the user explicitly exports it.
 - TikTok can omit public fields, request verification, change payloads, or expire external preview/avatar URLs.
 - Public channel enrichment uses the existing TikTok host permission and does not navigate the visible page.
@@ -50,9 +63,9 @@ Missing fields remain unavailable and are never inferred.
 - No additional host permissions beyond TikTok.
 - No backend, cloud sync, Chrome Web Store submission, or public GitHub Release.
 
-## Final validation
+## Validation baseline
 
-For PR #87 head `4d12189a5509c9ced21b397d1e5be0d16ed584ab`:
+For stable `main` and PR #87 head `4d12189a5509c9ced21b397d1e5be0d16ed584ab`:
 
 - Project Execution OS integrity run `29339387056`: passed.
 - TikTok Research Sorter CI run `29339387139`: passed.
@@ -60,6 +73,13 @@ For PR #87 head `4d12189a5509c9ced21b397d1e5be0d16ed584ab`:
 - Windows updater dry-run, full local-source validation, and manifest version check: passed.
 - Installable ZIP inspected: root-level `manifest.json`, manifest version `0.5.0`, 10 extension files, and unchanged TikTok-only host permissions.
 - PR #87 merged into `main` as `6a9817c923ed0e531ee7193b8e52ee986b5fe29d`.
+
+For `agent/tiktok-design-preview`:
+
+- the standalone document has complete HTML, style, script, and closing tags;
+- the three preview views and width controls are present;
+- JavaScript is intentionally limited to preview interaction;
+- extension runtime validation is unchanged because runtime files were not edited.
 
 ## Distribution
 
