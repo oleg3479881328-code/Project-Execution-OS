@@ -1,58 +1,70 @@
 ---
 project_mode: internal
-status: stable
-version: 0.4.0
-branch: main
-active_issue: 84
-pull_request: 85
+status: active
+version: 0.5.0
+branch: agent/tiktok-research-sorter-channel-export-v0.5.0
+active_issue: 86
+pull_request: 87
 ---
 
 # TikTok Research Sorter — Project State
 
 ## Current phase
 
-Version 0.4.0 is integrated into `main`. It adds durable favorites, checkbox-based curation, and safe standalone HTML export while preserving the existing public-profile and hashtag research workflows. The Windows updater follows `main`.
+Version 0.5.0 adds complete public channel snapshots to Favorites and selected HTML exports while preserving the profile, hashtag, favorites, and checkbox-selection workflows. PR #87 is under final automated validation before integration into `main`.
 
 ## Working implementation
 
 - WXT Manifest V3 extension with a React side panel.
-- Public profile scanning with profile analytics, filters, and versioned CSV/JSON export.
+- Public profile scanning with expanded channel identity, counters, identifiers, flags, locale, timestamps, and analytics.
 - Public hashtag scanning with per-account top-N selection and a minimum-view threshold.
 - A star control on every video card.
-- Favorites stored independently from profile and hashtag snapshots.
-- Dedicated Favorites view with favorite count.
-- Checkbox selection, select all, clear selection, individual removal, and bulk removal.
-- Standalone HTML export containing only checked favorites.
-- HTML cards include clickable video/profile links, descriptions, preview images, dates, audio, hashtags, and available metrics.
+- Durable favorite entries containing both the video snapshot and a channel snapshot.
+- Backward-compatible migration of v0.4.0 favorites to partial channel snapshots.
+- Automatic channel-snapshot refresh when richer profile information is collected.
+- Same-origin public channel enrichment after adding a favorite, without navigating the visible TikTok page.
+- Manual `Обновить канал` action as a fallback.
+- Favorites grouped by channel with complete channel cards.
+- Selected-only standalone HTML grouped by channel.
+- Channel HTML includes identity, public IDs, counters, flags, locale, dates, website, source, channel analytics, links, and selected videos.
 - HTML escaping and HTTP(S)-only URL validation.
-- Backward-compatible migration for dashboards created before Favorites existed.
-- Atomic Windows one-click updater following `main`.
+- Atomic Windows one-click updater following `main` after merge.
+
+## Supported public channel fields
+
+- username, profile URL, display name, avatar, biography, verification, and website;
+- public user ID and `secUid`;
+- followers, following, friends, total profile likes, and public video count;
+- region, language, private-account flag, commerce-account flag, and account creation date;
+- locally collected video count, median views, average engagement, and strongest hashtags;
+- collection/update timestamps and data source.
+
+Missing fields remain unavailable and are never inferred.
 
 ## Boundaries
 
 - Data remains local unless the user explicitly exports it.
-- Exported HTML references public TikTok links and externally hosted preview images; previews can stop loading if TikTok later expires those URLs.
+- TikTok can omit public fields, request verification, change payloads, or expire external preview/avatar URLs.
+- Public channel enrichment uses the existing TikTok host permission and does not navigate the visible page.
 - No login, CAPTCHA, private-profile, paywall, rate-limit, or access-control bypass.
 - No additional host permissions beyond TikTok.
 - No backend, cloud sync, Chrome Web Store submission, or public GitHub Release.
 
-## Final validation
+## Validation status
 
-For PR #85 head `eb3328251cb256164237baefb66b25b449d222cb`:
+Implementation and regression coverage are committed on PR #87. Final evidence still required:
 
-- Project Execution OS integrity run `29333836074`: passed.
-- TikTok Research Sorter CI run `29333836128`: passed.
-- Linux reproducible install, strict TypeScript, all tests, production build, packaging, and artifact upload: passed.
-- Windows updater dry-run, full local-source validation, and manifest version check: passed.
-- PR #85 merged into `main` as `92f66e3fea0b96f30dfad8dc0de7aff5e1a5c696`.
+- Project Execution OS integrity validation;
+- Linux reproducible install, TypeScript, all tests, production build, packaging, and artifact upload;
+- Windows updater dry-run, full local-source validation, and manifest version check;
+- installable extension ZIP inspection;
+- PR merge into `main`.
 
-## Distribution
+## Distribution target
 
-Successful v0.4.0 CI produced:
+Successful v0.5.0 CI must produce:
 
 - unpacked Chrome MV3 extension;
-- `tiktok-research-sorter-extension-v0.4.0.zip`;
-- `tiktok-sorter-auto-updater-setup-v0.4.0.zip`;
-- `tiktok-research-sorter-source-v0.4.0.zip`.
-
-The installable extension ZIP was independently inspected: `manifest.json` is at the archive root and declares version `0.4.0`.
+- `tiktok-research-sorter-extension-v0.5.0.zip`;
+- `tiktok-sorter-auto-updater-setup-v0.5.0.zip`;
+- `tiktok-research-sorter-source-v0.5.0.zip`.
