@@ -1,13 +1,23 @@
 import { browser } from 'wxt/browser';
 import { median } from './analytics';
+import { mergeDiscoveredVideos } from './tag-research';
 import { mergeVideoRecords } from './tiktok-parser';
-import type { DashboardData, ProfileRecord, ProfileSnapshot, ScanState, VideoRecord } from './types';
+import type {
+  DashboardData,
+  ProfileRecord,
+  ProfileSnapshot,
+  ScanOptions,
+  ScanState,
+  TagResearchSnapshot,
+  VideoRecord,
+} from './types';
 
 const STORAGE_KEY = 'tiktokResearchSorter.dashboard.v1';
 const STALE_SCAN_MS = 2 * 60 * 1000;
 
 const initialState: DashboardData = {
   profiles: {},
+  tagResearch: {},
   activeScan: {
     status: 'idle',
     videosFound: 0,
@@ -21,10 +31,22 @@ const sourcePriority: Record<ProfileRecord['source'], number> = {
   api: 3,
 };
 
+function normalizeTagKey(tag: string): string {
+  return tag.trim().replace(/^#/, '').toLowerCase();
+}
+
+function normalizeDashboard(value: DashboardData | undefined): DashboardData {
+  if (!value) return structuredClone(initialState);
+  return {
+    profiles: value.profiles ?? {},
+    tagResearch: value.tagResearch ?? {},
+    activeScan: value.activeScan ?? structuredClone(initialState.activeScan),
+  };
+}
+
 export async function loadDashboard(): Promise<DashboardData> {
   const stored = await browser.storage.local.get(STORAGE_KEY);
-  const value = stored[STORAGE_KEY] as DashboardData | undefined;
-  const dashboard = value ?? structuredClone(initialState);
+  const dashboard = normalizeDashboard(stored[STORAGE_KEY] as DashboardData | undefined);
 
   if (
     dashboard.activeScan.status === 'scanning'
@@ -115,9 +137,68 @@ export async function mergeVideoBatch(username: string, profileUrl: string, vide
   return dashboard;
 }
 
+export async function beginTagResearch(
+  tag: string,
+  tagUrl: string,
+  options: ScanOptions,
+): Promise<DashboardData> {
+  const dashboard = await loadDashboard();
+  const key = normalizeTagKey(tag);
+  dashboard.tagResearch[key] = {
+    tag: key,
+    tagUrl,
+    videos: [],
+    topVideosPerAccount: Math.max(1, Math.floor(options.topVideosPerAccount)),
+    minViews: Math.max(0, Math.floor(options.minViews)),
+    scannedVideos: 0,
+    accountsFound: 0,
+    lastScannedAt: Date.now(),
+  };
+  await saveDashboard(dashboard);
+  return dashboard;
+}
+
+export async function mergeTagVideoBatch(
+  tag: string,
+  tagUrl: string,
+  videos: VideoRecord[],
+): Promise<DashboardData> {
+  const dashboard = await loadDashboard();
+  const key = normalizeTagKey(tag);
+  const existing: TagResearchSnapshot = dashboard.tagResearch[key] ?? {
+    tag: key,
+    tagUrl,
+    videos: [],
+    topVideosPerAccount: 1,
+    minViews: 0,
+    scannedVideos: 0,
+    accountsFound: 0,
+    lastScannedAt: Date.now(),
+  };
+
+  existing.videos = mergeDiscoveredVideos([...existing.videos, ...videos]);
+  existing.scannedVideos = existing.videos.length;
+  existing.accountsFound = new Set(existing.videos.map((video) => video.author.toLowerCase())).size;
+  existing.lastScannedAt = Date.now();
+  existing.tagUrl = tagUrl;
+  dashboard.tagResearch[key] = existing;
+  dashboard.activeScan.videosFound = existing.scannedVideos;
+  dashboard.activeScan.accountsFound = existing.accountsFound;
+  dashboard.activeScan.updatedAt = Date.now();
+  await saveDashboard(dashboard);
+  return dashboard;
+}
+
 export async function clearProfile(username: string): Promise<DashboardData> {
   const dashboard = await loadDashboard();
   delete dashboard.profiles[username];
+  await saveDashboard(dashboard);
+  return dashboard;
+}
+
+export async function clearTagResearch(tag: string): Promise<DashboardData> {
+  const dashboard = await loadDashboard();
+  delete dashboard.tagResearch[normalizeTagKey(tag)];
   await saveDashboard(dashboard);
   return dashboard;
 }

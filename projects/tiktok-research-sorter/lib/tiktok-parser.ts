@@ -152,7 +152,7 @@ export function extractVideosFromPayload(
 
     if (looksLikeVideoItem(value)) {
       const normalized = normalizeTikTokItem(value, fallbackAuthor, source);
-      if (normalized) found.set(normalized.id, normalized);
+      if (normalized) found.set(`${normalized.author.toLowerCase()}:${normalized.id}`, normalized);
     }
 
     if (Array.isArray(value)) {
@@ -298,41 +298,71 @@ export function extractProfileFromDom(username: string): ProfileRecord {
   };
 }
 
-export function extractVideosFromDom(username: string): VideoRecord[] {
+export function parseTikTokVideoUrl(value: string, baseUrl = 'https://www.tiktok.com'): { author: string; id: string; videoUrl: string } | undefined {
+  try {
+    const url = new URL(value, baseUrl);
+    const match = url.pathname.match(/^\/@([^/]+)\/video\/(\d+)/i);
+    if (!match?.[1] || !match[2]) return undefined;
+    const author = decodeURIComponent(match[1]).replace(/^@/, '');
+    if (!author) return undefined;
+    return {
+      author,
+      id: match[2],
+      videoUrl: `${url.origin}/@${author}/video/${match[2]}`,
+    };
+  } catch {
+    return undefined;
+  }
+}
+
+function extractVideoFromLink(link: HTMLAnchorElement): VideoRecord | undefined {
+  const parsed = parseTikTokVideoUrl(link.href, location.origin);
+  if (!parsed) return undefined;
+
+  const card = link.closest<HTMLElement>(
+    '[data-e2e="user-post-item"], [data-e2e="challenge-item"], [data-e2e="search-card-video-container"], article, li, div'
+  );
+  const viewsNode = card?.querySelector<HTMLElement>(
+    '[data-e2e="video-views"], [data-e2e="search-card-video-views"], [class*="video-count"], strong'
+  );
+  const image = link.querySelector<HTMLImageElement>('img') ?? card?.querySelector<HTMLImageElement>('img');
+  const description = image?.alt ?? link.getAttribute('aria-label') ?? '';
+  const cardText = card?.textContent?.toLowerCase() ?? '';
+
+  return {
+    id: parsed.id,
+    author: parsed.author,
+    profileUrl: `https://www.tiktok.com/@${parsed.author}`,
+    videoUrl: parsed.videoUrl,
+    description,
+    views: parseCompactNumber(viewsNode?.textContent),
+    likes: 0,
+    comments: 0,
+    shares: 0,
+    coverUrl: sanitizeHttpUrl(image?.currentSrc || image?.src || undefined),
+    hashtags: Array.from(description.matchAll(/#([\p{L}\p{N}_]+)/gu), (entry) => entry[1] ?? '').filter(Boolean),
+    isPinned: ['pinned', 'закреплено', 'fixé', 'angeheftet'].some((label) => cardText.includes(label)),
+    collectedAt: Date.now(),
+    source: 'dom',
+  };
+}
+
+export function extractVideosFromDiscoveryDom(): VideoRecord[] {
   const found = new Map<string, VideoRecord>();
-  const links = document.querySelectorAll<HTMLAnchorElement>(`a[href*="/@${CSS.escape(username)}/video/"]`);
+  const links = document.querySelectorAll<HTMLAnchorElement>('a[href*="/video/"]');
 
   for (const link of links) {
-    const url = new URL(link.href, location.origin);
-    const match = url.pathname.match(/\/video\/(\d+)/);
-    const id = match?.[1];
-    if (!id || found.has(id)) continue;
-
-    const card = link.closest<HTMLElement>('[data-e2e="user-post-item"], [data-e2e="user-post-item-list"] > div, div');
-    const viewsNode = card?.querySelector<HTMLElement>('[data-e2e="video-views"], strong');
-    const image = link.querySelector<HTMLImageElement>('img') ?? card?.querySelector<HTMLImageElement>('img');
-    const description = image?.alt ?? link.getAttribute('aria-label') ?? '';
-    const cardText = card?.textContent?.toLowerCase() ?? '';
-
-    found.set(id, {
-      id,
-      author: username,
-      profileUrl: `https://www.tiktok.com/@${username}`,
-      videoUrl: url.toString().split('?')[0] ?? url.toString(),
-      description,
-      views: parseCompactNumber(viewsNode?.textContent),
-      likes: 0,
-      comments: 0,
-      shares: 0,
-      coverUrl: sanitizeHttpUrl(image?.currentSrc || image?.src || undefined),
-      hashtags: Array.from(description.matchAll(/#([\p{L}\p{N}_]+)/gu), (entry) => entry[1] ?? '').filter(Boolean),
-      isPinned: ['pinned', 'закреплено', 'fixé', 'angeheftet'].some((label) => cardText.includes(label)),
-      collectedAt: Date.now(),
-      source: 'dom',
-    });
+    const video = extractVideoFromLink(link);
+    if (!video) continue;
+    found.set(`${video.author.toLowerCase()}:${video.id}`, video);
   }
 
   return [...found.values()];
+}
+
+export function extractVideosFromDom(username: string): VideoRecord[] {
+  const normalized = username.toLowerCase();
+  return extractVideosFromDiscoveryDom().filter((video) => video.author.toLowerCase() === normalized);
 }
 
 export function mergeVideoRecords(current: VideoRecord, incoming: VideoRecord): VideoRecord {

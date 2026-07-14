@@ -1,57 +1,54 @@
 ---
 project_mode: internal
-status: stable
-version: 0.2.0
-branch: main
-active_issue: 72
-pull_request: 71
+status: active
+version: 0.3.0
+branch: agent/tiktok-research-sorter-tag-scan-v0.3.0
+active_issue: 82
+pull_request: 83
 ---
 
 # TikTok Research Sorter — Project State
 
 ## Current phase
 
-Version 0.2.0 is integrated into `main`. The automatic Windows updater follows `main`, so future approved changes can be delivered through the desktop shortcut without manual extension reinstallation.
+Version 0.3.0 adds public hashtag-page research while preserving the existing profile workflow. PR #83 is under automated validation before integration into `main`.
 
 ## Working implementation
 
 - WXT Manifest V3 extension with a React side panel.
-- Public TikTok profile scanning initiated by the user.
-- Full profile card with avatar, name, bio, verification, followers, following, profile likes, video count, scan time, coverage, publication frequency, median views, and strongest hashtags.
-- Video cards with cover, views, velocity, engagement, and outlier score.
-- Selected TikTok API observation plus embedded-state and DOM fallbacks.
-- Local per-profile storage, filters, CSV, and JSON export.
-- Atomic Windows one-click updater with a dedicated persistent Chrome profile.
+- Automatic detection of public profile pages and `/tag/<hashtag>` pages.
+- Public profile scanning with profile card, outlier analytics, filtering, and export.
+- Public hashtag scanning with automatic scrolling and selected TikTok challenge/search payload observation.
+- Hashtag videos grouped by account.
+- User-selectable top videos per account: 1, 2, 3, 5, or 10.
+- User-selectable minimum view threshold.
+- Local hashtag snapshots that can be re-filtered after scanning.
+- Versioned CSV and JSON export.
+- Atomic Windows one-click updater following `main`.
 
-## Stabilization completed
+## Boundaries
 
-- Background dashboard mutations are serialized to prevent lost updates.
-- Stale scans recover automatically.
-- Content-script scan locks are released through `try/catch/finally`.
-- Source precedence is API → embedded JSON → DOM.
-- External URLs are restricted to HTTP(S).
-- Publication frequency, average engagement, localized counts, duration normalization, and CSV formula safety are covered.
-- The updater validates in an isolated candidate directory, preserves the current build on failure, and keeps one previous version for rollback.
+- Hashtag mode selects top videos among items actually discovered on the open hashtag page.
+- It does not silently open every creator profile.
+- No login, CAPTCHA, private-profile, paywall, rate-limit, or access-control bypass.
+- No additional host permissions beyond TikTok.
+- No Chrome Web Store submission or public GitHub Release is authorized.
 
-## Automated validation
+## Validation status
 
-- 40 unit and regression tests pass.
-- Strict TypeScript check passes.
-- Linux production build and packaging pass.
-- Windows updater dry-run and full local-source validation pass.
-- Project Execution OS structure and system-context manifest validation pass.
+Local implementation validation completed before push:
 
-## Distribution
+- strict TypeScript check passed;
+- hashtag selection fixture tests passed;
+- production Chrome MV3 build passed.
 
-The updater default is `main`. Successful CI produces:
+Final GitHub Linux, Windows, Project Execution OS integrity, artifact, and merge evidence remain pending on PR #83.
+
+## Distribution target
+
+Successful CI must produce:
 
 - unpacked Chrome MV3 extension;
-- `tiktok-research-sorter-extension-0.2.0.zip`;
-- `tiktok-sorter-auto-updater-setup-0.2.0.zip`;
-- `tiktok-research-sorter-source-0.2.0.zip`.
-
-## Remaining boundaries
-
-- No Chrome Web Store submission or public GitHub Release is authorized.
-- TikTok may change public payloads or DOM structure.
-- Very large future datasets may require IndexedDB instead of `chrome.storage.local`.
+- `tiktok-research-sorter-extension-v0.3.0.zip`;
+- `tiktok-sorter-auto-updater-setup-v0.3.0.zip`;
+- `tiktok-research-sorter-source-v0.3.0.zip`.

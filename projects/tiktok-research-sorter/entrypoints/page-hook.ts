@@ -5,9 +5,11 @@ export default defineUnlistedScript(() => {
   globalObject[marker] = true;
 
   const shouldInspect = (url: string) =>
-    url.includes('/api/post/item_list/') ||
-    url.includes('/api/user/detail/') ||
-    url.includes('/api/item/detail/');
+    url.includes('/api/post/item_list/')
+    || url.includes('/api/user/detail/')
+    || url.includes('/api/item/detail/')
+    || url.includes('/api/challenge/item_list/')
+    || url.includes('/api/search/item/full/');
 
   const emit = (url: string, payload: unknown) => {
     window.postMessage({

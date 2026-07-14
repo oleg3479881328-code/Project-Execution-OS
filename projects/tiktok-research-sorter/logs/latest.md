@@ -1,47 +1,58 @@
 # Latest Log — TikTok Research Sorter
 
-Date: 2026-07-12
-Version: `0.2.0`
-Status: integrated into `main`; automatic updater follows `main`
+Date: 2026-07-13
+Version: `0.3.0`
+Issue: `#82`
+Branch: `agent/tiktok-research-sorter-tag-scan-v0.3.0`
+Status: implementation complete locally; final GitHub validation pending
 
-## Completed
+## Added
 
-- Full TikTok profile and video research interface.
-- Serialized background persistence and stale-scan recovery.
-- API → embedded JSON → DOM source precedence.
-- Corrected analytics, localized count parsing, duration normalization, and CSV formula safety.
-- Atomic Windows updater with candidate build, validation, rollback, dedicated Chrome profile, and non-interactive CI mode.
-- 40 unit and regression tests.
-- Linux and Windows GitHub Actions validation.
-- Automatic unpacked extension, extension ZIP, updater ZIP, and source ZIP artifacts.
-- Project Execution OS structure and context-manifest integrity validation.
-- PR #71 merged into `main`.
-- Updater default branch changed from the development branch to `main`.
+- Automatic recognition of TikTok hashtag pages such as `/tag/weddingphotography`.
+- Selected observation of TikTok challenge/search item-list responses.
+- DOM fallback for video links from multiple authors on discovery pages.
+- Hashtag snapshot persistence in `chrome.storage.local`.
+- Per-account grouping and highest-viewed top-N selection.
+- User controls for top 1, 2, 3, 5, or 10 videos per account.
+- User control for minimum view count.
+- Separate profile and hashtag result modes in the side panel.
+- Versioned hashtag/profile CSV and JSON export.
+- Version bump and versioned installation artifacts to `v0.3.0`.
 
-## Final automated verification
+## Automated coverage added
 
-- Project Execution OS structure validation: passed.
-- System-context manifest validation: passed.
-- Linux reproducible install: passed.
-- TypeScript strict check: passed.
-- 40 tests: passed.
-- Chrome MV3 production build: passed.
-- Packaging and artifact upload: passed.
-- Windows zero-side-effect dry run: passed.
-- Windows full updater validation: passed.
-- Generated manifest version check: passed.
+- sanitized `weddingphotography` hashtag payload fixture;
+- extraction of multiple authors from one discovery payload;
+- top-one selection per account;
+- top-two/top-three behavior;
+- minimum-view filtering;
+- duplicate video metric merging;
+- TikTok discovery-link parsing.
 
-## Distribution behavior
+## Local verification performed
 
-The desktop shortcut now downloads `main`, validates the candidate build, preserves the active build on failure, retains one previous version, and launches the dedicated persistent Chrome profile only after success.
+```text
+npm ci --no-audit --no-fund
+npm run check
+npm test
+npm run build
+```
 
-## Remaining boundaries
+Local result for the reconstructed project package:
 
-- No Chrome Web Store submission is authorized.
-- No public GitHub Release is authorized.
-- TikTok can change its public APIs and DOM.
-- IndexedDB remains a future scaling option for very large datasets.
+- TypeScript: passed;
+- new hashtag tests: passed;
+- production Chrome MV3 build: passed;
+- generated manifest version: `0.3.0`.
+
+## Pending final evidence
+
+- GitHub Linux CI;
+- GitHub Windows updater CI;
+- Project Execution OS integrity CI;
+- downloadable v0.3.0 artifacts;
+- pull-request merge into `main`.
 
 ## Owner action
 
-None for installation updates, code validation, packaging, or repository integration.
+None during implementation and automated validation.
