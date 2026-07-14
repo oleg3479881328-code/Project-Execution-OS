@@ -1,56 +1,58 @@
 ---
 project_mode: internal
 status: stable
-version: 0.3.0
+version: 0.4.0
 branch: main
-active_issue: 82
-pull_request: 83
+active_issue: 84
+pull_request: 85
 ---
 
 # TikTok Research Sorter — Project State
 
 ## Current phase
 
-Version 0.3.0 is integrated into `main`. It adds public TikTok hashtag-page research while preserving the existing public-profile workflow. The Windows updater already follows `main`, so approved future builds can be delivered through the existing desktop shortcut.
+Version 0.4.0 is integrated into `main`. It adds durable favorites, checkbox-based curation, and safe standalone HTML export while preserving the existing public-profile and hashtag research workflows. The Windows updater follows `main`.
 
 ## Working implementation
 
 - WXT Manifest V3 extension with a React side panel.
-- Automatic detection of public profile pages and `/tag/<hashtag>` pages.
-- Public profile scanning with profile card, outlier analytics, filtering, and versioned export.
-- Public hashtag scanning with automatic scrolling and selected TikTok challenge/search payload observation.
-- Hashtag videos grouped by account.
-- User-selectable top videos per account: 1, 2, 3, 5, or 10.
-- User-selectable minimum view threshold.
-- Local hashtag snapshots that can be re-filtered after scanning.
-- Versioned CSV and JSON exports.
+- Public profile scanning with profile analytics, filters, and versioned CSV/JSON export.
+- Public hashtag scanning with per-account top-N selection and a minimum-view threshold.
+- A star control on every video card.
+- Favorites stored independently from profile and hashtag snapshots.
+- Dedicated Favorites view with favorite count.
+- Checkbox selection, select all, clear selection, individual removal, and bulk removal.
+- Standalone HTML export containing only checked favorites.
+- HTML cards include clickable video/profile links, descriptions, preview images, dates, audio, hashtags, and available metrics.
+- HTML escaping and HTTP(S)-only URL validation.
+- Backward-compatible migration for dashboards created before Favorites existed.
 - Atomic Windows one-click updater following `main`.
 
 ## Boundaries
 
-- Hashtag mode selects top videos among items actually discovered on the open hashtag page.
-- It does not silently open every creator profile.
+- Data remains local unless the user explicitly exports it.
+- Exported HTML references public TikTok links and externally hosted preview images; previews can stop loading if TikTok later expires those URLs.
 - No login, CAPTCHA, private-profile, paywall, rate-limit, or access-control bypass.
 - No additional host permissions beyond TikTok.
-- No Chrome Web Store submission or public GitHub Release is authorized.
+- No backend, cloud sync, Chrome Web Store submission, or public GitHub Release.
 
 ## Final validation
 
-For PR #83 head `5de3ce07dace425ea63359b4340c0beedf3fa5a0`:
+For PR #85 head `eb3328251cb256164237baefb66b25b449d222cb`:
 
-- Project Execution OS integrity run `29294689690`: passed.
-- TikTok Research Sorter CI run `29294689721`: passed.
-- Linux reproducible install, TypeScript, tests, build, packaging, and artifact upload: passed.
+- Project Execution OS integrity run `29333836074`: passed.
+- TikTok Research Sorter CI run `29333836128`: passed.
+- Linux reproducible install, strict TypeScript, all tests, production build, packaging, and artifact upload: passed.
 - Windows updater dry-run, full local-source validation, and manifest version check: passed.
-- PR #83 merged into `main` as `b1d0d79a369c5aa7595c48d5b29aea235e775748`.
+- PR #85 merged into `main` as `92f66e3fea0b96f30dfad8dc0de7aff5e1a5c696`.
 
 ## Distribution
 
-Successful v0.3.0 CI produced:
+Successful v0.4.0 CI produced:
 
 - unpacked Chrome MV3 extension;
-- `tiktok-research-sorter-extension-v0.3.0.zip`;
-- `tiktok-sorter-auto-updater-setup-v0.3.0.zip`;
-- `tiktok-research-sorter-source-v0.3.0.zip`.
+- `tiktok-research-sorter-extension-v0.4.0.zip`;
+- `tiktok-sorter-auto-updater-setup-v0.4.0.zip`;
+- `tiktok-research-sorter-source-v0.4.0.zip`.
 
-The installable extension ZIP was verified to contain `manifest.json` at its archive root with manifest version `0.3.0`.
+The installable extension ZIP was independently inspected: `manifest.json` is at the archive root and declares version `0.4.0`.
