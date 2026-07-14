@@ -26,9 +26,9 @@ Primary users:
 ## 3. Source of truth
 
 - Durable source: `projects/tiktok-research-sorter/` inside `oleg3479881328-code/Project-Execution-OS`.
-- Stable distribution branch: `main`.
-- Active feature branch: `agent/tiktok-research-sorter-tag-scan-v0.3.0` until Issue #82 is merged.
-- Active issue: `#82`.
+- Stable implementation and distribution branch: `main`.
+- Version 0.3.0 delivery issue: `#82`.
+- Version 0.3.0 pull request: `#83`.
 
 ## 4. Architecture
 
@@ -43,9 +43,9 @@ TikTok public page
 
 ## 5. Current status
 
-- Mode: `implementation / automated validation`
-- Phase: `v0.3.0 hashtag discovery scan`
-- Status: profile workflow stable; hashtag workflow implemented and awaiting final branch CI/merge.
+- Mode: `stable / integrated`
+- Phase: `v0.3.0 hashtag discovery scan delivered`
+- Status: profile and hashtag workflows are integrated into `main`; Linux and Windows validation and versioned packaging are green.
 
 ## 6. Key decisions and constraints
 
@@ -58,16 +58,12 @@ TikTok public page
 - Preserve only sanitized fixtures. Never commit cookies, tokens, authorization headers, browser profiles, signatures, or raw identifying traffic.
 - Keep generated deliverables versioned.
 
-## 7. Current validation gate
+## 7. Current validation baseline
 
-Before v0.3.0 is integrated:
-
-- strict TypeScript check passes;
-- all unit and regression tests pass;
-- Linux build and versioned packaging pass;
-- Windows updater validation passes;
-- Project Execution OS integrity validation passes;
-- downloadable `v0.3.0` artifacts exist.
+- Project Execution OS integrity validation passes.
+- Linux reproducible install, strict TypeScript check, tests, production build, and versioned packaging pass.
+- Windows updater dry-run, full local-source validation, and manifest check pass.
+- Installable extension archive contains root-level `manifest.json` with version `0.3.0`.
 
 ## 8. Read next
 
