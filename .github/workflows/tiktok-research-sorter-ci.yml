@@ -66,16 +66,16 @@ jobs:
         run: |
           set -euo pipefail
           cd .output/chrome-mv3
-          zip -qr ../../tiktok-research-sorter-extension-v0.5.0.zip .
+          zip -qr ../../tiktok-research-sorter-extension-v0.6.0.zip .
           cd ../..
-          zip -qr tiktok-sorter-auto-updater-setup-v0.5.0.zip automation/windows
-          zip -qr tiktok-research-sorter-source-v0.5.0.zip . \
+          zip -qr tiktok-sorter-auto-updater-setup-v0.6.0.zip automation/windows
+          zip -qr tiktok-research-sorter-source-v0.6.0.zip . \
             -x 'node_modules/*' '.output/*' '.wxt/*' '*.zip'
 
       - name: Upload unpacked extension
         uses: actions/upload-artifact@v4
         with:
-          name: tiktok-research-sorter-chrome-mv3-v0.5.0-${{ github.sha }}
+          name: tiktok-research-sorter-chrome-mv3-v0.6.0-${{ github.sha }}
           path: projects/tiktok-research-sorter/.output/chrome-mv3/
           retention-days: 14
           if-no-files-found: error
@@ -83,11 +83,11 @@ jobs:
       - name: Upload packaged files
         uses: actions/upload-artifact@v4
         with:
-          name: tiktok-research-sorter-packages-v0.5.0-${{ github.sha }}
+          name: tiktok-research-sorter-packages-v0.6.0-${{ github.sha }}
           path: |
-            projects/tiktok-research-sorter/tiktok-research-sorter-extension-v0.5.0.zip
-            projects/tiktok-research-sorter/tiktok-sorter-auto-updater-setup-v0.5.0.zip
-            projects/tiktok-research-sorter/tiktok-research-sorter-source-v0.5.0.zip
+            projects/tiktok-research-sorter/tiktok-research-sorter-extension-v0.6.0.zip
+            projects/tiktok-research-sorter/tiktok-sorter-auto-updater-setup-v0.6.0.zip
+            projects/tiktok-research-sorter/tiktok-research-sorter-source-v0.6.0.zip
           retention-days: 30
           if-no-files-found: error
 
@@ -128,4 +128,4 @@ jobs:
           $manifest = Join-Path $env:LOCALAPPDATA 'TikTokResearchSorterDev\source\.output\chrome-mv3\manifest.json'
           if (-not (Test-Path $manifest)) { throw "Manifest not found: $manifest" }
           $json = Get-Content $manifest -Raw | ConvertFrom-Json
-          if ($json.version -ne '0.5.0') { throw "Unexpected manifest version: $($json.version)" }
+          if ($json.version -ne '0.6.0') { throw "Unexpected manifest version: $($json.version)" }
