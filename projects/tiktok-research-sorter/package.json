@@ -1,9 +1,9 @@
 {
   "name": "tiktok-research-sorter",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
-  "description": "Local-first Chrome extension for TikTok research with favorites, complete public channel snapshots, and selected HTML export.",
+  "description": "Local-first Chrome extension for TikTok research with favorites, complete public channel snapshots, local yt-dlp download queue integration, and selected HTML export.",
   "scripts": {
     "dev": "wxt",
     "build": "wxt build",
