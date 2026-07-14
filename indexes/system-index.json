@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b1d0d79a369c5aa7595c48d5b29aea235e775748",
-  "generated_at": "2026-07-13T20:04:53-04:00",
+  "repository_commit": "c681b18864ed8c2778efa0801eb81b772f68b085",
+  "generated_at": "2026-07-13T20:05:12-04:00",
   "artifact_count": 501,
   "artifacts": [
     {
@@ -9664,16 +9664,16 @@
       "title": "TikTok Research Sorter — Project State",
       "type": "project-artifact",
       "domain": "tiktok-research-sorter",
-      "status": "active",
+      "status": "stable",
       "date": null,
-      "sha256": "fca7730f1c79e0e67689168dc2a8be61413e79269ba764ac7a0f9ee2699d2444",
+      "sha256": "e596fadb016b4f8641774b9659c4ce0967ae42217b966876b0f839d6e1656c36",
       "headings": [
         "TikTok Research Sorter — Project State",
         "Current phase",
         "Working implementation",
         "Boundaries",
-        "Validation status",
-        "Distribution target"
+        "Final validation",
+        "Distribution"
       ]
     },
     {
