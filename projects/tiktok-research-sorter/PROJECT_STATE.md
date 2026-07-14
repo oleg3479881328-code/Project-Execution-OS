@@ -4,14 +4,14 @@ status: active
 version: 0.3.0
 branch: agent/tiktok-research-sorter-tag-scan-v0.3.0
 active_issue: 82
-pull_request: pending
+pull_request: 83
 ---
 
 # TikTok Research Sorter — Project State
 
 ## Current phase
 
-Version 0.3.0 adds public hashtag-page research while preserving the existing profile workflow. The feature branch is under automated validation before integration into `main`.
+Version 0.3.0 adds public hashtag-page research while preserving the existing profile workflow. PR #83 is under automated validation before integration into `main`.
 
 ## Working implementation
 
@@ -42,7 +42,7 @@ Local implementation validation completed before push:
 - hashtag selection fixture tests passed;
 - production Chrome MV3 build passed.
 
-Final GitHub Linux, Windows, Project Execution OS integrity, artifact, and merge evidence remain pending on the feature branch.
+Final GitHub Linux, Windows, Project Execution OS integrity, artifact, and merge evidence remain pending on PR #83.
 
 ## Distribution target
 
