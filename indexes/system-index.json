@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c681b18864ed8c2778efa0801eb81b772f68b085",
-  "generated_at": "2026-07-13T20:05:12-04:00",
+  "repository_commit": "697b1266eafa5c18dcc5e66e6c9050628343b1fe",
+  "generated_at": "2026-07-13T20:05:26-04:00",
   "artifact_count": 501,
   "artifacts": [
     {
@@ -9646,7 +9646,7 @@
       "domain": "tiktok-research-sorter",
       "status": null,
       "date": null,
-      "sha256": "834c224598c8d5a91a0aa721f50b80c218801c0a0ca7353fa729125c1b791c06",
+      "sha256": "2f647b111b460025f763b9652ed9e06c91a7cb5bec29f8c09de68b6b877d02f8",
       "headings": [
         "PROJECT — TikTok Research Sorter",
         "1. Project",
@@ -9655,7 +9655,7 @@
         "4. Architecture",
         "5. Current status",
         "6. Key decisions and constraints",
-        "7. Current validation gate",
+        "7. Current validation baseline",
         "8. Read next"
       ]
     },
