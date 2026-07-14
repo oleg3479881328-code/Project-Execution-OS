@@ -5,14 +5,14 @@ version: 0.5.0
 branch: agent/tiktok-design-preview
 base_branch: main
 active_issue: null
-pull_request: pending
+pull_request: 88
 ---
 
 # TikTok Research Sorter — Project State
 
 ## Current phase
 
-Version 0.5.0 remains integrated and validated in `main`. The bounded branch `agent/tiktok-design-preview` adds an autonomous HTML design stand for visual iteration without changing the Chrome Extension runtime, permissions, data model, scanning, persistence, analytics, or export logic.
+Version 0.5.0 remains integrated and validated in `main`. Draft PR #88 from `agent/tiktok-design-preview` adds an autonomous HTML design stand for visual iteration without changing the Chrome Extension runtime, permissions, data model, scanning, persistence, analytics, or export logic.
 
 ## Active design artifact
 
@@ -74,7 +74,7 @@ For stable `main` and PR #87 head `4d12189a5509c9ced21b397d1e5be0d16ed584ab`:
 - Installable ZIP inspected: root-level `manifest.json`, manifest version `0.5.0`, 10 extension files, and unchanged TikTok-only host permissions.
 - PR #87 merged into `main` as `6a9817c923ed0e531ee7193b8e52ee986b5fe29d`.
 
-For `agent/tiktok-design-preview`:
+For draft PR #88:
 
 - the standalone document has complete HTML, style, script, and closing tags;
 - the three preview views and width controls are present;
