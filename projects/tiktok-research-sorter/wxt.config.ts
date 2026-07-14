@@ -4,8 +4,8 @@ export default defineConfig({
   srcDir: '.',
   manifest: {
     name: 'TikTok Research Sorter',
-    description: 'Scan public TikTok profiles and hashtag pages, rank videos per account, and export research locally.',
-    version: '0.3.0',
+    description: 'Scan TikTok profiles and hashtag pages, save favorites, and export selected research as HTML.',
+    version: '0.4.0',
     permissions: ['storage', 'sidePanel', 'activeTab', 'scripting'],
     host_permissions: ['https://www.tiktok.com/*', 'https://tiktok.com/*'],
     action: {
