@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d70ec765193522dc0ef73d3e48addc43d74f37e2",
-  "generated_at": "2026-07-13T20:05:39-04:00",
+  "repository_commit": "92f66e3fea0b96f30dfad8dc0de7aff5e1a5c696",
+  "generated_at": "2026-07-14T08:50:33-04:00",
   "artifact_count": 501,
   "artifacts": [
     {
@@ -9683,12 +9683,13 @@
       "domain": "tiktok-research-sorter",
       "status": null,
       "date": null,
-      "sha256": "04aa0a4ebdc3fbf0e62472f11724640e4f13d5777beee2039ae609ba2b6cf36d",
+      "sha256": "5ab9c9228fd91acf240ef43ab0570857f312316ee8cf51202e469014bd1a7a6e",
       "headings": [
         "TikTok Research Sorter",
-        "Version 0.3.0",
+        "Version 0.4.0",
         "Profile research",
         "Hashtag research",
+        "Favorites and HTML shortlist",
         "Reliability and safety",
         "One-click Windows workflow",
         "Local development",
