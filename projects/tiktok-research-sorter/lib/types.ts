@@ -1,4 +1,4 @@
-export const APP_VERSION = '0.3.0';
+export const APP_VERSION = '0.4.0';
 
 export type ScanStatus = 'idle' | 'scanning' | 'paused' | 'complete' | 'stopped' | 'blocked' | 'error';
 export type ScanMode = 'profile' | 'tag';
@@ -46,6 +46,12 @@ export interface EnrichedVideo extends VideoRecord {
   commentRate?: number;
   shareRate?: number;
   outlierScore?: number;
+}
+
+export interface FavoriteEntry {
+  key: string;
+  video: VideoRecord;
+  favoritedAt: number;
 }
 
 export interface ProfileRecord {
@@ -113,6 +119,8 @@ export type RuntimeMessage =
   | { type: 'GET_DASHBOARD' }
   | { type: 'CLEAR_PROFILE'; username: string }
   | { type: 'CLEAR_TAG_RESEARCH'; tag: string }
+  | { type: 'TOGGLE_FAVORITE'; video: VideoRecord }
+  | { type: 'REMOVE_FAVORITES'; keys: string[] }
   | { type: 'PROFILE_DATA'; profile: ProfileRecord }
   | { type: 'VIDEO_BATCH'; username: string; profileUrl: string; videos: VideoRecord[] }
   | { type: 'TAG_SCAN_BEGIN'; tag: string; tagUrl: string; options: ScanOptions }
@@ -123,5 +131,6 @@ export type RuntimeMessage =
 export interface DashboardData {
   profiles: Record<string, ProfileSnapshot>;
   tagResearch: Record<string, TagResearchSnapshot>;
+  favorites: Record<string, FavoriteEntry>;
   activeScan: ScanState;
 }
