@@ -4,8 +4,8 @@ Date: 2026-07-14
 Version: `0.5.0`
 Issue: `#86`
 Pull request: `#87`
-Branch: `agent/tiktok-research-sorter-channel-export-v0.5.0`
-Status: implementation complete; final GitHub validation pending
+Branch: `main`
+Status: integrated and validated
 
 ## Delivered
 
@@ -40,18 +40,36 @@ Status: implementation complete; final GitHub validation pending
 - rejection of unsafe channel/video/avatar/preview URLs;
 - omission of unselected channels and videos.
 
+## Final verification
+
+For PR #87 head `4d12189a5509c9ced21b397d1e5be0d16ed584ab`:
+
+- Project Execution OS integrity run `29339387056`: passed;
+- TikTok Research Sorter CI run `29339387139`: passed;
+- Linux reproducible install: passed;
+- strict TypeScript check: passed;
+- all unit and regression tests: passed;
+- production Chrome MV3 build: passed;
+- versioned packaging and artifact upload: passed;
+- Windows zero-side-effect updater dry run: passed;
+- Windows full local-source updater validation: passed;
+- generated manifest version check: passed.
+
+PR #87 merged into `main` as commit `6a9817c923ed0e531ee7193b8e52ee986b5fe29d`.
+
+## Artifacts
+
+- unpacked Chrome MV3 extension;
+- `tiktok-research-sorter-extension-v0.5.0.zip`;
+- `tiktok-sorter-auto-updater-setup-v0.5.0.zip`;
+- `tiktok-research-sorter-source-v0.5.0.zip`.
+
+The installable extension ZIP was independently inspected: `manifest.json` is at the archive root, it declares version `0.5.0`, the archive contains 10 extension files, and permissions remain `storage`, `sidePanel`, `activeTab`, and `scripting` with TikTok-only host access.
+
 ## Product boundary
 
 Only public fields TikTok actually provides are stored. TikTok can omit data, return a verification page, change its payloads, or expire external avatar/preview URLs. The extension does not bypass login, CAPTCHA, private accounts, paywalls, rate limits, or access controls.
 
-## Pending final evidence
-
-- Project Execution OS integrity CI;
-- Linux reproducible install, strict TypeScript, all tests, build, packaging, and artifact upload;
-- Windows updater dry-run, full local-source validation, and manifest version check;
-- installable v0.5.0 ZIP inspection;
-- PR #87 merge into `main`.
-
 ## Owner action
 
-None during implementation and automated validation.
+None for code implementation, testing, packaging, merge, or repository delivery. The owner only needs to install the provided versioned extension ZIP.
