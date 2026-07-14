@@ -1,9 +1,9 @@
 {
   "name": "tiktok-research-sorter",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
-  "description": "Local-first Chrome extension for scanning public TikTok profiles and hashtag pages, then ranking videos per account.",
+  "description": "Local-first Chrome extension for TikTok profile and hashtag research with favorites and selected HTML export.",
   "scripts": {
     "dev": "wxt",
     "build": "wxt build",
