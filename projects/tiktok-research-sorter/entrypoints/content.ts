@@ -1,5 +1,6 @@
 import { browser } from 'wxt/browser';
 import {
+  extractProfileFromDocument,
   extractProfileFromDom,
   extractProfileFromPayload,
   extractVideosFromDiscoveryDom,
@@ -105,10 +106,10 @@ function detectChallenge(): boolean {
   );
 }
 
-function embeddedPayloads(): unknown[] {
+function embeddedPayloadsFromRoot(root: ParentNode): unknown[] {
   const candidates = [
-    document.querySelector<HTMLScriptElement>('#__UNIVERSAL_DATA_FOR_REHYDRATION__'),
-    document.querySelector<HTMLScriptElement>('#SIGI_STATE'),
+    root.querySelector<HTMLScriptElement>('#__UNIVERSAL_DATA_FOR_REHYDRATION__'),
+    root.querySelector<HTMLScriptElement>('#SIGI_STATE'),
   ].filter(Boolean) as HTMLScriptElement[];
 
   return candidates.flatMap((script) => {
@@ -118,6 +119,10 @@ function embeddedPayloads(): unknown[] {
       return [];
     }
   });
+}
+
+function embeddedPayloads(): unknown[] {
+  return embeddedPayloadsFromRoot(document);
 }
 
 async function collectProfileEmbedded(context: ProfilePageContext): Promise<void> {
@@ -137,6 +142,71 @@ async function collectTagEmbedded(context: TagPageContext): Promise<void> {
 
 async function collectProfileDom(context: ProfilePageContext): Promise<void> {
   await sendProfile(extractProfileFromDom(context.username));
+}
+
+async function enrichChannel(usernameInput: string): Promise<{ ok: boolean; videosFound: number; message?: string }> {
+  const username = usernameInput.trim().replace(/^@/, '');
+  if (!username) return { ok: false, videosFound: 0, message: 'Не указан канал.' };
+
+  const context: ProfilePageContext = {
+    kind: 'profile',
+    username,
+    profileUrl: `https://www.tiktok.com/@${encodeURIComponent(username)}`,
+  };
+
+  try {
+    const response = await fetch(context.profileUrl, {
+      credentials: 'include',
+      cache: 'no-store',
+      headers: { Accept: 'text/html,application/xhtml+xml' },
+    });
+    if (!response.ok) {
+      return { ok: false, videosFound: 0, message: `TikTok вернул HTTP ${response.status}.` };
+    }
+
+    const html = await response.text();
+    const lowered = html.toLowerCase();
+    if (lowered.includes('verify to continue') || lowered.includes('captcha')) {
+      return { ok: false, videosFound: 0, message: 'TikTok запросил проверку пользователя.' };
+    }
+
+    const parsedDocument = new DOMParser().parseFromString(html, 'text/html');
+    const mergedVideos = new Map<string, VideoRecord>();
+    let profileFound = false;
+
+    for (const payload of embeddedPayloadsFromRoot(parsedDocument)) {
+      const profile = extractProfileFromPayload(payload, username, 'embedded-json');
+      if (profile) {
+        profileFound = true;
+        await sendProfile(profile);
+      }
+      for (const video of extractVideosFromPayload(payload, username, 'embedded-json')) {
+        const existing = mergedVideos.get(video.id);
+        mergedVideos.set(video.id, existing ? mergeVideoRecords(existing, video) : video);
+      }
+    }
+
+    const domProfile = extractProfileFromDocument(parsedDocument, username, 'dom');
+    await sendProfile(domProfile);
+    profileFound = profileFound || Boolean(
+      domProfile.displayName || domProfile.bio || domProfile.avatarUrl
+      || domProfile.followers !== undefined || domProfile.videoCount !== undefined
+    );
+
+    const videos = [...mergedVideos.values()];
+    await sendProfileBatch(context, videos);
+    return {
+      ok: profileFound,
+      videosFound: videos.length,
+      message: profileFound ? undefined : 'TikTok не отдал расширенные публичные данные канала.',
+    };
+  } catch (cause) {
+    return {
+      ok: false,
+      videosFound: 0,
+      message: cause instanceof Error ? cause.message : String(cause),
+    };
+  }
 }
 
 async function startProfileScan(context: ProfilePageContext, options: ScanOptions): Promise<void> {
@@ -404,6 +474,7 @@ export default defineContentScript({
         stopRequested = true;
         return Promise.resolve({ ok: true });
       }
+      if (message.type === 'ENRICH_CHANNEL') return enrichChannel(message.username);
       return undefined;
     });
   },
