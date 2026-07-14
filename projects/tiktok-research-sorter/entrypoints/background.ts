@@ -7,6 +7,8 @@ import {
   mergeProfileData,
   mergeTagVideoBatch,
   mergeVideoBatch,
+  removeFavorites,
+  toggleFavorite,
   updateScanState,
 } from '../lib/store';
 import type { DashboardData, RuntimeMessage } from '../lib/types';
@@ -39,6 +41,10 @@ export default defineBackground(() => {
         return publish(() => beginTagResearch(message.tag, message.tagUrl, message.options));
       case 'TAG_VIDEO_BATCH':
         return publish(() => mergeTagVideoBatch(message.tag, message.tagUrl, message.videos));
+      case 'TOGGLE_FAVORITE':
+        return publish(() => toggleFavorite(message.video));
+      case 'REMOVE_FAVORITES':
+        return publish(() => removeFavorites(message.keys));
       case 'SCAN_STATE':
         return publish(() => updateScanState(message.state));
       case 'CLEAR_PROFILE':

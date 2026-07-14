@@ -1,8 +1,8 @@
 # TikTok Research Sorter
 
-Local-first Manifest V3 extension for scanning public TikTok profile pages and public TikTok hashtag pages, ranking videos, and exporting research data.
+Local-first Manifest V3 extension for scanning public TikTok profile and hashtag pages, ranking videos, saving favorites, and exporting selected research.
 
-## Version 0.3.0
+## Version 0.4.0
 
 ### Profile research
 
@@ -29,14 +29,43 @@ The extension groups discovered videos by account and keeps the requested top vi
 
 Important: hashtag mode ranks videos found on the open hashtag page. It does not silently visit every creator profile or claim to inspect videos that TikTok did not load.
 
+### Favorites and HTML shortlist
+
+Every video card has a star:
+
+- `☆` adds the video to Favorites;
+- `★` removes it from Favorites.
+
+Favorites are stored separately from profile and hashtag results, so clearing a scanned profile or hashtag does not remove saved videos.
+
+Open the `★ Избранное` tab to:
+
+1. select videos with checkboxes;
+2. select all or clear the current selection;
+3. remove selected favorites;
+4. download `tiktok-favorites-selected-v0.4.0.html`.
+
+The generated HTML page is standalone and suitable for sending as a file. It contains:
+
+- clickable TikTok video and profile links;
+- preview images when TikTok provides them;
+- descriptions and hashtags;
+- publication dates and audio titles;
+- views, likes, comments, shares, saves, and engagement rate;
+- a print-friendly responsive layout.
+
+Only checked favorites are included. User-controlled text is HTML-escaped, and non-HTTP(S) links or previews are rejected.
+
 ### Reliability and safety
 
 - Side Panel interface opened from the extension toolbar.
 - User-initiated automatic scrolling with explicit stop, challenge detection, and error recovery.
 - Hybrid collection from embedded JSON, selected TikTok page requests, and loaded DOM cards.
 - Serialized local persistence to prevent lost updates.
+- Backward-compatible dashboard migration adds Favorites to existing installations.
 - Strict data-source precedence: API → embedded JSON → DOM fallback.
 - CSV export with spreadsheet-formula protection.
+- HTML export with markup escaping and URL protocol validation.
 - No login, CAPTCHA, private-profile, rate-limit, paywall, or access-control bypass.
 - Host permissions remain limited to TikTok.
 
@@ -76,9 +105,9 @@ Load `.output/chrome-mv3` through `chrome://extensions` with Developer mode enab
 Each successful branch or pull-request run uploads versioned files:
 
 - unpacked Chrome MV3 extension;
-- `tiktok-research-sorter-extension-v0.3.0.zip`;
-- `tiktok-sorter-auto-updater-setup-v0.3.0.zip`;
-- `tiktok-research-sorter-source-v0.3.0.zip`.
+- `tiktok-research-sorter-extension-v0.4.0.zip`;
+- `tiktok-sorter-auto-updater-setup-v0.4.0.zip`;
+- `tiktok-research-sorter-source-v0.4.0.zip`.
 
 ## Product boundary
 

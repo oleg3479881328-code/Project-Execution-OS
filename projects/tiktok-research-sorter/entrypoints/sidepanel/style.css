@@ -21,8 +21,10 @@ h2 { margin: 0; font-size: 18px; line-height: 1.15; }
 .context-panel > strong { font-size: 12px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .context-panel > button { grid-column: 2; grid-row: 1 / span 2; padding: 7px 9px; }
 .mode-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; padding: 4px; background: #111621; border: 1px solid rgba(255,255,255,.07); border-radius: 12px; }
-.mode-tabs button { background: transparent; color: #969bae; }
+.mode-tabs-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.mode-tabs button { background: transparent; color: #969bae; padding-inline: 8px; }
 .mode-tabs button.active { color: #fff; background: linear-gradient(135deg, rgba(122,92,255,.85), rgba(208,79,255,.72)); font-weight: 700; }
+.tab-count { display: inline-grid; place-items: center; min-width: 18px; height: 18px; margin-left: 4px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 9px; }
 .control-row, .toolbar, .actions { display: flex; gap: 9px; align-items: end; flex-wrap: wrap; }
 label { display: grid; gap: 5px; color: #aeb2c6; font-size: 11px; flex: 1; min-width: 110px; }
 select, input { width: 100%; color: #f6f7fb; background: #0f131e; border: 1px solid #303648; border-radius: 9px; padding: 8px 9px; outline: none; }
@@ -66,26 +68,44 @@ button { color: #f7f7fb; background: #303648; border-radius: 9px; padding: 9px 1
 .stats-grid strong { display: block; font-size: 18px; margin-top: 4px; }
 .actions span { margin-left: auto; color: #9297aa; font-size: 11px; }
 .video-list { display: grid; gap: 10px; }
-.video-card { display: grid; grid-template-columns: 92px minmax(0,1fr); gap: 11px; background: rgba(22,26,38,.94); border: 1px solid rgba(255,255,255,.07); border-radius: 13px; padding: 9px; }
+.video-card { position: relative; display: grid; grid-template-columns: 92px minmax(0,1fr); gap: 11px; background: rgba(22,26,38,.94); border: 1px solid rgba(255,255,255,.07); border-radius: 13px; padding: 9px; transition: border-color .18s ease, box-shadow .18s ease; }
+.video-card.selected { border-color: rgba(122,92,255,.85); box-shadow: 0 0 0 3px rgba(122,92,255,.14); }
+.card-controls { position: absolute; top: 7px; right: 7px; z-index: 4; display: flex; align-items: center; gap: 6px; }
+.favorite-star { width: 34px; height: 34px; padding: 0; display: grid; place-items: center; border-radius: 50%; color: #d9dce8; background: rgba(8,10,16,.82); border: 1px solid rgba(255,255,255,.16); font-size: 21px; line-height: 1; box-shadow: 0 5px 14px rgba(0,0,0,.32); }
+.favorite-star.active { color: #ffd666; background: rgba(76,54,8,.94); border-color: rgba(255,214,102,.48); }
+.select-control { min-width: 0; display: flex; align-items: center; gap: 5px; padding: 7px 8px; color: #e5e7ef; background: rgba(8,10,16,.84); border: 1px solid rgba(255,255,255,.15); border-radius: 9px; cursor: pointer; box-shadow: 0 5px 14px rgba(0,0,0,.26); }
+.select-control input { width: 16px; height: 16px; margin: 0; padding: 0; accent-color: #8a69ff; }
+.select-control span { font-size: 9px; }
 .cover { position: relative; min-height: 124px; border-radius: 9px; overflow: hidden; background: #0a0d13; display: block; }
 .cover img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
 .cover-placeholder { height: 100%; display: grid; place-items: center; color: #6f7487; font-weight: 800; }
 .rank { position: absolute; top: 5px; left: 5px; color: #fff; background: rgba(0,0,0,.68); border-radius: 6px; padding: 3px 5px; font-size: 10px; }
-.video-copy { min-width: 0; }
-.video-author { display: inline-block; color: #8fded3; text-decoration: none; font-size: 10px; margin-bottom: 5px; }
-.metrics { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.video-copy { min-width: 0; padding-top: 3px; }
+.video-author { display: inline-block; color: #8fded3; text-decoration: none; font-size: 10px; margin-bottom: 5px; padding-right: 40px; }
+.metrics { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; padding-right: 38px; }
 .metrics strong { color: #fff; font-size: 12px; }
 .metrics span { color: #d2c8ff; background: #2b2446; border-radius: 999px; padding: 3px 6px; font-size: 9px; }
 .video-copy p { color: #d9dbe5; font-size: 11px; line-height: 1.4; margin: 8px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .micro-metrics { display: flex; gap: 8px; flex-wrap: wrap; color: #9fa4b6; font-size: 10px; }
 .hashtags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
 .hashtags span { color: #6ee6d2; font-size: 9px; }
+.favorite-date { margin-top: 8px; color: #7f8599; font-size: 9px; }
 .account-groups { display: grid; gap: 12px; }
 .account-group { display: grid; gap: 9px; padding: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(16,20,30,.75); border-radius: 14px; }
 .account-group > header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .account-group > header a { color: #8fded3; text-decoration: none; font-weight: 800; font-size: 13px; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .account-group > header span { color: #8f95aa; font-size: 9px; text-align: right; }
+.favorites-intro { display: flex; justify-content: space-between; gap: 16px; align-items: center; background: linear-gradient(135deg, rgba(37,32,55,.96), rgba(24,28,40,.92)); }
+.favorites-intro p:last-child { color: #aeb2c6; font-size: 11px; line-height: 1.5; margin: 8px 0 0; }
+.favorites-intro > strong { width: 58px; height: 58px; flex: 0 0 58px; display: grid; place-items: center; border-radius: 50%; color: #ffd666; background: rgba(255,214,102,.1); border: 1px solid rgba(255,214,102,.26); font-size: 22px; }
+.favorites-actions { align-items: center; }
+.favorites-list .video-card { background: rgba(26,29,42,.97); }
 .empty { color: #8e93a5; text-align: center; padding: 40px 10px; border: 1px dashed #343a4c; border-radius: 14px; }
+@media (max-width: 430px) {
+  .mode-tabs button { font-size: 10px; padding-inline: 4px; }
+  .select-control span { display: none; }
+  .metrics { padding-right: 30px; }
+}
 @media (min-width: 520px) {
   .stats-grid { grid-template-columns: repeat(4, 1fr); }
   .profile-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }

@@ -2,24 +2,29 @@ import { useEffect, useMemo, useState } from 'react';
 import { browser } from 'wxt/browser';
 import { enrichVideos, publicationFrequencyPerWeek, strongestHashtags, summarize } from '../../lib/analytics';
 import { videosToCsv } from '../../lib/csv';
+import { favoriteKey, orderedFavoriteEntries, selectFavoriteEntries } from '../../lib/favorites';
+import { generateFavoritesHtml } from '../../lib/html-export';
 import { formatCompactNumber } from '../../lib/numbers';
 import { groupTopVideosPerAccount } from '../../lib/tag-research';
 import { APP_VERSION } from '../../lib/types';
 import type {
   DashboardData,
   EnrichedVideo,
+  FavoriteEntry,
   ProfileSnapshot,
   RuntimeMessage,
   ScanOptions,
   TikTokPageContext,
+  VideoRecord,
 } from '../../lib/types';
 
 type SortKey = 'views' | 'likes' | 'comments' | 'shares' | 'publishedAt' | 'viewsPerDay' | 'outlierScore' | 'engagementRate';
-type ViewMode = 'profile' | 'tag';
+type ViewMode = 'profile' | 'tag' | 'favorites';
 
 const emptyDashboard: DashboardData = {
   profiles: {},
   tagResearch: {},
+  favorites: {},
   activeScan: { status: 'idle', videosFound: 0, updatedAt: Date.now() },
 };
 
@@ -30,6 +35,15 @@ const defaultOptions: ScanOptions = {
   topVideosPerAccount: 1,
   minViews: 0,
 };
+
+function normalizeDashboard(value: Partial<DashboardData> | undefined): DashboardData {
+  return {
+    profiles: value?.profiles ?? {},
+    tagResearch: value?.tagResearch ?? {},
+    favorites: value?.favorites ?? {},
+    activeScan: value?.activeScan ?? emptyDashboard.activeScan,
+  };
+}
 
 async function activeTabId(): Promise<number | undefined> {
   const tabs = await browser.tabs.query({ active: true, currentWindow: true });
@@ -89,11 +103,14 @@ export default function App() {
   const [maxVideos, setMaxVideos] = useState(defaultOptions.maxVideos);
   const [topVideosPerAccount, setTopVideosPerAccount] = useState(defaultOptions.topVideosPerAccount);
   const [minViews, setMinViews] = useState(defaultOptions.minViews);
+  const [selectedFavoriteKeys, setSelectedFavoriteKeys] = useState<Set<string>>(new Set());
   const [error, setError] = useState('');
+
+  const applyDashboard = (value: Partial<DashboardData> | undefined) => setDashboard(normalizeDashboard(value));
 
   const refresh = async () => {
     const data = await browser.runtime.sendMessage({ type: 'GET_DASHBOARD' } satisfies RuntimeMessage) as DashboardData;
-    setDashboard({ ...emptyDashboard, ...data, tagResearch: data?.tagResearch ?? {} });
+    applyDashboard(data);
   };
 
   const detectPageContext = async () => {
@@ -111,9 +128,7 @@ export default function App() {
     void refresh();
     void detectPageContext();
     const listener = (message: { type?: string; dashboard?: DashboardData }) => {
-      if (message.type === 'DASHBOARD_UPDATED' && message.dashboard) {
-        setDashboard({ ...emptyDashboard, ...message.dashboard, tagResearch: message.dashboard.tagResearch ?? {} });
-      }
+      if (message.type === 'DASHBOARD_UPDATED' && message.dashboard) applyDashboard(message.dashboard);
     };
     browser.runtime.onMessage.addListener(listener);
     return () => browser.runtime.onMessage.removeListener(listener);
@@ -121,6 +136,8 @@ export default function App() {
 
   const usernames = Object.keys(dashboard.profiles).sort();
   const tags = Object.keys(dashboard.tagResearch).sort();
+  const favoriteEntries = useMemo(() => orderedFavoriteEntries(dashboard.favorites), [dashboard.favorites]);
+  const favoriteKeysSignature = favoriteEntries.map((entry) => entry.key).join('|');
 
   useEffect(() => {
     if (!selectedProfile && usernames[0]) setSelectedProfile(usernames[0]);
@@ -136,6 +153,11 @@ export default function App() {
       setViewMode('tag');
     }
   }, [dashboard.activeScan.tag, tags.join('|')]);
+
+  useEffect(() => {
+    const available = new Set(favoriteEntries.map((entry) => entry.key));
+    setSelectedFavoriteKeys((current) => new Set([...current].filter((key) => available.has(key))));
+  }, [favoriteKeysSignature]);
 
   const profile = selectedProfile ? dashboard.profiles[selectedProfile] : undefined;
   const enriched = useMemo(() => enrichVideos(profile?.videos ?? []), [profile?.videos]);
@@ -163,8 +185,11 @@ export default function App() {
   );
   const selectedTagVideos = useMemo(() => tagGroups.flatMap((group) => group.videos), [tagGroups]);
   const enrichedTagVideos = useMemo(() => new Map(
-    enrichVideos(selectedTagVideos).map((video) => [`${video.author.toLowerCase()}:${video.id}`, video]),
+    enrichVideos(selectedTagVideos).map((video) => [favoriteKey(video), video]),
   ), [selectedTagVideos]);
+  const enrichedFavoriteVideos = useMemo(() => new Map(
+    enrichVideos(favoriteEntries.map((entry) => entry.video)).map((video) => [favoriteKey(video), video]),
+  ), [favoriteEntries]);
 
   const start = async () => {
     setError('');
@@ -188,18 +213,31 @@ export default function App() {
     if (tabId) await browser.tabs.sendMessage(tabId, { type: 'STOP_SCAN' } satisfies RuntimeMessage).catch(() => undefined);
   };
 
+  const toggleFavorite = async (video: VideoRecord) => {
+    const data = await browser.runtime.sendMessage({ type: 'TOGGLE_FAVORITE', video } satisfies RuntimeMessage) as DashboardData;
+    applyDashboard(data);
+  };
+
   const clearProfileData = async () => {
     if (!selectedProfile) return;
     const data = await browser.runtime.sendMessage({ type: 'CLEAR_PROFILE', username: selectedProfile } satisfies RuntimeMessage) as DashboardData;
-    setDashboard(data);
+    applyDashboard(data);
     setSelectedProfile('');
   };
 
   const clearTagData = async () => {
     if (!selectedTag) return;
     const data = await browser.runtime.sendMessage({ type: 'CLEAR_TAG_RESEARCH', tag: selectedTag } satisfies RuntimeMessage) as DashboardData;
-    setDashboard(data);
+    applyDashboard(data);
     setSelectedTag('');
+  };
+
+  const removeSelectedFavorites = async () => {
+    const keys = [...selectedFavoriteKeys];
+    if (!keys.length) return;
+    const data = await browser.runtime.sendMessage({ type: 'REMOVE_FAVORITES', keys } satisfies RuntimeMessage) as DashboardData;
+    applyDashboard(data);
+    setSelectedFavoriteKeys(new Set());
   };
 
   const exportProfileCsv = () => {
@@ -219,7 +257,7 @@ export default function App() {
   const exportTagCsv = () => {
     if (!tagSnapshot) return;
     const enrichedVideos = selectedTagVideos.map((video) =>
-      enrichedTagVideos.get(`${video.author.toLowerCase()}:${video.id}`) ?? video as EnrichedVideo
+      enrichedTagVideos.get(favoriteKey(video)) ?? video as EnrichedVideo
     );
     downloadText(`${tagSnapshot.tag}-top-videos-v${APP_VERSION}.csv`, `\uFEFF${videosToCsv(enrichedVideos)}`, 'text/csv;charset=utf-8');
   };
@@ -242,6 +280,16 @@ export default function App() {
     );
   };
 
+  const exportSelectedFavoritesHtml = () => {
+    const selected = selectFavoriteEntries(dashboard.favorites, selectedFavoriteKeys);
+    if (!selected.length) return;
+    downloadText(
+      `tiktok-favorites-selected-v${APP_VERSION}.html`,
+      generateFavoritesHtml(selected, { title: 'Отобранные TikTok-ролики' }),
+      'text/html;charset=utf-8',
+    );
+  };
+
   const scanning = dashboard.activeScan.status === 'scanning';
   const detectedLabel = pageContext?.kind === 'tag'
     ? `Страница хэштега #${pageContext.tag}`
@@ -249,13 +297,15 @@ export default function App() {
       ? `Профиль @${pageContext.username}`
       : 'Откройте профиль или страницу хэштега TikTok';
 
+  const isFavorite = (video: Pick<VideoRecord, 'author' | 'id'>) => Boolean(dashboard.favorites[favoriteKey(video)]);
+
   return (
     <main className="app-shell">
       <header className="hero">
         <div>
           <p className="eyebrow">LOCAL-FIRST RESEARCH TOOL · v{APP_VERSION}</p>
           <h1>TikTok Research Sorter</h1>
-          <p className="subtitle">Сканирует профили и страницы хэштегов, затем находит самые просматриваемые ролики каждого аккаунта.</p>
+          <p className="subtitle">Сканирует TikTok, сохраняет понравившиеся ролики и создаёт готовые HTML-подборки.</p>
         </div>
         <span className={`status status-${dashboard.activeScan.status}`}>{dashboard.activeScan.status}</span>
       </header>
@@ -266,45 +316,50 @@ export default function App() {
         <button onClick={() => void detectPageContext()}>Обновить</button>
       </section>
 
-      <section className="mode-tabs">
+      <section className="mode-tabs mode-tabs-three">
         <button className={viewMode === 'profile' ? 'active' : ''} onClick={() => setViewMode('profile')}>Профили</button>
         <button className={viewMode === 'tag' ? 'active' : ''} onClick={() => setViewMode('tag')}>Хэштеги</button>
+        <button className={viewMode === 'favorites' ? 'active' : ''} onClick={() => setViewMode('favorites')}>
+          ★ Избранное <span className="tab-count">{favoriteEntries.length}</span>
+        </button>
       </section>
 
-      <section className="panel scan-panel">
-        <div className="control-row">
-          <label>
-            Сканировать роликов
-            <select value={maxVideos} onChange={(event) => setMaxVideos(Number(event.target.value))}>
-              {[50, 100, 300, 500, 1000].map((value) => <option key={value} value={value}>{value}</option>)}
-            </select>
-          </label>
-          {viewMode === 'tag' && (
-            <>
-              <label>
-                Лучших с аккаунта
-                <select value={topVideosPerAccount} onChange={(event) => setTopVideosPerAccount(Number(event.target.value))}>
-                  {[1, 2, 3, 5, 10].map((value) => <option key={value} value={value}>{value}</option>)}
-                </select>
-              </label>
-              <label>
-                Минимум просмотров
-                <input type="number" min="0" step="1000" value={minViews} onChange={(event) => setMinViews(Math.max(0, Number(event.target.value)))} />
-              </label>
-            </>
-          )}
-          <button className="primary" onClick={start} disabled={scanning}>
-            {viewMode === 'tag' ? 'Сканировать хэштег' : 'Сканировать профиль'}
-          </button>
-          <button className="secondary" onClick={stop} disabled={!scanning}>Стоп</button>
-        </div>
-        <div className="progress-track"><div className="progress-fill" style={{ width: `${Math.min(100, (dashboard.activeScan.videosFound / maxVideos) * 100)}%` }} /></div>
-        <p className="scan-message">{dashboard.activeScan.message ?? 'Откройте нужную страницу TikTok и запустите сканирование.'}</p>
-        {viewMode === 'tag' && <p className="hint">Выбираются лучшие ролики каждого аккаунта среди роликов, найденных на открытой странице хэштега.</p>}
-        {error && <p className="error">{error}</p>}
-      </section>
+      {viewMode !== 'favorites' && (
+        <section className="panel scan-panel">
+          <div className="control-row">
+            <label>
+              Сканировать роликов
+              <select value={maxVideos} onChange={(event) => setMaxVideos(Number(event.target.value))}>
+                {[50, 100, 300, 500, 1000].map((value) => <option key={value} value={value}>{value}</option>)}
+              </select>
+            </label>
+            {viewMode === 'tag' && (
+              <>
+                <label>
+                  Лучших с аккаунта
+                  <select value={topVideosPerAccount} onChange={(event) => setTopVideosPerAccount(Number(event.target.value))}>
+                    {[1, 2, 3, 5, 10].map((value) => <option key={value} value={value}>{value}</option>)}
+                  </select>
+                </label>
+                <label>
+                  Минимум просмотров
+                  <input type="number" min="0" step="1000" value={minViews} onChange={(event) => setMinViews(Math.max(0, Number(event.target.value)))} />
+                </label>
+              </>
+            )}
+            <button className="primary" onClick={start} disabled={scanning}>
+              {viewMode === 'tag' ? 'Сканировать хэштег' : 'Сканировать профиль'}
+            </button>
+            <button className="secondary" onClick={stop} disabled={!scanning}>Стоп</button>
+          </div>
+          <div className="progress-track"><div className="progress-fill" style={{ width: `${Math.min(100, (dashboard.activeScan.videosFound / maxVideos) * 100)}%` }} /></div>
+          <p className="scan-message">{dashboard.activeScan.message ?? 'Откройте нужную страницу TikTok и запустите сканирование.'}</p>
+          {viewMode === 'tag' && <p className="hint">Выбираются лучшие ролики каждого аккаунта среди роликов, найденных на открытой странице хэштега.</p>}
+          {error && <p className="error">{error}</p>}
+        </section>
+      )}
 
-      {viewMode === 'profile' ? (
+      {viewMode === 'profile' && (
         <ProfileResults
           profile={profile}
           summary={summary}
@@ -324,8 +379,12 @@ export default function App() {
           exportCsv={exportProfileCsv}
           exportJson={exportProfileJson}
           clear={clearProfileData}
+          isFavorite={isFavorite}
+          toggleFavorite={toggleFavorite}
         />
-      ) : (
+      )}
+
+      {viewMode === 'tag' && (
         <TagResults
           tags={tags}
           selectedTag={selectedTag}
@@ -338,6 +397,20 @@ export default function App() {
           exportCsv={exportTagCsv}
           exportJson={exportTagJson}
           clear={clearTagData}
+          isFavorite={isFavorite}
+          toggleFavorite={toggleFavorite}
+        />
+      )}
+
+      {viewMode === 'favorites' && (
+        <FavoritesResults
+          entries={favoriteEntries}
+          enrichedVideos={enrichedFavoriteVideos}
+          selectedKeys={selectedFavoriteKeys}
+          setSelectedKeys={setSelectedFavoriteKeys}
+          toggleFavorite={toggleFavorite}
+          removeSelected={removeSelectedFavorites}
+          exportHtml={exportSelectedFavoritesHtml}
         />
       )}
     </main>
@@ -363,6 +436,8 @@ function ProfileResults({
   exportCsv,
   exportJson,
   clear,
+  isFavorite,
+  toggleFavorite,
 }: {
   profile?: ProfileSnapshot;
   summary: ReturnType<typeof summarize>;
@@ -382,6 +457,8 @@ function ProfileResults({
   exportCsv: () => void;
   exportJson: () => void;
   clear: () => void;
+  isFavorite: (video: Pick<VideoRecord, 'author' | 'id'>) => boolean;
+  toggleFavorite: (video: VideoRecord) => Promise<void>;
 }) {
   return (
     <>
@@ -433,7 +510,16 @@ function ProfileResults({
       </section>
 
       <section className="video-list">
-        {visible.map((video, index) => <VideoCard key={video.id} video={video} rank={index + 1} showOutlier />)}
+        {visible.map((video, index) => (
+          <VideoCard
+            key={favoriteKey(video)}
+            video={video}
+            rank={index + 1}
+            showOutlier
+            favorite={isFavorite(video)}
+            onToggleFavorite={() => void toggleFavorite(video)}
+          />
+        ))}
         {!visible.length && <div className="empty">Пока нет собранных роликов.</div>}
       </section>
     </>
@@ -452,6 +538,8 @@ function TagResults({
   exportCsv,
   exportJson,
   clear,
+  isFavorite,
+  toggleFavorite,
 }: {
   tags: string[];
   selectedTag: string;
@@ -464,6 +552,8 @@ function TagResults({
   exportCsv: () => void;
   exportJson: () => void;
   clear: () => void;
+  isFavorite: (video: Pick<VideoRecord, 'author' | 'id'>) => boolean;
+  toggleFavorite: (video: VideoRecord) => Promise<void>;
 }) {
   return (
     <>
@@ -500,18 +590,90 @@ function TagResults({
               <span>{group.videos.length} лучших · максимум {formatCompactNumber(group.topViews)}</span>
             </header>
             <div className="video-list">
-              {group.videos.map((video, index) => (
-                <VideoCard
-                  key={`${group.author}:${video.id}`}
-                  video={enrichedVideos.get(`${group.author.toLowerCase()}:${video.id}`) ?? video as EnrichedVideo}
-                  rank={index + 1}
-                  showAuthor={false}
-                />
-              ))}
+              {group.videos.map((video, index) => {
+                const displayVideo = enrichedVideos.get(favoriteKey(video)) ?? video as EnrichedVideo;
+                return (
+                  <VideoCard
+                    key={favoriteKey(video)}
+                    video={displayVideo}
+                    rank={index + 1}
+                    showAuthor={false}
+                    favorite={isFavorite(video)}
+                    onToggleFavorite={() => void toggleFavorite(video)}
+                  />
+                );
+              })}
             </div>
           </section>
         ))}
         {!groups.length && <div className="empty">Нет роликов, подходящих под выбранный минимум просмотров.</div>}
+      </section>
+    </>
+  );
+}
+
+function FavoritesResults({
+  entries,
+  enrichedVideos,
+  selectedKeys,
+  setSelectedKeys,
+  toggleFavorite,
+  removeSelected,
+  exportHtml,
+}: {
+  entries: FavoriteEntry[];
+  enrichedVideos: Map<string, EnrichedVideo>;
+  selectedKeys: Set<string>;
+  setSelectedKeys: (value: Set<string>) => void;
+  toggleFavorite: (video: VideoRecord) => Promise<void>;
+  removeSelected: () => Promise<void>;
+  exportHtml: () => void;
+}) {
+  const allSelected = entries.length > 0 && selectedKeys.size === entries.length;
+
+  const toggleSelection = (key: string, checked: boolean) => {
+    const next = new Set(selectedKeys);
+    if (checked) next.add(key);
+    else next.delete(key);
+    setSelectedKeys(next);
+  };
+
+  return (
+    <>
+      <section className="panel favorites-intro">
+        <div>
+          <p className="eyebrow">ИЗБРАННОЕ</p>
+          <h2>Отбор роликов для отправки</h2>
+          <p>Отметьте нужные ролики чекбоксами. HTML-файл сохранит ссылки, описания, показатели и превью.</p>
+        </div>
+        <strong>{entries.length}</strong>
+      </section>
+
+      <section className="panel actions favorites-actions">
+        <button onClick={() => setSelectedKeys(new Set(entries.map((entry) => entry.key)))} disabled={!entries.length || allSelected}>Выбрать все</button>
+        <button onClick={() => setSelectedKeys(new Set())} disabled={!selectedKeys.size}>Снять выбор</button>
+        <button className="primary" onClick={exportHtml} disabled={!selectedKeys.size}>Скачать HTML выбранного</button>
+        <button className="danger" onClick={() => void removeSelected()} disabled={!selectedKeys.size}>Удалить выбранное</button>
+        <span>Выбрано: {selectedKeys.size}</span>
+      </section>
+
+      <section className="video-list favorites-list">
+        {entries.map((entry, index) => {
+          const video = enrichedVideos.get(entry.key) ?? entry.video as EnrichedVideo;
+          return (
+            <VideoCard
+              key={entry.key}
+              video={video}
+              rank={index + 1}
+              favorite
+              selected={selectedKeys.has(entry.key)}
+              onSelectedChange={(checked) => toggleSelection(entry.key, checked)}
+              onToggleFavorite={() => void toggleFavorite(entry.video)}
+              favoritedAt={entry.favoritedAt}
+            />
+          );
+        })}
+        {!entries.length && <div className="empty">Избранных роликов пока нет. Нажмите звёздочку на любой карточке.</div>}
       </section>
     </>
   );
@@ -579,14 +741,42 @@ function VideoCard({
   rank,
   showOutlier = false,
   showAuthor = true,
+  favorite = false,
+  selected,
+  onSelectedChange,
+  onToggleFavorite,
+  favoritedAt,
 }: {
   video: EnrichedVideo;
   rank: number;
   showOutlier?: boolean;
   showAuthor?: boolean;
+  favorite?: boolean;
+  selected?: boolean;
+  onSelectedChange?: (checked: boolean) => void;
+  onToggleFavorite?: () => void;
+  favoritedAt?: number;
 }) {
   return (
-    <article className="video-card">
+    <article className={`video-card${selected ? ' selected' : ''}`}>
+      <div className="card-controls">
+        {onSelectedChange && (
+          <label className="select-control" title="Выбрать для HTML">
+            <input type="checkbox" checked={Boolean(selected)} onChange={(event) => onSelectedChange(event.target.checked)} />
+            <span>Выбрать</span>
+          </label>
+        )}
+        {onToggleFavorite && (
+          <button
+            className={`favorite-star${favorite ? ' active' : ''}`}
+            onClick={onToggleFavorite}
+            title={favorite ? 'Удалить из избранного' : 'Добавить в избранное'}
+            aria-label={favorite ? 'Удалить из избранного' : 'Добавить в избранное'}
+          >
+            {favorite ? '★' : '☆'}
+          </button>
+        )}
+      </div>
       <a className="cover" href={video.videoUrl} target="_blank" rel="noreferrer">
         {video.coverUrl ? <img src={video.coverUrl} alt="" /> : <div className="cover-placeholder">#{rank}</div>}
         <span className="rank">#{rank}</span>
@@ -606,6 +796,7 @@ function VideoCard({
           <span>ER {percent(video.engagementRate)}</span>
         </div>
         <div className="hashtags">{video.hashtags.slice(0, 6).map((tag) => <span key={tag}>#{tag}</span>)}</div>
+        {favoritedAt && <div className="favorite-date">Добавлено: {formatDate(favoritedAt)}</div>}
       </div>
     </article>
   );
