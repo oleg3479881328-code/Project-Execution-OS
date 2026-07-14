@@ -3,7 +3,7 @@
 Date: 2026-07-14
 Version: `0.5.0` design-only follow-up
 Issue: none
-Pull request: pending
+Pull request: `#88` draft
 Branch: `agent/tiktok-design-preview`
 Status: standalone design preview added; extension runtime unchanged
 
@@ -52,4 +52,4 @@ The stable extension remains version `0.5.0` with TikTok-only host access and no
 
 ## Owner action
 
-Open the standalone HTML file and use it as the visual workspace. No extension installation or rebuild is required for design iteration.
+Open the standalone HTML file from draft PR #88 and use it as the visual workspace. No extension installation or rebuild is required for design iteration.
