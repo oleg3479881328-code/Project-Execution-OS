@@ -2,12 +2,18 @@ import { useEffect, useMemo, useState } from 'react';
 import { browser } from 'wxt/browser';
 import { enrichVideos, publicationFrequencyPerWeek, strongestHashtags, summarize } from '../../lib/analytics';
 import { videosToCsv } from '../../lib/csv';
-import { favoriteKey, orderedFavoriteEntries, selectFavoriteEntries } from '../../lib/favorites';
+import {
+  favoriteKey,
+  groupFavoriteEntriesByChannel,
+  orderedFavoriteEntries,
+  selectFavoriteEntries,
+} from '../../lib/favorites';
 import { generateFavoritesHtml } from '../../lib/html-export';
 import { formatCompactNumber } from '../../lib/numbers';
 import { groupTopVideosPerAccount } from '../../lib/tag-research';
 import { APP_VERSION } from '../../lib/types';
 import type {
+  ChannelSnapshot,
   DashboardData,
   EnrichedVideo,
   FavoriteEntry,
@@ -86,7 +92,22 @@ function formatDate(timestamp: number | undefined): string {
   }).format(new Date(timestamp));
 }
 
-function initials(profile: ProfileSnapshot): string {
+function formatUnixDate(timestampSeconds: number | undefined): string {
+  if (!timestampSeconds) return '—';
+  return new Intl.DateTimeFormat('ru-RU', {
+    day: '2-digit', month: 'short', year: 'numeric',
+  }).format(new Date(timestampSeconds * 1000));
+}
+
+function formatOptionalNumber(value: number | undefined): string {
+  return value === undefined ? '—' : formatCompactNumber(value);
+}
+
+function yesNo(value: boolean | undefined): string {
+  return value === undefined ? '—' : value ? 'Да' : 'Нет';
+}
+
+function initials(profile: { displayName?: string; username: string }): string {
   const source = profile.displayName || profile.username;
   return source.split(/\s+/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join('') || 'TT';
 }
@@ -121,6 +142,23 @@ export default function App() {
       if (connection.context?.kind === 'profile') setViewMode('profile');
     } catch {
       setPageContext(undefined);
+    }
+  };
+
+  const requestChannelEnrichment = async (username: string, surfaceError = false) => {
+    try {
+      const { tabId } = await connectToActiveTikTokTab();
+      const result = await browser.tabs.sendMessage(tabId, {
+        type: 'ENRICH_CHANNEL',
+        username,
+      } satisfies RuntimeMessage) as { ok?: boolean; message?: string };
+      if (surfaceError && !result?.ok) setError(result?.message || `Не удалось получить данные канала @${username}.`);
+      if (result?.ok) setError('');
+    } catch (cause) {
+      if (surfaceError) {
+        const details = cause instanceof Error ? cause.message : String(cause);
+        setError(`Откройте любую страницу TikTok и повторите обновление канала. ${details}`);
+      }
     }
   };
 
@@ -214,8 +252,10 @@ export default function App() {
   };
 
   const toggleFavorite = async (video: VideoRecord) => {
+    const adding = !dashboard.favorites[favoriteKey(video)];
     const data = await browser.runtime.sendMessage({ type: 'TOGGLE_FAVORITE', video } satisfies RuntimeMessage) as DashboardData;
     applyDashboard(data);
+    if (adding) void requestChannelEnrichment(video.author, false);
   };
 
   const clearProfileData = async () => {
@@ -284,8 +324,8 @@ export default function App() {
     const selected = selectFavoriteEntries(dashboard.favorites, selectedFavoriteKeys);
     if (!selected.length) return;
     downloadText(
-      `tiktok-favorites-selected-v${APP_VERSION}.html`,
-      generateFavoritesHtml(selected, { title: 'Отобранные TikTok-ролики' }),
+      `tiktok-favorites-with-channels-v${APP_VERSION}.html`,
+      generateFavoritesHtml(selected, { title: 'Отобранные TikTok-ролики и каналы' }),
       'text/html;charset=utf-8',
     );
   };
@@ -305,7 +345,7 @@ export default function App() {
         <div>
           <p className="eyebrow">LOCAL-FIRST RESEARCH TOOL · v{APP_VERSION}</p>
           <h1>TikTok Research Sorter</h1>
-          <p className="subtitle">Сканирует TikTok, сохраняет понравившиеся ролики и создаёт готовые HTML-подборки.</p>
+          <p className="subtitle">Сохраняет ролики вместе с полной публичной информацией о каналах и создаёт готовые HTML-подборки.</p>
         </div>
         <span className={`status status-${dashboard.activeScan.status}`}>{dashboard.activeScan.status}</span>
       </header>
@@ -359,6 +399,8 @@ export default function App() {
         </section>
       )}
 
+      {viewMode === 'favorites' && error && <section className="panel error-panel">{error}</section>}
+
       {viewMode === 'profile' && (
         <ProfileResults
           profile={profile}
@@ -409,6 +451,7 @@ export default function App() {
           selectedKeys={selectedFavoriteKeys}
           setSelectedKeys={setSelectedFavoriteKeys}
           toggleFavorite={toggleFavorite}
+          refreshChannel={(username) => requestChannelEnrichment(username, true)}
           removeSelected={removeSelectedFavorites}
           exportHtml={exportSelectedFavoritesHtml}
         />
@@ -618,6 +661,7 @@ function FavoritesResults({
   selectedKeys,
   setSelectedKeys,
   toggleFavorite,
+  refreshChannel,
   removeSelected,
   exportHtml,
 }: {
@@ -626,9 +670,11 @@ function FavoritesResults({
   selectedKeys: Set<string>;
   setSelectedKeys: (value: Set<string>) => void;
   toggleFavorite: (video: VideoRecord) => Promise<void>;
+  refreshChannel: (username: string) => Promise<void>;
   removeSelected: () => Promise<void>;
   exportHtml: () => void;
 }) {
+  const groups = groupFavoriteEntriesByChannel(entries);
   const allSelected = entries.length > 0 && selectedKeys.size === entries.length;
 
   const toggleSelection = (key: string, checked: boolean) => {
@@ -643,8 +689,8 @@ function FavoritesResults({
       <section className="panel favorites-intro">
         <div>
           <p className="eyebrow">ИЗБРАННОЕ</p>
-          <h2>Отбор роликов для отправки</h2>
-          <p>Отметьте нужные ролики чекбоксами. HTML-файл сохранит ссылки, описания, показатели и превью.</p>
+          <h2>Отбор роликов и каналов для отправки</h2>
+          <p>HTML-файл включает выбранные ролики и все публичные данные каналов, которые удалось получить от TikTok.</p>
         </div>
         <strong>{entries.length}</strong>
       </section>
@@ -652,30 +698,94 @@ function FavoritesResults({
       <section className="panel actions favorites-actions">
         <button onClick={() => setSelectedKeys(new Set(entries.map((entry) => entry.key)))} disabled={!entries.length || allSelected}>Выбрать все</button>
         <button onClick={() => setSelectedKeys(new Set())} disabled={!selectedKeys.size}>Снять выбор</button>
-        <button className="primary" onClick={exportHtml} disabled={!selectedKeys.size}>Скачать HTML выбранного</button>
+        <button className="primary" onClick={exportHtml} disabled={!selectedKeys.size}>Скачать HTML с каналами</button>
         <button className="danger" onClick={() => void removeSelected()} disabled={!selectedKeys.size}>Удалить выбранное</button>
-        <span>Выбрано: {selectedKeys.size}</span>
+        <span>Выбрано: {selectedKeys.size} · Каналов: {groups.length}</span>
       </section>
 
-      <section className="video-list favorites-list">
-        {entries.map((entry, index) => {
-          const video = enrichedVideos.get(entry.key) ?? entry.video as EnrichedVideo;
-          return (
-            <VideoCard
-              key={entry.key}
-              video={video}
-              rank={index + 1}
-              favorite
-              selected={selectedKeys.has(entry.key)}
-              onSelectedChange={(checked) => toggleSelection(entry.key, checked)}
-              onToggleFavorite={() => void toggleFavorite(entry.video)}
-              favoritedAt={entry.favoritedAt}
-            />
-          );
-        })}
+      <section className="favorite-channel-groups">
+        {groups.map((group) => (
+          <section className="favorite-channel-group" key={group.key}>
+            <ChannelCard channel={group.channel} onRefresh={() => void refreshChannel(group.channel.username)} />
+            <div className="video-list favorites-list">
+              {group.entries.map((entry, index) => {
+                const video = enrichedVideos.get(entry.key) ?? entry.video as EnrichedVideo;
+                return (
+                  <VideoCard
+                    key={entry.key}
+                    video={video}
+                    rank={index + 1}
+                    favorite
+                    selected={selectedKeys.has(entry.key)}
+                    onSelectedChange={(checked) => toggleSelection(entry.key, checked)}
+                    onToggleFavorite={() => void toggleFavorite(entry.video)}
+                    favoritedAt={entry.favoritedAt}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        ))}
         {!entries.length && <div className="empty">Избранных роликов пока нет. Нажмите звёздочку на любой карточке.</div>}
       </section>
     </>
+  );
+}
+
+function ChannelCard({ channel, onRefresh }: { channel: ChannelSnapshot; onRefresh: () => void }) {
+  return (
+    <section className="panel channel-card">
+      <div className="channel-head">
+        <a className="channel-avatar" href={channel.profileUrl} target="_blank" rel="noreferrer">
+          {channel.avatarUrl ? <img src={channel.avatarUrl} alt="" /> : <span>{initials(channel)}</span>}
+        </a>
+        <div className="channel-identity">
+          <div className="channel-title-row">
+            <h2>{channel.displayName || `@${channel.username}`}</h2>
+            {channel.verified && <span className="verified" title="Проверенный аккаунт">✓</span>}
+            <span className={`channel-completeness ${channel.completeness}`}>{channel.completeness === 'full' ? 'полные данные' : 'частичные данные'}</span>
+          </div>
+          <a href={channel.profileUrl} target="_blank" rel="noreferrer">@{channel.username}</a>
+          {channel.bio && <p>{channel.bio}</p>}
+          <div className="channel-links">
+            <a href={channel.profileUrl} target="_blank" rel="noreferrer">Профиль TikTok ↗</a>
+            {channel.website && <a href={channel.website} target="_blank" rel="noreferrer">Сайт ↗</a>}
+          </div>
+        </div>
+        <button className="secondary channel-refresh" onClick={onRefresh}>Обновить канал</button>
+      </div>
+
+      <div className="channel-stats">
+        <article><span>Подписчики</span><strong>{formatOptionalNumber(channel.followers)}</strong></article>
+        <article><span>Подписки</span><strong>{formatOptionalNumber(channel.following)}</strong></article>
+        <article><span>Друзья</span><strong>{formatOptionalNumber(channel.friends)}</strong></article>
+        <article><span>Лайки профиля</span><strong>{formatOptionalNumber(channel.totalLikes)}</strong></article>
+        <article><span>Видео в профиле</span><strong>{formatOptionalNumber(channel.videoCount)}</strong></article>
+        <article><span>Собрано видео</span><strong>{formatCompactNumber(channel.collectedVideoCount)}</strong></article>
+        <article><span>Медиана просмотров</span><strong>{formatCompactNumber(channel.medianViews)}</strong></article>
+        <article><span>Средний ER</span><strong>{percent(channel.averageEngagementRate)}</strong></article>
+      </div>
+
+      <div className="channel-details">
+        <div><span>User ID</span><strong>{channel.userId || '—'}</strong></div>
+        <div><span>secUid</span><strong>{channel.secUid || '—'}</strong></div>
+        <div><span>Регион</span><strong>{channel.region || '—'}</strong></div>
+        <div><span>Язык</span><strong>{channel.language || '—'}</strong></div>
+        <div><span>Создан</span><strong>{formatUnixDate(channel.accountCreatedAt)}</strong></div>
+        <div><span>Закрытый аккаунт</span><strong>{yesNo(channel.privateAccount)}</strong></div>
+        <div><span>Коммерческий</span><strong>{yesNo(channel.commerceAccount)}</strong></div>
+        <div><span>Источник</span><strong>{channel.profileDataSource || '—'}</strong></div>
+        <div><span>Обновлено</span><strong>{formatDate(channel.profileDataUpdatedAt || channel.capturedAt)}</strong></div>
+      </div>
+
+      <div className="profile-topics">
+        <span>Сильные темы канала</span>
+        <div>
+          {channel.strongestHashtags.map((tag) => <span key={tag}>#{tag}</span>)}
+          {!channel.strongestHashtags.length && <em>Появятся после сбора роликов канала.</em>}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -711,18 +821,33 @@ function ProfileCard({
         </div>
       </div>
 
-      <div className="profile-stats">
-        <article><span>Подписчики</span><strong>{profile.followers === undefined ? '—' : formatCompactNumber(profile.followers)}</strong></article>
-        <article><span>Подписки</span><strong>{profile.following === undefined ? '—' : formatCompactNumber(profile.following)}</strong></article>
-        <article><span>Лайки профиля</span><strong>{profile.totalLikes === undefined ? '—' : formatCompactNumber(profile.totalLikes)}</strong></article>
-        <article><span>Видео в профиле</span><strong>{profile.videoCount === undefined ? '—' : formatCompactNumber(profile.videoCount)}</strong></article>
+      <div className="profile-stats profile-stats-wide">
+        <article><span>Подписчики</span><strong>{formatOptionalNumber(profile.followers)}</strong></article>
+        <article><span>Подписки</span><strong>{formatOptionalNumber(profile.following)}</strong></article>
+        <article><span>Друзья</span><strong>{formatOptionalNumber(profile.friends)}</strong></article>
+        <article><span>Лайки профиля</span><strong>{formatOptionalNumber(profile.totalLikes)}</strong></article>
+        <article><span>Видео в профиле</span><strong>{formatOptionalNumber(profile.videoCount)}</strong></article>
+        <article><span>Собрано видео</span><strong>{formatCompactNumber(profile.videos.length)}</strong></article>
+        <article><span>Медиана просмотров</span><strong>{formatCompactNumber(profile.medianViews)}</strong></article>
+        <article><span>Средний ER</span><strong>{summary.averageEngagementRate.toFixed(2)}%</strong></article>
+      </div>
+
+      <div className="profile-details">
+        <div><span>User ID</span><strong>{profile.userId || '—'}</strong></div>
+        <div><span>secUid</span><strong>{profile.secUid || '—'}</strong></div>
+        <div><span>Регион</span><strong>{profile.region || '—'}</strong></div>
+        <div><span>Язык</span><strong>{profile.language || '—'}</strong></div>
+        <div><span>Создан</span><strong>{formatUnixDate(profile.accountCreatedAt)}</strong></div>
+        <div><span>Закрытый аккаунт</span><strong>{yesNo(profile.privateAccount)}</strong></div>
+        <div><span>Коммерческий</span><strong>{yesNo(profile.commerceAccount)}</strong></div>
+        <div><span>Источник</span><strong>{profile.profileDataSource || '—'}</strong></div>
       </div>
 
       <div className="profile-insights">
         <div><span>Последнее сканирование</span><strong>{formatDate(profile.lastScannedAt)}</strong></div>
+        <div><span>Обновление профиля</span><strong>{formatDate(profile.profileDataUpdatedAt)}</strong></div>
         <div><span>Покрытие</span><strong>{coverage}</strong></div>
         <div><span>Частота публикаций</span><strong>{frequency === undefined ? '—' : `${frequency.toFixed(1)} в неделю`}</strong></div>
-        <div><span>Типичный ролик</span><strong>{formatCompactNumber(summary.medianViews)} просмотров</strong></div>
       </div>
 
       <div className="profile-topics">

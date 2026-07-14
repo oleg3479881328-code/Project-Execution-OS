@@ -1,13 +1,13 @@
 # TikTok Research Sorter
 
-Local-first Manifest V3 extension for scanning public TikTok profile and hashtag pages, ranking videos, saving favorites, and exporting selected research.
+Local-first Manifest V3 extension for scanning public TikTok profile and hashtag pages, ranking videos, saving favorites with channel snapshots, and exporting selected research.
 
-## Version 0.4.0
+## Version 0.5.0
 
 ### Profile research
 
-- Full profile card with avatar, display name, biography, verification status, followers, following, profile likes, and public video count.
-- Scan metadata: last scan, collected coverage, estimated posting frequency, median views, and strongest hashtags.
+- Full profile card with avatar, display name, biography, verification, website, public IDs, region, language, account flags, followers, following, friends, profile likes, and public video count.
+- Scan metadata: last scan, profile update time, collected coverage, estimated posting frequency, median views, average engagement, and strongest hashtags.
 - Video cards with cover, rank, views, views/day, outlier score, engagement, and hashtags.
 - Sorting, search, outlier filtering, CSV export, and JSON export.
 
@@ -27,42 +27,56 @@ The side panel automatically detects hashtag mode. Choose:
 
 The extension groups discovered videos by account and keeps the requested top videos from each account. Results can be adjusted after scanning because the locally stored hashtag snapshot retains all videos collected during that scan.
 
-Important: hashtag mode ranks videos found on the open hashtag page. It does not silently visit every creator profile or claim to inspect videos that TikTok did not load.
+Important: hashtag mode ranks videos found on the open hashtag page. It does not silently claim to inspect videos TikTok did not load.
 
-### Favorites and HTML shortlist
+### Favorites with complete channel information
 
 Every video card has a star:
 
 - `☆` adds the video to Favorites;
 - `★` removes it from Favorites.
 
-Favorites are stored separately from profile and hashtag results, so clearing a scanned profile or hashtag does not remove saved videos.
+When a video is added, the extension stores a durable channel snapshot. It also requests public profile enrichment from the current TikTok tab without navigating away. Existing favorite snapshots are refreshed automatically whenever richer profile data is collected later.
+
+The channel snapshot can contain every supported public field TikTok actually exposes:
+
+- username, display name, avatar, biography, profile link, verification, and website;
+- public user ID and `secUid`;
+- followers, following, friends, total profile likes, and public video count;
+- region, language, private-account flag, commerce-account flag, and account creation date;
+- locally collected video count, median views, average engagement, and strongest hashtags;
+- collection timestamps and data source.
+
+Unavailable fields are displayed as `—`; values are never invented.
+
+### Selected HTML with channels
 
 Open the `★ Избранное` tab to:
 
-1. select videos with checkboxes;
-2. select all or clear the current selection;
-3. remove selected favorites;
-4. download `tiktok-favorites-selected-v0.4.0.html`.
+1. review favorites grouped by channel;
+2. refresh a channel profile when needed;
+3. select videos with checkboxes;
+4. select all or clear the current selection;
+5. remove selected favorites;
+6. download `tiktok-favorites-with-channels-v0.5.0.html`.
 
-The generated HTML page is standalone and suitable for sending as a file. It contains:
+The standalone HTML file is suitable for sending to another person. Each channel section contains the full stored channel card followed by only that channel's checked videos. It includes:
 
 - clickable TikTok video and profile links;
+- channel avatar, biography, identifiers, public statistics, flags, dates, website, source, and channel analytics;
 - preview images when TikTok provides them;
-- descriptions and hashtags;
-- publication dates and audio titles;
-- views, likes, comments, shares, saves, and engagement rate;
-- a print-friendly responsive layout.
+- video descriptions, hashtags, publication dates, audio titles, duration, pinned status, and metrics;
+- a responsive and print-friendly layout.
 
-Only checked favorites are included. User-controlled text is HTML-escaped, and non-HTTP(S) links or previews are rejected.
+User-controlled text is HTML-escaped, and non-HTTP(S) links or previews are rejected.
 
 ### Reliability and safety
 
 - Side Panel interface opened from the extension toolbar.
 - User-initiated automatic scrolling with explicit stop, challenge detection, and error recovery.
-- Hybrid collection from embedded JSON, selected TikTok page requests, and loaded DOM cards.
+- Hybrid collection from embedded JSON, selected TikTok page requests, loaded DOM cards, and same-origin public profile enrichment.
 - Serialized local persistence to prevent lost updates.
-- Backward-compatible dashboard migration adds Favorites to existing installations.
+- Backward-compatible migration adds channel snapshots to existing favorites.
 - Strict data-source precedence: API → embedded JSON → DOM fallback.
 - CSV export with spreadsheet-formula protection.
 - HTML export with markup escaping and URL protocol validation.
@@ -105,10 +119,10 @@ Load `.output/chrome-mv3` through `chrome://extensions` with Developer mode enab
 Each successful branch or pull-request run uploads versioned files:
 
 - unpacked Chrome MV3 extension;
-- `tiktok-research-sorter-extension-v0.4.0.zip`;
-- `tiktok-sorter-auto-updater-setup-v0.4.0.zip`;
-- `tiktok-research-sorter-source-v0.4.0.zip`.
+- `tiktok-research-sorter-extension-v0.5.0.zip`;
+- `tiktok-sorter-auto-updater-setup-v0.5.0.zip`;
+- `tiktok-research-sorter-source-v0.5.0.zip`.
 
 ## Product boundary
 
-This project analyzes data already visible to the user on public TikTok pages. Data remains local in the browser unless the user explicitly exports it. TikTok can change public payloads and page structure, so platform parsing remains isolated and regression-tested.
+The project stores only public data TikTok makes available to the current browser session. TikTok can omit fields, request verification, change payloads, or expire external preview URLs. Missing fields remain unavailable rather than being inferred.

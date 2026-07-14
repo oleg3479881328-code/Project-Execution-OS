@@ -31,6 +31,21 @@ function firstNumber(...values: unknown[]): number | undefined {
   return undefined;
 }
 
+function firstBoolean(...values: unknown[]): boolean | undefined {
+  for (const value of values) {
+    if (typeof value === 'boolean') return value;
+    if (value === 1 || value === '1' || value === 'true') return true;
+    if (value === 0 || value === '0' || value === 'false') return false;
+  }
+  return undefined;
+}
+
+function normalizeTimestampSeconds(...values: unknown[]): number | undefined {
+  const timestamp = firstNumber(...values);
+  if (timestamp === undefined) return undefined;
+  return timestamp > 10_000_000_000 ? Math.floor(timestamp / 1_000) : timestamp;
+}
+
 function extractUrl(value: unknown): string | undefined {
   if (typeof value === 'string' && value.trim()) return value.trim();
   const record = asRecord(value);
@@ -100,7 +115,6 @@ export function normalizeTikTokItem(
   if (!id || !author) return undefined;
 
   const description = firstString(item.desc, item.description, item.title) ?? '';
-  const publishedAt = firstNumber(item.createTime, item.create_time, item.createdAt);
   const profileUrl = `https://www.tiktok.com/@${author}`;
 
   return {
@@ -109,7 +123,7 @@ export function normalizeTikTokItem(
     profileUrl,
     videoUrl: `${profileUrl}/video/${id}`,
     description,
-    publishedAt: publishedAt && publishedAt > 10_000_000_000 ? Math.floor(publishedAt / 1_000) : publishedAt,
+    publishedAt: normalizeTimestampSeconds(item.createTime, item.create_time, item.createdAt),
     durationSeconds: normalizeDurationSeconds(videoRecord.duration, item.duration),
     views: firstNumber(stats.playCount, stats.play_count, stats.viewCount, stats.views) ?? 0,
     likes: firstNumber(stats.diggCount, stats.digg_count, stats.likeCount, stats.likes) ?? 0,
@@ -190,6 +204,8 @@ function normalizeProfileCandidate(
   if (!username) return undefined;
   if (fallbackUsername && username.toLowerCase() !== fallbackUsername.toLowerCase()) return undefined;
 
+  const userId = firstString(user.id, user.uid, user.userId, user.user_id, container.userId);
+  const secUid = firstString(user.secUid, user.sec_uid, container.secUid, container.sec_uid);
   const displayName = firstString(user.nickname, user.displayName, user.display_name, container.nickname);
   const bio = firstString(user.signature, user.bio, user.description, container.signature);
   const avatarUrl = sanitizeHttpUrl(extractUrl(user.avatarLarger))
@@ -199,6 +215,7 @@ function normalizeProfileCandidate(
     ?? sanitizeHttpUrl(extractUrl(container.avatarLarger));
   const followers = firstNumber(stats.followerCount, stats.follower_count, stats.followers);
   const following = firstNumber(stats.followingCount, stats.following_count, stats.following);
+  const friends = firstNumber(stats.friendCount, stats.friend_count, stats.friends);
   const totalLikes = firstNumber(stats.heartCount, stats.heart_count, stats.heart, stats.diggCount, stats.likes);
   const videoCount = firstNumber(stats.videoCount, stats.video_count, stats.videos);
   const website = sanitizeHttpUrl(
@@ -206,24 +223,46 @@ function normalizeProfileCandidate(
     ?? extractUrl(user.bio_link)
     ?? firstString(user.website, user.url),
   );
-  const verified = Boolean(user.verified ?? user.isVerified ?? user.is_verified);
+  const verified = firstBoolean(user.verified, user.isVerified, user.is_verified);
+  const privateAccount = firstBoolean(user.privateAccount, user.private_account, user.secret, user.isPrivate, user.is_private);
+  const commerceAccount = firstBoolean(
+    user.isCommerceUser,
+    user.is_commerce_user,
+    user.commerceUser,
+    user.commerce_user,
+    asRecord(user.commerceUserInfo) || asRecord(user.commerce_user_info) ? true : undefined,
+  );
+  const region = firstString(user.region, user.regionCode, user.region_code, user.accountRegion, user.account_region);
+  const language = firstString(user.language, user.languageCode, user.language_code, user.lang);
+  const accountCreatedAt = normalizeTimestampSeconds(user.createTime, user.create_time, user.createdAt, user.created_at);
 
-  const hasIdentityDetails = Boolean(displayName || bio || avatarUrl || website || verified);
-  const hasProfileStats = [followers, following, totalLikes, videoCount].some((value) => value !== undefined);
+  const hasIdentityDetails = Boolean(
+    userId || secUid || displayName || bio || avatarUrl || website || region || language
+    || verified !== undefined || privateAccount !== undefined || commerceAccount !== undefined
+  );
+  const hasProfileStats = [followers, following, friends, totalLikes, videoCount].some((value) => value !== undefined);
   if (!hasIdentityDetails && !hasProfileStats) return undefined;
 
   return {
     username,
     profileUrl: `https://www.tiktok.com/@${username}`,
+    userId,
+    secUid,
     displayName,
     bio,
     avatarUrl,
     followers,
     following,
+    friends,
     totalLikes,
     videoCount,
     verified,
+    privateAccount,
+    commerceAccount,
     website,
+    region,
+    language,
+    accountCreatedAt,
     collectedAt: Date.now(),
     source,
   };
@@ -258,27 +297,34 @@ export function extractProfileFromPayload(
   visit(payload, 0);
   return candidates.sort((a, b) => {
     const score = (profile: ProfileRecord) =>
-      Number(profile.followers !== undefined) * 4
-      + Number(profile.videoCount !== undefined) * 3
+      Number(profile.followers !== undefined) * 5
+      + Number(profile.videoCount !== undefined) * 4
+      + Number(profile.totalLikes !== undefined) * 3
       + Number(Boolean(profile.avatarUrl)) * 2
       + Number(Boolean(profile.bio))
-      + Number(Boolean(profile.displayName));
+      + Number(Boolean(profile.displayName))
+      + Number(Boolean(profile.userId))
+      + Number(Boolean(profile.secUid));
     return score(b) - score(a);
   })[0];
 }
 
-export function extractProfileFromDom(username: string): ProfileRecord {
+export function extractProfileFromDocument(
+  root: ParentNode,
+  username: string,
+  source: ProfileRecord['source'] = 'dom',
+): ProfileRecord {
   const text = (...selectors: string[]) => {
     for (const selector of selectors) {
-      const el = document.querySelector<HTMLElement>(selector);
+      const el = root.querySelector<HTMLElement>(selector);
       if (el?.textContent?.trim()) return el.textContent.trim();
     }
     return undefined;
   };
-  const avatar = document.querySelector<HTMLImageElement>(
+  const avatar = root.querySelector<HTMLImageElement>(
     '[data-e2e="user-avatar"] img[src], header [class*="avatar"] img[src], header img[data-e2e="user-avatar"]'
   );
-  const websiteAnchor = document.querySelector<HTMLAnchorElement>(
+  const websiteAnchor = root.querySelector<HTMLAnchorElement>(
     '[data-e2e="user-bio"] a[href], [data-e2e="user-link"] a[href], a[data-e2e="user-link"]'
   );
 
@@ -290,12 +336,18 @@ export function extractProfileFromDom(username: string): ProfileRecord {
     avatarUrl: sanitizeHttpUrl(avatar?.currentSrc || avatar?.src || undefined),
     followers: firstNumber(text('[data-e2e="followers-count"]', 'header [class*="follower-count"]')),
     following: firstNumber(text('[data-e2e="following-count"]', 'header [class*="following-count"]')),
+    friends: firstNumber(text('[data-e2e="friends-count"]', 'header [class*="friend-count"]')),
     totalLikes: firstNumber(text('[data-e2e="likes-count"]', 'header [class*="like-count"]', 'header [class*="heart-count"]')),
-    verified: Boolean(document.querySelector('[data-e2e="user-title"] svg, [data-e2e="verified-badge"], header [class*="verified"]')),
+    videoCount: firstNumber(text('[data-e2e="videos-count"]', 'header [class*="video-count"]')),
+    verified: Boolean(root.querySelector('[data-e2e="user-title"] svg, [data-e2e="verified-badge"], header [class*="verified"]')),
     website: sanitizeHttpUrl(websiteAnchor?.href),
     collectedAt: Date.now(),
-    source: 'dom',
+    source,
   };
+}
+
+export function extractProfileFromDom(username: string): ProfileRecord {
+  return extractProfileFromDocument(document, username, 'dom');
 }
 
 export function parseTikTokVideoUrl(value: string, baseUrl = 'https://www.tiktok.com'): { author: string; id: string; videoUrl: string } | undefined {

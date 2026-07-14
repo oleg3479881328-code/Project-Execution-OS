@@ -1,4 +1,4 @@
-export const APP_VERSION = '0.4.0';
+export const APP_VERSION = '0.5.0';
 
 export type ScanStatus = 'idle' | 'scanning' | 'paused' | 'complete' | 'stopped' | 'blocked' | 'error';
 export type ScanMode = 'profile' | 'tag';
@@ -48,24 +48,26 @@ export interface EnrichedVideo extends VideoRecord {
   outlierScore?: number;
 }
 
-export interface FavoriteEntry {
-  key: string;
-  video: VideoRecord;
-  favoritedAt: number;
-}
-
 export interface ProfileRecord {
   username: string;
   profileUrl: string;
+  userId?: string;
+  secUid?: string;
   displayName?: string;
   bio?: string;
   avatarUrl?: string;
   followers?: number;
   following?: number;
+  friends?: number;
   totalLikes?: number;
   videoCount?: number;
   verified?: boolean;
+  privateAccount?: boolean;
+  commerceAccount?: boolean;
   website?: string;
+  region?: string;
+  language?: string;
+  accountCreatedAt?: number;
   collectedAt: number;
   source: 'api' | 'embedded-json' | 'dom';
 }
@@ -76,6 +78,21 @@ export interface ProfileSnapshot extends Omit<ProfileRecord, 'collectedAt' | 'so
   lastScannedAt: number;
   profileDataUpdatedAt?: number;
   profileDataSource?: ProfileRecord['source'];
+}
+
+export interface ChannelSnapshot extends Omit<ProfileSnapshot, 'videos'> {
+  collectedVideoCount: number;
+  averageEngagementRate?: number;
+  strongestHashtags: string[];
+  capturedAt: number;
+  completeness: 'partial' | 'full';
+}
+
+export interface FavoriteEntry {
+  key: string;
+  video: VideoRecord;
+  channel: ChannelSnapshot;
+  favoritedAt: number;
 }
 
 export interface ScanOptions {
@@ -116,6 +133,7 @@ export type RuntimeMessage =
   | { type: 'PING' }
   | { type: 'START_SCAN'; options: ScanOptions }
   | { type: 'STOP_SCAN' }
+  | { type: 'ENRICH_CHANNEL'; username: string }
   | { type: 'GET_DASHBOARD' }
   | { type: 'CLEAR_PROFILE'; username: string }
   | { type: 'CLEAR_TAG_RESEARCH'; tag: string }

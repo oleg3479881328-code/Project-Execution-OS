@@ -1,67 +1,57 @@
 # Latest Log — TikTok Research Sorter
 
 Date: 2026-07-14
-Version: `0.4.0`
-Issue: `#84`
-Pull request: `#85`
-Branch: `main`
-Status: integrated and validated
+Version: `0.5.0`
+Issue: `#86`
+Pull request: `#87`
+Branch: `agent/tiktok-research-sorter-channel-export-v0.5.0`
+Status: implementation complete; final GitHub validation pending
 
 ## Delivered
 
-- Star control on every profile and hashtag video card.
-- Durable Favorites storage independent from scanned profile and hashtag data.
-- Dedicated Favorites tab with live favorite count.
-- Checkbox selection of favorite videos.
-- Select all, clear selection, remove selected, and individual favorite removal.
-- Standalone HTML generation from only the checked favorites.
-- HTML cards with clickable video/profile links, descriptions, preview images, dates, audio titles, hashtags, and available metrics.
-- Responsive and print-friendly HTML layout suitable for sending as a file.
-- HTML escaping for user-controlled text and HTTP(S)-only external URL validation.
-- Backward-compatible dashboard migration for existing v0.3.0 installations.
-- Versioned exports and installation artifacts using `v0.4.0`.
+- Expanded public channel parsing for user ID, `secUid`, display name, biography, avatar, verification, website, followers, following, friends, total profile likes, public video count, region, language, account flags, and account creation date.
+- Durable channel snapshot attached to every new favorite.
+- Backward-compatible migration of v0.4.0 favorites to partial channel snapshots.
+- Automatic refresh of favorite channel snapshots when richer public profile data is collected.
+- Same-origin public profile enrichment after adding a favorite without navigating the visible TikTok page.
+- Manual `Обновить канал` action in Favorites.
+- Favorites grouped by channel.
+- Complete channel cards in the extension with public counters, identifiers, flags, dates, data source, and locally calculated analytics.
+- Selected-only standalone HTML grouped by channel.
+- Complete channel card before each channel’s selected videos in HTML.
+- HTML includes channel and video links, avatars/previews, descriptions, dates, audio, hashtags, video metrics, channel metrics, source, and timestamps.
+- Missing public fields displayed as unavailable instead of being invented.
+- Versioned HTML filename and installation artifacts using `v0.5.0`.
 
 ## Automated coverage added
 
-- stable case-insensitive favorite keys;
-- newest-first favorite ordering;
-- selected-only favorite extraction;
-- standalone HTML structure and version metadata;
-- inclusion of links, previews, descriptions, and metrics;
-- markup/script escaping;
-- rejection of `javascript:` and `data:` URLs;
-- omission of unselected favorites from generated HTML.
-
-## Final verification
-
-For PR #85 head `eb3328251cb256164237baefb66b25b449d222cb`:
-
-- Project Execution OS integrity run `29333836074`: passed;
-- TikTok Research Sorter CI run `29333836128`: passed;
-- Linux reproducible install: passed;
-- strict TypeScript check: passed;
-- all unit and regression tests: passed;
-- production Chrome MV3 build: passed;
-- versioned packaging and artifact upload: passed;
-- Windows zero-side-effect updater dry run: passed;
-- Windows full local-source updater validation: passed;
-- generated manifest version check: passed.
-
-PR #85 merged into `main` as commit `92f66e3fea0b96f30dfad8dc0de7aff5e1a5c696`.
-
-## Artifacts
-
-- unpacked Chrome MV3 extension;
-- `tiktok-research-sorter-extension-v0.4.0.zip`;
-- `tiktok-sorter-auto-updater-setup-v0.4.0.zip`;
-- `tiktok-research-sorter-source-v0.4.0.zip`.
-
-The installable extension ZIP was separately inspected: `manifest.json` is at the archive root, the archive contains 10 extension files, and the manifest declares version `0.4.0`.
+- complete public channel payload parsing;
+- identifiers, counters, flags, locale, website, and account date;
+- preservation of explicit false flags;
+- millisecond timestamp normalization;
+- unsafe profile website rejection;
+- legacy favorite migration to a partial channel snapshot;
+- rich channel snapshot creation from a scanned profile;
+- richer channel snapshot merging;
+- favorite grouping by case-insensitive channel identity;
+- selected-only channel-grouped HTML;
+- complete channel and video information in HTML;
+- channel and video markup escaping;
+- rejection of unsafe channel/video/avatar/preview URLs;
+- omission of unselected channels and videos.
 
 ## Product boundary
 
-The exported HTML is a local static file. Video and profile links point to public TikTok pages, and preview images use the public image URLs captured during scanning. TikTok can later expire those preview URLs. No TikTok access controls are bypassed.
+Only public fields TikTok actually provides are stored. TikTok can omit data, return a verification page, change its payloads, or expire external avatar/preview URLs. The extension does not bypass login, CAPTCHA, private accounts, paywalls, rate limits, or access controls.
+
+## Pending final evidence
+
+- Project Execution OS integrity CI;
+- Linux reproducible install, strict TypeScript, all tests, build, packaging, and artifact upload;
+- Windows updater dry-run, full local-source validation, and manifest version check;
+- installable v0.5.0 ZIP inspection;
+- PR #87 merge into `main`.
 
 ## Owner action
 
-None for code implementation, testing, packaging, merge, or repository delivery. The owner only needs to install the provided versioned extension ZIP.
+None during implementation and automated validation.
