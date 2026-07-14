@@ -1,6 +1,6 @@
 ---
 project_mode: internal
-status: active-development
+status: validated-draft
 version: 0.6.0
 branch: agent/tiktok-design-preview
 base_branch: main
@@ -12,7 +12,7 @@ pull_request: 88
 
 ## Current phase
 
-Version 0.5.0 remains the stable integrated baseline in `main`. Draft PR #88 now contains two bounded v0.6.0 additions:
+Version 0.5.0 remains the stable integrated baseline in `main`. Draft PR #88 contains two validated v0.6.0 additions:
 
 1. an autonomous HTML design stand for visual iteration;
 2. a per-video-card download control that reuses the existing local `Yt-Dlp-Download-Manager` queue.
@@ -31,6 +31,7 @@ Version 0.5.0 remains the stable integrated baseline in `main`. Draft PR #88 now
 
 - Every rendered `.video-card` in profile, hashtag, and Favorites views receives `↓ Скачать`.
 - `VideoDownloadControls.tsx` discovers current card targets and mounts isolated React controls into each card.
+- Controls remain attached when React rerenders or replaces a card node.
 - The button sends `DOWNLOAD_VIDEO` to the extension background.
 - `lib/download-manager.ts` validates that the URL is HTTPS, belongs to TikTok, and contains `/video/`.
 - The background submits `POST http://127.0.0.1:8000/api/jobs` with:
@@ -79,26 +80,39 @@ Stable v0.5.0:
 
 - Project Execution OS integrity run `29339387056`: passed.
 - TikTok Research Sorter CI run `29339387139`: passed.
-- Linux reproducible install, strict TypeScript, all tests, production build, packaging, and artifact upload: passed.
-- Windows updater dry-run, full local-source validation, and manifest version check: passed.
 - PR #87 merged into `main` as `6a9817c923ed0e531ee7193b8e52ee986b5fe29d`.
 
-Active draft PR #88:
+Validated v0.6.0 runtime head `1a916679fd35bb00de14ac4d8423102f2038b7b8`:
 
-- standalone design document added and structurally checked;
-- download-manager client and four unit scenarios added;
-- runtime message and background queue handler added;
-- exact local host permission added;
-- version and packaging moved to `0.6.0`;
-- first Linux TypeScript run failed before tests because `useRef` lacked an explicit initial value;
-- the TypeScript issue was corrected in `08240ea3e02fde80ac4f1612b7d5e8ec5a9c1a4f`;
-- current head requires final green integrity, Linux check/test/build/package, Windows updater, and manifest validation.
+- Project OS integrity run `29352113915`: passed.
+- TikTok Research Sorter CI run `29352115086`: passed.
+- Linux reproducible `npm ci`: passed.
+- strict TypeScript: passed.
+- all unit and regression tests, including download integration: passed.
+- production Chrome MV3 build: passed.
+- v0.6.0 packaging: passed.
+- unpacked extension and packaged artifacts upload: passed.
+- Windows updater zero-side-effect dry run: passed.
+- Windows updater full local-source validation: passed.
+- generated manifest version `0.6.0`: passed.
+
+Corrections made during validation:
+
+- explicit `useRef` initial value added after the first TypeScript failure;
+- HTML export regression expectation advanced from `v0.5.0` to `v0.6.0` after the first test failure.
 
 ## Distribution target
 
-Successful v0.6.0 CI must produce:
+Successful v0.6.0 CI produces:
 
 - unpacked Chrome MV3 extension;
 - `tiktok-research-sorter-extension-v0.6.0.zip`;
 - `tiktok-sorter-auto-updater-setup-v0.6.0.zip`;
 - `tiktok-research-sorter-source-v0.6.0.zip`.
+
+## Remaining human validation
+
+- install the v0.6.0 extension build in Chrome;
+- start `Yt-Dlp-Download-Manager` at `127.0.0.1:8000`;
+- click `↓ Скачать` on profile, hashtag, and Favorites cards;
+- confirm that each click creates the expected local queue job and downloaded file.
