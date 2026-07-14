@@ -1,11 +1,11 @@
 # Latest Log — TikTok Research Sorter
 
 Date: 2026-07-14
-Version: `0.6.0` draft
+Version: `0.6.0` validated draft
 Issue: none
 Pull request: `#88` draft
 Branch: `agent/tiktok-design-preview`
-Status: design preview and per-card local download integration implemented; final CI validation in progress
+Status: design preview and per-card local download integration implemented and automated validation green
 
 ## Delivered in the active branch
 
@@ -23,6 +23,7 @@ Status: design preview and per-card local download integration implemented; fina
   - `Отправляем…`;
   - `✓ В очереди`;
   - retry after a displayed error.
+- Kept controls attached across React rerenders by comparing both card identity and the current DOM mount slot.
 - Added `DOWNLOAD_VIDEO` to the typed runtime-message contract.
 - Added a background handler that delegates downloads to the existing local manager.
 - Added `lib/download-manager.ts` with strict direct-video URL validation.
@@ -66,25 +67,39 @@ Not added:
 - propagation of Download Manager API error details;
 - actionable error text when the local manager is not running.
 
+The existing HTML-export regression was advanced from `v0.5.0` to `v0.6.0`.
+
 ## Version and packaging
 
 - `APP_VERSION`: `0.6.0`.
 - WXT manifest version: `0.6.0`.
 - package version: `0.6.0`.
-- CI package and artifact names moved to `v0.6.0`.
-- Windows manifest validation now expects `0.6.0`.
+- CI package and artifact names: `v0.6.0`.
+- Windows manifest validation expects `0.6.0`.
 
-## Validation history
+## Validation result
 
-Stable v0.5.0 remains merged in `main` as `6a9817c923ed0e531ee7193b8e52ee986b5fe29d` with its original green validation baseline.
+Validated runtime head: `1a916679fd35bb00de14ac4d8423102f2038b7b8`.
 
-For active PR #88:
+- Project OS integrity run `29352113915`: passed.
+- TikTok Research Sorter CI run `29352115086`: passed.
+- Linux reproducible dependency install: passed.
+- strict TypeScript: passed.
+- all unit and regression tests: passed.
+- production Chrome MV3 build: passed.
+- v0.6.0 packaging: passed.
+- unpacked extension upload: passed.
+- packaged artifacts upload: passed.
+- Windows updater dry run: passed.
+- Windows full local-source validation: passed.
+- generated manifest version `0.6.0`: passed.
 
-- Project OS integrity passed on the first runtime-download head.
-- The first Linux run stopped at TypeScript before tests and build because `useRef` was created without an explicit initial value.
-- The error was corrected in commit `08240ea3e02fde80ac4f1612b7d5e8ec5a9c1a4f`.
-- Workflow packaging and manifest expectations were then updated from `0.5.0` to `0.6.0`.
-- Final acceptance remains conditional on green integrity, Linux TypeScript/tests/build/package, Windows updater validation, and generated manifest inspection.
+Errors found and resolved during validation:
+
+1. `useRef` required an explicit initial value under the current React type definitions.
+2. The HTML-export regression still expected version `0.5.0` after the intentional version bump.
+
+Both fixes are included and the subsequent full validation is green.
 
 ## Runtime boundary
 
@@ -93,6 +108,6 @@ For active PR #88:
 - A failed local connection stays visible on the card and can be retried.
 - The research database and channel snapshots remain independent from downloaded media.
 
-## Owner action after green CI
+## Remaining owner smoke test
 
-Install or update the v0.6.0 extension build, start the existing `Yt-Dlp-Download-Manager`, and click `↓ Скачать` on any scanned video card.
+Install the v0.6.0 extension build, start the existing `Yt-Dlp-Download-Manager`, click `↓ Скачать` on profile, hashtag, and Favorites cards, and confirm that each creates the expected local queue job and downloaded file.
