@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "86b1a62749bbe1f9dfc2711ac26a403ed4f6a31d",
-  "generated_at": "2026-07-12T10:37:17-04:00",
+  "repository_commit": "b1d0d79a369c5aa7595c48d5b29aea235e775748",
+  "generated_at": "2026-07-13T20:04:53-04:00",
   "artifact_count": 501,
   "artifacts": [
     {
@@ -9646,19 +9646,17 @@
       "domain": "tiktok-research-sorter",
       "status": null,
       "date": null,
-      "sha256": "2f1108dba44c6deb6c5b6c9aa80985aedbfb5543500c7d5c19e3e4d274b64057",
+      "sha256": "834c224598c8d5a91a0aa721f50b80c218801c0a0ca7353fa729125c1b791c06",
       "headings": [
         "PROJECT — TikTok Research Sorter",
         "1. Project",
         "2. Purpose",
-        "3. Source Of Truth",
-        "4. Source Trail",
-        "5. Current Status",
-        "6. Done So Far",
-        "7. Current Focus",
-        "8. Next Practical Step",
-        "9. Key Decisions And Constraints",
-        "10. Read Next"
+        "3. Source of truth",
+        "4. Architecture",
+        "5. Current status",
+        "6. Key decisions and constraints",
+        "7. Current validation gate",
+        "8. Read next"
       ]
     },
     {
@@ -9666,17 +9664,16 @@
       "title": "TikTok Research Sorter — Project State",
       "type": "project-artifact",
       "domain": "tiktok-research-sorter",
-      "status": "stable",
+      "status": "active",
       "date": null,
-      "sha256": "32d574dec0202e2feed83aa749a4c25befd41cdfadf9745cc5992fe8f41ac69b",
+      "sha256": "fca7730f1c79e0e67689168dc2a8be61413e79269ba764ac7a0f9ee2699d2444",
       "headings": [
         "TikTok Research Sorter — Project State",
         "Current phase",
         "Working implementation",
-        "Stabilization completed",
-        "Automated validation",
-        "Distribution",
-        "Remaining boundaries"
+        "Boundaries",
+        "Validation status",
+        "Distribution target"
       ]
     },
     {
@@ -9686,10 +9683,13 @@
       "domain": "tiktok-research-sorter",
       "status": null,
       "date": null,
-      "sha256": "5d916e432ce6e591d12e1cefdc435f2dd4de7e3e80567752ff9060bf0a86712d",
+      "sha256": "04aa0a4ebdc3fbf0e62472f11724640e4f13d5777beee2039ae609ba2b6cf36d",
       "headings": [
         "TikTok Research Sorter",
-        "Version 0.2.0",
+        "Version 0.3.0",
+        "Profile research",
+        "Hashtag research",
+        "Reliability and safety",
         "One-click Windows workflow",
         "Local development",
         "CI artifacts",
@@ -9810,15 +9810,15 @@
       "title": "Latest Log — TikTok Research Sorter",
       "type": "project-artifact",
       "domain": "tiktok-research-sorter",
-      "status": "integrated into `main`; automatic updater follows `main",
-      "date": "2026-07-12",
-      "sha256": "b3c073d898cf282213438b74c852b191c04c8da9615da2e64ab991b1ad94b448",
+      "status": "implementation complete locally; final GitHub validation pending",
+      "date": "2026-07-13",
+      "sha256": "15fb2052399033f493eb55a8cacd6b255b9e02262f1596c0001ff893dafdf856",
       "headings": [
         "Latest Log — TikTok Research Sorter",
-        "Completed",
-        "Final automated verification",
-        "Distribution behavior",
-        "Remaining boundaries",
+        "Added",
+        "Automated coverage added",
+        "Local verification performed",
+        "Pending final evidence",
         "Owner action"
       ]
     },
