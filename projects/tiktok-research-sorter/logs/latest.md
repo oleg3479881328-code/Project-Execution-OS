@@ -3,10 +3,11 @@
 Date: 2026-07-13
 Version: `0.3.0`
 Issue: `#82`
-Branch: `agent/tiktok-research-sorter-tag-scan-v0.3.0`
-Status: implementation complete locally; final GitHub validation pending
+Pull request: `#83`
+Branch: `main`
+Status: integrated and validated
 
-## Added
+## Delivered
 
 - Automatic recognition of TikTok hashtag pages such as `/tag/weddingphotography`.
 - Selected observation of TikTok challenge/search item-list responses.
@@ -17,7 +18,7 @@ Status: implementation complete locally; final GitHub validation pending
 - User control for minimum view count.
 - Separate profile and hashtag result modes in the side panel.
 - Versioned hashtag/profile CSV and JSON export.
-- Version bump and versioned installation artifacts to `v0.3.0`.
+- Versioned installation artifacts using `v0.3.0` in filenames.
 
 ## Automated coverage added
 
@@ -29,30 +30,36 @@ Status: implementation complete locally; final GitHub validation pending
 - duplicate video metric merging;
 - TikTok discovery-link parsing.
 
-## Local verification performed
+## Final verification
 
-```text
-npm ci --no-audit --no-fund
-npm run check
-npm test
-npm run build
-```
+For PR #83 head `5de3ce07dace425ea63359b4340c0beedf3fa5a0`:
 
-Local result for the reconstructed project package:
-
-- TypeScript: passed;
-- new hashtag tests: passed;
+- Project Execution OS integrity run `29294689690`: passed;
+- TikTok Research Sorter CI run `29294689721`: passed;
+- Linux reproducible install: passed;
+- strict TypeScript check: passed;
+- all unit and regression tests: passed;
 - production Chrome MV3 build: passed;
-- generated manifest version: `0.3.0`.
+- versioned packaging and artifact upload: passed;
+- Windows zero-side-effect updater dry run: passed;
+- Windows full local-source updater validation: passed;
+- generated manifest version check: passed.
 
-## Pending final evidence
+PR #83 merged into `main` as commit `b1d0d79a369c5aa7595c48d5b29aea235e775748`.
 
-- GitHub Linux CI;
-- GitHub Windows updater CI;
-- Project Execution OS integrity CI;
-- downloadable v0.3.0 artifacts;
-- pull-request merge into `main`.
+## Artifacts
+
+- unpacked Chrome MV3 extension;
+- `tiktok-research-sorter-extension-v0.3.0.zip`;
+- `tiktok-sorter-auto-updater-setup-v0.3.0.zip`;
+- `tiktok-research-sorter-source-v0.3.0.zip`.
+
+The installable extension ZIP was separately inspected: `manifest.json` is at the archive root and declares version `0.3.0`.
+
+## Product boundary
+
+Hashtag mode selects the best videos from each account among videos TikTok actually loads on the open hashtag page. It does not silently scan every video on every creator profile and does not bypass TikTok access controls.
 
 ## Owner action
 
-None during implementation and automated validation.
+None for code integration, automated validation, packaging, or repository delivery.
