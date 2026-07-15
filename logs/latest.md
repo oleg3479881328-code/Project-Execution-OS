@@ -1,25 +1,23 @@
 # Latest Executor Status
 
-Timestamp: 2026-07-15T14:30:00-04:00
-Marker: COMPLETE
-Task-ID: media-probe-candidate-v0.1.0
-Status: Implemented and merged `media.probe` version `0.1.0` as the first executable reusable capability block. Added package metadata, manifest, stable contracts, ffprobe provider, workspace boundary, CLI, tests, validation evidence, CI, registry promotion from `idea` to `candidate`, and refreshed the system context manifest.
-Reply-Surface: repository main branch after PR merge
-PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/89
-Merge-SHA: 74c6ae9585f55f84f6f5e342368636c3e1512a01
-Implementation-Path: capabilities/media-probe/
-Manifest-Path: capabilities/media-probe/manifest.yaml
-Validation-Path: capabilities/media-probe/VALIDATION.md
-Implementation-Log: logs/2026-07-15-media-probe-candidate.md
-Capability-Registry: capability-library/REGISTRY.md
-CI-Workflow: .github/workflows/media-probe-tests.yml
-System-Context-Manifest: SYSTEM_CONTEXT_MANIFEST.md v13
-Local-Test-Evidence: Python 3.13.5; pytest 9.0.2; ffprobe 7.1.3; 6 passed in 0.30s
-CLI-Smoke-Evidence: generated 0.1-second 8000 Hz WAV; status success; duration and sample rate verified
-GitHub-CI: media.probe tests success on Python 3.12 and 3.13
-System-Integrity-CI: success after manifest SHA and fingerprint refresh
-Remote-Reclone-Limitation: container could not resolve github.com; no workaround invented; error logged; independent PR CI passed
-Current-Registry-Status: media.probe candidate 0.1.0
-Not-Claimed: validated or production
-Next-Safe-Action: Run native Windows and representative real-media checks, integrate media.probe into one real application, and implement media.clip as the second capability.
-Owner-Action-Required: None.
+Timestamp: 2026-07-15T14:55:00-04:00
+Marker: COMPLETE_OWNER_CONFIRMATION_PENDING
+Task-ID: block-studio-v0.1.0
+Status: Implemented and merged Block Studio 0.1.0 as the first owner-facing local application for reusable capability blocks. Added registry/manifest/entry-point discovery, interactive media.probe upload and preview, readable metadata, streams, raw JSON, logs, contract, tests, owner/developer modes, protected runtime storage, cleanup, Windows launcher, portable ZIP, and Linux/Windows CI.
+Reply-Surface: repository main branch and portable artifact
+PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/90
+Merge-SHA: d70fbb1be0d419b3dcc5b47a9d3dc107a9551069
+Application-Path: apps/block-studio/
+Windows-Launcher: START_BLOCK_STUDIO.bat
+Validation-Path: apps/block-studio/VALIDATION.md
+CI-Workflow: .github/workflows/block-studio-tests.yml
+Local-Test-Evidence: 5 passed in 1.55s; JavaScript syntax passed
+Real-MP4-Evidence: H.264/AAC 320x240, 0.8s; upload, probe, preview, and cleanup passed
+Linux-CI: success on Python 3.13 with ffprobe
+Windows-CI: success on Python 3.13 with ffprobe
+System-Integrity-CI: success
+Portable-Artifact: Block-Studio-v0.1.0-portable.zip
+Current-Status: Block Studio candidate 0.1.0; media.probe candidate 0.1.0
+Not-Claimed: owner-confirmed, validated, or production
+Next-Safe-Action: Owner opens Block Studio on the target Windows computer, processes one real MP4, and reports the exact result; then implement media.clip as the second interactive capability.
+Owner-Action-Required: Run the provided ZIP or START_BLOCK_STUDIO.bat and test one real file.
