@@ -2,6 +2,7 @@
 
 Date: 2026-07-15
 Version: `0.1.0 candidate`
+Pull request: `https://github.com/oleg3479881328-code/Project-Execution-OS/pull/90`
 
 ## Local environment
 
@@ -74,6 +75,22 @@ POST /api/blocks/media.probe/run
 DELETE /api/executions/<execution-id>
 ```
 
+## GitHub Actions
+
+PR #90 completed successfully:
+
+```text
+Block Studio tests — success
+Ubuntu / Python 3.13 — success
+Windows / Python 3.13 — success
+ffprobe installation — success
+real ffprobe API smoke test — success
+JavaScript syntax check — success
+Validate Project OS Integrity — success
+```
+
+The Windows job provides automated native Windows evidence for local paths, package installation, ffprobe discovery, upload execution, preview delivery, and cleanup.
+
 ## Visual QA
 
 The owner-mode layout was rendered in headless Chromium as a static visual fixture and inspected at 1440 pixels width.
@@ -103,6 +120,7 @@ It contains the Windows launcher, Block Studio application, capability package, 
 
 Block Studio remains `candidate 0.1.0` until:
 
-- GitHub Actions passes on Linux and Windows;
 - the owner opens it on the target Windows computer;
 - a real user-owned media file is processed successfully.
+
+Automated Linux and Windows validation is complete.
