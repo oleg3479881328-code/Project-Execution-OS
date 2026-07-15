@@ -40,11 +40,11 @@ Internal route growth belongs in `docs/ROUTER.md`, not in `START_HERE.md`.
 
 ## Current Phase
 
-Foundation phase.
+Foundation validation phase.
 
 Mode:
 
-`document-first`
+`document-first with executable capability candidates`
 
 Status:
 
@@ -68,6 +68,8 @@ Status:
 - `blocks/PROJECT_INDEX.md`
 - `capability-library/README.md`
 - `capability-library/REGISTRY.md`
+- `capabilities/media-probe/BLOCK.md`
+- `capabilities/media-probe/VALIDATION.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/WORKFLOW_DECISION_TABLE.md`
 - `docs/MICRO_TASK_MODE.md`
@@ -117,6 +119,7 @@ Status:
 - `knowledge-library/PROJECT_INDEX.md`
 - `CHANGELOG.md`
 - `logs/WORKFLOW_LOG.md`
+- `logs/2026-07-15-media-probe-candidate.md`
 
 ## Project Folder Standard
 
@@ -166,6 +169,30 @@ The workflow composes actions.
 
 The application owns product-specific behavior.
 
+## First Executable Capability
+
+```text
+media.probe 0.1.0 — candidate
+```
+
+Implementation:
+
+```text
+capabilities/media-probe/
+```
+
+Evidence:
+
+```text
+6 local tests passed
+manual CLI smoke test passed
+GitHub Actions passed on Python 3.12 and 3.13
+Project OS integrity validation passed
+PR #89 merged as 74c6ae9585f55f84f6f5e342368636c3e1512a01
+```
+
+The block remains `candidate`, not `validated`, until native Windows behavior and at least one real application integration are confirmed.
+
 ## Zero-State And Active-State
 
 Zero-state bootstrap:
@@ -189,8 +216,8 @@ The central repository is an active transfer-ready project with committed contin
 
 The lightweight bootstrap model was smoke-tested with temporary project `Test123`; the owner reports that the temporary test project has been deleted.
 
-The composable capability-block architecture is recorded as `candidate_v1`. The first validation target is the media chain registered in `capability-library/REGISTRY.md`.
+The composable capability-block architecture is recorded as `candidate_v1` and now has one executable candidate implementation.
 
 ## Next Required Action
 
-Implement and validate the first deterministic local capability block, preferably `media.probe`, before promoting the capability architecture beyond candidate status.
+Validate `media.probe` on native Windows and in one real application workflow, then implement `media.clip` as the second capability and compare the two before extracting shared SDK code.
