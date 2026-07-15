@@ -1,0 +1,22 @@
+block_id: media.probe
+version: 0.1.0
+status: candidate
+runtime: python
+python: ">=3.12"
+entry_point: peos_media_probe:create_block
+cli: peos-media-probe
+inputs:
+  - media
+outputs:
+  - media_metadata
+permissions:
+  network: false
+  filesystem: workspace-read-only
+  subprocess:
+    - ffprobe
+  gpu: false
+credentials: []
+providers:
+  - ffprobe
+idempotent: true
+destructive: false
