@@ -22,8 +22,8 @@
 
 ## Current Status
 
-- Mode: `document-first`
-- Phase: `foundation`
+- Mode: `document-first with first executable capability candidate`
+- Phase: `foundation validation`
 - Status: `transfer-ready central project`
 
 ## Done So Far
@@ -40,19 +40,26 @@
 - Added `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md` as the system-wide architecture for reusable executable capabilities.
 - Added `capability-library/README.md` and `capability-library/REGISTRY.md`.
 - Separated domain blocks from executable capability blocks, workflow composition, and application adapters.
-- Registered the first planned media capability chain: download, probe, audio extraction, transcription, and clipping.
+- Registered the initial media capability chain: download, probe, audio extraction, transcription, and clipping.
+- Implemented `media.probe` version `0.1.0` as the first executable candidate capability in `capabilities/media-probe/`.
+- Added request, context, artifact, result, error, provider, and CLI contracts.
+- Added unit, contract, negative-path, real ffprobe smoke tests, and pull-request CI.
+- Promoted `media.probe` from `idea` to `candidate` after 6 local tests and a manual CLI smoke test passed.
 
 ## Current Focus
 
 - Keep the central system internally consistent and transfer-ready after every meaningful change.
 - Apply harness engineering step by step by routing architecture/scaffold questions to `docs/HARNESS_ENGINEERING_STANDARD.md` before quality measurement.
 - Build repeated application functionality as versioned capability blocks rather than duplicating code inside each project.
+- Validate the shared contract against a second executable capability instead of prematurely extracting a common SDK.
 
 ## Next Practical Step
 
-- Implement `media.probe` as the first deterministic local capability block using ffprobe.
-- Use it to validate the common manifest, request/result contracts, artifact model, tests, CLI adapter, and registry promotion process.
-- Then implement `media.clip`, `media.extract_audio`, `media.transcribe`, and `media.download` in that order unless real project evidence changes the sequence.
+- Confirm the `media.probe` pull-request CI result and merge if green.
+- Run a native Windows smoke test before treating Windows path behavior as verified.
+- Implement `media.clip` as the second capability using ffmpeg.
+- Reuse the `media.probe` contract shape where evidence supports it, but extract shared code only after actual duplication appears.
+- Then implement `media.extract_audio`, `media.transcribe`, and `media.download` unless real project evidence changes the sequence.
 
 ## Key Decisions And Constraints
 
@@ -68,6 +75,8 @@
 - Workflows compose capability blocks; applications own project-specific business logic and UI.
 - Package-first is the default. Do not create a microservice for every block without evidence that an in-process package is insufficient.
 - Do not call a capability reusable merely because a specification exists. Registry status must reflect actual code and validation evidence.
+- `candidate` means implementation and minimum tests exist; it does not mean real application validation is complete.
+- Do not extract a common capability SDK from one implementation alone.
 
 ## Read Next
 
@@ -77,5 +86,6 @@
 4. `logs/latest.md`
 5. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md` for reusable executable functionality
 6. `capability-library/REGISTRY.md` for current implementation readiness
-7. `PROJECT_INDEX.md` only when broader navigation is needed
-8. routed standards only when the active task requires them
+7. `capabilities/media-probe/BLOCK.md` and `capabilities/media-probe/VALIDATION.md` for the first candidate
+8. `PROJECT_INDEX.md` only when broader navigation is needed
+9. routed standards only when the active task requires them
