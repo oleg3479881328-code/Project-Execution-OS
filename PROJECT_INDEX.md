@@ -23,7 +23,8 @@ It must also support:
 - brainstorm-only work without forcing project creation;
 - idea capture without forcing project creation;
 - normalization of older repositories into the current standard;
-- durable ChatGPT to Codex communication through GitHub.
+- durable ChatGPT to Codex communication through GitHub;
+- reusable executable capability blocks that can be composed into multiple applications without copying implementation code.
 
 ## Primary Entrypoint
 
@@ -65,6 +66,8 @@ Status:
 - `project-library/decisions/006-stable-start-here-live-router.md`
 - `blocks/README.md`
 - `blocks/PROJECT_INDEX.md`
+- `capability-library/README.md`
+- `capability-library/REGISTRY.md`
 - `docs/WORKFLOW_CONTRACT.md`
 - `docs/WORKFLOW_DECISION_TABLE.md`
 - `docs/MICRO_TASK_MODE.md`
@@ -73,6 +76,7 @@ Status:
 - `docs/SYSTEM_CONTEXT_VERSION_STANDARD.md`
 - `docs/API_RUNTIME_COST_CACHE_LOGGING_STANDARD.md`
 - `docs/HARNESS_ENGINEERING_STANDARD.md`
+- `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
 - `docs/AGENT_QUALITY_SCORECARD_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
 - `docs/RESEARCH_STANDARD.md`
@@ -142,6 +146,26 @@ START_HERE.md
 → minimum additional files needed for the task
 ```
 
+## Capability Composition Rule
+
+Reusable functionality should follow:
+
+```text
+domain block
+→ capability contract
+→ versioned capability implementation
+→ workflow composition
+→ application adapter and UI
+```
+
+The domain block decides and reviews.
+
+The capability block performs one bounded action.
+
+The workflow composes actions.
+
+The application owns product-specific behavior.
+
 ## Zero-State And Active-State
 
 Zero-state bootstrap:
@@ -165,6 +189,8 @@ The central repository is an active transfer-ready project with committed contin
 
 The lightweight bootstrap model was smoke-tested with temporary project `Test123`; the owner reports that the temporary test project has been deleted.
 
+The composable capability-block architecture is recorded as `candidate_v1`. The first validation target is the media chain registered in `capability-library/REGISTRY.md`.
+
 ## Next Required Action
 
-Use `docs/HARNESS_ENGINEERING_STANDARD.md` as the architecture wrapper for reusable or operational agent workflows before applying `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` for measurement.
+Implement and validate the first deterministic local capability block, preferably `media.probe`, before promoting the capability architecture beyond candidate status.
