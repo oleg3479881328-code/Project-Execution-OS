@@ -4,13 +4,13 @@
 
 This block gives `Project Execution OS` one reusable workflow for website, landing-page, SaaS-site, and product-interface design that must stay research-grounded, usable, conversion-aware, buildable, reviewable, and protected from generic AI-coded frontend output.
 
-It teaches an agent to move from product intent to donor research, visual donor selection, page strategy, section composition, UI system, responsive behavior, implementation handoff, frontend design QA, and design review instead of stopping at decorative mockups or compiling generic UI.
+It teaches an agent to move from product intent to donor research, visual donor selection, page strategy, section composition, UI system, responsive behavior, implementation handoff, bounded Taste-guided frontend execution, frontend design QA, and design review instead of stopping at decorative mockups or compiling generic UI.
 
 ## Status
 
-`candidate_v3`
+`candidate_v4`
 
-The block has been expanded from a process-only design block into a fuller website-building, site-design, and AI-coded frontend QA domain block. It remains candidate until validated on real website projects.
+The block has been expanded from a process-only design block into a fuller website-building, site-design, AI-coded frontend execution, and QA domain block. It remains candidate until validated on real website projects.
 
 ## Core Principle
 
@@ -22,7 +22,7 @@ Start by understanding the product, user path, competitors, donor websites, prov
 
 When owner taste or visual direction is not yet fixed, show a curated visual catalog and let the owner select concrete references before drafting the specification.
 
-When AI codes a visible frontend, do not accept compile success as design success. Run the narrowest useful design QA gate before release or handoff.
+When AI codes a visible frontend, do not accept compile success as design success. Use a bounded execution standard to prevent generic AI defaults, then run the narrowest useful design QA gate before release or handoff.
 
 ## When To Use
 
@@ -37,6 +37,7 @@ Use this block when the task is to:
 - create a frontend-aware UI specification before implementation;
 - review an existing website design for usability, clarity, conversion, consistency, and buildability;
 - prepare design guidance that a frontend executor can implement;
+- guide AI frontend implementation away from generic visual defaults without overriding product context or the existing stack;
 - apply a design QA gate to AI-coded frontend work, including Impeccable-backed or manual fallback review.
 
 ## When Not To Use
@@ -53,7 +54,7 @@ Do not use this block for:
 
 A valid website design pass must connect:
 
-`goal -> user scenario -> donor research -> visual donor selection when needed -> page strategy -> section plan -> wireframe -> UI system -> responsive behavior -> implementation handoff -> frontend design QA when AI-coded or release-bound -> review`
+`goal -> user scenario -> donor research -> visual donor selection when needed -> page strategy -> section plan -> wireframe -> UI system -> responsive behavior -> implementation handoff -> bounded Taste-guided frontend execution when appropriate -> frontend design QA when AI-coded or release-bound -> review`
 
 If one of those required layers is missing, the design is incomplete.
 
@@ -75,10 +76,11 @@ Smallest useful path:
 12. `blocks/design/MOTION_AND_ANIMATION.md` when motion is requested or visible
 13. `blocks/design/CONVERSION_AND_MARKETING.md` when business conversion matters
 14. `blocks/design/IMPLEMENTATION_HANDOFF.md` before frontend execution
-15. `blocks/design/IMPECCABLE_DESIGN_QA_GATE.md` when AI-coded frontend work needs design QA or an Impeccable-backed review path
-16. `blocks/design/WEBSITE_REVIEW_CHECKLIST.md` for review
-17. `blocks/design/DESIGN_REVIEW_STANDARD.md` when deeper formal review is needed
-18. `blocks/design/DONORS.md` only when legacy donor rationale or older pattern notes are needed
+15. `blocks/design/TASTE_FRONTEND_EXECUTION_STANDARD.md` when an AI coding agent needs bounded anti-slop guidance during implementation
+16. `blocks/design/IMPECCABLE_DESIGN_QA_GATE.md` when AI-coded frontend work needs design QA or an Impeccable-backed review path
+17. `blocks/design/WEBSITE_REVIEW_CHECKLIST.md` for review
+18. `blocks/design/DESIGN_REVIEW_STANDARD.md` when deeper formal review is needed
+19. `blocks/design/DONORS.md` only when legacy donor rationale or older pattern notes are needed
 
 Do not load every file by default. Load the smallest path that fits the current task.
 
@@ -86,7 +88,7 @@ Do not load every file by default. Load the smallest path that fits the current 
 
 This block does not replace frontend implementation.
 
-Its job is to produce a design package that a frontend executor can build with minimal guessing and then check visible AI-coded output against a design QA gate when the surface is release-bound or owner-facing.
+Its job is to produce a design package that a frontend executor can build with minimal guessing, optionally constrain the execution agent with the appropriate Taste mode and profile, and then check visible AI-coded output against a design QA gate when the surface is release-bound or owner-facing.
 
 That means the design output should make clear:
 
@@ -98,6 +100,8 @@ That means the design output should make clear:
 - how the layout changes across screen sizes;
 - which interaction states or content rules matter;
 - which ready site stack fits the work;
+- whether Taste guidance is excluded, product-safe partial, redesign, or full marketing mode;
+- which `DESIGN_VARIANCE`, `MOTION_INTENSITY`, and `VISUAL_DENSITY` values apply when relevant;
 - whether Impeccable-backed design QA or manual fallback QA is required;
 - what is still intentionally left for implementation judgment.
 
@@ -117,14 +121,15 @@ Typical outputs:
 - responsive behavior rules;
 - conversion review;
 - frontend-aware handoff spec;
+- Taste execution mode and profile when AI-coded visual implementation needs anti-slop guidance;
 - Impeccable or manual Design QA Gate record when AI-coded frontend work is reviewed;
 - design review findings and required revisions.
 
 ## Boundary
 
-This block stores the reusable website-design, site-building, and frontend-design-QA workflow layer.
+This block stores the reusable website-design, site-building, frontend-execution, and frontend-design-QA workflow layer.
 
-Keep project-specific brand choices, final copy, customer data, proprietary screenshots, Impeccable runtime outputs, and implementation details in the target project unless they are being generalized into a reusable standard.
+Keep project-specific brand choices, final copy, customer data, proprietary screenshots, Taste runtime outputs, Impeccable runtime outputs, and implementation details in the target project unless they are being generalized into a reusable standard.
 
 ## Final Rule
 
