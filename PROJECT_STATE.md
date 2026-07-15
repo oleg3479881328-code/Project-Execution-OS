@@ -2,7 +2,7 @@
 project_name: Project Execution OS
 project_mode: compact
 status: transfer_ready
-updated_at: 2026-07-06
+updated_at: 2026-07-15
 source_of_truth: repository
 active_branch: main
 ---
@@ -23,32 +23,73 @@ logs/latest.md
 
 ## Latest Confirmed Milestone
 
-- Added `docs/HARNESS_ENGINEERING_STANDARD.md` as the central architecture wrapper for reusable or operational AI-agent workflows.
-- Updated `docs/ROUTER.md` so harness engineering, agent runtime scaffold, tool/context/permission design, sandbox, memory and verification scaffold requests route directly to the new standard.
-- Updated `PROJECT_INDEX.md` to include both `docs/HARNESS_ENGINEERING_STANDARD.md` and existing `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` in canonical documents.
-- Updated `PROJECT.md` so the central entrypoint records the new harness-engineering layer.
-- Source trail recorded in the new standard: `https://github.com/ai-boost/awesome-harness-engineering`.
-- Creation/update commits on branch `harness-engineering-standard-v1`: `dcfd166a67876ac94302bbf450ba739cd00ed76f`, `fd898db662c8f3687862a2e95b59eaa0e9498f02`, `c5562ebc3d23a4f40878bd15c34b5ec44ce8e39e`, `8de112b5494a2980dc5146d977223b9293d966ad`, `8dfddd946090bd940993f09a3d1b9fc4d4227647`, `7a42b335d5db55f025824e967763dac497b8bd12`.
+- Adopted composable executable capability blocks as a system-wide architecture for functionality that should be reused across applications.
+- Added `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`.
+- Added `capability-library/README.md` and `capability-library/REGISTRY.md`.
+- Separated four layers explicitly:
+
+```text
+domain block
+-> executable capability block
+-> workflow composition
+-> application adapter / UI
+```
+
+- Added a router path for reusable executable blocks and portable shared modules.
+- Updated `blocks/README.md` so domain blocks are not confused with implemented code.
+- Updated `blocks/video-production/BLOCK.md` to route download, probing, extraction, transcription, and clipping toward reusable capability contracts.
+- Registered the first planned media chain:
+
+```text
+media.download
+-> media.probe
+-> media.extract_audio
+-> media.transcribe
+-> media.clip
+```
+
+- Updated `PROJECT_INDEX.md` and `PROJECT.md` with the new architecture.
+
+## Architecture Decision
+
+Reusable technical functionality should not be rebuilt separately inside each application.
+
+Default model:
+
+```text
+build once behind a stable contract
+-> package and version
+-> validate independently
+-> compose into project workflows
+-> connect through thin application adapters
+```
+
+Package-first is the default. A capability becomes a service only when isolation, scaling, hardware, dependency, or multi-language consumer evidence justifies it.
 
 ## Current Focus
 
 Keep the central project internally consistent and transfer-ready after every meaningful change.
 
-Harness engineering is now the first architecture layer for repeated or operational agents. Agent quality measurement remains handled by `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` after the scaffold is explicit.
+Validate the capability architecture through real executable code rather than adding more specifications.
 
 ## Current Next Safe Action
 
-Use `docs/HARNESS_ENGINEERING_STANDARD.md` on the next real reusable agent or workflow before promoting it beyond one-off use.
+Implement `media.probe` as the first candidate capability block using ffprobe.
 
-Recommended next validation target: apply it to `projects/personal-secretary-os/PROJECT.md` or another active repeated workflow, then update the owning project state.
+Minimum validation target:
 
-When a new task arrives:
+```text
+manifest
+request/result contract
+artifact model
+Python invocation
+CLI adapter
+contract test
+local smoke test
+registry promotion from idea to candidate
+```
 
-1. enter through `START_HERE.md`;
-2. follow `docs/ROUTER.md`;
-3. read `PROJECT.md`, then this file and `logs/latest.md`;
-4. perform only the smallest justified change;
-5. update `PROJECT_STATE.md` and `logs/latest.md` after the meaningful step.
+After that, proceed to `media.clip`, then `media.extract_audio`, `media.transcribe`, and `media.download`, unless real project evidence changes the sequence.
 
 ## Active Files For Re-entry
 
@@ -59,27 +100,33 @@ Read in this order when resuming central-project work:
 3. `PROJECT.md`
 4. `PROJECT_STATE.md`
 5. `logs/latest.md`
-6. `PROJECT_INDEX.md` only when broader navigation is needed
-7. routed standards only when the active task requires them
+6. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md` for reusable code architecture
+7. `capability-library/REGISTRY.md` for actual block readiness
+8. `PROJECT_INDEX.md` only when broader navigation is needed
+9. routed standards only when the active task requires them
 
-For harness engineering work, open:
+For capability implementation work, also open:
 
 ```text
+docs/EXISTING_SOLUTION_FIRST_STANDARD.md
 docs/HARNESS_ENGINEERING_STANDARD.md
-docs/AGENT_QUALITY_SCORECARD_STANDARD.md
+blocks/<relevant-domain>/BLOCK.md
 ```
 
 For Impeccable or AI-coded frontend design QA work, open:
 
 ```text
+blocks/design/TASTE_FRONTEND_EXECUTION_STANDARD.md
 blocks/design/IMPECCABLE_DESIGN_QA_GATE.md
 blocks/design/BLOCK.md
 ```
 
 ## Known Blockers
 
+- All entries in `capability-library/REGISTRY.md` currently have status `idea`; no executable capability block has yet been implemented or validated under the new contract.
+- The common artifact and request/result contracts remain architectural guidance until `media.probe` validates them in code.
 - `gemini-tts-speech-generation` is registered as `candidate` / `not_reviewed`; it must not be treated as active until reviewed.
-- `blocks/design/IMPECCABLE_DESIGN_QA_GATE.md` is candidate guidance and should be validated on a real frontend task before promotion.
+- `blocks/design/IMPECCABLE_DESIGN_QA_GATE.md` and `blocks/design/TASTE_FRONTEND_EXECUTION_STANDARD.md` are candidate guidance and should be validated on a real frontend task before promotion.
 - `docs/HARNESS_ENGINEERING_STANDARD.md` is newly added and should be validated on a real reusable-agent workflow before being treated as mature operational guidance.
 
 ## Do-Not-Break Rules
@@ -87,7 +134,9 @@ blocks/design/BLOCK.md
 - Do not bypass `START_HERE.md` as the stable top-level entrypoint.
 - Do not replace `docs/ROUTER.md` with duplicated navigation logic elsewhere.
 - Do not treat chat memory as durable project truth.
-- Do not add files, folders, or architectural layers ritualistically.
+- Do not add files, folders, services, or architectural layers ritualistically.
 - Do not claim execution without a confirmed repository event.
+- Do not call a capability implemented, validated, or production-ready without matching registry evidence.
+- Do not copy reusable block code into multiple applications as the normal integration method.
 - Preserve the smallest sufficient context-loading path.
 - Update this file and `logs/latest.md` after every meaningful central-project change.
