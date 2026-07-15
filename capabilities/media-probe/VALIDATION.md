@@ -70,6 +70,18 @@ Verified result:
 }
 ```
 
+## Repository Branch Verification
+
+GitHub compare confirmed that branch `capability-media-probe-v0.1.0` is based on the current `main` commit and contains the expected capability implementation, package metadata, tests, example, and workflow files.
+
+A second validation attempt tried to clone the branch back into the execution container and rerun tests from the remote copy. The clone could not start because the container could not resolve `github.com`:
+
+```text
+fatal: unable to access 'https://github.com/oleg3479881328-code/Project-Execution-OS.git/': Could not resolve host: github.com
+```
+
+No workaround was invented. Independent repository validation is delegated to the pull-request GitHub Actions workflow.
+
 ## GitHub CI
 
 Workflow added:
@@ -84,12 +96,13 @@ CI status must be checked on the pull request before merge.
 
 ## Candidate Conclusion
 
-The evidence is sufficient to promote `media.probe` from `idea` to `candidate`.
+The local execution evidence is sufficient to promote `media.probe` from `idea` to `candidate`.
 
 It is not sufficient for `validated` because the block has not yet been integrated into a real application workflow.
 
 ## Remaining Validation
 
+- confirm the pull-request GitHub Actions result;
 - run a native Windows smoke test;
 - test representative MP4/H.264/AAC input;
 - test variable-frame-rate input;
