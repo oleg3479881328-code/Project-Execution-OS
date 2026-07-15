@@ -35,10 +35,11 @@ Implementation location:
 capabilities/media-probe/
 ```
 
-Pull request:
+Merged evidence:
 
 ```text
-https://github.com/oleg3479881328-code/Project-Execution-OS/pull/89
+PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/89
+Squash commit: 74c6ae9585f55f84f6f5e342368636c3e1512a01
 ```
 
 Implemented and recorded:
@@ -52,16 +53,16 @@ Implemented and recorded:
 - unit, contract, missing-tool, and real ffprobe smoke tests;
 - GitHub Actions workflow for Python 3.12 and 3.13;
 - candidate validation record;
-- registry promotion from `idea` to `candidate`.
+- registry promotion from `idea` to `candidate`;
+- refreshed system context manifest after the router change.
 
-Local evidence:
+Verification evidence:
 
 ```text
-Python 3.13.5
-pytest 9.0.2
-ffprobe 7.1.3
-6 passed in 0.30s
-manual CLI smoke test passed
+Local: Python 3.13.5; pytest 9.0.2; ffprobe 7.1.3; 6 passed in 0.30s
+CLI: generated 0.1-second 8000 Hz WAV; success; duration and sample rate verified
+GitHub Actions: media.probe tests — success
+GitHub Actions: Validate Project OS Integrity — success
 ```
 
 ## Architecture Decision
@@ -82,14 +83,12 @@ The first implementation intentionally keeps its contracts inside the package. A
 
 ## Current Focus
 
-- Confirm PR #89 GitHub Actions results.
-- Merge the candidate only when CI is green.
-- Validate the contract against `media.clip` as the second executable block.
+- Run native Windows and representative real-media validation for `media.probe`.
+- Integrate `media.probe` into one real application workflow before promotion to `validated`.
+- Implement `media.clip` as the second executable block.
 - Keep the distinction between `candidate` and `validated` explicit.
 
 ## Current Next Safe Action
-
-After PR #89 merges:
 
 1. run a native Windows smoke test for `media.probe`;
 2. test representative MP4/H.264/AAC and variable-frame-rate inputs;
@@ -123,10 +122,10 @@ blocks/<relevant-domain>/BLOCK.md
 
 ## Known Blockers
 
-- PR #89 CI must pass before merge.
 - Native Windows path behavior is implemented but not yet verified on Windows.
 - `media.probe` is not yet integrated into a real application, so it is not `validated`.
-- The container could not re-clone the remote branch because DNS resolution for `github.com` was unavailable; the error is logged and CI is the independent repository check.
+- Representative MP4/H.264/AAC and variable-frame-rate fixtures remain untested.
+- The container could not re-clone the remote branch because DNS resolution for `github.com` was unavailable; the error remains logged, while PR CI independently passed.
 - Other media capability entries remain `idea`.
 - `gemini-tts-speech-generation` remains `candidate` / `not_reviewed`.
 - Design Taste and Impeccable standards remain candidate guidance pending real-project validation.
