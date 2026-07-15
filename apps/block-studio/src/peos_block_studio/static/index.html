@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Execution OS — Block Studio</title>
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body data-mode="owner">
+  <div class="app-shell">
+    <header class="topbar">
+      <div><div class="eyebrow">PROJECT EXECUTION OS</div><h1>Block Studio</h1></div>
+      <div class="topbar-actions">
+        <div id="healthBadge" class="health-badge pending"><span></span> Проверка среды…</div>
+        <div class="mode-switch" role="group" aria-label="Режим интерфейса">
+          <button class="mode-button active" data-mode="owner">Владелец</button>
+          <button class="mode-button" data-mode="developer">Разработчик</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="sidebar">
+        <div class="sidebar-heading"><span>Библиотека блоков</span><span id="blockCount" class="count-pill">0</span></div>
+        <div id="blockList" class="block-list"></div>
+        <div class="privacy-note"><strong>Локально и приватно</strong><span>Файлы остаются на этом компьютере.</span></div>
+      </aside>
+
+      <section class="content">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <div class="block-kicker"><span id="selectedBlockId">media.probe</span><span id="selectedStatus" class="status-badge candidate">candidate</span></div>
+            <h2 id="selectedTitle">Анализ медиа</h2>
+            <p id="selectedDescription">Загрузите видео или аудио и посмотрите, что внутри файла.</p>
+            <div class="meta-row"><span>Версия <strong id="selectedVersion">0.1.0</strong></span><span>Провайдер <strong id="selectedProvider">ffprobe</strong></span></div>
+          </div>
+          <div class="readiness-card"><div class="readiness-label">Готовность</div><div id="readinessValue" class="readiness-value">Candidate</div><div id="readinessText" class="readiness-text">Код и тесты есть. Реальное приложение ещё проверяется.</div></div>
+        </div>
+
+        <div id="interactiveArea" class="interactive-area">
+          <section class="panel upload-panel">
+            <div class="panel-heading">
+              <div><span class="step-number">1</span><div><h3>Выберите файл</h3><p>MP4, MOV, WAV, MP3 или другой формат, который понимает ffprobe.</p></div></div>
+              <button id="clearButton" class="ghost-button hidden">Очистить</button>
+            </div>
+
+            <label id="dropZone" class="drop-zone" for="fileInput">
+              <input id="fileInput" type="file" accept="video/*,audio/*">
+              <div class="drop-icon">＋</div>
+              <strong>Перетащите файл сюда</strong><span>или нажмите, чтобы выбрать</span><small>Файл не отправляется в интернет</small>
+            </label>
+
+            <div id="fileSummary" class="file-summary hidden">
+              <div class="file-icon" id="fileTypeIcon">VIDEO</div>
+              <div class="file-copy"><strong id="fileName"></strong><span id="fileSize"></span></div>
+              <span id="fileReadyBadge" class="mini-badge">готов к запуску</span>
+            </div>
+
+            <div id="previewWrap" class="preview-wrap hidden">
+              <video id="videoPreview" controls class="media-preview hidden"></video>
+              <audio id="audioPreview" controls class="audio-preview hidden"></audio>
+              <div id="genericPreview" class="generic-preview hidden">Предпросмотр недоступен, но файл можно проанализировать.</div>
+            </div>
+
+            <div class="run-row">
+              <button id="runButton" class="primary-button" disabled><span id="runButtonText">Запустить media.probe</span><span id="spinner" class="spinner hidden"></span></button>
+              <div id="runHint" class="run-hint">Сначала выберите файл</div>
+            </div>
+          </section>
+
+          <section id="resultPanel" class="panel result-panel hidden">
+            <div class="panel-heading result-heading">
+              <div><span class="step-number success">2</span><div><h3>Результат блока</h3><p id="resultSubtitle">Медиа успешно проанализировано.</p></div></div>
+              <div id="executionStatus" class="execution-status success">SUCCESS</div>
+            </div>
+            <div id="warningList" class="warning-list hidden"></div>
+            <div id="summaryCards" class="summary-grid"></div>
+
+            <div class="tabs" role="tablist">
+              <button class="tab active" data-tab="overview">Результат</button>
+              <button class="tab" data-tab="streams">Потоки</button>
+              <button class="tab developer-only" data-tab="raw">Raw JSON</button>
+              <button class="tab developer-only" data-tab="logs">Логи</button>
+              <button class="tab developer-only" data-tab="contract">Контракт</button>
+              <button class="tab" data-tab="tests">Тесты</button>
+              <button class="tab developer-only" data-tab="usage">Использование</button>
+            </div>
+
+            <div id="tab-overview" class="tab-panel active"></div>
+            <div id="tab-streams" class="tab-panel"></div>
+            <div id="tab-raw" class="tab-panel"><pre id="rawJson" class="code-block"></pre></div>
+            <div id="tab-logs" class="tab-panel"><div id="logList" class="log-list"></div></div>
+            <div id="tab-contract" class="tab-panel"></div>
+            <div id="tab-tests" class="tab-panel"></div>
+            <div id="tab-usage" class="tab-panel"></div>
+          </section>
+        </div>
+
+        <section id="comingSoon" class="panel coming-soon hidden">
+          <div class="coming-icon">◇</div><h3 id="comingTitle">Блок запланирован</h3>
+          <p id="comingText">Для него уже есть место в общей архитектуре, но исполняемого кода пока нет.</p>
+          <div class="coming-path"><span>Следующая стадия</span><strong id="comingStatus">idea → candidate</strong></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
