@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "5ce0730bd4e1d9588bb1c9f154669ee4c46a1568",
-  "generated_at": "2026-07-14T20:09:28-04:00",
+  "repository_commit": "59dbfb9769caca25ee1d5fce95d279e88e2291b1",
+  "generated_at": "2026-07-14T20:10:21-04:00",
   "artifact_count": 503,
   "artifacts": [
     {
@@ -1119,7 +1119,7 @@
       "domain": "design",
       "status": null,
       "date": null,
-      "sha256": "79897314a1d8a8671566460222d7a1f92b824156aa7c09ab8de3ac2b9a041922",
+      "sha256": "44f23f1a9da9078d6ecaf76a3e2b39db2a98b0c5c3c8b697cad9744204d436e8",
       "headings": [
         "Impeccable Design QA Gate",
         "Purpose",
@@ -1130,6 +1130,7 @@
         "When Not To Use",
         "Core Rule",
         "Placement In The Design Chain",
+        "Relationship To Taste Frontend Execution",
         "New Frontend Project Flow",
         "Existing Frontend Project Flow",
         "CLI Detector Flow",
