@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f780ddbba5ab087c009e76f010ce3ce40f302762",
-  "generated_at": "2026-07-15T13:38:26-04:00",
+  "repository_commit": "fbd557dcfc43c5c270da8647d7efcad0bd20589c",
+  "generated_at": "2026-07-15T13:38:48-04:00",
   "artifact_count": 506,
   "artifacts": [
     {
@@ -4299,7 +4299,7 @@
       "domain": "video-production",
       "status": null,
       "date": null,
-      "sha256": "a072fe43e0827e820ec383e8cffc029f193f94619b7dc7b7984ff06dedf2b205",
+      "sha256": "296c0155518edca84dff9375abc125487bc206f53cbf883bd4fbab51583c2021",
       "headings": [
         "Video Production Block",
         "Purpose",
@@ -4308,6 +4308,7 @@
         "When To Use",
         "When Not To Use",
         "Required Reading Inside This Block",
+        "Capability Reuse Rule",
         "Typical Outputs",
         "Boundary",
         "Final Rule"
