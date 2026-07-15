@@ -22,7 +22,7 @@
 
 ## Current Status
 
-- Mode: `document-first with first executable capability candidate`
+- Mode: `document-first with executable capability candidates`
 - Phase: `foundation validation`
 - Status: `transfer-ready central project`
 
@@ -45,6 +45,9 @@
 - Added request, context, artifact, result, error, provider, and CLI contracts.
 - Added unit, contract, negative-path, real ffprobe smoke tests, and pull-request CI.
 - Promoted `media.probe` from `idea` to `candidate` after 6 local tests and a manual CLI smoke test passed.
+- Passed GitHub Actions on Python 3.12 and 3.13 plus the central Project OS integrity check.
+- Merged PR #89 into `main` with squash commit `74c6ae9585f55f84f6f5e342368636c3e1512a01`.
+- Refreshed `SYSTEM_CONTEXT_MANIFEST.md` after the capability route changed the active router blob.
 
 ## Current Focus
 
@@ -55,8 +58,9 @@
 
 ## Next Practical Step
 
-- Confirm the `media.probe` pull-request CI result and merge if green.
 - Run a native Windows smoke test before treating Windows path behavior as verified.
+- Test representative MP4/H.264/AAC and variable-frame-rate inputs.
+- Integrate `media.probe` into one real application workflow before promotion to `validated`.
 - Implement `media.clip` as the second capability using ffmpeg.
 - Reuse the `media.probe` contract shape where evidence supports it, but extract shared code only after actual duplication appears.
 - Then implement `media.extract_audio`, `media.transcribe`, and `media.download` unless real project evidence changes the sequence.
