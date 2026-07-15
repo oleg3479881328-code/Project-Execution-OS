@@ -6,6 +6,13 @@ Date: 2026-07-15
 
 Status tested: `0.1.0 candidate`
 
+Merged evidence:
+
+```text
+PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/89
+Squash commit: 74c6ae9585f55f84f6f5e342368636c3e1512a01
+```
+
 ## Environment
 
 ```text
@@ -72,7 +79,7 @@ Verified result:
 
 ## Repository Branch Verification
 
-GitHub compare confirmed that branch `capability-media-probe-v0.1.0` is based on the current `main` commit and contains the expected capability implementation, package metadata, tests, example, and workflow files.
+GitHub compare confirmed that branch `capability-media-probe-v0.1.0` was based on the then-current `main` commit and contained the expected capability implementation, package metadata, tests, example, validation artifacts, state updates, and workflow files.
 
 A second validation attempt tried to clone the branch back into the execution container and rerun tests from the remote copy. The clone could not start because the container could not resolve `github.com`:
 
@@ -80,29 +87,35 @@ A second validation attempt tried to clone the branch back into the execution co
 fatal: unable to access 'https://github.com/oleg3479881328-code/Project-Execution-OS.git/': Could not resolve host: github.com
 ```
 
-No workaround was invented. Independent repository validation is delegated to the pull-request GitHub Actions workflow.
+No workaround was invented. Independent repository validation was delegated to the pull-request GitHub Actions workflow.
 
 ## GitHub CI
 
-Workflow added:
+Workflow:
 
 ```text
 .github/workflows/media-probe-tests.yml
 ```
 
-The workflow runs the package tests on Python 3.12 and 3.13 and installs ffmpeg/ffprobe before the real smoke test.
+Verified results on PR #89:
 
-CI status must be checked on the pull request before merge.
+```text
+media.probe tests — success
+Python matrix — 3.12 and 3.13
+real ffprobe smoke test included
+Validate Project OS Integrity — success
+```
+
+The initial integrity run exposed a stale `docs/ROUTER.md` blob SHA in `SYSTEM_CONTEXT_MANIFEST.md`, caused by the earlier capability-route addition. The manifest was refreshed to version 13 with the recalculated SHA-256 fingerprint, after which the integrity workflow passed.
 
 ## Candidate Conclusion
 
-The local execution evidence is sufficient to promote `media.probe` from `idea` to `candidate`.
+The execution and CI evidence is sufficient to keep `media.probe` at `candidate 0.1.0`.
 
-It is not sufficient for `validated` because the block has not yet been integrated into a real application workflow.
+It is not sufficient for `validated` because the block has not yet been integrated into a real application workflow and native Windows behavior remains unverified.
 
 ## Remaining Validation
 
-- confirm the pull-request GitHub Actions result;
 - run a native Windows smoke test;
 - test representative MP4/H.264/AAC input;
 - test variable-frame-rate input;
