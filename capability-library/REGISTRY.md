@@ -20,18 +20,18 @@ A row records architectural intent and implementation status. It must not imply 
 | Block ID | Status | Version | Implementation location | Initial providers | Inputs | Outputs | Validation targets | Known limitations |
 |---|---|---:|---|---|---|---|---|---|
 | `media.download` | idea | — | not created | yt-dlp, direct HTTP | authorized source descriptor | video/audio artifact | short-video workflow, QuizLight | rights and platform restrictions must remain explicit |
-| `media.probe` | idea | — | not created | ffprobe | media artifact | normalized media metadata | short-video workflow, QuizLight | depends on ffprobe availability |
+| `media.probe` | candidate | 0.1.0 | `capabilities/media-probe/` | ffprobe | one local media artifact | original artifact enriched with normalized probe metadata | short-video workflow, QuizLight | native Windows and real application integration still required |
 | `media.extract_audio` | idea | — | not created | ffmpeg | video/audio artifact | normalized audio artifact | transcription workflows | codec and channel normalization policy not yet validated |
 | `media.transcribe` | idea | — | not created | whisper.cpp, faster-whisper, optional cloud adapter | audio/video artifact | transcript artifact with segments and timestamps | short-video workflow, QuizLight | provider selection and hardware benchmarks not yet validated |
 | `media.clip` | idea | — | not created | ffmpeg | media artifact plus time ranges | one or more clip artifacts | Reels factory, QuizLight phrase clips | exact-cut versus stream-copy behavior needs fixtures |
 | `media.generate_captions` | idea | — | not created | transcript formatter, ffmpeg/libass optional | transcript artifact | SRT/VTT/ASS caption artifacts | short-video workflow | styling contract not yet defined |
 | `media.render_vertical` | idea | — | not created | ffmpeg | media, captions, layout parameters | vertical video artifact | Reels/Shorts/TikTok factory | layout presets not yet defined |
 
-## First Implementation Order
+## Implementation Sequence
 
 ```text
-1. media.probe
-2. media.clip
+1. media.probe          candidate 0.1.0
+2. media.clip           next
 3. media.extract_audio
 4. media.transcribe
 5. media.download
@@ -43,6 +43,48 @@ Reasoning:
 - establish artifact and result contracts before network and model-provider complexity;
 - validate composition locally;
 - add download permissions and transcription provider routing after the core media contract is stable.
+
+## Candidate Evidence — media.probe 0.1.0
+
+Implementation:
+
+```text
+capabilities/media-probe/
+```
+
+Manifest:
+
+```text
+capabilities/media-probe/manifest.yaml
+```
+
+Package entry points:
+
+```text
+project_execution_os.capabilities -> media_probe
+peos-media-probe CLI
+```
+
+Local verification on 2026-07-15:
+
+```text
+Python 3.13.5
+pytest 9.0.2
+ffprobe 7.1.3
+6 tests passed
+manual CLI smoke test passed on generated WAV input
+```
+
+Durable evidence:
+
+```text
+capabilities/media-probe/VALIDATION.md
+.github/workflows/media-probe-tests.yml
+```
+
+Promotion boundary:
+
+`media.probe` is `candidate`, not `validated`. It still requires native Windows checking and integration into a real application workflow.
 
 ## Promotion Evidence
 

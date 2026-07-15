@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "peos-capability-media-probe"
+version = "0.1.0"
+description = "Project Execution OS capability block for normalized media metadata probing via ffprobe."
+readme = "BLOCK.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [
+  { name = "Oleg / Project Execution OS" }
+]
+keywords = ["ffprobe", "media", "metadata", "capability-block"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+peos-media-probe = "peos_media_probe.cli:main"
+
+[project.entry-points."project_execution_os.capabilities"]
+media_probe = "peos_media_probe:create_block"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
