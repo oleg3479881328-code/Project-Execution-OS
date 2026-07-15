@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "59dbfb9769caca25ee1d5fce95d279e88e2291b1",
-  "generated_at": "2026-07-14T20:10:21-04:00",
-  "artifact_count": 503,
+  "repository_commit": "f780ddbba5ab087c009e76f010ce3ce40f302762",
+  "generated_at": "2026-07-15T13:38:26-04:00",
+  "artifact_count": 506,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -478,9 +478,12 @@
       "domain": "README.md",
       "status": null,
       "date": null,
-      "sha256": "ff3dd8509a6649c6e54126fd5198fb94e98e1aefee8804c50f84e5d586e7eca3",
+      "sha256": "5c2ebff80f39295fe0d0ae408594dc4f0f839d74dca3a4fee013789b25420b7c",
       "headings": [
-        "Blocks"
+        "Blocks",
+        "Domain Blocks",
+        "Executable Capability Blocks",
+        "Separation Rule"
       ]
     },
     {
@@ -5008,6 +5011,40 @@
       ]
     },
     {
+      "path": "capability-library/README.md",
+      "title": "Capability Library",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "3bf161b0ba50dc1c65e5d2c994fa4a0a4c333272c57709557bf6892661328606",
+      "headings": [
+        "Capability Library",
+        "Purpose",
+        "Default Integration Rule",
+        "Registry",
+        "Current Priority"
+      ]
+    },
+    {
+      "path": "capability-library/REGISTRY.md",
+      "title": "Capability Block Registry",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "bad55141502ff641a1d0f881f23f561f66deec55d3a8653b036de8cda3a1ec8d",
+      "headings": [
+        "Capability Block Registry",
+        "Purpose",
+        "Status Definitions",
+        "Registry",
+        "First Implementation Order",
+        "Promotion Evidence",
+        "Final Rule"
+      ]
+    },
+    {
       "path": "coordination/CHECKPOINT.md",
       "title": "Coordination Checkpoint",
       "type": "repository-artifact",
@@ -5805,6 +5842,67 @@
         "Current Compatibility Targets",
         "Adapter Rules",
         "Out-of-Scope Rule"
+      ]
+    },
+    {
+      "path": "docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md",
+      "title": "Composable Capability Blocks Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "success | partial | failed | cancelled",
+      "date": null,
+      "sha256": "a5711ef2b0a062c3cafa8224f5080a4952447345b2c0f9242b5cb60d558817ea",
+      "headings": [
+        "Composable Capability Blocks Standard",
+        "Purpose",
+        "Source Trail",
+        "Status",
+        "Core Decision",
+        "Two Different Meanings Of Block",
+        "Domain Block",
+        "Capability Block",
+        "Workflow",
+        "Application Adapter",
+        "Core Architectural Model",
+        "Default Implementation Strategy",
+        "Standard Block Identity",
+        "Minimum Capability Contract",
+        "BlockRequest",
+        "BlockContext",
+        "BlockResult",
+        "Artifact Contract",
+        "Recommended Package Structure",
+        "Required Manifest",
+        "Discovery And Installation",
+        "Invocation Adapters",
+        "Composition Rules",
+        "One Block, One Technical Responsibility",
+        "Explicit Inputs And Outputs",
+        "Provider Independence",
+        "Idempotency",
+        "No Hidden Orchestration",
+        "No UI In The Core",
+        "No Embedded Secrets",
+        "Permissions And Safety",
+        "Testing Standard",
+        "Candidate",
+        "Validated",
+        "Production",
+        "Verification Output",
+        "Versioning",
+        "Block Registry",
+        "Existing Solution First",
+        "First Media Capability Set",
+        "1. `media.download`",
+        "2. `media.probe`",
+        "3. `media.extract_audio`",
+        "4. `media.transcribe`",
+        "5. `media.clip`",
+        "Example Application Composition",
+        "Promotion Rule",
+        "Relationship To Other Standards",
+        "Fail Conditions",
+        "Final Rule"
       ]
     },
     {
