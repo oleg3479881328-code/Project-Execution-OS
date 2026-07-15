@@ -6,6 +6,8 @@ This file defines how `Project Execution OS` uses Impeccable as a design-quality
 
 The goal is to prevent visible AI-built interfaces from shipping as generic, unreviewed UI when the work includes a landing page, website, SaaS page, dashboard, onboarding flow, settings page, portfolio, or other user-facing web surface.
 
+This gate runs after frontend implementation. When appropriate, the implementation phase may first use `TASTE_FRONTEND_EXECUTION_STANDARD.md` as bounded generation-time guidance.
+
 ## Source Trail
 
 - Source article: `https://pimenov.ai/knowledge/impeccable-dizajn-skill-dlya-ai-kodinga/`
@@ -88,12 +90,28 @@ goal
 -> section plan / wireframe
 -> UI system direction
 -> implementation handoff
+-> bounded Taste-guided execution when appropriate
 -> frontend implementation
 -> Impeccable design QA gate
 -> final review / release decision
 ```
 
-This gate does not replace the upstream Design Block. It protects downstream implementation from drifting into generic AI-coded UI.
+This gate does not replace the upstream Design Block or generation-time execution guidance. It protects downstream implementation from drifting into generic AI-coded UI and catches visible issues that remain after coding.
+
+## Relationship To Taste Frontend Execution
+
+`TASTE_FRONTEND_EXECUTION_STANDARD.md` and this gate have different roles:
+
+```text
+Taste guidance = generation-time direction
+Impeccable = post-implementation design QA
+```
+
+Taste may be excluded, product-safe partial, redesign, or full marketing mode depending on the surface.
+
+Impeccable remains the release-bound QA layer for all relevant visible frontend work, including dashboards and product UI where the full external Taste Skill is not appropriate.
+
+A Taste pre-flight result does not count as an Impeccable pass.
 
 ## New Frontend Project Flow
 
@@ -123,6 +141,8 @@ DESIGN.md
 
 `PRODUCT.md` and `DESIGN.md` must be grounded in the project purpose, audience, brand/product lane, user path, selected references, rejected references, and implementation constraints.
 
+When Taste-guided execution is also approved, `DESIGN.md` or the implementation handoff should additionally record the selected Taste mode and, when relevant, `DESIGN_VARIANCE`, `MOTION_INTENSITY`, and `VISUAL_DENSITY`.
+
 ## Existing Frontend Project Flow
 
 For an existing UI:
@@ -143,6 +163,8 @@ Then inside the active AI coding tool:
 ```
 
 Use this when the project needs to preserve an existing visual language instead of replacing it with a new one.
+
+If Taste redesign guidance was used before this gate, preserve its audit-first evidence and review whether the targeted fixes actually improved the rendered surface without breaking functionality.
 
 ## CLI Detector Flow
 
@@ -174,7 +196,8 @@ A frontend surface passes this gate only if the executor can answer yes to all r
 11. Accessibility basics are checked: contrast, focus, touch targets, heading order, labels.
 12. Obvious generic AI-design patterns are removed or justified.
 13. Detector warnings are fixed or explicitly waived with a reason.
-14. The final handoff records what was checked and what remains unresolved.
+14. Any Taste mode, profile, or pre-flight record used during implementation is consistent with the actual product surface.
+15. The final handoff records what was checked and what remains unresolved.
 
 ## Fail Conditions
 
@@ -185,7 +208,8 @@ Fail the gate if any of these are true:
 - mobile behavior is assumed but not checked;
 - accessibility issues are ignored;
 - detector findings are dismissed without a written reason;
-- the executor claims Impeccable ran but provides no command, report, commit, or other evidence.
+- a marketing Taste profile was applied to a dashboard or workflow UI without justification;
+- the executor claims Taste or Impeccable ran but provides no command, report, commit, or other evidence.
 
 ## Manual Fallback Gate
 
@@ -195,8 +219,9 @@ If Impeccable cannot be installed or run, the executor must still perform a manu
 1. Read PRODUCT.md / DESIGN.md, or create a project-grounded equivalent if they do not exist.
 2. Review hierarchy, clarity, typography, color, layout, states, responsiveness, and accessibility.
 3. Identify generic AI-design patterns.
-4. Fix what can be fixed immediately.
-5. Record unresolved issues and reasons.
+4. Review any Taste mode or profile used during implementation and confirm it fit the surface.
+5. Fix what can be fixed immediately.
+6. Record unresolved issues and reasons.
 ```
 
 The final report must say:
@@ -215,6 +240,8 @@ Design QA Gate:
 - Target surface:
 - Product context checked: yes/no/path
 - Design context checked: yes/no/path
+- Taste guidance used: excluded | product-safe partial | redesign | marketing full | no
+- Taste pre-flight path or result:
 - Commands run:
 - Detector result:
 - Key fixes made:
@@ -234,6 +261,7 @@ blocks/design/BLOCK.md
 blocks/design/WEBSITE_DESIGN_PIPELINE.md
 blocks/design/DESIGN_AGENT_STANDARD.md
 blocks/design/IMPLEMENTATION_HANDOFF.md
+blocks/design/TASTE_FRONTEND_EXECUTION_STANDARD.md
 blocks/design/WEBSITE_REVIEW_CHECKLIST.md
 blocks/design/DESIGN_REVIEW_STANDARD.md
 ```
