@@ -76,3 +76,30 @@ def test_rejects_input_outside_workspace(tmp_path: Path) -> None:
     assert result.status == "failed"
     assert result.error is not None
     assert result.error.code == "input_outside_workspace"
+
+
+def test_missing_ffprobe_returns_structured_error(tmp_path: Path) -> None:
+    media = tmp_path / "sample.bin"
+    media.write_bytes(b"not-real-media")
+
+    result = MediaProbeBlock().run(
+        BlockRequest(
+            request_id="req-3",
+            input_artifacts=(
+                ArtifactRef(
+                    artifact_id="art-3",
+                    kind="media",
+                    uri=media.as_uri(),
+                ),
+            ),
+        ),
+        BlockContext(
+            workspace=tmp_path,
+            ffprobe_path="definitely-missing-ffprobe-executable",
+        ),
+    )
+
+    assert result.status == "failed"
+    assert result.error is not None
+    assert result.error.code == "ffprobe_not_found"
+    assert result.error.retryable is False
