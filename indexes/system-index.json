@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f7b2498987e4d69187ab16f929e2f99b7fee503c",
-  "generated_at": "2026-07-15T13:39:20-04:00",
+  "repository_commit": "3da0518b1be6ead844c41bd609ed9f4ca1bfafaa",
+  "generated_at": "2026-07-15T13:40:03-04:00",
   "artifact_count": 506,
   "artifacts": [
     {
@@ -103,7 +103,7 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "69b5c141d01d775e2a797cac91a70d0ecda10ff85f748307b5e02f5464333644",
+      "sha256": "6722158f8544c654323e678110f255f4a97bbcbc311710491b393ddbd479b9d7",
       "headings": [
         "Project Index — Project Execution OS",
         "Repository",
@@ -114,6 +114,7 @@
         "Canonical Documents",
         "Project Folder Standard",
         "Entry And Context Rule",
+        "Capability Composition Rule",
         "Zero-State And Active-State",
         "Current Status",
         "Next Required Action"
