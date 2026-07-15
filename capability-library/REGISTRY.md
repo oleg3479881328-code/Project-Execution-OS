@@ -20,7 +20,7 @@ A row records architectural intent and implementation status. It must not imply 
 | Block ID | Status | Version | Implementation location | Initial providers | Inputs | Outputs | Validation targets | Known limitations |
 |---|---|---:|---|---|---|---|---|---|
 | `media.download` | idea | — | not created | yt-dlp, direct HTTP | authorized source descriptor | video/audio artifact | short-video workflow, QuizLight | rights and platform restrictions must remain explicit |
-| `media.probe` | candidate | 0.1.0 | `capabilities/media-probe/` | ffprobe | one local media artifact | original artifact enriched with normalized probe metadata | short-video workflow, QuizLight | native Windows and real application integration still required |
+| `media.probe` | candidate | 0.1.0 | `capabilities/media-probe/` | ffprobe | one local media artifact | original artifact enriched with normalized probe metadata | short-video workflow, QuizLight | automated Windows and Block Studio integration passed; owner target-machine confirmation still required |
 | `media.extract_audio` | idea | — | not created | ffmpeg | video/audio artifact | normalized audio artifact | transcription workflows | codec and channel normalization policy not yet validated |
 | `media.transcribe` | idea | — | not created | whisper.cpp, faster-whisper, optional cloud adapter | audio/video artifact | transcript artifact with segments and timestamps | short-video workflow, QuizLight | provider selection and hardware benchmarks not yet validated |
 | `media.clip` | idea | — | not created | ffmpeg | media artifact plus time ranges | one or more clip artifacts | Reels factory, QuizLight phrase clips | exact-cut versus stream-copy behavior needs fixtures |
@@ -75,16 +75,28 @@ ffprobe 7.1.3
 manual CLI smoke test passed on generated WAV input
 ```
 
+Application integration evidence:
+
+```text
+apps/block-studio/
+real upload endpoint execution passed
+real H.264/AAC MP4 smoke test passed
+preview and temporary execution cleanup passed
+GitHub Actions passed on Ubuntu and Windows with Python 3.13
+```
+
 Durable evidence:
 
 ```text
 capabilities/media-probe/VALIDATION.md
+apps/block-studio/VALIDATION.md
 .github/workflows/media-probe-tests.yml
+.github/workflows/block-studio-tests.yml
 ```
 
 Promotion boundary:
 
-`media.probe` is `candidate`, not `validated`. It still requires native Windows checking and integration into a real application workflow.
+`media.probe` remains `candidate`, not `validated`, until the owner runs Block Studio on the target Windows computer with a real user-owned media file and confirms the result.
 
 ## Promotion Evidence
 
