@@ -23,32 +23,46 @@ logs/latest.md
 
 ## Latest Confirmed Milestone
 
-- Adopted composable executable capability blocks as a system-wide architecture for functionality that should be reused across applications.
-- Added `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`.
-- Added `capability-library/README.md` and `capability-library/REGISTRY.md`.
-- Separated four layers explicitly:
+The composable capability-block architecture now has its first executable implementation:
 
 ```text
-domain block
--> executable capability block
--> workflow composition
--> application adapter / UI
+media.probe 0.1.0 — candidate
 ```
 
-- Added a router path for reusable executable blocks and portable shared modules.
-- Updated `blocks/README.md` so domain blocks are not confused with implemented code.
-- Updated `blocks/video-production/BLOCK.md` to route download, probing, extraction, transcription, and clipping toward reusable capability contracts.
-- Registered the first planned media chain:
+Implementation location:
 
 ```text
-media.download
--> media.probe
--> media.extract_audio
--> media.transcribe
--> media.clip
+capabilities/media-probe/
 ```
 
-- Updated `PROJECT_INDEX.md` and `PROJECT.md` with the new architecture.
+Pull request:
+
+```text
+https://github.com/oleg3479881328-code/Project-Execution-OS/pull/89
+```
+
+Implemented and recorded:
+
+- package manifest and Python metadata;
+- package-discovery entry point;
+- CLI adapter;
+- request, context, artifact, result, and structured error contracts;
+- ffprobe provider and normalized metadata;
+- read-only workspace boundary;
+- unit, contract, missing-tool, and real ffprobe smoke tests;
+- GitHub Actions workflow for Python 3.12 and 3.13;
+- candidate validation record;
+- registry promotion from `idea` to `candidate`.
+
+Local evidence:
+
+```text
+Python 3.13.5
+pytest 9.0.2
+ffprobe 7.1.3
+6 passed in 0.30s
+manual CLI smoke test passed
+```
 
 ## Architecture Decision
 
@@ -64,32 +78,24 @@ build once behind a stable contract
 -> connect through thin application adapters
 ```
 
-Package-first is the default. A capability becomes a service only when isolation, scaling, hardware, dependency, or multi-language consumer evidence justifies it.
+The first implementation intentionally keeps its contracts inside the package. A shared capability SDK must not be extracted until a second implementation demonstrates real duplication.
 
 ## Current Focus
 
-Keep the central project internally consistent and transfer-ready after every meaningful change.
-
-Validate the capability architecture through real executable code rather than adding more specifications.
+- Confirm PR #89 GitHub Actions results.
+- Merge the candidate only when CI is green.
+- Validate the contract against `media.clip` as the second executable block.
+- Keep the distinction between `candidate` and `validated` explicit.
 
 ## Current Next Safe Action
 
-Implement `media.probe` as the first candidate capability block using ffprobe.
+After PR #89 merges:
 
-Minimum validation target:
-
-```text
-manifest
-request/result contract
-artifact model
-Python invocation
-CLI adapter
-contract test
-local smoke test
-registry promotion from idea to candidate
-```
-
-After that, proceed to `media.clip`, then `media.extract_audio`, `media.transcribe`, and `media.download`, unless real project evidence changes the sequence.
+1. run a native Windows smoke test for `media.probe`;
+2. test representative MP4/H.264/AAC and variable-frame-rate inputs;
+3. integrate `media.probe` into one real application workflow;
+4. implement `media.clip` using ffmpeg;
+5. compare the two implementations before extracting shared contract code.
 
 ## Active Files For Re-entry
 
@@ -100,10 +106,12 @@ Read in this order when resuming central-project work:
 3. `PROJECT.md`
 4. `PROJECT_STATE.md`
 5. `logs/latest.md`
-6. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md` for reusable code architecture
-7. `capability-library/REGISTRY.md` for actual block readiness
-8. `PROJECT_INDEX.md` only when broader navigation is needed
-9. routed standards only when the active task requires them
+6. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
+7. `capability-library/REGISTRY.md`
+8. `capabilities/media-probe/BLOCK.md`
+9. `capabilities/media-probe/VALIDATION.md`
+10. `logs/2026-07-15-media-probe-candidate.md`
+11. `PROJECT_INDEX.md` only when broader navigation is needed
 
 For capability implementation work, also open:
 
@@ -113,21 +121,15 @@ docs/HARNESS_ENGINEERING_STANDARD.md
 blocks/<relevant-domain>/BLOCK.md
 ```
 
-For Impeccable or AI-coded frontend design QA work, open:
-
-```text
-blocks/design/TASTE_FRONTEND_EXECUTION_STANDARD.md
-blocks/design/IMPECCABLE_DESIGN_QA_GATE.md
-blocks/design/BLOCK.md
-```
-
 ## Known Blockers
 
-- All entries in `capability-library/REGISTRY.md` currently have status `idea`; no executable capability block has yet been implemented or validated under the new contract.
-- The common artifact and request/result contracts remain architectural guidance until `media.probe` validates them in code.
-- `gemini-tts-speech-generation` is registered as `candidate` / `not_reviewed`; it must not be treated as active until reviewed.
-- `blocks/design/IMPECCABLE_DESIGN_QA_GATE.md` and `blocks/design/TASTE_FRONTEND_EXECUTION_STANDARD.md` are candidate guidance and should be validated on a real frontend task before promotion.
-- `docs/HARNESS_ENGINEERING_STANDARD.md` is newly added and should be validated on a real reusable-agent workflow before being treated as mature operational guidance.
+- PR #89 CI must pass before merge.
+- Native Windows path behavior is implemented but not yet verified on Windows.
+- `media.probe` is not yet integrated into a real application, so it is not `validated`.
+- The container could not re-clone the remote branch because DNS resolution for `github.com` was unavailable; the error is logged and CI is the independent repository check.
+- Other media capability entries remain `idea`.
+- `gemini-tts-speech-generation` remains `candidate` / `not_reviewed`.
+- Design Taste and Impeccable standards remain candidate guidance pending real-project validation.
 
 ## Do-Not-Break Rules
 
@@ -138,5 +140,6 @@ blocks/design/BLOCK.md
 - Do not claim execution without a confirmed repository event.
 - Do not call a capability implemented, validated, or production-ready without matching registry evidence.
 - Do not copy reusable block code into multiple applications as the normal integration method.
+- Do not extract a common SDK from one block alone.
 - Preserve the smallest sufficient context-loading path.
 - Update this file and `logs/latest.md` after every meaningful central-project change.
