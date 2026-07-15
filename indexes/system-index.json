@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3da0518b1be6ead844c41bd609ed9f4ca1bfafaa",
-  "generated_at": "2026-07-15T13:40:03-04:00",
-  "artifact_count": 506,
+  "repository_commit": "fb6a150f8437eaa49ab78395fd022dbed6a453ba",
+  "generated_at": "2026-07-15T14:15:33-04:00",
+  "artifact_count": 510,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -82,7 +82,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "e608e7b7ab0e5c73197b3fbc3341cd061da1e714d4c927a92f7fd621053b0927",
+      "sha256": "ac921d7d5d43d4cd22a3d6b51de0a6999b9375acae4039ee051d5a96fc792b93",
       "headings": [
         "PROJECT.md",
         "Project",
@@ -103,7 +103,7 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "6722158f8544c654323e678110f255f4a97bbcbc311710491b393ddbd479b9d7",
+      "sha256": "d6ad368dfe95fa68c41b9c7e8b4006ac532e79b424584e305f1bfc8339c0afda",
       "headings": [
         "Project Index — Project Execution OS",
         "Repository",
@@ -115,6 +115,7 @@
         "Project Folder Standard",
         "Entry And Context Rule",
         "Capability Composition Rule",
+        "First Executable Capability",
         "Zero-State And Active-State",
         "Current Status",
         "Next Required Action"
@@ -127,11 +128,12 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "7f28031dbd17418d771332c23bd565d568f4a268231edf8517df09461605a0f8",
+      "sha256": "31a3509a12db10d3bbda7bf8df534e089e76f2f58e81d851da4a53662116e679",
       "headings": [
         "PROJECT_STATE.md",
         "Current State",
         "Latest Confirmed Milestone",
+        "Architecture Decision",
         "Current Focus",
         "Current Next Safe Action",
         "Active Files For Re-entry",
@@ -196,13 +198,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "b9aa042326c16ca9ccef5f2ac33ec3b476ec10c7355f36aaa75557e7a59c43c4",
+      "sha256": "c273c9ed9181a3dc5a5be9c48a32055ef6813fdf5cbdb326d12722d5a88af27d",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v12`",
+        "Profile: `knowledge-aware-core-v13`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -5013,6 +5015,65 @@
       ]
     },
     {
+      "path": "capabilities/media-probe/BLOCK.md",
+      "title": "media.probe Capability Block",
+      "type": "domain-block-entrypoint",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "7a2ab11c1d1123300013c806dba4ba48fb36eb5cbef9d3cea4ea0e79fc799b7f",
+      "headings": [
+        "media.probe Capability Block",
+        "Purpose",
+        "Status",
+        "Block Identity",
+        "Responsibility",
+        "Inputs",
+        "Outputs",
+        "Python Usage",
+        "CLI Usage",
+        "Dependencies",
+        "Safety Boundary",
+        "Verification",
+        "Known Limitations",
+        "Promotion Requirement"
+      ]
+    },
+    {
+      "path": "capabilities/media-probe/CHANGELOG.md",
+      "title": "Changelog",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "d377e89416e9e8348d93f5c1305fe3bddb1fd7dac6f4d285c16eebf1b93284d1",
+      "headings": [
+        "Changelog",
+        "0.1.0 — 2026-07-15"
+      ]
+    },
+    {
+      "path": "capabilities/media-probe/VALIDATION.md",
+      "title": "media.probe Validation Record",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": "2026-07-15",
+      "sha256": "2d467a25beda8931860e7591bc4b6a73e64224e703bb93be2c35b00fe6654300",
+      "headings": [
+        "media.probe Validation Record",
+        "Candidate Validation",
+        "Environment",
+        "Installation Command",
+        "Automated Test Command",
+        "Manual CLI Smoke Test",
+        "Repository Branch Verification",
+        "GitHub CI",
+        "Candidate Conclusion",
+        "Remaining Validation"
+      ]
+    },
+    {
       "path": "capability-library/README.md",
       "title": "Capability Library",
       "type": "repository-artifact",
@@ -5035,13 +5096,14 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "bad55141502ff641a1d0f881f23f561f66deec55d3a8653b036de8cda3a1ec8d",
+      "sha256": "78708e508e686c611aedc3ae503ab5f0e28818758a3d052b635ebb45476f5a1a",
       "headings": [
         "Capability Block Registry",
         "Purpose",
         "Status Definitions",
         "Registry",
-        "First Implementation Order",
+        "Implementation Sequence",
+        "Candidate Evidence — media.probe 0.1.0",
         "Promotion Evidence",
         "Final Rule"
       ]
@@ -7943,6 +8005,27 @@
       ]
     },
     {
+      "path": "logs/2026-07-15-media-probe-candidate.md",
+      "title": "media.probe Candidate Implementation Log",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": "2026-07-15",
+      "sha256": "42083ac28e280d111bdd610da45cec7f7cf3327f8ba95ba727025a8e8418120b",
+      "headings": [
+        "media.probe Candidate Implementation Log",
+        "Goal",
+        "Implemented",
+        "Local Evidence",
+        "Error Encountered — Remote Re-clone",
+        "Error Encountered — System Integrity",
+        "GitHub CI Evidence",
+        "Registry Decision",
+        "Final Result",
+        "Next Safe Action"
+      ]
+    },
+    {
       "path": "logs/WORKFLOW_LOG.md",
       "title": "Workflow Log — Project Execution OS",
       "type": "repository-artifact",
@@ -8390,9 +8473,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Added `docs/HARNESS_ENGINEERING_STANDARD.md` as the central architecture wrapper for reusable or operational AI-agent workflows. Updated `docs/ROUTER.md` with a direct harness-engineering route, updated `PROJECT_INDEX.md` to include the new standard and existing `docs/AGENT_QUALITY_SCORECARD_STANDARD.md`, updated `PROJECT.md`, and updated `PROJECT_STATE.md`.",
+      "status": "Implemented and merged `media.probe` version `0.1.0` as the first executable reusable capability block. Added package metadata, manifest, stable contracts, ffprobe provider, workspace boundary, CLI, tests, validation evidence, CI, registry promotion from `idea` to `candidate`, and refreshed the system context manifest.",
       "date": null,
-      "sha256": "6eaa87da63b65f616379aa942f731de99dc2ddd2fa334197dca0b119b4ebbe50",
+      "sha256": "a29617ceb556d0e62f8cc52e70e27ee6b47a383983ec238cb7b35c767e152d26",
       "headings": [
         "Latest Executor Status"
       ]
