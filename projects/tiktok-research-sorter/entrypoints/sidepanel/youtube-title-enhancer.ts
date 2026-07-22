@@ -1,5 +1,6 @@
 const TITLE_LIMIT = 100;
 const ENHANCED_ATTR = 'youtubeTitleEnhanced';
+const USER_EDITED_ATTR = 'youtubeTitleEdited';
 
 function parseLocalizedCompactNumber(source: string): number | undefined {
   const normalized = source
@@ -167,8 +168,20 @@ function injectStyles(): void {
   document.head.append(style);
 }
 
+function refreshEnhancedCard(card: HTMLElement): void {
+  const input = card.querySelector<HTMLTextAreaElement>('.youtube-title-input');
+  if (!input || input.dataset[USER_EDITED_ATTR] === 'true') return;
+
+  const nextTitle = buildYouTubeTitle(card);
+  if (input.value !== nextTitle) input.value = nextTitle;
+}
+
 function enhanceCard(card: HTMLElement): void {
-  if (card.dataset[ENHANCED_ATTR] === 'true') return;
+  const existingInput = card.querySelector<HTMLTextAreaElement>('.youtube-title-input');
+  if (existingInput) {
+    refreshEnhancedCard(card);
+    return;
+  }
 
   const videoCopy = card.querySelector<HTMLElement>('.video-copy');
   if (!videoCopy) return;
@@ -195,6 +208,9 @@ function enhanceCard(card: HTMLElement): void {
   input.spellcheck = false;
   input.value = buildYouTubeTitle(card);
   input.setAttribute('aria-label', 'YouTube title');
+  input.addEventListener('input', () => {
+    input.dataset[USER_EDITED_ATTR] = 'true';
+  });
 
   copyButton.addEventListener('click', async () => {
     try {
@@ -235,7 +251,11 @@ function scheduleEnhancement(): void {
 
 const root = document.getElementById('root');
 if (root) {
-  new MutationObserver(scheduleEnhancement).observe(root, { childList: true, subtree: true });
+  new MutationObserver(scheduleEnhancement).observe(root, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+  });
 }
 
 scheduleEnhancement();
