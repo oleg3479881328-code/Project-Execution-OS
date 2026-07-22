@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fb6a150f8437eaa49ab78395fd022dbed6a453ba",
-  "generated_at": "2026-07-15T14:15:33-04:00",
-  "artifact_count": 510,
+  "repository_commit": "fc0274b6d33b46754eda21b5fc721d2cd6862e42",
+  "generated_at": "2026-07-22T10:51:01-04:00",
+  "artifact_count": 514,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -82,7 +82,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "ac921d7d5d43d4cd22a3d6b51de0a6999b9375acae4039ee051d5a96fc792b93",
+      "sha256": "f2b4dd5ace015e90dda4db1bc0e1bedeafceab07ed3fa1d24a069adf4d1ae40d",
       "headings": [
         "PROJECT.md",
         "Project",
@@ -128,11 +128,12 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "31a3509a12db10d3bbda7bf8df534e089e76f2f58e81d851da4a53662116e679",
+      "sha256": "ef2fb3d4a926f2040ac5b0b9de427e1b09ecce824b1014ee02aa78f43b3bb2d7",
       "headings": [
         "PROJECT_STATE.md",
         "Current State",
         "Latest Confirmed Milestone",
+        "Verification Evidence",
         "Architecture Decision",
         "Current Focus",
         "Current Next Safe Action",
@@ -395,6 +396,54 @@
         "Constraints and Stop Conditions",
         "Evidence / References",
         "Validation Status"
+      ]
+    },
+    {
+      "path": "apps/README.md",
+      "title": "Applications",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "ee3e7422fe11e09f903d449615db8525849f98facd50f94475d6afdb528434c0",
+      "headings": [
+        "Applications",
+        "Current applications"
+      ]
+    },
+    {
+      "path": "apps/block-studio/README.md",
+      "title": "Project Execution OS — Block Studio",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "d5a17906fadef7b05528d95409be706ad6aff24d1655d2af01b8d5e979072f79",
+      "headings": [
+        "Project Execution OS — Block Studio",
+        "What version 0.1.0 provides",
+        "Windows start",
+        "Manual start",
+        "Safety"
+      ]
+    },
+    {
+      "path": "apps/block-studio/VALIDATION.md",
+      "title": "Block Studio Validation Record",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": "2026-07-15",
+      "sha256": "d66d53888e289001231f7e5fc7c2b1cc15eae902e574997f17e691a2a117f795",
+      "headings": [
+        "Block Studio Validation Record",
+        "Local environment",
+        "Package and automated tests",
+        "Real MP4 integration smoke test",
+        "GitHub Actions",
+        "Visual QA",
+        "Portable artifact",
+        "Promotion boundary"
       ]
     },
     {
@@ -5096,7 +5145,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "78708e508e686c611aedc3ae503ab5f0e28818758a3d052b635ebb45476f5a1a",
+      "sha256": "7ef405036cfdca37105fbfdf9f0d7fc062709c0635c11d74ba50fabeb101b06d",
       "headings": [
         "Capability Block Registry",
         "Purpose",
@@ -8005,6 +8054,27 @@
       ]
     },
     {
+      "path": "logs/2026-07-15-block-studio-v0.1.0.md",
+      "title": "Block Studio 0.1.0 Implementation Log",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": "2026-07-15",
+      "sha256": "04930e817a26c67c5bcae53a59c03079f1601280db182a21464ef6747c5ebe20",
+      "headings": [
+        "Block Studio 0.1.0 Implementation Log",
+        "Goal",
+        "Implemented",
+        "Architecture",
+        "Local Validation",
+        "Visual Validation",
+        "GitHub Actions",
+        "Distribution",
+        "Status Decision",
+        "Next Safe Action"
+      ]
+    },
+    {
       "path": "logs/2026-07-15-media-probe-candidate.md",
       "title": "media.probe Candidate Implementation Log",
       "type": "repository-artifact",
@@ -8473,9 +8543,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Implemented and merged `media.probe` version `0.1.0` as the first executable reusable capability block. Added package metadata, manifest, stable contracts, ffprobe provider, workspace boundary, CLI, tests, validation evidence, CI, registry promotion from `idea` to `candidate`, and refreshed the system context manifest.",
+      "status": "Implemented and merged Block Studio 0.1.0 as the first owner-facing local application for reusable capability blocks. Added registry/manifest/entry-point discovery, interactive media.probe upload and preview, readable metadata, streams, raw JSON, logs, contract, tests, owner/developer modes, protected runtime storage, cleanup, Windows launcher, portable ZIP, and Linux/Windows CI.",
       "date": null,
-      "sha256": "a29617ceb556d0e62f8cc52e70e27ee6b47a383983ec238cb7b35c767e152d26",
+      "sha256": "1c092ddf28e9dcbc50422b069dea0402a31165d47dc163cd201d9cdd753acb50",
       "headings": [
         "Latest Executor Status"
       ]
