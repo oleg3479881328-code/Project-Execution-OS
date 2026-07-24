@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6b84a9656ed58376fda3df06a697ee725fae4802",
-  "generated_at": "2026-07-24T14:06:16-04:00",
+  "repository_commit": "4b8e00d162a4155991e056cc29ae03a097a7e085",
+  "generated_at": "2026-07-24T14:06:43-04:00",
   "artifact_count": 515,
   "artifacts": [
     {
@@ -10878,7 +10878,7 @@
       "domain": "registry.md",
       "status": null,
       "date": null,
-      "sha256": "6dc5c0f4ff7e2c5d3970dcf4a211db4fbe071e84098d9a93e41da75a024d3b74",
+      "sha256": "520a32ac5f2eb0e472d61f2496e560cd08469a60970f6f127ed739357e937232",
       "headings": [
         "Central Skill Registry",
         "Purpose",
