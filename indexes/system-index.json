@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a55331f0694d5b8cb8768bfbfaa110a4df568e48",
-  "generated_at": "2026-07-30T10:55:22-04:00",
+  "repository_commit": "acac85f1286fd96bf2e82284c7c6d34da3dd2f14",
+  "generated_at": "2026-07-30T16:08:52-04:00",
   "artifact_count": 515,
   "artifacts": [
     {
@@ -5790,13 +5790,14 @@
       "domain": "system",
       "status": "Files Changed:",
       "date": null,
-      "sha256": "2763348f9be43ffcdab0797211aa7d4764c409d4c904ac68efb6f1699c748ee4",
+      "sha256": "3cf6c0aef551a8d49f7acc2b02c9415c40c32a441c56e2cd151d8c54334d955b",
       "headings": [
         "Codex Handoff Standard v1",
         "Purpose",
         "Core Model",
         "Non-Thinking Executor Rule",
         "Transport Rule",
+        "Exact GitHub Comment Retrieval Rule",
         "Owner-Facing Handoff Rule",
         "Canonical One-Link Relay Workflow",
         "No Pre-Execution Chatter",
