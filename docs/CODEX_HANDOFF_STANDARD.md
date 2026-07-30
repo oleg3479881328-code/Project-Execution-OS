@@ -55,6 +55,24 @@ GitHub issue, PR comment, or review thread is the transport when no direct runti
 
 Prefer an existing suitable project-bound GitHub channel before creating a new one.
 
+## Exact GitHub Comment Retrieval Rule
+
+When the owner relays a direct GitHub URL containing an exact issue-comment, PR-comment, or review-thread identifier, that exact comment is the task payload.
+
+The executor must:
+- read the exact comment directly through GitHub CLI or GitHub API using the supplied repository, issue/PR number, and comment ID;
+- begin execution immediately after retrieving the payload;
+- use the supplied direct URL as the authoritative transport location.
+
+The executor must not:
+- search the web for the URL;
+- open or analyze the general Issue or PR page before retrieving the exact comment;
+- announce that it will read, inspect, summarize, or interpret the comment;
+- restate the task before execution;
+- fall back to web browsing unless GitHub CLI/API returns a concrete authentication, permission, or availability error.
+
+Every reasoning-model handoff that returns a direct GitHub comment URL must include this retrieval behavior explicitly when needed. This rule exists to avoid redundant searches, unnecessary pre-execution chatter, and avoidable executor-limit consumption.
+
 ## Owner-Facing Handoff Rule
 
 The owner should not receive large handoff packets in chat by default.
