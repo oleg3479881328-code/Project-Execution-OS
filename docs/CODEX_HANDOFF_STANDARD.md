@@ -68,6 +68,54 @@ Default behavior:
 
 The purpose is to reduce chat clutter while preserving complete execution context for the executor.
 
+## Canonical One-Link Relay Workflow
+
+This is the default end-to-end workflow when the owner manually relays links between the reasoning model and the executor:
+
+1. The owner and reasoning model discuss the task until every implementation decision is complete.
+2. The reasoning model publishes one self-contained execution packet in the project-bound GitHub transport.
+3. The reasoning model returns to the owner only the direct URL of that packet.
+4. The owner passes that URL to the executor.
+5. The executor opens the packet and begins execution immediately.
+6. The executor performs the work, validates it, and publishes the complete execution report and evidence at the packet's specified `Response URL`.
+7. The executor returns to the owner only the direct URL of the execution report. If blocked, it returns only the direct URL of a precise blocker report.
+8. The owner passes that report URL to the reasoning model.
+9. The reasoning model opens and verifies the actual report, changes, and evidence, then accepts the result or publishes the next fully specified correction packet.
+10. The cycle repeats until the reasoning model accepts the result.
+
+The normal transport is therefore:
+
+```text
+Discussion and decisions
+-> one task URL
+-> execution
+-> one report URL
+-> reasoning-model review
+-> accept or next task URL
+```
+
+The owner is a link relay in this temporary manual bridge, not the implementation analyst and not the reviewer. The owner must not be asked to interpret the packet, compare technical options, inspect evidence, or decide how the executor should proceed.
+
+Each direction uses one primary link. Do not require the owner to copy large packets, logs, reports, or multiple URLs between agents.
+
+## No Pre-Execution Chatter
+
+After receiving the task URL, the executor must not:
+
+- restate or summarize the assignment;
+- explain how it understood the assignment;
+- announce a plan;
+- describe what it is about to do;
+- ask for confirmation of decisions already present in the packet;
+- send conversational progress updates.
+
+The executor's next owner-facing message must contain only:
+
+- the direct execution-report URL after completion; or
+- the direct blocker-report URL when mechanical execution cannot continue.
+
+Detailed results, validation evidence, changed files, risks, and deviations belong inside the linked execution report, not in owner-facing chat.
+
 ## Mandatory Execution Mode
 
 Every Codex or executor handoff must include an `Execution Mode` section.
