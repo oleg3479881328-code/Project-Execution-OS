@@ -2,25 +2,50 @@
 
 ## Purpose
 
-This standard defines how reasoning-model work is handed to Codex for execution.
+This standard defines how reasoning-model work is handed to Codex or any other executor.
 
-Use Codex only when executor access is actually needed for:
+Use an executor only when executor access is actually needed for:
 - repository edits;
 - local commands;
 - validation;
 - environment inspection;
 - other tool-only work.
 
-If a task is small, safe, and can be completed directly through reasoning and drafting, do it without Codex.
+If a task is small, safe, and can be completed directly through reasoning and drafting, do it without an executor.
 
 ## Core Model
 
 ```text
-Reasoning model thinks.
-Codex executes.
+Reasoning model decides and specifies.
+Executor performs the specified actions.
 Reviewer verifies.
 Repository memory persists.
 ```
+
+## Non-Thinking Executor Rule
+
+The executor is the hands, not the head.
+
+The reasoning model owns all analysis, architecture, choices, prioritization, naming, scope, implementation design, acceptance criteria, and validation design before the handoff is sent.
+
+The executor must not:
+- design the solution;
+- choose between approaches;
+- reinterpret the objective;
+- invent missing requirements;
+- fill an unspecified decision with an assumption;
+- propose a different architecture;
+- expand or reduce scope;
+- decide what the owner probably meant;
+- make product, UX, data, security, or workflow decisions.
+
+The executor may inspect files, repository state, commands, and outputs only as required to perform the specified actions and collect evidence. Inspection does not authorize it to choose or redesign the solution.
+
+Every handoff must be complete enough for the executor to follow mechanically, including exact targets, exact required changes, fixed naming and behavior, forbidden changes, validation steps, and expected outputs.
+
+If an instruction is missing, contradictory, unsafe, impossible, or requires a decision that was not supplied, the executor must stop before improvising and report one precise blocker: what decision or input is missing and where execution stopped.
+
+A weak or inexpensive model must be able to execute the packet correctly without independent reasoning.
 
 ## Transport Rule
 
@@ -50,12 +75,21 @@ Every Codex or executor handoff must include an `Execution Mode` section.
 Default behavior:
 
 - begin implementation immediately;
-- do not pause for optional clarification questions before starting work;
-- resolve minor, reversible ambiguity with the smallest reasonable implementation and record the assumption in the execution report;
-- ask a question only when a real blocker prevents safe execution, such as missing access, missing required credentials, conflicting repository state, or an irreversible high-risk choice;
-- do not pause for optional preferences, naming choices, or reversible low-risk decisions.
+- execute the packet literally and only within its stated scope;
+- do not pause for optional preferences because all implementation decisions must already be supplied;
+- do not resolve ambiguity, make assumptions, or choose a reasonable alternative;
+- ask or report a blocker only when a missing decision, conflicting instruction, missing access, missing required credential, unsafe action, or impossible validation prevents mechanical execution;
+- stop before any unspecified or out-of-scope action.
 
-Use an interactive planning session instead only when the owner explicitly requests planning rather than execution.
+Use an interactive planning session instead only when the owner explicitly requests planning rather than execution. Planning belongs to the reasoning model, not the executor.
+
+## Existing-Solution Responsibility
+
+Searching for, comparing, and selecting an existing solution is reasoning work.
+
+The reasoning model must complete that work before an implementation handoff and identify the selected solution or exact implementation design in the packet.
+
+An executor may be assigned a bounded evidence-gathering task with exact search targets and return format. In that case it reports findings only and does not choose the solution.
 
 ## Full Packet
 
@@ -67,25 +101,28 @@ IMPLEMENTATION HANDOFF PACKET
 Packet Type:
 Objective:
 Source Decision / Design:
+Decisions Already Made:
 Allowed Scope:
 Out Of Scope:
 Repository Context:
 Files Allowed To Change:
 Forbidden Changes:
-Existing Solution Search Required:
+Selected Existing Solution Or Exact Implementation Design:
 Implementation Instructions:
 Execution Mode:
 - Begin implementation immediately.
-- Do not pause for optional clarification questions before starting work.
-- Resolve minor, reversible ambiguity with the smallest reasonable implementation and record assumptions.
-- Ask only if a real blocker prevents safe execution.
+- Execute these instructions literally and only within the allowed scope.
+- Do not make assumptions, choose alternatives, or redesign the solution.
+- Stop and report the exact blocker if any required decision or input is missing.
 Acceptance Criteria:
 Validation Commands / Checks:
+Expected Outputs:
 Rollback Notes:
 Execution Report Contract:
+Response URL:
 ```
 
-This is the default next artifact whenever the task is clearly Codex-bound and executor access is now the missing step.
+This is the default next artifact whenever the task is clearly executor-bound and executor access is now the missing step.
 
 ## Packet Lite
 
@@ -95,40 +132,43 @@ Use this when the task is narrow, low-risk, and bounded to a few files:
 CODEX PACKET LITE
 
 Objective:
+Decisions Already Made:
 Files Allowed To Change:
 Forbidden Changes:
-Existing Solution Search Required:
+Exact Changes:
 Execution Mode:
 - Begin implementation immediately.
-- Do not pause for optional clarification questions before starting work.
-- Resolve minor, reversible ambiguity with the smallest reasonable implementation and record assumptions.
-- Ask only if a real blocker prevents safe execution.
+- Execute these instructions literally and only within the allowed scope.
+- Do not make assumptions, choose alternatives, or redesign the solution.
+- Stop and report the exact blocker if any required decision or input is missing.
 Acceptance Criteria:
 Validation:
+Expected Output:
 Return:
+Response URL:
 ```
 
-For architecture, implementation, configuration, debugging, automation, and integration work, `Existing Solution Search Required` defaults to `Yes` unless there is a stated reason otherwise.
+The reasoning model must not send either packet until all choices required for mechanical execution have been made.
 
 ## Execution Report
 
-Codex must return:
+The executor must return:
 
 ```text
 EXECUTION REPORT
 
 Status:
 Files Changed:
-Existing Solutions Checked:
-Solution Reused Or Adapted:
-Why Custom Implementation Was Necessary:
+Specified Solution Implemented:
 Validation Performed:
 Validation Not Performed:
 Blockers:
-Assumptions Made:
+Deviations From Packet: None / Blocked Before Deviation
 Risks / Follow-Up:
 Ready For Review: Yes / No
 ```
+
+The executor reports evidence, not new design recommendations. Any newly discovered decision belongs back with the reasoning model.
 
 ## Evidence Rule
 
