@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "acac85f1286fd96bf2e82284c7c6d34da3dd2f14",
-  "generated_at": "2026-07-30T16:08:52-04:00",
-  "artifact_count": 515,
+  "repository_commit": "e5092a1e3e544d21c07ad143ed47befbd2241c21",
+  "generated_at": "2026-07-31T20:03:31-04:00",
+  "artifact_count": 516,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7541,6 +7541,42 @@
         "Decision Rule For Future Recommendations",
         "Lesson Learned",
         "Next Research Task"
+      ]
+    },
+    {
+      "path": "knowledge-library/execution-standards/CODEX_EXECUTOR_LIMIT_EFFICIENCY.md",
+      "title": "Codex Executor Limit Efficiency",
+      "type": "knowledge-entry",
+      "domain": "knowledge:execution-standards",
+      "status": "active for the current environment",
+      "date": "2026-07-31",
+      "sha256": "c868d5b5ffe952ab427afe5d735e432e595707722cddf58f2d37f7b08dede482",
+      "headings": [
+        "Codex Executor Limit Efficiency",
+        "Purpose",
+        "Core Architecture",
+        "Current Model Policy",
+        "Execution Packet Standard",
+        "Context-Minimization Policy",
+        "AGENTS.md",
+        "Repository Context",
+        "Command Output",
+        "Thread And Cache Policy",
+        "Execution Routing Ladder",
+        "Donor Patterns And Candidate Tools",
+        "Aider Architect/Editor",
+        "Aider Repo Map",
+        "Serena MCP",
+        "Repomix",
+        "ast-grep",
+        "Local Models",
+        "Measurement",
+        "Applies To",
+        "Triggers",
+        "Do Not Load When",
+        "Risks And Boundaries",
+        "Related Standards",
+        "Final Rule"
       ]
     },
     {
