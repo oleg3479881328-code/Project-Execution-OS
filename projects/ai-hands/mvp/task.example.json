@@ -1,0 +1,14 @@
+{
+  "workspace": "C:\\Users\\oleg3\\Documents\\AI Hands\\wp003-ollama-smoke",
+  "model": "qwen3:4b",
+  "instruction": "Replace the line beta with delta. Preserve all other text and line order exactly.",
+  "target_file": "notes.txt",
+  "validation_command": [
+    "powershell",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    ".\\validate.ps1"
+  ],
+  "ollama_url": "http://127.0.0.1:11434"
+}
