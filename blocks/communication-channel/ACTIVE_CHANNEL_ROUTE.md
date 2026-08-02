@@ -16,11 +16,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Write Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/96`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/97`
 
 ### Read Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/96`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/97`
 
 ### Reviewer To Executor Mailbox
 
@@ -36,7 +36,7 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Scope
 
-`AI Hands / WP-001 local environment inventory for MVP 1 executor selection`
+`AI Hands / WP-002 bounded Cline + Ollama local-model smoke test`
 
 ### Last Confirmed At
 
