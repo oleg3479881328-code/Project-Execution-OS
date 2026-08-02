@@ -16,19 +16,19 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Write Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/96`
 
 ### Read Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/96`
 
 ### Reviewer To Executor Mailbox
 
-`projects/tiktok-research-sorter/coordination/TO_EXECUTOR.md`
+`projects/ai-hands/coordination/TO_EXECUTOR.md`
 
 ### Executor To Reviewer Mailbox
 
-`projects/tiktok-research-sorter/coordination/FROM_EXECUTOR.md`
+`projects/ai-hands/coordination/FROM_EXECUTOR.md`
 
 ### Transport Type
 
@@ -36,11 +36,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Scope
 
-`TikTok Research Sorter 0.2.0 / autonomous stabilization, automated validation, CI artifacts, and Windows updater hardening`
+`AI Hands / WP-001 local environment inventory for MVP 1 executor selection`
 
 ### Last Confirmed At
 
-`2026-07-10`
+`2026-08-02`
 
 ## Permanent Backup Recovery Pointer
 
