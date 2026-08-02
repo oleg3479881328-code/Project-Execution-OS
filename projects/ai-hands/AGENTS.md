@@ -7,8 +7,8 @@ Before project work:
 1. Read `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`.
 2. Read `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ROUTER.md`.
 3. Read `projects/ai-hands/PROJECT.md`.
-4. Read `projects/ai-hands/PROJECT_STATE.md`.
-5. Read `projects/ai-hands/logs/latest.md`.
+4. Read `projects/ai-hands/PROJECT_STATE.md` only when the task depends on current execution state, continuity, prior work, or handoff context.
+5. Read `projects/ai-hands/logs/latest.md` only when the latest executor status, blocker, result, or continuation state is relevant.
 6. Read only the minimum additional files required for the active task.
 
 ## Project-Specific Guardrails
