@@ -43,14 +43,15 @@ Success for MVP 1 means one repeatable local-model execution cycle works without
 
 - Project repository path: `projects/ai-hands/`
 - Notion project page: `https://app.notion.com/p/3b0a08dab069812e97f8e97ff84327e9`
-- Initial research context: conversation that selected Goose, OpenHands, and Cline as donor candidates, with a minimal custom adapter retained as a fallback.
+- Durable environment evidence: `https://github.com/oleg3479881328-code/Project-Execution-OS/issues/96`
+- Earlier donor discussion was not preserved as a recoverable source and is therefore not authoritative. Candidate order must be validated from official documentation and live local tests under Existing Solution First.
 
 ## Current Status
 
 - Status: `active`
 - Current mode: `execution`
 - Phase: `MVP 1 bootstrap and environment discovery`
-- Confidence: architecture direction confirmed; local hardware and installed-model inventory still require direct verification.
+- Confidence: architecture direction confirmed; executor and model choice require live validation.
 
 ## Done So Far
 
@@ -58,14 +59,15 @@ Success for MVP 1 means one repeatable local-model execution cycle works without
 - GitHub and Notion selected as active durable layers.
 - Notion project registry entry created.
 - Internal project location selected inside Project Execution OS.
+- Local environment inventory completed in Issue #96.
 
 ## Current Focus
 
-Create the minimum durable project front door and prepare the first bounded execution task: verify the local environment and select the smallest proven executor path that can run a local model against an approved test repository.
+Validate the smallest already-installed executor path against the verified local environment and prove one bounded local-model execution loop.
 
 ## Next Practical Step
 
-Run a local environment inventory on the owner's computer covering operating system, CPU, RAM, GPU/VRAM, Ollama or other model servers, installed models, Docker/WSL availability, Git, Python, Node.js, and candidate executor availability. Record only verified results.
+Run WP-002: a safe smoke test using the installed Cline CLI and Ollama with a small local model, an isolated branch, a harmless file edit, an allowlisted validation command, and a complete diff/report.
 
 ## MVP 1 Scope
 
@@ -98,7 +100,7 @@ Run a local environment inventory on the owner's computer covering operating sys
 - Never let an untrusted local model write directly to the default branch.
 - Start with one executor and one local model; add routing only after the base loop is reliable.
 - Local hardware and installed models must be detected directly and must not be inferred from old chat statements.
-- Search and test existing executor shells in this order: already installed tools, Goose, OpenHands, Cline CLI/SDK, then a minimal custom adapter if adaptation is demonstrably worse.
+- Apply Existing Solution First to executor selection; the currently preferred first test is Cline because WP-001 verified it is already installed, not because of an unrecoverable prior conversation.
 - Require explicit approval for destructive, privileged, credential-related, network-sensitive, or externally publishing operations.
 
 ## MVP Acceptance Criteria
@@ -117,8 +119,8 @@ MVP 1 is complete when all of the following are demonstrated in one recorded run
 
 ## Read Next
 
-1. `PROJECT_STATE.md`
-2. `logs/latest.md`
-3. `AGENTS.md`
-4. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
-5. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
+1. `AGENTS.md`
+2. `PROJECT_STATE.md` when current execution state or continuity matters.
+3. `logs/latest.md` when the latest executor status or result matters.
+4. `https://github.com/oleg3479881328-code/Project-Execution-OS/issues/96`
+5. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
