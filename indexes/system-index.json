@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "cb9ac4103884df0915f4a38faf418ff11f7c0f76",
-  "generated_at": "2026-08-02T13:45:51-04:00",
-  "artifact_count": 516,
+  "repository_commit": "56a9945c277d48d740280e0fb5a416733a311393",
+  "generated_at": "2026-08-02T15:02:53-04:00",
+  "artifact_count": 522,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -9395,6 +9395,119 @@
         "Decisions",
         "Risks Or Lessons",
         "Next Required Action"
+      ]
+    },
+    {
+      "path": "projects/ai-hands/AGENTS.md",
+      "title": "AI Hands Agent Instructions",
+      "type": "project-artifact",
+      "domain": "ai-hands",
+      "status": null,
+      "date": null,
+      "sha256": "a5382b3139fb950c141cb5b110ca1810e71bdb459c6f3e1c27d08e6fbf9020bc",
+      "headings": [
+        "AI Hands Agent Instructions",
+        "Required Entry Order",
+        "Project-Specific Guardrails",
+        "Working Rule",
+        "Central Standards"
+      ]
+    },
+    {
+      "path": "projects/ai-hands/PROJECT.md",
+      "title": "AI Hands",
+      "type": "project-artifact",
+      "domain": "ai-hands",
+      "status": null,
+      "date": null,
+      "sha256": "b587c2bc5e5a711e500f269970e90ddcb2492dfb242e279f9b5ef88ff064cdb5",
+      "headings": [
+        "AI Hands",
+        "Project",
+        "Purpose",
+        "System Entry Point",
+        "Operating Principle",
+        "Source Of Truth",
+        "Source Trail",
+        "Current Status",
+        "Done So Far",
+        "Current Focus",
+        "Next Practical Step",
+        "MVP 1 Scope",
+        "In scope",
+        "Out of scope",
+        "Key Decisions And Constraints",
+        "MVP Acceptance Criteria",
+        "Read Next"
+      ]
+    },
+    {
+      "path": "projects/ai-hands/PROJECT_STATE.md",
+      "title": "AI Hands — Project State",
+      "type": "project-artifact",
+      "domain": "ai-hands",
+      "status": null,
+      "date": null,
+      "sha256": "dd415cfc02bf59a8c4c161e530e68d9777b785d0883a4a6d902dca619c1aca5b",
+      "headings": [
+        "AI Hands — Project State",
+        "State Snapshot",
+        "Objective",
+        "Confirmed Decisions",
+        "Unknowns To Verify",
+        "Active Work Package",
+        "WP-001 — Local environment inventory",
+        "WP-002 — Executor donor smoke test",
+        "Risks",
+        "Next Practical Step"
+      ]
+    },
+    {
+      "path": "projects/ai-hands/coordination/FROM_EXECUTOR.md",
+      "title": "FROM_EXECUTOR",
+      "type": "project-artifact",
+      "domain": "ai-hands",
+      "status": null,
+      "date": null,
+      "sha256": "97eac874f30c47434d2d47c5368a23c14f45b8a48dc068c381318f55fd37c418",
+      "headings": [
+        "FROM_EXECUTOR",
+        "Latest Executor Message"
+      ]
+    },
+    {
+      "path": "projects/ai-hands/coordination/TO_EXECUTOR.md",
+      "title": "TO_EXECUTOR",
+      "type": "project-artifact",
+      "domain": "ai-hands",
+      "status": null,
+      "date": null,
+      "sha256": "174afeac5b497c6ccef0aa061483bba3687841580ebcfcc5a383f529a6ee3ae9",
+      "headings": [
+        "TO_EXECUTOR",
+        "Active Assignment",
+        "Objective",
+        "Required Inventory",
+        "Boundaries",
+        "Deliverables",
+        "Reply Contract"
+      ]
+    },
+    {
+      "path": "projects/ai-hands/logs/latest.md",
+      "title": "AI Hands — Latest Log",
+      "type": "project-artifact",
+      "domain": "ai-hands",
+      "status": null,
+      "date": null,
+      "sha256": "5e731b2ede4cc3dd3982abb5d54b6209c0a2b8a444f25fcc25196c828c64995c",
+      "headings": [
+        "AI Hands — Latest Log",
+        "2026-08-02 — Project bootstrap",
+        "Request",
+        "Actions Completed",
+        "Current Result",
+        "Next Action"
       ]
     },
     {
