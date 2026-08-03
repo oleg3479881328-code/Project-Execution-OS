@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d3d1cbd2ec8afd296a9a7e8bbd3bd74f935f1d9c",
-  "generated_at": "2026-08-02T15:03:37-04:00",
-  "artifact_count": 522,
+  "repository_commit": "8e15856d323c7840b287adede579d382846f93aa",
+  "generated_at": "2026-08-02T21:24:31-04:00",
+  "artifact_count": 523,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -9404,10 +9404,11 @@
       "domain": "ai-hands",
       "status": null,
       "date": null,
-      "sha256": "a5382b3139fb950c141cb5b110ca1810e71bdb459c6f3e1c27d08e6fbf9020bc",
+      "sha256": "d904fbc6a5fd80b49343c33d2314a422bc524153490f7f74f85b9783fad224a3",
       "headings": [
         "AI Hands Agent Instructions",
         "Required Entry Order",
+        "Authority And Role Contract",
         "Project-Specific Guardrails",
         "Working Rule",
         "Central Standards"
@@ -9508,6 +9509,25 @@
         "Actions Completed",
         "Current Result",
         "Next Action"
+      ]
+    },
+    {
+      "path": "projects/ai-hands/mvp/README.md",
+      "title": "AI Hands MVP — Isolated Ollama Adapter",
+      "type": "project-artifact",
+      "domain": "ai-hands",
+      "status": null,
+      "date": null,
+      "sha256": "e8c31ec4dac6c0933d04dfb21e65c09af9142fbd3a6b9130b316fc11b5410419",
+      "headings": [
+        "AI Hands MVP — Isolated Ollama Adapter",
+        "Existing-solution decision",
+        "Role contract",
+        "Safety boundary",
+        "Run",
+        "Task packet",
+        "Expected output",
+        "MVP acceptance test"
       ]
     },
     {
