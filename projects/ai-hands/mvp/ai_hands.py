@@ -79,6 +79,32 @@ CURRENT FILE CONTENT:
 """
 
 
+def parse_ollama_proposal(envelope: dict[str, Any]) -> dict[str, Any]:
+    """Parse structured model output from supported Ollama envelope fields.
+
+    Most models place final output in ``response``. Some reasoning models emit
+    the requested JSON in ``thinking`` while leaving ``response`` empty. We
+    accept the first non-empty valid JSON object from those known fields only.
+    """
+    parse_errors: list[str] = []
+    for field in ("response", "thinking"):
+        candidate = envelope.get(field)
+        if not isinstance(candidate, str) or not candidate.strip():
+            continue
+        try:
+            proposal = json.loads(candidate)
+        except json.JSONDecodeError as exc:
+            parse_errors.append(f"{field}: {exc.msg}")
+            continue
+        if isinstance(proposal, dict):
+            return proposal
+        parse_errors.append(f"{field}: JSON value is not an object")
+
+    detail = "; ".join(parse_errors)
+    suffix = f" ({detail})" if detail else ""
+    raise ExecutionError(f"model did not return valid proposal JSON{suffix}")
+
+
 def call_ollama(task: Task, prompt: str) -> dict[str, Any]:
     payload = json.dumps({
         "model": task.model,
@@ -98,13 +124,9 @@ def call_ollama(task: Task, prompt: str) -> dict[str, Any]:
             envelope = json.loads(response.read().decode("utf-8"))
     except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
         raise ExecutionError(f"Ollama request failed: {exc}") from exc
-    try:
-        proposal = json.loads(envelope["response"])
-    except (KeyError, TypeError, json.JSONDecodeError) as exc:
-        raise ExecutionError("model did not return valid proposal JSON") from exc
-    if not isinstance(proposal, dict):
-        raise ExecutionError("model proposal must be a JSON object")
-    return proposal
+    if not isinstance(envelope, dict):
+        raise ExecutionError("Ollama response envelope must be a JSON object")
+    return parse_ollama_proposal(envelope)
 
 
 def validate_proposal(task: Task, proposal: dict[str, Any]) -> tuple[str, str]:
