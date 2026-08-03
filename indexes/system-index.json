@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8e15856d323c7840b287adede579d382846f93aa",
-  "generated_at": "2026-08-02T21:24:31-04:00",
-  "artifact_count": 523,
+  "repository_commit": "16879cdd47cfd56ccc66608345d182c8fec22840",
+  "generated_at": "2026-08-03T14:42:58-04:00",
+  "artifact_count": 524,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -6819,6 +6819,43 @@
         "Source-of-Truth Rule",
         "Execution Split",
         "Related Nodes"
+      ]
+    },
+    {
+      "path": "docs/PROJECT_MEMORY_STANDARD.md",
+      "title": "Project Memory Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "5b7201d084e0f1e9f950c5b15cc70761bfe9e3d700ad71db307fa3d9d801a886",
+      "headings": [
+        "Project Memory Standard",
+        "Purpose",
+        "Constitutional Rule",
+        "Universal Memory Layers",
+        "L0 — Session Memory",
+        "L1 — Project Entrypoint",
+        "L2 — Current Operational State",
+        "L3 — Durable Knowledge",
+        "Canonical Re-Entry Sequence",
+        "ChatGPT Project Pointer Rule",
+        "Notion-First Project Rule",
+        "Repository-First Project Rule",
+        "Source-Of-Truth Precedence",
+        "Promotion Rules",
+        "Update Responsibility",
+        "Minimum Structures",
+        "Zero-State Real Project",
+        "Active Repository Project",
+        "Active Notion-First Project",
+        "ChatGPT Project With External Canonical Memory",
+        "Migration Snapshot Rule",
+        "Anti-Bureaucracy Rule",
+        "Memory Health Test",
+        "Adoption Rule For Existing Projects",
+        "Related Standards",
+        "Final Rule"
       ]
     },
     {
