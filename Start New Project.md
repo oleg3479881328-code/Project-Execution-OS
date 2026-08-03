@@ -15,8 +15,8 @@ First determine what the user is actually doing:
 - exploring or discussing an idea only -> `docs/MODE_CLASSIFIER.md`
 - preserving an idea or reference without starting a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - explicitly starting project work -> `docs/PROJECT_LIFECYCLE_MODEL.md` and `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
-- explicitly starting a real project -> `docs/PROJECT_BOOTSTRAP_STANDARD.md`, then `docs/PROJECT_ENTRYPOINT_STANDARD.md`
-- continuing an existing project -> its current project entrypoint; if missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
+- explicitly starting a real project -> `docs/PROJECT_BOOTSTRAP_STANDARD.md`, then `docs/PROJECT_ENTRYPOINT_STANDARD.md` and `docs/PROJECT_MEMORY_STANDARD.md`
+- continuing an existing project -> its current project entrypoint, then restore context through `docs/PROJECT_MEMORY_STANDARD.md`; if the entrypoint is missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - handing an already-defined execution task to Codex -> `docs/CODEX_HANDOFF_STANDARD.md`
 
 ## Bootstrap Boundary
@@ -36,6 +36,8 @@ When the owner intentionally creates an internal subproject inside an existing G
 Do not create these artifacts solely because a new folder exists, a workspace is opened, or an idea is being discussed.
 
 Do not automatically create any additional project artifacts beyond that minimum bootstrap set.
+
+The universal memory architecture begins with the entrypoint and expands only after meaningful work exists. Follow `docs/PROJECT_MEMORY_STANDARD.md` and do not create empty memory structure for hypothetical future needs.
 
 ## Minimum Question
 
