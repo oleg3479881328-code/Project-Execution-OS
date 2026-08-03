@@ -3,6 +3,7 @@
   "model": "qwen3:4b",
   "instruction": "Replace the line beta with delta. Preserve all other text and line order exactly.",
   "target_file": "notes.txt",
+  "expected_branch": "smoke/nondefault",
   "validation_command": [
     "powershell",
     "-ExecutionPolicy",
