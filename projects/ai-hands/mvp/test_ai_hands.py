@@ -48,6 +48,27 @@ class AdapterSafetyTests(unittest.TestCase):
             with self.assertRaises(ai_hands.ExecutionError):
                 ai_hands.load_task(path)
 
+    def test_parses_standard_response_field(self):
+        proposal = {"target_file": "notes.txt", "new_content": "x", "summary": "done"}
+        self.assertEqual(
+            ai_hands.parse_ollama_proposal({"response": json.dumps(proposal)}),
+            proposal,
+        )
+
+    def test_parses_reasoning_field_when_response_is_empty(self):
+        proposal = {"target_file": "notes.txt", "new_content": "x", "summary": "done"}
+        self.assertEqual(
+            ai_hands.parse_ollama_proposal({
+                "response": "",
+                "thinking": json.dumps(proposal),
+            }),
+            proposal,
+        )
+
+    def test_rejects_non_json_reasoning_output(self):
+        with self.assertRaises(ai_hands.ExecutionError):
+            ai_hands.parse_ollama_proposal({"response": "", "thinking": "not-json"})
+
 
 if __name__ == "__main__":
     unittest.main()
