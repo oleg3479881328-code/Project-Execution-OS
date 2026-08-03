@@ -19,11 +19,21 @@
 
 - This project is governed by `Project Execution OS`.
 - `Existing Solution First` is mandatory after the task is defined.
+- Durable project memory follows the universal `Project Memory Standard`.
 
 ## Source Of Truth
 
 - Current source of truth: this `PROJECT.md` file plus the central `Project Execution OS` standards.
 - No project-specific durable system has been confirmed yet.
+
+## Memory Precedence
+
+1. confirmed working artifact or primary source;
+2. canonical project standard or decision;
+3. this project entrypoint;
+4. current project state and latest durable log when they exist;
+5. current conversation;
+6. model memory.
 
 ## Current Status
 
@@ -44,10 +54,12 @@
 - Architecture, stack, tooling, persistence layers, implementation plan, and scope are not yet confirmed.
 - The project has received the minimum bootstrap appropriate for its location.
 - After the task is defined, check for adequate existing solutions before custom implementation.
+- Do not treat chat history or model memory as durable project truth.
 
 ## Read Next
 
 1. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md`
 2. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_BOOTSTRAP_STANDARD.md`
 3. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_ENTRYPOINT_STANDARD.md`
-4. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
+4. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/PROJECT_MEMORY_STANDARD.md`
+5. `https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
