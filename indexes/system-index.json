@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "607fe25f60b0c90af7cfac33c8e6ca38a7fb977e",
-  "generated_at": "2026-08-07T17:49:59-04:00",
+  "repository_commit": "b7737727e3dcc28a632a5b1cafe85f519ef48792",
+  "generated_at": "2026-08-07T17:51:03-04:00",
   "artifact_count": 525,
   "artifacts": [
     {
@@ -221,7 +221,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "746cb5ed46135a3a8800dd7a94703eac387f3e41014ac52b717e2c8896923901",
+      "sha256": "671a6436fe2f413737cf761157ed745f7498536a503b247cdbde370588d2e18d",
       "headings": [
         "Start New Project",
         "Purpose",
@@ -5756,10 +5756,11 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "3fdd48bc352e69c0e0680bcf33c28d07adae8eba8325e4c4546e7dbda7e4394e",
+      "sha256": "b1125dfb9df5d6c04db540765d47f6e1893698ac3aa0403ad06be3a891190559",
       "headings": [
         "ChatGPT Project START_HERE Template",
         "Purpose",
+        "Required Filename",
         "Core Rule",
         "Default Russian Template",
         "START_HERE",
