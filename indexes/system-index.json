@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f05567cf1fb2583e3afa5cc4f8fca3b2e4e0feb8",
-  "generated_at": "2026-08-07T17:52:28-04:00",
-  "artifact_count": 525,
+  "repository_commit": "a4f70b4fe4e7d12ddb5f7c065bb3e8ef93ce0226",
+  "generated_at": "2026-08-07T18:16:17-04:00",
+  "artifact_count": 526,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -6264,6 +6264,29 @@
         "When Custom Work Is Allowed",
         "Evidence Shape",
         "Required Propagation"
+      ]
+    },
+    {
+      "path": "docs/EXTERNAL_AI_NOTION_TASK_RESULT_STANDARD.md",
+      "title": "External AI Task + Result Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "b768943ff615b71d7a36ecfbd2ef3a697ebadfdeee558aa7f194858a3d4d8a21",
+      "headings": [
+        "External AI Task + Result Standard",
+        "Purpose",
+        "Core Pattern",
+        "Default Workspace",
+        "Task Page Contract",
+        "Result Page Contract",
+        "Owner Handoff Rule",
+        "Review Rule",
+        "Reuse Across Projects",
+        "When Not To Use It",
+        "Naming",
+        "Final Rule"
       ]
     },
     {
