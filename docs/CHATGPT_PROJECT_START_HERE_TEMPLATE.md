@@ -8,21 +8,25 @@ The attachment is only a stable entrance into the project. It is not the project
 
 ## Required Filename
 
-The attachment filename must include the human-readable project name followed by `START_HERE`.
+The attachment filename must include the project name followed by `START_HERE`.
+
+Use underscores `_` as separators between all words.
 
 Default format:
 
 ```text
-<Project Name> - START_HERE.md
+<Project_Name>_START_HERE.md
 ```
 
 Example:
 
 ```text
-AI Program Interaction Research - START_HERE.md
+AI_Program_Interaction_Research_START_HERE.md
 ```
 
-Do not use a generic bare `START_HERE.md` for ChatGPT Project attachments when a project name is known. The filename itself must identify which project the entrypoint belongs to.
+Do not use spaces, hyphen separators, or URL-encoded filename forms such as `%20`.
+Do not use a generic bare `START_HERE.md` for ChatGPT Project attachments when a project name is known.
+The filename itself must identify which project the entrypoint belongs to and must be safe to expose as a direct downloadable filename without URL-encoding noise.
 
 ## Core Rule
 
@@ -50,7 +54,10 @@ Use this content by default for Oleg's ChatGPT Projects:
 
 ## Usage Rules
 
-- Filename: `<Project Name> - START_HERE.md`.
+- Filename: `<Project_Name>_START_HERE.md`.
+- Replace spaces in the project name with underscores `_`.
+- Use underscores consistently; do not insert spaces or hyphen separators into the filename.
+- Never intentionally produce `%20` or other URL-encoded separators as part of the visible filename.
 - Keep the explanatory part to roughly 3–4 sentences.
 - Write it in Russian by default so both Oleg and the AI can read it directly.
 - Project-specific values are normally the project name in the filename and `<URL>` in the content.
@@ -61,7 +68,7 @@ Use this content by default for Oleg's ChatGPT Projects:
 
 ## Final Rule
 
-ChatGPT attachment filename identifies the project.
+ChatGPT attachment filename identifies the project and uses underscores only.
 ChatGPT attachment content = stable door.
 Canonical live `START_HERE` = living router.
 Project systems behind it = evolving project.
