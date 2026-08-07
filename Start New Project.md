@@ -16,12 +16,13 @@ First determine what the user is actually doing:
 - preserving an idea or reference without starting a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - explicitly starting project work -> `docs/PROJECT_LIFECYCLE_MODEL.md` and `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
 - explicitly starting a real project -> `docs/PROJECT_BOOTSTRAP_STANDARD.md`, then `docs/PROJECT_ENTRYPOINT_STANDARD.md` and `docs/PROJECT_MEMORY_STANDARD.md`
+- starting or attaching a real project inside ChatGPT Projects -> first establish the canonical live project entrypoint, then create one thin stable `START_HERE.md` pointer under `docs/PROJECT_BOOTSTRAP_STANDARD.md`, `docs/PROJECT_ENTRYPOINT_STANDARD.md`, and `docs/PROJECT_MEMORY_STANDARD.md`
 - continuing an existing project -> its current project entrypoint, then restore context through `docs/PROJECT_MEMORY_STANDARD.md`; if the entrypoint is missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - handing an already-defined execution task to Codex -> `docs/CODEX_HANDOFF_STANDARD.md`
 
 ## Bootstrap Boundary
 
-Creating or opening a folder, workspace, or Codex Desktop project does not automatically create project files under Project Execution OS.
+Creating or opening a folder, workspace, ChatGPT Project, or Codex Desktop project does not automatically create project files under Project Execution OS.
 
 When the owner intentionally creates a standalone real project folder, initialize it immediately with:
 
@@ -32,6 +33,8 @@ PROJECT.md
 ```
 
 When the owner intentionally creates an internal subproject inside an existing Git repository, do not run nested `git init`; create `PROJECT.md` and add `AGENTS.md` only if local subproject instructions are useful.
+
+When the owner intentionally uses ChatGPT Projects as an interface to a project whose canonical memory lives elsewhere, attach one `START_HERE.md` pointer after the canonical live entrypoint exists. Do not put evolving project state into that attachment and do not require repeated uploads after ordinary project changes.
 
 Do not create these artifacts solely because a new folder exists, a workspace is opened, or an idea is being discussed.
 
