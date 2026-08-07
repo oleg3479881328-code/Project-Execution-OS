@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "61840e5ab495d14a25cf7832186e00b484783b7b",
-  "generated_at": "2026-08-07T14:43:52-04:00",
-  "artifact_count": 524,
+  "repository_commit": "607fe25f60b0c90af7cfac33c8e6ca38a7fb977e",
+  "generated_at": "2026-08-07T17:49:59-04:00",
+  "artifact_count": 525,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -221,7 +221,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "f85d47a60d17ab2b89fb82e087235b8c9def19b19de052193a9cb912b3d84ee3",
+      "sha256": "746cb5ed46135a3a8800dd7a94703eac387f3e41014ac52b717e2c8896923901",
       "headings": [
         "Start New Project",
         "Purpose",
@@ -5750,6 +5750,24 @@
       ]
     },
     {
+      "path": "docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md",
+      "title": "ChatGPT Project START_HERE Template",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "3fdd48bc352e69c0e0680bcf33c28d07adae8eba8325e4c4546e7dbda7e4394e",
+      "headings": [
+        "ChatGPT Project START_HERE Template",
+        "Purpose",
+        "Core Rule",
+        "Default Russian Template",
+        "START_HERE",
+        "Usage Rules",
+        "Final Rule"
+      ]
+    },
+    {
       "path": "docs/CODEX_CHANNEL_ACK_AND_PUBLISH_STANDARD.md",
       "title": "Codex Channel Acknowledgement And Publication Standard",
       "type": "system-standard",
@@ -6729,7 +6747,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "bfe1e999adb2df5f915f9f5adcc215a551dc660974569c3e095c6da52662c59e",
+      "sha256": "00331ed0615f2b81d589d1f232f8db3e144f67bed42f10a5dad1cc2a6e840e72",
       "headings": [
         "Project Bootstrap Standard",
         "Purpose",
@@ -6738,6 +6756,7 @@
         "External Project vs Internal Subproject",
         "External independent project folder",
         "Internal subproject inside an existing Git repository",
+        "ChatGPT Project Bootstrap Rule",
         "Zero-State Bootstrap",
         "First Meaningful Execution Step",
         "File Placement Rule",
