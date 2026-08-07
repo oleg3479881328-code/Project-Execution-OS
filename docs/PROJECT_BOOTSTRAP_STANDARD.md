@@ -18,9 +18,11 @@ START_HERE.md
 → minimum additional files required by the task
 ```
 
-`PROJECT.md` is the local front door for one project.
+`PROJECT.md` is the local front door for one repository project.
 
 It does not replace `START_HERE.md` as the top-level door into the overall system.
+
+For a ChatGPT Project whose canonical live project memory is external, the attached `START_HERE.md` is a thin pointer into that live project; it is not the live project itself.
 
 ## Bootstrap Boundary
 
@@ -59,6 +61,25 @@ When the owner intentionally creates a project-like subfolder inside an already 
 - create `AGENTS.md` only when local subproject instructions are actually needed.
 
 Inside `projects/<project-id>/` in this central repository, do not create nested Git repositories unless there is a separate explicit decision to do so.
+
+## ChatGPT Project Bootstrap Rule
+
+When the owner wants to use a real project through ChatGPT Projects and the project has or will have durable live memory outside the ChatGPT attachment surface:
+
+1. establish the canonical live project entrypoint first;
+2. create exactly one attached `START_HERE.md` for the ChatGPT Project;
+3. make that file a thin stable pointer to the canonical live entrypoint;
+4. put evolving project state, roadmap, research, decisions, logs, and routing in the live project memory, not in the attached pointer;
+5. design the pointer so the owner attaches it once and ordinary project evolution does not require another upload;
+6. future chats must enter through the pointer and restore state from the live project rather than asking the owner to repeat context.
+
+The attached file is an interface bootstrap artifact, not a project snapshot.
+
+Do not generate a new migration snapshot file for the ChatGPT Project every time the project changes.
+
+Do not ask the owner to replace the pointer unless the canonical target or routing contract changes.
+
+Follow `docs/PROJECT_ENTRYPOINT_STANDARD.md` and `docs/PROJECT_MEMORY_STANDARD.md`.
 
 ## Zero-State Bootstrap
 
@@ -133,21 +154,24 @@ For projects outside this repository, central-system references must use canonic
 
 1. Confirm that the owner is intentionally creating a real project.
 2. Confirm whether the target is:
-   - a standalone external project folder; or
-   - an internal subproject inside an existing Git repository.
+   - a standalone external project folder;
+   - an internal subproject inside an existing Git repository; or
+   - a ChatGPT Project interface pointing to external canonical project memory.
 3. For a standalone folder, run `git init`.
-4. Copy `PROJECT_TEMPLATE.md` into the project as `PROJECT.md`.
+4. Copy `PROJECT_TEMPLATE.md` into the project as `PROJECT.md` when the repository form applies.
 5. Copy `AGENTS_TEMPLATE.md` into the project as `AGENTS.md` when the case requires local agent instructions.
-6. Mark unconfirmed purpose explicitly as unknown when it is still unknown.
-7. Obtain or continue defining the project purpose.
-8. After purpose is confirmed, route into the minimal appropriate lifecycle, structure, research, or execution standards.
+6. If ChatGPT Projects will be used with external canonical memory, create one thin `START_HERE.md` pointer after the canonical live entrypoint exists.
+7. Mark unconfirmed purpose explicitly as unknown when it is still unknown.
+8. Obtain or continue defining the project purpose.
+9. After purpose is confirmed, route into the minimal appropriate lifecycle, structure, research, or execution standards.
 
 ## Related Nodes
 
 - `START_HERE.md` — top-level router only
 - `Start New Project.md` — new-project route
 - `docs/PROJECT_LIFECYCLE_MODEL.md` — layer and persistence decisions
-- `docs/PROJECT_ENTRYPOINT_STANDARD.md` — ongoing entrypoint contract
+- `docs/PROJECT_ENTRYPOINT_STANDARD.md` — ongoing entrypoint contract, including ChatGPT Project pointer behavior
+- `docs/PROJECT_MEMORY_STANDARD.md` — durable memory and re-entry rules
 - `docs/PROJECT_STRUCTURE_STANDARD.md` — file or versioned structure when justified
 - `docs/FILE_ORGANIZATION_STANDARD.md` — global canonical placement rule for every durable artifact
 - `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md` — continuity after zero-state bootstrap
