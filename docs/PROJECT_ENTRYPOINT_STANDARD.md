@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This standard defines the single entrypoint artifact for any specific project, regardless of whether that project lives primarily in `GitHub` or `Notion`.
+This standard defines the single entrypoint artifact for any specific project, regardless of whether that project lives primarily in `GitHub`, `Notion`, or another durable workspace.
 
 The goal is simple:
 
@@ -19,22 +19,71 @@ Any human or AI entering a project should be able to read one short artifact and
 
 ## Core Rule
 
-Every meaningful project should have exactly one current project entrypoint.
+Every meaningful project should have exactly one current canonical project entrypoint.
 
 That entrypoint is not the full history of the project.
 
 It is the shortest reliable way to enter the project without re-deriving context from chat, memory, or guesswork.
 
+If an interface such as ChatGPT Projects requires an attached local file, that file is not a second canonical entrypoint. It is a thin stable pointer to the canonical live entrypoint.
+
 ## Canonical Forms
 
-Use the same contract in two environment-specific forms:
+Use the same contract in environment-specific forms:
 
 - `GitHub / repository projects` -> `PROJECT.md`
-- `Notion / workspace-first projects` -> `Project Entrypoint` page or top section
+- `Notion / workspace-first projects` -> `Project Entrypoint` or `START HERE` page
+- `ChatGPT Project with external live project memory` -> attached `START_HERE.md` pointer only
 
 The medium may differ.
 
 The contract should stay the same.
+
+## ChatGPT Project Attachment Standard
+
+When a project is used inside ChatGPT Projects and the live project evolves in GitHub, Notion, Drive, or another durable external workspace, provide ChatGPT with exactly one stable attached entry file:
+
+```text
+START_HERE.md
+```
+
+This attached file must be a pointer, not a snapshot of project state.
+
+It must contain only enough information to route the executor into the live project, including:
+
+1. project identity;
+2. the exact durable URL or path of the canonical live entrypoint;
+3. the required re-entry sequence;
+4. an instruction to follow the live router / current-state links rather than reconstructing state from chat;
+5. source-of-truth precedence stating that the live project overrides the attachment, chat history, and model memory;
+6. the Project Execution OS reference when applicable.
+
+The pointer should normally remain unchanged for the lifetime of the project.
+
+Project evolution must happen behind the pointer in the canonical live project memory.
+
+Do not require the owner to re-upload or replace the ChatGPT Project attachment merely because project state, roadmap, research, architecture, tasks, or current focus changed.
+
+Replace the attached pointer only when the canonical entrypoint location itself changes or the routing contract materially changes.
+
+### Required Behavior After Attachment
+
+Once the pointer file is attached to the ChatGPT Project:
+
+```text
+ChatGPT Project START_HERE.md
+→ canonical live project entrypoint
+→ project ROUTER, if present
+→ current operational state
+→ latest work log/checkpoint
+→ only task-relevant durable knowledge
+```
+
+The assistant must not treat the attached pointer as the current project state.
+
+The assistant must not ask the owner to paste migration context again when that context is recoverable through the canonical project memory.
+
+The assistant must not create a fresh full START_HERE snapshot inside ChatGPT as a substitute for maintaining the live project.
 
 ## Initialization-Only Entrypoint
 
@@ -57,7 +106,7 @@ Invented fields are not allowed.
 
 ## Required Questions The Entrypoint Must Answer
 
-After reading the entrypoint, a new human or AI should be able to answer:
+After reading the canonical live entrypoint, a new human or AI should be able to answer:
 
 1. What is this project?
 2. Why does it exist?
@@ -73,7 +122,7 @@ If the entrypoint does not answer these clearly, it is incomplete.
 
 ## Required Sections
 
-Every project entrypoint should include the following sections in compact form:
+Every canonical live project entrypoint should include the following sections in compact form:
 
 ### 1. Project
 
@@ -156,7 +205,7 @@ Examples:
 - visibility or privacy rule;
 - source-of-truth rule;
 - source-traceability rule;
-- review or handoff rule.
+- review or handoff rule;
 - `Existing Solution First` when the project must search for adequate existing solutions before custom work.
 
 ### 10. Read Next
@@ -189,6 +238,8 @@ Rules belong in project rules or system standards.
 
 The entrypoint remains the front door.
 
+A ChatGPT Project pointer must not become a duplicated live entrypoint.
+
 ## Environment-Specific Guidance
 
 ### GitHub Form
@@ -218,7 +269,7 @@ For repository projects:
 
 ### Notion Form
 
-Use a page or top section called `Project Entrypoint`.
+Use a page or top section called `Project Entrypoint` or `START HERE`.
 
 This form should point to:
 
@@ -230,9 +281,17 @@ This form should point to:
 
 In `Notion`, the entrypoint should usually sit near the top of the page so a new participant does not need to scroll through raw notes first.
 
+### ChatGPT Projects Form
+
+If the project has external canonical memory, attach one `START_HERE.md` pointer file to the ChatGPT Project.
+
+Do not attach a periodically regenerated full project snapshot as the entrypoint.
+
+The file should be designed so the owner can attach it once and continue the project in future chats without repeating migration or replacing the file after ordinary project changes.
+
 ## Maintenance Rule
 
-Update the project entrypoint whenever one of these changes:
+Update the canonical live project entrypoint whenever one of these changes:
 
 - the source of truth changes;
 - the source trail changes;
@@ -241,8 +300,14 @@ Update the project entrypoint whenever one of these changes:
 - the next practical step changes;
 - a major decision changes what a new participant must know first.
 
-If the project evolves but the entrypoint does not, re-entry cost rises and the entrypoint stops doing its job.
+Update a ChatGPT Project pointer only when its target or routing contract changes.
+
+If the project evolves but the live entrypoint does not, re-entry cost rises and the entrypoint stops doing its job.
 
 ## Final Rule
+
+One project has one live canonical front door.
+
+Interface-specific files such as ChatGPT Project attachments are stable pointers to that front door, not competing copies of it.
 
 A project entrypoint without a recoverable source trail is incomplete.
