@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "16879cdd47cfd56ccc66608345d182c8fec22840",
-  "generated_at": "2026-08-03T14:42:58-04:00",
+  "repository_commit": "61840e5ab495d14a25cf7832186e00b484783b7b",
+  "generated_at": "2026-08-07T14:43:52-04:00",
   "artifact_count": 524,
   "artifacts": [
     {
@@ -221,7 +221,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "b8445e57f4474366b8e358cee44ec6474ed8d03ef0f2a42e6fc80c17472e0a50",
+      "sha256": "f85d47a60d17ab2b89fb82e087235b8c9def19b19de052193a9cb912b3d84ee3",
       "headings": [
         "Start New Project",
         "Purpose",
@@ -6754,12 +6754,14 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "87799ac4ad207f3977c18413229ed103c1fa098ace0040bfe4f948f361007f99",
+      "sha256": "5736fd4a7f7aa1a378f94a047c123fc3fabb991e7b95a9b97596d7e3934f979f",
       "headings": [
         "Project Entrypoint Standard",
         "Purpose",
         "Core Rule",
         "Canonical Forms",
+        "ChatGPT Project Attachment Standard",
+        "Required Behavior After Attachment",
         "Initialization-Only Entrypoint",
         "Required Questions The Entrypoint Must Answer",
         "Required Sections",
@@ -6778,6 +6780,7 @@
         "GitHub Form",
         "Legacy Migration Rule",
         "Notion Form",
+        "ChatGPT Projects Form",
         "Maintenance Rule",
         "Final Rule"
       ]
@@ -11528,7 +11531,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "e9d9effd5d8a2589f6c9307f7888a1094ceecb71aa8965d28a958b0e98459557",
+      "sha256": "f8411d9b9064a5b948973193c4154d395d306624745f3a82df9c68302345e8fa",
       "headings": [
         "PROJECT.md",
         "Project",
@@ -11536,6 +11539,7 @@
         "System Entry Point",
         "Operating Principle",
         "Source Of Truth",
+        "Memory Precedence",
         "Current Status",
         "Current Focus",
         "Next Practical Step",
