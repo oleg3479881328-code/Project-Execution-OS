@@ -8,32 +8,28 @@ Turn the consolidated archival/bibliographic research into a public research web
 
 - Entered through `Start New Project.md` and followed Project Execution OS project bootstrap/memory rules.
 - Applied Existing Solution First.
-- Checked the existing `Website-Design-System` repository and reused its site-specific design-contract approach rather than inventing a separate design process.
+- Reused the existing `Website-Design-System` approach.
 - Consolidated the research and second-opinion critique into a source-aware editorial structure.
-- Initialized this internal project under the already-versioned Project Execution OS repository (no nested git repository).
-- Added static site source under `site/`: HTML, CSS, minimal JS, and Vercel config.
-- Created Vercel production project `tsiolkovsky-yesenin-lermontov-research`.
-- Production deployment reached `READY`.
-- Verified homepage and stylesheet both return HTTP 200.
+- Added static site source under `site/`.
+- Created and published Vercel production project `tsiolkovsky-yesenin-lermontov-research`.
+- Added clickable `Источник` labels directly beside substantive claims instead of relying only on the footer bibliography.
+- Added per-candidate sources in the Lermontov comparison.
+- Reworked mobile layout: reduced headline/section sizing, normalized card padding, made navigation horizontally scrollable, removed page overflow, and converted the Lermontov table into stacked mobile cards.
+- Redeployed production and verified homepage and stylesheet both return HTTP 200.
 
 ## Published URLs
 
 - Production: https://tsiolkovsky-yesenin-lermontov-resea.vercel.app
 - GitHub project folder: https://github.com/oleg3479881328-code/Project-Execution-OS/tree/main/projects/tsiolkovsky-yesenin-lermontov-research
-- Vercel deployment id: `dpl_4GxgoKvqPJW4B93Syoxot7uXGryc`
+- Latest Vercel deployment id: `dpl_HE87HqJRVXpdcNhePAobwdRw7Wv8`
 
 ## Validation position
 
-The published content intentionally separates:
-
-- established / high-confidence facts;
-- working hypotheses;
-- contradicted or currently unsupported claims;
-- recommendations for archival follow-up.
+The published content intentionally separates established facts, working hypotheses, unsupported claims, and recommended archival follow-up. Inline source labels now make the evidentiary trail visible at the point of each thesis.
 
 ## Infrastructure note
 
-The site source is durable in GitHub and production is live on Vercel. This deployment was created from the GitHub-maintained source snapshot via the available Vercel deployment API. Automatic GitHub-triggered continuous deployment is not yet attached because the available Vercel connector does not expose project Git-link mutation.
+Site source remains durable in GitHub; production is live on Vercel. Automatic GitHub-triggered continuous deployment is still not attached.
 
 ## Next research step
 
