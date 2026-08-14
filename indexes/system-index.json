@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a4f70b4fe4e7d12ddb5f7c065bb3e8ef93ce0226",
-  "generated_at": "2026-08-07T18:16:17-04:00",
-  "artifact_count": 526,
+  "repository_commit": "73fbd6673ed59e8629601cc84dba1f4f43601396",
+  "generated_at": "2026-08-14T12:59:29-04:00",
+  "artifact_count": 529,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -221,7 +221,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "671a6436fe2f413737cf761157ed745f7498536a503b247cdbde370588d2e18d",
+      "sha256": "ea7673c191624e7f3d12428f17a70b6989e8b2cf8ff5c88b7bf5c8393894a612",
       "headings": [
         "Start New Project",
         "Purpose",
@@ -10398,6 +10398,60 @@
         "Artifacts",
         "Product boundary",
         "Owner action"
+      ]
+    },
+    {
+      "path": "projects/tsiolkovsky-yesenin-lermontov-research/PROJECT.md",
+      "title": "Архивное исследование: Циолковский, Есенин, Лермонтов",
+      "type": "project-artifact",
+      "domain": "tsiolkovsky-yesenin-lermontov-research",
+      "status": null,
+      "date": null,
+      "sha256": "6f9586dc944cd648cb22ba192c96299e856b40a40e2c6f72f7460495306330a2",
+      "headings": [
+        "Архивное исследование: Циолковский, Есенин, Лермонтов",
+        "Project",
+        "Purpose",
+        "Source Of Truth",
+        "Source Trail",
+        "Current Status",
+        "Done So Far",
+        "Current Focus",
+        "Next Practical Step",
+        "Key Decisions And Constraints",
+        "Read Next"
+      ]
+    },
+    {
+      "path": "projects/tsiolkovsky-yesenin-lermontov-research/PROJECT_STATE.md",
+      "title": "PROJECT STATE",
+      "type": "project-artifact",
+      "domain": "tsiolkovsky-yesenin-lermontov-research",
+      "status": "active",
+      "date": null,
+      "sha256": "20a99ef57be852811c5f533ca7a33da152aba9b50f8c77e022328e960405e37b",
+      "headings": [
+        "PROJECT STATE",
+        "Confirmed",
+        "Explicitly not confirmed",
+        "Deployment target",
+        "Next safe action"
+      ]
+    },
+    {
+      "path": "projects/tsiolkovsky-yesenin-lermontov-research/logs/latest.md",
+      "title": "Latest Work Log — 2026-08-14",
+      "type": "project-artifact",
+      "domain": "tsiolkovsky-yesenin-lermontov-research",
+      "status": null,
+      "date": null,
+      "sha256": "4002e719fba65a784168a04e55a046336ca5af04354fbbccba49611ba1a43c05",
+      "headings": [
+        "Latest Work Log — 2026-08-14",
+        "Goal",
+        "Work completed",
+        "Current validation position",
+        "Pending"
       ]
     },
     {
