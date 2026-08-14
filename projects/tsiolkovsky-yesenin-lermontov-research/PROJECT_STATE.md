@@ -1,7 +1,7 @@
 # PROJECT STATE
 
 Status: active
-Phase: implementation / deployment
+Phase: published / archival follow-up
 Confidence: research core high for Tsiolkovsky identification and Yesenin; medium for Lermontov identification.
 
 ## Confirmed
@@ -20,10 +20,22 @@ Confidence: research core high for Tsiolkovsky identification and Yesenin; mediu
 - A. R. Belyaev or N. A. Zabolotsky as confirmed recipients of this exact manuscript.
 - The Lermontov title without an additional identifying feature.
 
-## Deployment target
+## Published artifact
 
-Static site under `site/`, intended for Vercel.
+- Production: https://tsiolkovsky-yesenin-lermontov-resea.vercel.app
+- Vercel project: `prj_Llr8CEWXJnQ6NG95ZlhQr95J0cW0`
+- Deployment: `dpl_4GxgoKvqPJW4B93Syoxot7uXGryc`
+- GitHub source: `projects/tsiolkovsky-yesenin-lermontov-research/site/`
+
+## Validation
+
+- Production deployment state: READY.
+- Production homepage returned HTTP 200.
+- Production stylesheet returned HTTP 200.
+- Russian UTF-8 content and source links are present in the published HTML.
 
 ## Next safe action
 
-Publish `site/` on Vercel, verify all navigation/source links, then update this file and `logs/latest.md` with the production URL.
+For the research itself, send a targeted archival inquiry to the A. M. Gorky Archive at IMLI RAS and obtain one additional physical/bibliographic identifier for the Lermontov book.
+
+For infrastructure, optionally attach the Vercel project to the GitHub repository/root directory for automatic deploys on future commits; the current publication is deployed from the same GitHub-maintained source snapshot through the Vercel deployment API.
