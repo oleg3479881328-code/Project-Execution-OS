@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b201e22ec164c0a8663427bd43bdaf8a7e73b21f",
-  "generated_at": "2026-08-14T13:01:40-04:00",
+  "repository_commit": "669238c6eacf6607238a607be171bdaeac2426e2",
+  "generated_at": "2026-08-14T13:03:50-04:00",
   "artifact_count": 529,
   "artifacts": [
     {
@@ -10429,12 +10429,13 @@
       "domain": "tsiolkovsky-yesenin-lermontov-research",
       "status": "active",
       "date": null,
-      "sha256": "20a99ef57be852811c5f533ca7a33da152aba9b50f8c77e022328e960405e37b",
+      "sha256": "9979a72a2cd98fe852a71da2130a99a30d4da75fd7538ae827ba09d5e19c05c6",
       "headings": [
         "PROJECT STATE",
         "Confirmed",
         "Explicitly not confirmed",
-        "Deployment target",
+        "Published artifact",
+        "Validation",
         "Next safe action"
       ]
     },
