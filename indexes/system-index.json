@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d7ab22cb557d4a6d4731479d3f5b79194a3c9f05",
-  "generated_at": "2026-08-15T09:22:57-04:00",
-  "artifact_count": 530,
+  "repository_commit": "73eca5c6868b01d4eaebeeed7568c7d4c9ab6185",
+  "generated_at": "2026-08-15T09:23:23-04:00",
+  "artifact_count": 532,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -9635,6 +9635,43 @@
         "Next Practical Step",
         "Key Decisions And Constraints",
         "Read Next"
+      ]
+    },
+    {
+      "path": "projects/codex/PROJECT_STATE.md",
+      "title": "Codex — PROJECT_STATE.md",
+      "type": "project-artifact",
+      "domain": "codex",
+      "status": null,
+      "date": null,
+      "sha256": "376bdbbc741f347243d9eb6faba1f70b228cd2dc317f1dd4b83532b470b0c12e",
+      "headings": [
+        "Codex — PROJECT_STATE.md",
+        "Current Mode",
+        "Current Objective",
+        "Active Inputs",
+        "Current Monitoring Rules",
+        "Existing Monitoring",
+        "Initial Findings To Preserve",
+        "Existing Internal Codex Assets",
+        "Current Risks / Unknowns",
+        "Next Safe Actions"
+      ]
+    },
+    {
+      "path": "projects/codex/logs/latest.md",
+      "title": "Codex — Latest Work Log",
+      "type": "project-artifact",
+      "domain": "codex",
+      "status": null,
+      "date": "2026-08-15",
+      "sha256": "b12b2afe6c2ca26330d41bb3ab98cdc927faf4c258d23e8fbb21be6fa50d369b",
+      "headings": [
+        "Codex — Latest Work Log",
+        "What changed",
+        "Important decision",
+        "Current focus",
+        "Next action"
       ]
     },
     {
