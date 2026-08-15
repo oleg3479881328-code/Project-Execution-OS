@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1fc5e38f1cd06c4cf68140ff16f155c6a455f695",
-  "generated_at": "2026-08-14T13:14:21-04:00",
-  "artifact_count": 529,
+  "repository_commit": "d7ab22cb557d4a6d4731479d3f5b79194a3c9f05",
+  "generated_at": "2026-08-15T09:22:57-04:00",
+  "artifact_count": 530,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -9611,6 +9611,30 @@
         "Task packet",
         "Expected output",
         "MVP acceptance test"
+      ]
+    },
+    {
+      "path": "projects/codex/PROJECT.md",
+      "title": "Codex — PROJECT.md",
+      "type": "project-artifact",
+      "domain": "codex",
+      "status": null,
+      "date": null,
+      "sha256": "20e8c47bf8a450bc93486556fa539c52e6b8fc6667a96f20e2085e8fbd52f083",
+      "headings": [
+        "Codex — PROJECT.md",
+        "Project",
+        "Purpose",
+        "System Entry Point",
+        "Source Of Truth",
+        "Source Trail",
+        "Memory Precedence",
+        "Current Status",
+        "Done So Far",
+        "Current Focus",
+        "Next Practical Step",
+        "Key Decisions And Constraints",
+        "Read Next"
       ]
     },
     {
