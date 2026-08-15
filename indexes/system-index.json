@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "73eca5c6868b01d4eaebeeed7568c7d4c9ab6185",
-  "generated_at": "2026-08-15T09:23:23-04:00",
-  "artifact_count": 532,
+  "repository_commit": "7c492cc175a91e16a1779e4f1f12ace93c52ede9",
+  "generated_at": "2026-08-15T09:23:38-04:00",
+  "artifact_count": 533,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -9656,6 +9656,30 @@
         "Existing Internal Codex Assets",
         "Current Risks / Unknowns",
         "Next Safe Actions"
+      ]
+    },
+    {
+      "path": "projects/codex/knowledge/MONITORING_AND_FINDINGS.md",
+      "title": "Codex Monitoring And Findings",
+      "type": "project-artifact",
+      "domain": "codex",
+      "status": null,
+      "date": null,
+      "sha256": "23cd0c2642d00d4cb4af6558791a43e9adbc812c01000904ec82601ed3a4b304",
+      "headings": [
+        "Codex Monitoring And Findings",
+        "Purpose",
+        "Required Entry Shape",
+        "Monitoring Sources",
+        "Reddit",
+        "Official / Primary Sources",
+        "Seed Leads From Recent Monitoring",
+        "Persistent remote Codex execution",
+        "Closed-loop device/runtime validation",
+        "Usage/reset behavior",
+        "Agent stuck on unavailable UI action",
+        "Internal Reusable Codex Assets",
+        "Promotion Rule"
       ]
     },
     {
