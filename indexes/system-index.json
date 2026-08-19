@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "50cff23380dc990116432aacbd706fa53cd95795",
-  "generated_at": "2026-08-19T15:07:58-04:00",
-  "artifact_count": 538,
+  "repository_commit": "fda1a86fcba9a5ecf302555d6b99be332316d387",
+  "generated_at": "2026-08-19T15:12:19-04:00",
+  "artifact_count": 539,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7189,7 +7189,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "15941d00c989b0427e34aa1f64788c11965a234f73786aefd567064fd3f8d094",
+      "sha256": "d15b1b9e7b01b0efc3221d1ea01ca2203b067fef3466d40541510fdefa5122ff",
       "headings": [
         "Shared Web Platform Registry",
         "Purpose",
@@ -7202,7 +7202,8 @@
         "WEB-SEO-STATE-001 — Preview/indexing state is explicit",
         "WEB-BRAND-SHELL-001 — Engine shared, brand shell local",
         "WEB-DESIGN-EVIDENCE-001 — Viewports are independent donor states",
-        "Current Shared-Code Extraction Gate",
+        "Shared Web Core v0.1 — current state",
+        "Current Shared-Code Promotion Gate",
         "Near-Identical Project Operating Rule",
         "Next Extraction Set",
         "Governance"
@@ -8867,6 +8868,22 @@
         "technology",
         "markets",
         "local"
+      ]
+    },
+    {
+      "path": "packages/shared-web-core-v0.1/README.md",
+      "title": "Shared Web Core v0.1 — Contract Canary",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": "CANDIDATE / OWNER-APPROVED EARLY EXTRACTION",
+      "date": null,
+      "sha256": "9d86da146304934d79a03691b640b246172c6d8dd73a92075e300ef251db3fb4",
+      "headings": [
+        "Shared Web Core v0.1 — Contract Canary",
+        "Included",
+        "Excluded",
+        "Canary",
+        "Promotion gate"
       ]
     },
     {
