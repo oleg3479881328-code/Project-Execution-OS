@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e26317d6df38a1e87b0dd5d1667e734026f32cc7",
-  "generated_at": "2026-08-19T14:48:31-04:00",
+  "repository_commit": "82b9427a6b03e65007c0b0df2bb70e28223153f7",
+  "generated_at": "2026-08-19T14:49:01-04:00",
   "artifact_count": 537,
   "artifacts": [
     {
@@ -7139,12 +7139,15 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "0bfaf3a5cc6f2cd7c2c3f9aa5f1b81f95450d345ebabeaa673189f256ee30165",
+      "sha256": "d23df402aef6acf26faf4a7c7a7e242d83aa8e9a86b465590fd0ddfd29ba5080",
       "headings": [
         "Shared Project Capability Matrix",
         "Purpose",
         "Status Values",
         "Current Matrix — 2026-08-19",
+        "Current Convergence Queue",
+        "Tusia should consume from Olga/shared layer",
+        "Shared layer should consume from Tusia when it advances",
         "Synchronization Rule",
         "Important Consequence",
         "Chat Entry Requirement",
