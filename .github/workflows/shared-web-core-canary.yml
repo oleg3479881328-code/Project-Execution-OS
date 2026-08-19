@@ -1,0 +1,22 @@
+name: Shared Web Core Canary
+
+on:
+  push:
+    paths:
+      - "packages/shared-web-core-v0.1/**"
+      - ".github/workflows/shared-web-core-canary.yml"
+  pull_request:
+    paths:
+      - "packages/shared-web-core-v0.1/**"
+      - ".github/workflows/shared-web-core-canary.yml"
+
+jobs:
+  validate-tusia-runtime-canary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate durable runtime evidence
+        run: node packages/shared-web-core-v0.1/scripts/validate-canary.mjs
