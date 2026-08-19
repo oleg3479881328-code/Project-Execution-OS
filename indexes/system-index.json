@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "462e59cadf676564f7d7e8b37cd1584fbfb27419",
-  "generated_at": "2026-08-19T14:45:05-04:00",
-  "artifact_count": 536,
+  "repository_commit": "e26317d6df38a1e87b0dd5d1667e734026f32cc7",
+  "generated_at": "2026-08-19T14:48:31-04:00",
+  "artifact_count": 537,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -6763,6 +6763,30 @@
         "Current State Values",
         "Owner Visibility Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/PLATFORM_FAMILY_SYNC_STANDARD.md",
+      "title": "Platform Family Synchronization Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "75dee632befe7b1bdad7321c51effe5cdccfd5fa8ab610d7582c417cb663b624",
+      "headings": [
+        "Platform Family Synchronization Standard",
+        "Purpose",
+        "Core Model",
+        "No Permanent Master Client",
+        "Capability Synchronization Loop",
+        "Family Target State",
+        "Adoption Queue",
+        "Knowledge-First Propagation",
+        "Code Synchronization Rule",
+        "New Chat Requirement",
+        "Project-Specific Work Boundary",
+        "Review Questions",
+        "Related Nodes"
       ]
     },
     {
