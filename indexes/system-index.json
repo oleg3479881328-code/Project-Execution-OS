@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2ecc5f1cad67315683a7ac567c79a1e36312e544",
-  "generated_at": "2026-08-19T08:08:39-04:00",
+  "repository_commit": "b126c9dfeb7c4db30685cd5063fa8d32a3642ff5",
+  "generated_at": "2026-08-19T08:09:03-04:00",
   "artifact_count": 533,
   "artifacts": [
     {
@@ -6875,11 +6875,12 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "5b7201d084e0f1e9f950c5b15cc70761bfe9e3d700ad71db307fa3d9d801a886",
+      "sha256": "cc8a71fd057e3e362ae3b763c2c915af56385104e498e4ef1abc119a4a8b9e52",
       "headings": [
         "Project Memory Standard",
         "Purpose",
         "Constitutional Rule",
+        "Durable File Artifact Rule",
         "Universal Memory Layers",
         "L0 — Session Memory",
         "L1 — Project Entrypoint",
