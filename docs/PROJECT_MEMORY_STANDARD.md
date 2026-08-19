@@ -16,6 +16,22 @@ Durable project memory must live outside chat in explicit project artifacts and 
 
 Model memory, conversation history, and previous assistant summaries may help with orientation, but they never override the canonical project memory.
 
+## Durable File Artifact Rule
+
+Any valuable file artifact produced or received during work must survive the chat session.
+
+When a ZIP, export package, document, PDF, image, media file, design extract, evidence package, backup, snapshot, source bundle, migration package, or other file may be needed later, preserve a durable copy in Google Drive before treating it as safely retained.
+
+This is a global Project Execution OS rule. It applies to every project and to meaningful non-project work.
+
+Routing follows `docs/FILE_ORGANIZATION_STANDARD.md`:
+
+- project-specific files -> that project's Google Drive folder tree;
+- cross-project or system-wide reusable artifacts -> global `System Artifacts` folder;
+- GitHub and Notion may remain canonical for code, structured text, decisions, and live documentation, but valuable file artifacts must not exist only in chat, `/mnt/data`, or another temporary runtime.
+
+The executor performs this persistence proactively. The owner should not need to request it repeatedly.
+
 ## Universal Memory Layers
 
 Every active project uses four logical layers.
@@ -196,9 +212,10 @@ After every meaningful work step, the executor must determine whether to update:
 - `logs/latest.md` or equivalent — when meaningful work or validation occurred;
 - a durable knowledge artifact — when reusable knowledge was created;
 - a decision or error record — when a confirmed decision or fix must survive;
-- source trail — when new source material or provenance became relevant.
+- source trail — when new source material or provenance became relevant;
+- Google Drive — when a valuable file artifact was created, received, exported, or changed and must survive the session.
 
-The owner should not need to request a handoff manually for the project to remain recoverable.
+The owner should not need to request a handoff or a Drive save manually for the project to remain recoverable.
 
 ## Minimum Structures
 
@@ -279,7 +296,8 @@ A project passes the memory health test when a new executor can:
 4. find the next safe action;
 5. identify key constraints and do-not-repeat work;
 6. open deeper standards or sources only when relevant;
-7. continue without asking Oleg to reconstruct hidden context.
+7. find valuable file artifacts in durable storage without relying on old chats or temporary runtimes;
+8. continue without asking Oleg to reconstruct hidden context.
 
 If this requires reading old chats or relying on model memory, the project memory is incomplete.
 
@@ -293,8 +311,9 @@ For an existing project:
 4. establish or repair current operational state;
 5. link, do not duplicate, existing standards and knowledge;
 6. record the precedence order;
-7. remove or clearly mark stale competing entrypoints;
-8. run the memory health test.
+7. move valuable file artifacts out of temporary/chat-only storage into their correct Google Drive location;
+8. remove or clearly mark stale competing entrypoints;
+9. run the memory health test.
 
 Do not perform a destructive migration without confirming which existing artifacts are still authoritative.
 
@@ -310,4 +329,4 @@ Do not perform a destructive migration without confirming which existing artifac
 
 ## Final Rule
 
-Every meaningful project must have durable memory, but every executor should read only the minimum durable memory needed to act safely.
+Every meaningful project must have durable memory, and every valuable file artifact must survive the chat session in durable storage, but every executor should read only the minimum durable memory needed to act safely.
