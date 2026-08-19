@@ -32,6 +32,33 @@ Do not create persistent files in:
 
 Use the narrowest correct existing folder. If no suitable folder exists, create a logical subfolder inside the correct parent location before creating the file.
 
+## Global Google Drive Persistence Rule
+
+Chat, model memory, temporary runtime storage, and local session folders are not durable file storage.
+
+Whenever work produces a file or package that has continuing value and another human or AI executor may need later, preserve a durable copy in Google Drive before treating the work as safely retained.
+
+This rule applies globally across Project Execution OS, not only to a specific project.
+
+Examples include:
+
+- ZIP archives and export packages;
+- design extracts and evidence packages;
+- generated documents, spreadsheets, presentations, PDFs, images, audio, and video;
+- technical specifications and migration packages when a file copy matters;
+- source bundles, backups, snapshots, and reproducibility artifacts;
+- uploaded reference files that become important to ongoing work.
+
+Storage routing:
+
+1. Project-specific durable files belong inside that project's Google Drive folder tree.
+2. Cross-project, reusable, infrastructure, or system-wide artifacts belong under the global `System Artifacts` folder.
+3. The global `System Artifacts` folder is: `https://drive.google.com/drive/folders/17HCaGyRQsauU5f5r9HwnCksOr4IlV4t_`.
+4. Do not duplicate a file into both locations without a real reason. Prefer one canonical Drive copy plus durable links from Notion, GitHub, or project entrypoints.
+5. Text or code whose canonical source is GitHub or Notion may remain canonical there, but any valuable generated/downloadable file artifact must not exist only in chat or temporary runtime storage.
+
+The executor should perform this persistence step proactively. The owner should not need to say “save this to Drive” each time.
+
 ## Canonical Placement Rules
 
 1. Keep all files belonging to one project inside that project's folder tree.
@@ -49,8 +76,9 @@ When a durable artifact does not belong to an existing project:
 
 1. identify the correct general-purpose parent folder;
 2. use or create a clearly named subfolder;
-3. if the correct destination is unclear, ask the owner before creating a persistent file;
-4. do not silently fall back to the root of Drive or another random location.
+3. route reusable or system-wide artifacts under the global `System Artifacts` folder;
+4. if the correct destination is still unclear, ask the owner before creating a persistent file;
+5. do not silently fall back to the root of Drive or another random location.
 
 ## Tool Limitation Rule
 
@@ -65,8 +93,8 @@ If the available connector or tool cannot create or move a file into the correct
 
 A runtime workspace such as `/mnt/data` may be used for temporary generation, validation, conversion, or download delivery.
 
-Files in a temporary runtime workspace are not canonical storage. When a durable copy is needed, place it into the correct persistent folder or explicitly tell the owner that only a temporary downloadable copy exists.
+Files in a temporary runtime workspace are not canonical storage. When a durable copy is needed, place it into the correct persistent Google Drive folder before treating the artifact as safely preserved, or explicitly tell the owner that only a temporary copy exists because persistence was technically blocked.
 
 ## Final Rule
 
-Create deliberately. Store canonically. Keep folders clean. Do not spread files around.
+Create deliberately. Store canonically. Persist valuable file artifacts to Google Drive. Keep folders clean. Do not spread files around.
