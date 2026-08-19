@@ -1,4 +1,4 @@
-export type EntityKind = "venue" | "wedding" | string;
+export type EntityKind = string;
 
 export interface StableEntityIdentity {
   id: string;
@@ -73,6 +73,43 @@ export function assertPublishedDocument<TContent>(doc: PublishedDocument<TConten
   }
   if (doc.content === undefined || doc.content === null) {
     throw new Error("Published document content is required");
+  }
+}
+
+export function resolvePublishedProjection<TContent, TProjection>(args: {
+  entity: StableEntityIdentity;
+  published: PublishedDocument<TContent> | null;
+  fallback: TProjection;
+  projectPublished: (doc: PublishedDocument<TContent>) => TProjection;
+}): PublishedProjection<TProjection> {
+  assertStableEntityIdentity(args.entity);
+
+  if (args.published === null) {
+    return {
+      source: "fallback",
+      entityId: args.entity.id,
+      projection: args.fallback,
+    };
+  }
+
+  assertPublishedDocument(args.published);
+  if (args.published.entityId !== args.entity.id || args.published.kind !== args.entity.kind) {
+    throw new Error("Published document identity does not match requested entity");
+  }
+
+  return {
+    source: "published",
+    entityId: args.entity.id,
+    projection: args.projectPublished(args.published),
+  };
+}
+
+export function assertPublicVersionVisible(verification: PublicVersionVerification, receipt: PublishReceipt): void {
+  if (verification.publishId !== receipt.publishId) {
+    throw new Error("Public version verification does not match publish receipt");
+  }
+  if (!verification.visible) {
+    throw new Error("Published version is not yet visible at the public URL");
   }
 }
 
