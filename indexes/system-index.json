@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b126c9dfeb7c4db30685cd5063fa8d32a3642ff5",
-  "generated_at": "2026-08-19T08:09:03-04:00",
-  "artifact_count": 533,
+  "repository_commit": "71474ae1c8bd4cbd198f9bd9a444b663cdd6d8ff",
+  "generated_at": "2026-08-19T14:43:52-04:00",
+  "artifact_count": 534,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7106,6 +7106,33 @@
         "Scale Boundary",
         "Retrieval Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/SHARED_SOLUTION_PROMOTION_STANDARD.md",
+      "title": "Shared Solution Promotion Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "a11367650486d8a45588e1fa55d583dc17d8863a305abb52a23a71b1c8c4fdda",
+      "headings": [
+        "Shared Solution Promotion Standard",
+        "Purpose",
+        "Core Invariant",
+        "Why This Exists",
+        "Four Shared Targets",
+        "1. Shared Knowledge",
+        "2. Shared Code",
+        "3. Shared Automation",
+        "4. Project Template",
+        "Promotion Gate",
+        "Nearly-Identical Project Rule",
+        "Independent Review Questions",
+        "Search Integration",
+        "No-Monorepo Requirement",
+        "Adoption Rule",
+        "Related Nodes"
       ]
     },
     {
