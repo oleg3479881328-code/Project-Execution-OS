@@ -39,7 +39,7 @@ It is not a code repository by itself. It records what is reusable, what evidenc
 - Origin: Olga Polo venue migration
 - Cross-project relevance: Tusia has the same Venue/Wedding entity architecture.
 - Invariant: content identity must not depend on the current public URL or slug; routing may migrate without losing editor/data bindings.
-- Review still needed: code-level comparison against Tusia durable source before shared code extraction.
+- Shared-code status: represented in `packages/shared-web-core-v0.1/src/contracts.ts`; production dependency adoption still pending real client canary.
 
 ### WEB-PUBLISH-001 — Centralized one-click publish pipeline
 
@@ -47,8 +47,8 @@ It is not a code repository by itself. It records what is reusable, what evidenc
 - Origin: Olga Polo Puck editor
 - Pattern: editor data/assets → durable published document/assets → versioned source → deployment → public-version verification.
 - Proven concept: one client-facing Publish action; no manual second deployment step for the client.
-- Current blocker for shared code: Olga implementation contains project-specific environment names, default repo/branch, actor/source strings, and project assumptions.
-- Next action: extract a generic publish adapter contract only after Olga ↔ Tusia code-level comparison.
+- Shared-code status: generic `PublishAdapter`, `PublishReceipt` and public-version verification contracts now exist in `packages/shared-web-core-v0.1/src/contracts.ts`; no Olga repo/branch/env defaults were copied.
+- Remaining gate: production canary integration and review.
 
 ### WEB-SEO-STATE-001 — Preview/indexing state is explicit
 
@@ -71,16 +71,34 @@ It is not a code repository by itself. It records what is reusable, what evidenc
 - Invariant: mobile/tablet/desktop captures are independent evidence states; do not infer mobile from desktop.
 - Required checks: suspicious geometry that exceeds viewport is flagged and reconciled against screenshots/other evidence before implementation.
 
-## Current Shared-Code Extraction Gate
+## Shared Web Core v0.1 — current state
 
-Do not create a shared npm/package implementation from Olga code yet.
+Owner approved early extraction because Olga and Tusia are intentionally near-identical project instances and the goal is to stop chat-to-chat architectural drift.
 
-Reason:
+Created candidate contract layer:
 
-1. Olga has strong implementation evidence.
-2. Tusia is a second real architectural consumer and the projects are intentionally near-identical.
-3. However the currently discoverable Tusia project is represented by Notion + Vercel deployment evidence, while a separate durable GitHub repository was not found.
-4. Therefore the knowledge-level invariants can be promoted now, but shared code must wait for a real code-level comparison or an owner-approved earlier extraction.
+- `packages/shared-web-core-v0.1/src/contracts.ts`
+- `packages/shared-web-core-v0.1/canaries/tusia-runtime-canary.json`
+- `packages/shared-web-core-v0.1/scripts/validate-canary.mjs`
+- `.github/workflows/shared-web-core-canary.yml`
+
+Important boundary:
+
+- this is a **contract canary**, not a full shared UI/CMS implementation;
+- the Tusia canary is a durable runtime-recovery artifact and does not pretend to be original source code;
+- unknown Tusia internals remain explicitly `unknown`;
+- production projects are not yet automatically migrated to this package.
+
+## Current Shared-Code Promotion Gate
+
+v0.1 stays `CANDIDATE` until:
+
+1. independent review confirms the contracts contain no hidden Olga-specific assumptions;
+2. a real client canary consumes the contracts in its codebase;
+3. build/runtime regression passes;
+4. the capability matrix is updated with adoption evidence.
+
+Tusia is preferred as first real integration canary once its durable source is located or reconstructed as an actual maintainable source tree.
 
 ## Near-Identical Project Operating Rule
 
@@ -98,17 +116,13 @@ Do not solve the same platform problem separately in each chat.
 
 ## Next Extraction Set
 
-After Tusia durable code source is located or reconstructed into a durable repo:
-
-1. compare entity contracts;
-2. compare published content document shapes;
-3. compare editor/publish lifecycle;
-4. compare routing and public path resolution;
-5. compare SEO/indexing state helpers;
-6. compare responsive shell boundaries;
-7. design the smallest client-neutral interfaces;
-8. independently review them;
-9. create shared code only after that review passes.
+1. production canary integration of stable entity identity;
+2. production canary integration of published-content resolver contract;
+3. publish adapter implementation behind client-specific configuration;
+4. hostname-aware indexing/publication helper;
+5. shared responsive parity test harness without brand snapshots;
+6. independent review;
+7. only then version/publish as a true reusable package consumed by sibling projects.
 
 ## Governance
 
