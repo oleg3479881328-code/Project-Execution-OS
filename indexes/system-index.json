@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "82b9427a6b03e65007c0b0df2bb70e28223153f7",
-  "generated_at": "2026-08-19T14:49:01-04:00",
-  "artifact_count": 537,
+  "repository_commit": "50cff23380dc990116432aacbd706fa53cd95795",
+  "generated_at": "2026-08-19T15:07:58-04:00",
+  "artifact_count": 538,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7359,6 +7359,27 @@
         "Recommended Migration Order",
         "What Must Exist Before Deleting 3TestAgents",
         "Deletion Rule"
+      ]
+    },
+    {
+      "path": "docs/TUSIA_RUNTIME_RECOVERY_AND_OLGA_COMPARISON.md",
+      "title": "Tusia Runtime Recovery and Olga Comparison",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "36bfa1eb438fbf9637617c1a4e8866e922dc2ff19be5f211bf114c8b870bb257",
+      "headings": [
+        "Tusia Runtime Recovery and Olga Comparison",
+        "Purpose",
+        "Current deployed Tusia evidence",
+        "Olga durable implementation reference",
+        "Capability comparison",
+        "What is already settled for Tusia",
+        "What cannot yet be claimed",
+        "Shared Core extraction consequence",
+        "Independent review verdict",
+        "Next action"
       ]
     },
     {
