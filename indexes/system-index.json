@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "beeeb9f0003ec7affbb7131c8803164a5523fa5d",
-  "generated_at": "2026-08-19T14:44:24-04:00",
-  "artifact_count": 535,
+  "repository_commit": "462e59cadf676564f7d7e8b37cd1584fbfb27419",
+  "generated_at": "2026-08-19T14:45:05-04:00",
+  "artifact_count": 536,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7106,6 +7106,26 @@
         "Scale Boundary",
         "Retrieval Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/SHARED_PROJECT_CAPABILITY_MATRIX.md",
+      "title": "Shared Project Capability Matrix",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "0bfaf3a5cc6f2cd7c2c3f9aa5f1b81f95450d345ebabeaa673189f256ee30165",
+      "headings": [
+        "Shared Project Capability Matrix",
+        "Purpose",
+        "Status Values",
+        "Current Matrix — 2026-08-19",
+        "Synchronization Rule",
+        "Important Consequence",
+        "Chat Entry Requirement",
+        "Current Evidence Limitation",
+        "Related Nodes"
       ]
     },
     {
