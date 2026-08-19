@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "71474ae1c8bd4cbd198f9bd9a444b663cdd6d8ff",
-  "generated_at": "2026-08-19T14:43:52-04:00",
-  "artifact_count": 534,
+  "repository_commit": "beeeb9f0003ec7affbb7131c8803164a5523fa5d",
+  "generated_at": "2026-08-19T14:44:24-04:00",
+  "artifact_count": 535,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7133,6 +7133,32 @@
         "No-Monorepo Requirement",
         "Adoption Rule",
         "Related Nodes"
+      ]
+    },
+    {
+      "path": "docs/SHARED_WEB_PLATFORM_REGISTRY.md",
+      "title": "Shared Web Platform Registry",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "15941d00c989b0427e34aa1f64788c11965a234f73786aefd567064fd3f8d094",
+      "headings": [
+        "Shared Web Platform Registry",
+        "Purpose",
+        "Status Values",
+        "Registry",
+        "WEB-CMS-SOT-001 — Published CMS source of truth",
+        "WEB-CMS-PARITY-001 — Published/fallback responsive parity",
+        "WEB-ENTITY-ID-001 — Stable entity identity separate from slug/URL",
+        "WEB-PUBLISH-001 — Centralized one-click publish pipeline",
+        "WEB-SEO-STATE-001 — Preview/indexing state is explicit",
+        "WEB-BRAND-SHELL-001 — Engine shared, brand shell local",
+        "WEB-DESIGN-EVIDENCE-001 — Viewports are independent donor states",
+        "Current Shared-Code Extraction Gate",
+        "Near-Identical Project Operating Rule",
+        "Next Extraction Set",
+        "Governance"
       ]
     },
     {
