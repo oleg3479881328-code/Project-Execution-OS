@@ -7,11 +7,19 @@ export interface StableEntityIdentity {
   parentId?: string | null;
 }
 
+/**
+ * Durable published content envelope.
+ *
+ * `entityId` and `publishId` are optional because existing clients may store
+ * stable identity in a separate registry and track publish verification in a
+ * separate publish receipt. Shared code must not force a storage migration just
+ * to satisfy the common contract.
+ */
 export interface PublishedDocument<TContent = unknown> {
-  entityId: string;
+  entityId?: string;
   kind: EntityKind;
   slug: string;
-  publishId: string;
+  publishId?: string;
   publishedAt?: string | null;
   content: TContent;
 }
@@ -68,8 +76,8 @@ export function assertStableEntityIdentity(entity: StableEntityIdentity): void {
 }
 
 export function assertPublishedDocument<TContent>(doc: PublishedDocument<TContent>): void {
-  if (!doc.entityId || !doc.kind || !doc.slug || !doc.publishId) {
-    throw new Error("Published document envelope is incomplete");
+  if (!doc.kind || !doc.slug) {
+    throw new Error("Published document envelope requires kind and slug");
   }
   if (doc.content === undefined || doc.content === null) {
     throw new Error("Published document content is required");
@@ -93,8 +101,11 @@ export function resolvePublishedProjection<TContent, TProjection>(args: {
   }
 
   assertPublishedDocument(args.published);
-  if (args.published.entityId !== args.entity.id || args.published.kind !== args.entity.kind) {
-    throw new Error("Published document identity does not match requested entity");
+  if (args.published.kind !== args.entity.kind || args.published.slug !== args.entity.slug) {
+    throw new Error("Published document kind/slug does not match requested entity");
+  }
+  if (args.published.entityId && args.published.entityId !== args.entity.id) {
+    throw new Error("Published document entityId does not match requested entity");
   }
 
   return {
