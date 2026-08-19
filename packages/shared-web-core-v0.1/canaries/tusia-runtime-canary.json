@@ -1,0 +1,51 @@
+{
+  "project": "Tusia / Tasha Hurley Weddings",
+  "evidenceType": "runtime-recovery",
+  "sourceStatus": "original-source-not-located",
+  "capturedAt": "2026-08-19T19:04:26Z",
+  "vercel": {
+    "projectId": "prj_0jyr5Ue9rSjJQS6q6hJneSrwgOnr",
+    "deploymentId": "dpl_957sk9KPvXH2zoTM1dd2b4vQBRUC",
+    "framework": "nextjs",
+    "deploymentState": "READY"
+  },
+  "runtime": {
+    "route": "/venues",
+    "status": 200,
+    "indexing": "preview_noindex",
+    "headersObserved": {
+      "x-robots-tag": "noindex",
+      "x-matched-path": "/venues"
+    },
+    "shell": {
+      "desktopHeaderObserved": true,
+      "mobileHeaderObserved": true,
+      "brandLocal": true
+    },
+    "venuesObserved": [
+      "elizabeth-house",
+      "kalmia-garden-gastler-farm",
+      "adena-orchard-vine",
+      "brooklyn-grange",
+      "central-park",
+      "garner-historic-district",
+      "locust-hill-barn"
+    ],
+    "stagingDependenciesObserved": true
+  },
+  "capabilities": {
+    "shared-nextjs-vercel-pattern": "observed",
+    "brand-shell-local": "observed",
+    "preview-noindex": "observed",
+    "stable-entity-identity": "unknown",
+    "published-cms-source-of-truth": "unknown",
+    "one-click-publish": "unknown",
+    "public-version-verification": "unknown",
+    "cms-fallback-responsive-parity": "unknown"
+  },
+  "rules": [
+    "Unknown runtime internals must not be inferred as implemented.",
+    "This canary is a durable runtime representation, not reconstructed original source code.",
+    "Known family targets from Olga/shared registry remain mandatory when Tusia implementation reaches those capabilities."
+  ]
+}
