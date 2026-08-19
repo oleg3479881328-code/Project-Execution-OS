@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7c492cc175a91e16a1779e4f1f12ace93c52ede9",
-  "generated_at": "2026-08-15T09:23:38-04:00",
+  "repository_commit": "2ecc5f1cad67315683a7ac567c79a1e36312e544",
+  "generated_at": "2026-08-19T08:08:39-04:00",
   "artifact_count": 533,
   "artifacts": [
     {
@@ -6296,12 +6296,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "92e01e6d970ec6246ec5ef24f31e998360f204c6c40b32f39b5f3dbfdb4cb3c0",
+      "sha256": "8146467e2bd987cdb0caf7a4b504499dbe49290bdd6228517bdd38cf9ad90559",
       "headings": [
         "File Organization Standard",
         "Purpose",
         "Scope",
         "Core Rule",
+        "Global Google Drive Persistence Rule",
         "Canonical Placement Rules",
         "Non-Project Work",
         "Tool Limitation Rule",
