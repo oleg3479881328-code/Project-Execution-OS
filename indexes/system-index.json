@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fbbfdd53a6853ae985969896e84c7c1237ba5960",
-  "generated_at": "2026-08-20T11:17:14-04:00",
+  "repository_commit": "5d71c898352b1c25206467a22092f79219a51639",
+  "generated_at": "2026-08-20T11:48:14-04:00",
   "artifact_count": 541,
   "artifacts": [
     {
@@ -6117,7 +6117,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "b39884622d40c66b0e628e9056956b21ec079383df4fb861f48fb81dace5aaf4",
+      "sha256": "84e8bafcdf1495cf09547470be1d49307b3ad78e7a2e471c637c442a32e0c09b",
       "headings": [
         "GLOBAL ENTITY DOSSIER STANDARD — One Entity, One Canonical Dossier",
         "Status",
@@ -6134,6 +6134,7 @@
         "Assets / Content",
         "Operational / Publishability",
         "Hard Rules",
+        "Mandatory Internal Source Order Before External Research",
         "Cross-Project Rule",
         "Event / Relationship Rule",
         "Research Rule",
