@@ -85,6 +85,20 @@ Project relevance; SEO/AEO eligibility; outreach status; publishability; automat
 - Every material enrichment should retain source/provenance and verification date/status.
 - Before external research, search our own accumulated system first to avoid researching the same entity repeatedly.
 
+## Mandatory Internal Source Order Before External Research
+
+Before creating a new canonical dossier or launching outside research, search the system in this order:
+
+1. project canonical databases and entity registries;
+2. Google Drive / Google Sheets entity files, inventories and research documents;
+3. Notion project memory, migration snapshots, OSINT/research reports and prior audit pages;
+4. GitHub/data files and application data stores where relevant;
+5. external web research only for unresolved gaps, stale facts or verification needs.
+
+A file or spreadsheet in Google Drive is not a secondary afterthought. If it contains stable entity IDs, contact fields, aliases, evidence, relationships or prior research, it is part of the internal knowledge system and must be checked before external research or duplicate creation.
+
+When multiple internal systems use different IDs for the same entity, preserve a crosswalk rather than discarding either provenance. A downstream dossier may have its own operational ID while retaining source-system IDs such as ecosystem IDs.
+
 ## Cross-Project Rule
 
 Canonical identity may be global even when project-specific relationships are local. A company/person/tool should not be duplicated merely because it appears in different projects. Project-specific facts and relationships can remain in project layers while referencing the same canonical identity whenever architecture permits.
@@ -121,7 +135,7 @@ Legacy duplicate records are observations/evidence, not automatically deleted. D
 
 ## Completion Criterion
 
-For entity-heavy work, a task is not fully complete if useful new entity information remains stranded only in chat, a one-off report, or a duplicate project row. Material entity knowledge must be promoted to the canonical dossier/registry when the system supports it.
+For entity-heavy work, a task is not fully complete if useful new entity information remains stranded only in chat, a one-off report, a Drive file, a spreadsheet or a duplicate project row. Material entity knowledge must be promoted to the canonical dossier/registry when the system supports it.
 
 ## Proven Origin
 
