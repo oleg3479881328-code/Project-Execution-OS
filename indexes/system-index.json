@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fda1a86fcba9a5ecf302555d6b99be332316d387",
-  "generated_at": "2026-08-19T15:12:19-04:00",
-  "artifact_count": 539,
+  "repository_commit": "5793bbe5ad94ad971e3b5fb53e9ad85170b17e5d",
+  "generated_at": "2026-08-20T11:16:45-04:00",
+  "artifact_count": 541,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -6111,6 +6111,39 @@
       ]
     },
     {
+      "path": "docs/ENTITY_DOSSIER_STANDARD.md",
+      "title": "GLOBAL ENTITY DOSSIER STANDARD — One Entity, One Canonical Dossier",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "b39884622d40c66b0e628e9056956b21ec079383df4fb861f48fb81dace5aaf4",
+      "headings": [
+        "GLOBAL ENTITY DOSSIER STANDARD — One Entity, One Canonical Dossier",
+        "Status",
+        "Core Law",
+        "What Counts as an Entity",
+        "Mandatory Identity-First Workflow",
+        "Canonical Dossier Field Families",
+        "Identity",
+        "Contact / Access",
+        "Social / Digital Identity",
+        "Authority / Reputation",
+        "Relationships / Graph",
+        "Evidence / Provenance",
+        "Assets / Content",
+        "Operational / Publishability",
+        "Hard Rules",
+        "Cross-Project Rule",
+        "Event / Relationship Rule",
+        "Research Rule",
+        "Agent Behavior",
+        "Migration / Legacy Handling",
+        "Completion Criterion",
+        "Proven Origin"
+      ]
+    },
+    {
       "path": "docs/EXECUTION_PACKETS/EXECUTE_NEWS_LAYER_MVP.md",
       "title": "EXECUTE NEWS LAYER MVP",
       "type": "system-standard",
@@ -8868,6 +8901,23 @@
         "technology",
         "markets",
         "local"
+      ]
+    },
+    {
+      "path": "packages/shared-web-core-v0.1/CANARY_REVIEW_2026-08-19.md",
+      "title": "Shared Web Core v0.1 — first client integration canary review",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": "PASS WITH SCOPE LIMITATION",
+      "date": "2026-08-19",
+      "sha256": "c758d74b8032880232414eb486cdd0d553becc9dd9189acb8aa39df0460cd85f",
+      "headings": [
+        "Shared Web Core v0.1 — first client integration canary review",
+        "Fresh production evidence used",
+        "Canary finding that changed Shared Core",
+        "Executed canary",
+        "Reviewer verdict",
+        "Scope limitation"
       ]
     },
     {
