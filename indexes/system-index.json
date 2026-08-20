@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "5d71c898352b1c25206467a22092f79219a51639",
-  "generated_at": "2026-08-20T11:48:14-04:00",
-  "artifact_count": 541,
+  "repository_commit": "b895d08a516f1a97af7d6f616337bfcf28dbb8b0",
+  "generated_at": "2026-08-20T13:28:46-04:00",
+  "artifact_count": 542,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -6903,6 +6903,42 @@
         "Mode 3 — Existing Standard Project",
         "Mode 4 — Legacy Project Normalization",
         "Mode Selection Rule"
+      ]
+    },
+    {
+      "path": "docs/PROJECT_KNOWLEDGE_DATABASE_STANDARD.md",
+      "title": "GLOBAL PROJECT KNOWLEDGE DATABASE STANDARD",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "f629746fb707d2008409d36ac36b364b85468e1606548e84cb4840df063bfcee",
+      "headings": [
+        "GLOBAL PROJECT KNOWLEDGE DATABASE STANDARD",
+        "Status",
+        "Core Law",
+        "Separation of Responsibilities",
+        "Project Knowledge Database",
+        "Notion",
+        "GitHub",
+        "Chat",
+        "Project Database vs Global Identity",
+        "Mandatory Entity Architecture",
+        "Search-Before-Research Rule",
+        "Master Registry Rule",
+        "ID Crosswalk Rule",
+        "Media Rule",
+        "Page Queue Rule",
+        "Publishability Gate",
+        "URL / Redirect Preservation Law",
+        "QA Layer",
+        "Dashboard Rule",
+        "Change Log Rule",
+        "Page Factory Contract",
+        "Photographer-Project Default",
+        "Migration Rule for Existing Projects",
+        "Completion Criterion",
+        "Proven Origin"
       ]
     },
     {
