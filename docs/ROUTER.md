@@ -18,6 +18,7 @@ Do not append an unrelated next-project question after answering the active requ
 
 ## Routes
 
+- entity, business, person, vendor, venue, organization, tool, platform, website/domain, publication/profile, reusable node, identity resolution, deduplication, entity enrichment, dossier, canonical card, aliases/rebrands, repeated research prevention, or cross-project entity reuse -> `docs/ENTITY_DOSSIER_STANDARD.md`
 - possible new project or new initiative -> `Start New Project.md`
 - `личный секретарь`, `секретарь`, `режим секретаря`, `режим личного секретаря`, `личный помощник`, `помощник`, `режим помощника`, personal secretary, or personal assistant -> `projects/personal-secretary-os/PROJECT.md`
 - operating-mode uncertainty -> `docs/MODE_CLASSIFIER.md`
