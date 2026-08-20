@@ -18,6 +18,7 @@ Do not append an unrelated next-project question after answering the active requ
 
 ## Routes
 
+- project knowledge database, central operational database, structured source of truth, photographer knowledge engine, SEO knowledge database, Page Queue, Media registry, Geography layer, Redirects/URLs registry, QA dashboard, ID Crosswalk architecture, Knowledge Database to Page Factory, structured website production pipeline, or migration from scattered project tables into one production datastore -> `docs/PROJECT_KNOWLEDGE_DATABASE_STANDARD.md`
 - entity, business, person, vendor, venue, organization, tool, platform, website/domain, publication/profile, reusable node, identity resolution, deduplication, entity enrichment, dossier, canonical card, aliases/rebrands, repeated research prevention, or cross-project entity reuse -> `docs/ENTITY_DOSSIER_STANDARD.md`
 - possible new project or new initiative -> `Start New Project.md`
 - `личный секретарь`, `секретарь`, `режим секретаря`, `режим личного секретаря`, `личный помощник`, `помощник`, `режим помощника`, personal secretary, or personal assistant -> `projects/personal-secretary-os/PROJECT.md`
