@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7a04e437ece948aba2cc12adcda1dccd550e9440",
-  "generated_at": "2026-08-20T13:29:11-04:00",
-  "artifact_count": 542,
+  "repository_commit": "b7a755bf9a385a18d7c235dd26ea3ecc31ab83cc",
+  "generated_at": "2026-08-21T10:15:50-04:00",
+  "artifact_count": 543,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7794,6 +7794,35 @@
         "Risks",
         "Source",
         "Related Standards"
+      ]
+    },
+    {
+      "path": "knowledge-library/architecture-decisions/google-workspace-notion-data-layer-architecture.md",
+      "title": "Google Workspace + Notion Data Layer Architecture",
+      "type": "knowledge-entry",
+      "domain": "knowledge:architecture-decisions",
+      "status": null,
+      "date": null,
+      "sha256": "41f51854e65d21eb9c55771bfe4dc84f7ceeafacab5535cc54d4c8c7edc2fe48",
+      "headings": [
+        "Google Workspace + Notion Data Layer Architecture",
+        "Source and evidence",
+        "Problem",
+        "Decision",
+        "Google Drive",
+        "Google Sheets",
+        "Notion",
+        "Automation and consumers",
+        "Evolution rule",
+        "Applies To",
+        "Triggers",
+        "Do Not Load When",
+        "When to use",
+        "When not to use",
+        "Adaptation notes",
+        "Risks",
+        "Review status",
+        "Related standards"
       ]
     },
     {
