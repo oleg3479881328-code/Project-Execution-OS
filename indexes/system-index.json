@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b7a755bf9a385a18d7c235dd26ea3ecc31ab83cc",
-  "generated_at": "2026-08-21T10:15:50-04:00",
-  "artifact_count": 543,
+  "repository_commit": "60622789c8356aa776f882571c0d706bc65d4707",
+  "generated_at": "2026-08-21T11:05:43-04:00",
+  "artifact_count": 544,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8128,6 +8128,27 @@
         "Recommended Russian-Output Add-On",
         "Usage Notes",
         "Review Status"
+      ]
+    },
+    {
+      "path": "knowledge-library/research-methods/telegram-channel-full-audit-via-json-export.md",
+      "title": "Full Telegram Channel Audit via Telegram Desktop JSON Export",
+      "type": "knowledge-entry",
+      "domain": "knowledge:research-methods",
+      "status": null,
+      "date": null,
+      "sha256": "dc01998d3f500506c4d93f36652ef92d67fcefa4f00cba67622be97719211997",
+      "headings": [
+        "Full Telegram Channel Audit via Telegram Desktop JSON Export",
+        "Problem",
+        "Method",
+        "Why JSON",
+        "What This Enables",
+        "When To Use",
+        "When Not To Use",
+        "Reliability Rule",
+        "Operational Note",
+        "Sources / Traceability"
       ]
     },
     {
