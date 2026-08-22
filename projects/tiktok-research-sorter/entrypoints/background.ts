@@ -1,4 +1,5 @@
 import { browser } from 'wxt/browser';
+import { queueTikTokDownload } from '../lib/download-manager';
 import {
   beginTagResearch,
   clearProfile,
@@ -11,7 +12,7 @@ import {
   toggleFavorite,
   updateScanState,
 } from '../lib/store';
-import type { DashboardData, RuntimeMessage } from '../lib/types';
+import type { DashboardData, DownloadQueueResponse, RuntimeMessage } from '../lib/types';
 
 export default defineBackground(() => {
   browser.sidePanel?.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => undefined);
@@ -45,6 +46,13 @@ export default defineBackground(() => {
         return publish(() => toggleFavorite(message.video));
       case 'REMOVE_FAVORITES':
         return publish(() => removeFavorites(message.keys));
+      case 'DOWNLOAD_VIDEO':
+        return queueTikTokDownload(message.videoUrl)
+          .then((result): DownloadQueueResponse => ({ ok: true, ...result }))
+          .catch((cause): DownloadQueueResponse => ({
+            ok: false,
+            error: cause instanceof Error ? cause.message : String(cause),
+          }));
       case 'SCAN_STATE':
         return publish(() => updateScanState(message.state));
       case 'CLEAR_PROFILE':
