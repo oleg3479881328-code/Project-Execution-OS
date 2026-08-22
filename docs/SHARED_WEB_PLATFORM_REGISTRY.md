@@ -41,6 +41,17 @@ It is not a code repository by itself. It records what is reusable, what evidenc
 - Invariant: content identity must not depend on the current public URL or slug; routing may migrate without losing editor/data bindings.
 - Shared-code status: represented in `packages/shared-web-core-v0.1/src/contracts.ts`; production dependency adoption still pending real client canary.
 
+### WEB-ENTITY-VERIFY-001 — External entity/vendor verification search ladder
+
+- Status: `PROVEN`
+- Origin: Olga Polo — Matt & Morgan vendor-link research, Fitz The Occasion correction (2026-08-22)
+- Invariant: do not conclude that an official destination is unavailable after checking only websites and directories. For business/vendor identity resolution, search the exact brand through official social channels before falling back to marketplaces.
+- Required search order when no internal canonical entity page exists: official website → exact-brand Instagram → exact-brand Facebook → LinkedIn/owner identity corroboration → strong marketplace/directory profile.
+- Verification method: combine exact brand name with locality/industry context and at least one independent corroborating source when ambiguity exists. Owner/person identity may be used as corroboration, not as a substitute for the brand destination when a brand-owned social profile exists.
+- Failure mode: a marketplace link is promoted as the primary destination while an official brand social profile exists and is discoverable.
+- Example: Fitz The Occasion, Cincinnati. Initial research incorrectly recommended a marketplace profile; exact-brand social search immediately surfaced `https://www.instagram.com/fitztheoccasion/` and `https://www.facebook.com/fitztheoccasion/`. Primary destination was corrected to the official Instagram profile.
+- Operational rule: if a second model/tool finds an official destination that the first pass missed, treat it as a search-quality defect, re-run identity verification, correct the durable record, and update the shared method so the miss is not repeated.
+
 ### WEB-PUBLISH-001 — Centralized one-click publish pipeline
 
 - Status: `CANDIDATE`
