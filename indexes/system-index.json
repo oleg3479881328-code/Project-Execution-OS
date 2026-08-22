@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3416b8c04c81834ce9f7e8d757cf967019bff1c8",
-  "generated_at": "2026-08-22T15:03:15-04:00",
+  "repository_commit": "74c1f5a4b555128c34cc512795540215cd291000",
+  "generated_at": "2026-08-22T19:48:13-04:00",
   "artifact_count": 545,
   "artifacts": [
     {
@@ -221,7 +221,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "ea7673c191624e7f3d12428f17a70b6989e8b2cf8ff5c88b7bf5c8393894a612",
+      "sha256": "8d28b83d27ab38fa6b71b766ee56fb7f8292a0d5f60f31542209c1e2aeb53730",
       "headings": [
         "Start New Project",
         "Purpose",
@@ -7290,7 +7290,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "d15b1b9e7b01b0efc3221d1ea01ca2203b067fef3466d40541510fdefa5122ff",
+      "sha256": "9e89d7c2c6c704af3cc673bdc7bf8da37c60e68c168616b00a7bffa8a47c286c",
       "headings": [
         "Shared Web Platform Registry",
         "Purpose",
@@ -7299,6 +7299,7 @@
         "WEB-CMS-SOT-001 — Published CMS source of truth",
         "WEB-CMS-PARITY-001 — Published/fallback responsive parity",
         "WEB-ENTITY-ID-001 — Stable entity identity separate from slug/URL",
+        "WEB-ENTITY-VERIFY-001 — External entity/vendor verification search ladder",
         "WEB-PUBLISH-001 — Centralized one-click publish pipeline",
         "WEB-SEO-STATE-001 — Preview/indexing state is explicit",
         "WEB-BRAND-SHELL-001 — Engine shared, brand shell local",
