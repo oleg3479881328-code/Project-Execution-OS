@@ -1,180 +1,330 @@
 # External AI Task + Result Standard
 
+> Legacy filename retained for compatibility. This standard is workspace-neutral and applies to parallel ChatGPT worker chats and other AI executors across Project Execution OS.
+
 ## Purpose
 
-This standard defines a reusable way to delegate substantial work to another AI without forcing the owner to shuttle text, files, partial results, and follow-up context back and forth between assistants.
+This standard defines the global Project Execution OS pattern for delegating substantial independent work to another AI worker without blocking the primary conversation and without using Oleg as a manual transport layer for context or results.
 
-The pattern is workspace-first:
-
-1. create one durable task page;
-2. create one durable result page;
-3. put the exact result destination inside the task;
-4. give the external AI one task link;
-5. require the external AI to write results directly to the designated result page;
-6. later review, verify, and continue from that same durable workspace.
-
-This standard is project-agnostic and may be used across all projects.
-
-## Core Pattern
+The intended operating model is:
 
 ```text
-Owner / Primary AI
-    -> creates TASK page
-    -> creates RESULT page
-    -> embeds RESULT destination in TASK
-    -> gives only TASK link to external AI
-
-External AI
-    -> reads TASK
-    -> performs work
-    -> writes directly into RESULT page
-    -> may create child pages only when the task explicitly permits it
-
-Primary AI
-    -> later opens RESULT page
-    -> checks progress / quality / completeness
-    -> records corrections or next task in the same durable workspace
+Primary chat = Controller / Architect / Reviewer
+Worker chats = temporary Executors
+Durable workspace = shared state and source of truth
 ```
 
-## Default Workspace
+The primary chat may continue discussing, planning, reviewing, or creating additional work while one or more worker chats execute independent tasks in parallel.
 
-When the project already has a canonical durable workspace, create both pages inside that project workspace.
+This standard is project-agnostic and applies across all projects.
 
-For Notion-first projects, the default is:
+## Core Invariant
 
-- one page titled like `TASK — <short task name>`;
-- one page titled like `RESULT — <short result name>` or a domain-specific persistent destination such as `MASTER CATALOG`;
-- both pages live under the project’s canonical Notion area or a clearly linked child area.
+Use this rule:
 
-Do not create task/result pages as disconnected private pages if the project already has a canonical parent.
+```text
+One link in -> zero extra explanation -> full execution -> durable write-back -> later review.
+```
 
-## Task Page Contract
+When Oleg says words equivalent to `напиши задание воркеру`, create a self-contained durable task packet whenever a shared durable workspace is available.
 
-Every external-AI task page must contain enough information for a capable AI to execute without requiring the owner to relay additional context manually.
+Oleg should normally need to do only one manual action:
+
+1. open another ChatGPT chat/tab;
+2. send the task link.
+
+He should not need to copy instructions, repeat context, explain the task, relay intermediate results, or wait in the primary chat for the worker to finish.
+
+## Parallel Work Model
+
+The default multi-worker flow is:
+
+```text
+Oleg <-> Primary Chat / Controller
+              |
+              | creates self-contained task links
+              v
+       TASK A   TASK B   TASK C
+          |        |        |
+          v        v        v
+      Worker A  Worker B  Worker C
+          |        |        |
+          +--------+--------+
+                   |
+                   v
+            Durable Workspace
+                   |
+                   v
+       Primary Chat / Reviewer
+          PASS / FIX / BLOCK
+```
+
+Workers are temporary execution surfaces. The durable workspace carries the task, sources, state, outputs, logs, and reviewable result.
+
+Deleting or losing a worker chat after successful write-back must not destroy the durable result.
+
+## Main-Conversation Continuity Rule
+
+Delegating a task to a worker must not unnecessarily block the primary conversation.
+
+After the owner has the worker task link, the primary chat remains available for ongoing discussion and for creating additional tasks.
+
+Do not structure ordinary delegated work around `send task -> wait for worker -> resume conversation` when the task is independent enough to run in parallel.
+
+Prefer:
+
+```text
+discuss -> identify independent task -> create worker packet -> owner dispatches link -> continue main conversation
+```
+
+The owner may later say `проверь`, `проверь воркера`, or identify a task by name. The primary AI should then inspect the durable result directly and perform QA without asking Oleg to paste the worker output back into chat.
+
+## Workspace-Neutral Rule
+
+Do not assume Notion or Google Docs specifically.
+
+Use the project's canonical durable workspace and the data format that naturally fits the task.
+
+Possible durable locations include:
+
+- Google Drive folders;
+- Google Sheets databases and control tables;
+- Google Docs for long-form task or result material when appropriate;
+- Notion pages or databases;
+- GitHub repositories, issues, PRs, files, or project artifacts;
+- another canonical connected workspace explicitly used by the project.
+
+For Google-Drive-first projects, treat Google Drive as the shared state layer. Google Sheets may hold structured databases and execution control, Drive folders may hold assets, and Docs may be used only where long-form text is actually useful.
+
+The architecture must not depend on one file type.
+
+## Task Packet Contract
+
+Every worker task must be self-contained enough that a capable worker can execute it from the single task link without requiring extra explanation from Oleg.
 
 At minimum include:
 
-1. **Goal** — what must be accomplished.
-2. **Context** — only the project context needed for execution.
-3. **Scope** — what is included and excluded.
-4. **Method / constraints** — research depth, source rules, implementation rules, validation rules, etc.
-5. **Required output structure** — table, report, code, catalog, checklist, artifacts, etc.
-6. **Exact durable result destination** — page title + direct Notion URL.
-7. **Write rule** — explicitly say to write the result directly there instead of returning the full result to the owner in chat.
-8. **Child-page rule** — whether child pages are allowed and what must remain on the main result page.
-9. **Completion marker** — how the external AI should indicate that the work is complete or still in progress.
-10. **Source traceability** — where references, links, raw sources, or generated artifacts must be recorded.
+1. **Task name** — clear human-readable name.
+2. **Task / Job ID** — stable identifier when the workflow benefits from one.
+3. **Goal** — what must be accomplished.
+4. **Context** — only the context required for this task.
+5. **Scope** — what is included and excluded.
+6. **Sources** — exact durable files, tables, folders, URLs, records, or project nodes to inspect.
+7. **Method / constraints** — research rules, existing-solution-first requirements, editing boundaries, validation rules, and do-not-repeat constraints.
+8. **Write targets** — exact durable destinations to update.
+9. **Entity-write rule** — when shared registries are involved, search before create and use update/upsert behavior where possible to avoid duplicates.
+10. **Required output** — exact expected result shape.
+11. **Completion / status rule** — how to mark complete, partial, blocked, or not ready.
+12. **Execution trace** — what records, files, entities, sources, or artifacts were read or changed.
+13. **QA readiness** — explicit marker such as `READY_FOR_QA: YES/NO` when useful.
+14. **Fallback behavior** — what to do when evidence is missing or access fails; do not silently invent missing facts.
 
-## Result Page Contract
+## One-Link Handoff Rule
 
-The result page is durable project memory, not a temporary inbox.
+The task link itself is the handoff packet.
 
-It should contain:
+Oleg should not be required to separately send:
 
-- a short purpose statement;
-- a clear write rule;
-- current status (`not started`, `in progress`, `complete`, or equivalent);
-- the actual result or a compact index to child result pages;
-- important sources and traceability;
-- enough structure for the primary AI to review progress without asking the owner to copy anything back.
-
-If the result becomes large, child pages are allowed, but the parent result page must retain:
-
-- summary;
-- status;
-- index / links;
-- key conclusions;
-- remaining TODOs.
-
-## Owner Handoff Rule
-
-The owner should normally need to transfer only one thing to the external AI:
-
-**the task-page link.**
-
-Do not require the owner to separately send:
-
-- a second result-page link;
-- copied instructions;
+- a result-page link;
 - repeated project context;
-- a result template already embedded in the task;
-- manually relayed intermediate results.
+- copied instructions;
+- source lists already present in the task;
+- output templates already present in the task;
+- explanation of what the task means;
+- manually relayed worker results.
 
-The task page itself is the handoff packet.
+If a worker would need those things, the task packet is incomplete.
 
-## Review Rule
+## Task-Link Presentation Rule
 
-When the owner later asks whether there are results, the primary AI should:
+Whenever the primary AI gives Oleg a worker-task link, the visible link text must be the clear task name in normal human language.
 
-1. open the designated result page directly;
-2. inspect current content and child pages if needed;
-3. report concrete progress;
-4. distinguish finished work from TODO / partial work;
-5. verify important claims when the review requires it;
-6. avoid asking the owner to paste the external AI’s output if it already exists in the durable workspace.
+Do not give bare or ambiguous labels such as:
 
-## Reuse Across Projects
+```text
+ссылка
+открыть
+task
+worker
+Google Drive
+документ
+```
 
-This pattern is not limited to research.
+Prefer:
 
-Use it when useful for:
+```text
+[Проверить индексацию новых wedding pages](...)
+[Оформить свадьбу Matt & Morgan к публикации](...)
+[Провести аудит vendor entities для Wedding W023](...)
+```
 
-- deep research;
-- market scans;
-- code audits;
-- architecture reviews;
-- content production;
-- data extraction;
-- document analysis;
-- QA;
-- design exploration;
-- competitive analysis;
-- catalog building;
-- long-form drafting;
-- test planning;
-- implementation investigations;
-- migration analysis;
-- other substantial delegated work.
+The owner must be able to recognize what a link will execute without opening it.
 
-## When Not To Use It
+When multiple worker links are given together, each must have a distinct task-specific title.
 
-Do not create this structure for trivial one-message tasks where a durable task/result workspace would add more overhead than value.
+## Worker Ownership and Parallel Safety
 
-Do not use it when the external AI cannot access the designated workspace.
-
-Do not treat chat as the canonical result location when a durable project workspace is available.
-
-## Naming
-
-Use clear names that are understandable without opening the page.
+Parallel workers should own separate task targets whenever possible.
 
 Examples:
 
-```text
-TASK — Deep Research — CAD and Creative Tools
-RESULT — CAD and Creative Tools Research
+- Worker A -> Wedding W023
+- Worker B -> Wedding W024
+- Worker C -> Wedding W025
 
-TASK — Competitor Analysis — Local Wedding Video
-RESULT — Competitor Analysis
+Avoid two workers editing the same primary record simultaneously unless the task explicitly defines safe coordination.
 
-TASK — Code Audit — Download Pipeline
-RESULT — Download Pipeline Audit
-```
-
-For persistent accumulative destinations, a domain-specific name may be better than `RESULT`, for example:
+For shared entity registries or databases:
 
 ```text
-MASTER CATALOG — AI Program Interaction Research
-RESEARCH LIBRARY — Competitors
-QA REPORT — Release 0.4
+search -> existing entity? -> enrich/update
+not found -> create
 ```
+
+Do not default to blind creation when concurrent workers may encounter the same venue, vendor, person, organization, URL, or other entity.
+
+When a shared write could create a collision, the task must either:
+
+- define an upsert/search-before-create rule;
+- assign one worker as owner of the shared record;
+- write candidates to a staging area for later merge;
+- or avoid that shared write during parallel execution.
+
+## Result and Execution Report Contract
+
+A worker must leave a durable, reviewable result rather than merely saying `done` in chat.
+
+For substantial tasks, record enough execution state to support independent QA. A useful generic structure is:
+
+```text
+JOB_ID
+TASK_NAME
+STATUS
+STARTED / FINISHED when available
+SOURCES_READ
+RECORDS_OR_FILES_CHANGED
+ENTITIES_CREATED
+ENTITIES_UPDATED
+ARTIFACTS_CREATED
+MISSING_EVIDENCE
+BLOCKERS
+READY_FOR_QA: YES/NO
+```
+
+Use only the fields relevant to the task; do not create bureaucracy for trivial work.
+
+The result may live directly in the target database/file or in a dedicated result/log artifact. The exact shape should follow the project's natural workspace.
+
+## Controller / Reviewer Rule
+
+When Oleg later asks to check a worker result, the primary AI should:
+
+1. identify the task from its clear task name or Job ID;
+2. open the durable task and result destinations directly;
+3. inspect the actual changed state, not just a worker completion claim;
+4. distinguish finished work from partial, blocked, or unverified work;
+5. check compliance with the task acceptance criteria;
+6. verify important factual or technical claims when appropriate;
+7. check for duplicate or conflicting writes when shared registries were involved;
+8. return a clear verdict such as `PASS`, `FIX`, or `BLOCK`;
+9. if needed, prepare a bounded correction task for the same or another worker.
+
+Do not ask Oleg to copy worker output back into the primary chat when the result already exists in the durable workspace.
+
+## Relationship to Project Memory
+
+This standard implements the Project Memory constitutional rule that chat is a temporary execution surface and durable state must live outside chat.
+
+Worker chats are not project memory.
+
+The project must remain recoverable from its canonical durable state even if all worker chats disappear.
+
+Project memory, source-of-truth precedence, file persistence, and entrypoint rules continue to follow `docs/PROJECT_MEMORY_STANDARD.md` and related standards.
+
+## Reuse Across Projects
+
+Use this pattern when independent work can proceed while the primary conversation continues, including:
+
+- research;
+- audits;
+- data enrichment;
+- SEO and content production;
+- wedding or event preparation;
+- entity research;
+- market scans;
+- competitor analysis;
+- document analysis;
+- content drafting;
+- catalog building;
+- QA;
+- test planning;
+- implementation investigations;
+- code review where the worker has the required access;
+- migration analysis;
+- repetitive independent batches;
+- other substantial delegated work.
+
+A single conversation may dispatch several workers when the tasks are independent enough to benefit from parallel execution.
+
+## When Not To Use It
+
+Do not create worker infrastructure for a trivial one-message task when delegation overhead is larger than the task.
+
+Do not use a worker when it cannot access the required sources or durable write destination.
+
+Do not parallelize tightly coupled work whose steps must occur sequentially unless explicit dependencies are encoded.
+
+Do not rely on cross-chat memory as the only way a worker understands its task.
+
+Do not treat worker chat output as canonical when a durable project workspace exists.
+
+## Naming
+
+Task names must be understandable without opening the task.
+
+Good examples:
+
+```text
+TASK — Publish Wedding W023 — Matt & Morgan
+TASK — Audit Cincinnati Venue Entity Duplicates
+TASK — Research Zero-Click SEO Competitor Patterns
+TASK — Verify Search Console Indexation After DNS Change
+```
+
+Avoid generic names such as:
+
+```text
+TASK 1
+Worker task
+Research
+Do this
+New task
+```
+
+## Adoption Direction
+
+Project Execution OS is moving toward a controller + parallel worker operating model for suitable tasks.
+
+The intended default is not to force every task through workers. The primary AI should identify work that is sufficiently independent, substantial, and parallelizable, then create a self-contained worker packet when the owner requests delegation.
+
+Initial adoption may remain manually dispatched by Oleg through separate ChatGPT tabs. Automation of tab creation or orchestration is not required for the model to be valid.
+
+The manual dispatch step is intentionally minimal:
+
+```text
+Primary AI creates task -> gives named link -> Oleg sends link in another chat -> returns to primary conversation.
+```
+
+The system can later automate dispatch if a proven, low-friction mechanism becomes available, but manual one-link dispatch is the current acceptable baseline.
 
 ## Final Rule
 
-One durable task link should be enough to delegate the work.
+The owner should be able to keep talking to the primary AI while independent workers execute elsewhere.
 
-The external AI writes into the durable result location named inside that task.
+One clearly named durable task link should be enough to start each worker.
 
-The primary AI later reviews the same result location directly.
+Workers write results back into shared durable state.
 
-The owner should not be used as a manual transport layer between AIs when a shared durable workspace can carry the task and result instead.
+The primary AI later reviews that durable state directly.
+
+Oleg should not be used as the context shuttle, result shuttle, or waiting mechanism between AI sessions.
