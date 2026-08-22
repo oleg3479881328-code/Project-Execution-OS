@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "48cdef1a96b2b5317d0bb4961c028f4901d02d69",
-  "generated_at": "2026-08-21T20:00:05-04:00",
+  "repository_commit": "3416b8c04c81834ce9f7e8d757cf967019bff1c8",
+  "generated_at": "2026-08-22T15:03:15-04:00",
   "artifact_count": 545,
   "artifacts": [
     {
@@ -6332,19 +6332,25 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "b768943ff615b71d7a36ecfbd2ef3a697ebadfdeee558aa7f194858a3d4d8a21",
+      "sha256": "1c1b33bbfe13ba6bc7bef19f62290dcbe1a4eb60df7bff28b8435d43266acc24",
       "headings": [
         "External AI Task + Result Standard",
         "Purpose",
-        "Core Pattern",
-        "Default Workspace",
-        "Task Page Contract",
-        "Result Page Contract",
-        "Owner Handoff Rule",
-        "Review Rule",
+        "Core Invariant",
+        "Parallel Work Model",
+        "Main-Conversation Continuity Rule",
+        "Workspace-Neutral Rule",
+        "Task Packet Contract",
+        "One-Link Handoff Rule",
+        "Task-Link Presentation Rule",
+        "Worker Ownership and Parallel Safety",
+        "Result and Execution Report Contract",
+        "Controller / Reviewer Rule",
+        "Relationship to Project Memory",
         "Reuse Across Projects",
         "When Not To Use It",
         "Naming",
+        "Adoption Direction",
         "Final Rule"
       ]
     },
