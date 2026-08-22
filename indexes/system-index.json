@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "60622789c8356aa776f882571c0d706bc65d4707",
-  "generated_at": "2026-08-21T11:05:43-04:00",
-  "artifact_count": 544,
+  "repository_commit": "48cdef1a96b2b5317d0bb4961c028f4901d02d69",
+  "generated_at": "2026-08-21T20:00:05-04:00",
+  "artifact_count": 545,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -5575,14 +5575,14 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "7fd4c91e0005beb1a0875c540824111c25f7254eab86761036b79b7e4022cf75",
+      "sha256": "bba97df72b049d7d4071fcc9bdc8c5fe441df1d1e75a125a910d9f31042a492e",
       "headings": [
         "Always Transfer-Ready State Standard",
         "Purpose",
         "Zero-State vs Active Execution",
         "Core Rule",
-        "Durable Interim Checkpoint Rule",
-        "Interim Checkpoint Minimum Content",
+        "Durable Interim Preservation Rule",
+        "Live State Minimum Content",
         "Minimal Continuity Loop",
         "Active Minimum Set",
         "Maintenance Rule",
@@ -5636,6 +5636,31 @@
         "Project-Aware Default",
         "Failure Mode To Prevent",
         "Example"
+      ]
+    },
+    {
+      "path": "docs/CANONICAL_LIVE_STATE_CHECKPOINT_STANDARD.md",
+      "title": "Canonical Live State & Checkpoint Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "e5d0bd93acce682734cadbcaeea69264e0cfb1f9916293247b4f28365fb15283",
+      "headings": [
+        "Canonical Live State & Checkpoint Standard",
+        "Purpose",
+        "Constitutional Rule",
+        "Canonical Live State",
+        "START HERE vs Current State",
+        "Work Log and Decision Log",
+        "Supersedes / Obsolete Rule",
+        "Checkpoint Rule",
+        "Migration / Handoff Rule",
+        "Chat-Boundary Rule",
+        "Re-Entry Sequence",
+        "Anti-Bureaucracy Rule",
+        "Adoption Rule for Existing Projects",
+        "Final Rule"
       ]
     },
     {
