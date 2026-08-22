@@ -175,9 +175,9 @@ def ollama_model_available(endpoint: str, model: str, timeout_seconds: float) ->
     return False
 
 
-def build_local_config(timeout_seconds: float) -> EndpointConfig | None:
+def build_local_config(timeout_seconds: float, local_model: str | None = None) -> EndpointConfig | None:
     endpoint = os.environ.get("HYBRID_AGENT_LOCAL_ENDPOINT", DEFAULT_LOCAL_ENDPOINT)
-    model = os.environ.get("HYBRID_AGENT_LOCAL_MODEL", DEFAULT_LOCAL_MODEL)
+    model = local_model or os.environ.get("HYBRID_AGENT_LOCAL_MODEL", DEFAULT_LOCAL_MODEL)
     api_key = os.environ.get("HYBRID_AGENT_LOCAL_API_KEY", DEFAULT_LOCAL_API_KEY)
     if endpoint.endswith(":11434"):
         endpoint = endpoint + "/v1"
@@ -697,9 +697,10 @@ def run_workstation_route(
     include_full_evidence: bool = False,
     launch_executor: bool = False,
     repo_root: Path = REPO_ROOT,
+    local_model: str | None = None,
 ) -> dict[str, Any]:
     entrypoints = discover_workstation_entrypoints()
-    local_config = build_local_config(timeout_seconds) if should_probe_local(mode) else None
+    local_config = build_local_config(timeout_seconds, local_model=local_model) if should_probe_local(mode) else None
     cloud_config = build_cloud_config(executor, timeout_seconds)
     chosen_mode = mode
     route_decision: RouteDecision | None = None
