@@ -18,7 +18,7 @@ First determine what the user is actually doing:
 - explicitly starting a real project -> `docs/PROJECT_BOOTSTRAP_STANDARD.md`, then `docs/PROJECT_ENTRYPOINT_STANDARD.md` and `docs/PROJECT_MEMORY_STANDARD.md`
 - starting or attaching a real project inside ChatGPT Projects -> first establish the canonical live project entrypoint, then create one thin stable `START_HERE.md` pointer under `docs/PROJECT_BOOTSTRAP_STANDARD.md`, `docs/PROJECT_ENTRYPOINT_STANDARD.md`, `docs/PROJECT_MEMORY_STANDARD.md`, and `docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md`
 - continuing an existing project -> its current project entrypoint, then restore context through `docs/PROJECT_MEMORY_STANDARD.md`; if the entrypoint is missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
-- delegating a substantial task to another AI while a shared durable workspace is available -> `docs/EXTERNAL_AI_NOTION_TASK_RESULT_STANDARD.md`
+- delegating a substantial independent task to another AI or parallel ChatGPT worker while a shared durable workspace is available -> `docs/EXTERNAL_AI_NOTION_TASK_RESULT_STANDARD.md`
 - handing an already-defined execution task to Codex -> `docs/CODEX_HANDOFF_STANDARD.md`
 
 ## Bootstrap Boundary
