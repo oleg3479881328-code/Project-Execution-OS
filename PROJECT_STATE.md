@@ -2,7 +2,7 @@
 project_name: Project Execution OS
 project_mode: compact
 status: transfer_ready
-updated_at: 2026-07-15
+updated_at: 2026-08-23
 source_of_truth: repository
 active_branch: main
 ---
@@ -13,7 +13,7 @@ active_branch: main
 
 `Project Execution OS` is active and transfer-ready.
 
-The repository now contains all four intended layers:
+The repository contains all four intended layers:
 
 ```text
 domain knowledge
@@ -21,6 +21,13 @@ domain knowledge
 -> workflow / application adapter
 -> owner-facing UI
 ```
+
+A new architecture research track is now active: determine whether official Codex App Server / Codex harness interfaces can replace or simplify parts of the current manual/bridge-based worker handoff while preserving Project Execution OS ownership of routing, memory, approvals, review, and durable evidence.
+
+Research task: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/113
+Trigger reference: https://pimenov.ai/articles/codex-stanovitsya-platformoy-agent-vnutri-raboty/
+
+This is research only. No runtime replacement, Prompt Bridge removal, or architecture migration is approved until primary-source evidence is reviewed.
 
 ## Latest Confirmed Milestone
 
@@ -63,7 +70,7 @@ Project OS integrity workflow: passed
 
 The automated Windows run confirms package installation, ffprobe availability, file upload, capability execution, preview retrieval, and cleanup.
 
-## Architecture Decision
+## Architecture Decisions
 
 Applications may present and compose capabilities, but must not copy provider implementation logic.
 
@@ -77,16 +84,25 @@ apps/block-studio
 
 New capability manifests and registry entries are visible in the Studio library. A block becomes interactive when an application adapter is added.
 
+For worker orchestration, the existing OS architecture remains authoritative while Issue #113 evaluates official Codex runtime/harness surfaces under Existing Solution First. The research must distinguish what Codex can own from what must remain Project Execution OS responsibility.
+
 ## Current Focus
 
+- Research Issue #113: official Codex App Server / Harness integration surface and fit with Project Execution OS.
 - Owner test on the target Windows computer with a real user-owned file.
 - Keep Block Studio and `media.probe` at `candidate` until that confirmation is received.
 - Build `media.clip` as the second capability and add its interactive Studio page.
 - Extract shared SDK code only after real duplication appears between two blocks.
 
-## Current Next Safe Action
+## Current Next Safe Actions
 
 ```text
+Architecture track:
+1. Execute Issue #113 as bounded evidence-gathering research.
+2. Review the report against official primary sources.
+3. Only after review decide whether a small Codex App Server proof of concept is justified.
+
+Capability track:
 1. Open Block Studio on the owner's Windows computer.
 2. Load a real MP4.
 3. Run media.probe and inspect the visible result.
@@ -101,15 +117,19 @@ New capability manifests and registry entries are visible in the Studio library.
 3. `PROJECT.md`
 4. `PROJECT_STATE.md`
 5. `logs/latest.md`
-6. `apps/README.md`
-7. `apps/block-studio/README.md`
-8. `apps/block-studio/VALIDATION.md`
-9. `capability-library/REGISTRY.md`
-10. `capabilities/media-probe/BLOCK.md`
-11. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
+6. `docs/HARNESS_ENGINEERING_STANDARD.md`
+7. `docs/CODEX_HANDOFF_STANDARD.md`
+8. Issue #113 — Codex App Server / Harness research
+9. `apps/README.md`
+10. `apps/block-studio/README.md`
+11. `apps/block-studio/VALIDATION.md`
+12. `capability-library/REGISTRY.md`
+13. `capabilities/media-probe/BLOCK.md`
+14. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
 
 ## Known Blockers
 
+- Codex App Server / Harness fit has not yet been verified against current official OpenAI sources; Issue #113 is open.
 - The owner has not yet run Block Studio on the target Windows computer.
 - A real owner-owned media file has not yet been confirmed through the UI.
 - Variable-frame-rate media remains an additional edge-case fixture.
@@ -117,6 +137,8 @@ New capability manifests and registry entries are visible in the Studio library.
 
 ## Do-Not-Break Rules
 
+- Do not replace or delete the current worker handoff/Prompt Bridge based only on the discovery article.
+- Do not treat Codex App Server integration as approved until Issue #113 evidence is reviewed.
 - Do not claim owner validation without the owner's explicit result.
 - Do not copy capability provider code into Block Studio.
 - Do not expose Block Studio beyond `127.0.0.1` by default.
