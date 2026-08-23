@@ -1,23 +1,15 @@
 # Latest Executor Status
 
-Timestamp: 2026-07-15T14:55:00-04:00
-Marker: COMPLETE_OWNER_CONFIRMATION_PENDING
-Task-ID: block-studio-v0.1.0
-Status: Implemented and merged Block Studio 0.1.0 as the first owner-facing local application for reusable capability blocks. Added registry/manifest/entry-point discovery, interactive media.probe upload and preview, readable metadata, streams, raw JSON, logs, contract, tests, owner/developer modes, protected runtime storage, cleanup, Windows launcher, portable ZIP, and Linux/Windows CI.
-Reply-Surface: repository main branch and portable artifact
-PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/90
-Merge-SHA: d70fbb1be0d419b3dcc5b47a9d3dc107a9551069
-Application-Path: apps/block-studio/
-Windows-Launcher: START_BLOCK_STUDIO.bat
-Validation-Path: apps/block-studio/VALIDATION.md
-CI-Workflow: .github/workflows/block-studio-tests.yml
-Local-Test-Evidence: 5 passed in 1.55s; JavaScript syntax passed
-Real-MP4-Evidence: H.264/AAC 320x240, 0.8s; upload, probe, preview, and cleanup passed
-Linux-CI: success on Python 3.13 with ffprobe
-Windows-CI: success on Python 3.13 with ffprobe
-System-Integrity-CI: success
-Portable-Artifact: Block-Studio-v0.1.0-portable.zip
-Current-Status: Block Studio candidate 0.1.0; media.probe candidate 0.1.0
-Not-Claimed: owner-confirmed, validated, or production
-Next-Safe-Action: Owner opens Block Studio on the target Windows computer, processes one real MP4, and reports the exact result; then implement media.clip as the second interactive capability.
-Owner-Action-Required: Run the provided ZIP or START_BLOCK_STUDIO.bat and test one real file.
+Timestamp: 2026-08-23T14:43:12-04:00
+Marker: RESEARCH_TASK_OPENED
+Task-ID: codex-app-server-project-execution-os
+Status: Captured the Codex-as-platform / App Server direction as a Project Execution OS architecture research track and opened bounded research Issue #113. The issue requires primary-source verification of official Codex App Server / harness capabilities and an evidence-based mapping against the current Project Execution OS worker handoff / Prompt Bridge model. No implementation or architecture replacement is approved at this stage.
+Issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/113
+Trigger-Reference: https://pimenov.ai/articles/codex-stanovitsya-platformoy-agent-vnutri-raboty/
+Project-State-Updated: PROJECT_STATE.md
+Project-State-Commit: 231f74fc59f11fa67810e70d7aed4cfa33642dd0
+Research-Scope: task creation, context injection, session continuity, parallel workers, tool execution, sandbox, approvals, secrets, events, results, cancellation, retries/resume, audit trail, human review, GitHub integration, and external orchestrator/UI fit.
+Existing-Solution-First: Official OpenAI documentation, repositories, release notes, API references, and examples are authoritative; the discovery article is not treated as technical authority.
+Implementation-Changes: None
+Architecture-Change-Approved: No
+Next-Safe-Action: Execute Issue #113 as research only, return the report as a comment on the issue, then independently review the evidence before authorizing any proof of concept or change to the current handoff/Prompt Bridge.
