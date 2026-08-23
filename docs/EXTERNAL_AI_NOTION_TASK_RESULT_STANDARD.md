@@ -21,7 +21,7 @@ The primary chat may continue discussing, planning, reviewing, or creating addit
 Use this rule:
 
 ```text
-One link in -> zero extra explanation -> full execution -> durable write-back -> later review.
+One link in -> zero extra explanation -> full execution -> durable write-back -> concise human completion summary with result link -> later review.
 ```
 
 When Oleg says words equivalent to `напиши задание воркеру`, create a self-contained durable task packet whenever a shared durable workspace is available.
@@ -120,6 +120,7 @@ At minimum include:
 12. **Execution trace** — what records, files, entities, sources, or artifacts were read or changed.
 13. **QA readiness** — explicit marker such as `READY_FOR_QA: YES/NO` when useful.
 14. **Fallback behavior** — what to do when evidence is missing or access fails; do not silently invent missing facts.
+15. **Worker completion message rule** — after durable write-back, the worker must reply in chat with a brief human-readable summary of what was done, the key outcome/status in one or two sentences, and a clickable link to the durable result or primary artifact. A bare message such as `результат записан координатору`, `done`, or `completed` is not sufficient.
 
 ## One-Link Handoff Rule
 
@@ -221,6 +222,34 @@ READY_FOR_QA: YES/NO
 Use only the fields relevant to the task; do not create bureaucracy for trivial work.
 
 The result may live directly in the target database/file or in a dedicated result/log artifact. The exact shape should follow the project's natural workspace.
+
+## Worker Completion Message Contract
+
+After the durable result is saved, the worker must return a short completion message in the worker chat so Oleg can immediately understand what happened without opening the document first.
+
+The completion message should normally contain exactly three things:
+
+1. what was completed;
+2. the most important result, verdict, or blocker in one or two short sentences;
+3. a clearly named clickable link to the durable result or primary artifact.
+
+Good example:
+
+```text
+Аудит завершён. Gego остаётся лучшим базовым вариантом, но локальный Windows-пилот требует Docker Desktop и проверки RAM под MongoDB/PostgreSQL/etcd.
+[Результат — Gego Windows Local Deployment Audit](...)
+```
+
+Bad examples:
+
+```text
+Результат записан координатору.
+Done.
+Task completed.
+Смотри документ.
+```
+
+The worker completion message is a convenience summary only. The durable workspace remains the source of truth.
 
 ## Controller / Reviewer Rule
 
@@ -330,7 +359,7 @@ The owner should be able to keep talking to the primary AI while independent wor
 
 One clearly named durable task link — sent by itself — is enough to start each worker.
 
-Workers write results back into shared durable state.
+Workers write results back into shared durable state, then provide a concise completion summary with the result link in their chat.
 
 The primary AI later reviews that durable state directly.
 
