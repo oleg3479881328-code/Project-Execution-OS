@@ -16,8 +16,6 @@ Durable workspace = shared state and source of truth
 
 The primary chat may continue discussing, planning, reviewing, or creating additional work while one or more worker chats execute independent tasks in parallel.
 
-This standard is project-agnostic and applies across all projects.
-
 ## Core Invariant
 
 Use this rule:
@@ -31,7 +29,9 @@ When Oleg says words equivalent to `напиши задание воркеру`,
 Oleg should normally need to do only one manual action:
 
 1. open another ChatGPT chat/tab;
-2. send the task link.
+2. send ONLY the task link.
+
+The task URL itself is the complete launch command. The worker must not require Oleg to add `открой документ`, `работай по нему`, `RUN`, project context, or any explanatory text. The task packet must contain the execution contract needed to interpret a bare task URL as: open this exact durable task, read it fully, execute it, and write the substantive result back to the designated durable destination.
 
 He should not need to copy instructions, repeat context, explain the task, relay intermediate results, or wait in the primary chat for the worker to finish.
 
@@ -102,6 +102,8 @@ The architecture must not depend on one file type.
 
 Every worker task must be self-contained enough that a capable worker can execute it from the single task link without requiring extra explanation from Oleg.
 
+The very top of each task packet must include a link-only execution contract stating that if the document URL is the only content sent in a fresh worker chat, the URL itself is the complete instruction to open, read, execute, and write back. No separate trigger text is required.
+
 At minimum include:
 
 1. **Task name** — clear human-readable name.
@@ -121,10 +123,15 @@ At minimum include:
 
 ## One-Link Handoff Rule
 
-The task link itself is the handoff packet.
+The task link itself is the handoff packet AND the launch command.
+
+Oleg should send only the URL in the fresh worker chat. No prefix, suffix, instruction, trigger token, or explanation is required.
 
 Oleg should not be required to separately send:
 
+- `открой этот документ`;
+- `работай только по нему`;
+- `RUN`;
 - a result-page link;
 - repeated project context;
 - copied instructions;
@@ -312,7 +319,7 @@ Initial adoption may remain manually dispatched by Oleg through separate ChatGPT
 The manual dispatch step is intentionally minimal:
 
 ```text
-Primary AI creates task -> gives named link -> Oleg sends link in another chat -> returns to primary conversation.
+Primary AI creates task -> gives named link -> Oleg sends ONLY that link in another chat -> returns to primary conversation.
 ```
 
 The system can later automate dispatch if a proven, low-friction mechanism becomes available, but manual one-link dispatch is the current acceptable baseline.
@@ -321,7 +328,7 @@ The system can later automate dispatch if a proven, low-friction mechanism becom
 
 The owner should be able to keep talking to the primary AI while independent workers execute elsewhere.
 
-One clearly named durable task link should be enough to start each worker.
+One clearly named durable task link — sent by itself — is enough to start each worker.
 
 Workers write results back into shared durable state.
 
