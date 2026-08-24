@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "771c1bff755b3abfd1f95c6679bc9c088e63ddcf",
-  "generated_at": "2026-08-24T17:50:05-04:00",
-  "artifact_count": 547,
+  "repository_commit": "e93660201e168674b6d7be37ec552b9d67b97221",
+  "generated_at": "2026-08-24T17:53:19-04:00",
+  "artifact_count": 548,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7504,6 +7504,29 @@
         "Parallel Worker Rule",
         "Completion Rule",
         "Relationship to Other Standards",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/WORKER_IMMEDIATE_EXECUTION_STANDARD.md",
+      "title": "Worker Immediate Execution Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "5bd094a2ad6438160c6b4cc6328f7442092a9332034df2d5b6c0f91217bca259",
+      "headings": [
+        "Worker Immediate Execution Standard",
+        "Purpose",
+        "Core Rule",
+        "Mandatory Worker Behavior",
+        "Forbidden Non-Execution Behavior",
+        "Mandatory Task-Packet Header",
+        "IMMEDIATE EXECUTION CONTRACT — READ FIRST",
+        "Genuine Blocker Rule",
+        "Controller Preflight Rule",
+        "Worker Chat Naming",
+        "Relationship to Existing Standards",
         "Final Rule"
       ]
     },
