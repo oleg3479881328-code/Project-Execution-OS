@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2c0514a0ce7d536c9e6993037ea0bd8c0aa0c532",
-  "generated_at": "2026-08-23T20:39:05-04:00",
+  "repository_commit": "8251017d2413a2af83542723e95e511c5d07f0f9",
+  "generated_at": "2026-08-23T20:40:56-04:00",
   "artifact_count": 546,
   "artifacts": [
     {
@@ -7493,7 +7493,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "f6140d4db7c6af36eb4636d8fcb6aa6f109d79aa5e242e47c23ddd5cef3e33a9",
+      "sha256": "82ebb229dfe9d1efce8096fc8dc5eca3c01fa311b234579bf6740cc4d6d55a52",
       "headings": [
         "Worker Task Numbering Standard",
         "Status",
@@ -7501,6 +7501,8 @@
         "Core Invariant",
         "Number Allocation Rule",
         "Task Packet Contract",
+        "Worker Chat Naming Rule",
+        "First-Line Visibility Rule",
         "Parallel Batch Rule",
         "Validation Before Handoff",
         "Correction Rule",
