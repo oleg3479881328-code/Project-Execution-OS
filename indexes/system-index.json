@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8251017d2413a2af83542723e95e511c5d07f0f9",
-  "generated_at": "2026-08-23T20:40:56-04:00",
-  "artifact_count": 546,
+  "repository_commit": "771c1bff755b3abfd1f95c6679bc9c088e63ddcf",
+  "generated_at": "2026-08-24T17:50:05-04:00",
+  "artifact_count": 547,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7484,6 +7484,27 @@
         "Shared Core extraction consequence",
         "Independent review verdict",
         "Next action"
+      ]
+    },
+    {
+      "path": "docs/WORKER_CHAT_NAMING_STANDARD.md",
+      "title": "Worker Chat Naming Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "d4ff2bbf97829a124b0d709877648466b3ddc28bc2d8b4d1184762d4fbf9a14d",
+      "headings": [
+        "Worker Chat Naming Standard",
+        "Purpose",
+        "Canonical Format",
+        "Mandatory Identity Equality Rule",
+        "Worker Chat Title Rule",
+        "Controller Task-Creation Rule",
+        "Parallel Worker Rule",
+        "Completion Rule",
+        "Relationship to Other Standards",
+        "Final Rule"
       ]
     },
     {
