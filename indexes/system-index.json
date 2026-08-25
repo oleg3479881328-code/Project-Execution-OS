@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e93660201e168674b6d7be37ec552b9d67b97221",
-  "generated_at": "2026-08-24T17:53:19-04:00",
-  "artifact_count": 548,
+  "repository_commit": "a4429068d5e0e09280ae3ee8472d719fb09b21f7",
+  "generated_at": "2026-08-25T09:40:34-04:00",
+  "artifact_count": 550,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -221,7 +221,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "8d28b83d27ab38fa6b71b766ee56fb7f8292a0d5f60f31542209c1e2aeb53730",
+      "sha256": "da49c04e8fe34ce77b52832d6a1ee8296ff05c41c9d95e1a5f640398b13d2dfa",
       "headings": [
         "Start New Project",
         "Purpose",
@@ -5145,7 +5145,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "7ef405036cfdca37105fbfdf9f0d7fc062709c0635c11d74ba50fabeb101b06d",
+      "sha256": "ee17f7ccd3e44da621a2d547b963d52d3bf6d98425ddc28d582315b90f74e8b5",
       "headings": [
         "Capability Block Registry",
         "Purpose",
@@ -10918,6 +10918,66 @@
         "Validation position",
         "Infrastructure note",
         "Next research step"
+      ]
+    },
+    {
+      "path": "projects/visitor-analytics-control-plane/ARCHITECTURE.md",
+      "title": "Universal Visitor Analytics — Architecture",
+      "type": "project-artifact",
+      "domain": "visitor-analytics-control-plane",
+      "status": null,
+      "date": null,
+      "sha256": "672aaa1688492b67fe7451b6c08a6c93d8d326c8b6669856c0da1e4944269a85",
+      "headings": [
+        "Universal Visitor Analytics — Architecture",
+        "Goal",
+        "Selected Donor",
+        "Default: Umami v3",
+        "Optional escalation: PostHog",
+        "System Shape",
+        "Central Project Registry",
+        "Standard Event Contract",
+        "Common event names",
+        "Minimum event fields",
+        "Identity Model",
+        "Anonymous default",
+        "Known identity",
+        "Global Admin UI",
+        "Required screens",
+        "All Projects",
+        "Recent Visitors",
+        "Session Timeline",
+        "Entity Interest",
+        "Sources -> Behavior -> Conversion",
+        "Replay",
+        "Olga Pilot Event Map",
+        "Privacy And Security",
+        "Deployment Direction",
+        "Capability Boundaries",
+        "Promotion Plan"
+      ]
+    },
+    {
+      "path": "projects/visitor-analytics-control-plane/PROJECT.md",
+      "title": "Visitor Analytics Control Plane",
+      "type": "project-artifact",
+      "domain": "visitor-analytics-control-plane",
+      "status": null,
+      "date": null,
+      "sha256": "ac9261a75743c1076d2c775179b922702e89e80949f718d9a9509978c91d446c",
+      "headings": [
+        "Visitor Analytics Control Plane",
+        "Status",
+        "Purpose",
+        "Project Type",
+        "Operating System",
+        "Existing Solution First Decision",
+        "Architecture",
+        "First Pilot",
+        "Identity Rule",
+        "Source Of Truth",
+        "Current Work",
+        "Next Exact Step"
       ]
     },
     {
