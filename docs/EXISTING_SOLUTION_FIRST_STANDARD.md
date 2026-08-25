@@ -69,6 +69,70 @@ For operational troubleshooting, debugging, repair, or environment issues:
 2. only after that fails, move into custom diagnostics, speculative workarounds, or low-level experimentation;
 3. if the standard path requires elevated permissions, a restart, a vendor reset flow, a system repair tool, or another known maintenance procedure, prefer that documented path before inventing a custom one.
 
+## Domain-Mapping Gate
+
+When the task enters a new or weakly understood domain, do not jump directly from the problem statement to implementation.
+
+First build the smallest useful domain map:
+
+1. identify the core concepts, entities, constraints, metrics, and vocabulary;
+2. identify the established professional frameworks, standards, checklists, reference architectures, and tools already used in the domain;
+3. identify the typical questions experts use to test assumptions and hypotheses;
+4. decompose the problem into the smallest meaningful blocks before selecting a solution.
+
+This gate exists to prevent plausible but non-standard custom design caused by incomplete domain knowledge.
+
+## Reuse Ladder
+
+Prefer solutions in this order:
+
+```text
+REUSE → CONFIGURE → INTEGRATE → ADAPT → BUILD
+```
+
+Definitions:
+
+- REUSE — use an existing project/system solution with no meaningful change;
+- CONFIGURE — use an existing product, framework, standard, or tool through supported configuration;
+- INTEGRATE — connect proven components without rebuilding their core behavior;
+- ADAPT — make bounded modifications to a proven donor pattern;
+- BUILD — create a new custom solution only for the demonstrated remaining gap.
+
+Do not treat build-vs-buy as a binary choice. A valid outcome may reuse most capabilities and build only the missing bounded portion.
+
+## Evidence Comparison Gate
+
+For non-trivial solution selection, compare credible candidates before committing. At minimum capture:
+
+- what problem/capability each candidate actually solves;
+- evidence of maturity or real-world use;
+- compatibility with current constraints;
+- implementation/adaptation cost and operational risk;
+- what still remains custom;
+- why the selected option is adequate for the current task or MVP.
+
+Do not confuse popularity, model agreement, or marketing claims with evidence.
+
+## Default Discovery Flow
+
+For unfamiliar or strategic work, use this sequence unless a narrower standard applies:
+
+```text
+Problem
+→ Internal Search
+→ External Existing-Solution Search
+→ Domain Map
+→ Candidate Solutions
+→ Evidence Comparison
+→ Reuse/Configure/Integrate/Adapt/Build Decision
+→ Plan
+→ Execute
+→ Verify
+→ Capture Knowledge
+```
+
+The external search should prefer, in order: official standards/documentation, established frameworks/methodologies, reusable skills/templates/checklists, reference implementations/open source, proven tools/SaaS/APIs, known failure modes and practitioner evidence, and only then custom design.
+
 ## Stop Rule
 
 Use this stopping rule:
