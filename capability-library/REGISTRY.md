@@ -26,6 +26,8 @@ A row records architectural intent and implementation status. It must not imply 
 | `media.clip` | idea | — | not created | ffmpeg | media artifact plus time ranges | one or more clip artifacts | Reels factory, QuizLight phrase clips | exact-cut versus stream-copy behavior needs fixtures |
 | `media.generate_captions` | idea | — | not created | transcript formatter, ffmpeg/libass optional | transcript artifact | SRT/VTT/ASS caption artifacts | short-video workflow | styling contract not yet defined |
 | `media.render_vertical` | idea | — | not created | ffmpeg | media, captions, layout parameters | vertical video artifact | Reels/Shorts/TikTok factory | layout presets not yet defined |
+| `analytics.track` | idea | — | not created | Umami v3 default; PostHog optional escalation | pageview/event plus normalized project context | provider event/session record | Olga Polo web surfaces, then a second independent site | contract exists only in `projects/visitor-analytics-control-plane/ARCHITECTURE.md`; no executable adapter yet |
+| `analytics.query` | idea | — | not created | Umami REST API default | project/date/session/event filters | normalized analytics result | private cross-project operator console | provider-normalization contract not yet implemented |
 
 ## Implementation Sequence
 
@@ -35,6 +37,24 @@ A row records architectural intent and implementation status. It must not imply 
 3. media.extract_audio
 4. media.transcribe
 5. media.download
+```
+
+Analytics sequence is tracked separately under:
+
+```text
+projects/visitor-analytics-control-plane/
+```
+
+Current analytics order:
+
+```text
+central Umami deployment
+-> analytics.track candidate
+-> Olga pilot
+-> analytics.track validated
+-> analytics.query candidate
+-> global private admin MVP
+-> second-project validation
 ```
 
 Reasoning:
