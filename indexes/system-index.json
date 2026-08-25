@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a4429068d5e0e09280ae3ee8472d719fb09b21f7",
-  "generated_at": "2026-08-25T09:40:34-04:00",
+  "repository_commit": "762fb55f022495b4b160c2afdf56298b5812a7bf",
+  "generated_at": "2026-08-25T18:58:12-04:00",
   "artifact_count": 550,
   "artifacts": [
     {
@@ -6311,13 +6311,17 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "5133a1da50d9236aaca1d791953e30867a409d3bf451592520f330f11e3b4e0e",
+      "sha256": "1781fd005d41423391baaee3fd2d4be9fdd5be1cabb972a68cde0a7b5f432a94",
       "headings": [
         "Existing Solution First Standard",
         "Purpose",
         "Core Invariant",
         "Scope",
         "Search Order",
+        "Domain-Mapping Gate",
+        "Reuse Ladder",
+        "Evidence Comparison Gate",
+        "Default Discovery Flow",
         "Stop Rule",
         "Adaptation Rule",
         "When Custom Work Is Allowed",
