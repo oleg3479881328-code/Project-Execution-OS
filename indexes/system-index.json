@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8c864e46c4ead6ba3a7c523dda0cd8ce3e12a568",
-  "generated_at": "2026-08-27T19:37:03-04:00",
-  "artifact_count": 551,
+  "repository_commit": "93c406979eb96ffe830dd85df3edc509bfdd3afc",
+  "generated_at": "2026-08-27T19:39:40-04:00",
+  "artifact_count": 552,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7508,6 +7508,23 @@
         "E. Decisions — do now / later / avoid",
         "14. Maintenance Rule",
         "Related Canonical Nodes"
+      ]
+    },
+    {
+      "path": "docs/TOOL_STACK_AUDIT_DECISION_2026-08-27.md",
+      "title": "Tool Stack Audit — Owner Decision — 2026-08-27",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "fd0c1d4d2fcf77cd2abe7d2df56f980bb0a0fe9899970c378cb227fdb72d28b3",
+      "headings": [
+        "Tool Stack Audit — Owner Decision — 2026-08-27",
+        "Source",
+        "Decision",
+        "Canonical Reference",
+        "Status",
+        "Final Rule"
       ]
     },
     {
