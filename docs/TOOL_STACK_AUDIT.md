@@ -157,7 +157,128 @@ This is a pattern, not a forced universal stack. Existing stable project archite
 - Some platform-specific analytics/SEO integrations exist only in individual project records and should not be mistaken for global defaults.
 - A future registry may benefit from fields for `owner`, `cost`, `account`, `credential location`, `projects using`, `replacement/exit path`, and `last verified`; credentials themselves must never be stored here.
 
-## 13. Maintenance Rule
+## 13. Rationalization Audit — Duplicates, Gaps, Decisions
+
+### A. Apparent overlaps that should remain separate
+
+| Pair / group | Decision | Reason |
+| --- | --- | --- |
+| Google Drive vs GitHub | KEEP BOTH | Drive owns heavy/source files; GitHub owns code and technical state. No true duplication. |
+| Google Docs vs Notion | KEEP BOTH, tighten boundary | Docs = living collaborative protocols/handoffs; Notion = navigation, dashboards, curated knowledge. Do not maintain the same canonical prose in both. |
+| Google Sheets vs Notion databases | PREFER SHEETS for operational/bulk data | Notion is the human-facing layer. Duplicate only curated subsets with explicit ownership. |
+| n8n vs Apps Script | KEEP BOTH, route by scope | Apps Script for Workspace-local/simple workflows; n8n for multi-service orchestration, branching, retries and broader integrations. |
+| Puck vs Showit | KEEP BOTH by architecture | Puck is preferred for new controlled React/Next.js editing; Showit stays where an existing visual marketing site depends on it. Do not migrate for uniformity alone. |
+| Puck vs shadcn/ui | NOT COMPETITORS | Puck is an editor/composition layer; shadcn is a component source. Approved components may be exposed through Puck. |
+| GA vs Clarity | KEEP BOTH when useful | GA answers traffic/acquisition questions; Clarity answers behavioral/session questions. Do not install either without an actual measurement need. |
+| ChatGPT vs Codex | KEEP ROLE SEPARATION | ChatGPT coordinates/researches/reviews; Codex executes bounded code work. Avoid using implementation agents as project memory. |
+
+### B. Redundancy to reduce
+
+1. **Canonical project prose duplicated across GitHub, Docs and Notion** — highest information-architecture risk. Every durable artifact should declare one canonical home; other surfaces should link or summarize.
+2. **Design guidance proliferation** — Taste, Impeccable, Vercel guidelines and external UI libraries must not become four competing design systems. Internal Design Block remains authority; external tools are generation/review inputs.
+3. **Automation choice by habit** — do not start n8n for a two-step Workspace-only task and do not stretch Apps Script into a complex cross-service orchestration engine.
+4. **Analytics accumulation** — avoid adding trackers simply because they are available. Each tracker needs a question/KPI owner and an exit path.
+5. **CMS multiplication** — no new CMS/editor should be introduced for a new React project until Puck is shown insufficient for the required editing model.
+
+### C. Missing links / gaps
+
+#### GAP-1 — Tool registry metadata
+Current inventory names tools but does not yet track `cost`, `account/owner`, `projects using`, `last verified`, `data sensitivity`, `credential location reference`, and `exit/replacement path`.
+
+**Priority: P1.** Add metadata without ever storing secrets themselves.
+
+#### GAP-2 — Database promotion trigger is qualitative
+The architecture correctly says Sheets should graduate to PostgreSQL/Supabase-class storage when scale/relations/concurrency demand it, but no measurable promotion gate exists.
+
+**Priority: P1.** Define triggers such as write concurrency, relational integrity requirements, runtime API dependency, query complexity, row growth, and automation contention before choosing a database.
+
+#### GAP-3 — Unified observability
+Deployment, workflow, indexing, analytics and automation health are observed in separate products. There is no single operational view answering: `what is broken right now?`
+
+**Priority: P1.** Build a lightweight control-plane/dashboard from existing APIs before buying another observability platform.
+
+#### GAP-4 — Secrets / credential governance
+The inventory intentionally does not store credentials, but the system needs a canonical policy for where secrets live, rotation ownership, environment scoping and how agents reference them without copying values into project memory.
+
+**Priority: P0 security/governance.** Existing solution first: prefer platform secret stores / environment management; document references, never secret values.
+
+#### GAP-5 — Backup / restore verification
+Drive/GitHub/SaaS persistence is not the same as a tested recovery plan. Critical project state needs explicit recovery ownership and periodic restore evidence.
+
+**Priority: P1.** Define minimum backup/restore checks by data class.
+
+#### GAP-6 — Design system persistence for new sites
+The design pipeline has generation and QA standards, but every new site needs a small durable project-local design contract so later agents do not re-invent typography, spacing, radii, components and motion.
+
+**Priority: P1.** Standardize a project-local `DESIGN_SYSTEM.md` or equivalent generated/updated from the approved design direction. Do not retrofit stable projects merely to satisfy the convention.
+
+#### GAP-7 — Automated UI acceptance loop
+Impeccable and design standards exist, but a complete repeatable loop should connect rendered viewport screenshots, accessibility/interaction checks, anti-slop/static checks and human approval.
+
+**Priority: P1.** Treat code inspection alone as insufficient evidence of visual quality.
+
+#### GAP-8 — Tool adoption / retirement gate
+Candidates can accumulate indefinitely. There is no single explicit promotion rule for tools themselves.
+
+**Priority: P2.** Candidate tool should have: problem solved, existing-solution comparison, integration cost, recurring cost, data/security impact, pilot evidence, owner, rollback/exit path. Retire candidates that never pass a pilot.
+
+### D. Current default stack after rationalization
+
+```text
+CONTROL / EXECUTION
+ChatGPT -> Codex when bounded implementation is needed
+
+CODE
+GitHub -> Next.js / React / TypeScript -> Vercel
+
+DESIGN
+Project Execution OS Design Block
+  -> existing approved components first
+  -> shadcn/ui or other reviewed component source when useful
+  -> Puck only when visual client editing is required
+  -> rendered UI QA / Impeccable review before acceptance
+
+DATA / KNOWLEDGE
+Drive = files
+Docs = living collaborative documents
+Sheets = current operational structured data
+Notion = human-facing navigation / curated knowledge
+Postgres/Supabase-class DB = only after promotion trigger
+
+AUTOMATION
+Direct supported integration/API first
+Apps Script for Google-local workflows
+n8n for cross-service orchestration
+
+MEASUREMENT
+GSC = search/indexing reality
+GA = traffic/acquisition when needed
+Clarity = behavior/session evidence when needed
+```
+
+### E. Decisions — do now / later / avoid
+
+**DO NOW**
+- Preserve current core stack; no migration campaign.
+- Add explicit tool metadata and ownership fields to this registry.
+- Define secrets-governance and database-promotion gates.
+- Make project-local design-system persistence + rendered UI QA the default for future web projects.
+- Design a lightweight unified operational dashboard from existing sources.
+
+**DO LATER, ON TRIGGER**
+- Adopt PostgreSQL/Supabase-class backend when Sheets crosses a defined suitability threshold.
+- Add specialized component/UI libraries only after a project-specific need and compatibility review.
+- Replace project-specific legacy CMS only when business/technical evidence justifies migration.
+
+**AVOID**
+- Rebuilding stable Olga/Puck editor merely to standardize it.
+- Moving all project knowledge into one SaaS.
+- Installing every researched design library.
+- Duplicating the same canonical data across Sheets and Notion without field ownership.
+- Adding another automation platform while n8n/Apps Script/direct APIs cover the requirement.
+- Treating Vercel, Puck or Notion as universal answers outside their boundaries.
+
+## 14. Maintenance Rule
 
 Update this inventory when any of these occur:
 
