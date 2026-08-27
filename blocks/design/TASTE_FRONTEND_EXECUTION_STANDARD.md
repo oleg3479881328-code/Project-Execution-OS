@@ -2,11 +2,13 @@
 
 ## Purpose
 
-This standard defines how `Project Execution OS` may use the external Taste Skill approach to guide AI coding agents during frontend implementation without allowing one author's visual preferences to override product context, usability, accessibility, performance, or the existing project stack.
+This standard defines how `Project Execution OS` guides AI coding agents during frontend implementation without allowing generic model defaults, one author's taste, or a component library's demo aesthetic to override product context, usability, accessibility, performance, brand, or the existing project stack.
 
 The goal is to reduce generic AI-coded frontend output while keeping design decisions traceable, contextual, reviewable, and compatible with the existing Design Block and Impeccable Design QA Gate.
 
 ## Source Trail
+
+Original reviewed source:
 
 - Source article: `https://pimenov.ai/knowledge/taste-skill-anti-slop-frontend/`
 - Official repository: `https://github.com/Leonxlnx/taste-skill`
@@ -15,60 +17,131 @@ The goal is to reduce generic AI-coded frontend output while keeping design deci
 - Strict GPT variant reviewed: `skills/gpt-tasteskill/SKILL.md`
 - Captured for Project Execution OS on: `2026-07-14`
 
+Additional independent review completed `2026-08-27`:
+
+- UI Skills: `https://www.ui-skills.com/` — agent-oriented catalog/router for design-engineering skills, with CLI and MCP paths.
+- shadcn/ui: `https://ui.shadcn.com/` — open-code component and distribution system; component source is copied into the project and is directly editable by agents.
+- coss ui: `https://coss.com/ui` — modern Base UI-based system for developers and AI; shadcn CLI compatible; useful as an optional extension, not a mandatory base.
+- Design System Checklist: `https://www.designsystemchecklist.com/` — reference checklist for design-system coverage; use as an audit frame, not as a substitute for project requirements.
+- Beautiful UI: `https://www.beautifului.dev/` — components aimed at AI-native interfaces, including streaming, approval, tool, task, chat, flowchart, code and table patterns.
+- beUI: `https://beui.dev/` — open-source React/Next motion components distributed through shadcn; useful selectively for interaction patterns.
+- Rare UI: `https://www.rareui.com/` — small open-source set of distinctive animated React components installable through shadcn CLI; novelty layer only.
+- Transitions.dev: `https://transitions.dev/` — copyable UI transitions plus an agent skill; use selectively for purposeful microinteraction patterns.
+- Emil Kowalski, `You Don't Need Animations`: `https://emilkowal.ski/ui/you-dont-need-animations` — motion should have a purpose; common UI animation should generally remain under 300ms; frequent actions may be better without animation.
+- Emil Kowalski, `Agents with Taste`: `https://emilkowal.ski/ui/agents-with-taste` — concrete agent-facing motion guidance and duration ranges.
+
 ## Status
 
-`candidate`
+`approved internal standard; external tools remain conditional`
 
-The upstream default skill is experimental and can change. This file is the stable Project Execution OS interpretation. Production projects must not silently inherit future upstream changes.
+The internal rules below are stable Project Execution OS policy. External libraries, catalogs and skills are not automatically approved dependencies. Their current version, compatibility, license, accessibility and maintenance status must be checked at implementation time.
 
 ## Core Decision
 
-Taste Skill is not the design strategy, product specification, component library, or final quality gate.
+Do not solve AI design weakness with a stronger aesthetic prompt alone.
 
-Its approved role is a bounded frontend execution layer:
+Use a constrained execution stack:
 
 ```text
-goal and user scenario
--> donor research and selected visual direction
--> page strategy and UI system
--> implementation handoff
--> Taste-guided frontend execution when appropriate
--> Impeccable or manual design QA gate
--> final review and release decision
+product goal + user scenario
+-> Existing Solution First
+-> existing brand/design evidence
+-> donor/reference research
+-> compact Design Read
+-> design-system rules/tokens
+-> approved component primitives
+-> optional specialist components
+-> purposeful motion only
+-> implementation
+-> anti-slop pre-flight
+-> Impeccable/manual visual QA
+-> release decision
 ```
 
-`Project Execution OS` decides what should be built and why.
+The agent is not allowed to treat its learned visual median as the design direction.
 
-Taste guidance helps the coding agent avoid generic visual defaults while implementing it.
+## UI Toolkit Hierarchy
 
-Impeccable or the manual fallback gate checks the visible result after implementation.
+### Layer 0 — Existing Solution First
 
-## When To Use
+Before generating a new component or visual pattern, inspect in this order:
 
-Use this standard for:
+1. existing project components and tokens;
+2. existing project design system and brand assets;
+3. previously approved Project Execution OS design patterns;
+4. suitable established external components/patterns;
+5. custom creation only when the above are insufficient.
 
-- marketing landing pages;
-- product marketing sites;
-- portfolios and presentation websites;
-- campaign or launch pages;
-- visual redesigns of existing marketing surfaces;
-- brand-forward pages where typography, composition, imagery, and motion materially affect the outcome;
-- selected product surfaces when only the bounded product-safe rules below are enabled.
+Do not rebuild a solved UI pattern merely because generation is easy.
 
-## When Not To Use
+### Layer 1 — Rules and Judgment
 
-Do not apply the full Taste Skill behavior to:
+Preferred sources:
 
-- dashboards;
-- admin panels;
-- data tables;
-- dense analytics interfaces;
-- multi-step product workflows;
-- accessibility-critical or regulated interfaces without substantial restriction;
-- tiny UI edits where the full process would add ceremony;
-- backend-only, infrastructure, script, or database work.
+- current project design specification;
+- UI Skills, when its smallest relevant skill improves execution;
+- Design System Checklist as coverage audit;
+- Emil Kowalski motion principles;
+- this Project Execution OS standard.
 
-For these surfaces, use the product specification, the existing design system, and the Impeccable or manual QA gate. Only selected product-safe rules may be borrowed.
+These sources guide decisions. They do not choose the product's visual identity.
+
+### Layer 2 — Base Components
+
+For compatible React projects without an established competing system, `shadcn/ui` is the preferred candidate base because the component source becomes project-owned open code and is straightforward for coding agents to inspect and modify.
+
+This is a preference, not a forced migration rule.
+
+Never migrate an existing design system to shadcn solely because this standard mentions it.
+
+### Layer 3 — Optional Extensions
+
+Use only when a concrete requirement is not cleanly covered by the existing system/base:
+
+- `coss ui` — broader modern primitives/patterns;
+- `Beautiful UI` — AI-native application surfaces;
+- `beUI` — motion-rich interaction components;
+- `Rare UI` — rare/distinctive effects.
+
+Do not mix libraries casually. Imported components must be normalized to project tokens, accessibility rules, interaction behavior and visual language.
+
+### Layer 4 — Motion
+
+Use `Transitions.dev`, beUI motion patterns, or equivalent existing project solutions only after the interaction purpose is identified.
+
+Motion must communicate at least one of:
+
+- state;
+- continuity;
+- hierarchy;
+- spatial relationship;
+- progress/feedback;
+- intentional brand expression on an appropriate marketing surface.
+
+If none applies, default to no animation.
+
+## Required Pre-Code Output
+
+Before an AI coding agent writes or changes a substantial visible frontend, it must produce a compact Design Read.
+
+```text
+Design Read:
+- Surface:
+- Audience:
+- Primary user action:
+- Product or brand lane:
+- Existing components/tokens found:
+- Selected donor references:
+- Base component source:
+- Optional specialist components required:
+- Accessibility or regulatory constraints:
+- Motion purpose, if any:
+- Taste mode: Marketing Full | Existing Surface Redesign | Product-Safe Partial | Excluded
+```
+
+If the direction cannot be inferred and materially different interpretations would produce different work, ask exactly one clarifying question.
+
+Do not ask when the existing specification, donor record, or project context already resolves the direction.
 
 ## Scope Modes
 
@@ -96,80 +169,46 @@ Not automatically allowed:
 
 ### Mode B: Existing Surface Redesign
 
-Use for an existing visible frontend that must preserve functionality and most of its visual language.
-
 Required sequence:
 
 ```text
 Scan -> Diagnose -> Fix -> Test -> QA
 ```
 
-Rules:
-
-- inspect the current framework, styling approach, dependencies, design tokens, and component patterns first;
-- list concrete visual and interaction problems before editing;
-- work with the existing stack;
-- prefer small, reviewable changes over rewrites;
-- test after each bounded change set;
-- document any intentional visual-language change.
+Inspect the current framework, styling, dependencies, design tokens and component patterns first. List concrete problems before editing. Prefer bounded changes over rewrites and preserve functionality.
 
 ### Mode C: Product-Safe Partial
 
-Use for SaaS product pages, Chrome extension interfaces, command centers, internal tools, and other functional product UI.
+Use for SaaS product pages, command centers, internal tools and other functional product UI.
 
-Allowed rules:
+Allowed:
 
-- Design Read;
 - hierarchy and typography discipline;
-- one coherent palette and radius logic;
-- dependency verification;
-- hover, focus, active, loading, empty, error, and disabled states;
+- coherent palette/radius logic;
+- verified components;
+- hover, focus, active, loading, empty, error and disabled states;
 - responsive behavior;
 - accessibility checks;
-- import and asset verification;
 - anti-repetition review;
 - final pre-flight.
 
 Disabled by default:
 
-- AIDA as a universal page structure;
+- AIDA as universal structure;
 - mandatory GSAP or scroll hijacking;
 - mandatory imagery;
 - huge cinematic spacing;
 - forced asymmetry;
 - visual randomization;
-- motion on every clickable element;
-- marketing-specific hero rules.
+- motion on every clickable element.
 
 ### Mode D: Excluded
 
-For data-heavy dashboards, admin panels, regulated workflows, and tables, do not install or invoke the full external Taste Skill.
-
-Use the project design system and a product-oriented QA checklist instead.
-
-## Required Pre-Code Output
-
-Before an AI coding agent writes or changes a substantial visible frontend, it must produce a compact Design Read.
-
-```text
-Design Read:
-- Surface:
-- Audience:
-- Primary user action:
-- Product or brand lane:
-- Selected donor references:
-- Existing design system or stack:
-- Accessibility or regulatory constraints:
-- Taste mode: Marketing Full | Existing Surface Redesign | Product-Safe Partial | Excluded
-```
-
-If the direction cannot be inferred and materially different interpretations would produce different work, ask exactly one clarifying question.
-
-Do not ask when the existing specification, donor record, or project context already resolves the direction.
+For data-heavy dashboards, regulated workflows and dense tables, do not invoke a full marketing-oriented Taste behavior. Use the project design system and product-oriented QA.
 
 ## Taste Profile
 
-For approved scopes, record these three parameters in the project `DESIGN.md`, implementation handoff, or equivalent durable project artifact:
+For approved scopes, record:
 
 ```text
 Taste Profile:
@@ -179,15 +218,7 @@ Taste Profile:
 - Rationale:
 ```
 
-Definitions:
-
-- `DESIGN_VARIANCE`: 1 means highly conventional and symmetrical; 10 means highly experimental and compositionally irregular.
-- `MOTION_INTENSITY`: 1 means nearly static; 10 means cinematic, scroll-driven, and physics-heavy.
-- `VISUAL_DENSITY`: 1 means highly spacious; 10 means information-dense.
-
-The agent may recommend values but must not silently change approved project values during implementation.
-
-Suggested starting ranges:
+Suggested ranges:
 
 | Surface | Variance | Motion | Density |
 |---|---:|---:|---:|
@@ -195,252 +226,159 @@ Suggested starting ranges:
 | Creative agency landing | 8-9 | 6-8 | 3-4 |
 | Premium consumer landing | 6-8 | 4-6 | 3-4 |
 | Developer portfolio | 5-7 | 4-6 | 3-4 |
-| Existing redesign, preserve | match existing | existing +0 to +1 | match existing |
+| Existing redesign | match existing | existing +0 to +1 | match existing |
 | Product UI | 3-5 | 1-3 | 4-7 |
 | Accessibility-critical UI | 2-4 | 1-2 | 4-6 |
 
-## Rule Levels
+## Anti-Slop Hard Gate
 
-Every imported Taste rule must be classified as one of these:
+The following defaults are forbidden unless justified by project evidence or an explicit design decision:
 
-### Mandatory
+- blue/purple/indigo gradient as an automatic AI aesthetic;
+- Inter or another default font chosen only because it is convenient;
+- glassmorphism used as generic decoration;
+- every content group placed inside a rounded card;
+- repeated three-equal-card sections without information-architecture reason;
+- identical section composition repeated down the page;
+- generic `hero -> logos -> features -> testimonials -> CTA` skeleton used without content/strategy justification;
+- oversized rounded corners everywhere;
+- arbitrary glow, blur, mesh gradient, grain or shadow effects;
+- decorative dashboard charts or fake metrics;
+- meaningless badges/pills above headings;
+- placeholder copy presented as production content;
+- animation added only to make the interface look premium;
+- component-library demo styling shipped without adapting it to the project.
 
-Applies whenever relevant:
+Passing the gate does not require being visually unusual. It requires every major visual choice to be explainable by the product, audience, brand, content, interaction or selected reference direction.
 
-- understand the brief before coding;
-- use the approved project stack and design system;
-- verify dependencies before importing them;
-- verify font and asset licensing;
-- preserve accessibility fundamentals;
-- implement relevant component states;
-- define responsive behavior explicitly;
-- avoid broken contrast, overflow, wrapping, and horizontal scroll;
-- test functionality after redesign changes;
-- record what was checked.
+## Design System Minimum Coverage
 
-### Recommended
+For substantial new surfaces, verify at minimum:
 
-Normally useful but may be waived with a reason:
+- color roles and contrast;
+- typography roles and scale;
+- spacing system;
+- sizing/container logic;
+- radii;
+- borders and shadows;
+- icon treatment;
+- responsive breakpoints/behavior;
+- interactive states;
+- form states and validation;
+- loading/empty/error/success states where relevant;
+- focus and keyboard behavior;
+- motion tokens/rules if motion exists;
+- image/illustration treatment if visual assets exist.
 
-- avoid automatic AI-purple gradients;
-- avoid repeated three-equal-card layouts;
-- avoid making every section use the same composition;
-- avoid unnecessary card containers;
-- keep one coherent accent and neutral family;
-- keep radius, icon, and shadow logic consistent;
-- keep body copy at readable line lengths;
-- use semantic HTML;
-- use real content rather than lorem ipsum;
-- prefer layout and spacing fixes before adding decorative effects.
+A checklist is a coverage tool, not proof of design quality.
 
-### Contextual
+## Motion Standard
 
-Use only when supported by the brief:
+Motion must be purposeful and fast.
 
-- asymmetric hero layouts;
-- bento composition;
-- serif display typography;
-- kinetic typography;
-- generated hero imagery;
-- GSAP, scroll pinning, horizontal scroll, magnetic hover, or other advanced motion;
-- strict hero copy-length limits;
-- AIDA page structure;
-- cinematic section spacing;
-- texture, grain, glass, mesh gradients, or other material effects.
+Default guidance from reviewed Emil Kowalski material:
 
-No contextual rule becomes mandatory merely because it appears in an external skill.
-
-## Protected Boundaries
-
-### Existing Stack
-
-Do not migrate React, Next.js, Tailwind, CSS modules, vanilla CSS, or another styling system solely because the upstream skill prefers a different stack.
-
-Use official design-system packages when the project explicitly belongs to that ecosystem and the choice is approved. Do not mix multiple full design systems in one component tree without a documented architecture decision.
-
-### Dependencies
-
-Before importing any package:
-
-1. inspect the project's dependency file;
-2. confirm the package is present or add an explicit installation step;
-3. verify framework and major-version compatibility;
-4. avoid introducing a large animation or UI dependency for a minor visual effect.
-
-### Font Licensing
-
-A font named in an external skill is not automatically licensed for production.
-
-Use only:
-
-- already licensed brand fonts;
-- open-source fonts with verified web-use terms;
-- system fonts;
-- fonts approved through a separate licensing decision.
-
-Record any commercial font dependency in the project handoff.
-
-### Motion
-
-Motion must communicate hierarchy, state, continuity, or brand intent.
-
-Do not add motion merely to make the interface appear expensive.
-
-Required safeguards:
-
+- micro-interactions: roughly 100-150ms;
+- common UI such as tooltips/dropdowns: roughly 150-250ms;
+- modals/drawers: roughly 200-300ms;
+- common UI animation should generally stay under 300ms;
+- repeated high-frequency actions may need no animation;
+- exit can often be faster than entrance;
 - honor `prefers-reduced-motion`;
-- avoid scroll hijacking unless explicitly approved;
-- prefer `transform` and `opacity` for animation;
-- isolate client-side animation code in frameworks that distinguish server and client components;
-- verify mobile performance;
-- do not require GSAP for surfaces that can be implemented cleanly with CSS or a lighter existing dependency.
+- prefer compositor-friendly `transform` and `opacity` where appropriate;
+- do not introduce a large animation dependency for a minor effect.
 
-### Image-First Work
+These are defaults, not immutable laws.
 
-Image-first design is optional, not universal.
+## Component Import Gate
 
-Use it when visual direction cannot be resolved through existing brand assets or donor references and the surface is marketing-oriented.
+Before importing any external UI component:
 
-Do not require generated imagery for dashboards, utilities, settings, forms, tables, or other function-first surfaces.
-
-Generated assets must still be checked for relevance, consistency, licensing, accessibility, crop behavior, and responsive use.
+1. confirm an equivalent does not already exist locally;
+2. verify framework/version compatibility;
+3. verify dependency cost;
+4. inspect accessibility and keyboard behavior;
+5. inspect responsive behavior;
+6. verify license and asset/font rights;
+7. normalize tokens and styling to the project;
+8. remove demo-only effects/content;
+9. test relevant states;
+10. record the source when the component becomes an approved reusable pattern.
 
 ## Anti-Slop Pre-Flight
 
-Before implementation is handed to the final QA gate, the executor must check all relevant items.
+Before final QA, verify:
 
 ### Context
-
-- The Design Read matches the actual project brief.
-- The selected mode is appropriate for the surface.
-- Approved donor references and existing brand assets were used.
-- The implementation does not substitute the agent's favorite aesthetic for the audience's needs.
+- Design Read matches the brief.
+- Existing solutions were inspected first.
+- Donor/brand evidence was used where available.
+- Agent preference did not replace audience/product needs.
 
 ### Layout
-
-- The page does not repeat the same section family without a reason.
-- Marketing pages are not built only from equal cards.
-- Multi-column sections have explicit mobile behavior.
-- No accidental horizontal scrolling exists.
-- Navigation, hero, CTAs, and dense sections fit their intended viewports.
-- Bento or grid layouts contain no unexplained empty cells.
+- Repetition has a reason.
+- Mobile behavior is explicit.
+- No accidental horizontal scroll.
+- Navigation, hero, CTAs and dense sections fit target viewports.
 
 ### Typography and Content
-
-- Heading scale and line breaks are intentional.
+- Heading scale/line breaks are intentional.
 - Paragraph line length is readable.
-- Buttons do not wrap unexpectedly on desktop.
-- Copy is specific and not generic AI marketing language.
-- No placeholder content, fake links, or unexplained sample data remains.
-- Fonts used are available and licensed.
+- Buttons do not wrap unexpectedly.
+- Copy is specific, not generic AI marketing language.
+- No unexplained placeholder content remains.
+- Fonts are available and licensed.
 
 ### Color and Shape
-
-- Text and interactive controls meet required contrast.
-- Accent, neutral, corner-radius, icon, and shadow logic are coherent.
-- AI-purple, beige-luxury, glass, or other fashionable palettes are present only when justified by the brief.
-- Visual effects do not obscure function or readability.
+- Contrast is adequate.
+- Accent, neutral, radius, icon and shadow logic are coherent.
+- AI-purple, beige-luxury, glass or other fashionable defaults appear only when justified.
 
 ### Interaction and States
-
-- Relevant hover, focus, active, loading, empty, error, success, and disabled states exist.
+- Relevant hover/focus/active/loading/empty/error/success/disabled states exist.
 - Keyboard focus is visible.
-- Form labels are not replaced by placeholders.
-- Error messages are direct and contextual.
+- Labels are not replaced by placeholders.
 - Motion has a reduced-motion path.
 
 ### Technical Integrity
-
-- Every import resolves.
-- Dependencies and versions were verified.
-- Semantic elements and useful alternative text are present.
-- Mobile behavior was tested rather than assumed.
-- Existing functionality still works after redesign.
-- No debug code, dead code, fake destinations, or arbitrary z-index escalation remains.
+- Imports resolve.
+- Dependencies/versions are verified.
+- Semantic elements and useful alt text are present.
+- Mobile behavior was tested.
+- Existing functionality still works.
+- No debug code, fake destinations or arbitrary z-index escalation remains.
 
 ## Relationship To Impeccable
 
-Taste-guided execution and Impeccable are complementary.
-
 ```text
-Taste guidance = generation-time direction
-Impeccable = post-implementation design QA
+Taste/UI guidance = generation-time direction
+Anti-Slop Gate = implementation sanity check
+Impeccable = post-implementation visual QA
 ```
 
-The Taste pre-flight does not replace the `IMPECCABLE_DESIGN_QA_GATE.md` process.
-
-A release-bound or owner-facing frontend must still pass:
-
-```text
-Impeccable-backed gate
-```
-
-or:
-
-```text
-manual fallback gate
-```
-
-Do not claim either tool or skill was run without command, report, commit, or other evidence.
+A release-bound or owner-facing frontend must still pass the Impeccable-backed gate or documented manual fallback. Never claim a tool/skill was run without evidence.
 
 ## Upstream Version Control
 
-Do not depend on an unpinned upstream `main` branch for production behavior.
-
-Approved options:
-
-1. use this stable internal standard without installing the external skill;
-2. pin the external repository to a reviewed commit;
-3. copy a reviewed `SKILL.md` into the project and record its source commit;
-4. install a named upstream skill only after verifying its current content.
-
-When upstream changes are adopted, record:
-
-```text
-- upstream repository
-- skill name
-- commit or version
-- date reviewed
-- material changes
-- Project Execution OS rules retained, changed, or rejected
-```
-
-## Recommended Project Handoff Record
-
-```text
-Taste Frontend Execution:
-- Mode:
-- Target surface:
-- Design Read path:
-- Taste Profile path:
-- Upstream skill installed: yes/no
-- Upstream skill name and commit:
-- Existing stack preserved: yes/no
-- Dependencies added:
-- Fonts and licensing checked:
-- Motion safeguards checked:
-- Anti-slop pre-flight result:
-- Waivers:
-- Next QA gate: Impeccable | manual fallback
-- Remaining design risks:
-```
+Do not depend on an unpinned external `main` branch for production behavior. Pin reviewed versions/commits where practical and record material upstream changes before adopting them.
 
 ## Fail Conditions
 
-Fail this execution layer when any of these are true:
+Fail the execution layer when any of these are true:
 
-- the agent starts coding before understanding the surface and audience;
-- a marketing-oriented Taste profile is applied to a dashboard or workflow UI;
-- existing functionality or stack is replaced without approval;
-- GSAP, imagery, or cinematic motion is treated as mandatory by default;
-- unlicensed or unavailable fonts are used;
-- accessibility or mobile behavior is ignored;
-- upstream behavior changed without version review;
-- the executor claims a Taste or Impeccable pass without evidence;
-- the result is visually novel but less clear, usable, performant, or maintainable.
+- coding starts before the surface and audience are understood;
+- Existing Solution First was skipped;
+- an external component was imported merely because it looked impressive;
+- a marketing aesthetic was applied to a workflow UI;
+- existing functionality or stack was replaced without approval;
+- animation, imagery or cinematic motion was treated as mandatory;
+- unavailable/unlicensed fonts or assets were used;
+- accessibility/mobile behavior was ignored;
+- a component-library demo aesthetic was mistaken for the project's design system;
+- the result is visually novel but less clear, usable, performant or maintainable.
 
 ## Final Rule
 
-Use Taste to correct AI defaults, not to create a new default.
+Use design guidance to correct AI defaults, not to create a new default.
 
-The interface must remain grounded in the product, audience, selected references, existing stack, accessibility requirements, and measurable user path.
+The best interface is not the one that looks least like AI. It is the one whose visual and interaction decisions are grounded in the product, audience, brand, selected references, existing stack, accessibility requirements and measurable user path.
