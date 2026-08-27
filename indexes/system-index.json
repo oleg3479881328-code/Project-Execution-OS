@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "9b0eaaa9ebf9123b732fe889112cef3dc63502b8",
-  "generated_at": "2026-08-27T18:50:42-04:00",
-  "artifact_count": 550,
+  "repository_commit": "024ed51c5cd29b4a4b835bed0830f11958819c6d",
+  "generated_at": "2026-08-27T19:34:48-04:00",
+  "artifact_count": 551,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7464,6 +7464,36 @@
         "Recommended Migration Order",
         "What Must Exist Before Deleting 3TestAgents",
         "Deletion Rule"
+      ]
+    },
+    {
+      "path": "docs/TOOL_STACK_AUDIT.md",
+      "title": "Project Execution OS — Tool & Stack Audit",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "dd57804e7a0993e414924d3af3e42385707bf83d2cb42ef9a2e060a3e33e282e",
+      "headings": [
+        "Project Execution OS — Tool & Stack Audit",
+        "Purpose",
+        "Status Legend",
+        "1. AI / Execution Layer",
+        "2. Web Application Stack",
+        "3. Design / UI Quality Layer",
+        "4. Durable Storage / Knowledge / Data Layer",
+        "5. Automation / Integration Layer",
+        "6. Website / CMS / Client-Site Platforms",
+        "7. SEO / Analytics / Visibility Layer",
+        "8. Research / Extraction / Media Utilities",
+        "9. Communication / Work Coordination",
+        "10. Current Proven Web Platform Combination",
+        "11. Important Boundaries",
+        "12. Audit Findings",
+        "What is strong today",
+        "Current weaknesses / cleanup opportunities",
+        "13. Maintenance Rule",
+        "Related Canonical Nodes"
       ]
     },
     {
