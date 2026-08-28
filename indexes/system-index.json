@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "91332e7216084656518eeda01140c66d22bde948",
-  "generated_at": "2026-08-28T12:19:21-04:00",
+  "repository_commit": "3a78b04c148d7eedb65877f723ed9a9ac86e803d",
+  "generated_at": "2026-08-28T12:20:06-04:00",
   "artifact_count": 553,
   "artifacts": [
     {
@@ -6430,14 +6430,14 @@
     },
     {
       "path": "docs/HARNESS_ENGINEERING_STANDARD.md",
-      "title": "Harness Engineering Standard v1",
+      "title": "Harness Engineering Standard v2",
       "type": "system-standard",
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "bd586c54a857456fa8002613349e836a81f6369f8aab69ff810c8c25e44b1277",
+      "sha256": "f6fe26082efe56ddff1c8be64313d73e75eb85cc8d3d680d68366437444a5112",
       "headings": [
-        "Harness Engineering Standard v1",
+        "Harness Engineering Standard v2",
         "Purpose",
         "Source Trail",
         "Scope",
@@ -6454,6 +6454,11 @@
         "8. Memory",
         "9. Verification",
         "10. Observability And Handoff",
+        "Bounded Execution Contract",
+        "Verification Invalidation Law",
+        "User-Facing Behavioral Verification",
+        "Code Checkpoint Rule",
+        "Skill Extraction Rule",
         "Minimum Harness Package",
         "Harness Change Protocol",
         "Relationship To Existing Standards",
@@ -7139,18 +7144,20 @@
     },
     {
       "path": "docs/REVIEW_STANDARD.md",
-      "title": "Review Standard v2",
+      "title": "Review Standard v3",
       "type": "system-standard",
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "712d115028cc9476805283bc57560b59b1962ec74db2dd75332b9162d23ab091",
+      "sha256": "bbf68530d6b0aa4823a0235812e5b9f4b64048320927e10627e2c977c1043cc3",
       "headings": [
-        "Review Standard v2",
+        "Review Standard v3",
         "Purpose",
         "Review Scope",
         "Acceptance Rule",
         "Review Evidence",
+        "Verification Invalidation Rule",
+        "Bounded Change Review",
         "Micro-Task Mode",
         "Logging Rule"
       ]
