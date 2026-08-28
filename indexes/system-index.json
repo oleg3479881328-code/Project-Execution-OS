@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "93c406979eb96ffe830dd85df3edc509bfdd3afc",
-  "generated_at": "2026-08-27T19:39:40-04:00",
-  "artifact_count": 552,
+  "repository_commit": "91332e7216084656518eeda01140c66d22bde948",
+  "generated_at": "2026-08-28T12:19:21-04:00",
+  "artifact_count": 553,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7751,6 +7751,30 @@
         "Evidence Rule",
         "Sync and Automation Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/research/VIBECODING_WITHOUT_CHAOS_GAP_ANALYSIS_2026-08-28.md",
+      "title": "Vibe Coding Without Chaos — Gap Analysis",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "reviewed donor reference",
+      "date": "2026-08-28",
+      "sha256": "2bdd7f47f4ff9b152d0bea0f85578ea3d975d6bcd8eabbd584342da292497196",
+      "headings": [
+        "Vibe Coding Without Chaos — Gap Analysis",
+        "Purpose",
+        "Executive Result",
+        "Rule-by-Rule Comparison",
+        "Accepted Standard Changes",
+        "A. Bounded Execution Contract",
+        "B. Verification Invalidation Law",
+        "C. UI Behavioral Verification Baseline",
+        "D. Bounded Improvement Rule",
+        "E. Code Checkpoint Rule",
+        "F. Skill Extraction Rule",
+        "Rejected / Not Adopted As New Architecture",
+        "Final Decision"
       ]
     },
     {
