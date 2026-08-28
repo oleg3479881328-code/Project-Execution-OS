@@ -1,4 +1,4 @@
-# Harness Engineering Standard v1
+# Harness Engineering Standard v2
 
 ## Purpose
 
@@ -14,7 +14,12 @@ Primary donor reference:
 
 - `https://github.com/ai-boost/awesome-harness-engineering`
 
-This standard adapts the donor concept into the existing `Project Execution OS` architecture. It does not copy the donor list as a dependency or replace local OS standards.
+Additional reviewed execution reference:
+
+- `https://pimenov.ai/articles/vaybkoding-bez-bardaka/`
+- gap analysis: `docs/research/VIBECODING_WITHOUT_CHAOS_GAP_ANALYSIS_2026-08-28.md`
+
+Donor references inform this standard but do not replace local OS architecture.
 
 ## Scope
 
@@ -32,36 +37,20 @@ Do not force this standard onto a disposable one-off chat task with no reuse, ri
 
 ## Core Definition
 
-In this OS:
-
 ```text
 Agent harness = the controlled execution environment around an AI agent.
 ```
 
-A harness may include:
-
-- entrypoint and routing;
-- context package;
-- planning artifact;
-- tool interface;
-- permission boundary;
-- memory or state layer;
-- sandbox or execution environment;
-- verification loop;
-- observability and logs;
-- human approval or escalation path;
-- handoff state.
+A harness may include entrypoint and routing, context, planning, tools, permissions, memory, sandbox, verification, observability, approval, and handoff state.
 
 ## Core Rule
-
-Use this operating rule:
 
 ```text
 Do not start by adding more agents.
 Start by making the smallest sufficient harness explicit.
 ```
 
-The preferred progression is:
+Preferred progression:
 
 ```text
 single answer
@@ -71,47 +60,45 @@ single answer
   -> multi-agent workflow only when evidence justifies separation
 ```
 
-This mirrors `docs/AGENT_QUALITY_SCORECARD_STANDARD.md`: useful, repeatable outcomes matter more than complexity.
-
 ## Minimum Harness Questions
 
-Before promoting an agent or workflow beyond one-off use, answer the smallest relevant subset of these questions.
+Before promoting an agent or workflow beyond one-off use, answer the smallest relevant subset.
 
 ### 1. Task Shape
 
 - What repeated task is this harness for?
 - Is the task bounded, long-running, risky, or multi-session?
 - What is the successful outcome?
-- What should be explicitly out of scope?
+- What is explicitly out of scope?
 
 ### 2. Entrypoint And Route
 
 - Where does the agent start?
 - Which router or project entrypoint must be read first?
 - Which deeper files are loaded only when needed?
-- How does a new executor avoid using stale chat memory?
+- How does a new executor avoid stale chat memory?
 
 ### 3. Context Delivery
 
 - What is always-on context?
 - What is retrieved on demand?
 - What must survive context compaction?
-- What should never enter the model context?
+- What should never enter model context?
 
-Use `docs/CONTEXT_ASSEMBLY_STANDARD.md` for routed context decisions.
+Use `docs/CONTEXT_ASSEMBLY_STANDARD.md`.
 
 ### 4. Planning And State
 
 - Does the task need a durable plan?
 - Where are decisions, deviations, and progress recorded?
-- What state must survive handoff to another agent?
+- What state must survive handoff?
 
-For long or transferable work, use the active project continuity pattern from `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`.
+Use `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md` for long or transferable work.
 
 ### 5. Tools
 
 - Which tools are available?
-- Which tools are actually needed for this workflow?
+- Which are actually needed?
 - Are tool names and outputs unambiguous?
 - Does each tool do one conceptual thing?
 - Do tool errors tell the agent what to do next?
@@ -120,10 +107,8 @@ Do not expose broad tool sets merely because they exist.
 
 ### 6. Permissions
 
-- Which actions are read-only?
-- Which actions are write-capable?
-- Which actions are destructive, external, financial, publishing, deployment, or communication actions?
-- Which actions require explicit human approval?
+- Which actions are read-only, write-capable, destructive, external, financial, publishing, deployment, or communication actions?
+- Which require explicit human approval?
 - What is forbidden even if technically possible?
 
 Default to least privilege.
@@ -133,25 +118,25 @@ Default to least privilege.
 - Where does code, shell, browser, or file execution happen?
 - What files, network domains, credentials, and secrets are reachable?
 - Can the agent modify its own rules, tools, hooks, or permission files?
-- What is the rollback path if the agent makes a bad change?
+- What is the rollback path?
 
-An agent that can edit its own harness must be treated as a higher-risk system.
+An agent that can edit its own harness is higher risk.
 
 ### 8. Memory
 
 - What should be remembered?
-- Who approves memory writes when the memory affects future behavior?
-- How are stale, contradicted, or project-specific memories invalidated?
-- Where is memory stored: project files, repository memory, external database, or platform memory?
+- Who approves memory writes that affect future behavior?
+- How are stale or contradicted memories invalidated?
+- Where is memory stored?
 
 Prefer durable project files for project-specific state before inventing a global memory layer.
 
 ### 9. Verification
 
 - What check proves the output works?
-- Can the agent run that check itself?
+- Can the agent run it itself?
 - What requires human review?
-- Which failures must be recorded for future regression tests?
+- Which failures should become regression cases?
 
 Do not accept `it looked good once` as evidence for a repeated workflow.
 
@@ -163,6 +148,69 @@ Do not accept `it looked good once` as evidence for a repeated workflow.
 - Can another executor resume without reading the chat transcript?
 
 Use `logs/latest.md`, project state files, or the owning workflow log when the task must survive handoff.
+
+## Bounded Execution Contract
+
+For non-trivial implementation work, establish the smallest useful contract before editing:
+
+```text
+GOAL
+USER-OBSERVABLE RESULT
+CONTEXT TO READ
+CHANGE
+DO NOT TOUCH
+VERIFY
+ROLLBACK / SAFE CHECKPOINT
+```
+
+Omit fields that add no value for a micro-task. The purpose is to bound the decision space, not create paperwork.
+
+If the instruction is vague, such as `improve this screen` or `clean up the code`, do not interpret it as permission for broad refactoring. Convert it into an observable defect or desired outcome, explicit boundaries, non-goals, and verification. Adjacent improvements become separate candidate tasks unless required by the current contract.
+
+## Verification Invalidation Law
+
+```text
+Any change made after verification invalidates the previous verification for every behavior that the new change could affect.
+```
+
+Do not preserve a `validated` state merely because an earlier version passed. Re-run the relevant checks after the last affecting change.
+
+## User-Facing Behavioral Verification
+
+Machine checks are necessary when applicable, but they do not by themselves prove user-facing behavior.
+
+For UI work, verify the relevant subset of:
+
+- open from a clean/reproducible state;
+- primary success path;
+- one relevant error, invalid, empty, or failure state;
+- refresh/persistence when persistence is part of the contract;
+- critical console errors and network failures;
+- representative desktop and mobile viewport when responsive behavior is in scope.
+
+Choose checks from the actual contract. Do not perform irrelevant browser rituals merely to satisfy a checklist.
+
+Browser tools such as Playwright or DevTools are implementation options, not mandatory dependencies. The requirement is observable evidence appropriate to the task.
+
+## Code Checkpoint Rule
+
+For Git-backed implementation work, after the final relevant verification:
+
+1. inspect the actual diff;
+2. confirm no unrelated files or behavior changed;
+3. preserve a known rollback path;
+4. prefer one coherent completed change per commit/checkpoint;
+5. distinguish `committed` from `validated` and `reviewed`.
+
+A commit proves a stored state. It does not prove the behavior works.
+
+## Skill Extraction Rule
+
+Do not create a reusable skill merely because a workflow can be imagined.
+
+Promote a workflow into a skill only after real executions show a recurring, sufficiently stable sequence of inputs, boundaries, checks, stop conditions, and output evidence. If each run still requires major instruction rewriting, keep collecting observations instead of hiding uncertainty inside automation.
+
+Use the Skill Creator block and lifecycle standards for the actual promotion decision.
 
 ## Minimum Harness Package
 
@@ -206,13 +254,11 @@ When changing a harness:
 4. Keep the entrypoint and router consistent.
 5. Add or update verification guidance.
 6. Update transfer state when the change is meaningful.
-7. Record what was reused, what was adapted, and what remains custom.
+7. Record what was reused, adapted, and remains custom.
 
 Do not add empty templates, logs, agents, scorecards, memory files, or workflow layers by ritual.
 
 ## Relationship To Existing Standards
-
-Use this standard as the architecture wrapper. Then delegate specifics:
 
 | Concern | Use |
 |---|---|
@@ -225,6 +271,7 @@ Use this standard as the architecture wrapper. Then delegate specifics:
 | Research | `docs/RESEARCH_STANDARD.md` |
 | Review | `docs/REVIEW_STANDARD.md` |
 | Codex handoff | `docs/CODEX_HANDOFF_ENTRYPOINT.md` |
+| Skill creation | `blocks/skill-creator/BLOCK.md` |
 
 ## Promotion Levels
 
@@ -258,7 +305,9 @@ Investigate and improve the harness when:
 - tool errors lead to hallucinated workarounds;
 - memory becomes stale or contradicts project files;
 - cost grows without quality improvement;
-- adding another agent increases handoff failures.
+- adding another agent increases handoff failures;
+- a task expands through undefined “improvements”;
+- code is changed after verification without re-verifying affected behavior.
 
 ## Final Rule
 
@@ -266,4 +315,4 @@ Engineer the scaffold before blaming the model.
 
 Use the smallest sufficient harness.
 
-Make context, tools, permissions, verification, and handoff explicit before treating an agent as reliable.
+Make context, tools, permissions, boundaries, verification, rollback, and handoff explicit before treating an agent as reliable.
