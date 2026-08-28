@@ -2,7 +2,7 @@
 project_name: Project Execution OS
 project_mode: compact
 status: transfer_ready
-updated_at: 2026-08-23
+updated_at: 2026-08-28
 source_of_truth: repository
 active_branch: main
 ---
@@ -22,14 +22,39 @@ domain knowledge
 -> owner-facing UI
 ```
 
-A new architecture research track is now active: determine whether official Codex App Server / Codex harness interfaces can replace or simplify parts of the current manual/bridge-based worker handoff while preserving Project Execution OS ownership of routing, memory, approvals, review, and durable evidence.
+A new architecture research track is active: determine whether official Codex App Server / Codex harness interfaces can replace or simplify parts of the current manual/bridge-based worker handoff while preserving Project Execution OS ownership of routing, memory, approvals, review, and durable evidence.
 
 Research task: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/113
 Trigger reference: https://pimenov.ai/articles/codex-stanovitsya-platformoy-agent-vnutri-raboty/
 
 This is research only. No runtime replacement, Prompt Bridge removal, or architecture migration is approved until primary-source evidence is reviewed.
 
-## Latest Confirmed Milestone
+## Latest Standards Milestone — 2026-08-28
+
+The article `https://pimenov.ai/articles/vaybkoding-bez-bardaka/` was reviewed as a donor/reference against current Project Execution OS standards.
+
+Gap analysis:
+
+`docs/research/VIBECODING_WITHOUT_CHAOS_GAP_ANALYSIS_2026-08-28.md`
+
+Accepted improvements were integrated into existing standards instead of creating a parallel “vibe coding” workflow:
+
+- `docs/HARNESS_ENGINEERING_STANDARD.md` upgraded to v2;
+- `docs/REVIEW_STANDARD.md` upgraded to v3.
+
+New explicit central rules:
+
+- bounded execution contract: `GOAL / USER-OBSERVABLE RESULT / CONTEXT / CHANGE / DO NOT TOUCH / VERIFY / ROLLBACK` for non-trivial implementation work when relevant;
+- any affecting change after verification invalidates the previous verification for affected behavior;
+- user-facing work requires behavioral evidence when reasonably possible, not only machine checks;
+- UI verification uses the relevant subset of success path, failure state, persistence/refresh, console/network, desktop/mobile checks;
+- vague “improve/clean up” instructions must be converted into bounded observable outcomes before broad changes;
+- Git-backed implementation should inspect the final diff, preserve rollback, and prefer one coherent completed change per checkpoint;
+- skills should be extracted from observed stable repetition rather than invented before the process stabilizes.
+
+The donor's fixed documentation tree and one-hour setup sequence were not adopted as universal OS architecture. Existing routed bootstrap and progressive memory remain authoritative.
+
+## Latest Confirmed Product Milestone
 
 `Block Studio 0.1.0` was implemented and merged as the first local visual application for capability blocks.
 
@@ -89,6 +114,7 @@ For worker orchestration, the existing OS architecture remains authoritative whi
 ## Current Focus
 
 - Research Issue #113: official Codex App Server / Harness integration surface and fit with Project Execution OS.
+- Apply the strengthened bounded-execution and verification rules to future implementation work.
 - Owner test on the target Windows computer with a real user-owned file.
 - Keep Block Studio and `media.probe` at `candidate` until that confirmation is received.
 - Build `media.clip` as the second capability and add its interactive Studio page.
@@ -118,14 +144,16 @@ Capability track:
 4. `PROJECT_STATE.md`
 5. `logs/latest.md`
 6. `docs/HARNESS_ENGINEERING_STANDARD.md`
-7. `docs/CODEX_HANDOFF_STANDARD.md`
-8. Issue #113 — Codex App Server / Harness research
-9. `apps/README.md`
-10. `apps/block-studio/README.md`
-11. `apps/block-studio/VALIDATION.md`
-12. `capability-library/REGISTRY.md`
-13. `capabilities/media-probe/BLOCK.md`
-14. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
+7. `docs/REVIEW_STANDARD.md`
+8. `docs/research/VIBECODING_WITHOUT_CHAOS_GAP_ANALYSIS_2026-08-28.md`
+9. `docs/CODEX_HANDOFF_STANDARD.md`
+10. Issue #113 — Codex App Server / Harness research
+11. `apps/README.md`
+12. `apps/block-studio/README.md`
+13. `apps/block-studio/VALIDATION.md`
+14. `capability-library/REGISTRY.md`
+15. `capabilities/media-probe/BLOCK.md`
+16. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
 
 ## Known Blockers
 
@@ -145,4 +173,6 @@ Capability track:
 - Do not retain temporary owner files after explicit cleanup.
 - Do not promote `media.probe` or Block Studio beyond registry evidence.
 - Do not extract a common SDK from one block alone.
+- Do not preserve a validated state after an affecting post-verification change without re-running relevant checks.
+- Do not interpret vague improvement requests as permission for unbounded refactoring.
 - Update this file and `logs/latest.md` after every meaningful central-project change.
