@@ -1,4 +1,4 @@
-# Knowledge System v2
+# Knowledge System v3
 
 ## 1. Purpose
 
@@ -90,7 +90,70 @@ Meaning:
 
 Do not silently treat `captured`, `researched` or `candidate` material as an active operating rule.
 
-## 7. Promotion Rule
+## 7. Promotion Gate After Meaningful Work
+
+After every meaningful work step, the executor must decide whether anything learned should be promoted out of temporary session context.
+
+Use this compact gate:
+
+```text
+Did this work produce something worth reusing or preserving?
+-> no: continue; do not create documentation by ritual
+-> yes: classify it and update the narrowest correct existing artifact
+```
+
+Classify before creating anything new:
+
+- current project fact, completion state, blocker, or next action -> current state / current log;
+- project-specific decision -> project decision record or equivalent durable project artifact;
+- architecture decision with durable consequences -> architecture-decision record / ADR-style artifact;
+- verified failure plus verified fix -> verified technical solution, known-fix entry, or narrow runbook;
+- repeatable operational procedure -> SOP, runbook, checklist, or playbook;
+- reusable pattern or lesson -> project knowledge first; central knowledge only when cross-project reuse is proven;
+- mandatory rule that should govern future work -> update an existing standard first; create a new standard only when no existing standard cleanly owns the rule;
+- reusable executable or instruction-backed behavior -> existing skill/capability path, not a prose standard;
+- raw idea, donor, article, or unverified outside solution -> reference capture, not active knowledge.
+
+### Promotion Selection Rule
+
+Do not use a mechanical repetition threshold such as "the second occurrence becomes a standard."
+
+Promotion depends on evidence, reuse value, scope, and stability.
+
+A lesson may deserve immediate durable capture after one high-value incident, while a frequently repeated local behavior may still belong only in a project runbook.
+
+### Existing Artifact First
+
+Before creating a new standard, knowledge file, runbook, checklist, ADR, or skill:
+
+1. search the current project for an artifact that already owns the subject;
+2. search central Project Execution OS standards / knowledge when cross-project reuse is plausible;
+3. update the existing canonical artifact when it can absorb the new rule without becoming ambiguous;
+4. create a new artifact only when the responsibility is genuinely distinct.
+
+Do not create parallel truth.
+
+### Standard Promotion Threshold
+
+Promote something to a mandatory standard only when all are true:
+
+1. the rule is stable enough to govern future work;
+2. its scope is broader than one isolated incident;
+3. violating it creates meaningful quality, safety, continuity, or execution risk;
+4. evidence or repeated successful use supports it;
+5. no current standard already owns the rule cleanly.
+
+A successful one-off technique is not automatically a standard.
+
+### Completion Responsibility
+
+The executor, not the owner, is responsible for running this gate during normal work.
+
+The owner should not need to remember to say "save this", "make a standard", or "do not forget this" after every useful discovery.
+
+Explicit owner preservation requests still follow `docs/AUTOMATIC_CAPTURE_STANDARD.md`.
+
+## 8. Promotion Rule
 
 A project-specific lesson or external reference may be promoted to central knowledge only when:
 
@@ -105,7 +168,7 @@ Promotion does not require an `08_KNOWLEDGE_EXTRACT.md` file unless the work is 
 
 Do not create empty extraction artifacts by ritual.
 
-## 8. Knowledge Entry Types
+## 9. Knowledge Entry Types
 
 Allowed central entry types include:
 
@@ -129,7 +192,7 @@ When stored in the GitHub-backed central library, useful category folders may in
 
 Do not create a category folder until an accepted entry needs it.
 
-## 9. Distinguish Knowledge From Other Artifacts
+## 10. Distinguish Knowledge From Other Artifacts
 
 Use these boundaries:
 
@@ -142,7 +205,7 @@ Use these boundaries:
 
 Do not store one artifact type under another label merely because it is convenient.
 
-## 10. General Reusable Knowledge Entry Format
+## 11. General Reusable Knowledge Entry Format
 
 A full central knowledge entry should include only the sections that materially help reuse:
 
@@ -165,7 +228,7 @@ A full central knowledge entry should include only the sections that materially 
 
 Use the full form for cross-project standards, architecture lessons or material requiring context.
 
-## 11. Compact Verified Technical Solution Format
+## 12. Compact Verified Technical Solution Format
 
 For a narrow technical problem that has been successfully resolved and verified, use the compact format adapted from legacy knowledge-base experiments:
 
@@ -183,7 +246,7 @@ Use this format only for verified technical solutions, not for speculative ideas
 
 Before solving a repeated technical error from scratch, search existing verified technical solutions and relevant project evidence first.
 
-## 12. Search Order For New Work
+## 13. Search Order For New Work
 
 Use the lightest relevant search order:
 
@@ -195,7 +258,7 @@ Use the lightest relevant search order:
 
 Do not read all knowledge stores by default when a small task does not need them.
 
-## 13. Selective Loading Rule
+## 14. Selective Loading Rule
 
 Central reusable knowledge must be loaded into active AI context only when the current mode, project, task or trigger makes it relevant.
 
@@ -211,7 +274,7 @@ Do not load the entire `knowledge-library/` by default.
 
 Selective context assembly follows `docs/CONTEXT_ASSEMBLY_STANDARD.md`.
 
-## 14. Anti-Dump Rule
+## 15. Anti-Dump Rule
 
 The knowledge library is not a dumping ground.
 
@@ -225,7 +288,7 @@ Do not store:
 - empty templates created merely to make the system look complete;
 - stale entries that remain active after replacement.
 
-## 15. Review And Activation
+## 16. Review And Activation
 
 A central knowledge item becomes active only after appropriate review.
 
@@ -240,7 +303,7 @@ Review should establish:
 - that loading triggers and exclusions are usable;
 - that an older active entry is deprecated or replaced when necessary.
 
-## 16. Related Nodes
+## 17. Related Nodes
 
 - `docs/AUTOMATIC_CAPTURE_STANDARD.md`
 - `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
