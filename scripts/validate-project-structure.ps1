@@ -20,6 +20,29 @@ function Get-FrontmatterValue {
     return $null
 }
 
+function Get-StateValue {
+    param(
+        [string]$Content,
+        [string]$FrontmatterKey,
+        [string]$LegacyLabel
+    )
+
+    $frontmatterValue = Get-FrontmatterValue -Content $Content -Key $FrontmatterKey
+    if ($frontmatterValue) {
+        return $frontmatterValue
+    }
+
+    # PROJECT_STRUCTURE_STANDARD.md requires durable state, but does not mandate
+    # YAML frontmatter. Accept the established human-readable state snapshot form
+    # (for example: "- Status: `active`") so older valid projects remain compatible.
+    $escapedLabel = [regex]::Escape($LegacyLabel)
+    if ($Content -match "(?mi)^\s*[-*]\s*$escapedLabel\s*:\s*`?([^`\r\n]+)`?\s*$") {
+        return $Matches[1].Trim()
+    }
+
+    return $null
+}
+
 function Add-ErrorMessage {
     param(
         [System.Collections.Generic.List[string]]$Errors,
@@ -84,10 +107,10 @@ foreach ($projectDir in $projectDirs) {
 
     $stateContent = Get-Content -Raw $statePath
     $projectMode = Get-FrontmatterValue -Content $stateContent -Key "project_mode"
-    $status = Get-FrontmatterValue -Content $stateContent -Key "status"
+    $status = Get-StateValue -Content $stateContent -FrontmatterKey "status" -LegacyLabel "Status"
 
     if (-not $status) {
-        Add-ErrorMessage $errors $projectDir.Name "PROJECT_STATE.md should define frontmatter key: status"
+        Add-ErrorMessage $errors $projectDir.Name "PROJECT_STATE.md must expose a readable status (YAML frontmatter 'status' or '- Status:' state snapshot)"
     }
 
     if ($projectMode -eq "full" -and -not (Test-Path (Join-Path $projectDir.FullName "PROJECT_RULES.md"))) {
