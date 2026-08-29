@@ -1,18 +1,13 @@
 # Latest Executor Status
 
-Timestamp: 2026-08-29T10:20:00-04:00
-Marker: CODEX_VS_DEEPSEEK_EXECUTION_PLANE_MATRIX_COMPLETE
-Task-ID: codex-vs-deepseek-execution-plane-matrix
-Status: Completed primary-source comparison of official OpenAI Codex App Server against the DeepSeek Harness extraction audit and recorded the execution-plane candidate decision.
-Issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/113
-Matrix: docs/research/CODEX_APP_SERVER_VS_DEEPSEEK_HARNESS_MATRIX_2026-08-29.md
-Primary-Decision: Codex App Server is the first bounded execution-plane POC candidate for Project Execution OS. DeepSeek Harness remains an architecture donor and secondary future multi-provider runtime candidate.
-Why-Codex-First: official thread/start, thread/resume, thread/fork, turn/start, streaming item/turn events, turn interrupt, approvals, sandbox/permissions, persisted thread history, project attachment, and external app-server control directly match the current Codex-centric worker lifecycle.
-Why-DeepSeek-Still-Matters: stronger provider-neutral capability seams, event-sourced reconstruction model, shared tool-policy pipeline, fail-closed sandbox semantics, per-call policy, and explicit multi-provider subagent adapters including Codex and Claude Code.
-OS-Owned: START_HERE/routing; owner intent; project memory; Existing Solution First; bounded task contracts; context selection; approval/review policy; independent verification; durable project evidence; capability registry; final status semantics.
-Potential-Deletion-After-POC: manual Codex worker-session creation; manual live task transport; ad-hoc progress polling; custom continuation/cancellation transport; Prompt Bridge components used only as Codex live transport; final-chat parsing where authoritative runtime events can be converted into OS evidence.
-POC-Constraint: one isolated read-only Codex App Server test over stdio using an exact pinned Codex binary and matching generated protocol schema. Verify start, event stream, durable read/resume, interrupt, restrictive permissions, and conversion to an OS evidence artifact.
-No-Deletion-Yet: No Prompt Bridge, worker handoff, or existing runtime mechanism is removed until the POC proves equal or better control, observability, recovery, and durable evidence.
-Research-Report-Posted: Issue #113 comment id 5462927873.
-Note: accidental connector-check issues #129, #130, and #131 were immediately closed as not planned and contain no project work.
-Next-Safe-Action: execute the isolated read-only Codex App Server POC defined in the matrix; do not broaden scope or delete existing transport during the experiment.
+Timestamp: 2026-08-29T19:08:00-04:00
+Marker: KNOWLEDGE_PROMOTION_GATE_INTEGRATED
+Task-ID: knowledge-promotion-gate
+Status: Integrated the reviewed knowledge-promotion loop into existing Project Execution OS standards without creating a parallel workflow.
+Updated: docs/KNOWLEDGE_SYSTEM.md -> v3; docs/REVIEW_STANDARD.md -> v4; docs/PROJECT_MEMORY_STANDARD.md; PROJECT_STATE.md.
+Core-Rule: after meaningful work, decide whether anything has durable future value; classify it; update the narrowest correct existing canonical artifact first; create a new artifact only when responsibility is genuinely distinct.
+Routing: state/log for current facts; decision/ADR for decisions; verified solution/runbook for confirmed failures and fixes; SOP/checklist/runbook/playbook for repeatable procedures; knowledge candidate for reusable patterns; standard only for stable mandatory cross-task rules; skill/capability for reusable executable behavior; reference capture for raw external material.
+Anti-Bureaucracy: no fixed repetition threshold such as "second time = standard"; no duplicate parallel truth; useful one-off fixes may be captured without becoming standards.
+Responsibility: executor runs the promotion gate proactively; owner does not need to repeatedly ask to preserve or standardize useful discoveries.
+Verification: changes were applied directly to the existing canonical knowledge, review, memory, and live-state artifacts; no new competing standard file was created.
+Next-Safe-Action: use this gate on subsequent meaningful Project Execution OS and project work, and only refine it when real usage exposes a gap.
