@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3a78b04c148d7eedb65877f723ed9a9ac86e803d",
-  "generated_at": "2026-08-28T12:20:06-04:00",
-  "artifact_count": 553,
+  "repository_commit": "d6777de7f82c53b741c6679b29e1c85ddc55909c",
+  "generated_at": "2026-08-29T10:06:01-04:00",
+  "artifact_count": 554,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -128,11 +128,12 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "cbc0a5846be1f420e21ca4cfe970f883b365287aba025303ec32a6abd479e528",
+      "sha256": "10bf9aaea503b15bf183bce27f90fdc48e2f16e274f9c6957acfe22dad5493a8",
       "headings": [
         "PROJECT_STATE.md",
         "Current State",
-        "Latest Confirmed Milestone",
+        "Latest Standards Milestone — 2026-08-28",
+        "Latest Confirmed Product Milestone",
         "Verification Evidence",
         "Architecture Decisions",
         "Current Focus",
@@ -8346,6 +8347,33 @@
       ]
     },
     {
+      "path": "knowledge-library/verified-technical-solutions/openai-codex-skills-plugins-2026-08-29.md",
+      "title": "OpenAI Codex Skills / Plugins — verified reference",
+      "type": "knowledge-entry",
+      "domain": "knowledge:verified-technical-solutions",
+      "status": "VERIFIED EXTERNAL SOLUTION / DONOR STANDARD",
+      "date": null,
+      "sha256": "0a31da3b654abbdc4d1e86596a4be854dac38f660d1a140d643af3e0a3941eb3",
+      "headings": [
+        "OpenAI Codex Skills / Plugins — verified reference",
+        "Why this is here",
+        "Current upstream status",
+        "Core concepts worth adopting",
+        "Skill",
+        "Plugin",
+        "Existing Solution First integration rule",
+        "Mapping to Project Execution OS",
+        "High-value official donor examples observed",
+        "Particularly important upstream system capabilities",
+        "skill-creator",
+        "plugin-creator",
+        "What Project Execution OS already does beyond this upstream model",
+        "Adoption decision",
+        "Source traceability",
+        "Maintenance rule"
+      ]
+    },
+    {
       "path": "knowledge-library/verified-technical-solutions/vscode-chat-custom-endpoint-deepseek-v4-pro.md",
       "title": "VS Code Chat: подключение DeepSeek V4 Pro через Custom Endpoint",
       "type": "knowledge-entry",
@@ -9105,9 +9133,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Captured the Codex-as-platform / App Server direction as a Project Execution OS architecture research track and opened bounded research Issue #113. The issue requires primary-source verification of official Codex App Server / harness capabilities and an evidence-based mapping against the current Project Execution OS worker handoff / Prompt Bridge model. No implementation or architecture replacement is approved at this stage.",
+      "status": "Completed rule-by-rule comparison of the 2026-08-28 Pimenov article `Вайбкодинг без бардака` against current Project Execution OS architecture and integrated only the useful gaps into existing standards.",
       "date": null,
-      "sha256": "fef887c42aa6c00920e2e1e013d3dd81864c287aadea8cd68ec941529b9ba656",
+      "sha256": "01accc7c7b8e091fbe85719385b0d9eaff8ce2b6c022c5c4c29bb315b29a9d1f",
       "headings": [
         "Latest Executor Status"
       ]
