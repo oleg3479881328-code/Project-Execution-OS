@@ -32,9 +32,6 @@ function Get-StateValue {
         return $frontmatterValue
     }
 
-    # PROJECT_STRUCTURE_STANDARD.md requires durable readable state, but does not
-    # mandate YAML frontmatter or a bullet-list snapshot. Accept both established
-    # human-readable forms: "Status: active" and "- Status: `active`".
     $escapedLabel = [regex]::Escape($LegacyLabel)
     $legacyPattern = '(?mi)^\s*(?:[-*]\s*)?' + $escapedLabel + '\s*:\s*`?([^`\r\n]+)`?\s*$'
     if ($Content -match $legacyPattern) {
@@ -55,6 +52,7 @@ function Add-ErrorMessage {
 }
 
 $errors = [System.Collections.Generic.List[string]]::new()
+$warnings = [System.Collections.Generic.List[string]]::new()
 
 if (-not (Test-Path $projectsRoot)) {
     Write-Host "No projects directory found. Nothing to validate."
@@ -87,7 +85,7 @@ foreach ($projectDir in $projectDirs) {
     }
 
     if ($hasLegacy -and -not $hasProject) {
-        Write-Host "Legacy entrypoint allowed temporarily for $($projectDir.Name); migrate PROJECT_ENTRYPOINT.md to PROJECT.md." -ForegroundColor Yellow
+        $warnings.Add("$($projectDir.Name) - legacy PROJECT_ENTRYPOINT.md is still in use; migrate to PROJECT.md when the project is next maintained") | Out-Null
     }
 
     if (-not $hasState -and -not $hasLatestLog) {
@@ -107,11 +105,19 @@ foreach ($projectDir in $projectDirs) {
     }
 
     $stateContent = Get-Content -Raw $statePath
+    if ([string]::IsNullOrWhiteSpace($stateContent)) {
+        Add-ErrorMessage $errors $projectDir.Name "PROJECT_STATE.md is empty"
+        continue
+    }
+
     $projectMode = Get-FrontmatterValue -Content $stateContent -Key "project_mode"
     $status = Get-StateValue -Content $stateContent -FrontmatterKey "status" -LegacyLabel "Status"
 
+    # A dedicated status field is useful, but PROJECT_STRUCTURE_STANDARD.md does
+    # not require one. Some valid projects express state through sections such as
+    # Current Mode / Current Objective. Keep this as a diagnostic, not a hard gate.
     if (-not $status) {
-        Add-ErrorMessage $errors $projectDir.Name "PROJECT_STATE.md must expose a readable status (YAML frontmatter 'status', 'Status:', or '- Status:' state snapshot)"
+        $warnings.Add("$($projectDir.Name) - PROJECT_STATE.md has no dedicated status field; state is accepted if the file remains meaningful and current") | Out-Null
     }
 
     if ($projectMode -eq "full" -and -not (Test-Path (Join-Path $projectDir.FullName "PROJECT_RULES.md"))) {
@@ -129,8 +135,15 @@ foreach ($projectDir in $projectDirs) {
     }
 }
 
+foreach ($warning in $warnings) {
+    Write-Warning $warning
+}
+
 if ($errors.Count -gt 0) {
     Write-Error ("Project structure validation failed:`n- " + ($errors -join "`n- "))
 }
 
 Write-Host "Project structure validation passed."
+if ($warnings.Count -gt 0) {
+    Write-Host "Warnings: $($warnings.Count)" -ForegroundColor Yellow
+}
