@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d6777de7f82c53b741c6679b29e1c85ddc55909c",
-  "generated_at": "2026-08-29T10:06:01-04:00",
-  "artifact_count": 554,
+  "repository_commit": "fbfb9e0d2f20b96522c3c47e81fab86c634ab61a",
+  "generated_at": "2026-08-29T10:17:01-04:00",
+  "artifact_count": 555,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7759,6 +7759,27 @@
         "Evidence Rule",
         "Sync and Automation Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/research/DEEPSEEK_HARNESS_EXTRACTION_AUDIT_2026-08-29.md",
+      "title": "DeepSeek Harness Extraction Audit — 2026-08-29",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "63abe21c493ea7447f9f1d3bbc2edb7fab241fc09f2e6b49c2f16528c805a9c7",
+      "headings": [
+        "DeepSeek Harness Extraction Audit — 2026-08-29",
+        "Decision",
+        "Adopt Now",
+        "Adapt Later",
+        "Experimental Integration Candidates",
+        "Do Not Copy By Default",
+        "Extraction Matrix",
+        "Smallest Future Proof Of Concept",
+        "Sources",
+        "Final Decision"
       ]
     },
     {
