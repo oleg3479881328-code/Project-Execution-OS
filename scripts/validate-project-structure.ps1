@@ -32,11 +32,11 @@ function Get-StateValue {
         return $frontmatterValue
     }
 
-    # PROJECT_STRUCTURE_STANDARD.md requires durable state, but does not mandate
-    # YAML frontmatter. Accept the established human-readable state snapshot form
-    # (for example: "- Status: `active`") so older valid projects remain compatible.
+    # PROJECT_STRUCTURE_STANDARD.md requires durable readable state, but does not
+    # mandate YAML frontmatter or a bullet-list snapshot. Accept both established
+    # human-readable forms: "Status: active" and "- Status: `active`".
     $escapedLabel = [regex]::Escape($LegacyLabel)
-    $legacyPattern = '(?mi)^\s*[-*]\s*' + $escapedLabel + '\s*:\s*`?([^`\r\n]+)`?\s*$'
+    $legacyPattern = '(?mi)^\s*(?:[-*]\s*)?' + $escapedLabel + '\s*:\s*`?([^`\r\n]+)`?\s*$'
     if ($Content -match $legacyPattern) {
         return $Matches[1].Trim()
     }
@@ -111,7 +111,7 @@ foreach ($projectDir in $projectDirs) {
     $status = Get-StateValue -Content $stateContent -FrontmatterKey "status" -LegacyLabel "Status"
 
     if (-not $status) {
-        Add-ErrorMessage $errors $projectDir.Name "PROJECT_STATE.md must expose a readable status (YAML frontmatter 'status' or '- Status:' state snapshot)"
+        Add-ErrorMessage $errors $projectDir.Name "PROJECT_STATE.md must expose a readable status (YAML frontmatter 'status', 'Status:', or '- Status:' state snapshot)"
     }
 
     if ($projectMode -eq "full" -and -not (Test-Path (Join-Path $projectDir.FullName "PROJECT_RULES.md"))) {
