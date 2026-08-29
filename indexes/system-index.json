@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "bd080529755b790f895a12eb64a41e73844e8d1d",
-  "generated_at": "2026-08-29T10:17:45-04:00",
-  "artifact_count": 555,
+  "repository_commit": "b6e40e8684bb5b3a0de05ba9f59151166b2690a1",
+  "generated_at": "2026-08-29T10:20:58-04:00",
+  "artifact_count": 556,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -128,11 +128,12 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": null,
-      "sha256": "10bf9aaea503b15bf183bce27f90fdc48e2f16e274f9c6957acfe22dad5493a8",
+      "sha256": "048e4bad14fe43ee65f582e8e8d1bad15d7eb35f839eea848b88e8cafc6f3089",
       "headings": [
         "PROJECT_STATE.md",
         "Current State",
-        "Latest Standards Milestone — 2026-08-28",
+        "Latest Standards Milestone — 2026-08-29 — DeepSeek Harness Extraction",
+        "Previous Standards Milestone — 2026-08-28",
         "Latest Confirmed Product Milestone",
         "Verification Evidence",
         "Architecture Decisions",
@@ -7772,6 +7773,32 @@
       ]
     },
     {
+      "path": "docs/research/CODEX_APP_SERVER_VS_DEEPSEEK_HARNESS_MATRIX_2026-08-29.md",
+      "title": "Codex App Server vs DeepSeek Harness — Execution-Plane Matrix — 2026-08-29",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "6142da555733de76970af20e88dcaaa37ba7bf5ac72b4e1c596b4435b85fda43",
+      "headings": [
+        "Codex App Server vs DeepSeek Harness — Execution-Plane Matrix — 2026-08-29",
+        "Decision Summary",
+        "Primary Sources Reviewed",
+        "OpenAI Codex",
+        "DeepSeek Harness",
+        "Comparison Matrix",
+        "What Codex App Server Can Potentially Replace or Simplify",
+        "What Must Remain Project Execution OS Owned",
+        "Why DeepSeek Harness Still Matters",
+        "Current Risks / Limitations",
+        "Codex App Server",
+        "DeepSeek Harness",
+        "Recommended Architecture Now",
+        "Smallest Safe POC",
+        "Decision"
+      ]
+    },
+    {
       "path": "docs/research/DEEPSEEK_HARNESS_EXTRACTION_AUDIT_2026-08-29.md",
       "title": "DeepSeek Harness Extraction Audit — 2026-08-29",
       "type": "system-standard",
@@ -9164,9 +9191,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Completed rule-by-rule comparison of the 2026-08-28 Pimenov article `Вайбкодинг без бардака` against current Project Execution OS architecture and integrated only the useful gaps into existing standards.",
+      "status": "Completed architecture extraction from the official `deepseek-ai/deepseek-harness` repository and integrated only the high-value general runtime rules into the existing Project Execution OS harness standard.",
       "date": null,
-      "sha256": "01accc7c7b8e091fbe85719385b0d9eaff8ce2b6c022c5c4c29bb315b29a9d1f",
+      "sha256": "15347b960a7477e50dd5071e50b79c25e5a4695bd03416bd25fd67a7b395b6f6",
       "headings": [
         "Latest Executor Status"
       ]
