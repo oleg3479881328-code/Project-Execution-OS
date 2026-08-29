@@ -1,4 +1,4 @@
-# Review Standard v3
+# Review Standard v4
 
 ## Purpose
 
@@ -21,7 +21,10 @@ Review should check:
 - whether the final affecting change happened before the evidence being used to claim validation;
 - whether unrelated files or behavior entered a bounded implementation change;
 - whether a rollback path or safe checkpoint exists when the task can damage working state;
-- next-step clarity.
+- next-step clarity;
+- whether meaningful reusable knowledge was left only in chat or transient execution state;
+- whether a new standard, runbook, knowledge entry, ADR, checklist, or skill was created when an existing canonical artifact should have been updated instead;
+- whether one-off behavior was prematurely promoted into a mandatory standard.
 
 ## Acceptance Rule
 
@@ -82,6 +85,38 @@ goal -> action -> result -> short review note -> next action
 ```
 
 Do not force a heavyweight review ritual for micro-tasks.
+
+## Post-Review Promotion Gate
+
+At the end of a meaningful review, run the promotion gate from `docs/KNOWLEDGE_SYSTEM.md`.
+
+The review should answer:
+
+```text
+Did this work create a durable fact, decision, verified fix,
+repeatable procedure, reusable pattern, mandatory rule,
+or reusable capability that future work should not rediscover?
+```
+
+If no, stop without creating documentation ceremony.
+
+If yes:
+
+1. classify the result;
+2. update the narrowest correct existing canonical artifact first;
+3. create a new artifact only when no existing artifact owns the responsibility;
+4. do not promote a one-off result into a standard merely because it was useful;
+5. leave the project transfer-ready after the promotion.
+
+Typical routing:
+
+- state / blocker / next action -> project state or current log;
+- decision -> project decision / ADR-style record;
+- verified failure + fix -> verified technical solution / known-fix entry / runbook;
+- repeatable procedure -> SOP / checklist / runbook / playbook;
+- reusable cross-project lesson -> central knowledge candidate, then review;
+- mandatory cross-task rule -> existing standard, or a new standard only when necessary;
+- reusable executable behavior -> skill / capability path.
 
 ## Logging Rule
 
