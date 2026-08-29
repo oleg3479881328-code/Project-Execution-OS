@@ -205,7 +205,7 @@ Do not dump entire conversations into project memory.
 
 ## Update Responsibility
 
-After every meaningful work step, the executor must determine whether to update:
+After every meaningful work step, the executor must first run the promotion gate in `docs/KNOWLEDGE_SYSTEM.md`, then determine whether to update:
 
 - `PROJECT.md` or the Notion entrypoint — only when the front door changed;
 - `PROJECT_STATE.md` or equivalent — when current state or next action changed;
@@ -214,6 +214,10 @@ After every meaningful work step, the executor must determine whether to update:
 - a decision or error record — when a confirmed decision or fix must survive;
 - source trail — when new source material or provenance became relevant;
 - Google Drive — when a valuable file artifact was created, received, exported, or changed and must survive the session.
+
+The promotion gate must classify what was learned before creating new documentation. Prefer updating an existing canonical state file, decision record, verified-fix entry, runbook, checklist, knowledge entry, standard, skill, or capability over creating a parallel artifact.
+
+Do not use a fixed repetition count as the trigger for standardization. A standard is appropriate only when the rule is stable, sufficiently broad, evidence-backed, and genuinely mandatory for future work.
 
 The owner should not need to request a handoff or a Drive save manually for the project to remain recoverable.
 
