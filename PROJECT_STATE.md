@@ -29,7 +29,42 @@ Trigger reference: https://pimenov.ai/articles/codex-stanovitsya-platformoy-agen
 
 This is research only. No runtime replacement, Prompt Bridge removal, or architecture migration is approved until primary-source evidence is reviewed.
 
-## Latest Standards Milestone — 2026-08-29 — DeepSeek Harness Extraction
+## Latest Standards Milestone — 2026-08-29 — Knowledge Promotion Gate
+
+The existing knowledge/memory/review architecture was strengthened without adding a parallel standard.
+
+Updated:
+
+- `docs/KNOWLEDGE_SYSTEM.md` -> v3;
+- `docs/REVIEW_STANDARD.md` -> v4;
+- `docs/PROJECT_MEMORY_STANDARD.md` -> explicit promotion-gate responsibility.
+
+New central rule:
+
+```text
+meaningful work
+-> ask whether anything has durable future value
+-> classify the result
+-> update the narrowest correct existing canonical artifact first
+-> create a new artifact only when responsibility is genuinely distinct
+```
+
+Routing now distinguishes:
+
+- current fact / blocker / next action -> state or log;
+- decision -> project decision / ADR-style record;
+- verified failure + fix -> verified technical solution / known-fix entry / runbook;
+- repeatable procedure -> SOP / checklist / runbook / playbook;
+- reusable pattern -> project knowledge first, central knowledge after review;
+- mandatory cross-task rule -> existing standard first, new standard only when necessary;
+- reusable executable behavior -> skill / capability;
+- raw external idea/reference -> reference capture.
+
+No mechanical rule such as "second repetition = standard" was adopted. Promotion depends on evidence, reuse value, stability, scope, and risk.
+
+The executor is responsible for running this gate during normal work; the owner should not need to repeatedly request preservation or standardization.
+
+## Previous Standards Milestone — 2026-08-29 — DeepSeek Harness Extraction
 
 Official donor/reference reviewed:
 
