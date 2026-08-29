@@ -2,7 +2,7 @@
 project_name: Project Execution OS
 project_mode: compact
 status: transfer_ready
-updated_at: 2026-08-28
+updated_at: 2026-08-29
 source_of_truth: repository
 active_branch: main
 ---
@@ -29,7 +29,44 @@ Trigger reference: https://pimenov.ai/articles/codex-stanovitsya-platformoy-agen
 
 This is research only. No runtime replacement, Prompt Bridge removal, or architecture migration is approved until primary-source evidence is reviewed.
 
-## Latest Standards Milestone — 2026-08-28
+## Latest Standards Milestone — 2026-08-29 — DeepSeek Harness Extraction
+
+Official donor/reference reviewed:
+
+`https://github.com/deepseek-ai/deepseek-harness`
+
+Extraction audit:
+
+`docs/research/DEEPSEEK_HARNESS_EXTRACTION_AUDIT_2026-08-29.md`
+
+`docs/HARNESS_ENGINEERING_STANDARD.md` upgraded to v3.
+
+Accepted central runtime rules:
+
+- model-visible runtime state must be reconstructable from durable state when replay/resume matters;
+- reusable runtime capabilities should separate Service Definition / Provider / Consumer;
+- safety-critical runtime behavior fails closed rather than silently degrading;
+- reusable tool runtimes should prefer one shared policy/guard/approval/execute/post-process/result pipeline;
+- execution/security policy should be resolved per call when sessions or workers can differ;
+- partial enforcement must not be presented as full enforcement;
+- incomplete/crashed work must recover as interrupted/unknown/failed, never silently successful;
+- resumable delegated workers should preserve durable lineage/delegation identity when runtime support exists;
+- unsupported provider capabilities must reject loudly rather than be silently ignored.
+
+Architecture decision:
+
+```text
+Project Execution OS = control plane
+external harness/runtime = optional execution plane
+```
+
+Project Execution OS keeps ownership of owner intent, routing, project standards, durable project memory, approvals/review policy, and durable business evidence.
+
+DeepSeek Harness is an integration candidate for lower runtime concerns such as model calls, tool execution, sandbox enforcement, runtime session persistence, and child-agent execution.
+
+No current Project Execution OS component was replaced or deleted by this audit. Cordis-specific topology, self-modification behavior, and DeepSeek pre-release compatibility policy were explicitly not adopted as universal OS rules.
+
+## Previous Standards Milestone — 2026-08-28
 
 The article `https://pimenov.ai/articles/vaybkoding-bez-bardaka/` was reviewed as a donor/reference against current Project Execution OS standards.
 
@@ -39,10 +76,10 @@ Gap analysis:
 
 Accepted improvements were integrated into existing standards instead of creating a parallel “vibe coding” workflow:
 
-- `docs/HARNESS_ENGINEERING_STANDARD.md` upgraded to v2;
+- `docs/HARNESS_ENGINEERING_STANDARD.md` upgraded to v2, now superseded by v3;
 - `docs/REVIEW_STANDARD.md` upgraded to v3.
 
-New explicit central rules:
+New explicit central rules from that milestone:
 
 - bounded execution contract: `GOAL / USER-OBSERVABLE RESULT / CONTEXT / CHANGE / DO NOT TOUCH / VERIFY / ROLLBACK` for non-trivial implementation work when relevant;
 - any affecting change after verification invalidates the previous verification for affected behavior;
@@ -111,10 +148,13 @@ New capability manifests and registry entries are visible in the Studio library.
 
 For worker orchestration, the existing OS architecture remains authoritative while Issue #113 evaluates official Codex runtime/harness surfaces under Existing Solution First. The research must distinguish what Codex can own from what must remain Project Execution OS responsibility.
 
+DeepSeek Harness is now a second official donor/reference for the execution-plane architecture. It does not authorize a competing migration track. Findings from DeepSeek and Issue #113 must be reconciled before any runtime POC is promoted beyond an isolated experiment.
+
 ## Current Focus
 
 - Research Issue #113: official Codex App Server / Harness integration surface and fit with Project Execution OS.
-- Apply the strengthened bounded-execution and verification rules to future implementation work.
+- Reconcile DeepSeek Harness donor findings with the Codex research before choosing any execution runtime.
+- Apply Harness Engineering Standard v3 to future reusable/runtime work.
 - Owner test on the target Windows computer with a real user-owned file.
 - Keep Block Studio and `media.probe` at `candidate` until that confirmation is received.
 - Build `media.clip` as the second capability and add its interactive Studio page.
@@ -124,9 +164,10 @@ For worker orchestration, the existing OS architecture remains authoritative whi
 
 ```text
 Architecture track:
-1. Execute Issue #113 as bounded evidence-gathering research.
-2. Review the report against official primary sources.
-3. Only after review decide whether a small Codex App Server proof of concept is justified.
+1. Complete/review Issue #113 against official OpenAI primary sources.
+2. Compare Codex runtime capabilities with the DeepSeek Harness extraction audit.
+3. Define one execution-plane candidate matrix.
+4. Only then decide whether one isolated read-only runtime POC is justified.
 
 Capability track:
 1. Open Block Studio on the owner's Windows computer.
@@ -144,20 +185,23 @@ Capability track:
 4. `PROJECT_STATE.md`
 5. `logs/latest.md`
 6. `docs/HARNESS_ENGINEERING_STANDARD.md`
-7. `docs/REVIEW_STANDARD.md`
-8. `docs/research/VIBECODING_WITHOUT_CHAOS_GAP_ANALYSIS_2026-08-28.md`
-9. `docs/CODEX_HANDOFF_STANDARD.md`
-10. Issue #113 — Codex App Server / Harness research
-11. `apps/README.md`
-12. `apps/block-studio/README.md`
-13. `apps/block-studio/VALIDATION.md`
-14. `capability-library/REGISTRY.md`
-15. `capabilities/media-probe/BLOCK.md`
-16. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
+7. `docs/research/DEEPSEEK_HARNESS_EXTRACTION_AUDIT_2026-08-29.md`
+8. `docs/REVIEW_STANDARD.md`
+9. `docs/research/VIBECODING_WITHOUT_CHAOS_GAP_ANALYSIS_2026-08-28.md`
+10. `docs/CODEX_HANDOFF_STANDARD.md`
+11. Issue #113 — Codex App Server / Harness research
+12. `apps/README.md`
+13. `apps/block-studio/README.md`
+14. `apps/block-studio/VALIDATION.md`
+15. `capability-library/REGISTRY.md`
+16. `capabilities/media-probe/BLOCK.md`
+17. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
 
 ## Known Blockers
 
 - Codex App Server / Harness fit has not yet been verified against current official OpenAI sources; Issue #113 is open.
+- DeepSeek Harness is rapidly evolving, so direct runtime integration has upgrade-churn risk.
+- No execution-plane POC has yet proved that a third-party harness deletes enough custom orchestration to justify adoption.
 - The owner has not yet run Block Studio on the target Windows computer.
 - A real owner-owned media file has not yet been confirmed through the UI.
 - Variable-frame-rate media remains an additional edge-case fixture.
@@ -165,8 +209,12 @@ Capability track:
 
 ## Do-Not-Break Rules
 
-- Do not replace or delete the current worker handoff/Prompt Bridge based only on the discovery article.
-- Do not treat Codex App Server integration as approved until Issue #113 evidence is reviewed.
+- Do not replace or delete the current worker handoff/Prompt Bridge based only on donor research.
+- Do not start competing DeepSeek and Codex runtime migrations in parallel.
+- Do not treat DeepSeek Harness integration as approved production architecture without an isolated evidence-backed POC.
+- Do not treat partial sandbox enforcement as full protection.
+- Do not silently downgrade unsupported runtime/provider capabilities.
+- Do not recover interrupted execution as successful execution without fresh evidence.
 - Do not claim owner validation without the owner's explicit result.
 - Do not copy capability provider code into Block Studio.
 - Do not expose Block Studio beyond `127.0.0.1` by default.
