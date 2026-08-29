@@ -36,7 +36,8 @@ function Get-StateValue {
     # YAML frontmatter. Accept the established human-readable state snapshot form
     # (for example: "- Status: `active`") so older valid projects remain compatible.
     $escapedLabel = [regex]::Escape($LegacyLabel)
-    if ($Content -match "(?mi)^\s*[-*]\s*$escapedLabel\s*:\s*`?([^`\r\n]+)`?\s*$") {
+    $legacyPattern = '(?mi)^\s*[-*]\s*' + $escapedLabel + '\s*:\s*`?([^`\r\n]+)`?\s*$'
+    if ($Content -match $legacyPattern) {
         return $Matches[1].Trim()
     }
 
