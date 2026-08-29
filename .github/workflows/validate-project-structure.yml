@@ -19,9 +19,11 @@ jobs:
         run: ./scripts/validate-project-structure.ps1
 
       - name: Validate router integrity
+        if: always()
         shell: pwsh
         run: ./scripts/validate-router-integrity.ps1
 
       - name: Validate system context manifest
+        if: always()
         shell: pwsh
         run: ./scripts/validate-system-context-manifest.ps1
