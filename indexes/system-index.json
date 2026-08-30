@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "15815c0da747763722f093fd0d4ed2f081d601db",
-  "generated_at": "2026-08-30T19:53:30-04:00",
+  "repository_commit": "184ee1fafb05e8e0e8c29b01b98c5c3df2da2fb5",
+  "generated_at": "2026-08-30T19:54:09-04:00",
   "artifact_count": 558,
   "artifacts": [
     {
@@ -5682,9 +5682,11 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "e113e2affd48bcdf9db363dfdf2dd3b1a538751961c694c5683444abbdcf2ff0",
+      "sha256": "11da112ad3b1dab2d95237e2531cba87e9bce204150e8a96db14bae6aa7ea709",
       "headings": [
         "Capability Library Layer Standard v0.1",
+        "Status",
+        "Replaced By",
         "Purpose",
         "Core Model",
         "Definition",
