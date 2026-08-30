@@ -24,6 +24,7 @@ Do not append an unrelated next-project question after answering the active requ
 
 ## Routes
 
+- existing project selection, project registry, project list, project catalogue, choosing or locating an existing project, or entry into a specific existing project when a narrower direct route is not already available -> `projects/ROUTER.md`
 - project knowledge database, central operational database, structured source of truth, photographer knowledge engine, SEO knowledge database, Page Queue, Media registry, Geography layer, Redirects/URLs registry, QA dashboard, ID Crosswalk architecture, Knowledge Database to Page Factory, structured website production pipeline, or migration from scattered project tables into one production datastore -> `docs/PROJECT_KNOWLEDGE_DATABASE_STANDARD.md`
 - entity, business, person, vendor, venue, organization, tool, platform, website/domain, publication/profile, reusable node, identity resolution, deduplication, entity enrichment, dossier, canonical card, aliases/rebrands, repeated research prevention, or cross-project entity reuse -> `docs/ENTITY_DOSSIER_STANDARD.md`
 - possible new project or new initiative -> `Start New Project.md`
@@ -54,7 +55,6 @@ Do not append an unrelated next-project question after answering the active requ
 - indexing or repository catalog work -> `docs/INDEXING_STANDARD.md`
 - create, expand, review, or formalize a reusable domain block -> `skills/orchestration/domain-block-creation/SKILL.md`
 - current-project summary, status, orientation, or "where are we now?" question -> enter through the global router tree, reach the current project's entrypoint, read only minimum necessary current-state evidence, answer directly, and stop unless the owner explicitly requests another action
-- entry into a specific existing project -> follow the router tree to that project's current entrypoint; prefer `PROJECT.md`, fall back to legacy `PROJECT_ENTRYPOINT.md` only during migration, and use `docs/PROJECT_ENTRYPOINT_STANDARD.md` if no project entrypoint exists
 - transfer readiness, executor continuity, durable state maintenance, or handoff survivability -> `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
 - create, review, register, migrate, deprecate, or retire a reusable skill -> `blocks/skill-creator/BLOCK.md`
 - multi-layer context assembly, recursive routing, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
