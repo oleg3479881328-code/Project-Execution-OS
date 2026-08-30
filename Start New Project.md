@@ -1,10 +1,24 @@
 # Start New Project
 
+## Compatibility Re-entry Rule
+
+If this file is opened directly from an older stable bookmark, user instruction, saved URL, ChatGPT configuration, or other external pointer, do **not** assume that the active request is about creating a new project.
+
+Immediately re-enter Project Execution OS through the one canonical global door:
+
+`START_HERE.md`
+
+Then open `docs/ROUTER.md` and follow the narrowest live route for the actual request.
+
+Only return to this file when the router selects the possible-new-project / new-initiative branch.
+
+This compatibility rule allows existing bookmarks to keep working without requiring the owner to edit them manually when the internal architecture changes.
+
 ## Purpose
 
-This file is the thin entrypoint for a possible new project inside Project Execution OS.
+This file is the thin routed branch for a possible new project inside Project Execution OS.
 
-Its only job is to identify the correct next path.
+Its only job is to identify the correct next path after the global router has selected new-project work.
 
 Do not place project-storage rules, workflow logic, tool instructions, architecture, or execution standards in this file. Those belong in the internal system nodes linked below.
 
@@ -59,6 +73,6 @@ If the user is already discussing a clear idea, do not restart a questionnaire. 
 
 The global `START_HERE.md` is the universal front door.
 
-This file handles the new-project branch after routing has selected it.
+This file is a routed branch plus a compatibility redirect for older external bookmarks.
 
 Classify the intent and follow the next internal node.
