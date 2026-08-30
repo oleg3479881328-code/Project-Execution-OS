@@ -1,5 +1,23 @@
 # Capability Library Layer Standard v0.1
 
+## Status
+
+`deprecated — historical architecture note`
+
+## Replaced By
+
+Use the current routed architecture instead:
+
+- `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md` for reusable executable capability blocks;
+- `skills/PROJECT_INDEX.md` and the skill lifecycle for reusable instruction-backed skills;
+- `blocks/PROJECT_INDEX.md` for reusable domain blocks;
+- `docs/CONTEXT_ASSEMBLY_STANDARD.md` for selective context loading;
+- `docs/ROUTER.md` for live discovery and routing.
+
+Do not revive the generic capability-record layer as a parallel registry unless a new reviewed requirement proves that the current distinct block/skill/capability architecture cannot represent the needed behavior.
+
+The content below is retained only as historical design evidence.
+
 ## Purpose
 
 This standard defines the lightweight middle layer between a thin agent and execution tools.
@@ -138,8 +156,6 @@ Acceptable evidence:
 
 ## Final Rule
 
-Thin agents choose capabilities.
+This historical artifact is not an active operating standard.
 
-Capabilities carry reusable operational knowledge.
-
-Execution still requires evidence, validation, and review.
+Current PEOS routing, domain blocks, skills, executable capability blocks, and context-assembly standards own the responsibilities that this early generic capability layer attempted to combine.
