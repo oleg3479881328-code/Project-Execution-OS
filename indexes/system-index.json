@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fcb499fd5302ce4d1b4a0278bde7fbbcbfcdcbe1",
-  "generated_at": "2026-08-30T13:07:13-04:00",
+  "repository_commit": "910ab7cc314d37b35b3e22722e684e35674df06d",
+  "generated_at": "2026-08-30T13:08:59-04:00",
   "artifact_count": 557,
   "artifacts": [
     {
@@ -128,10 +128,11 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": "- `docs/KNOWLEDGE_SYSTEM.md` -> v3;",
-      "sha256": "2f343c38dc7cc002177a826a2bc2e74a1fcc4e92a563b07b81923912d79b313e",
+      "sha256": "b2ad8d3da6aa042cd156917236d384e0b7471293c641f4e82a12f039a6d7fb12",
       "headings": [
         "PROJECT_STATE.md",
         "Current State",
+        "Latest Integration Milestone — 2026-08-30 — Archify Candidate",
         "Latest Standards Milestone — 2026-08-29 — Knowledge Promotion Gate",
         "Previous Standards Milestone — 2026-08-29 — DeepSeek Harness Extraction",
         "Previous Standards Milestone — 2026-08-28",
@@ -7499,7 +7500,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "88d567868042f64b57c4cf3dff922cc7f30bac8e284c47a2740398af823a88c0",
+      "sha256": "04a26f5edf8b9ffb65756e2c44b81ea28f5ef5436e5d8d9961a94ba8c0264387",
       "headings": [
         "Project Execution OS — Tool & Stack Audit",
         "Purpose",
@@ -9227,9 +9228,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Integrated the reviewed knowledge-promotion loop into existing Project Execution OS standards without creating a parallel workflow.",
-      "date": "docs/KNOWLEDGE_SYSTEM.md -> v3; docs/REVIEW_STANDARD.md -> v4; docs/PROJECT_MEMORY_STANDARD.md; PROJECT_STATE.md.",
-      "sha256": "1bcccdd71e637356fdf7cce96cdb38ed987112607034978a016f6102c187b556",
+      "status": "Upstream Archify was reviewed under Existing Solution First, registered as an external architecture-visualization/evidence candidate, and a bounded self-map pilot was created.",
+      "date": null,
+      "sha256": "31f6fe095b1b7791144eb5bcb637e2b7469a1fc524ec6267dc685483f6984726",
       "headings": [
         "Latest Executor Status"
       ]
