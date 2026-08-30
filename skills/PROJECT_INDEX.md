@@ -22,6 +22,7 @@ skills/
   registry.md
   PROJECT_INDEX.md
   analysis/
+  audio/
   coordination/
   documentation/
   graph/
@@ -55,16 +56,19 @@ skills/
 | project-documentation-architect | documentation | reviewed | approved | 0.1.0 | skills/documentation/project-documentation-architect/SKILL.md |
 | chrome-web-store-publication-readiness | documentation | candidate | not_reviewed | 0.1.0 | skills/documentation/chrome-web-store-publication-readiness/SKILL.md |
 | logic-deconstruction | analysis | reviewed | approved | 0.1.0 | skills/analysis/logic-deconstruction/SKILL.md |
+| gemini-tts-speech-generation | audio | candidate | not_reviewed | 0.1.0 | skills/audio/gemini-tts-speech-generation/SKILL.md |
+| audio-verbatim-clip-extraction | audio | candidate | not_reviewed | unversioned | skills/audio-verbatim-clip-extraction/SKILL.md |
 
 ## Current Counts
 
 ```text
 active: 0
-candidate: 8
+candidate: 11
 reviewed: 8
 draft: 0
 deprecated: 0
 retired: 0
+total registered: 19
 ```
 
 ## Current Priorities
@@ -74,7 +78,8 @@ retired: 0
 3. Use `chrome-web-store-publication-readiness` on Voice Button as its first proving project, while keeping it in candidate status.
 4. Decide which reviewed skills are ready for real central operational use.
 5. Wire reviewed `graphify` into actual project bootstrap behavior.
-6. Keep governance stronger than skill-count growth.
+6. Review the two audio candidates before operational promotion.
+7. Keep governance stronger than skill-count growth.
 
 ## Forbidden Expansion Areas
 
@@ -85,3 +90,7 @@ Do not prioritize yet:
 - marketplaces;
 - vector databases;
 - mass skill import without review.
+
+## Maintenance Rule
+
+Every central `skills/**/SKILL.md` should be represented in this registry unless it is explicitly documented as an incubator, deprecated artifact, or external-only compatibility copy.
