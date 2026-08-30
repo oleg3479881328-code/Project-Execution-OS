@@ -1,5 +1,17 @@
 # Changelog
 
+This is a curated milestone log for significant Project Execution OS changes. It is not a per-commit ledger; Git history and `logs/latest.md` remain the detailed execution record.
+
+## 2026-08-30
+
+- established `START_HERE.md` as the single stable global AI/client entrypoint with recursive, unbounded router depth
+- added `projects/ROUTER.md` and aligned project-entry, context-assembly, ChatGPT compatibility and project-memory rules with the global routing architecture
+- upgraded `docs/KNOWLEDGE_SYSTEM.md` to knowledge-in-the-flow behavior adapted from KCS: search/reuse early, improve canonical knowledge during execution, capture expensive-to-reconstruct learning in the moment, and retain the final promotion gate as a safety net
+- aligned `docs/PROJECT_MEMORY_STANDARD.md` and `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md` with continuous knowledge/state preservation
+- added a machine-checked completion contract to the repository integrity workflow so the core chain `agent instructions -> knowledge-in-flow -> project memory -> transfer-ready state -> review promotion gate` cannot silently disappear
+- repaired `SYSTEM_CONTEXT_MANIFEST.md` after integrity validation exposed stale profile SHAs
+- added `scripts/audit_system_hygiene.py` and expanded `docs/INDEXING_STANDARD.md` so PEOS can detect structural bloat signals such as undiscoverable entrypoints, unindexed skills, aged candidates, duplicate canonical Markdown, possibly orphaned standards and stale curated milestones without auto-deleting knowledge
+
 ## 2026-06-10
 
 - added `docs/AGENT_QUALITY_SCORECARD_STANDARD.md` for measuring agent quality by successful outcomes, cost, latency, context efficiency, tool-use quality, regression protection, observability, safety and transferability
