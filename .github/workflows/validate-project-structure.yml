@@ -27,3 +27,8 @@ jobs:
         if: always()
         shell: pwsh
         run: ./scripts/validate-system-context-manifest.ps1
+
+      - name: Validate completion contract
+        if: always()
+        shell: pwsh
+        run: ./scripts/validate-completion-contract.ps1
