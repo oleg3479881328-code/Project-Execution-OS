@@ -2,7 +2,7 @@
 project_name: Project Execution OS
 project_mode: compact
 status: transfer_ready
-updated_at: 2026-08-29
+updated_at: 2026-08-30
 source_of_truth: repository
 active_branch: main
 ---
@@ -28,6 +28,33 @@ Research task: https://github.com/oleg3479881328-code/Project-Execution-OS/issue
 Trigger reference: https://pimenov.ai/articles/codex-stanovitsya-platformoy-agent-vnutri-raboty/
 
 This is research only. No runtime replacement, Prompt Bridge removal, or architecture migration is approved until primary-source evidence is reviewed.
+
+## Latest Integration Milestone — 2026-08-30 — Archify Candidate
+
+Upstream reviewed:
+
+`https://github.com/tt-a1i/archify`
+
+Canonical integration note:
+
+`docs/integrations/archify/README.md`
+
+Decision:
+
+```text
+ADOPT FOR PILOT
+DO NOT REIMPLEMENT
+DO NOT PROMOTE TO ACTIVE UNTIL VERIFIED
+DO NOT REGISTER AS AN INTERNAL CAPABILITY YET
+```
+
+Archify is treated as an external architecture-visualization / architecture-evidence candidate, not as a Project Execution OS capability block. Project Execution OS keeps ownership of routing, standards, durable memory, approvals, review policy, capability readiness, and verified project state.
+
+First pilot:
+
+https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132
+
+The pilot will map Project Execution OS itself using the canonical `START_HERE.md -> docs/ROUTER.md` path and the four-layer architecture, with typed/validated Archify output and explicit truth boundaries. Promotion requires successful tool validation plus human confirmation that the map improves orientation without inventing topology.
 
 ## Latest Standards Milestone — 2026-08-29 — Knowledge Promotion Gate
 
@@ -185,10 +212,13 @@ For worker orchestration, the existing OS architecture remains authoritative whi
 
 DeepSeek Harness is now a second official donor/reference for the execution-plane architecture. It does not authorize a competing migration track. Findings from DeepSeek and Issue #113 must be reconciled before any runtime POC is promoted beyond an isolated experiment.
 
+Archify is an orthogonal visualization/evidence candidate. It must not be confused with the execution-plane choice or used to infer runtime behavior that has not been established independently.
+
 ## Current Focus
 
 - Research Issue #113: official Codex App Server / Harness integration surface and fit with Project Execution OS.
 - Reconcile DeepSeek Harness donor findings with the Codex research before choosing any execution runtime.
+- Run Issue #132: Archify self-map pilot against Project Execution OS and keep Archify at `CANDIDATE` until evidence exists.
 - Apply Harness Engineering Standard v3 to future reusable/runtime work.
 - Owner test on the target Windows computer with a real user-owned file.
 - Keep Block Studio and `media.probe` at `candidate` until that confirmation is received.
@@ -201,8 +231,9 @@ DeepSeek Harness is now a second official donor/reference for the execution-plan
 Architecture track:
 1. Complete/review Issue #113 against official OpenAI primary sources.
 2. Compare Codex runtime capabilities with the DeepSeek Harness extraction audit.
-3. Define one execution-plane candidate matrix.
-4. Only then decide whether one isolated read-only runtime POC is justified.
+3. Run the independent Archify self-map pilot from Issue #132; do not treat it as an execution-runtime decision.
+4. Define one execution-plane candidate matrix.
+5. Only then decide whether one isolated read-only runtime POC is justified.
 
 Capability track:
 1. Open Block Studio on the owner's Windows computer.
@@ -225,18 +256,21 @@ Capability track:
 9. `docs/research/VIBECODING_WITHOUT_CHAOS_GAP_ANALYSIS_2026-08-28.md`
 10. `docs/CODEX_HANDOFF_STANDARD.md`
 11. Issue #113 — Codex App Server / Harness research
-12. `apps/README.md`
-13. `apps/block-studio/README.md`
-14. `apps/block-studio/VALIDATION.md`
-15. `capability-library/REGISTRY.md`
-16. `capabilities/media-probe/BLOCK.md`
-17. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
+12. `docs/integrations/archify/README.md`
+13. Issue #132 — Archify self-map pilot
+14. `apps/README.md`
+15. `apps/block-studio/README.md`
+16. `apps/block-studio/VALIDATION.md`
+17. `capability-library/REGISTRY.md`
+18. `capabilities/media-probe/BLOCK.md`
+19. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
 
 ## Known Blockers
 
 - Codex App Server / Harness fit has not yet been verified against current official OpenAI sources; Issue #113 is open.
 - DeepSeek Harness is rapidly evolving, so direct runtime integration has upgrade-churn risk.
 - No execution-plane POC has yet proved that a third-party harness deletes enough custom orchestration to justify adoption.
+- Archify has not yet passed the Project Execution OS self-map pilot; it remains `CANDIDATE`, not ACTIVE.
 - The owner has not yet run Block Studio on the target Windows computer.
 - A real owner-owned media file has not yet been confirmed through the UI.
 - Variable-frame-rate media remains an additional edge-case fixture.
@@ -247,6 +281,8 @@ Capability track:
 - Do not replace or delete the current worker handoff/Prompt Bridge based only on donor research.
 - Do not start competing DeepSeek and Codex runtime migrations in parallel.
 - Do not treat DeepSeek Harness integration as approved production architecture without an isolated evidence-backed POC.
+- Do not treat Archify as an execution runtime or source of canonical project truth.
+- Do not promote Archify to ACTIVE or register it as an internal capability block without pilot evidence.
 - Do not treat partial sandbox enforcement as full protection.
 - Do not silently downgrade unsupported runtime/provider capabilities.
 - Do not recover interrupted execution as successful execution without fresh evidence.
@@ -258,4 +294,3 @@ Capability track:
 - Do not extract a common SDK from one block alone.
 - Do not preserve a validated state after an affecting post-verification change without re-running relevant checks.
 - Do not interpret vague improvement requests as permission for unbounded refactoring.
-- Update this file and `logs/latest.md` after every meaningful central-project change.
