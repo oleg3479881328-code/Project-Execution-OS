@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "43a433e395a8aa3e3429fd84f07e5b4baee8263c",
-  "generated_at": "2026-08-30T18:50:44-04:00",
+  "repository_commit": "d884df6958f2380779841552a3fab60cadcd8153",
+  "generated_at": "2026-08-30T18:51:08-04:00",
   "artifact_count": 558,
   "artifacts": [
     {
@@ -5579,7 +5579,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "bba97df72b049d7d4071fcc9bdc8c5fe441df1d1e75a125a910d9f31042a492e",
+      "sha256": "5a75d2fa2aa2730960a794a9ae3bc4de17ad0680918660b4730baa02cb2dc37c",
       "headings": [
         "Always Transfer-Ready State Standard",
         "Purpose",
@@ -5587,12 +5587,14 @@
         "Core Rule",
         "Durable Interim Preservation Rule",
         "Live State Minimum Content",
-        "Minimal Continuity Loop",
+        "Minimal Continuity And Knowledge Loop",
         "Active Minimum Set",
         "Maintenance Rule",
+        "Completion Rule",
         "Transfer Test",
         "Anti-Bureaucracy Rule",
-        "Related Standards"
+        "Related Standards",
+        "Final Rule"
       ]
     },
     {
