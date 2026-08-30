@@ -40,6 +40,7 @@ def markdown_files() -> list[Path]:
 def first_status(text: str) -> str | None:
     patterns = [
         r"^Lifecycle status:\s*(.+)$",
+        r"^Lifecycle State:\s*(.+)$",
         r"^Current status:\s*(.+)$",
         r"^Status:\s*(.+)$",
     ]
@@ -81,6 +82,13 @@ def normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text.strip())
 
 
+def is_retired_status(status: str | None) -> bool:
+    if not status:
+        return False
+    lowered = status.lower()
+    return any(token in lowered for token in ("deprecated", "retired", "replaced", "superseded", "archived"))
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
@@ -104,9 +112,6 @@ def main() -> int:
     files = markdown_files()
     texts = {path.relative_to(ROOT).as_posix(): read(path) for path in files}
 
-    # Hard structural rule: every domain BLOCK entrypoint must be discoverable
-    # from the curated block index or the live router. We do not auto-delete or
-    # auto-promote blocks based on usage.
     block_index = texts.get("blocks/PROJECT_INDEX.md", "")
     router = texts.get("docs/ROUTER.md", "")
     block_entrypoints = sorted(ROOT.glob("blocks/**/BLOCK.md"))
@@ -122,7 +127,6 @@ def main() -> int:
         )
     info.append(f"Domain block entrypoints checked: {len(block_entrypoints)}")
 
-    # Hard structural rule: internal project entrypoints must be registered.
     project_router = texts.get("projects/ROUTER.md", "")
     project_entrypoints = sorted(ROOT.glob("projects/*/PROJECT.md"))
     missing_projects: list[str] = []
@@ -134,8 +138,6 @@ def main() -> int:
         errors.append("Internal projects missing from projects/ROUTER.md: " + ", ".join(missing_projects))
     info.append(f"Internal project entrypoints checked: {len(project_entrypoints)}")
 
-    # Skills can be intentionally nested or experimental, so missing curated
-    # registration is a review signal rather than an automatic failure.
     skills_index = texts.get("skills/PROJECT_INDEX.md", "")
     skill_entrypoints = sorted(ROOT.glob("skills/**/SKILL.md"))
     unindexed_skills: list[str] = []
@@ -146,7 +148,6 @@ def main() -> int:
     if unindexed_skills:
         warnings.append(f"Skills not visible in skills/PROJECT_INDEX.md ({len(unindexed_skills)}): " + ", ".join(unindexed_skills[:12]) + (" ..." if len(unindexed_skills) > 12 else ""))
 
-    # Candidate aging is a signal, not a deletion/promotion rule.
     now = head_date()
     aged_candidates: list[str] = []
     undated_candidates = 0
@@ -168,8 +169,6 @@ def main() -> int:
     if aged_candidates:
         warnings.append(f"Candidate artifacts older than 120 days need review ({len(aged_candidates)}): " + ", ".join(aged_candidates[:12]) + (" ..." if len(aged_candidates) > 12 else ""))
 
-    # Exact duplicate canonical Markdown is suspicious, but templates and copied
-    # examples can be legitimate, so report rather than delete/fail.
     by_hash: dict[str, list[str]] = defaultdict(list)
     for rel, text in texts.items():
         if not rel.startswith(CANONICAL_ROOTS):
@@ -183,29 +182,28 @@ def main() -> int:
         sample = [" = ".join(group) for group in duplicates[:8]]
         warnings.append(f"Exact/normalized duplicate canonical Markdown groups ({len(duplicates)}): " + "; ".join(sample))
 
-    # Standards that nobody else names are possible orphans. This is intentionally
-    # soft because some standards are reached through directory-local entrypoints.
     orphan_standards: list[str] = []
     docs_standards = sorted((ROOT / "docs").glob("*_STANDARD.md"))
-    combined_by_rel = texts
     for path in docs_standards:
         rel = path.relative_to(ROOT).as_posix()
+        text = texts.get(rel, "")
+        status = first_status(text)
+        if is_retired_status(status):
+            continue
         filename = path.name
         referenced = False
-        for other_rel, text in combined_by_rel.items():
+        for other_rel, other_text in texts.items():
             if other_rel == rel:
                 continue
-            if rel in text or filename in text:
+            if rel in other_text or filename in other_text:
                 referenced = True
                 break
         if not referenced:
             orphan_standards.append(rel)
     if orphan_standards:
-        warnings.append(f"Possibly orphaned top-level standards ({len(orphan_standards)}): " + ", ".join(orphan_standards[:15]) + (" ..." if len(orphan_standards) > 15 else ""))
-    info.append(f"Top-level standards checked for references: {len(docs_standards)}")
+        warnings.append(f"Possibly orphaned active top-level standards ({len(orphan_standards)}): " + ", ".join(orphan_standards[:15]) + (" ..." if len(orphan_standards) > 15 else ""))
+    info.append(f"Top-level standards checked for active inbound references: {len(docs_standards)}")
 
-    # CHANGELOG is a curated milestone log, not a per-commit ledger. Long silence
-    # is a review signal only; Git history and logs/latest.md remain operational evidence.
     changelog = texts.get("CHANGELOG.md", "")
     match = re.search(r"^##\s+(\d{4}-\d{2}-\d{2})\s*$", changelog, re.M)
     if match:
