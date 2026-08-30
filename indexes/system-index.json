@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ff5ddc34ad0db09060e98ac0fc3f5841f2c1726a",
-  "generated_at": "2026-08-30T18:18:59-04:00",
+  "repository_commit": "aa1d189dd914dd86f477c4f353a8a6e2da3b6b81",
+  "generated_at": "2026-08-30T18:19:17-04:00",
   "artifact_count": 557,
   "artifacts": [
     {
@@ -7181,11 +7181,11 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "0068807480d7a167897c0aa45928181164ba597cf594f8a7003723fd58b3dbf4",
+      "sha256": "d79698dfde37d824c332952632d999f6803c1c8deced79d2a770800123fd28df",
       "headings": [
         "Project Execution OS Router",
         "Purpose",
-        "Routing Rule",
+        "Recursive Routing Rule",
         "Routes",
         "Boundary",
         "Final Rule"
