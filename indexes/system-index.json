@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d72b3bb41f6f64537f10f5bb27be2835ceca5763",
-  "generated_at": "2026-08-30T18:35:55-04:00",
-  "artifact_count": 557,
+  "repository_commit": "1ba5b3eff376b225005e63a9c2a3dcffbed0650d",
+  "generated_at": "2026-08-30T18:38:37-04:00",
+  "artifact_count": 558,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -227,9 +227,10 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "021a88a2e88b2de7caaeb34aee49aa38eab46d8bae521d8ec3c059563de72f2d",
+      "sha256": "4b98c38abae633229af5845d3c5addc504d78c705b2fa3125b3c95d533e8afd7",
       "headings": [
         "Start New Project",
+        "Compatibility Re-entry Rule",
         "Purpose",
         "Route",
         "Bootstrap Boundary",
@@ -10055,6 +10056,26 @@
         "Decisions",
         "Risks Or Lessons",
         "Next Required Action"
+      ]
+    },
+    {
+      "path": "projects/ROUTER.md",
+      "title": "Projects Router",
+      "type": "project-artifact",
+      "domain": "ROUTER.md",
+      "status": null,
+      "date": null,
+      "sha256": "a7bcfdd6bdf783300a0674cf39584a09409dd46a7e75e72ec5e54eeda730d8a2",
+      "headings": [
+        "Projects Router",
+        "Purpose",
+        "Routing Rule",
+        "Registered Projects",
+        "External Project Rule",
+        "Child Router Rule",
+        "Boundary",
+        "Maintenance Rule",
+        "Final Rule"
       ]
     },
     {
