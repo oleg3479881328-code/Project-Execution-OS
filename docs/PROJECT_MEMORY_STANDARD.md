@@ -1,4 +1,4 @@
-# Project Memory Standard v2
+# Project Memory Standard v3
 
 ## Purpose
 
@@ -13,6 +13,10 @@ Chat is a temporary execution surface.
 Durable project memory lives outside chat in explicit project artifacts and canonical connected sources.
 
 Model memory, conversation history, ChatGPT Project files, and assistant summaries may help with orientation, but they never override canonical durable project memory.
+
+Knowledge and state preservation are part of execution. Important reusable learning must be captured or improved while work is happening when reconstruction risk is material, with a final promotion gate before meaningful work is declared complete.
+
+The knowledge-in-the-flow contract is defined by `docs/KNOWLEDGE_SYSTEM.md`.
 
 ## Global Entry Rule
 
@@ -174,6 +178,23 @@ Each project entrypoint must make durable precedence unambiguous. A typical orde
 
 For AI entry/navigation, the global `START_HERE.md` and router tree determine which project artifacts to consult; they do not replace the project's own source-of-truth precedence once the project is selected.
 
+## Knowledge-In-The-Flow Rule
+
+Meaningful project work must use the Solve Loop from `docs/KNOWLEDGE_SYSTEM.md` when reusable knowledge may matter:
+
+```text
+search existing project/system knowledge
+→ reuse the current canonical answer when applicable
+→ improve/correct it in place if real work exposes a gap
+→ capture new important learning while context is fresh
+→ continue execution
+→ run the final promotion/completion gate
+```
+
+Do not postpone an expensive-to-reconstruct verified fix, decision, blocker, source, benchmark result, or do-not-repeat lesson until the final chat response merely for convenience.
+
+Do not create new documentation when an existing canonical artifact can be improved.
+
 ## Promotion Rules
 
 Promote information out of L0 when it is a confirmed reusable rule, architectural/product decision, verified error/fix, reusable donor/template/reference, reproducibility source, meaningful milestone, blocker/path change, expensive-to-reproduce result, next safe action, or do-not-repeat constraint.
@@ -182,7 +203,9 @@ Place it in the narrowest correct durable artifact. Do not dump entire conversat
 
 ## Update Responsibility
 
-After meaningful work, run the promotion gate in `docs/KNOWLEDGE_SYSTEM.md`, then update only the canonical artifact whose truth changed:
+During meaningful work, update durable memory when a material fact would be costly or risky to reconstruct later.
+
+Before declaring meaningful work complete, run the final promotion/completion gate in `docs/KNOWLEDGE_SYSTEM.md` and update only the canonical artifact whose truth changed:
 
 - `PROJECT.md` / Notion entrypoint when the project-level front door changed;
 - `PROJECT_STATE.md` when current state or next action changed;
@@ -192,6 +215,8 @@ After meaningful work, run the promotion gate in `docs/KNOWLEDGE_SYSTEM.md`, the
 - router/registry/index when navigation topology changed.
 
 Prefer updating an existing canonical artifact over creating a parallel one.
+
+For meaningful work, completion requires both the execution result and the preservation gate to be handled. If durable preservation fails, report that explicitly instead of claiming full completion.
 
 ## Minimum Structures
 
@@ -253,7 +278,8 @@ Do not:
 - create empty databases/folders/routers for hypothetical needs;
 - require all projects to use the same storage medium;
 - preserve raw chat transcripts as project documentation;
-- force a new executor to read the entire knowledge base.
+- force a new executor to read the entire knowledge base;
+- create a new knowledge artifact when improving an existing one is sufficient.
 
 Use one global AI door, one canonical project entrypoint per project, one current state, one current log, and only the deeper knowledge actually needed.
 
@@ -266,9 +292,10 @@ A project passes when a new executor can, starting from global `START_HERE.md`:
 3. understand purpose/current phase;
 4. find completed work and next safe action;
 5. identify constraints/do-not-repeat work;
-6. open deeper knowledge only when relevant;
-7. find valuable file artifacts in durable storage;
-8. continue without asking the owner to reconstruct hidden context.
+6. find prior verified fixes and reusable project knowledge without repeating avoidable investigation;
+7. open deeper knowledge only when relevant;
+8. find valuable file artifacts in durable storage;
+9. continue without asking the owner to reconstruct hidden context.
 
 ## Adoption Rule For Existing Projects
 
@@ -293,6 +320,7 @@ Do not perform destructive migration merely to make interface attachments look u
 - `docs/ROUTER.md`
 - `projects/ROUTER.md`
 - `Start New Project.md`
+- `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/PROJECT_BOOTSTRAP_STANDARD.md`
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - `docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md`
@@ -304,4 +332,4 @@ Do not perform destructive migration merely to make interface attachments look u
 
 ## Final Rule
 
-Every meaningful project must have durable external memory, every valuable file artifact must survive the chat session, and every compatible AI should be able to enter through the one global `START_HERE.md`, recursively reach the correct project, and read only the minimum durable memory needed to act safely.
+Every meaningful project must have durable external memory, every valuable file artifact must survive the chat session, and every compatible AI should be able to enter through the one global `START_HERE.md`, recursively reach the correct project, reuse relevant existing knowledge before reinventing it, preserve important new learning during execution, and leave no valuable project knowledge stranded only in session context.
