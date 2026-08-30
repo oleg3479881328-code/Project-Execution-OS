@@ -16,7 +16,7 @@ First determine what the user is actually doing:
 - preserving an idea or reference without starting a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - explicitly starting project work -> `docs/PROJECT_LIFECYCLE_MODEL.md` and `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
 - explicitly starting a real project -> `docs/PROJECT_BOOTSTRAP_STANDARD.md`, then `docs/PROJECT_ENTRYPOINT_STANDARD.md` and `docs/PROJECT_MEMORY_STANDARD.md`
-- starting or attaching a real project inside ChatGPT Projects -> establish the project's durable canonical entrypoint normally, but use the generic ChatGPT attachment defined by `docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md`; that attachment points to the global `START_HERE.md`, and project identity is resolved through recursive routing
+- using a real project inside ChatGPT Projects -> establish the project's durable canonical entrypoint normally; if stable user/system instructions already route through global `START_HERE.md`, add no project-specific attachment; if an attachment is required/useful, use the optional generic bootstrap defined by `docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md`
 - continuing an existing project -> enter through global `START_HERE.md`, follow the router tree to the project's current entrypoint, then restore context through `docs/PROJECT_MEMORY_STANDARD.md`; if the project entrypoint is missing, use `docs/PROJECT_ENTRYPOINT_STANDARD.md`
 - delegating a substantial independent task to another AI or parallel ChatGPT worker while a shared durable workspace is available -> `docs/EXTERNAL_AI_NOTION_TASK_RESULT_STANDARD.md`, `docs/WORKER_IMMEDIATE_EXECUTION_STANDARD.md`, and `docs/WORKER_CHAT_NAMING_STANDARD.md`
 - handing an already-defined execution task to Codex -> `docs/CODEX_HANDOFF_STANDARD.md`
@@ -35,13 +35,15 @@ PROJECT.md
 
 When the owner intentionally creates an internal subproject inside an existing Git repository, do not run nested `git init`; create `PROJECT.md` and add `AGENTS.md` only if local subproject instructions are useful.
 
-When the owner intentionally uses ChatGPT Projects as an interface to externally stored project memory, attach the generic `START_HERE.md` pointer to the global Project Execution OS entrypoint. Do not put evolving project state into that attachment and do not require repeated uploads after ordinary project changes.
+When ChatGPT Projects is only an interface to externally stored project memory, do not create a project-specific ChatGPT entry architecture. Stable global client instructions are sufficient when they already require entry through Project Execution OS `START_HERE.md`.
 
-Project-specific canonical entrypoints still exist in durable project storage. They are reached through the router tree rather than being hard-coded into each ChatGPT Project attachment.
+If an interface attachment is still useful or required, attach the same generic `START_HERE.md` pointer to the global Project Execution OS entrypoint. Do not put evolving project state into that attachment.
 
-Do not create these artifacts solely because a new folder exists, a workspace is opened, or an idea is being discussed.
+Existing legacy project-specific ChatGPT pointers do not need manual replacement merely for migration. Global `START_HERE.md` and the live router path take precedence; legacy pointers are compatibility artifacts unless they actively create ambiguity.
 
-Do not automatically create any additional project artifacts beyond that minimum bootstrap set.
+Project-specific canonical entrypoints still exist in durable project storage. They are reached through the router tree rather than being hard-coded into ChatGPT Projects.
+
+Do not create artifacts solely because a new folder exists, a workspace is opened, or an idea is being discussed.
 
 The universal memory architecture begins with the entrypoint and expands only after meaningful work exists. Follow `docs/PROJECT_MEMORY_STANDARD.md` and do not create empty memory structure for hypothetical future needs.
 
