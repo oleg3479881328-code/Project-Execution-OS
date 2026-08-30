@@ -94,6 +94,20 @@ Current status:
 
 `candidate`
 
+### News Intelligence Block
+
+Path:
+
+`blocks/news-intelligence/`
+
+Purpose:
+
+Provide a reusable current-news intelligence workflow for collecting, deduplicating, source-checking, scoring, interpreting, packaging, and selectively preserving time-sensitive external signals.
+
+Current status:
+
+`candidate`
+
 ### Notion Agent Workspace Block
 
 Path:
@@ -103,6 +117,48 @@ Path:
 Purpose:
 
 Provide a reusable Notion workspace layer for stable `PROJECT_ID` routing, agent-compatible project pages, shared project databases, MCP/API access design, GitHub coordination boundaries, and fresh-agent re-entry.
+
+Current status:
+
+`candidate`
+
+### OSINT Block
+
+Path:
+
+`blocks/osint/`
+
+Purpose:
+
+Provide reusable open-source intelligence, public-source investigation, source verification, timeline reconstruction, due-diligence, reputation and evidence-log workflows.
+
+Current status:
+
+`candidate`
+
+### Reviewer Block
+
+Path:
+
+`blocks/reviewer/`
+
+Purpose:
+
+Provide one reusable hard-review and independent-critique workflow for red-team inspection, acceptance gating, missing-evidence detection, risk review, and explicit verdicts.
+
+Current status:
+
+`candidate_v1`
+
+### Server Rental Block
+
+Path:
+
+`blocks/server-rental/`
+
+Purpose:
+
+Provide reusable decision and implementation guidance for VPS, cloud/GPU rental, serverless compute, rented AI infrastructure and hybrid compute routing.
 
 Current status:
 
@@ -239,6 +295,10 @@ Current status:
 For the automatically refreshed machine-derived artifact list, use:
 
 `indexes/BLOCK_CATALOG.generated.md`
+
+## Maintenance Rule
+
+Every `blocks/**/BLOCK.md` entrypoint must be discoverable from this curated index or a live router. Prefer listing current reusable blocks here even when a direct global-router route also exists.
 
 ## Final Rule
 
