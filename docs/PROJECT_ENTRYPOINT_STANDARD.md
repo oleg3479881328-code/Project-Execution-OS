@@ -2,111 +2,69 @@
 
 ## Purpose
 
-This standard defines the single entrypoint artifact for any specific project, regardless of whether that project lives primarily in `GitHub`, `Notion`, or another durable workspace.
+This standard defines the canonical entrypoint artifact for a specific project while preserving the Project Execution OS rule that AI interfaces enter the overall system through one global `START_HERE.md`.
 
-The goal is simple:
-
-Any human or AI entering a project should be able to read one short artifact and quickly understand:
-
-- what this project is;
-- why it exists;
-- where the source of truth lives;
-- what has already been done;
-- what is happening now;
-- what should happen next;
-- which constraints or decisions already matter;
-- where to read deeper only if needed.
+A project entrypoint is a durable project node reached through routing. It is not a competing global door.
 
 ## Core Rule
 
-Every meaningful project should have exactly one current canonical project entrypoint.
+Every meaningful project should have exactly one current canonical project entrypoint in its durable workspace.
 
-That entrypoint is not the full history of the project.
+Any AI/client interface should enter Project Execution OS through the global `START_HERE.md`, follow recursive routing, and only then reach the relevant project's canonical entrypoint.
 
-It is the shortest reliable way to enter the project without re-deriving context from chat, memory, or guesswork.
+```text
+global START_HERE.md
+→ router
+→ router / registry / index ... as needed
+→ canonical project entrypoint
+→ minimum current evidence
+```
 
-If an interface such as ChatGPT Projects requires an attached local file, that file is not a second canonical entrypoint. It is a thin stable pointer to the canonical live entrypoint.
+Routing depth is not fixed.
 
-## Canonical Forms
+## Canonical Project Forms
 
-Use the same contract in environment-specific forms:
+Use the same project-entry contract in environment-specific durable forms:
 
 - `GitHub / repository projects` -> `PROJECT.md`
 - `Notion / workspace-first projects` -> `Project Entrypoint` or `START HERE` page
-- `ChatGPT Project with external live project memory` -> attached `START_HERE.md` pointer only
+- another durable workspace -> one clearly identified canonical project entrypoint appropriate to that system
 
-The medium may differ.
+The medium may differ. The contract should stay the same.
 
-The contract should stay the same.
+## ChatGPT Projects
 
-## ChatGPT Project Attachment Standard
+ChatGPT Project is an interface, not a durable project-entrypoint layer.
 
-When a project is used inside ChatGPT Projects and the live project evolves in GitHub, Notion, Drive, or another durable external workspace, provide ChatGPT with exactly one stable attached entry file:
+When an attached bootstrap file is useful or required, use the generic `START_HERE.md` pointer defined by `docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md`.
 
-```text
-START_HERE.md
-```
+That attachment points to the global Project Execution OS `START_HERE.md`, not directly to a specific project.
 
-This attached file must be a pointer, not a snapshot of project state.
+Do not maintain project-specific ChatGPT attachment snapshots or parallel project-specific START_HERE contracts merely because work happens inside separate ChatGPT Projects.
 
-It must contain only enough information to route the executor into the live project, including:
+Project identity is resolved through the live router tree and durable project registry/index nodes.
 
-1. project identity;
-2. the exact durable URL or path of the canonical live entrypoint;
-3. the required re-entry sequence;
-4. an instruction to follow the live router / current-state links rather than reconstructing state from chat;
-5. source-of-truth precedence stating that the live project overrides the attachment, chat history, and model memory;
-6. the Project Execution OS reference when applicable.
+## Recursive Navigation Contract
 
-The pointer should normally remain unchanged for the lifetime of the project.
+A navigation node may point to:
 
-Project evolution must happen behind the pointer in the canonical live project memory.
+- another router;
+- a project registry;
+- a domain registry;
+- a collection index;
+- a project entrypoint;
+- another specialized navigation node;
+- canonical content.
 
-Do not require the owner to re-upload or replace the ChatGPT Project attachment merely because project state, roadmap, research, architecture, tasks, or current focus changed.
+Any of those navigation nodes may route onward again.
 
-Replace the attached pointer only when the canonical entrypoint location itself changes or the routing contract materially changes.
+There is no artificial maximum routing depth. Use the depth required by the real information architecture while keeping each node narrow.
 
-### Required Behavior After Attachment
+Navigation nodes should not duplicate the detailed state or knowledge stored behind them.
 
-Once the pointer file is attached to the ChatGPT Project:
+## Required Questions The Project Entrypoint Must Answer
 
-```text
-ChatGPT Project START_HERE.md
-→ canonical live project entrypoint
-→ project ROUTER, if present
-→ current operational state
-→ latest work log/checkpoint
-→ only task-relevant durable knowledge
-```
-
-The assistant must not treat the attached pointer as the current project state.
-
-The assistant must not ask the owner to paste migration context again when that context is recoverable through the canonical project memory.
-
-The assistant must not create a fresh full START_HERE snapshot inside ChatGPT as a substitute for maintaining the live project.
-
-## Initialization-Only Entrypoint
-
-An entrypoint may honestly exist before the project purpose is known.
-
-This initialization-only form is valid for a newly bootstrapped project and should not be treated as incomplete merely because some fields are still unknown.
-
-In that zero state, the entrypoint should explicitly say:
-
-- status: `initialized — purpose not yet defined`;
-- type: `not yet classified`;
-- purpose is not yet confirmed;
-- architecture, stack, storage layers, scope, and implementation plan are not yet confirmed;
-- no substantive implementation should begin yet;
-- next practical step is to obtain the project purpose from the owner.
-
-Unknown fields are allowed when they are truthful.
-
-Invented fields are not allowed.
-
-## Required Questions The Entrypoint Must Answer
-
-After reading the canonical live entrypoint, a new human or AI should be able to answer:
+After reaching the canonical project entrypoint, a new human or AI should be able to answer:
 
 1. What is this project?
 2. Why does it exist?
@@ -122,16 +80,14 @@ If the entrypoint does not answer these clearly, it is incomplete.
 
 ## Required Sections
 
-Every canonical live project entrypoint should include the following sections in compact form:
+Every canonical live project entrypoint should include the following sections in compact form.
 
 ### 1. Project
-
 - project name;
 - short description;
 - project type.
 
 ### 2. Purpose
-
 - why the project exists;
 - who it is for;
 - what success looks like at the current stage.
@@ -139,175 +95,68 @@ Every canonical live project entrypoint should include the following sections in
 If purpose is unknown, say so directly instead of guessing.
 
 ### 3. Source Of Truth
-
 State clearly where durable truth lives.
 
-Examples:
-
-- `GitHub repository`
-- `Notion project page`
-- `GitHub repo for execution + Notion for readable workspace`
-
-This section must remove ambiguity.
-
 ### 4. Source Trail
-
-Follow `docs/SOURCE_TRACEABILITY_STANDARD.md`.
-
-State where the underlying sources, references, uploaded files, raw packets, or research inputs can be opened again.
-
-This section should include at least one recoverable pointer such as:
-
-- source URL;
-- Notion page URL;
-- Google Drive file URL;
-- GitHub repository path;
-- attached file link;
-- raw package path plus SHA256;
-- source list with filenames and checksums.
-
-If no durable external source exists yet, say so explicitly.
-
-Do not imply that a source package is saved if the artifact only contains a summary.
+Follow `docs/SOURCE_TRACEABILITY_STANDARD.md` and provide recoverable pointers to underlying sources, raw inputs, Drive files, repository paths, databases or other durable evidence.
 
 ### 5. Current Status
-
-Summarize:
-
-- current mode;
-- current phase or step;
-- current health or confidence if relevant.
+Summarize current mode, phase and health/confidence when relevant.
 
 ### 6. Done So Far
-
-List only the most important completed work or milestones.
-
-Do not turn this into a full chronology.
+List only the most important completed milestones.
 
 ### 7. Current Focus
-
 State what is actively being worked on now.
 
 ### 8. Next Practical Step
-
-State the next useful action as clearly as possible.
-
-This should be concrete enough that a new participant can continue without guessing.
+State the next useful action clearly enough that another participant can continue without guessing.
 
 ### 9. Key Decisions And Constraints
-
 Record only decisions and constraints that materially affect future work.
 
-Examples:
-
-- chosen tool or platform;
-- forbidden scope;
-- visibility or privacy rule;
-- source-of-truth rule;
-- source-traceability rule;
-- review or handoff rule;
-- `Existing Solution First` when the project must search for adequate existing solutions before custom work.
-
 ### 10. Read Next
+Point to the minimum deeper artifacts needed for additional context.
 
-Point to the minimum deeper artifacts needed for deeper context.
+## Initialization-Only Entrypoint
 
-Examples:
+A project entrypoint may honestly exist before the project purpose is known.
 
-- `PROJECT_STATE.md`
-- latest workflow run
-- latest log
-- relevant knowledge entry
-- linked Notion database or subpage
+In that state, say explicitly that the project is initialized but not yet defined. Unknown fields are allowed when truthful. Invented fields are not.
 
-In initialization-only state, those deeper artifacts may legitimately not exist yet.
-
-## What The Entrypoint Must Not Become
+## What The Project Entrypoint Must Not Become
 
 The project entrypoint must not become:
 
+- the global system router;
 - the full project history;
 - the full rules document;
 - a transcript dump;
 - a research archive;
-- a hidden second state file.
+- a hidden second state database.
 
-History belongs in logs, workflow runs, databases, or supporting pages.
-
-Rules belong in project rules or system standards.
-
-The entrypoint remains the front door.
-
-A ChatGPT Project pointer must not become a duplicated live entrypoint.
-
-## Environment-Specific Guidance
-
-### GitHub Form
-
-Use `PROJECT.md` in the repository root or project root.
-
-This form should point to:
-
-- `PROJECT_STATE.md`
-- `PROJECT_RULES.md` if present
-- latest workflow run
-- latest project log
-- source trail / raw input package when relevant
-
-In initialization-only state, those deeper artifacts may legitimately not exist yet.
+History belongs in logs, workflow runs, databases or supporting pages. Rules belong in standards/project rules. The project entrypoint remains the shortest reliable project-level front door after routing has selected that project.
 
 ## Legacy Migration Rule
 
 For repository projects:
 
 - if `PROJECT.md` exists, use it as the canonical project entrypoint;
-- if `PROJECT.md` is absent but `PROJECT_ENTRYPOINT.md` exists, treat `PROJECT_ENTRYPOINT.md` as a legacy name;
-- read that legacy file temporarily;
+- if `PROJECT.md` is absent but `PROJECT_ENTRYPOINT.md` exists, treat it as a legacy name;
 - migrate it to `PROJECT.md` at the nearest safe opportunity;
-- update project links and references during that migration;
-- do not keep both `PROJECT.md` and `PROJECT_ENTRYPOINT.md` active at the same time.
-
-### Notion Form
-
-Use a page or top section called `Project Entrypoint` or `START HERE`.
-
-This form should point to:
-
-- the project page itself;
-- the current state block or status field;
-- the relevant task or notes databases if they matter;
-- the next working area to open;
-- the source trail / raw input package when relevant.
-
-In `Notion`, the entrypoint should usually sit near the top of the page so a new participant does not need to scroll through raw notes first.
-
-### ChatGPT Projects Form
-
-If the project has external canonical memory, attach one `START_HERE.md` pointer file to the ChatGPT Project.
-
-Do not attach a periodically regenerated full project snapshot as the entrypoint.
-
-The file should be designed so the owner can attach it once and continue the project in future chats without repeating migration or replacing the file after ordinary project changes.
+- update links and references;
+- do not keep both active at the same time.
 
 ## Maintenance Rule
 
-Update the canonical live project entrypoint whenever one of these changes:
+Update the canonical project entrypoint whenever its source of truth, source trail, current mode, current focus, next practical step, or a major decision changes what a new participant must know first.
 
-- the source of truth changes;
-- the source trail changes;
-- the current mode changes;
-- the current focus changes;
-- the next practical step changes;
-- a major decision changes what a new participant must know first.
-
-Update a ChatGPT Project pointer only when its target or routing contract changes.
-
-If the project evolves but the live entrypoint does not, re-entry cost rises and the entrypoint stops doing its job.
+Do not update the generic ChatGPT attachment for ordinary project changes.
 
 ## Final Rule
 
-One project has one live canonical front door.
+One Project Execution OS has one global AI door: `START_HERE.md`.
 
-Interface-specific files such as ChatGPT Project attachments are stable pointers to that front door, not competing copies of it.
+One meaningful project has one canonical durable project entrypoint.
 
-A project entrypoint without a recoverable source trail is incomplete.
+Recursive routers connect the global door to the correct project and may use as many navigation levels as the information architecture requires.
