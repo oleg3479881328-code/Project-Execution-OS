@@ -17,6 +17,7 @@ global START_HERE.md
 → router
 → router / registry / index ... as needed
 → canonical project entrypoint
+→ project-local routing ... as needed
 → minimum current evidence
 ```
 
@@ -36,31 +37,38 @@ The medium may differ. The contract should stay the same.
 
 ChatGPT Project is an interface, not a durable project-entrypoint layer.
 
-When an attached bootstrap file is useful or required, use the generic `START_HERE.md` pointer defined by `docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md`.
+If stable user/system instructions already guarantee entry through global Project Execution OS `START_HERE.md`, no ChatGPT Project attachment is required.
 
-That attachment points to the global Project Execution OS `START_HERE.md`, not directly to a specific project.
+When an attached bootstrap file is useful or required, use the generic optional `START_HERE.md` pointer defined by `docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md`. It points to the global Project Execution OS `START_HERE.md`, not directly to a specific project.
 
-Do not maintain project-specific ChatGPT attachment snapshots or parallel project-specific START_HERE contracts merely because work happens inside separate ChatGPT Projects.
+Do not create new project-specific ChatGPT attachment snapshots or parallel project-specific START_HERE contracts merely because work happens inside separate ChatGPT Projects.
 
 Project identity is resolved through the live router tree and durable project registry/index nodes.
 
+### Legacy ChatGPT Attachment Migration
+
+Existing ChatGPT Projects may already contain project-specific START_HERE/pointer files created under the previous contract.
+
+Migration is zero-touch by default:
+
+- do not require the owner to open every ChatGPT Project;
+- do not require re-uploading or replacing old attachments merely to adopt the new architecture;
+- global `START_HERE.md` has precedence when stable client instructions require it;
+- the live router path has precedence over a legacy interface pointer;
+- the selected project's canonical durable entrypoint has precedence over a legacy interface pointer;
+- current durable evidence has precedence over stale attachment content.
+
+A legacy pointer may remain physically attached. Treat it as a non-authoritative compatibility artifact and ignore its direct project routing until the global router tree has selected that project.
+
+Replace or remove a legacy attachment only during convenient maintenance or when it demonstrably causes ambiguity. Its presence alone is not a blocker.
+
 ## Recursive Navigation Contract
 
-A navigation node may point to:
-
-- another router;
-- a project registry;
-- a domain registry;
-- a collection index;
-- a project entrypoint;
-- another specialized navigation node;
-- canonical content.
-
-Any of those navigation nodes may route onward again.
+A navigation node may point to another router, project/domain registry, collection index, project entrypoint, specialized navigation node, or canonical content. Any navigation node may route onward again.
 
 There is no artificial maximum routing depth. Use the depth required by the real information architecture while keeping each node narrow.
 
-Navigation nodes should not duplicate the detailed state or knowledge stored behind them.
+Navigation nodes should not duplicate detailed state or knowledge stored behind them.
 
 ## Required Questions The Project Entrypoint Must Answer
 
@@ -80,64 +88,17 @@ If the entrypoint does not answer these clearly, it is incomplete.
 
 ## Required Sections
 
-Every canonical live project entrypoint should include the following sections in compact form.
+Every canonical live project entrypoint should include, in compact form: Project; Purpose; Source Of Truth; Source Trail; Current Status; Done So Far; Current Focus; Next Practical Step; Key Decisions And Constraints; Read Next.
 
-### 1. Project
-- project name;
-- short description;
-- project type.
-
-### 2. Purpose
-- why the project exists;
-- who it is for;
-- what success looks like at the current stage.
-
-If purpose is unknown, say so directly instead of guessing.
-
-### 3. Source Of Truth
-State clearly where durable truth lives.
-
-### 4. Source Trail
-Follow `docs/SOURCE_TRACEABILITY_STANDARD.md` and provide recoverable pointers to underlying sources, raw inputs, Drive files, repository paths, databases or other durable evidence.
-
-### 5. Current Status
-Summarize current mode, phase and health/confidence when relevant.
-
-### 6. Done So Far
-List only the most important completed milestones.
-
-### 7. Current Focus
-State what is actively being worked on now.
-
-### 8. Next Practical Step
-State the next useful action clearly enough that another participant can continue without guessing.
-
-### 9. Key Decisions And Constraints
-Record only decisions and constraints that materially affect future work.
-
-### 10. Read Next
-Point to the minimum deeper artifacts needed for additional context.
-
-## Initialization-Only Entrypoint
-
-A project entrypoint may honestly exist before the project purpose is known.
-
-In that state, say explicitly that the project is initialized but not yet defined. Unknown fields are allowed when truthful. Invented fields are not.
+Follow `docs/SOURCE_TRACEABILITY_STANDARD.md` for recoverable underlying sources and evidence. Unknown fields are allowed when truthful; invented fields are not.
 
 ## What The Project Entrypoint Must Not Become
 
-The project entrypoint must not become:
+The project entrypoint must not become the global system router, full project history, full rules document, transcript dump, research archive, or hidden second state database.
 
-- the global system router;
-- the full project history;
-- the full rules document;
-- a transcript dump;
-- a research archive;
-- a hidden second state database.
+History belongs in logs/workflow runs/databases/supporting pages. Rules belong in standards/project rules. The project entrypoint remains the shortest reliable project-level front door after routing selects that project.
 
-History belongs in logs, workflow runs, databases or supporting pages. Rules belong in standards/project rules. The project entrypoint remains the shortest reliable project-level front door after routing has selected that project.
-
-## Legacy Migration Rule
+## Repository Legacy Migration Rule
 
 For repository projects:
 
@@ -147,16 +108,20 @@ For repository projects:
 - update links and references;
 - do not keep both active at the same time.
 
+This repository-file migration is separate from ChatGPT attachment migration: old repository entrypoint names should be cleaned up when safe, while old ChatGPT attachments may remain because they are non-authoritative interface artifacts.
+
 ## Maintenance Rule
 
 Update the canonical project entrypoint whenever its source of truth, source trail, current mode, current focus, next practical step, or a major decision changes what a new participant must know first.
 
-Do not update the generic ChatGPT attachment for ordinary project changes.
+Do not update a generic ChatGPT attachment for ordinary project changes.
 
 ## Final Rule
 
 One Project Execution OS has one global AI door: `START_HERE.md`.
 
 One meaningful project has one canonical durable project entrypoint.
+
+Stable global client instructions make per-project ChatGPT pointers unnecessary.
 
 Recursive routers connect the global door to the correct project and may use as many navigation levels as the information architecture requires.
