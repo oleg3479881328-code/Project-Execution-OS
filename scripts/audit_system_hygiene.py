@@ -38,16 +38,23 @@ def markdown_files() -> list[Path]:
 
 
 def first_status(text: str) -> str | None:
-    patterns = [
+    inline_patterns = [
         r"^Lifecycle status:\s*(.+)$",
         r"^Lifecycle State:\s*(.+)$",
         r"^Current status:\s*(.+)$",
         r"^Status:\s*(.+)$",
     ]
-    for pattern in patterns:
+    for pattern in inline_patterns:
         match = re.search(pattern, text, re.I | re.M)
         if match:
             return match.group(1).strip().strip("` ")
+
+    section = re.search(
+        r"(?ims)^#{2,4}\s+(?:Lifecycle Status|Lifecycle State|Current Status|Status)\s*$\s*\n+\s*`?([^\n`]+)`?",
+        text,
+    )
+    if section:
+        return section.group(1).strip().strip("` ")
     return None
 
 
