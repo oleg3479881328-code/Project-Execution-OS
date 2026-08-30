@@ -1,4 +1,4 @@
-# Context Assembly Standard v3
+# Context Assembly Standard v4
 
 ## Purpose
 
@@ -18,7 +18,7 @@ Do not load the whole system or whole project by default.
 ## Universal Entry Sequence
 
 ```text
-0. Stable client/system instruction, if needed
+0. Stable client/system instruction, if available
 1. global START_HERE.md
 2. first live router: docs/ROUTER.md
 3. zero or more additional routers / registries / indexes
@@ -29,17 +29,32 @@ Do not load the whole system or whole project by default.
 8. current user instruction, error, log or execution input
 ```
 
-The number of routing layers is intentionally unbounded.
+The number of routing layers is intentionally unbounded. A route can be one hop or one hundred hops if the real information architecture requires it. Depth itself is not a problem; unnecessary context expansion is.
 
-A route can be one hop or one hundred hops if the real information architecture requires it. Depth itself is not a problem; unnecessary context expansion is.
+## Bootstrap Precedence Rule
+
+For project-related work, the global Project Execution OS `START_HERE.md` is the authoritative AI entry door.
+
+When stable user/system instructions already require that entry, no project-specific ChatGPT attachment is needed.
+
+If an interface also exposes an old project-specific START_HERE/pointer attachment, do not let that artifact bypass or override the global route. Use this precedence:
+
+```text
+stable instruction requiring global START_HERE
+→ global START_HERE
+→ live router path
+→ selected canonical project entrypoint
+→ current durable evidence
+→ legacy interface attachments only as optional hints
+```
+
+A legacy attachment may remain physically present. Its presence does not require manual migration and does not make it canonical.
 
 ## Recursive Router Rule
 
 A router is a navigation pattern, not one privileged file.
 
-A navigation node may be a router, registry, index, directory map, project catalogue, wedding catalogue, vendor catalogue, capability catalogue or another bounded map.
-
-It may point to another navigation node or to canonical content.
+A navigation node may be a router, registry, index, directory map, project catalogue, wedding catalogue, vendor catalogue, capability catalogue or another bounded map. It may point to another navigation node or to canonical content.
 
 Each navigation level should expose only enough information to choose the next relevant path. It should not duplicate all content behind that path.
 
@@ -65,15 +80,11 @@ ChatGPT Projects, Codex, Claude, DeepSeek, local models and future agents are ex
 
 They may contain a minimal stable bootstrap instruction or pointer, but they should not become canonical project-memory stores merely because work happens there.
 
-When a client can reach the global Project Execution OS entrypoint, its bootstrap should direct it to global `START_HERE.md`.
-
-Do not create a separate navigation architecture for each AI client.
+Prefer a stable client instruction pointing to global `START_HERE.md`. Add a generic interface pointer only when useful or required. Do not create a separate navigation architecture for each AI client.
 
 ## Project Context Rule
 
 When routing reaches a specific project, read that project's canonical durable entrypoint first.
-
-The intended shape is:
 
 ```text
 global START_HERE.md
@@ -106,17 +117,13 @@ A deep router tree is compatible with a small context window because each step c
 
 Before mass scanning a project or collection, check whether a useful index/router already exists.
 
-If a collection has grown enough that navigation is becoming expensive or ambiguous, create the smallest useful router/index at that level.
-
-Examples may include projects, weddings, vendors, venues, knowledge domains or capabilities.
+If a collection has grown enough that navigation is becoming expensive or ambiguous, create the smallest useful router/index at that level. Examples may include projects, weddings, vendors, venues, knowledge domains or capabilities.
 
 Do not create empty hierarchy for hypothetical future scale.
 
 ## Reusable Knowledge Rule
 
-Use central reusable knowledge only when the current task may benefit from a reviewed cross-project solution or pattern.
-
-Do not load complete knowledge, skills, agent or block trees into routine work.
+Use central reusable knowledge only when the current task may benefit from a reviewed cross-project solution or pattern. Do not load complete knowledge, skills, agent or block trees into routine work.
 
 ## Executor Context Rule
 
@@ -142,15 +149,7 @@ Caching is an optimization, not memory. Preserve runtime usage/cost logging wher
 
 ## Review Rule
 
-Review context assembly for:
-
-- missing required context;
-- unnecessary loaded context;
-- stale/unreviewed guidance treated as active truth;
-- router nodes that have accumulated content instead of navigation;
-- duplicate interface-specific entry architectures;
-- hard-coded routing-depth assumptions;
-- project/collection scale that now deserves a smaller child router/index.
+Review context assembly for missing required context, unnecessary loaded context, stale/unreviewed guidance, router nodes that accumulated content instead of navigation, duplicate interface-specific entry architectures, hard-coded routing-depth assumptions, and project/collection scale that now deserves a smaller child router/index.
 
 ## Related Nodes
 
@@ -169,3 +168,5 @@ Review context assembly for:
 The system must not depend on an AI reading everything or knowing in advance which project it is inside.
 
 It must enable any compatible AI to know one stable global door, recursively navigate to the correct canonical node, and load the smallest trustworthy context sufficient for the active action.
+
+Interface-specific legacy pointers may remain, but they are never allowed to outrank the global door and live durable route.
