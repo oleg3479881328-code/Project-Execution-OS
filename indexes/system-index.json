@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "1956460bad0180b005960bed5e8c6f54d8d60e48",
-  "generated_at": "2026-08-30T18:35:40-04:00",
+  "repository_commit": "d72b3bb41f6f64537f10f5bb27be2835ceca5763",
+  "generated_at": "2026-08-30T18:35:55-04:00",
   "artifact_count": 557,
   "artifacts": [
     {
@@ -6073,17 +6073,18 @@
     },
     {
       "path": "docs/CONTEXT_ASSEMBLY_STANDARD.md",
-      "title": "Context Assembly Standard v3",
+      "title": "Context Assembly Standard v4",
       "type": "system-standard",
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "9e59b19da1fd1bab79e135dd685bd75a89a0c53d174a89bb7dbf4efd33fe5fec",
+      "sha256": "becd5c3a97b0cc96f0a3ef86d1dcae40598b35ac97d3e5272aa5afef0b15535e",
       "headings": [
-        "Context Assembly Standard v3",
+        "Context Assembly Standard v4",
         "Purpose",
         "Core Rule",
         "Universal Entry Sequence",
+        "Bootstrap Precedence Rule",
         "Recursive Router Rule",
         "Client / Interface Rule",
         "Project Context Rule",
