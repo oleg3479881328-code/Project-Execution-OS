@@ -2,73 +2,76 @@
 
 ## Purpose
 
-This file defines the canonical format for the small project entry attachment placed inside a ChatGPT Project when the real project lives and evolves in durable external systems such as Notion, GitHub, Google Drive, or other connected workspaces.
+This file defines the stable bootstrap attachment for ChatGPT Projects when durable project knowledge lives outside the ChatGPT interface.
 
-The attachment is only a stable entrance into the project. It is not the project description, project memory, project state, roadmap, log, or snapshot.
+ChatGPT Project is a working window. It is not the canonical project memory and does not need its own project-specific navigation architecture.
 
 ## Required Filename
 
-The attachment filename must include the project name followed by `START_HERE`.
-
-Use underscores `_` as separators between all words.
-
-Default format:
+Use:
 
 ```text
-<Project_Name>_START_HERE.md
+START_HERE.md
 ```
 
-Example:
-
-```text
-AI_Program_Interaction_Research_START_HERE.md
-```
-
-Do not use spaces, hyphen separators, or URL-encoded filename forms such as `%20`.
-Do not use a generic bare `START_HERE.md` for ChatGPT Project attachments when a project name is known.
-The filename itself must identify which project the entrypoint belongs to and must be safe to expose as a direct downloadable filename without URL-encoding noise.
+The same attachment may be used across ChatGPT Projects because project identity is resolved after entering the global Project Execution OS router tree.
 
 ## Core Rule
 
-The real canonical `START_HERE` lives in the project's durable workspace.
+There is one canonical global AI entrypoint:
 
-The attached ChatGPT Project entry file should remain short and stable. It must explain in a few sentences what the file is, make clear that the project may evolve independently across multiple systems, and point the AI to the canonical live `START_HERE`.
+`Project-Execution-OS/START_HERE.md`
 
-Ordinary project evolution must not require replacing this attachment.
+A ChatGPT Project attachment is only a stable pointer to that global entrypoint. It must not point directly to a specific project's live state or duplicate a project-specific START_HERE hierarchy.
+
+Ordinary project evolution, project renaming, routing changes below the global router, or current-state changes must not require replacing the ChatGPT attachment.
 
 ## Default Russian Template
-
-Use this content by default for Oleg's ChatGPT Projects:
 
 ```md
 # START_HERE
 
-Этот файл — стабильная входная точка в проект, а не сам проект и не его текущее состояние.
-Проект живой и может развиваться одновременно в Notion, GitHub, Google Drive и других связанных системах.
-Перед началом работы всегда сначала открой канонический START_HERE по ссылке ниже и уже оттуда следуй по актуальным маршрутам, источникам истины, текущему состоянию и инструкциям проекта.
+Это стабильный указатель на единственную глобальную входную точку Project Execution OS.
+Перед проектной работой всегда сначала открой канонический START_HERE по ссылке ниже, затем следуй по текущему Router и его дочерним роутерам/реестрам до нужного проекта и минимально необходимого контекста.
 Не считай этот файл, историю чата или память модели актуальным состоянием проекта.
 
 Канонический START_HERE:
-<URL>
+https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/START_HERE.md
 ```
+
+## Recursive Routing Rule
+
+After opening the global `START_HERE.md`, routing may recurse through any number of navigation layers:
+
+```text
+START_HERE
+→ global ROUTER
+→ project/domain registry or router
+→ project router/index
+→ collection router/index
+→ canonical project/content node
+→ minimum task-specific evidence
+```
+
+The depth is determined by the information architecture, not by a fixed system limit.
+
+A router or registry should contain navigation and identifiers, not duplicated project state or detailed knowledge.
 
 ## Usage Rules
 
-- Filename: `<Project_Name>_START_HERE.md`.
-- Replace spaces in the project name with underscores `_`.
-- Use underscores consistently; do not insert spaces or hyphen separators into the filename.
-- Never intentionally produce `%20` or other URL-encoded separators as part of the visible filename.
-- Keep the explanatory part to roughly 3–4 sentences.
-- Write it in Russian by default so both Oleg and the AI can read it directly.
-- Project-specific values are normally the project name in the filename and `<URL>` in the content.
-- The URL must point to the canonical live project `START_HERE`, not merely to a generic project home page unless that page itself is the canonical entrypoint.
-- The canonical live `START_HERE` may route onward to Notion, GitHub, Google Drive, databases, logs, current state, or other systems as the project evolves.
-- Do not duplicate live project state, task lists, architecture, research, decisions, or history inside the attached file.
-- Do not regenerate the attachment merely because the project changed behind the canonical entrypoint.
+- Attach one generic `START_HERE.md` pointer to ChatGPT Projects when an attachment is useful or required.
+- Do not create a separate project-specific attachment contract merely to identify the ChatGPT Project.
+- Resolve project identity through the live router tree and current durable sources.
+- Do not duplicate live project state, task lists, architecture, research, decisions, or history inside the attachment.
+- Do not regenerate the attachment because a project changed behind the router tree.
+- Replace the attachment only if the location of the global `START_HERE.md` itself changes or the global bootstrap contract materially changes.
 
 ## Final Rule
 
-ChatGPT attachment filename identifies the project and uses underscores only.
-ChatGPT attachment content = stable door.
-Canonical live `START_HERE` = living router.
-Project systems behind it = evolving project.
+One global `START_HERE.md` = one stable AI door.
+
+ChatGPT Project attachment = pointer to that door.
+
+Routers/registries = recursively composable navigation.
+
+Projects and durable systems behind them = evolving source of truth.
