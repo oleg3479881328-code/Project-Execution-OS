@@ -53,6 +53,8 @@ Do not append an unrelated next-project question after answering the active requ
 - immigration law, USCIS, Form I-485, marriage-based adjustment of status, consular processing, immigration interviews, RFEs, NOIDs, immigration travel risk, or USCIS PM-602-0199 -> `blocks/us-law/immigration/BLOCK.md`
 - United States law, federal or state legal research, statutes, regulations, court rules, case law, legal-risk triage, attorney handoff preparation, or legal-source automation -> `blocks/us-law/BLOCK.md`
 - indexing or repository catalog work -> `docs/INDEXING_STANDARD.md`
+- project summary, project registry, project card, handoff summary, document index, secretary navigation page, clickable source links, or reducing clicks to canonical project sources -> `docs/NAVIGABLE_SUMMARY_LINKING_STANDARD.md`
+- delegated worker task numbering, `TASK <N>` identity, Job ID numbering, worker chat naming, or numbered worker-packet consistency -> `docs/WORKER_TASK_NUMBERING_STANDARD.md`
 - create, expand, review, or formalize a reusable domain block -> `skills/orchestration/domain-block-creation/SKILL.md`
 - current-project summary, status, orientation, or "where are we now?" question -> enter through the global router tree, reach the current project's entrypoint, read only minimum necessary current-state evidence, answer directly, and stop unless the owner explicitly requests another action
 - transfer readiness, executor continuity, durable state maintenance, or handoff survivability -> `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
