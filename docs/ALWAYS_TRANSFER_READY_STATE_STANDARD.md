@@ -8,6 +8,8 @@ A project should be able to move from one executor to another — Codex, ChatGPT
 
 This standard follows `docs/CANONICAL_LIVE_STATE_CHECKPOINT_STANDARD.md`: one live current state is primary; checkpoints are rare frozen recovery/audit artifacts; a chat boundary alone never creates a migration.
 
+Knowledge capture and reuse follow `docs/KNOWLEDGE_SYSTEM.md`. Transfer-ready state and durable knowledge are different artifacts, but both are normal by-products of meaningful execution.
+
 ## Zero-State vs Active Execution
 
 This standard starts after zero-state bootstrap.
@@ -36,9 +38,11 @@ After every meaningful work step, the executor must leave enough durable state f
 
 The primary mechanism is continuous maintenance of the single canonical live current state plus the current work log — not repeated migration snapshots.
 
+At the same time, reusable knowledge must not be forced into current-state files. Verified fixes, repeatable procedures, durable decisions and reusable lessons belong in the narrowest canonical knowledge/decision/runbook artifact selected by `docs/KNOWLEDGE_SYSTEM.md`.
+
 ## Durable Interim Preservation Rule
 
-Do not wait until the final report to preserve important current state.
+Do not wait until the final report to preserve important current state or expensive-to-reconstruct learning.
 
 During any long-running, multi-phase, benchmark-heavy, research-heavy, integration-heavy, or review-heavy task, preserve durable interim facts whenever the thread of work would be costly to reconstruct.
 
@@ -54,18 +58,21 @@ Normally this means updating the existing live state and work log when any of th
 - a reviewer posts an in-scope correction that future executors must see;
 - execution remains active long enough that re-entry risk becomes material.
 
+If the event also creates reusable knowledge — for example a verified fix, durable architecture decision, new do-not-repeat lesson, repeatable procedure, or important source/evidence trail — update the appropriate canonical knowledge artifact in the same flow instead of leaving it only in the state log.
+
 Do not create a new frozen checkpoint for each such event. Create a checkpoint only when preserving an exact transition state has real rollback, audit, or handoff value under `docs/CANONICAL_LIVE_STATE_CHECKPOINT_STANDARD.md`.
 
-The preserved state must be durable and repository-visible or channel-visible. Do not leave important interim state only in chat memory, terminal scrollback, or an executor's local workspace.
+The preserved state and knowledge must be durable and repository-visible or channel-visible. Do not leave important interim facts only in chat memory, terminal scrollback, or an executor's local workspace.
 
 Preferred preservation order:
 
 ```text
-update PROJECT_STATE.md
--> update logs/latest.md
+update PROJECT_STATE.md when live state changed
+-> update logs/latest.md when meaningful execution/validation occurred
+-> update the narrowest existing knowledge/decision/runbook artifact when reusable truth changed
 -> preserve reusable benchmark or research findings in a narrow durable file when needed
 -> create a frozen checkpoint only when the checkpoint trigger is real
--> link preserved state from the active issue or PR when useful
+-> link preserved state/evidence from the active issue or PR when useful
 ```
 
 If the project does not yet use `PROJECT_STATE.md` and `logs/latest.md`, use the narrowest existing durable state mechanism for that project, such as:
@@ -100,19 +107,26 @@ Last Verified:
 
 Use a compact factual style. Avoid long narrative summaries unless they reduce real re-entry cost.
 
-## Minimal Continuity Loop
+## Minimal Continuity And Knowledge Loop
 
 ```text
+before/re-entering work
+-> search relevant project knowledge and prior verified solutions when applicable
+
 work step
 -> update PROJECT_STATE.md when current state or next action changed
 -> record logs/latest.md when meaningful work or validation occurred
+-> improve/capture durable knowledge during the work when reconstruction risk is material
 -> create a checkpoint only for a real recovery/audit boundary
 -> update PROJECT.md only if the project front door changed
+
+before declaring meaningful work complete
+-> run the final promotion/completion gate in docs/KNOWLEDGE_SYSTEM.md
 ```
 
 Do not create documentation ceremony for trivial work.
 
-Do not leave important durable state only in chat.
+Do not leave important durable state or reusable knowledge only in chat.
 
 Do not create a migration merely because a chat ended or a new chat started.
 
@@ -134,7 +148,7 @@ Current State
 Current Work Log
 ```
 
-Optional artifacts may exist, but they must not replace the single live state.
+Optional knowledge artifacts may exist when justified, but they must not replace the single live state.
 
 ## Maintenance Rule
 
@@ -152,7 +166,20 @@ Update the live current state and current work log after every meaningful step t
 - do-not-repeat completed work;
 - an obsolete route or decision that could mislead a future executor.
 
+Separately, update canonical durable knowledge when real work creates or changes reusable truth. Do not duplicate reusable knowledge into state files merely to satisfy continuity.
+
 Update the project entrypoint only when the project front door would otherwise mislead a new executor.
+
+## Completion Rule
+
+Meaningful work is not fully transfer-ready merely because the implementation or answer exists.
+
+Before reporting meaningful work as complete, verify both:
+
+1. current state/next action is durably recoverable when it changed;
+2. the knowledge promotion gate has been handled and no important reusable fix, decision, lesson or evidence remains only in temporary context.
+
+If preservation cannot be completed, report that limitation explicitly instead of claiming full completion.
 
 ## Transfer Test
 
@@ -162,7 +189,7 @@ An active repository-first project passes the transfer test if a new executor ca
 2. `PROJECT_STATE.md`
 3. `logs/latest.md`
 
-and then identify the next safe action without asking Oleg for missing context.
+and then identify the next safe action without asking Oleg for missing context, while task-relevant reusable knowledge is discoverable through the project's normal routing/knowledge paths.
 
 A Notion-first project passes when the executor can read:
 
@@ -176,7 +203,7 @@ Historical migrations are not default reading. They are consulted only when the 
 
 ## Anti-Bureaucracy Rule
 
-The goal is continuity, not paperwork.
+The goal is continuity and reuse, not paperwork.
 
 Do not require five documents when one current state file and one latest log are enough.
 
@@ -186,8 +213,11 @@ Do not create empty folders or placeholder files just to satisfy ceremony.
 
 Do not create chat-by-chat migration pages.
 
+Do not create a new knowledge file when an existing canonical artifact can be improved.
+
 ## Related Standards
 
+- `docs/KNOWLEDGE_SYSTEM.md`
 - `docs/CANONICAL_LIVE_STATE_CHECKPOINT_STANDARD.md`
 - `docs/PROJECT_MEMORY_STANDARD.md`
 - `docs/PROJECT_BOOTSTRAP_STANDARD.md`
@@ -196,3 +226,7 @@ Do not create chat-by-chat migration pages.
 - `docs/PROJECT_STRUCTURE_STANDARD.md`
 - `docs/CODEX_HANDOFF_STANDARD.md`
 - `docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md`
+
+## Final Rule
+
+Keep the project continuously transfer-ready, capture reusable knowledge in the flow of meaningful work, and never make the owner reconstruct important state or lessons from chat history.
