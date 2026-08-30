@@ -1,20 +1,49 @@
-# Project Memory Standard
+# Project Memory Standard v2
 
 ## Purpose
 
-This standard defines the universal memory architecture for every meaningful project operating under Project Execution OS.
+This standard defines the universal durable-memory architecture for meaningful projects operating under Project Execution OS.
 
-Its goal is to give every project durable, complete, and efficient memory without treating chat history or model memory as a source of truth.
-
-A new human or AI executor should be able to enter a project, restore only the context needed for the current task, and continue safely without asking Oleg to reconstruct the project from memory.
+Its goal is to preserve complete recoverable project memory while allowing every AI/client to enter through one global `START_HERE.md`, navigate recursively, and load only the minimum context needed for the current task.
 
 ## Constitutional Rule
 
 Chat is a temporary execution surface.
 
-Durable project memory must live outside chat in explicit project artifacts and canonical connected sources.
+Durable project memory lives outside chat in explicit project artifacts and canonical connected sources.
 
-Model memory, conversation history, and previous assistant summaries may help with orientation, but they never override the canonical project memory.
+Model memory, conversation history, ChatGPT Project files, and assistant summaries may help with orientation, but they never override canonical durable project memory.
+
+## Global Entry Rule
+
+Project memory does not begin with a project-specific ChatGPT pointer.
+
+The AI/client entry sequence begins globally:
+
+```text
+stable client instruction, when available
+→ Project Execution OS START_HERE.md
+→ docs/ROUTER.md
+→ zero or more child routers / registries / indexes
+→ canonical project entrypoint
+→ current project state and only task-relevant durable memory
+```
+
+There is no fixed maximum router depth.
+
+A project-specific `PROJECT.md`, Notion `Project Entrypoint`, or equivalent durable page remains the project's canonical local front door after the routing tree selects that project. It is not a competing global AI entrypoint.
+
+## ChatGPT Projects Rule
+
+ChatGPT Project is an interface/work window, not a canonical memory layer.
+
+If stable user/system instructions already guarantee entry through the global Project Execution OS `START_HERE.md`, no ChatGPT Project attachment is required.
+
+If an interface attachment is useful or required, use the same generic `START_HERE.md` bootstrap defined by `docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md`. It points to the global Project Execution OS entrypoint, not directly to a project-specific memory tree.
+
+Existing project-specific ChatGPT pointers created under the old contract do not require manual replacement. They are non-authoritative compatibility artifacts. Global `START_HERE.md`, the live router path, the selected canonical project entrypoint, and current durable evidence all outrank them.
+
+Remove or replace a legacy attachment only during convenient maintenance or when it actively causes ambiguity.
 
 ## Durable File Artifact Rule
 
@@ -22,145 +51,108 @@ Any valuable file artifact produced or received during work must survive the cha
 
 When a ZIP, export package, document, PDF, image, media file, design extract, evidence package, backup, snapshot, source bundle, migration package, or other file may be needed later, preserve a durable copy in Google Drive before treating it as safely retained.
 
-This is a global Project Execution OS rule. It applies to every project and to meaningful non-project work.
-
 Routing follows `docs/FILE_ORGANIZATION_STANDARD.md`:
 
 - project-specific files -> that project's Google Drive folder tree;
 - cross-project or system-wide reusable artifacts -> global `System Artifacts` folder;
-- GitHub and Notion may remain canonical for code, structured text, decisions, and live documentation, but valuable file artifacts must not exist only in chat, `/mnt/data`, or another temporary runtime.
-
-The executor performs this persistence proactively. The owner should not need to request it repeatedly.
+- GitHub and Notion may remain canonical for code, structured text, decisions, and live documentation;
+- valuable file artifacts must not exist only in chat, `/mnt/data`, or another temporary runtime.
 
 ## Universal Memory Layers
-
-Every active project uses four logical layers.
 
 ### L0 — Session Memory
 
 Temporary working context inside the current chat, terminal, IDE, or executor session.
 
-L0 may contain:
+L0 is not durable project memory. Anything another executor may need later must be promoted before the work is considered safely preserved.
 
-- the current conversation;
-- temporary reasoning;
-- terminal output;
-- draft changes;
-- transient working notes.
+### L1 — Canonical Project Entrypoint
 
-L0 is not durable project memory.
-
-Anything that another executor may need later must be promoted to a durable layer before the work is considered safely preserved.
-
-### L1 — Project Entrypoint
-
-The shortest reliable front door into the project.
+The shortest reliable durable front door into the selected project.
 
 Canonical forms:
 
-- repository-first project: `PROJECT.md`;
-- Notion-first project: `Project Entrypoint` or `START HERE` page;
-- ChatGPT Project attachment: a thin pointer file that routes to the canonical entrypoint.
+- repository-first project -> `PROJECT.md`;
+- Notion-first project -> `Project Entrypoint` or `START HERE` page;
+- another durable workspace -> one clearly identified equivalent.
 
-L1 must stay short. It routes; it does not contain the whole project.
+L1 is reached through the global router tree. It routes; it does not contain the whole project.
 
 Follow `docs/PROJECT_ENTRYPOINT_STANDARD.md`.
 
 ### L2 — Current Operational State
 
-The minimum current state required to continue work safely.
+The minimum current state required to continue safely.
 
-For repository projects after the first meaningful execution step:
+For repository projects after meaningful execution begins:
 
 ```text
 PROJECT_STATE.md
 logs/latest.md
 ```
 
-For Notion-first projects, use an equivalent current-state page or block plus a current work log.
+For Notion-first projects, use equivalent current-state and work-log artifacts.
 
-L2 answers:
-
-- what is happening now;
-- what has been completed;
-- what remains;
-- what is blocked;
-- what must not be repeated;
-- what the next safe action is.
+L2 answers what is happening now, what was completed, what remains, blockers, do-not-repeat work, and the next safe action.
 
 Follow `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`.
 
 ### L3 — Durable Knowledge
 
-Deeper reusable project knowledge, opened only when relevant.
-
-Examples:
-
-- standards and rules;
-- architecture and decisions;
-- known bugs and fixes;
-- source trail and research;
-- reusable donors and templates;
-- content libraries and indexes;
-- archives and publication history;
-- schemas, contracts, and technical references;
-- migration snapshots when a project needs historical handoff records.
+Deeper reusable project knowledge opened only when relevant: standards, architecture, decisions, verified fixes, source trails, research, donors/templates, content indexes, schemas, contracts, archives, and other expensive-to-reconstruct knowledge.
 
 L3 is modular. Do not force every project to create every category.
 
-Create a durable knowledge artifact only when the information is reusable, expensive to reconstruct, or materially affects future work.
-
 ## Canonical Re-Entry Sequence
 
-A new executor should restore context in this order:
-
 ```text
-1. thin local pointer, if present
-2. canonical project entrypoint
-3. current operational state
-4. latest work log or checkpoint
-5. only the task-relevant durable knowledge
-6. raw source material only when needed
+1. global START_HERE.md
+2. live router tree
+3. selected canonical project entrypoint
+4. current operational state when needed
+5. latest work log/checkpoint when needed
+6. only task-relevant durable knowledge
+7. raw source material only when needed
 ```
 
-Do not begin by scanning the entire repository, Notion workspace, archive, or chat history.
+A legacy interface pointer, if physically present, is not step 1 and must not bypass this sequence.
 
-Use the minimum sufficient context rule.
+Do not begin by scanning the entire repository, Drive tree, Notion workspace, archive, or chat history.
 
-## ChatGPT Project Pointer Rule
+## Recursive Collection Memory Rule
 
-When a project uses the ChatGPT Projects interface and its live canonical entrypoint is stored elsewhere, the attached `START_HERE.md` must be a thin, stable pointer.
+Large projects may contain their own routers, registries, or indexes. Use them recursively rather than flattening all project memory into `PROJECT.md`.
 
-The pointer must state:
+Examples:
 
-1. that it is not the canonical project memory;
-2. the exact durable location of the canonical entrypoint;
-3. that the canonical entrypoint must be read before project work;
-4. that linked required sources must be opened as directed;
-5. that the canonical source overrides the pointer, chat history, and model memory.
+```text
+project
+→ weddings router
+→ one wedding
+→ vendors router
+→ one vendor dossier
+```
 
-The pointer should normally remain unchanged.
+or any hierarchy justified by the project's real structure.
 
-Do not duplicate the full live entrypoint inside the ChatGPT Project attachment because the copy will become stale.
+Create child navigation only when scale or ambiguity justifies it. Do not create empty hierarchy for hypothetical future needs.
 
 ## Notion-First Project Rule
 
 When Notion is the primary durable workspace:
 
-- maintain one canonical `START HERE` or `Project Entrypoint` page;
+- maintain one canonical project entrypoint;
 - keep it compact and routing-focused;
-- put detailed standards in separate linked pages;
-- keep current status in a dedicated current-state block or page;
-- keep reusable knowledge in narrow pages or databases;
-- update the canonical page when routing, priorities, source-of-truth, or required reading changes.
-
-The entrypoint must not grow into the entire knowledge base.
+- put detailed standards in linked pages;
+- keep current status in a dedicated current-state block/page;
+- keep reusable knowledge in narrow pages/databases;
+- update the entrypoint when source-of-truth, routing, priorities, or required reading changes.
 
 ## Repository-First Project Rule
 
 When GitHub or a local repository is the primary durable workspace:
 
-- use `PROJECT.md` as the canonical project entrypoint;
+- use `PROJECT.md` as canonical project entrypoint;
 - use `PROJECT_STATE.md` and `logs/latest.md` after meaningful execution begins;
 - keep detailed standards and reusable knowledge under appropriate durable paths;
 - link external Notion, Drive, issue, PR, or source pages rather than duplicating them without need;
@@ -168,58 +160,38 @@ When GitHub or a local repository is the primary durable workspace:
 
 ## Source-Of-Truth Precedence
 
-Each project entrypoint must explicitly declare its precedence order.
-
-A typical order is:
+Each project entrypoint must make durable precedence unambiguous. A typical order is:
 
 ```text
 1. confirmed working artifact or primary source
 2. canonical project standard or decision
 3. canonical project entrypoint
 4. current project state
-5. latest durable work log or checkpoint
+5. latest durable work log/checkpoint
 6. current conversation
 7. model memory
 ```
 
-Projects may adapt this order, but ambiguity is not allowed.
+For AI entry/navigation, the global `START_HERE.md` and router tree determine which project artifacts to consult; they do not replace the project's own source-of-truth precedence once the project is selected.
 
 ## Promotion Rules
 
-Promote information out of L0 when it is any of the following:
+Promote information out of L0 when it is a confirmed reusable rule, architectural/product decision, verified error/fix, reusable donor/template/reference, reproducibility source, meaningful milestone, blocker/path change, expensive-to-reproduce result, next safe action, or do-not-repeat constraint.
 
-- a confirmed reusable rule;
-- an architectural or product decision;
-- a known error and verified fix;
-- a reusable donor, template, or reference;
-- a source location required for reproducibility;
-- a meaningful completed milestone;
-- a current blocker or changed execution path;
-- a result that would be expensive to reproduce;
-- a new next safe action;
-- a do-not-repeat constraint.
-
-Place it in the narrowest correct durable artifact.
-
-Do not dump entire conversations into project memory.
+Place it in the narrowest correct durable artifact. Do not dump entire conversations into project memory.
 
 ## Update Responsibility
 
-After every meaningful work step, the executor must first run the promotion gate in `docs/KNOWLEDGE_SYSTEM.md`, then determine whether to update:
+After meaningful work, run the promotion gate in `docs/KNOWLEDGE_SYSTEM.md`, then update only the canonical artifact whose truth changed:
 
-- `PROJECT.md` or the Notion entrypoint — only when the front door changed;
-- `PROJECT_STATE.md` or equivalent — when current state or next action changed;
-- `logs/latest.md` or equivalent — when meaningful work or validation occurred;
-- a durable knowledge artifact — when reusable knowledge was created;
-- a decision or error record — when a confirmed decision or fix must survive;
-- source trail — when new source material or provenance became relevant;
-- Google Drive — when a valuable file artifact was created, received, exported, or changed and must survive the session.
+- `PROJECT.md` / Notion entrypoint when the project-level front door changed;
+- `PROJECT_STATE.md` when current state or next action changed;
+- `logs/latest.md` when meaningful execution/validation occurred;
+- knowledge/decision/error/source records when reusable truth changed;
+- Google Drive when a valuable file artifact must survive the session;
+- router/registry/index when navigation topology changed.
 
-The promotion gate must classify what was learned before creating new documentation. Prefer updating an existing canonical state file, decision record, verified-fix entry, runbook, checklist, knowledge entry, standard, skill, or capability over creating a parallel artifact.
-
-Do not use a fixed repetition count as the trigger for standardization. A standard is appropriate only when the rule is stable, sufficiently broad, evidence-backed, and genuinely mandatory for future work.
-
-The owner should not need to request a handoff or a Drive save manually for the project to remain recoverable.
+Prefer updating an existing canonical artifact over creating a parallel one.
 
 ## Minimum Structures
 
@@ -230,8 +202,6 @@ PROJECT.md
 AGENTS.md    # required for standalone external folders; optional for internal subprojects
 ```
 
-Do not create empty memory files before meaningful work exists.
-
 ### Active Repository Project
 
 ```text
@@ -240,92 +210,93 @@ PROJECT_STATE.md
 logs/latest.md
 ```
 
-Add deeper memory only when justified.
-
 ### Active Notion-First Project
 
 ```text
-START HERE or Project Entrypoint
+Project Entrypoint / START HERE
 Current State
 Current Work Log
 linked task-relevant standards and knowledge
 ```
 
-### ChatGPT Project With External Canonical Memory
+### ChatGPT Project Interface
+
+No project-specific memory structure is required inside ChatGPT Projects.
+
+Preferred:
 
 ```text
-START_HERE.md    # thin pointer only
-external canonical entrypoint
-external current state and durable knowledge
+stable user/system instruction → global PEOS START_HERE.md
 ```
+
+Optional compatibility bootstrap:
+
+```text
+generic START_HERE.md → global PEOS START_HERE.md
+```
+
+The actual project memory remains external and is selected through routing.
 
 ## Migration Snapshot Rule
 
-A migration snapshot is a historical handoff artifact, not the primary live state.
+A migration snapshot is a historical handoff artifact, not primary live state. Use it only when a major phase/executor/environment transition genuinely benefits from a frozen record.
 
-Use it when:
-
-- a major phase or executor transition needs a frozen record;
-- the project crosses environments or systems;
-- the active architecture changes materially;
-- preserving an exact transition state has real value.
-
-Do not use an ever-growing sequence of snapshots as a substitute for maintaining current state.
-
-The latest live state remains canonical.
+Do not use ever-growing snapshots as a substitute for maintaining current state.
 
 ## Anti-Bureaucracy Rule
 
-The purpose is reliable memory, not documentation volume.
-
 Do not:
 
-- duplicate the same truth across multiple active files;
-- maintain a full START HERE copy in every interface;
-- create empty databases or folders for hypothetical future needs;
-- require all projects to use Notion when the repository is sufficient;
-- require all projects to use GitHub when Notion is the natural source of truth;
+- duplicate truth across multiple active files;
+- maintain project-specific START HERE copies in every AI interface;
+- manually replace harmless legacy ChatGPT attachments merely for architectural cleanliness;
+- create empty databases/folders/routers for hypothetical needs;
+- require all projects to use the same storage medium;
 - preserve raw chat transcripts as project documentation;
-- force a new executor to read the entire knowledge base before starting.
+- force a new executor to read the entire knowledge base.
 
-Use one front door, one current state, one current log, and only the deeper knowledge the project actually needs.
+Use one global AI door, one canonical project entrypoint per project, one current state, one current log, and only the deeper knowledge actually needed.
 
 ## Memory Health Test
 
-A project passes the memory health test when a new executor can:
+A project passes when a new executor can, starting from global `START_HERE.md`:
 
-1. identify the canonical source of truth;
-2. understand the project purpose and current phase;
-3. find what has already been completed;
-4. find the next safe action;
-5. identify key constraints and do-not-repeat work;
-6. open deeper standards or sources only when relevant;
-7. find valuable file artifacts in durable storage without relying on old chats or temporary runtimes;
-8. continue without asking Oleg to reconstruct hidden context.
-
-If this requires reading old chats or relying on model memory, the project memory is incomplete.
+1. route to the correct project without relying on hidden chat context;
+2. identify the canonical source of truth;
+3. understand purpose/current phase;
+4. find completed work and next safe action;
+5. identify constraints/do-not-repeat work;
+6. open deeper knowledge only when relevant;
+7. find valuable file artifacts in durable storage;
+8. continue without asking the owner to reconstruct hidden context.
 
 ## Adoption Rule For Existing Projects
 
 For an existing project:
 
 1. identify its real current source of truth;
-2. choose exactly one canonical entrypoint;
-3. replace duplicate attached START HERE copies with thin pointers when appropriate;
-4. establish or repair current operational state;
-5. link, do not duplicate, existing standards and knowledge;
-6. record the precedence order;
-7. move valuable file artifacts out of temporary/chat-only storage into their correct Google Drive location;
-8. remove or clearly mark stale competing entrypoints;
-9. run the memory health test.
+2. ensure exactly one canonical durable project entrypoint;
+3. register or route to it from the appropriate router/index when central discovery is useful;
+4. leave harmless legacy ChatGPT project pointers in place by default;
+5. establish/repair current operational state;
+6. link rather than duplicate standards and knowledge;
+7. record precedence;
+8. move valuable temporary/chat-only files to durable storage;
+9. mark genuinely stale competing durable entrypoints;
+10. run the memory health test.
 
-Do not perform a destructive migration without confirming which existing artifacts are still authoritative.
+Do not perform destructive migration merely to make interface attachments look uniform.
 
 ## Related Standards
 
+- `START_HERE.md`
+- `docs/ROUTER.md`
+- `projects/ROUTER.md`
 - `Start New Project.md`
 - `docs/PROJECT_BOOTSTRAP_STANDARD.md`
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md`
+- `docs/CHATGPT_PROJECT_START_HERE_TEMPLATE.md`
+- `docs/CONTEXT_ASSEMBLY_STANDARD.md`
 - `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
 - `docs/PROJECT_LIFECYCLE_MODEL.md`
 - `docs/FILE_ORGANIZATION_STANDARD.md`
@@ -333,4 +304,4 @@ Do not perform a destructive migration without confirming which existing artifac
 
 ## Final Rule
 
-Every meaningful project must have durable memory, and every valuable file artifact must survive the chat session in durable storage, but every executor should read only the minimum durable memory needed to act safely.
+Every meaningful project must have durable external memory, every valuable file artifact must survive the chat session, and every compatible AI should be able to enter through the one global `START_HERE.md`, recursively reach the correct project, and read only the minimum durable memory needed to act safely.
