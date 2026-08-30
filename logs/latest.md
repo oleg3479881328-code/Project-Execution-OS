@@ -1,14 +1,41 @@
 # Latest Executor Status
 
-Timestamp: 2026-08-30T13:07:00-04:00
-Marker: ARCHIFY_CANDIDATE_INTEGRATED
-Task-ID: archify-integration
-Status: Upstream Archify was reviewed under Existing Solution First, registered as an external architecture-visualization/evidence candidate, and a bounded self-map pilot was created.
-Merged-PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/133
-Merge-SHA: fcb499fd5302ce4d1b4a0278bde7fbbcbfcdcbe1
-Canonical-Integration: docs/integrations/archify/README.md
-Pilot-Issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132
-Decision: ADOPT FOR PILOT; DO NOT REIMPLEMENT; DO NOT PROMOTE TO ACTIVE UNTIL VERIFIED; DO NOT REGISTER AS AN INTERNAL CAPABILITY YET.
-Boundary: Project Execution OS remains authoritative for routing, standards, durable memory, approvals, review, capability readiness, and verified state. Archify is optional visualization/evidence tooling and must not manufacture topology or runtime claims.
-Pilot-Target: map Project Execution OS itself, including START_HERE.md -> docs/ROUTER.md and the four intended layers; require validated JSON/HTML plus human review before promotion.
-Next-Safe-Action: execute Issue #132 through a supported Codex Archify path and record exact version, mapped revision, validation results, artifact paths, limitations, and human review result.
+Date: 2026-08-30
+Marker: SYSTEM_HYGIENE_ENFORCEMENT_VERIFIED
+Task-ID: peos-system-hygiene
+Status: System hygiene enforcement was added to the existing Project Execution OS integrity layer and verified green in GitHub Actions.
+
+Implemented:
+- added `scripts/audit_system_hygiene.py`;
+- integrated the audit into `.github/workflows/validate-project-structure.yml` on push, pull request, manual dispatch, and weekly schedule;
+- expanded `docs/INDEXING_STANDARD.md` with hard-failure vs review-signal hygiene rules and an explicit no-auto-delete boundary;
+- restored `CHANGELOG.md` as a curated major-system-milestone log rather than a per-commit ledger;
+- repaired `blocks/PROJECT_INDEX.md` so all 20 current domain-block entrypoints are discoverable;
+- repaired `skills/PROJECT_INDEX.md` so all 19 current central skills are registered;
+- routed `docs/NAVIGABLE_SUMMARY_LINKING_STANDARD.md` and `docs/WORKER_TASK_NUMBERING_STANDARD.md` from the live router;
+- marked `docs/CAPABILITY_LIBRARY_LAYER_STANDARD.md` deprecated as a historical architecture layer superseded by current block/skill/capability/context architecture;
+- refreshed `SYSTEM_CONTEXT_MANIFEST.md` to `knowledge-aware-core-v16` after the router change.
+
+First Audit Findings:
+- 2 undiscoverable domain blocks: `blocks/news-intelligence/`, `blocks/reviewer/`;
+- 2 unindexed skills: `skills/audio/gemini-tts-speech-generation/SKILL.md`, `skills/audio-verbatim-clip-extraction/SKILL.md`;
+- 3 possibly orphaned top-level standards, all individually reviewed before action.
+
+Final Verification:
+- GitHub Actions run: https://github.com/oleg3479881328-code/Project-Execution-OS/actions/runs/33343073515
+- validated commit: `2cff7f87f755897dfd75d947ec929ba9079407bd`
+- project structure: PASS;
+- router integrity: PASS;
+- system context manifest: PASS;
+- completion contract: PASS;
+- system hygiene audit: PASS;
+- final hygiene result: `0 error(s), 0 warning(s)`;
+- audited: 20 domain block entrypoints, 9 internal project entrypoints, 54 top-level standards;
+- candidate artifacts detected: 75, of which 49 currently have no parseable audit date. This is an inventory signal, not a deletion trigger.
+
+Boundary:
+- structural contradictions may fail CI;
+- age, candidate status, low references, or low apparent usage alone must never auto-delete, auto-deprecate, or auto-promote knowledge;
+- soft hygiene signals require review against canonical evidence.
+
+Next-Safe-Action: let the weekly hygiene audit accumulate real evidence; when warnings appear, review and repair the owning canonical artifacts rather than creating parallel cleanup documents.
