@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d884df6958f2380779841552a3fab60cadcd8153",
-  "generated_at": "2026-08-30T18:51:08-04:00",
+  "repository_commit": "920295da79faf43cddab96de57150bd1432fe3db",
+  "generated_at": "2026-08-30T19:52:34-04:00",
   "artifact_count": 558,
   "artifacts": [
     {
@@ -12,7 +12,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "ee2ee1cbba9805a4b7329ba7ea7d95734b9653c3afdf8d6416960053e05475c5",
+      "sha256": "a2f7d216cfccd067ab7c58e8f7e94410cada62e94363b25e811310a714e6f874",
       "headings": []
     },
     {
@@ -67,9 +67,10 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "9630bc0c22bba0cf39f03250e41cc6f3ec32393cabd83c90fd81aa282c62b44a",
+      "sha256": "bd43d55f0130ac131403e6664ab3dff6d68da454927b57f78cd599b642f03ed3",
       "headings": [
         "Changelog",
+        "2026-08-30",
         "2026-06-10",
         "2026-06-01",
         "2026-05-21"
@@ -205,13 +206,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "a8110661e93a24a3b5609cd3dba61e79065f619db4ff31da4cf257d10646ef69",
+      "sha256": "91518ac554fa408144424952115b3c741b280507d98cd3b337f2d9cb1b7bbace",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v14`",
+        "Profile: `knowledge-aware-core-v15`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -505,7 +506,7 @@
       "domain": "PROJECT_INDEX.md",
       "status": "candidate",
       "date": null,
-      "sha256": "0b3bf4b4334a0075fc925f3dfb99964d311fffc23553fa7cbc8842ef5b3b3bc4",
+      "sha256": "96719809ec5459811e97478408f4b6123804ca17490f4e411142540875a8ab6a",
       "headings": [
         "Blocks Index",
         "Purpose",
@@ -516,7 +517,11 @@
         "Documentation Block",
         "Logic Block",
         "Music Block",
+        "News Intelligence Block",
         "Notion Agent Workspace Block",
+        "OSINT Block",
+        "Reviewer Block",
+        "Server Rental Block",
         "Skill Creator Block",
         "Solana Block",
         "Telegram Block",
@@ -527,6 +532,7 @@
         "Video Production Block",
         "YouTube Block",
         "Generated Catalog",
+        "Maintenance Rule",
         "Final Rule"
       ]
     },
@@ -6554,7 +6560,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "f21f84dead92fa4c57c36bda84f19e7e248d6b62acb7d952a0a67ea3cc6b5ff7",
+      "sha256": "77d12f9f25b57a8ef6f964831cfede8a3c695e3cd6da0d0491c874693a914c65",
       "headings": [
         "Indexing Layer Standard",
         "Purpose",
@@ -6565,6 +6571,10 @@
         "Automation",
         "Structural Indexing Rule",
         "Generated Index Scope",
+        "System Hygiene Audit Rule",
+        "Candidate Hygiene Rule",
+        "Changelog Boundary",
+        "Anti-Bloat Rule",
         "Semantic-Ready Corpus",
         "Semantic Search Boundary",
         "Graphify Boundary",
@@ -11244,7 +11254,7 @@
       "domain": "PROJECT_INDEX.md",
       "status": null,
       "date": null,
-      "sha256": "3a521efa3b62d8d1ad8c4ee1d88235d6e864be882ac3994ba5c9e06f4e4c9eb8",
+      "sha256": "ad2ee5eed870cf0a11be8db0ac69bde3ff2dd45070715c5ce67e8e123701ece2",
       "headings": [
         "Skills — Project Index",
         "Purpose",
@@ -11252,7 +11262,8 @@
         "Registered Skills",
         "Current Counts",
         "Current Priorities",
-        "Forbidden Expansion Areas"
+        "Forbidden Expansion Areas",
+        "Maintenance Rule"
       ]
     },
     {
