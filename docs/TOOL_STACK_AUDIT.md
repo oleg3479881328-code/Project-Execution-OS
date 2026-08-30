@@ -95,6 +95,7 @@ Google Drive -> Google Sheets -> automation / API -> Notion + websites + graphs 
 | --- | --- | --- | --- |
 | Web search / public web research | CORE | Existing Solution First, verification, current-source research | Prefer primary/official sources, then strong independent evidence. |
 | ScrapeGraphAI / similar extraction tooling | CANDIDATE / project-specific | structured web/entity extraction | Useful for graph/enrichment workflows; validate output and provenance. |
+| Archify | CANDIDATE | verified interactive architecture/workflow/sequence/data-flow/lifecycle maps | Existing Solution First candidate for architecture visualization/evidence. Pilot on Project Execution OS is Issue #132; canonical note: `docs/integrations/archify/README.md`. Do not treat diagrams as canonical state or register Archify as an internal capability until a separate verified contract exists. |
 | yt-dlp | ACTIVE in video workflows | media acquisition where permitted | Routed through Video Production block. |
 | FFmpeg | ACTIVE in video workflows | media transform/probe/edit automation | Reusable media capability. |
 | Local Python | ACTIVE | scripting, processing, analysis, utilities | Project-local virtual environments preferred. |
