@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "910ab7cc314d37b35b3e22722e684e35674df06d",
-  "generated_at": "2026-08-30T13:08:59-04:00",
+  "repository_commit": "07c703625e91e1603614c47adf33e9540cb6286c",
+  "generated_at": "2026-08-30T18:18:43-04:00",
   "artifact_count": 557,
   "artifacts": [
     {
@@ -187,11 +187,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "f92dd1176779fe4aace13ec3f6de752d0f8bbbe8a4a499a3c56cfd6ad9a873ad",
+      "sha256": "88c8f88f684b6d57ce6801a7bf03f57384394f1ae14b9cb7a0d933d42184707a",
       "headings": [
         "START HERE — Project Execution OS",
         "Purpose",
         "Internal Router",
+        "Recursive Routing Principle",
+        "Interface Rule",
         "Boundary",
         "Final Rule"
       ]
@@ -225,7 +227,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "da49c04e8fe34ce77b52832d6a1ee8296ff05c41c9d95e1a5f640398b13d2dfa",
+      "sha256": "a6e4ec8b99b5655ac2a23ab0dd9e5ba7e4f4a395bd2710df0b9f2eaed71f84ab",
       "headings": [
         "Start New Project",
         "Purpose",
@@ -5782,7 +5784,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "421e2c8d2cdf2a76923a3df937d18f40fc0afcfc643b221cad2cc708f3e91fa5",
+      "sha256": "878066ccff0bf10d3736d35ff39fc45f2772c0f26a8db4a709eb08768d7d3d86",
       "headings": [
         "ChatGPT Project START_HERE Template",
         "Purpose",
@@ -5790,6 +5792,7 @@
         "Core Rule",
         "Default Russian Template",
         "START_HERE",
+        "Recursive Routing Rule",
         "Usage Rules",
         "Final Rule"
       ]
@@ -6913,16 +6916,15 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "5736fd4a7f7aa1a378f94a047c123fc3fabb991e7b95a9b97596d7e3934f979f",
+      "sha256": "6aa5571b7cd6abb2f114a513faa143b35d49169335c405e80cdb9f403fa43163",
       "headings": [
         "Project Entrypoint Standard",
         "Purpose",
         "Core Rule",
-        "Canonical Forms",
-        "ChatGPT Project Attachment Standard",
-        "Required Behavior After Attachment",
-        "Initialization-Only Entrypoint",
-        "Required Questions The Entrypoint Must Answer",
+        "Canonical Project Forms",
+        "ChatGPT Projects",
+        "Recursive Navigation Contract",
+        "Required Questions The Project Entrypoint Must Answer",
         "Required Sections",
         "1. Project",
         "2. Purpose",
@@ -6934,12 +6936,9 @@
         "8. Next Practical Step",
         "9. Key Decisions And Constraints",
         "10. Read Next",
-        "What The Entrypoint Must Not Become",
-        "Environment-Specific Guidance",
-        "GitHub Form",
+        "Initialization-Only Entrypoint",
+        "What The Project Entrypoint Must Not Become",
         "Legacy Migration Rule",
-        "Notion Form",
-        "ChatGPT Projects Form",
         "Maintenance Rule",
         "Final Rule"
       ]
