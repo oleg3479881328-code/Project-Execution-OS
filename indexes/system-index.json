@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "aa1d189dd914dd86f477c4f353a8a6e2da3b6b81",
-  "generated_at": "2026-08-30T18:19:17-04:00",
+  "repository_commit": "1956460bad0180b005960bed5e8c6f54d8d60e48",
+  "generated_at": "2026-08-30T18:35:40-04:00",
   "artifact_count": 557,
   "artifacts": [
     {
@@ -227,7 +227,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "a6e4ec8b99b5655ac2a23ab0dd9e5ba7e4f4a395bd2710df0b9f2eaed71f84ab",
+      "sha256": "021a88a2e88b2de7caaeb34aee49aa38eab46d8bae521d8ec3c059563de72f2d",
       "headings": [
         "Start New Project",
         "Purpose",
@@ -5784,15 +5784,15 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "878066ccff0bf10d3736d35ff39fc45f2772c0f26a8db4a709eb08768d7d3d86",
+      "sha256": "d40295d15e1d117e3b4528651bcd7a5997c7ce571445081975ce72689ea7374f",
       "headings": [
         "ChatGPT Project START_HERE Template",
         "Purpose",
-        "Required Filename",
         "Core Rule",
         "Default Russian Template",
         "START_HERE",
         "Recursive Routing Rule",
+        "Legacy ChatGPT Project Compatibility",
         "Usage Rules",
         "Final Rule"
       ]
@@ -6909,29 +6909,19 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "6aa5571b7cd6abb2f114a513faa143b35d49169335c405e80cdb9f403fa43163",
+      "sha256": "5edb35f0f37779f942c584fc03e87984d3b04d6ed7506da469f156845c3150d1",
       "headings": [
         "Project Entrypoint Standard",
         "Purpose",
         "Core Rule",
         "Canonical Project Forms",
         "ChatGPT Projects",
+        "Legacy ChatGPT Attachment Migration",
         "Recursive Navigation Contract",
         "Required Questions The Project Entrypoint Must Answer",
         "Required Sections",
-        "1. Project",
-        "2. Purpose",
-        "3. Source Of Truth",
-        "4. Source Trail",
-        "5. Current Status",
-        "6. Done So Far",
-        "7. Current Focus",
-        "8. Next Practical Step",
-        "9. Key Decisions And Constraints",
-        "10. Read Next",
-        "Initialization-Only Entrypoint",
         "What The Project Entrypoint Must Not Become",
-        "Legacy Migration Rule",
+        "Repository Legacy Migration Rule",
         "Maintenance Rule",
         "Final Rule"
       ]
