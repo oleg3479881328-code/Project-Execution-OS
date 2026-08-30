@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ab189273c1a6f3eac203236c9353557f059044ac",
-  "generated_at": "2026-08-30T18:50:16-04:00",
+  "repository_commit": "43a433e395a8aa3e3429fd84f07e5b4baee8263c",
+  "generated_at": "2026-08-30T18:50:44-04:00",
   "artifact_count": 558,
   "artifacts": [
     {
@@ -7012,14 +7012,14 @@
     },
     {
       "path": "docs/PROJECT_MEMORY_STANDARD.md",
-      "title": "Project Memory Standard v2",
+      "title": "Project Memory Standard v3",
       "type": "system-standard",
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "ccce24355bedeb502407d3989d5ff9f40c09ec5a1a8ae4accc2cd78e98a84523",
+      "sha256": "fd2ab2740c240fbb793225c322f5639724cf068b8d79f0cfb1960b08fd9a5745",
       "headings": [
-        "Project Memory Standard v2",
+        "Project Memory Standard v3",
         "Purpose",
         "Constitutional Rule",
         "Global Entry Rule",
@@ -7035,6 +7035,7 @@
         "Notion-First Project Rule",
         "Repository-First Project Rule",
         "Source-Of-Truth Precedence",
+        "Knowledge-In-The-Flow Rule",
         "Promotion Rules",
         "Update Responsibility",
         "Minimum Structures",
