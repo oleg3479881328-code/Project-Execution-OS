@@ -2,17 +2,23 @@
 
 ## Purpose
 
-This is the live internal router for `Project Execution OS`.
+This is the first live internal router for `Project Execution OS`.
 
-`START_HERE.md` is the stable external entrypoint. It should remain minimal and durable.
+`START_HERE.md` is the single stable global entrypoint. This file is only the first navigation node after that door.
 
-This router may evolve as the internal system grows. Its job is to route an agent to the smallest relevant internal node for the current work.
+## Recursive Routing Rule
 
-## Routing Rule
+A router is a pattern, not a unique level of the hierarchy.
+
+This router may point to another router, registry, index, project entrypoint, domain block or canonical content node. Any child navigation node may route onward again.
+
+There is no artificial maximum routing depth. Use the smallest hierarchy that keeps each level understandable and prevents unrelated content from being loaded.
+
+A router/registry/index stores navigation, identifiers and enough disambiguation to select the next path. It does not store the detailed content behind every path.
 
 Choose the narrowest route that fits the active request.
 
-Do not read every standard by default.
+Do not read every route target by default.
 
 Do not append an unrelated next-project question after answering the active request.
 
@@ -47,11 +53,11 @@ Do not append an unrelated next-project question after answering the active requ
 - United States law, federal or state legal research, statutes, regulations, court rules, case law, legal-risk triage, attorney handoff preparation, or legal-source automation -> `blocks/us-law/BLOCK.md`
 - indexing or repository catalog work -> `docs/INDEXING_STANDARD.md`
 - create, expand, review, or formalize a reusable domain block -> `skills/orchestration/domain-block-creation/SKILL.md`
-- current-project summary, status, orientation, or "where are we now?" question -> read the current project's entrypoint and only the minimum necessary current-state evidence; answer the question directly; stop after the answer; do not trigger `Start New Project.md` or ask which new project to create unless the owner explicitly requests a new project
-- entry into a specific existing project -> that project's current entrypoint; prefer `PROJECT.md`, fall back to legacy `PROJECT_ENTRYPOINT.md` only during migration, and use `docs/PROJECT_ENTRYPOINT_STANDARD.md` if no project entrypoint exists
+- current-project summary, status, orientation, or "where are we now?" question -> enter through the global router tree, reach the current project's entrypoint, read only minimum necessary current-state evidence, answer directly, and stop unless the owner explicitly requests another action
+- entry into a specific existing project -> follow the router tree to that project's current entrypoint; prefer `PROJECT.md`, fall back to legacy `PROJECT_ENTRYPOINT.md` only during migration, and use `docs/PROJECT_ENTRYPOINT_STANDARD.md` if no project entrypoint exists
 - transfer readiness, executor continuity, durable state maintenance, or handoff survivability -> `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md`
 - create, review, register, migrate, deprecate, or retire a reusable skill -> `blocks/skill-creator/BLOCK.md`
-- multi-layer context assembly, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
+- multi-layer context assembly, recursive routing, selective knowledge loading, or API context/caching design -> `docs/CONTEXT_ASSEMBLY_STANDARD.md`
 - small bounded existing-project action -> `docs/MICRO_TASK_MODE.md`
 - agent re-entry into an existing GitHub-backed project, handoff between agents, or request to inspect only changes since prior work -> `docs/INCREMENTAL_REENTRY_STANDARD.md`
 - research task -> `docs/RESEARCH_STANDARD.md`
@@ -73,10 +79,12 @@ This router stores navigation only.
 
 Do not place detailed operating procedures, project state, implementation plans, tool commands, API credentials, logs or reusable knowledge content in this file.
 
+When this router becomes too broad in a domain, split that domain into a child router/registry/index rather than expanding this file indefinitely.
+
 ## Final Rule
 
-`START_HERE.md` is the stable door.
+`START_HERE.md` is the one stable global door.
 
-This file is the live internal map.
+This file is the first live internal map, not the last.
 
-Choose the path, answer the active request, and stop unless the owner asked for another action.
+Follow child routers recursively until the smallest relevant canonical node is reached.
