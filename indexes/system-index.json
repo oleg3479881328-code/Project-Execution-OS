@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8df88287e11a159ef095a757d1ba9c6feab6f726",
-  "generated_at": "2026-08-30T20:19:08-04:00",
+  "repository_commit": "55805a3ca77b7cb3de540ba5b2292da421f700e7",
+  "generated_at": "2026-08-30T20:39:34-04:00",
   "artifact_count": 558,
   "artifacts": [
     {
@@ -6563,7 +6563,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "03d85ac86c91afd717a6c157999aa8da9d0d5aaa05d77f55cc5c1c5616ffeeae",
+      "sha256": "e2a70e1fcaf8a152e25e1c5bbda19e05929715e43cfd1d7b4be1cb0a13f8568b",
       "headings": [
         "Indexing Layer Standard",
         "Purpose",
@@ -6579,6 +6579,7 @@
         "Hygiene Trend Rule",
         "Persistent Warning Rule",
         "GitHub Actions Visibility Rule",
+        "Git History Completeness Rule",
         "Block Activity Signal Rule",
         "Candidate Hygiene Rule",
         "Changelog Boundary",
@@ -9242,9 +9243,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Hygiene v2 trend, persistence, visibility and block-activity telemetry were added to the existing Project Execution OS integrity layer and verified green in GitHub Actions.",
+      "status": "Hygiene v2 was hardened against shallow-clone activity distortion and its persistence-to-ACTION_REQUIRED behavior was verified deterministically in CI.",
       "date": "2026-08-30",
-      "sha256": "22adeb5e954ea1080a7e58759fb2862dee49f0454511f116b423fc59cf32daea",
+      "sha256": "c412f94c8b61a3f446bf0d473465128048a2af33bcb19a5e11d58a3f0d9350ef",
       "headings": [
         "Latest Executor Status"
       ]
