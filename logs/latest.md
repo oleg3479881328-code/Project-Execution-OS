@@ -1,41 +1,46 @@
 # Latest Executor Status
 
 Date: 2026-08-30
-Marker: SYSTEM_HYGIENE_ENFORCEMENT_VERIFIED
-Task-ID: peos-system-hygiene
-Status: System hygiene enforcement was added to the existing Project Execution OS integrity layer and verified green in GitHub Actions.
+Marker: SYSTEM_HYGIENE_V2_VERIFIED
+Task-ID: peos-system-hygiene-v2
+Status: Hygiene v2 trend, persistence, visibility and block-activity telemetry were added to the existing Project Execution OS integrity layer and verified green in GitHub Actions.
 
 Implemented:
-- added `scripts/audit_system_hygiene.py`;
-- integrated the audit into `.github/workflows/validate-project-structure.yml` on push, pull request, manual dispatch, and weekly schedule;
-- expanded `docs/INDEXING_STANDARD.md` with hard-failure vs review-signal hygiene rules and an explicit no-auto-delete boundary;
-- restored `CHANGELOG.md` as a curated major-system-milestone log rather than a per-commit ledger;
-- repaired `blocks/PROJECT_INDEX.md` so all 20 current domain-block entrypoints are discoverable;
-- repaired `skills/PROJECT_INDEX.md` so all 19 current central skills are registered;
-- routed `docs/NAVIGABLE_SUMMARY_LINKING_STANDARD.md` and `docs/WORKER_TASK_NUMBERING_STANDARD.md` from the live router;
-- marked `docs/CAPABILITY_LIBRARY_LAYER_STANDARD.md` deprecated as a historical architecture layer superseded by current block/skill/capability/context architecture;
-- refreshed `SYSTEM_CONTEXT_MANIFEST.md` to `knowledge-aware-core-v16` after the router change.
+- extended `scripts/audit_system_hygiene.py` with stable warning IDs;
+- added consecutive warning persistence tracking from `logs/hygiene-history.jsonl`;
+- warnings remain non-blocking by default, but the third consecutive recorded occurrence becomes an explicit `ACTION_REQUIRED` review signal;
+- added GitHub Actions job summary output so hygiene signals are visible without opening raw stdout logs;
+- added per-domain-block Git activity signals: `last_touched`, commits in the last 30 days, and commits in the last 90 days;
+- added scheduled/manual trend recording and commit-back through `.github/workflows/validate-project-structure.yml`;
+- seeded `logs/hygiene-history.jsonl` from the first independently verified v2 CI run rather than waiting for the next weekly cron;
+- expanded `docs/INDEXING_STANDARD.md` with trend, persistent-warning, visibility and block-activity boundaries.
 
-First Audit Findings:
-- 2 undiscoverable domain blocks: `blocks/news-intelligence/`, `blocks/reviewer/`;
-- 2 unindexed skills: `skills/audio/gemini-tts-speech-generation/SKILL.md`, `skills/audio-verbatim-clip-extraction/SKILL.md`;
-- 3 possibly orphaned top-level standards, all individually reviewed before action.
+Persistence Boundary:
+- 1-2 consecutive warning occurrences -> warning;
+- 3+ consecutive recorded occurrences -> `ACTION_REQUIRED` review signal;
+- persistent warnings do not automatically fail CI;
+- only explicitly defined structural contradictions are blocking errors;
+- age, low activity, low references, candidate status, or persistence alone never authorize automatic deletion, deprecation, demotion, merge, or promotion.
 
-Final Verification:
-- GitHub Actions run: https://github.com/oleg3479881328-code/Project-Execution-OS/actions/runs/33343073515
-- validated commit: `2cff7f87f755897dfd75d947ec929ba9079407bd`
+Verified CI Run:
+- GitHub Actions run: https://github.com/oleg3479881328-code/Project-Execution-OS/actions/runs/33343781581
+- validated commit: `5a26f1e5cd805b433d7b28721fc8721212d9a4f5`
 - project structure: PASS;
 - router integrity: PASS;
 - system context manifest: PASS;
 - completion contract: PASS;
-- system hygiene audit: PASS;
-- final hygiene result: `0 error(s), 0 warning(s)`;
+- hygiene v2 audit: PASS;
+- final hygiene result: `0 error(s), 0 warning(s), 0 action-required signal(s)`;
 - audited: 20 domain block entrypoints, 9 internal project entrypoints, 54 top-level standards;
-- candidate artifacts detected: 75, of which 49 currently have no parseable audit date. This is an inventory signal, not a deletion trigger.
+- candidates: 75; undated candidates: 49.
 
-Boundary:
-- structural contradictions may fail CI;
-- age, candidate status, low references, or low apparent usage alone must never auto-delete, auto-deprecate, or auto-promote knowledge;
-- soft hygiene signals require review against canonical evidence.
+First Block Activity Baseline:
+- lowest 90-day activity: `blocks/documentation/` and `blocks/skill-creator/` at 0 commits in 90 days;
+- recently active examples: `blocks/design/` at 1 commit in 30 days and `blocks/communication-channel/` at 2 commits in 30 days;
+- these are maintenance/activity signals only, not evidence of user value or grounds for lifecycle action.
 
-Next-Safe-Action: let the weekly hygiene audit accumulate real evidence; when warnings appear, review and repair the owning canonical artifacts rather than creating parallel cleanup documents.
+Durable Trend Baseline:
+- `logs/hygiene-history.jsonl`
+- first row is based on the verified GitHub Actions output at commit `5a26f1e5cd805b433d7b28721fc8721212d9a4f5`.
+
+Next-Safe-Action: allow scheduled hygiene runs to append real trend evidence; review persistent `ACTION_REQUIRED` signals against canonical artifacts when they emerge instead of converting every warning into a blocking CI rule.
