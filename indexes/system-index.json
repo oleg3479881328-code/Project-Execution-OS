@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "5a26f1e5cd805b433d7b28721fc8721212d9a4f5",
-  "generated_at": "2026-08-30T20:10:30-04:00",
+  "repository_commit": "8df88287e11a159ef095a757d1ba9c6feab6f726",
+  "generated_at": "2026-08-30T20:19:08-04:00",
   "artifact_count": 558,
   "artifacts": [
     {
@@ -67,7 +67,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "bd43d55f0130ac131403e6664ab3dff6d68da454927b57f78cd599b642f03ed3",
+      "sha256": "ae017104555ccf6e350c7b01995f23e41d13081c8a6e6a76b33fbc9d2da32afe",
       "headings": [
         "Changelog",
         "2026-08-30",
@@ -5844,20 +5844,21 @@
     },
     {
       "path": "docs/CODEX_HANDOFF_STANDARD.md",
-      "title": "Codex Handoff Standard v1",
+      "title": "Codex Handoff Standard v2",
       "type": "system-standard",
       "domain": "system",
       "status": "Files Changed:",
       "date": null,
-      "sha256": "3cf6c0aef551a8d49f7acc2b02c9415c40c32a441c56e2cd151d8c54334d955b",
+      "sha256": "9bd8f0510f67cdc5ff2211f37637c3404ae979069f652b4f2d832d7bc79bdef5",
       "headings": [
-        "Codex Handoff Standard v1",
+        "Codex Handoff Standard v2",
         "Purpose",
         "Core Model",
         "Non-Thinking Executor Rule",
         "Transport Rule",
         "Exact GitHub Comment Retrieval Rule",
         "Owner-Facing Handoff Rule",
+        "Hard Link-Only Owner Output Constraint",
         "Canonical One-Link Relay Workflow",
         "No Pre-Execution Chatter",
         "Mandatory Execution Mode",
@@ -9241,9 +9242,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "System hygiene enforcement was added to the existing Project Execution OS integrity layer and verified green in GitHub Actions.",
+      "status": "Hygiene v2 trend, persistence, visibility and block-activity telemetry were added to the existing Project Execution OS integrity layer and verified green in GitHub Actions.",
       "date": "2026-08-30",
-      "sha256": "e64e7fcad338a82bdb5b7da91cced2d68d7625ecb70da79e0e99b6a055c12ca6",
+      "sha256": "22adeb5e954ea1080a7e58759fb2862dee49f0454511f116b423fc59cf32daea",
       "headings": [
         "Latest Executor Status"
       ]
