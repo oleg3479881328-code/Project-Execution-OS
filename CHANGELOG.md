@@ -11,6 +11,7 @@ This is a curated milestone log for significant Project Execution OS changes. It
 - added a machine-checked completion contract to the repository integrity workflow so the core chain `agent instructions -> knowledge-in-flow -> project memory -> transfer-ready state -> review promotion gate` cannot silently disappear
 - repaired `SYSTEM_CONTEXT_MANIFEST.md` after integrity validation exposed stale profile SHAs
 - added `scripts/audit_system_hygiene.py` and expanded `docs/INDEXING_STANDARD.md` so PEOS can detect structural bloat signals such as undiscoverable entrypoints, unindexed skills, aged candidates, duplicate canonical Markdown, possibly orphaned standards and stale curated milestones without auto-deleting knowledge
+- upgraded system hygiene to v2 with stable warning IDs, consecutive persistence tracking, `ACTION_REQUIRED` review signals after three recorded repeats, visible GitHub Actions summaries, per-block `last_touched` plus 30/90-day commit activity, and durable weekly trend history in `logs/hygiene-history.jsonl`; persistent/low-activity signals remain review evidence rather than automatic lifecycle actions or CI failures
 
 ## 2026-06-10
 
