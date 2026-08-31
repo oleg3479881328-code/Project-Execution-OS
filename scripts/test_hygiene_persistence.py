@@ -41,6 +41,16 @@ counts = module.consecutive_occurrences(history_four, {warning})
 assert counts[warning] == 4, counts
 assert counts[warning] >= module.PERSISTENCE_THRESHOLD
 
-print("Hygiene persistence escalation test passed.")
+original_git = module.git
+try:
+    module.git = lambda *args: "true" if args == ("rev-parse", "--is-shallow-repository") else ""
+    assert module.is_shallow_repository() is True
+    module.git = lambda *args: "false" if args == ("rev-parse", "--is-shallow-repository") else ""
+    assert module.is_shallow_repository() is False
+finally:
+    module.git = original_git
+
+print("Hygiene persistence and history-quality tests passed.")
 print("Verified: two prior consecutive occurrences + current occurrence = ACTION_REQUIRED threshold (3).")
 print("Verified: a gap resets the consecutive sequence.")
+print("Verified: shallow git history is detected explicitly.")
