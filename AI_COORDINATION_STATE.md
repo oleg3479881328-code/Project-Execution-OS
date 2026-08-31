@@ -7,7 +7,7 @@ Project Execution OS
 https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132
 
 ## Status
-active / Archify pilot execution in progress
+complete / Archify pilot technical pass; owner visual review pending
 
 ## Mailboxes
 - Reviewer to executor: `projects/tiktok-research-sorter/coordination/TO_EXECUTOR.md`
@@ -22,6 +22,8 @@ Generate and validate an upstream Archify high-level architecture map for Projec
 - Origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72#issuecomment-4940424195
 - Draft implementation PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/71
 - Working branch: `codex/issue-132-archify-pilot`
+- Draft PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/134
+- Commit: `f0a1b30`
 - Current extension version: `0.2.0`
 - Reviewer-reported validation: TypeScript passed, 8 tests passed, production build passed, ZIP passed.
 - Owner confirmed version `0.1.1` connects to TikTok and works on a public profile.
@@ -49,6 +51,10 @@ Generate and validate an upstream Archify high-level architecture map for Projec
 - Do not use the owner as routine courier or tester.
 
 ## Next Step
+
+Owner reviews `docs/architecture/archify/project-execution-os.architecture.html` from draft PR #134. Do not merge or promote Archify to ACTIVE based on this pilot alone.
+
+## Previous Next Step
 Read the executor-owned mailbox when it appears, then Issue #72, then inspect the reported branch/PR evidence. Continue automatically from the actual ACK, HEARTBEAT, BLOCKER, or COMPLETE state.
 
 ## Reading Rule
