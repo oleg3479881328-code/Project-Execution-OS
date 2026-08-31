@@ -29,6 +29,12 @@ The workbook is the canonical structured operational source of truth.
 
 Do not create a second Page Queue unless the owner explicitly changes the architecture.
 
+## Website / Page Factory Repository
+
+https://github.com/oleg3479881328-code/tasha-hurley-weddings-web
+
+The existing repository is the execution layer. Its venue/wedding data now carries canonical PQ/EV/venue IDs for traceability back to the Knowledge DB.
+
 ## Website Rule
 
 Operational staging shell:
