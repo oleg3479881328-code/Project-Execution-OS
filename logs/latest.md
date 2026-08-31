@@ -1,46 +1,41 @@
 # Latest Executor Status
 
 Date: 2026-08-30
-Marker: SYSTEM_HYGIENE_V2_VERIFIED
-Task-ID: peos-system-hygiene-v2
-Status: Hygiene v2 trend, persistence, visibility and block-activity telemetry were added to the existing Project Execution OS integrity layer and verified green in GitHub Actions.
+Marker: SYSTEM_HYGIENE_V2_DATA_QUALITY_VERIFIED
+Task-ID: peos-system-hygiene-v2-data-quality
+Status: Hygiene v2 was hardened against shallow-clone activity distortion and its persistence-to-ACTION_REQUIRED behavior was verified deterministically in CI.
 
 Implemented:
-- extended `scripts/audit_system_hygiene.py` with stable warning IDs;
-- added consecutive warning persistence tracking from `logs/hygiene-history.jsonl`;
-- warnings remain non-blocking by default, but the third consecutive recorded occurrence becomes an explicit `ACTION_REQUIRED` review signal;
-- added GitHub Actions job summary output so hygiene signals are visible without opening raw stdout logs;
-- added per-domain-block Git activity signals: `last_touched`, commits in the last 30 days, and commits in the last 90 days;
-- added scheduled/manual trend recording and commit-back through `.github/workflows/validate-project-structure.yml`;
-- seeded `logs/hygiene-history.jsonl` from the first independently verified v2 CI run rather than waiting for the next weekly cron;
-- expanded `docs/INDEXING_STANDARD.md` with trend, persistent-warning, visibility and block-activity boundaries.
+- `scripts/audit_system_hygiene.py` now checks `git rev-parse --is-shallow-repository` before treating Git-history activity telemetry as trustworthy;
+- a shallow repository produces an explicit data-quality warning instead of silently presenting incomplete `last_touched`, `commits_30d`, and `commits_90d` values as reliable;
+- snapshots now record `git_history_shallow` and `activity_metrics_reliable`;
+- GitHub Actions summary surfaces Git-history completeness;
+- structural hygiene checks still run in shallow clones because their validity does not depend on complete Git history;
+- added `scripts/test_hygiene_persistence.py` as a deterministic regression test for warning persistence and shallow-history detection;
+- wired the regression test into the existing integrity workflow before the live hygiene audit.
 
-Persistence Boundary:
-- 1-2 consecutive warning occurrences -> warning;
-- 3+ consecutive recorded occurrences -> `ACTION_REQUIRED` review signal;
-- persistent warnings do not automatically fail CI;
-- only explicitly defined structural contradictions are blocking errors;
-- age, low activity, low references, candidate status, or persistence alone never authorize automatic deletion, deprecation, demotion, merge, or promotion.
+Verified Persistence Behavior:
+- two prior consecutive history rows containing the same warning ID plus the current occurrence produce count 3 and meet the `ACTION_REQUIRED` threshold;
+- a history row without that warning ID breaks the consecutive chain;
+- three prior consecutive rows plus the current occurrence produce count 4;
+- the production history file is not polluted with synthetic test rows.
+
+Verified History-Quality Behavior:
+- `is_shallow_repository()` explicitly distinguishes shallow and full-history states;
+- shallow history is treated as an execution/data-quality limitation, not as a repository hygiene defect and not as an automatic lifecycle signal;
+- the production CI checkout remains `fetch-depth: 0`, so scheduled/push activity telemetry is calculated from full Git history.
 
 Verified CI Run:
-- GitHub Actions run: https://github.com/oleg3479881328-code/Project-Execution-OS/actions/runs/33343781581
-- validated commit: `5a26f1e5cd805b433d7b28721fc8721212d9a4f5`
+- GitHub Actions run: https://github.com/oleg3479881328-code/Project-Execution-OS/actions/runs/33344486124
+- validated commit: `afd5754ee368ef7d5c8b1c13a947e5b222b3cab9`
 - project structure: PASS;
 - router integrity: PASS;
 - system context manifest: PASS;
 - completion contract: PASS;
-- hygiene v2 audit: PASS;
-- final hygiene result: `0 error(s), 0 warning(s), 0 action-required signal(s)`;
-- audited: 20 domain block entrypoints, 9 internal project entrypoints, 54 top-level standards;
-- candidates: 75; undated candidates: 49.
+- hygiene persistence/history-quality regression test: PASS;
+- system hygiene audit: PASS.
 
-First Block Activity Baseline:
-- lowest 90-day activity: `blocks/documentation/` and `blocks/skill-creator/` at 0 commits in 90 days;
-- recently active examples: `blocks/design/` at 1 commit in 30 days and `blocks/communication-channel/` at 2 commits in 30 days;
-- these are maintenance/activity signals only, not evidence of user value or grounds for lifecycle action.
+Durable Lesson:
+Never interpret Git-history-derived hygiene telemetry from a shallow clone as complete repository activity evidence. Structural checks may still be valid, but activity metrics require full history or an explicit incompleteness warning.
 
-Durable Trend Baseline:
-- `logs/hygiene-history.jsonl`
-- first row is based on the verified GitHub Actions output at commit `5a26f1e5cd805b433d7b28721fc8721212d9a4f5`.
-
-Next-Safe-Action: allow scheduled hygiene runs to append real trend evidence; review persistent `ACTION_REQUIRED` signals against canonical artifacts when they emerge instead of converting every warning into a blocking CI rule.
+Next-Safe-Action: let real scheduled history accumulate while keeping the deterministic persistence regression test in CI; if production hygiene is later adapted to project repositories, preserve the same distinction between structural truth and history-dependent telemetry.
