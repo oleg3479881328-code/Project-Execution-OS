@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e9d8083a812c85b193149f28d9b83323e4d6ad82",
-  "generated_at": "2026-08-31T14:54:02-04:00",
+  "repository_commit": "ce54f623c6aa20af2d0f78becc6d483268ad202d",
+  "generated_at": "2026-08-31T14:56:37-04:00",
   "artifact_count": 561,
   "artifacts": [
     {
@@ -11178,7 +11178,7 @@
       "domain": "tusia-tasha-hurley",
       "status": null,
       "date": null,
-      "sha256": "f3a73c520c54d11aae28bec74967ce0f81bee40b012fa42d1b4546ec09e22245",
+      "sha256": "dfa163838492ad23de9b5e68500ff95b09b720aaf1c172a0b7f60d0203dc31ee",
       "headings": [
         "Tusia / Tasha Hurley Weddings",
         "Status",
@@ -11189,6 +11189,7 @@
         "Source Of Truth",
         "Canonical structured operational database",
         "Durable project workspace",
+        "Website / Page Factory execution repository",
         "Website / staging reference",
         "Source Trail",
         "Current Status",
@@ -11206,13 +11207,14 @@
       "domain": "tusia-tasha-hurley",
       "status": "in-progress",
       "date": null,
-      "sha256": "34b330973df682b5b40ff28429f5d7ee7e675be77f87658e96cf4cc74d8a2ce6",
+      "sha256": "eacef7cac3d69cdad6ff351b504d16913c3834d6aaac5c5a8e585e1a232c1ae0",
       "headings": [
         "Tusia / Tasha Hurley Weddings — Project State",
         "Current Phase",
         "Canonical Data",
         "Current Production Contract",
         "Queue Rule",
+        "Website / Page Factory Repository",
         "Website Rule",
         "Current Database Layers",
         "Research State",
