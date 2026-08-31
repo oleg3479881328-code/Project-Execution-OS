@@ -166,6 +166,27 @@ The summary should expose at least:
 
 Important hygiene signals must not exist only in stdout that requires opening raw job logs.
 
+## Git History Completeness Rule
+
+Never interpret Git-history-derived hygiene telemetry from a shallow repository as complete repository activity evidence.
+
+Before relying on `last_touched`, commit counts, change frequency, age-by-history, or similar metrics, check whether the repository has complete history with:
+
+```text
+git rev-parse --is-shallow-repository
+```
+
+If the result is `true`:
+
+- structural checks that depend only on the current tree may still be valid;
+- Git-history-derived activity metrics must be explicitly marked incomplete or unreliable;
+- do not compare shallow-derived activity numbers against full-history baselines as if they were equivalent;
+- fetch full history or use a full clone before making maintenance, lifecycle, deprecation, or prioritization decisions from activity telemetry.
+
+The system hygiene auditor must surface shallow-history state rather than silently emitting plausible-looking activity numbers.
+
+This rule applies to CI, local human runs, Codex/agent checkouts, temporary worktrees, external reviewers, and any future repository analytics that use Git history as evidence.
+
 ## Block Activity Signal Rule
 
 For each domain block, hygiene may record lightweight Git-derived activity signals such as:
