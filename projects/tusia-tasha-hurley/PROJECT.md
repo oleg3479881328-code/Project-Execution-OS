@@ -70,6 +70,14 @@ Current structure:
 - 04 — Website & Design
 - 05 — Backups & Exports
 
+### Website / Page Factory execution repository
+
+GitHub:
+
+https://github.com/oleg3479881328-code/tasha-hurley-weddings-web
+
+This is the executable Page Factory / website layer. It consumes approved canonical IDs and queue state; it is not a competing research database.
+
 ### Website / staging reference
 
 Current operational staging host:
@@ -124,6 +132,8 @@ The current queue already contains real-wedding / venue candidates including Ash
 - Reverse venue/vendor discovery completed through TASK 17 as dry-run research.
 - Google Drive root normalized into five project folders.
 - Project now has a canonical routed entrypoint in Project Execution OS.
+- Existing `tasha-hurley-weddings-web` repository is explicitly linked as the Website/Page Factory execution layer.
+- Page Factory venue/wedding data records now preserve canonical `pageCandidateId`, `eventId`, and `venueEntityId` lineage.
 
 ## Current Focus
 
