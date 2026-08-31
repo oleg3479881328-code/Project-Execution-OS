@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3cdf2b6296962ceff78632985d6117f9e0450a04",
-  "generated_at": "2026-08-31T17:58:31-04:00",
-  "artifact_count": 561,
+  "repository_commit": "d20c37b6a2e5492ca4ddd553ab19d9cc74717b21",
+  "generated_at": "2026-08-31T19:19:56-04:00",
+  "artifact_count": 562,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7822,6 +7822,32 @@
         "Evidence Rule",
         "Sync and Automation Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/integrations/scrapegraphai/README.md",
+      "title": "ScrapeGraphAI Integration Review",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "ad5d056480679112e881b6911aca671a28a9f43afc59a255a4efa6644599e60e",
+      "headings": [
+        "ScrapeGraphAI Integration Review",
+        "Status",
+        "Why this exists",
+        "Existing internal use case",
+        "Verified current upstream capabilities",
+        "Important delta from our earlier evaluation",
+        "1. Codex can use ScrapeGraphAI through MCP",
+        "2. Monitoring is now a first-class capability",
+        "3. Crawl + extract should be separated deliberately",
+        "Proposed architecture",
+        "Existing Solution First decision",
+        "Pilot acceptance test",
+        "Promotion gate",
+        "Current recommendation",
+        "Upstream references"
       ]
     },
     {
