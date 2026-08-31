@@ -1,41 +1,49 @@
 # Latest Executor Status
 
 Date: 2026-08-30
-Marker: SYSTEM_HYGIENE_V2_DATA_QUALITY_VERIFIED
-Task-ID: peos-system-hygiene-v2-data-quality
-Status: Hygiene v2 was hardened against shallow-clone activity distortion and its persistence-to-ACTION_REQUIRED behavior was verified deterministically in CI.
+Marker: HYGIENE_PROMOTION_AND_DECISION_GATES_SET
+Task-ID: peos-hygiene-followup
+Status: The shallow-history lesson was promoted from transient executor state into a permanent indexing rule, production-repository hygiene was explicitly scheduled for Olga, Tusia was explicitly deferred until a canonical source repository exists, and open-ended Codex/Archify tracks received dated decision gates.
 
-Implemented:
-- `scripts/audit_system_hygiene.py` now checks `git rev-parse --is-shallow-repository` before treating Git-history activity telemetry as trustworthy;
-- a shallow repository produces an explicit data-quality warning instead of silently presenting incomplete `last_touched`, `commits_30d`, and `commits_90d` values as reliable;
-- snapshots now record `git_history_shallow` and `activity_metrics_reliable`;
-- GitHub Actions summary surfaces Git-history completeness;
-- structural hygiene checks still run in shallow clones because their validity does not depend on complete Git history;
-- added `scripts/test_hygiene_persistence.py` as a deterministic regression test for warning persistence and shallow-history detection;
-- wired the regression test into the existing integrity workflow before the live hygiene audit.
+Permanent knowledge promotion:
+- `docs/INDEXING_STANDARD.md` now contains `Git History Completeness Rule`;
+- rule: never treat Git-history-derived hygiene telemetry from a shallow repository as complete repository activity evidence;
+- structural current-tree checks may remain valid on shallow clones, but history-dependent activity telemetry must be marked unreliable until full history is available;
+- applies to CI, local human runs, Codex/agent checkouts, temporary worktrees, external reviewers, and future repository analytics.
 
-Verified Persistence Behavior:
-- two prior consecutive history rows containing the same warning ID plus the current occurrence produce count 3 and meet the `ACTION_REQUIRED` threshold;
-- a history row without that warning ID breaks the consecutive chain;
-- three prior consecutive rows plus the current occurrence produce count 4;
-- the production history file is not polluted with synthetic test rows.
+Verification of promoted rule:
+- commit: `55805a3ca77b7cb3de540ba5b2292da421f700e7`;
+- integrity workflow: PASS;
+- refresh-index workflow: PASS.
 
-Verified History-Quality Behavior:
-- `is_shallow_repository()` explicitly distinguishes shallow and full-history states;
-- shallow history is treated as an execution/data-quality limitation, not as a repository hygiene defect and not as an automatic lifecycle signal;
-- the production CI checkout remains `fetch-depth: 0`, so scheduled/push activity telemetry is calculated from full Git history.
+Production hygiene rollout:
+- Olga repository verified accessible: `oleg3479881328-code/olga-polo-weddings-web`;
+- created issue: https://github.com/oleg3479881328-code/olga-polo-weddings-web/issues/128
+- target decision date: `2026-09-06`;
+- MVP scope: demo/template remnants, suspicious duplicate/legacy routes, broken internal links where deterministically detectable, stale/missing live-QA/deploy evidence, and deterministic source/generated disagreements;
+- Existing Solution First: extend current repo QA/CI where possible; do not create parallel validation infrastructure without need;
+- human-judgment signals remain non-destructive review signals.
 
-Verified CI Run:
-- GitHub Actions run: https://github.com/oleg3479881328-code/Project-Execution-OS/actions/runs/33344486124
-- validated commit: `afd5754ee368ef7d5c8b1c13a947e5b222b3cab9`
-- project structure: PASS;
-- router integrity: PASS;
-- system context manifest: PASS;
-- completion contract: PASS;
-- hygiene persistence/history-quality regression test: PASS;
-- system hygiene audit: PASS.
+Tusia boundary:
+- no accessible canonical Tusia source repository was found in the connected GitHub installation on 2026-08-30;
+- do not duplicate Olga hygiene work into an invented or non-canonical repository;
+- trigger: reuse/adapt the Olga hygiene contract when a canonical Tusia source repository exists and is ready for CI-backed production QA.
 
-Durable Lesson:
-Never interpret Git-history-derived hygiene telemetry from a shallow clone as complete repository activity evidence. Structural checks may still be valid, but activity metrics require full history or an explicit incompleteness warning.
+Codex App Server / DeepSeek Harness decision gate:
+- Issue #113 already contains completed comparative research and a current verdict: Codex App Server is the first bounded POC candidate; DeepSeek Harness remains donor/secondary multi-provider candidate;
+- Issue #113 updated with target decision date `2026-09-06`;
+- by that date: run the bounded read-only Codex App Server POC and record `ADOPT / REJECT / DEFER`, or document a concrete blocker and exact restart trigger;
+- current Prompt Bridge/worker transport must not be removed until the POC proves equal or better control, observability, recovery, and durable evidence.
 
-Next-Safe-Action: let real scheduled history accumulate while keeping the deterministic persistence regression test in CI; if production hygiene is later adapted to project repositories, preserve the same distinction between structural truth and history-dependent telemetry.
+Archify decision gate:
+- Issue #132 technical pilot status is already `TECHNICAL PASS — OWNER REVIEW PENDING`;
+- Issue #132 updated with target owner decision date `2026-09-02`;
+- owner verdict must be `GO / NO-GO / DEFER`;
+- owner review must verify no invented topology, successful orientation to the global entry/execution route, and material orientation improvement versus ROUTER-only navigation;
+- technical renderer success alone is insufficient for promotion.
+
+Next-Safe-Action:
+1. execute Olga issue #128 as a bounded project-specific hygiene MVP;
+2. complete Archify owner visual decision by 2026-09-02;
+3. execute Codex App Server bounded POC / decision gate by 2026-09-06;
+4. reuse Olga hygiene in Tusia only after a canonical Tusia source repo exists.
