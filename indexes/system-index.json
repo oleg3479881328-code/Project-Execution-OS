@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "184ee1fafb05e8e0e8c29b01b98c5c3df2da2fb5",
-  "generated_at": "2026-08-30T19:54:09-04:00",
+  "repository_commit": "5a26f1e5cd805b433d7b28721fc8721212d9a4f5",
+  "generated_at": "2026-08-30T20:10:30-04:00",
   "artifact_count": 558,
   "artifacts": [
     {
@@ -206,13 +206,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "91518ac554fa408144424952115b3c741b280507d98cd3b337f2d9cb1b7bbace",
+      "sha256": "7c9052ca0c0d8f8a7db661ae9caf7df1ba4618225823450d23785960b4b1c640",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v15`",
+        "Profile: `knowledge-aware-core-v16`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -6562,7 +6562,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "77d12f9f25b57a8ef6f964831cfede8a3c695e3cd6da0d0491c874693a914c65",
+      "sha256": "03d85ac86c91afd717a6c157999aa8da9d0d5aaa05d77f55cc5c1c5616ffeeae",
       "headings": [
         "Indexing Layer Standard",
         "Purpose",
@@ -6570,10 +6570,15 @@
         "Required Artifacts",
         "Curated navigation",
         "Generated indexing artifacts",
+        "Hygiene evidence",
         "Automation",
         "Structural Indexing Rule",
         "Generated Index Scope",
         "System Hygiene Audit Rule",
+        "Hygiene Trend Rule",
+        "Persistent Warning Rule",
+        "GitHub Actions Visibility Rule",
+        "Block Activity Signal Rule",
         "Candidate Hygiene Rule",
         "Changelog Boundary",
         "Anti-Bloat Rule",
@@ -9236,9 +9241,9 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "Upstream Archify was reviewed under Existing Solution First, registered as an external architecture-visualization/evidence candidate, and a bounded self-map pilot was created.",
-      "date": null,
-      "sha256": "31f6fe095b1b7791144eb5bcb637e2b7469a1fc524ec6267dc685483f6984726",
+      "status": "System hygiene enforcement was added to the existing Project Execution OS integrity layer and verified green in GitHub Actions.",
+      "date": "2026-08-30",
+      "sha256": "e64e7fcad338a82bdb5b7da91cced2d68d7625ecb70da79e0e99b6a055c12ca6",
       "headings": [
         "Latest Executor Status"
       ]
