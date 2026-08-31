@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import hashlib
+import json
+import os
 import re
 import subprocess
 import sys
@@ -12,6 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CANONICAL_ROOTS = ("docs", "blocks", "skills", "agent-library", "projects", "knowledge-library")
 GENERATED_PREFIXES = ("indexes/",)
+HISTORY_PATH = ROOT / "logs" / "hygiene-history.jsonl"
+PERSISTENCE_THRESHOLD = 3
 
 
 def read(path: Path) -> str:
@@ -96,9 +101,114 @@ def is_retired_status(status: str | None) -> bool:
     return any(token in lowered for token in ("deprecated", "retired", "replaced", "superseded", "archived"))
 
 
+def warning_id(kind: str, detail: str = "") -> str:
+    suffix = hashlib.sha256(detail.encode("utf-8")).hexdigest()[:10] if detail else "general"
+    return f"{kind}:{suffix}"
+
+
+def load_history() -> list[dict]:
+    if not HISTORY_PATH.exists():
+        return []
+    rows: list[dict] = []
+    for line in HISTORY_PATH.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            row = json.loads(line)
+            if isinstance(row, dict):
+                rows.append(row)
+        except json.JSONDecodeError:
+            continue
+    return rows
+
+
+def consecutive_occurrences(history: list[dict], current_warning_ids: set[str]) -> dict[str, int]:
+    counts = {wid: 1 for wid in current_warning_ids}
+    for wid in current_warning_ids:
+        for row in reversed(history):
+            prior = set(row.get("warning_ids", []))
+            if wid in prior:
+                counts[wid] += 1
+            else:
+                break
+    return counts
+
+
+def block_usage(path: Path, now: datetime) -> dict:
+    rel = path.parent.relative_to(ROOT).as_posix() + "/"
+    last_raw = git("log", "-1", "--format=%cI", "--", rel)
+    last_touched = None
+    age_days = None
+    if last_raw:
+        try:
+            dt = datetime.fromisoformat(last_raw.replace("Z", "+00:00"))
+            last_touched = dt.date().isoformat()
+            age_days = max(0, (now - dt).days)
+        except ValueError:
+            pass
+    count_30 = git("rev-list", "--count", "--since=30.days.ago", "HEAD", "--", rel)
+    count_90 = git("rev-list", "--count", "--since=90.days.ago", "HEAD", "--", rel)
+    return {
+        "block": rel.rstrip("/").split("/")[-1],
+        "path": rel,
+        "last_touched": last_touched,
+        "age_days": age_days,
+        "commits_30d": int(count_30) if count_30.isdigit() else 0,
+        "commits_90d": int(count_90) if count_90.isdigit() else 0,
+    }
+
+
+def append_history(snapshot: dict) -> None:
+    HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with HISTORY_PATH.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(snapshot, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def write_step_summary(snapshot: dict, warning_rows: list[dict], errors: list[str]) -> None:
+    target = os.getenv("GITHUB_STEP_SUMMARY")
+    if not target:
+        return
+    blocks = snapshot["block_usage"]
+    quiet_blocks = sorted(blocks, key=lambda row: (row["commits_90d"], -(row["age_days"] or 0)))[:8]
+    lines = [
+        "## PEOS System Hygiene",
+        "",
+        f"**Errors:** {len(errors)}  |  **Warnings:** {len(warning_rows)}  |  **Persistent warnings:** {sum(1 for row in warning_rows if row['consecutive'] >= PERSISTENCE_THRESHOLD)}",
+        "",
+        "| Metric | Value |",
+        "|---|---:|",
+        f"| Domain blocks | {snapshot['metrics']['domain_blocks']} |",
+        f"| Internal projects | {snapshot['metrics']['internal_projects']} |",
+        f"| Candidate artifacts | {snapshot['metrics']['candidates']} |",
+        f"| Undated candidates | {snapshot['metrics']['undated_candidates']} |",
+        f"| Active top-level standards | {snapshot['metrics']['top_level_standards']} |",
+        "",
+    ]
+    if warning_rows:
+        lines += ["### Warnings", "", "| ID | Consecutive runs | State | Message |", "|---|---:|---|---|"]
+        for row in warning_rows:
+            state = "ACTION_REQUIRED" if row["consecutive"] >= PERSISTENCE_THRESHOLD else "warning"
+            message = row["message"].replace("|", "\\|")
+            lines.append(f"| `{row['id']}` | {row['consecutive']} | {state} | {message} |")
+        lines.append("")
+    if errors:
+        lines += ["### Errors", ""] + [f"- {item}" for item in errors] + [""]
+    lines += ["### Lowest recent block activity", "", "| Block | Last touched | Commits 30d | Commits 90d |", "|---|---|---:|---:|"]
+    for row in quiet_blocks:
+        lines.append(f"| `{row['path']}` | {row['last_touched'] or 'unknown'} | {row['commits_30d']} | {row['commits_90d']} |")
+    lines += ["", "> Low activity is a review signal only. It does not authorize automatic deletion, deprecation, or promotion.", ""]
+    with open(target, "a", encoding="utf-8") as handle:
+        handle.write("\n".join(lines))
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--record-history", action="store_true", help="Append this run to logs/hygiene-history.jsonl")
+    args = parser.parse_args()
+
     errors: list[str] = []
-    warnings: list[str] = []
+    warning_messages: list[tuple[str, str]] = []
     info: list[str] = []
 
     required = [
@@ -128,10 +238,7 @@ def main() -> int:
         if rel_dir not in block_index and f"{rel_dir}BLOCK.md" not in router:
             missing_blocks.append(rel_dir)
     if missing_blocks:
-        errors.append(
-            "Domain block entrypoints are not discoverable from blocks/PROJECT_INDEX.md or docs/ROUTER.md: "
-            + ", ".join(missing_blocks)
-        )
+        errors.append("Domain block entrypoints are not discoverable from blocks/PROJECT_INDEX.md or docs/ROUTER.md: " + ", ".join(missing_blocks))
     info.append(f"Domain block entrypoints checked: {len(block_entrypoints)}")
 
     project_router = texts.get("projects/ROUTER.md", "")
@@ -153,7 +260,8 @@ def main() -> int:
         if rel not in skills_index and path.parent.relative_to(ROOT).as_posix() + "/" not in skills_index:
             unindexed_skills.append(rel)
     if unindexed_skills:
-        warnings.append(f"Skills not visible in skills/PROJECT_INDEX.md ({len(unindexed_skills)}): " + ", ".join(unindexed_skills[:12]) + (" ..." if len(unindexed_skills) > 12 else ""))
+        detail = ", ".join(unindexed_skills)
+        warning_messages.append((warning_id("unindexed-skills", detail), f"Skills not visible in skills/PROJECT_INDEX.md ({len(unindexed_skills)}): {detail}"))
 
     now = head_date()
     aged_candidates: list[str] = []
@@ -174,7 +282,8 @@ def main() -> int:
             aged_candidates.append(rel)
     info.append(f"Candidate artifacts detected: {candidate_count}; undated: {undated_candidates}")
     if aged_candidates:
-        warnings.append(f"Candidate artifacts older than 120 days need review ({len(aged_candidates)}): " + ", ".join(aged_candidates[:12]) + (" ..." if len(aged_candidates) > 12 else ""))
+        detail = ", ".join(aged_candidates)
+        warning_messages.append((warning_id("aged-candidates", detail), f"Candidate artifacts older than 120 days need review ({len(aged_candidates)}): {detail}"))
 
     by_hash: dict[str, list[str]] = defaultdict(list)
     for rel, text in texts.items():
@@ -186,8 +295,8 @@ def main() -> int:
         by_hash[digest].append(rel)
     duplicates = [rels for rels in by_hash.values() if len(rels) > 1]
     if duplicates:
-        sample = [" = ".join(group) for group in duplicates[:8]]
-        warnings.append(f"Exact/normalized duplicate canonical Markdown groups ({len(duplicates)}): " + "; ".join(sample))
+        detail = "; ".join(" = ".join(group) for group in duplicates)
+        warning_messages.append((warning_id("duplicate-markdown", detail), f"Exact/normalized duplicate canonical Markdown groups ({len(duplicates)}): {detail}"))
 
     orphan_standards: list[str] = []
     docs_standards = sorted((ROOT / "docs").glob("*_STANDARD.md"))
@@ -198,39 +307,73 @@ def main() -> int:
         if is_retired_status(status):
             continue
         filename = path.name
-        referenced = False
-        for other_rel, other_text in texts.items():
-            if other_rel == rel:
-                continue
-            if rel in other_text or filename in other_text:
-                referenced = True
-                break
-        if not referenced:
+        if not any(other_rel != rel and (rel in other_text or filename in other_text) for other_rel, other_text in texts.items()):
             orphan_standards.append(rel)
     if orphan_standards:
-        warnings.append(f"Possibly orphaned active top-level standards ({len(orphan_standards)}): " + ", ".join(orphan_standards[:15]) + (" ..." if len(orphan_standards) > 15 else ""))
+        detail = ", ".join(orphan_standards)
+        warning_messages.append((warning_id("orphan-standards", detail), f"Possibly orphaned active top-level standards ({len(orphan_standards)}): {detail}"))
     info.append(f"Top-level standards checked for active inbound references: {len(docs_standards)}")
 
     changelog = texts.get("CHANGELOG.md", "")
+    changelog_age = None
     match = re.search(r"^##\s+(\d{4}-\d{2}-\d{2})\s*$", changelog, re.M)
     if match:
         latest = datetime.strptime(match.group(1), "%Y-%m-%d").replace(tzinfo=timezone.utc)
-        age = (now - latest).days
-        info.append(f"Latest curated CHANGELOG milestone age: {age} day(s)")
-        if age > 60:
-            warnings.append(f"CHANGELOG.md has no curated milestone for {age} days; review whether major system changes are missing.")
+        changelog_age = (now - latest).days
+        info.append(f"Latest curated CHANGELOG milestone age: {changelog_age} day(s)")
+        if changelog_age > 60:
+            warning_messages.append((warning_id("stale-changelog"), f"CHANGELOG.md has no curated milestone for {changelog_age} days; review whether major system changes are missing."))
     else:
-        warnings.append("CHANGELOG.md has no parseable YYYY-MM-DD milestone heading.")
+        warning_messages.append((warning_id("unparseable-changelog"), "CHANGELOG.md has no parseable YYYY-MM-DD milestone heading."))
+
+    usage = [block_usage(path, now) for path in block_entrypoints]
+    history = load_history()
+    current_ids = {wid for wid, _ in warning_messages}
+    persistence = consecutive_occurrences(history, current_ids)
+    warning_rows = [
+        {"id": wid, "message": message, "consecutive": persistence.get(wid, 1)}
+        for wid, message in warning_messages
+    ]
+
+    snapshot = {
+        "schema_version": 2,
+        "recorded_at": now.isoformat(),
+        "commit": git("rev-parse", "HEAD") or "unknown",
+        "metrics": {
+            "domain_blocks": len(block_entrypoints),
+            "internal_projects": len(project_entrypoints),
+            "skills": len(skill_entrypoints),
+            "candidates": candidate_count,
+            "undated_candidates": undated_candidates,
+            "top_level_standards": len(docs_standards),
+            "changelog_age_days": changelog_age,
+            "errors": len(errors),
+            "warnings": len(warning_rows),
+            "persistent_warnings": sum(1 for row in warning_rows if row["consecutive"] >= PERSISTENCE_THRESHOLD),
+        },
+        "warning_ids": sorted(current_ids),
+        "warnings": warning_rows,
+        "block_usage": usage,
+    }
 
     print("PEOS System Hygiene Audit")
     print("=========================")
     for row in info:
         print(f"INFO: {row}")
-    for row in warnings:
-        print(f"WARNING: {row}")
+    for row in warning_rows:
+        state = "ACTION_REQUIRED" if row["consecutive"] >= PERSISTENCE_THRESHOLD else "WARNING"
+        print(f"{state} [{row['id']}] consecutive={row['consecutive']}: {row['message']}")
     for row in errors:
         print(f"ERROR: {row}")
-    print(f"Summary: {len(errors)} error(s), {len(warnings)} warning(s)")
+    print("Block usage signals:")
+    for row in sorted(usage, key=lambda item: (item["commits_90d"], item["path"])):
+        print(f"  {row['path']} last_touched={row['last_touched'] or 'unknown'} commits_30d={row['commits_30d']} commits_90d={row['commits_90d']}")
+    print(f"Summary: {len(errors)} error(s), {len(warning_rows)} warning(s), {snapshot['metrics']['persistent_warnings']} action-required signal(s)")
+
+    write_step_summary(snapshot, warning_rows, errors)
+    if args.record_history:
+        append_history(snapshot)
+        print(f"History appended: {HISTORY_PATH.relative_to(ROOT).as_posix()}")
 
     return 1 if errors else 0
 
