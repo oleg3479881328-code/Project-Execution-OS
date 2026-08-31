@@ -17,11 +17,12 @@ stable door
   -> generated machine index
   -> semantic-ready chunk corpus
   -> system hygiene audit
+  -> hygiene trend / persistence telemetry
   -> optional embeddings runtime
   -> optional graph-memory layer
 ```
 
-No generated index or hygiene report replaces canonical source files.
+No generated index, hygiene report, trend, or usage signal replaces canonical source files.
 
 ## Required Artifacts
 
@@ -41,6 +42,11 @@ No generated index or hygiene report replaces canonical source files.
 - `indexes/semantic-documents.jsonl`
 - `indexes/BLOCK_CATALOG.generated.md`
 - `indexes/KNOWLEDGE_CATALOG.generated.md`
+
+### Hygiene evidence
+
+- `logs/hygiene-history.jsonl` when scheduled history has begun accumulating
+- GitHub Actions job summary for each integrity run
 
 ### Automation
 
@@ -88,7 +94,7 @@ The system must be able to detect when its growing body of standards, blocks, sk
 
 Use `scripts/audit_system_hygiene.py` as the lightweight automated audit.
 
-The audit should distinguish **hard structural contradictions** from **review signals**.
+The audit must distinguish **hard structural contradictions** from **review signals**.
 
 Hard failures may include:
 
@@ -107,6 +113,72 @@ Review signals may include:
 A review signal is not permission to delete, merge, promote or deprecate automatically.
 
 The executor must inspect the artifact and preserve rare but valuable knowledge when it still has a legitimate route or use.
+
+## Hygiene Trend Rule
+
+A one-time clean snapshot is not enough to prove system health.
+
+Scheduled hygiene runs should preserve a compact trend record in `logs/hygiene-history.jsonl` containing the current metrics, warning identifiers, persistence state, and per-block activity signals.
+
+Use trends to answer questions such as:
+
+- are undated candidates shrinking or growing;
+- are warnings resolving or persisting;
+- are candidate counts growing faster than review capacity;
+- which blocks show ongoing maintenance activity;
+- which signals repeatedly survive multiple scheduled reviews.
+
+Do not treat the history file as a second source of truth. It is evidence about system maintenance behavior.
+
+## Persistent Warning Rule
+
+Each repeatable warning class should have a stable warning identifier.
+
+When the same warning identifier appears in consecutive recorded hygiene runs, increment its persistence count.
+
+Default interpretation:
+
+```text
+1-2 consecutive runs -> warning
+3+ consecutive runs -> ACTION_REQUIRED review signal
+```
+
+`ACTION_REQUIRED` does **not** automatically become a hard CI failure.
+
+Escalate a warning class into a blocking error only when a separate explicit rule establishes that continuing with the condition is unsafe or structurally invalid.
+
+This prevents a green CI badge from hiding long-lived hygiene debt without allowing harmless review signals to stop normal execution.
+
+## GitHub Actions Visibility Rule
+
+The hygiene audit should write a readable GitHub Actions job summary when running inside GitHub Actions.
+
+The summary should expose at least:
+
+- error count;
+- warning count;
+- persistent/action-required warning count;
+- candidate count;
+- undated candidate count;
+- current block/project counts;
+- warning IDs and consecutive-run counts when warnings exist;
+- a compact low-activity block view.
+
+Important hygiene signals must not exist only in stdout that requires opening raw job logs.
+
+## Block Activity Signal Rule
+
+For each domain block, hygiene may record lightweight Git-derived activity signals such as:
+
+- date of the most recent commit touching the block;
+- commit count touching the block over the last 30 days;
+- commit count touching the block over the last 90 days.
+
+These are **maintenance/activity signals**, not proof of user value or real-world usage.
+
+Low activity alone must never auto-delete, auto-deprecate, or auto-demote a block. A rarely changed mature block may be more useful than a frequently edited unstable block.
+
+Use activity signals to select review targets and ask better questions, not to make autonomous lifecycle decisions.
 
 ## Candidate Hygiene Rule
 
@@ -206,4 +278,4 @@ If an index is stale:
 
 ## Final Rule
 
-Index for navigation and selective loading, and audit for structural hygiene. Never treat an index or audit signal as a substitute for the underlying source of truth or human/agent review.
+Index for navigation and selective loading, audit for structural hygiene, and trend only what helps reveal maintenance direction. Never treat an index, audit signal, activity metric, or trend as a substitute for the underlying source of truth or reviewed lifecycle judgment.
