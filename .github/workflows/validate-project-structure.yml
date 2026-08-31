@@ -46,6 +46,11 @@ jobs:
         shell: pwsh
         run: ./scripts/validate-completion-contract.ps1
 
+      - name: Verify hygiene persistence escalation
+        if: always()
+        shell: pwsh
+        run: python ./scripts/test_hygiene_persistence.py
+
       - name: Audit system hygiene
         if: always()
         shell: pwsh
