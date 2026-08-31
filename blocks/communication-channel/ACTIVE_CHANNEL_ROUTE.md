@@ -16,11 +16,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Write Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/97`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132`
 
 ### Read Here
 
-`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/97`
+`https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132`
 
 ### Reviewer To Executor Mailbox
 
@@ -36,11 +36,11 @@ Do not store full messages, transcripts, reports, logs, or technical state here.
 
 ### Scope
 
-`AI Hands / WP-002 bounded Cline + Ollama local-model smoke test`
+`Project Execution OS / Issue #132 bounded Archify pilot`
 
 ### Last Confirmed At
 
-`2026-08-02`
+`2026-08-30`
 
 ## Permanent Backup Recovery Pointer
 

@@ -1,5 +1,16 @@
 # Latest Executor Status
 
+## 2026-08-30 — Archify pilot
+
+Marker: ACK / execution in progress
+Task: Issue #132 — Pilot Archify on Project Execution OS
+Reply-Surface: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132
+Branch: codex/issue-132-archify-pilot
+Current state: Upstream Archify v2.16.0 launched in the working Codex environment; final validate, deliver, and visual-check passed. `visualReview: pending` remains owner-only.
+Artifacts: `docs/architecture/archify/`
+Next automatic action: commit, push, open draft PR, and publish COMPLETE in Issue #132.
+Owner action required: none for execution; owner visual review remains pending after publication.
+
 Timestamp: 2026-07-15T14:55:00-04:00
 Marker: COMPLETE_OWNER_CONFIRMATION_PENDING
 Task-ID: block-studio-v0.1.0

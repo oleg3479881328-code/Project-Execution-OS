@@ -2,12 +2,16 @@
 project_name: Project Execution OS
 project_mode: compact
 status: transfer_ready
-updated_at: 2026-07-15
+updated_at: 2026-08-30
 source_of_truth: repository
-active_branch: main
+active_branch: codex/issue-132-archify-pilot
 ---
 
 # PROJECT_STATE.md
+
+## Current Task
+
+Issue #132 — bounded upstream Archify pilot. Artifacts generated and validated in the isolated review branch; owner visual review remains pending.
 
 ## Current State
 

@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Project Execution OS — authored architecture map",
+    "output": "project-execution-os.architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1390, 760],
+    "repository": {
+      "url": "https://github.com/oleg3479881328-code/Project-Execution-OS",
+      "revision": "b4119aea4fc0cf7c602943cc8071ed3db549dfeb"
+    },
+    "views": [
+      { "id": "system-entry", "label": "System entry route", "focus": ["start-here", "router", "project-entry", "state-context", "domain-knowledge", "capability", "adapter", "owner-ui"], "note": "Trace the authored entry chain from START_HERE.md to the owner-facing layer." },
+      { "id": "execution-review", "label": "Execution and review path", "focus": ["defined-work", "handoff", "execution", "verification", "evidence", "memory"], "note": "Trace the authored execution path from defined work to durable evidence and memory." }
+    ]
+  },
+  "components": [
+    { "id": "start-here", "type": "external", "label": "START_HERE.md", "sublabel": "system door", "tag": "ENTRYPOINT", "sources": [{ "path": "START_HERE.md", "line": 1 }] , "pos": [30, 220], "size": [150, 72] },
+    { "id": "router", "type": "backend", "label": "docs/ROUTER.md", "sublabel": "live map", "tag": "ROUTING", "sources": [{ "path": "docs/ROUTER.md", "line": 1 }], "pos": [204, 220], "size": [140, 72] },
+    { "id": "project-entry", "type": "backend", "label": "PROJECT.md", "sublabel": "project entrypoint", "tag": "CONTEXT", "sources": [{ "path": "PROJECT.md", "line": 1 }], "pos": [368, 220], "size": [150, 72] },
+    { "id": "state-context", "type": "database", "label": "State + context", "sublabel": "state + logs", "tag": "CONTEXT RESTORATION", "sources": [{ "path": "PROJECT_STATE.md", "line": 1 }, { "path": "logs/latest.md", "line": 1 }], "pos": [542, 220], "size": [170, 72] },
+    { "id": "domain-knowledge", "type": "database", "label": "L1 · Domain knowledge", "sublabel": "standards / docs / library", "tag": "DOMAIN KNOWLEDGE", "sources": [{ "path": "docs/ROUTER.md", "line": 17 }, { "path": "knowledge-library/README.md", "line": 1 }], "pos": [720, 80], "size": [190, 86] },
+    { "id": "capability", "type": "backend", "label": "L2 · Executable capability", "sublabel": "skills / tools", "tag": "EXECUTABLE CAPABILITY", "sources": [{ "path": "docs/ROUTER.md", "line": 17 }, { "path": "skills/PROJECT_INDEX.md", "line": 1 }], "pos": [720, 300], "size": [190, 86] },
+    { "id": "adapter", "type": "backend", "label": "L3 · Workflow / adapter", "sublabel": "workflow templates", "tag": "WORKFLOW / APPLICATION ADAPTER", "sources": [{ "path": "docs/ROUTER.md", "line": 17 }, { "path": "workflow-templates/project-bootstrap/AGENTS_TEMPLATE.md", "line": 1 }], "pos": [954, 220], "size": [190, 86] },
+    { "id": "owner-ui", "type": "frontend", "label": "L4 · Owner-facing UI", "sublabel": "project surfaces / apps", "tag": "OWNER-FACING UI", "sources": [{ "path": "PROJECT.md", "line": 1 }], "pos": [1168, 220], "size": [190, 86] },
+    { "id": "defined-work", "type": "external", "label": "Defined work", "sublabel": "issue / handoff", "tag": "EXECUTION PATH", "sources": [{ "path": "docs/CODEX_HANDOFF_STANDARD.md", "line": 1 }], "pos": [150, 500], "size": [170, 72] },
+    { "id": "handoff", "type": "security", "label": "Executor / Codex handoff", "sublabel": "bounded packet", "tag": "EXECUTION PATH", "sources": [{ "path": "docs/CODEX_HANDOFF_STANDARD.md", "line": 1 }, { "path": "docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md", "line": 1 }], "pos": [350, 500], "size": [190, 72] },
+    { "id": "execution", "type": "backend", "label": "Execution", "sublabel": "repository action", "tag": "EXECUTION PATH", "sources": [{ "path": "docs/CODEX_HANDOFF_STANDARD.md", "line": 1 }], "pos": [570, 500], "size": [160, 72] },
+    { "id": "verification", "type": "backend", "label": "Verification / review", "sublabel": "tests + evidence", "tag": "EXECUTION PATH", "sources": [{ "path": "docs/CODEX_HANDOFF_STANDARD.md", "line": 1 }], "pos": [760, 500], "size": [180, 72] },
+    { "id": "evidence", "type": "database", "label": "Durable evidence", "sublabel": "commit / PR / logs", "tag": "EXECUTION PATH", "sources": [{ "path": "docs/EXECUTOR_CHANNEL_ACK_AND_PUBLISH_STANDARD.md", "line": 1 }, { "path": "logs/latest.md", "line": 1 }], "pos": [970, 500], "size": [180, 72] },
+    { "id": "memory", "type": "database", "label": "Knowledge promotion / memory", "sublabel": "repository continuity", "tag": "EXECUTION PATH", "sources": [{ "path": "docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md", "line": 1 }], "pos": [1180, 500], "size": [180, 72] }
+  ],
+  "connections": [
+    { "id": "entry-to-router", "from": "start-here", "to": "router", "variant": "emphasis" },
+    { "id": "router-to-project", "from": "router", "to": "project-entry" },
+    { "id": "project-to-state", "from": "project-entry", "to": "state-context" },
+    { "id": "state-to-knowledge", "from": "state-context", "to": "domain-knowledge", "fromSide": "top", "toSide": "bottom" },
+    { "id": "state-to-capability", "from": "state-context", "to": "capability", "fromSide": "bottom", "toSide": "left" },
+    { "id": "knowledge-to-adapter", "from": "domain-knowledge", "to": "adapter", "fromSide": "right", "toSide": "top" },
+    { "id": "capability-to-adapter", "from": "capability", "to": "adapter", "fromSide": "right", "toSide": "bottom" },
+    { "id": "adapter-to-ui", "from": "adapter", "to": "owner-ui", "variant": "emphasis" },
+    { "id": "work-to-handoff", "from": "defined-work", "to": "handoff", "variant": "security" },
+    { "id": "handoff-to-execution", "from": "handoff", "to": "execution", "variant": "emphasis" },
+    { "id": "execution-to-verification", "from": "execution", "to": "verification" },
+    { "id": "verification-to-evidence", "from": "verification", "to": "evidence", "variant": "emphasis" },
+    { "id": "evidence-to-memory", "from": "evidence", "to": "memory" }
+  ]
+}

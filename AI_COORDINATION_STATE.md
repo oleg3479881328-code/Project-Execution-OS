@@ -1,27 +1,27 @@
 # AI Coordination State
 
 ## Project
-TikTok Research Sorter 0.2.0
+Project Execution OS
 
 ## Active Channel
-https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72
+https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132
 
 ## Status
-active / autonomous stabilization and delivery handoff published / executor ACK required
+active / Archify pilot execution in progress
 
 ## Mailboxes
 - Reviewer to executor: `projects/tiktok-research-sorter/coordination/TO_EXECUTOR.md`
 - Executor to reviewer: `projects/tiktok-research-sorter/coordination/FROM_EXECUTOR.md`
 
 ## Current Task
-Stabilize and deliver TikTok Research Sorter 0.2.0 without routine owner installation, testing, packaging, branch maintenance, or evidence relay. Reconcile the working branch with current `main`, commit reproducible dependencies, harden the profile card and Windows updater, add Linux and Windows CI, generate downloadable artifacts, automate fixture and browser-level validation where possible, and publish a verifiable completion report without merging or external publication.
+Generate and validate an upstream Archify high-level architecture map for Project Execution OS; publish reviewable artifacts without merging.
 
 ## Current Repository State
 - Active outbound mailbox sequence: `1`
-- Active issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72
+- Active issue: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132
 - Origin notice: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/72#issuecomment-4940424195
 - Draft implementation PR: https://github.com/oleg3479881328-code/Project-Execution-OS/pull/71
-- Working branch: `agent/tiktok-research-sorter-mvp`
+- Working branch: `codex/issue-132-archify-pilot`
 - Current extension version: `0.2.0`
 - Reviewer-reported validation: TypeScript passed, 8 tests passed, production build passed, ZIP passed.
 - Owner confirmed version `0.1.1` connects to TikTok and works on a public profile.
