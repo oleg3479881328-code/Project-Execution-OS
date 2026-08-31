@@ -30,6 +30,10 @@ def git(*args: str) -> str:
         return ""
 
 
+def is_shallow_repository() -> bool:
+    return git("rev-parse", "--is-shallow-repository").lower() == "true"
+
+
 def markdown_files() -> list[Path]:
     rows: list[Path] = []
     for path in ROOT.rglob("*.md"):
@@ -43,34 +47,29 @@ def markdown_files() -> list[Path]:
 
 
 def first_status(text: str) -> str | None:
-    inline_patterns = [
+    for pattern in (
         r"^Lifecycle status:\s*(.+)$",
         r"^Lifecycle State:\s*(.+)$",
         r"^Current status:\s*(.+)$",
         r"^Status:\s*(.+)$",
-    ]
-    for pattern in inline_patterns:
+    ):
         match = re.search(pattern, text, re.I | re.M)
         if match:
             return match.group(1).strip().strip("` ")
-
     section = re.search(
         r"(?ims)^#{2,4}\s+(?:Lifecycle Status|Lifecycle State|Current Status|Status)\s*$\s*\n+\s*`?([^\n`]+)`?",
         text,
     )
-    if section:
-        return section.group(1).strip().strip("` ")
-    return None
+    return section.group(1).strip().strip("` ") if section else None
 
 
 def first_date(text: str) -> datetime | None:
-    patterns = [
+    for pattern in (
         r"^Updated:\s*(\d{4}-\d{2}-\d{2})",
         r"^Captured:\s*(\d{4}-\d{2}-\d{2})",
         r"^Date checked:\s*(\d{4}-\d{2}-\d{2})",
         r"^Date:\s*(\d{4}-\d{2}-\d{2})",
-    ]
-    for pattern in patterns:
+    ):
         match = re.search(pattern, text, re.I | re.M)
         if match:
             try:
@@ -127,8 +126,7 @@ def consecutive_occurrences(history: list[dict], current_warning_ids: set[str]) 
     counts = {wid: 1 for wid in current_warning_ids}
     for wid in current_warning_ids:
         for row in reversed(history):
-            prior = set(row.get("warning_ids", []))
-            if wid in prior:
+            if wid in set(row.get("warning_ids", [])):
                 counts[wid] += 1
             else:
                 break
@@ -165,16 +163,18 @@ def append_history(snapshot: dict) -> None:
         handle.write(json.dumps(snapshot, ensure_ascii=False, sort_keys=True) + "\n")
 
 
-def write_step_summary(snapshot: dict, warning_rows: list[dict], errors: list[str]) -> None:
+def write_step_summary(snapshot: dict, warning_rows: list[dict], runtime_warnings: list[str], errors: list[str]) -> None:
     target = os.getenv("GITHUB_STEP_SUMMARY")
     if not target:
         return
     blocks = snapshot["block_usage"]
     quiet_blocks = sorted(blocks, key=lambda row: (row["commits_90d"], -(row["age_days"] or 0)))[:8]
+    history_state = "SHALLOW — activity metrics may be incomplete" if snapshot["git_history_shallow"] else "full history"
     lines = [
         "## PEOS System Hygiene",
         "",
         f"**Errors:** {len(errors)}  |  **Warnings:** {len(warning_rows)}  |  **Persistent warnings:** {sum(1 for row in warning_rows if row['consecutive'] >= PERSISTENCE_THRESHOLD)}",
+        f"**Git history:** {history_state}",
         "",
         "| Metric | Value |",
         "|---|---:|",
@@ -185,6 +185,8 @@ def write_step_summary(snapshot: dict, warning_rows: list[dict], errors: list[st
         f"| Active top-level standards | {snapshot['metrics']['top_level_standards']} |",
         "",
     ]
+    if runtime_warnings:
+        lines += ["### Data-quality warnings", ""] + [f"- {item}" for item in runtime_warnings] + [""]
     if warning_rows:
         lines += ["### Warnings", "", "| ID | Consecutive runs | State | Message |", "|---|---:|---|---|"]
         for row in warning_rows:
@@ -209,7 +211,14 @@ def main() -> int:
 
     errors: list[str] = []
     warning_messages: list[tuple[str, str]] = []
+    runtime_warnings: list[str] = []
     info: list[str] = []
+
+    shallow = is_shallow_repository()
+    if shallow:
+        runtime_warnings.append(
+            "Shallow repository detected. Structural checks remain valid, but block last_touched/30d/90d activity signals may be incomplete or misleading. Use a full clone or fetch full history before relying on activity metrics."
+        )
 
     required = [
         "START_HERE.md",
@@ -232,7 +241,7 @@ def main() -> int:
     block_index = texts.get("blocks/PROJECT_INDEX.md", "")
     router = texts.get("docs/ROUTER.md", "")
     block_entrypoints = sorted(ROOT.glob("blocks/**/BLOCK.md"))
-    missing_blocks: list[str] = []
+    missing_blocks = []
     for path in block_entrypoints:
         rel_dir = path.parent.relative_to(ROOT).as_posix().rstrip("/") + "/"
         if rel_dir not in block_index and f"{rel_dir}BLOCK.md" not in router:
@@ -243,7 +252,7 @@ def main() -> int:
 
     project_router = texts.get("projects/ROUTER.md", "")
     project_entrypoints = sorted(ROOT.glob("projects/*/PROJECT.md"))
-    missing_projects: list[str] = []
+    missing_projects = []
     for path in project_entrypoints:
         rel = path.relative_to(ROOT / "projects").as_posix()
         if rel not in project_router:
@@ -254,7 +263,7 @@ def main() -> int:
 
     skills_index = texts.get("skills/PROJECT_INDEX.md", "")
     skill_entrypoints = sorted(ROOT.glob("skills/**/SKILL.md"))
-    unindexed_skills: list[str] = []
+    unindexed_skills = []
     for path in skill_entrypoints:
         rel = path.relative_to(ROOT).as_posix()
         if rel not in skills_index and path.parent.relative_to(ROOT).as_posix() + "/" not in skills_index:
@@ -277,8 +286,7 @@ def main() -> int:
         dt = first_date(text)
         if dt is None:
             undated_candidates += 1
-            continue
-        if (now - dt).days > 120:
+        elif (now - dt).days > 120:
             aged_candidates.append(rel)
     info.append(f"Candidate artifacts detected: {candidate_count}; undated: {undated_candidates}")
     if aged_candidates:
@@ -287,23 +295,18 @@ def main() -> int:
 
     by_hash: dict[str, list[str]] = defaultdict(list)
     for rel, text in texts.items():
-        if not rel.startswith(CANONICAL_ROOTS):
-            continue
-        if rel.endswith("/README.md") or rel.endswith("PROJECT_INDEX.md"):
-            continue
-        digest = hashlib.sha256(normalize(text).encode("utf-8")).hexdigest()
-        by_hash[digest].append(rel)
+        if rel.startswith(CANONICAL_ROOTS) and not rel.endswith("/README.md") and not rel.endswith("PROJECT_INDEX.md"):
+            by_hash[hashlib.sha256(normalize(text).encode("utf-8")).hexdigest()].append(rel)
     duplicates = [rels for rels in by_hash.values() if len(rels) > 1]
     if duplicates:
         detail = "; ".join(" = ".join(group) for group in duplicates)
         warning_messages.append((warning_id("duplicate-markdown", detail), f"Exact/normalized duplicate canonical Markdown groups ({len(duplicates)}): {detail}"))
 
-    orphan_standards: list[str] = []
+    orphan_standards = []
     docs_standards = sorted((ROOT / "docs").glob("*_STANDARD.md"))
     for path in docs_standards:
         rel = path.relative_to(ROOT).as_posix()
-        text = texts.get(rel, "")
-        status = first_status(text)
+        status = first_status(texts.get(rel, ""))
         if is_retired_status(status):
             continue
         filename = path.name
@@ -330,15 +333,14 @@ def main() -> int:
     history = load_history()
     current_ids = {wid for wid, _ in warning_messages}
     persistence = consecutive_occurrences(history, current_ids)
-    warning_rows = [
-        {"id": wid, "message": message, "consecutive": persistence.get(wid, 1)}
-        for wid, message in warning_messages
-    ]
+    warning_rows = [{"id": wid, "message": message, "consecutive": persistence.get(wid, 1)} for wid, message in warning_messages]
 
     snapshot = {
-        "schema_version": 2,
+        "schema_version": 3,
         "recorded_at": now.isoformat(),
         "commit": git("rev-parse", "HEAD") or "unknown",
+        "git_history_shallow": shallow,
+        "activity_metrics_reliable": not shallow,
         "metrics": {
             "domain_blocks": len(block_entrypoints),
             "internal_projects": len(project_entrypoints),
@@ -353,6 +355,7 @@ def main() -> int:
         },
         "warning_ids": sorted(current_ids),
         "warnings": warning_rows,
+        "runtime_warnings": runtime_warnings,
         "block_usage": usage,
     }
 
@@ -360,17 +363,19 @@ def main() -> int:
     print("=========================")
     for row in info:
         print(f"INFO: {row}")
+    for row in runtime_warnings:
+        print(f"WARNING [shallow-history:general]: {row}")
     for row in warning_rows:
         state = "ACTION_REQUIRED" if row["consecutive"] >= PERSISTENCE_THRESHOLD else "WARNING"
         print(f"{state} [{row['id']}] consecutive={row['consecutive']}: {row['message']}")
     for row in errors:
         print(f"ERROR: {row}")
-    print("Block usage signals:")
+    print("Block usage signals:" + (" [UNRELIABLE: shallow history]" if shallow else ""))
     for row in sorted(usage, key=lambda item: (item["commits_90d"], item["path"])):
         print(f"  {row['path']} last_touched={row['last_touched'] or 'unknown'} commits_30d={row['commits_30d']} commits_90d={row['commits_90d']}")
     print(f"Summary: {len(errors)} error(s), {len(warning_rows)} warning(s), {snapshot['metrics']['persistent_warnings']} action-required signal(s)")
 
-    write_step_summary(snapshot, warning_rows, errors)
+    write_step_summary(snapshot, warning_rows, runtime_warnings, errors)
     if args.record_history:
         append_history(snapshot)
         print(f"History appended: {HISTORY_PATH.relative_to(ROOT).as_posix()}")
