@@ -1,4 +1,4 @@
-# Codex Handoff Standard v1
+# Codex Handoff Standard v2
 
 ## Purpose
 
@@ -85,6 +85,32 @@ Default behavior:
 4. provide the full packet in chat only when the owner explicitly asks for copy-paste text.
 
 The purpose is to reduce chat clutter while preserving complete execution context for the executor.
+
+## Hard Link-Only Owner Output Constraint
+
+This is a mandatory owner-interface rule, not a stylistic preference.
+
+When a reasoning model has created or updated a durable executor packet in GitHub or another registered durable transport, its normal owner-facing response must be link-only or link-plus-one-short-sentence.
+
+Do not paste the execution packet, acceptance criteria, command list, implementation plan, report template, or other long executor-facing material into owner chat when a durable link can carry it.
+
+A long pasted handoff in owner chat is considered a handoff-protocol failure unless one of these exceptions applies:
+
+- the owner explicitly asks for the full copy-paste packet;
+- no durable transport is available;
+- the link itself is insufficient because the owner must manually paste content into an environment that cannot open the transport.
+
+If none of those exceptions applies, create/update the durable packet first and return the direct link.
+
+Before sending an owner-facing executor handoff, perform this final check:
+
+```text
+Can the executor receive the complete task from one durable link?
+YES -> send the link, not the packet.
+NO  -> fix the durable transport or use an explicit exception.
+```
+
+This check applies to ChatGPT, reasoning models, reviewers, coordinators, secretaries, and any future owner-facing orchestration layer.
 
 ## Canonical One-Link Relay Workflow
 
