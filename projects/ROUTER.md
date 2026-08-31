@@ -25,6 +25,7 @@ A project may route onward through its own routers, registries, indexes, collect
 - Personal Secretary OS / personal secretary / secretary / assistant mode -> `personal-secretary-os/PROJECT.md`
 - Reels Factory MVP -> `reels-factory-mvp/PROJECT.md`
 - TikTok Research Sorter -> `tiktok-research-sorter/PROJECT.md`
+- Tusia / Tasha Hurley Weddings -> `tusia-tasha-hurley/PROJECT.md`
 - Циолковский / Есенин / Лермонтов archival research -> `tsiolkovsky-yesenin-lermontov-research/PROJECT.md`
 - Visitor Analytics Control Plane -> `visitor-analytics-control-plane/PROJECT.md`
 
