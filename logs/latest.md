@@ -5,6 +5,7 @@
 Marker: COMPLETE
 Task: Issue #132 — Pilot Archify on Project Execution OS
 Reply-Surface: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132
+Direct-comment: https://github.com/oleg3479881328-code/Project-Execution-OS/issues/132#issuecomment-5472267335
 Branch: codex/issue-132-archify-pilot
 Current state: Upstream Archify v2.16.0 launched in the working Codex environment; final validate, deliver, and visual-check passed. `visualReview: pending` remains owner-only. Commit `f0a1b30` and draft PR #134 are published.
 Artifacts: `docs/architecture/archify/`
