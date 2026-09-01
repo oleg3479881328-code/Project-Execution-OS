@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d20c37b6a2e5492ca4ddd553ab19d9cc74717b21",
-  "generated_at": "2026-08-31T19:19:56-04:00",
-  "artifact_count": 562,
+  "repository_commit": "d4c7043d0609a0ee4c5dc997675e3ab3e206c4f3",
+  "generated_at": "2026-09-01T12:35:03-04:00",
+  "artifact_count": 564,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7851,6 +7851,44 @@
       ]
     },
     {
+      "path": "docs/research/AWESOME_LLM_APPS_DONOR_AUDIT_2026-09-01.md",
+      "title": "Awesome LLM Apps — Donor Extraction Audit",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "REVIEWED EXTERNAL DONOR / SELECTIVE ADOPTION",
+      "date": "2026-09-01",
+      "sha256": "5b58a3d34ed005b1bfa538e769d39de5c3ed1bea689e5f1f4ab44ba98aaa298b",
+      "headings": [
+        "Awesome LLM Apps — Donor Extraction Audit",
+        "Purpose",
+        "Upstream evidence",
+        "Existing Project Execution OS baseline",
+        "Executive decision matrix",
+        "1. Advisor → Orchestrator → Worker: highest-value orchestration donor",
+        "PEOS adaptation",
+        "Trigger boundary",
+        "2. Worker isolation and self-contained packets",
+        "3. Verification ledger: adopt",
+        "4. Scope Creep Detector: strong pilot candidate",
+        "5. Commit Archaeologist: strong pilot candidate",
+        "6. Dependency Doctor: bounded pilot candidate",
+        "7. Self-Improving Agent Skills: extract the eval loop, not autonomous governance",
+        "8. Multi-MCP Agent Router: confirmation, not replacement",
+        "9. Shared memory: reject as canonical memory",
+        "10. Always-on agents and Release Radar",
+        "11. Context optimization: benchmark before adoption",
+        "12. RAG and Chat-with-X recipes",
+        "13. Skill quality bar worth importing conceptually",
+        "Rejected / not-now items",
+        "Priority queue",
+        "P0 — immediately useful donor patterns",
+        "P1 — bounded executable pilots",
+        "P2 — benchmark/research",
+        "Integration policy",
+        "Final conclusion"
+      ]
+    },
+    {
       "path": "docs/research/CODEX_APP_SERVER_VS_DEEPSEEK_HARNESS_MATRIX_2026-08-29.md",
       "title": "Codex App Server vs DeepSeek Harness — Execution-Plane Matrix — 2026-08-29",
       "type": "system-standard",
@@ -8480,6 +8518,26 @@
         "Reliability Rule",
         "Operational Note",
         "Sources / Traceability"
+      ]
+    },
+    {
+      "path": "knowledge-library/verified-technical-solutions/awesome-llm-apps-donor-2026-09-01.md",
+      "title": "Awesome LLM Apps — reviewed donor catalog",
+      "type": "knowledge-entry",
+      "domain": "knowledge:verified-technical-solutions",
+      "status": "VERIFIED EXTERNAL DONOR / SELECTIVE REUSE",
+      "date": null,
+      "sha256": "04ea0242c463e8c97d083b004fe0bef0c5bbe5760f77b2f77940a066ae894250",
+      "headings": [
+        "Awesome LLM Apps — reviewed donor catalog",
+        "Existing Solution First rule",
+        "Highest-value reviewed donor patterns",
+        "Executable pilot candidates",
+        "Explicit non-adoptions",
+        "Skill quality bar extracted",
+        "Architecture boundary",
+        "License note",
+        "Maintenance rule"
       ]
     },
     {
