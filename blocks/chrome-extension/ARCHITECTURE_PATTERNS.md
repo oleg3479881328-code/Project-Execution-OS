@@ -127,7 +127,8 @@ Use when the extension is for the owner's internal workflow, not public release.
 
 Typical parts:
 
-- minimal UI;
+- persistent Chrome Side Panel by default when the tool has multiple controls, progress, results, or long-running state;
+- toolbar popup only for tiny one-action utilities;
 - strict domain allowlist;
 - local configuration;
 - no public monetization;
@@ -137,7 +138,33 @@ Good for:
 
 - internal QA;
 - browser workflow shortcuts;
-- controlled operator tools.
+- controlled operator tools;
+- collectors/research tools that stay open while the user navigates the target site.
+
+### Owner UI default — Project Execution OS
+
+For persistent internal operator extensions, reuse the established Side Panel visual language instead of inventing a new black/white utility UI.
+
+Canonical donor:
+
+`projects/tiktok-research-sorter/entrypoints/sidepanel/`
+
+Visual DNA:
+
+- graphite / radial dark background;
+- translucent dark panels;
+- purple → magenta primary actions;
+- teal progress and link accents;
+- compact Inter/system typography;
+- 12–14 px panel radii;
+- colored status chips and visible progress.
+
+Implementation baseline:
+
+- Manifest V3 `side_panel.default_path`;
+- `sidePanel` permission;
+- `chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })`;
+- no `action.default_popup` for this pattern.
 
 ## Final Rule
 
