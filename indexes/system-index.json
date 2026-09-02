@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "d4c7043d0609a0ee4c5dc997675e3ab3e206c4f3",
-  "generated_at": "2026-09-01T12:35:03-04:00",
+  "repository_commit": "71054e1efc97b075016a9a2d0e11716f7d6bcebe",
+  "generated_at": "2026-09-02T19:21:29-04:00",
   "artifact_count": 564,
   "artifacts": [
     {
@@ -558,7 +558,7 @@
       "domain": "chrome-extension",
       "status": null,
       "date": null,
-      "sha256": "6472b4042d597004f2cb456ea48150a947bf57d044a89539f06192481cd819a8",
+      "sha256": "422f747d63f35cd4825f98676bac9d089a2cc8c3862e097e40d474357c424e2a",
       "headings": [
         "Chrome Extension Architecture Patterns",
         "Purpose",
@@ -568,6 +568,7 @@
         "Pattern 4 — AI Extension",
         "Pattern 5 — Affiliate or Commerce Helper",
         "Pattern 6 — Internal Operator Extension",
+        "Owner UI default — Project Execution OS",
         "Final Rule"
       ]
     },
