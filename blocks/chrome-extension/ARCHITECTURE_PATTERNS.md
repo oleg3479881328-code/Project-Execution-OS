@@ -166,6 +166,18 @@ Implementation baseline:
 - `chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })`;
 - no `action.default_popup` for this pattern.
 
+### Visible version rule
+
+For owner-operated extensions, the installed build version must be visible immediately in the primary UI.
+
+- show `vX.Y.Z` prominently in the Side Panel header, next to status;
+- read it dynamically from `chrome.runtime.getManifest().version`;
+- do not rely on a tiny footer-only version label;
+- show the same manifest-derived version on secondary Results/History surfaces when present;
+- toolbar action title may include the version as an additional check.
+
+This prevents confusion during rapid unpacked-extension iteration and live acceptance testing.
+
 ## Final Rule
 
 Choose the architecture pattern before choosing libraries. The product surface determines the stack, permissions, backend need, and compliance path.
