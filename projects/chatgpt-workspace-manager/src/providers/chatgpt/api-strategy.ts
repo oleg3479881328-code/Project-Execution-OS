@@ -27,6 +27,12 @@ interface RawConversation {
   conversation_origin?: unknown;
 }
 
+interface RawMessageContent {
+  content_type?: string;
+  parts?: unknown[];
+  text?: string;
+}
+
 interface RawMessageNode {
   id?: string;
   parent?: string | null;
@@ -36,11 +42,7 @@ interface RawMessageNode {
     author?: { role?: string };
     create_time?: number;
     metadata?: Record<string, unknown>;
-    content?: {
-      content_type?: string;
-      parts?: unknown[];
-      text?: string;
-    };
+    content?: RawMessageContent;
   } | null;
 }
 
@@ -204,7 +206,7 @@ function normalizeRole(role?: string): CanonicalMessage['role'] {
   return 'other';
 }
 
-function extractText(content?: RawMessageNode['message'] extends infer M ? M extends { content?: infer C } ? C : never : never): string {
+function extractText(content?: RawMessageContent): string {
   if (!content) return '';
   if (typeof content.text === 'string') return content.text;
   if (!Array.isArray(content.parts)) return '';
