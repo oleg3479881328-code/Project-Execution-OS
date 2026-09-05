@@ -36,6 +36,7 @@ export default function App() {
   const [capabilities, setCapabilities] = useState<CapabilityHealth[]>([]);
   const [syncing, setSyncing] = useState(false);
   const [hydrating, setHydrating] = useState(false);
+  const [offlineMode, setOfflineMode] = useState(false);
   const [status, setStatus] = useState('Cached workspace ready');
   const [error, setError] = useState<string | null>(null);
 
@@ -55,8 +56,10 @@ export default function App() {
   async function initialize() {
     try {
       await db.open();
+      const savedOfflineMode = (await getSetting<boolean>('offlineMode')) ?? false;
+      setOfflineMode(savedOfflineMode);
       await loadWorkspace('');
-      await runHealth();
+      await runHealth(false, savedOfflineMode);
     } catch (cause) {
       setError(readableError(cause));
     }
@@ -72,6 +75,23 @@ export default function App() {
   }
 
   async function syncMetadata() {
+    if (offlineMode) {
+      setError(null);
+      setStatus('Offline test mode — cached workspace preserved; live sync intentionally blocked');
+      await recordCapabilities([
+        {
+          capability: 'list-conversations',
+          status: 'unavailable',
+          strategy: 'local',
+          checkedAt: Date.now(),
+          message: 'Intentionally blocked by Offline test mode.',
+          diagnosticCode: 'OFFLINE_TEST_MODE'
+        }
+      ]);
+      setCapabilities(await latestCapabilities());
+      return;
+    }
+
     setSyncing(true);
     setError(null);
     setStatus('Syncing ChatGPT metadata…');
@@ -126,7 +146,13 @@ export default function App() {
     const cached = await getConversationMessages(conversation.id);
     if (cached.length > 0) {
       setMessages(cached);
-      setStatus('Preview loaded from local cache');
+      setStatus(offlineMode ? 'Offline test: preview loaded from local cache' : 'Preview loaded from local cache');
+      return;
+    }
+
+    if (offlineMode) {
+      setStatus('Offline test: selected conversation has no local message cache');
+      setError('Live hydration is intentionally disabled while Offline test mode is on.');
       return;
     }
 
@@ -186,7 +212,16 @@ export default function App() {
     setStatus('Note saved locally');
   }
 
-  async function runHealth(switchTab = false) {
+  async function toggleOfflineMode() {
+    const next = !offlineMode;
+    setOfflineMode(next);
+    await setSetting('offlineMode', next);
+    setError(null);
+    setStatus(next ? 'Offline test mode enabled — live ChatGPT access blocked by the extension' : 'Offline test mode disabled — live ChatGPT access restored');
+    await runHealth(false, next);
+  }
+
+  async function runHealth(switchTab = false, forceOffline = offlineMode) {
     const checkedAt = Date.now();
     const local: CapabilityHealth[] = [];
     try {
@@ -206,7 +241,43 @@ export default function App() {
       local.push({ capability: 'local-search', status: 'unavailable', strategy: 'local', checkedAt });
     }
 
-    const remote = await chatGPTAdapter.health();
+    const remote: CapabilityHealth[] = forceOffline
+      ? [
+          {
+            capability: 'chatgpt-tab',
+            status: 'unknown',
+            strategy: 'local',
+            checkedAt,
+            message: 'Skipped by Offline test mode.',
+            diagnosticCode: 'OFFLINE_TEST_MODE'
+          },
+          {
+            capability: 'session',
+            status: 'unavailable',
+            strategy: 'local',
+            checkedAt,
+            message: 'Intentionally blocked by Offline test mode.',
+            diagnosticCode: 'OFFLINE_TEST_MODE'
+          },
+          {
+            capability: 'list-conversations',
+            status: 'unavailable',
+            strategy: 'local',
+            checkedAt,
+            message: 'Intentionally blocked by Offline test mode.',
+            diagnosticCode: 'OFFLINE_TEST_MODE'
+          },
+          {
+            capability: 'read-conversation',
+            status: 'unavailable',
+            strategy: 'local',
+            checkedAt,
+            message: 'Live reads blocked; cached previews remain available.',
+            diagnosticCode: 'OFFLINE_TEST_MODE'
+          }
+        ]
+      : await chatGPTAdapter.health();
+
     const merged = [...local, ...remote];
     await recordCapabilities(merged);
     const latest = await latestCapabilities();
@@ -275,14 +346,14 @@ export default function App() {
               placeholder="Search local titles…"
               aria-label="Search conversations"
             />
-            <button className="primary" disabled={syncing} onClick={() => void syncMetadata()}>
-              {syncing ? 'Syncing…' : 'Sync'}
+            <button className="primary" disabled={syncing || offlineMode} onClick={() => void syncMetadata()}>
+              {offlineMode ? 'Offline' : syncing ? 'Syncing…' : 'Sync'}
             </button>
           </div>
 
           <div className="summary-row">
             <span>{conversations.length} local conversations</span>
-            <span>DB v{DB_SCHEMA_VERSION}</span>
+            <span>{offlineMode ? 'OFFLINE TEST' : `DB v${DB_SCHEMA_VERSION}`}</span>
           </div>
 
           <div className="workspace-grid">
@@ -377,6 +448,7 @@ export default function App() {
             <button className="primary" onClick={() => void runHealth()}>
               Run checks
             </button>
+            <button onClick={() => void toggleOfflineMode()}>{offlineMode ? 'Disable offline test' : 'Enable offline test'}</button>
             <button onClick={() => void exportDiagnostics()}>Export diagnostics</button>
           </div>
           <div className="health-list">
@@ -393,7 +465,9 @@ export default function App() {
             ))}
           </div>
           <div className="diagnostic-footnote">
-            Diagnostics exclude conversation titles and message content by default.
+            {offlineMode
+              ? 'Offline test mode blocks live ChatGPT calls inside the extension; local cache remains active.'
+              : 'Diagnostics exclude conversation titles and message content by default.'}
           </div>
         </section>
       )}
