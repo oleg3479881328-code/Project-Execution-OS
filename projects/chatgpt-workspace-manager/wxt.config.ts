@@ -5,7 +5,7 @@ export default defineConfig({
   manifest: {
     name: 'ChatGPT Workspace Manager',
     description: 'Private local-first control center for managing ChatGPT conversations.',
-    version: '0.1.2',
+    version: '0.1.3',
     permissions: ['storage', 'sidePanel', 'activeTab', 'scripting'],
     host_permissions: ['https://chatgpt.com/*', 'https://chat.openai.com/*'],
     side_panel: {
