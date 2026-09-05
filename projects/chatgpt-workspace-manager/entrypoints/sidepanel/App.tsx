@@ -1,3 +1,4 @@
+import { browser } from '#imports';
 import { useEffect, useMemo, useState } from 'react';
 import {
   DB_SCHEMA_VERSION,
@@ -86,10 +87,31 @@ export default function App() {
       await loadWorkspace(query);
       setStatus(`Synced ${upserted} conversations`);
       await runHealth(false);
+      await recordCapabilities([
+        {
+          capability: 'list-conversations',
+          status: 'healthy',
+          strategy: 'live-api',
+          checkedAt: Date.now(),
+          message: `Validated by successful metadata sync (${upserted} conversations).`
+        }
+      ]);
+      setCapabilities(await latestCapabilities());
     } catch (cause) {
       setError(readableError(cause));
       setStatus('Live sync unavailable — cached workspace preserved');
       await runHealth(false);
+      await recordCapabilities([
+        {
+          capability: 'list-conversations',
+          status: 'unavailable',
+          strategy: 'live-api',
+          checkedAt: Date.now(),
+          message: readableError(cause),
+          diagnosticCode: errorCode(cause)
+        }
+      ]);
+      setCapabilities(await latestCapabilities());
     } finally {
       setSyncing(false);
     }
@@ -112,8 +134,9 @@ export default function App() {
     setStatus('Hydrating selected conversation…');
     try {
       const detail = await chatGPTAdapter.readConversation(conversation.id);
+      const { owner: _owner, ...providerConversation } = conversation;
       await db.conversations.put({
-        ...conversation,
+        ...providerConversation,
         ...detail.conversation,
         contentHydrated: true,
         lastHydratedAt: Date.now()
@@ -131,6 +154,7 @@ export default function App() {
           message: 'Validated by successful on-demand preview.'
         }
       ]);
+      setCapabilities(await latestCapabilities());
     } catch (cause) {
       setError(readableError(cause));
       setStatus('Preview unavailable — local metadata remains available');
@@ -144,6 +168,7 @@ export default function App() {
           diagnosticCode: errorCode(cause)
         }
       ]);
+      setCapabilities(await latestCapabilities());
     } finally {
       setHydrating(false);
     }
@@ -289,7 +314,7 @@ export default function App() {
                     <div className="conversation-meta">
                       <span>{formatTime(conversation.updatedAt)}</span>
                       {conversation.archived && <span className="chip">Archived</span>}
-                      {conversation.nativeProjectId && <span className="chip">Project</span>}
+                      {conversation.nativeProjectId && <span className="chip">Context</span>}
                       {conversation.owner.note && <span className="chip accent">Note</span>}
                     </div>
                   </button>
