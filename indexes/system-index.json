@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f571b08e4bf4fe2e2879eb4132c60eae0486937d",
-  "generated_at": "2026-09-03T07:31:44-04:00",
-  "artifact_count": 564,
+  "repository_commit": "9e6e62eefd01bf4fa5652f67310d69bdb8e3b8ec",
+  "generated_at": "2026-09-05T07:35:08-04:00",
+  "artifact_count": 565,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8418,6 +8418,30 @@
         "Why This Exists",
         "When to Use",
         "When Not to Use"
+      ]
+    },
+    {
+      "path": "knowledge-library/patterns/x-ranking-engagement-signal-interpretation-2026-09.md",
+      "title": "Pattern — X Ranking Engagement Signal Interpretation (2026-09)",
+      "type": "knowledge-entry",
+      "domain": "knowledge:patterns",
+      "status": null,
+      "date": null,
+      "sha256": "1401e663b63770421384fd81bbe111aa9718d9ac804a545568866bb73b9eeb5c",
+      "headings": [
+        "Pattern — X Ranking Engagement Signal Interpretation (2026-09)",
+        "Status",
+        "Captured",
+        "Type",
+        "Source / Evidence",
+        "Verified Weights In The Inspected X Configuration",
+        "Critical Interpretation Rule",
+        "Reusable Marketing Pattern",
+        "Applies To",
+        "Triggers",
+        "Do Not Load When",
+        "Risks / Validation",
+        "Review Status"
       ]
     },
     {
