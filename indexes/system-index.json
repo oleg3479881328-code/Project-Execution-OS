@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7ada3f61d81eb41a2ecfae6ed7e1b2c52c125294",
-  "generated_at": "2026-09-05T09:51:26-04:00",
-  "artifact_count": 569,
+  "repository_commit": "641d1050cbf0c2fa860550f4b6b054e10bb62214",
+  "generated_at": "2026-09-05T09:52:11-04:00",
+  "artifact_count": 570,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10350,6 +10350,47 @@
         "Task packet",
         "Expected output",
         "MVP acceptance test"
+      ]
+    },
+    {
+      "path": "projects/chatgpt-workspace-manager/CODEX_HANDOFF_SLICE_1.md",
+      "title": "Codex Handoff — ChatGPT Workspace Manager — Slice 1",
+      "type": "project-artifact",
+      "domain": "chatgpt-workspace-manager",
+      "status": null,
+      "date": null,
+      "sha256": "de1979d27997291500477dbdf01dcdc18ce57b1e441779349731d31d9b6d9bbd",
+      "headings": [
+        "Codex Handoff — ChatGPT Workspace Manager — Slice 1",
+        "Objective",
+        "Canonical Inputs",
+        "Scope",
+        "Explicit Non-Scope",
+        "Architecture Contract",
+        "Canonical Data",
+        "Sync Behavior",
+        "Metadata sync",
+        "Content hydration",
+        "Capability Health",
+        "Donor Use",
+        "Internal UI donor",
+        "fineanmol/chatgpt-bulk-delete-manager",
+        "world-wide-dev/chatgpt-export",
+        "Threadline / personal-ai-memory",
+        "Permissions",
+        "Local-First Runtime Rules",
+        "UI Requirements",
+        "Workspace",
+        "Health",
+        "Diagnostics Export",
+        "Tests",
+        "Unit tests required",
+        "Integration tests required where feasible",
+        "Real browser acceptance",
+        "Acceptance Criteria",
+        "Rollback / Safety",
+        "Required Deliverables",
+        "Stop Condition"
       ]
     },
     {
