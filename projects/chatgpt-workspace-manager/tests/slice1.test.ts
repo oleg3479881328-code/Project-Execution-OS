@@ -3,6 +3,8 @@ import {
   DB_SCHEMA_VERSION,
   db,
   getWorkspaceConversations,
+  latestCapabilities,
+  recordCapabilities,
   updateOwnerMetadata,
   upsertConversationMetadata
 } from '../src/core/db';
@@ -70,6 +72,53 @@ describe('Slice 1 canonicalization and local workspace', () => {
     const result = await getWorkspaceConversations('vercel');
     expect(result).toHaveLength(1);
     expect(result[0]?.id).toBe('a');
+  });
+
+  it('preserves the last validated capability result when a later passive check is unknown', async () => {
+    await recordCapabilities([
+      {
+        capability: 'read-conversation',
+        status: 'healthy',
+        strategy: 'live-api',
+        checkedAt: 100,
+        message: 'Validated by successful preview.'
+      },
+      {
+        capability: 'read-conversation',
+        status: 'unknown',
+        strategy: 'live-api',
+        checkedAt: 200,
+        message: 'Passive health check cannot validate a read.'
+      }
+    ]);
+
+    const latest = await latestCapabilities();
+    const read = latest.find((item) => item.capability === 'read-conversation');
+    expect(read?.status).toBe('healthy');
+    expect(read?.checkedAt).toBe(100);
+  });
+
+  it('uses a newer explicit unavailable result instead of an older healthy result', async () => {
+    await recordCapabilities([
+      {
+        capability: 'list-conversations',
+        status: 'healthy',
+        strategy: 'live-api',
+        checkedAt: 100
+      },
+      {
+        capability: 'list-conversations',
+        status: 'unavailable',
+        strategy: 'live-api',
+        checkedAt: 200,
+        diagnosticCode: 'LIST_HTTP_500'
+      }
+    ]);
+
+    const latest = await latestCapabilities();
+    const list = latest.find((item) => item.capability === 'list-conversations');
+    expect(list?.status).toBe('unavailable');
+    expect(list?.diagnosticCode).toBe('LIST_HTTP_500');
   });
 
   it('sanitizes bearer tokens and JWT-like strings from diagnostics errors', () => {
