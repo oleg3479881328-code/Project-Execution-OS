@@ -8,7 +8,7 @@ import type { ChatGPTBridgeRequest, ChatGPTBridgeResponse } from './protocol';
 import { CHATGPT_ADAPTER_VERSION } from './api-strategy';
 
 const CHATGPT_URL_PATTERNS = ['https://chatgpt.com/*', 'https://chat.openai.com/*'];
-const CONTENT_SCRIPT_PATH = 'content-scripts/content.js';
+const CONTENT_SCRIPT_PATH = '/content-scripts/content.js';
 
 type BrowserTab = {
   id?: number;
