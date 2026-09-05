@@ -8,6 +8,8 @@
 
 Architecture review completed and accepted for implementation as a private, unpacked owner-operated Chrome extension.
 
+Architecture package and Slice 1 implementation handoff are committed.
+
 ## Decisions Frozen
 
 - Product is a personal ChatGPT control center, not a Chrome Web Store product.
@@ -51,6 +53,7 @@ Secondary donors:
 - `PROJECT.md` — project purpose, frozen architecture and acceptance gate.
 - `DONOR_CAPABILITY_MATRIX.md` — donor selection and reuse boundaries.
 - `TECHNICAL_ARCHITECTURE.md` — canonical contracts, DB, adapter, sync, bulk engine, health harness, tests and first implementation slice.
+- `CODEX_HANDOFF_SLICE_1.md` — bounded implementation contract for the first non-destructive vertical slice.
 
 ## First Implementation Slice
 
@@ -75,4 +78,4 @@ Do not begin archive/delete implementation until Slice 1 passes real-browser beh
 
 ## Next Action
 
-Prepare a bounded Codex implementation handoff for Slice 1, using the frozen architecture and donor matrix. Before coding, inspect exact donor files needed for the slice and record licenses/commit references for any reused code.
+Execute `CODEX_HANDOFF_SLICE_1.md`. After Slice 1 is implemented, perform real-browser acceptance and review before Slice 2.
