@@ -8,11 +8,11 @@
 
 Architecture accepted and Slice 1 implemented as a private, unpacked owner-operated Chrome extension.
 
-Machine validation is green for v0.1.1:
+Machine validation is green for v0.1.2:
 
 - dependency install: PASS;
 - TypeScript: PASS;
-- unit tests: PASS;
+- 7 unit tests: PASS;
 - WXT production build: PASS;
 - unpacked artifact upload: PASS.
 
@@ -100,6 +100,36 @@ This validates the intended authority split for these fields:
 
 `ChatGPT platform metadata != owner-local favorite/note metadata`.
 
+### Health screen evidence bookkeeping — BUG FOUND IN v0.1.1
+
+Browser evidence on 2026-09-05:
+
+- `session`, `chatgpt-tab`, `local-search`, and `local-db` rendered HEALTHY;
+- `list-conversations` and `read-conversation` incorrectly rendered UNKNOWN even though live sync and real conversation hydration had already succeeded;
+- status line showed `Preview loaded from local cache`, confirming cached preview path was active.
+
+Root cause:
+
+- successful sync/read explicitly stored HEALTHY capability evidence;
+- a later passive Health check stored newer UNKNOWN records for operations it did not actively re-run;
+- `latestCapabilities()` selected only the newest record, so UNKNOWN masked prior validated HEALTHY evidence.
+
+### v0.1.2 Health + offline acceptance fix
+
+Implemented and machine-validated:
+
+- `latestCapabilities()` now preserves the latest validated non-UNKNOWN result when a newer passive record is only UNKNOWN;
+- newer explicit HEALTHY/DEGRADED/UNAVAILABLE results still supersede older evidence;
+- added unit coverage for both evidence-retention and explicit-failure precedence;
+- added persistent `Offline test` mode in the Health panel;
+- Offline test intentionally blocks live ChatGPT calls inside the extension without disabling the browser's network connection;
+- cached Workspace list/search/favorites/notes remain available;
+- already hydrated conversations can be opened from IndexedDB while offline mode is enabled;
+- uncached conversations clearly report that live hydration is intentionally disabled;
+- Health reports `OFFLINE_TEST_MODE` for live capabilities while local DB/search continue to be checked normally.
+
+This creates a controlled acceptance test for the local-first contract without requiring the owner to disconnect the computer or interrupt the active ChatGPT session.
+
 ## Decisions Frozen
 
 - Product is a personal ChatGPT control center, not a Chrome Web Store product.
@@ -159,14 +189,20 @@ Secondary donors:
 10. Health panel;
 11. diagnostics export;
 12. self-healing content bridge in v0.1.1;
-13. no destructive actions yet.
+13. evidence-aware Health bookkeeping in v0.1.2;
+14. controlled Offline test mode in v0.1.2;
+15. no destructive actions yet.
 
 ## Acceptance Boundary
 
-Do not begin archive/delete implementation until the remaining Slice 1 browser checks pass and adapter failure is demonstrated not to break cached workspace browsing.
+Do not begin archive/delete implementation until v0.1.2 passes the final browser checks below.
 
 ## Next Browser Checks
 
-1. Open Health and verify session/list/read/local-db capabilities.
-2. Verify cached workspace remains browsable if live access is temporarily unavailable.
-3. After these pass, close Slice 1 and review Slice 2.
+1. Install v0.1.2 and open Health; verify previously proven list/read capabilities no longer fall back to UNKNOWN after Run checks.
+2. Enable Offline test.
+3. Return to Workspace and verify all 1051 cached metadata records remain searchable/browsable.
+4. Open `ChatGPT Workspace Manager` or `Домен Vercel обсудить` and verify cached messages load while Offline test is enabled.
+5. Verify favorite/note remain available in Offline test.
+6. Disable Offline test and verify normal live access resumes.
+7. After these pass, close Slice 1 and review Slice 2.
