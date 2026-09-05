@@ -79,9 +79,26 @@ Browser evidence on 2026-09-05:
 - non-text/tool content was preserved safely as a placeholder rather than crashing preview;
 - the rest of the 1051-conversation local Workspace remained available while the long conversation rendered.
 
-This confirms the second-stage sync path works on a large real conversation:
+A second conversation (`Домен Vercel обсудить`) also hydrated successfully with 15 messages, confirming repeated select/read/hydrate behavior across multiple conversations.
+
+This confirms the second-stage sync path works on real conversations:
 
 `local metadata record -> select -> ChatGPT read API -> message normalization -> IndexedDB message cache -> Side Panel preview`.
+
+### Owner favorite + local note persistence — PASS
+
+Browser evidence on 2026-09-05:
+
+- marked `ChatGPT Workspace Manager` as favorite;
+- saved a local note on that conversation;
+- switched selection to another conversation;
+- the original conversation remained visibly starred in the Workspace list;
+- the `Note` chip remained visible after selection changed;
+- therefore owner metadata persisted independently of the selected provider record and survived normal UI navigation.
+
+This validates the intended authority split for these fields:
+
+`ChatGPT platform metadata != owner-local favorite/note metadata`.
 
 ## Decisions Frozen
 
@@ -150,8 +167,6 @@ Do not begin archive/delete implementation until the remaining Slice 1 browser c
 
 ## Next Browser Checks
 
-1. Mark a conversation favorite and verify persistence.
-2. Save a local note and verify persistence after reselect/reload.
-3. Open Health and verify session/list/read/local-db capabilities.
-4. Verify cached workspace remains browsable if live access is temporarily unavailable.
-5. After these pass, close Slice 1 and review Slice 2.
+1. Open Health and verify session/list/read/local-db capabilities.
+2. Verify cached workspace remains browsable if live access is temporarily unavailable.
+3. After these pass, close Slice 1 and review Slice 2.
