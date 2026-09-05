@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "dca7080981a3a00076564e6f8ee50ce14498a1bf",
-  "generated_at": "2026-09-05T14:10:12-04:00",
+  "repository_commit": "6b18958b847f2ba1ce8f1978071eda6c9244af65",
+  "generated_at": "2026-09-05T14:18:06-04:00",
   "artifact_count": 574,
   "artifacts": [
     {
@@ -10613,18 +10613,21 @@
       "domain": "chatgpt-workspace-manager",
       "status": null,
       "date": null,
-      "sha256": "32e086e909fece97edb1156586257bd98c7f371eaec907169a2ea22fdd9a8132",
+      "sha256": "1487987075c94e5c94134473f00cade6fe134e0fdbafd462c88479306551a584",
       "headings": [
         "ChatGPT Workspace Manager — Latest State",
         "Date",
         "Current Status",
-        "First Browser Finding",
+        "Browser Acceptance Milestones",
+        "v0.1.0 bridge failure",
+        "v0.1.1 self-heal fix",
+        "Live metadata sync — PASS",
         "Decisions Frozen",
         "Donor Conclusions",
         "Architecture Files",
         "Slice 1 Implemented",
         "Acceptance Boundary",
-        "Next Action"
+        "Next Browser Checks"
       ]
     },
     {
