@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2d3cd7d128abffbd8326d1aab7671b4e7c958621",
-  "generated_at": "2026-09-05T12:23:12-04:00",
-  "artifact_count": 571,
+  "repository_commit": "94e2f8bfac3176b0b8ff74e1fff6c1fc3fcf7759",
+  "generated_at": "2026-09-05T12:24:34-04:00",
+  "artifact_count": 572,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8568,6 +8568,26 @@
         "Reliability Rule",
         "Operational Note",
         "Sources / Traceability"
+      ]
+    },
+    {
+      "path": "knowledge-library/research-methods/youtube-transcript-intake-whisper-transcribe-ai-2026-09.md",
+      "title": "YouTube Transcript Intake via Whisper Transcribe AI",
+      "type": "knowledge-entry",
+      "domain": "knowledge:research-methods",
+      "status": "reusable research method / pilot-verified integration",
+      "date": "2026-09-05",
+      "sha256": "84d8f173849ce80dc6fd5330376ca61053c4783ca89150920385eeea1376fc0f",
+      "headings": [
+        "YouTube Transcript Intake via Whisper Transcribe AI",
+        "Finding",
+        "Why This Matters Across Projects",
+        "Pilot Evidence",
+        "Critical Limitation Found",
+        "Recommended Research Routing",
+        "Reuse Decision",
+        "Related System Nodes",
+        "Final Rule"
       ]
     },
     {
