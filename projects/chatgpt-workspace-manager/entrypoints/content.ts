@@ -1,4 +1,4 @@
-import { defineContentScript } from 'wxt/sandbox';
+import { browser, defineContentScript } from '#imports';
 import {
   fetchAccessToken,
   listAllConversations,
