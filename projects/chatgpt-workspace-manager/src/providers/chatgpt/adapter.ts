@@ -8,6 +8,7 @@ import type { ChatGPTBridgeRequest, ChatGPTBridgeResponse } from './protocol';
 import { CHATGPT_ADAPTER_VERSION } from './api-strategy';
 
 const CHATGPT_URL_PATTERNS = ['https://chatgpt.com/*', 'https://chat.openai.com/*'];
+const CONTENT_SCRIPT_PATH = 'content-scripts/content.js';
 
 type BrowserTab = {
   id?: number;
@@ -81,14 +82,55 @@ async function send(tabId: number, request: ChatGPTBridgeRequest): Promise<ChatG
     return (await browser.tabs.sendMessage(tabId, request)) as ChatGPTBridgeResponse;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
+    if (!isMissingBridgeError(message)) {
+      return bridgeFailure(message, 'CHATGPT_BRIDGE_ERROR');
+    }
+
+    const injected = await injectContentBridge(tabId);
+    if (!injected.ok) return injected.response;
+
+    try {
+      await sleep(50);
+      return (await browser.tabs.sendMessage(tabId, request)) as ChatGPTBridgeResponse;
+    } catch (retryError) {
+      const retryMessage = retryError instanceof Error ? retryError.message : String(retryError);
+      return bridgeFailure(retryMessage, 'CHATGPT_CONTENT_BRIDGE_RETRY_FAILED');
+    }
+  }
+}
+
+async function injectContentBridge(
+  tabId: number
+): Promise<{ ok: true } | { ok: false; response: ChatGPTBridgeResponse }> {
+  try {
+    await browser.scripting.executeScript({
+      target: { tabId },
+      files: [CONTENT_SCRIPT_PATH]
+    });
+    return { ok: true };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     return {
       ok: false,
-      error: message.slice(0, 500),
-      diagnosticCode: message.includes('Receiving end does not exist')
-        ? 'CHATGPT_CONTENT_BRIDGE_MISSING'
-        : 'CHATGPT_BRIDGE_ERROR'
+      response: bridgeFailure(message, 'CHATGPT_CONTENT_BRIDGE_INJECTION_FAILED')
     };
   }
+}
+
+function bridgeFailure(message: string, diagnosticCode: string): ChatGPTBridgeResponse {
+  return {
+    ok: false,
+    error: message.slice(0, 500),
+    diagnosticCode
+  };
+}
+
+function isMissingBridgeError(message: string): boolean {
+  return message.includes('Receiving end does not exist') || message.includes('Could not establish connection');
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function requireChatGPTTab(): Promise<BrowserTab> {
