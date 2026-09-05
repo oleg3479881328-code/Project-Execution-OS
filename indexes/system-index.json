@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6d0f42db357f59599fd08597f0fd4bc03551b0a1",
-  "generated_at": "2026-09-05T09:49:34-04:00",
-  "artifact_count": 566,
+  "repository_commit": "411215efd3d2e89f42b2ec4e1fc3098d5dac5190",
+  "generated_at": "2026-09-05T09:50:11-04:00",
+  "artifact_count": 567,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10350,6 +10350,37 @@
         "Task packet",
         "Expected output",
         "MVP acceptance test"
+      ]
+    },
+    {
+      "path": "projects/chatgpt-workspace-manager/DONOR_CAPABILITY_MATRIX.md",
+      "title": "ChatGPT Workspace Manager — Donor Capability Matrix",
+      "type": "project-artifact",
+      "domain": "chatgpt-workspace-manager",
+      "status": null,
+      "date": null,
+      "sha256": "64b3006f220105b161d343640a0af5ecc137c318436468ac102dc44fd4ad428b",
+      "headings": [
+        "ChatGPT Workspace Manager — Donor Capability Matrix",
+        "Purpose",
+        "Selection Criteria",
+        "Matrix",
+        "Strongest Donors",
+        "1. Internal Side Panel donor",
+        "2. fineanmol/chatgpt-bulk-delete-manager",
+        "3. world-wide-dev/chatgpt-export",
+        "4. Threadline + personal-ai-memory",
+        "5. OwlCt/ChatGPT-Export",
+        "Reference-only Donors",
+        "qcrao/bulk-delete-chatGPT",
+        "Superpower / AI Toolbox / Simple Folder",
+        "Rejected Approaches",
+        "Fork one donor and expand it",
+        "Make the private ChatGPT API the core data model",
+        "DOM-only architecture",
+        "Proposed Capability Ownership",
+        "Donor Gate Before Code Copy",
+        "Current Decision"
       ]
     },
     {
