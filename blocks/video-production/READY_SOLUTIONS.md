@@ -72,6 +72,31 @@ Use when:
 
 ## Transcription / Captions
 
+### Whisper Transcribe AI — connected ChatGPT integration
+
+Use as an Existing-Solution-First connected path when:
+
+- a YouTube URL needs to be turned into transcript text for research or analysis;
+- direct YouTube transcript access is unavailable, blocked, or throttled;
+- an uploaded audio/video file needs convenient external transcription;
+- timestamped transcript/subtitle data is useful inside the ChatGPT workflow.
+
+Verified on 2026-09-05:
+
+- connected provider accepted a YouTube URL directly;
+- job processing and completed-result retrieval worked;
+- returned transcript text, paragraph timestamps, subtitle entries, language field, and media duration.
+
+Validation boundary:
+
+- first test reported a 558-second video but returned transcript coverage only to about 60 seconds;
+- always compare transcript coverage against media duration before treating the transcript as complete;
+- do not summarize a partial transcript as if it represented the entire source.
+
+Canonical integration note:
+
+`docs/integrations/whisper-transcribe-ai/README.md`
+
 ### Whisper / Faster-Whisper
 
 Use for:
@@ -79,7 +104,9 @@ Use for:
 - transcription;
 - subtitles;
 - language detection;
-- timestamped text.
+- timestamped text;
+- local/private processing;
+- full-control or batch workflows where a connected SaaS path is insufficient.
 
 ### Platform Captions
 
@@ -132,4 +159,4 @@ Before accepting a donor repo or automation:
 
 ## Final Rule
 
-Do not build a custom video tool until yt-dlp, ffmpeg, transcription tooling, template rendering, and automation platforms have been considered.
+Do not build a custom video tool until yt-dlp, ffmpeg, connected transcription providers, local transcription tooling, template rendering, and automation platforms have been considered.
