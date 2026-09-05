@@ -280,4 +280,4 @@ Before coding the full product:
 
 ## Immediate Next Action
 
-Build the donor capability matrix and technical architecture package, then hand the first implementation slice to Codex only after those contracts are frozen.
+Execute `CODEX_HANDOFF_SLICE_1.md`; do not start Slice 2 until Slice 1 passes real-browser acceptance.
