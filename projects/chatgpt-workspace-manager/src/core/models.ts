@@ -104,6 +104,7 @@ export interface ProviderConversationDetail {
 export interface DiagnosticsReport {
   exportedAt: string;
   extensionVersion: string;
+  extensionId: string;
   dbSchemaVersion: number;
   adapterVersion: string;
   capabilities: CapabilityHealth[];
