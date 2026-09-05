@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "663fbc4a13a769dae679b4f22a5c6cf6dfa21661",
-  "generated_at": "2026-09-05T12:36:47-04:00",
+  "repository_commit": "6fed31e0cca50400a11e4d063299c841f6944689",
+  "generated_at": "2026-09-05T12:37:17-04:00",
   "artifact_count": 574,
   "artifacts": [
     {
@@ -7720,9 +7720,12 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "2ed949194a2d61fbd6f70a8032545c7d3276bb0d3e0c3ea3da15469c9eeea84d",
+      "sha256": "64fa88f896896bbe1c7135137aaa3346881f3eca1d9e5406b4f73d51c220a9f7",
       "headings": [
-        "Integrations"
+        "Integrations",
+        "Current integrations",
+        "Operational rule",
+        "Design rule"
       ]
     },
     {
@@ -8600,7 +8603,7 @@
       "domain": "knowledge:research-methods",
       "status": "reusable research method / pilot-verified integration",
       "date": "2026-09-05",
-      "sha256": "84d8f173849ce80dc6fd5330376ca61053c4783ca89150920385eeea1376fc0f",
+      "sha256": "c96612efa4fbf1ba94e355a604f251bda85ea021ecfe008c853344d109b17a6b",
       "headings": [
         "YouTube Transcript Intake via Whisper Transcribe AI",
         "Finding",
@@ -8608,7 +8611,9 @@
         "Pilot Evidence",
         "Critical Limitation Found",
         "Recommended Research Routing",
+        "Coverage Check",
         "Reuse Decision",
+        "Lesson from the GLM-5.3-Flash video pilot",
         "Related System Nodes",
         "Final Rule"
       ]
