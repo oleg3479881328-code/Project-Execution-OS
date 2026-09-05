@@ -32,6 +32,22 @@ Use YouTube Studio for:
 - analytics review;
 - rights/problem handling.
 
+### Research / Transcript Intake
+
+For analysis of a YouTube video:
+
+1. use platform/native transcript or captions when readily accessible;
+2. if normal transcript access is unavailable, blocked, or throttled, use the connected `Whisper Transcribe AI` integration on the YouTube URL;
+3. compare transcript timestamps/coverage against the reported video duration;
+4. if coverage is incomplete and full-video analysis matters, escalate to another approved transcription path such as local/media-file Whisper or Faster-Whisper where source access and rights permit;
+5. only treat the transcript as evidence for the entire video after coverage is verified.
+
+Canonical integration note:
+
+`docs/integrations/whisper-transcribe-ai/README.md`
+
+Do not build a custom YouTube transcript scraper merely because direct web transcript access fails before checking the connected transcription path.
+
 ### Platform-Neutral Production
 
 Use `blocks/video-production/` for:
@@ -84,4 +100,4 @@ Before inventing a channel format, review:
 
 ## Final Rule
 
-Use YouTube Studio and official APIs as the platform foundation. Keep production tooling in Video Production Block and avoid duplicating it here.
+Use YouTube Studio and official APIs as the platform foundation. Reuse connected transcript intake for video research before inventing custom extraction, keep production tooling in Video Production Block, and avoid duplicating it here.
