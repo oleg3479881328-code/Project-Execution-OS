@@ -8,13 +8,15 @@
 
 Architecture accepted and Slice 1 implemented as a private, unpacked owner-operated Chrome extension.
 
-Machine validation is green for v0.1.3:
+Machine validation is green for v0.1.4:
 
 - dependency install: PASS;
 - TypeScript: PASS;
-- 8 unit tests: PASS;
+- 9 unit tests: PASS;
+- stable extension ID derivation test: PASS;
 - WXT production build: PASS;
-- unpacked artifact upload: PASS.
+- unpacked artifact upload: PASS;
+- built manifest inspected: version `0.1.4`, pinned manifest `key` present, permissions unchanged.
 
 Real-browser acceptance is in progress on the owner's active ChatGPT account.
 
@@ -40,7 +42,6 @@ Permanent fix in v0.1.1:
 
 Browser evidence:
 
-- v0.1.1 loaded as unpacked extension;
 - self-healing bridge succeeded without manual tab reload;
 - UI reported `Synced 1051 conversations`;
 - local Workspace list populated with 1051 records.
@@ -51,7 +52,7 @@ Validated chain:
 
 ### On-demand conversation hydration — PASS
 
-Browser evidence:
+Browser evidence from earlier unpacked installation:
 
 - `ChatGPT Workspace Manager` hydrated with 583 messages;
 - `Домен Vercel обсудить` hydrated with 15 messages;
@@ -63,7 +64,7 @@ Validated chain:
 
 `local metadata record -> select -> ChatGPT read API -> normalization -> IndexedDB message cache -> Side Panel preview`.
 
-### Owner favorite + local note persistence — PASS
+### Owner favorite + local note persistence — PASS WITHIN ONE EXTENSION INSTALLATION
 
 Browser evidence:
 
@@ -91,10 +92,8 @@ Fix in v0.1.2:
 
 ### Offline test diagnostics — PASS FOR HEALTH / LOCAL STORAGE LAYER
 
-Owner-exported diagnostics on 2026-09-05 from v0.1.2 show:
+Owner-exported diagnostics from v0.1.2 and v0.1.3 show:
 
-- extension version `0.1.2`;
-- adapter version `2026-09-slice1`;
 - `local-db`: HEALTHY;
 - `local-search`: HEALTHY;
 - `session`: UNAVAILABLE with `OFFLINE_TEST_MODE`;
@@ -106,7 +105,7 @@ This confirms Offline test blocks live ChatGPT access inside the extension while
 
 ### Offline test exit health restoration — EDGE CASE FOUND AND FIXED IN v0.1.3
 
-Review of v0.1.2 found a subtle bookkeeping issue:
+Review of v0.1.2 found:
 
 - while Offline test is enabled, list/read/session correctly receive explicit `OFFLINE_TEST_MODE = unavailable` evidence;
 - after disabling Offline test, passive list/read checks return UNKNOWN;
@@ -114,11 +113,47 @@ Review of v0.1.2 found a subtle bookkeeping issue:
 
 Fix in v0.1.3:
 
-- `latestCapabilities()` now checks the persisted `offlineMode` setting;
-- while Offline test is enabled, `OFFLINE_TEST_MODE` evidence is shown normally;
-- once Offline test is disabled, temporary `OFFLINE_TEST_MODE` records are excluded from the current Health view;
-- Health returns to the last real live validated result instead of retaining a synthetic offline failure;
-- dedicated unit test covers enable -> unavailable -> disable -> restore prior healthy evidence.
+- `latestCapabilities()` checks persisted `offlineMode`;
+- temporary `OFFLINE_TEST_MODE` evidence is visible while test mode is enabled;
+- after test mode is disabled, synthetic offline evidence is ignored and prior live evidence can surface again;
+- dedicated unit test covers the transition.
+
+### v0.1.3 browser result — STABLE LOCAL IDENTITY PROBLEM DISCOVERED
+
+Browser screenshots and exported diagnostics on 2026-09-05 showed:
+
+- after disabling Offline test, `list-conversations` was HEALTHY and `session` was HEALTHY;
+- `read-conversation` remained UNKNOWN because no successful live read had occurred in that specific current unpacked installation;
+- enabling Offline test correctly made live session/list/read UNAVAILABLE;
+- all 1051 metadata records remained available in Workspace;
+- selecting `ChatGPT Workspace Manager` in Offline test reported `selected conversation has no local message cache`.
+
+Interpretation:
+
+- Offline test itself behaved correctly;
+- the current installation had metadata but did not contain the 583-message cache hydrated in an earlier unpacked installation;
+- favorite/note test data from prior unpacked installations was also not guaranteed to survive when the extension was removed and a new extracted folder was loaded;
+- the likely cause is a different unpacked Chrome extension origin/ID between version folders, which means a different IndexedDB origin.
+
+### v0.1.4 Stable Identity — IMPLEMENTED AND MACHINE-VALIDATED
+
+Official Chrome documentation confirms manifest `key` can control the unique extension ID during development/unpacked loading.
+
+Implemented:
+
+- pinned public manifest `key`;
+- frozen expected Chrome extension ID: `ejpgnlcdfbbjkhlnbfonplngcfcjmbaa`;
+- shared identity constants in `src/core/extension-identity.ts`;
+- unit test derives Chrome extension ID from the pinned public key and asserts the frozen ID;
+- `EXTENSION_IDENTITY.md` documents the identity contract and upgrade rule;
+- built v0.1.4 manifest was inspected and contains the pinned key;
+- permissions remain `storage`, `sidePanel`, `activeTab`, `scripting` with ChatGPT-only host permissions.
+
+Important transition note:
+
+- v0.1.4 is a one-time identity reset from prior path-derived development IDs;
+- local state from v0.1.3 should be treated as test-only and may not automatically appear in v0.1.4;
+- from v0.1.4 onward, loading later builds from different folders should retain the same extension ID and therefore the same extension IndexedDB origin, provided the manifest key is not changed.
 
 ## Decisions Frozen
 
@@ -136,6 +171,7 @@ Fix in v0.1.3:
 - Local-first by default: no telemetry, analytics or vendor backend.
 - IndexedDB encryption is not required for first implementation; encrypted backup can come later.
 - Cross-provider support remains a future adapter direction.
+- Stable unpacked extension identity is now mandatory; manifest `key` must not change accidentally.
 
 ## Donor Conclusions
 
@@ -173,18 +209,21 @@ Secondary donors:
 13. evidence-aware Health bookkeeping;
 14. controlled Offline test mode;
 15. Offline test exit health restoration;
-16. no destructive actions yet.
+16. stable unpacked extension identity in v0.1.4;
+17. no destructive actions yet.
 
 ## Acceptance Boundary
 
-Do not begin archive/delete implementation until the remaining behavioral Offline test checks pass in Chrome.
+Do not begin archive/delete implementation until stable identity + cached preview persistence are verified in Chrome.
 
 ## Next Browser Checks
 
-1. Install v0.1.3.
-2. Enable Offline test.
-3. Return to Workspace and verify all 1051 cached metadata records remain visible/searchable.
-4. Open a previously hydrated conversation and verify cached messages render while Offline test is enabled.
-5. Verify favorite/note remain available in Offline test.
-6. Disable Offline test and open Health; list/read should return to prior validated HEALTHY instead of remaining OFFLINE/UNKNOWN.
-7. After these pass, close Slice 1 and review Slice 2.
+1. Install v0.1.4 and confirm Chrome extension ID is `ejpgnlcdfbbjkhlnbfonplngcfcjmbaa`.
+2. Disable Offline test if it is enabled.
+3. Sync metadata; expect approximately 1051 conversations.
+4. Open `ChatGPT Workspace Manager` live once and hydrate it; verify `read-conversation` becomes HEALTHY.
+5. Set one favorite and one local note.
+6. Enable Offline test; verify the hydrated chat opens from local cache and owner metadata remains visible.
+7. Disable Offline test.
+8. For the final identity-persistence proof, install the next build from a different folder and confirm the same Chrome extension ID and retained local state.
+9. After these pass, close Slice 1 and review Slice 2.
