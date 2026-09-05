@@ -68,6 +68,21 @@ This confirms the live chain works against the owner's real account:
 
 `Side Panel -> self-heal bridge -> ChatGPT session -> conversation list API -> normalization -> IndexedDB -> Workspace UI`.
 
+### On-demand conversation hydration — PASS
+
+Browser evidence on 2026-09-05:
+
+- selected the live conversation `ChatGPT Workspace Manager` from the local Workspace list;
+- extension fetched the selected conversation on demand;
+- UI reported `Hydrated 583 messages`;
+- normalized user/assistant messages rendered in the preview pane;
+- non-text/tool content was preserved safely as a placeholder rather than crashing preview;
+- the rest of the 1051-conversation local Workspace remained available while the long conversation rendered.
+
+This confirms the second-stage sync path works on a large real conversation:
+
+`local metadata record -> select -> ChatGPT read API -> message normalization -> IndexedDB message cache -> Side Panel preview`.
+
 ## Decisions Frozen
 
 - Product is a personal ChatGPT control center, not a Chrome Web Store product.
@@ -135,9 +150,8 @@ Do not begin archive/delete implementation until the remaining Slice 1 browser c
 
 ## Next Browser Checks
 
-1. Click one conversation and verify on-demand preview hydration.
-2. Mark a conversation favorite and verify persistence.
-3. Save a local note and verify persistence after reselect/reload.
-4. Open Health and verify session/list/read/local-db capabilities.
-5. Verify cached workspace remains browsable if live access is temporarily unavailable.
-6. After these pass, close Slice 1 and review Slice 2.
+1. Mark a conversation favorite and verify persistence.
+2. Save a local note and verify persistence after reselect/reload.
+3. Open Health and verify session/list/read/local-db capabilities.
+4. Verify cached workspace remains browsable if live access is temporarily unavailable.
+5. After these pass, close Slice 1 and review Slice 2.
