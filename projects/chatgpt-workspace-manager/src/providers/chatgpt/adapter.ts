@@ -8,7 +8,12 @@ import type { ChatGPTBridgeRequest, ChatGPTBridgeResponse } from './protocol';
 import { CHATGPT_ADAPTER_VERSION } from './api-strategy';
 
 const CHATGPT_URL_PATTERNS = ['https://chatgpt.com/*', 'https://chat.openai.com/*'];
-type BrowserTab = Awaited<ReturnType<typeof browser.tabs.query>>[number];
+
+type BrowserTab = {
+  id?: number;
+  url?: string;
+  active?: boolean;
+};
 
 export class ChatGPTAdapter {
   readonly provider = 'chatgpt' as const;
@@ -31,6 +36,14 @@ export class ChatGPTAdapter {
       return [
         health('chatgpt-tab', 'healthy', checkedAt, undefined, undefined, 'dom'),
         health('session', 'unavailable', checkedAt, response.error, response.diagnosticCode, 'live-api'),
+        health('list-conversations', 'unknown', checkedAt, undefined, undefined, 'live-api'),
+        health('read-conversation', 'unknown', checkedAt, undefined, undefined, 'live-api')
+      ];
+    }
+    if (response.type !== 'health') {
+      return [
+        health('chatgpt-tab', 'healthy', checkedAt, undefined, undefined, 'dom'),
+        health('session', 'degraded', checkedAt, 'Unexpected bridge response.', 'CHATGPT_HEALTH_RESPONSE_INVALID', 'live-api'),
         health('list-conversations', 'unknown', checkedAt, undefined, undefined, 'live-api'),
         health('read-conversation', 'unknown', checkedAt, undefined, undefined, 'live-api')
       ];
@@ -85,10 +98,10 @@ async function requireChatGPTTab(): Promise<BrowserTab> {
 }
 
 async function findChatGPTTab(): Promise<BrowserTab | undefined> {
-  const active = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
+  const active = (await browser.tabs.query({ active: true, currentWindow: true }))[0] as BrowserTab | undefined;
   if (active?.url && isChatGPTUrl(active.url)) return active;
 
-  const matches = await browser.tabs.query({ url: CHATGPT_URL_PATTERNS });
+  const matches = (await browser.tabs.query({ url: CHATGPT_URL_PATTERNS })) as BrowserTab[];
   return matches.find((tab) => tab.active) ?? matches[0];
 }
 
