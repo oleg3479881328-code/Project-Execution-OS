@@ -1,3 +1,4 @@
+import { browser } from '#imports';
 import type {
   CapabilityHealth,
   ProviderConversationDetail,
@@ -7,6 +8,7 @@ import type { ChatGPTBridgeRequest, ChatGPTBridgeResponse } from './protocol';
 import { CHATGPT_ADAPTER_VERSION } from './api-strategy';
 
 const CHATGPT_URL_PATTERNS = ['https://chatgpt.com/*', 'https://chat.openai.com/*'];
+type BrowserTab = Awaited<ReturnType<typeof browser.tabs.query>>[number];
 
 export class ChatGPTAdapter {
   readonly provider = 'chatgpt' as const;
@@ -76,13 +78,13 @@ async function send(tabId: number, request: ChatGPTBridgeRequest): Promise<ChatG
   }
 }
 
-async function requireChatGPTTab(): Promise<Browser.tabs.Tab> {
+async function requireChatGPTTab(): Promise<BrowserTab> {
   const tab = await findChatGPTTab();
   if (!tab?.id) throw new Error('CHATGPT_TAB_MISSING');
   return tab;
 }
 
-async function findChatGPTTab(): Promise<Browser.tabs.Tab | undefined> {
+async function findChatGPTTab(): Promise<BrowserTab | undefined> {
   const active = (await browser.tabs.query({ active: true, currentWindow: true }))[0];
   if (active?.url && isChatGPTUrl(active.url)) return active;
 
