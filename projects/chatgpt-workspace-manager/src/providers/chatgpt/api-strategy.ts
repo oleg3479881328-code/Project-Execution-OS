@@ -67,12 +67,13 @@ function authHeaders(accessToken: string): HeadersInit {
 
 export function normalizeConversation(raw: RawConversation, syncedAt = Date.now()): ProviderConversation | null {
   if (!raw.id) return null;
+  const createdAt = toMs(raw.create_time);
   return {
     provider: 'chatgpt',
     id: raw.id,
     title: raw.title?.trim() || 'Untitled conversation',
-    createdAt: toMs(raw.create_time),
-    updatedAt: toMs(raw.update_time),
+    createdAt,
+    updatedAt: toMs(raw.update_time) ?? createdAt ?? syncedAt,
     nativeProjectId: raw.gizmo_id ?? null,
     archived: Boolean(raw.is_archived),
     currentNodeId: raw.current_node ?? null,
@@ -130,6 +131,7 @@ export async function readConversation(
     provider: 'chatgpt' as const,
     id: conversationId,
     title: raw.title?.trim() || 'Untitled conversation',
+    updatedAt: Date.now(),
     contentHydrated: true,
     lastSyncedAt: Date.now(),
     providerRawVersion: CHATGPT_ADAPTER_VERSION
@@ -187,7 +189,7 @@ function activeBranch(mapping: Record<string, RawMessageNode>, leafId: string): 
   let cursor: string | null | undefined = leafId;
   while (cursor && !seen.has(cursor)) {
     seen.add(cursor);
-    const node = mapping[cursor];
+    const node: RawMessageNode | undefined = mapping[cursor];
     if (!node) break;
     result.push({ ...node, id: node.id ?? cursor });
     cursor = node.parent;
