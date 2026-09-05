@@ -10,7 +10,7 @@ export type ChatGPTBridgeResponse =
       ok: true;
       type: 'health';
       session: boolean;
-      list: boolean;
+      list: 'unknown';
       read: 'unknown';
     }
   | {
