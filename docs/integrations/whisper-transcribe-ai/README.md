@@ -32,13 +32,19 @@ The provider accepted the YouTube URL directly and returned a completed transcri
 
 ## Important Validation Limitation
 
-The first test video reported a total duration of 558 seconds (9:18), but the returned transcript package covered only about the first 60 seconds.
+The test video reported a total duration of 558 seconds (9:18), but the returned transcript package covered only about the first 60 seconds.
+
+A repeat submission of the same YouTube source on 2026-09-05 again returned the same approximately 60-second transcript while still reporting the full 558-second media duration. Additional URL-job attempts intended to continue from later points did not produce evidence of resumed/offset transcription.
+
+The connected account reported `hasPremiumAccess: false` during this test session. That entitlement state is recorded as context only; it is **not proven** to be the cause of the 60-second truncation.
 
 Therefore:
 
 - the integration itself is proven connected and operational;
 - URL submission and transcript-result retrieval are proven;
-- full-length transcript completeness is **not yet validated**;
+- timestamped first-segment transcription is repeatable on the tested source;
+- full-length YouTube transcript completeness is **not yet validated**;
+- the cause of the approximately 60-second limit is currently UNKNOWN;
 - agents must compare transcript coverage/timestamps against media duration before treating a result as a complete-video transcript;
 - a partial transcript must never be summarized as if it represented the entire video.
 
@@ -50,8 +56,9 @@ For YouTube research or analysis:
 1. Try platform/native transcript or captions when readily accessible.
 2. If direct transcript access is unavailable, blocked, or throttled, use connected Whisper Transcribe AI on the URL.
 3. Verify transcript coverage against the reported video duration.
-4. If coverage is incomplete and the full video matters, escalate to another supported path such as local/media-file Whisper or Faster-Whisper where rights and source access permit.
-5. Only then perform full-video summary, claim extraction, fact-checking, or durable project capture.
+4. If coverage is incomplete, first look for an established full-caption/transcript retrieval path rather than inventing custom scraping.
+5. If no adequate transcript path exists and the full source matters, use another approved route such as local/media-file Whisper or Faster-Whisper where rights and source access permit.
+6. Only then perform full-video summary, claim extraction, fact-checking, or durable project capture.
 ```
 
 For owned/uploaded audio or video, Whisper Transcribe AI may also be used as a convenient connected-app transcription path when local processing is unnecessary.
@@ -59,7 +66,7 @@ For owned/uploaded audio or video, Whisper Transcribe AI may also be used as a c
 ## Best Uses
 
 - YouTube research intake;
-- long-form video and interview analysis;
+- long-form video and interview analysis when coverage is verified;
 - extracting claims, instructions, products, tools, and workflow steps;
 - fact-check preparation;
 - timestamped notes;
@@ -79,7 +86,7 @@ Whisper Transcribe AI is now a provider/ready-solution candidate that the future
 
 Do not build custom YouTube transcript scraping or a new transcription service merely because direct web access to a video transcript fails.
 
-First reuse the connected provider path. Build or adapt only for a demonstrated remaining gap such as transcript completeness, provider limits, privacy, cost, offline operation, or deterministic batch processing.
+First reuse established transcript/caption surfaces and the connected provider path. Build or adapt only for a demonstrated remaining gap such as transcript completeness, provider limits, privacy, cost, offline operation, or deterministic batch processing.
 
 ## Security / Data Boundary
 
@@ -89,6 +96,7 @@ For sensitive, private, or locally controlled media, prefer an approved local tr
 
 ## Related Nodes
 
+- `knowledge-library/research-methods/youtube-transcript-intake-whisper-transcribe-ai-2026-09.md`
 - `docs/RESEARCH_STANDARD.md`
 - `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
 - `blocks/youtube/READY_SOLUTIONS.md`
@@ -98,4 +106,4 @@ For sensitive, private, or locally controlled media, prefer an approved local tr
 
 ## Final Rule
 
-Treat Whisper Transcribe AI as a useful connected transcription tool across projects, but verify transcript completeness before relying on it as evidence for an entire video.
+Treat Whisper Transcribe AI as a useful connected transcription tool across projects, but verify transcript completeness before relying on it as evidence for an entire video. On the 2026-09-05 YouTube pilot, direct URL transcription was repeatably partial at about 60 seconds of a 558-second source; the cause remains unproven.
