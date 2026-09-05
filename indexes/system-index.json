@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "77f1c3cc9c3fa3cc5aa37e12a05e9271cdc71e15",
-  "generated_at": "2026-09-05T12:36:13-04:00",
-  "artifact_count": 573,
+  "repository_commit": "3312b49ee4b10c90b4555c207ad064605fc0a7cf",
+  "generated_at": "2026-09-05T12:36:26-04:00",
+  "artifact_count": 574,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7788,6 +7788,29 @@
         "Purpose",
         "Recommended Core Prompt",
         "Design Rule"
+      ]
+    },
+    {
+      "path": "docs/integrations/cline-glm-5-3-flash/README.md",
+      "title": "Cline + GLM-5.3-Flash Integration Candidate",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "CANDIDATE / research-verified, not yet locally validated",
+      "date": null,
+      "sha256": "7e217a4f6c3890879a1d65feee1de87a9452718d498b8eea0aa1955f41d1bb3d",
+      "headings": [
+        "Cline + GLM-5.3-Flash Integration Candidate",
+        "Purpose",
+        "Current route",
+        "Important boundary",
+        "Intended Project Execution OS role",
+        "Model snapshot from the 2026-09-05 research pass",
+        "Benchmark rule",
+        "Availability rule",
+        "Validation plan",
+        "Canonical research note",
+        "Related nodes",
+        "Final rule"
       ]
     },
     {
