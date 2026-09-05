@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "589e9811f4f13ce5438081e8edf6653d5bcac6fc",
-  "generated_at": "2026-09-05T15:10:29-04:00",
-  "artifact_count": 574,
+  "repository_commit": "16864912897b9df1b201d864769e24b44cd7e922",
+  "generated_at": "2026-09-05T15:11:25-04:00",
+  "artifact_count": 575,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10519,6 +10519,22 @@
         "Proposed Capability Ownership",
         "Donor Gate Before Code Copy",
         "Current Decision"
+      ]
+    },
+    {
+      "path": "projects/chatgpt-workspace-manager/EXTENSION_IDENTITY.md",
+      "title": "ChatGPT Workspace Manager — Stable Extension Identity",
+      "type": "project-artifact",
+      "domain": "chatgpt-workspace-manager",
+      "status": null,
+      "date": null,
+      "sha256": "d34875d8024b6d08bc1fe5e0ab58665d692f44bde3a8ac4fe5b626b13fba83d0",
+      "headings": [
+        "ChatGPT Workspace Manager — Stable Extension Identity",
+        "Decision",
+        "Why",
+        "Rule",
+        "Acceptance"
       ]
     },
     {
