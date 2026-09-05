@@ -1,0 +1,25 @@
+{
+  "name": "chatgpt-workspace-manager",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "zip": "wxt zip",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@wxt-dev/module-react": "latest",
+    "dexie": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "wxt": "latest"
+  },
+  "devDependencies": {
+    "@types/chrome": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "typescript": "latest"
+  }
+}
