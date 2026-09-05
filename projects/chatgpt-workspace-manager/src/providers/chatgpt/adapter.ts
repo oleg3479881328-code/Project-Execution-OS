@@ -52,8 +52,8 @@ export class ChatGPTAdapter {
     return [
       health('chatgpt-tab', 'healthy', checkedAt, undefined, undefined, 'dom'),
       health('session', response.session ? 'healthy' : 'unavailable', checkedAt, undefined, undefined, 'live-api'),
-      health('list-conversations', response.list ? 'healthy' : 'unknown', checkedAt, undefined, undefined, 'live-api'),
-      health('read-conversation', 'unknown', checkedAt, 'Validated on first successful preview.', undefined, 'live-api')
+      health('list-conversations', 'unknown', checkedAt, 'Validated by the first successful metadata sync.', undefined, 'live-api'),
+      health('read-conversation', 'unknown', checkedAt, 'Validated by the first successful on-demand preview.', undefined, 'live-api')
     ];
   }
 
