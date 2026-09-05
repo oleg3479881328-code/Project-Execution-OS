@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e9d4bbff1f4dbe02a59c1321b97afdf92ba4f24c",
-  "generated_at": "2026-09-05T15:12:21-04:00",
+  "repository_commit": "8de0396119d2d23ee5c39dff08a56b5a44806a62",
+  "generated_at": "2026-09-05T15:13:44-04:00",
   "artifact_count": 575,
   "artifacts": [
     {
@@ -10629,7 +10629,7 @@
       "domain": "chatgpt-workspace-manager",
       "status": null,
       "date": null,
-      "sha256": "54a278c1ae9a2e94da98422615d3d590225b2c4fdea5406a3017a11ece786b7a",
+      "sha256": "9c120b2288a902c28d57a9cba83a0e9784a457b859fc1309d1e2123d576a4111",
       "headings": [
         "ChatGPT Workspace Manager — Latest State",
         "Date",
@@ -10638,10 +10638,12 @@
         "v0.1.0 bridge failure",
         "Live metadata sync — PASS",
         "On-demand conversation hydration — PASS",
-        "Owner favorite + local note persistence — PASS",
+        "Owner favorite + local note persistence — PASS WITHIN ONE EXTENSION INSTALLATION",
         "Health screen evidence bookkeeping — BUG FOUND AND FIXED",
         "Offline test diagnostics — PASS FOR HEALTH / LOCAL STORAGE LAYER",
         "Offline test exit health restoration — EDGE CASE FOUND AND FIXED IN v0.1.3",
+        "v0.1.3 browser result — STABLE LOCAL IDENTITY PROBLEM DISCOVERED",
+        "v0.1.4 Stable Identity — IMPLEMENTED AND MACHINE-VALIDATED",
         "Decisions Frozen",
         "Donor Conclusions",
         "Slice 1 Implemented",
