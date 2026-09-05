@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "9e6e62eefd01bf4fa5652f67310d69bdb8e3b8ec",
-  "generated_at": "2026-09-05T07:35:08-04:00",
-  "artifact_count": 565,
+  "repository_commit": "6d0f42db357f59599fd08597f0fd4bc03551b0a1",
+  "generated_at": "2026-09-05T09:49:34-04:00",
+  "artifact_count": 566,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10350,6 +10350,42 @@
         "Task packet",
         "Expected output",
         "MVP acceptance test"
+      ]
+    },
+    {
+      "path": "projects/chatgpt-workspace-manager/PROJECT.md",
+      "title": "ChatGPT Workspace Manager",
+      "type": "project-artifact",
+      "domain": "chatgpt-workspace-manager",
+      "status": null,
+      "date": null,
+      "sha256": "77251e3f7494904f30ef9d369b49418214a8770799fc18248217022d232ac629",
+      "headings": [
+        "ChatGPT Workspace Manager",
+        "Status",
+        "Purpose",
+        "Product Boundary",
+        "Frozen Architecture",
+        "Core principle",
+        "Authority split",
+        "Synchronization model",
+        "UI",
+        "Capability Health Layer",
+        "Functional Modules",
+        "1. Live workspace",
+        "2. Organization",
+        "3. Search",
+        "4. Bulk operations",
+        "5. Vault / backup",
+        "6. Long conversation navigator",
+        "7. Memory",
+        "8. Prompt library",
+        "Technology Baseline",
+        "Private ChatGPT APIs",
+        "Cross-provider Direction",
+        "Donor Strategy",
+        "Acceptance Gate Before Implementation",
+        "Immediate Next Action"
       ]
     },
     {
