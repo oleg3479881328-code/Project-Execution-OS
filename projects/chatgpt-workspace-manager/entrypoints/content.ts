@@ -27,7 +27,7 @@ async function handleRequest(request: ChatGPTBridgeRequest): Promise<ChatGPTBrid
           ok: true,
           type: 'health',
           session: true,
-          list: true,
+          list: 'unknown',
           read: 'unknown'
         };
       }
