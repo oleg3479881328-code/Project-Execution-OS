@@ -1,0 +1,45 @@
+name: ChatGPT Workspace Manager CI
+
+on:
+  push:
+    paths:
+      - 'projects/chatgpt-workspace-manager/**'
+      - '.github/workflows/chatgpt-workspace-manager-ci.yml'
+  pull_request:
+    paths:
+      - 'projects/chatgpt-workspace-manager/**'
+      - '.github/workflows/chatgpt-workspace-manager-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/chatgpt-workspace-manager
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: projects/chatgpt-workspace-manager/package.json
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Upload unpacked extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: chatgpt-workspace-manager-chrome-mv3
+          path: projects/chatgpt-workspace-manager/.output/chrome-mv3
+          if-no-files-found: error
