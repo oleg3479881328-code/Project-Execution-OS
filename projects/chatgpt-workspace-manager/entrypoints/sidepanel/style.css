@@ -1,0 +1,189 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f7f7fb;
+  background: #0a0b10;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { margin: 0; min-height: 100%; }
+body {
+  min-width: 360px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(116, 63, 255, 0.18), transparent 34%),
+    radial-gradient(circle at 100% 18%, rgba(0, 208, 180, 0.10), transparent 28%),
+    #0a0b10;
+}
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.app-shell { min-height: 100vh; padding: 14px; }
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.topbar h1 { margin: 2px 0 0; font-size: 18px; letter-spacing: -0.02em; }
+.eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .12em; color: #8b8fa3; }
+.header-status { display: flex; align-items: center; gap: 8px; }
+.version {
+  padding: 4px 8px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 999px;
+  font-size: 11px;
+  color: #c8c9d3;
+  background: rgba(255,255,255,.04);
+}
+.status-dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 12px currentColor; }
+.health-healthy { color: #48dfbd; }
+.health-degraded { color: #f5c76a; }
+.health-unavailable { color: #ff667d; }
+.health-unknown { color: #8d92a6; }
+.status-dot.health-healthy { background: #48dfbd; }
+.status-dot.health-degraded { background: #f5c76a; }
+.status-dot.health-unavailable { background: #ff667d; }
+.status-dot.health-unknown { background: #8d92a6; }
+
+.tabs { display: flex; gap: 6px; margin-bottom: 9px; }
+.tabs button, .toolbar button, .health-actions button, .note-box button {
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 10px;
+  background: rgba(255,255,255,.045);
+  color: #d9dbe5;
+  padding: 8px 10px;
+}
+.tabs button.active {
+  background: linear-gradient(135deg, rgba(125,73,255,.42), rgba(218,64,197,.22));
+  border-color: rgba(167,109,255,.48);
+  color: #fff;
+}
+button.primary {
+  background: linear-gradient(135deg, #7557ff, #c443c5);
+  border-color: transparent;
+  color: white;
+  font-weight: 700;
+}
+button:disabled { opacity: .55; cursor: default; }
+
+.status-line {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.035);
+  border: 1px solid rgba(255,255,255,.07);
+  color: #9da0b1;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+.error-text { color: #ff8293; word-break: break-word; }
+
+.toolbar { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.toolbar input {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(7,8,12,.72);
+  color: white;
+  border-radius: 10px;
+  padding: 9px 10px;
+  outline: none;
+}
+.toolbar input:focus { border-color: rgba(126,94,255,.75); box-shadow: 0 0 0 2px rgba(126,94,255,.12); }
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 8px 2px;
+  color: #85899c;
+  font-size: 10px;
+}
+
+.workspace-grid { display: grid; grid-template-columns: minmax(170px, .9fr) minmax(220px, 1.1fr); gap: 9px; min-height: calc(100vh - 190px); }
+.conversation-list, .preview-panel, .health-list {
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 14px;
+  background: rgba(16,17,24,.72);
+  backdrop-filter: blur(15px);
+  overflow: hidden;
+}
+.conversation-list { overflow-y: auto; max-height: calc(100vh - 190px); padding: 6px; }
+.conversation-card {
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 9px;
+  margin-bottom: 4px;
+}
+.conversation-card:hover { background: rgba(255,255,255,.045); }
+.conversation-card.selected {
+  background: linear-gradient(135deg, rgba(112,77,255,.20), rgba(0,202,180,.07));
+  border-color: rgba(127,95,255,.35);
+}
+.conversation-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.conversation-title { font-size: 12px; font-weight: 650; line-height: 1.3; overflow-wrap: anywhere; }
+.favorite { color: #4d5060; font-size: 14px; flex: 0 0 auto; }
+.favorite.on, .favorite:hover, .favorite-on { color: #f5c76a; }
+.conversation-meta { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; color: #7f8292; font-size: 9px; margin-top: 6px; }
+.chip {
+  border-radius: 999px;
+  padding: 2px 5px;
+  color: #aeb0bd;
+  background: rgba(255,255,255,.055);
+}
+.chip.accent { color: #65dfc7; background: rgba(34,195,166,.10); }
+
+.preview-panel { padding: 10px; overflow-y: auto; max-height: calc(100vh - 190px); }
+.preview-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.preview-header h2 { font-size: 14px; margin: 2px 0 0; line-height: 1.25; }
+.icon-button { border: 0; background: transparent; color: #4d5060; font-size: 18px; padding: 3px; }
+
+.note-box {
+  display: grid;
+  gap: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.075);
+  background: rgba(255,255,255,.025);
+  margin-bottom: 10px;
+}
+.note-box label { font-size: 10px; color: #979aac; }
+.note-box textarea {
+  width: 100%;
+  min-height: 58px;
+  resize: vertical;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(0,0,0,.25);
+  color: #eff0f5;
+  padding: 8px;
+  outline: none;
+}
+.note-box button { justify-self: end; padding: 6px 9px; font-size: 10px; }
+.messages { display: grid; gap: 8px; }
+.message { border-radius: 10px; padding: 9px; border: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.028); }
+.message.user { background: rgba(112,77,255,.10); border-color: rgba(112,77,255,.16); }
+.message-role { color: #7e8297; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px; }
+.message-text { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; line-height: 1.48; color: #d7d9e2; }
+.empty-state { padding: 20px 12px; text-align: center; color: #7f8292; font-size: 11px; line-height: 1.45; }
+
+.health-actions { display: flex; gap: 7px; margin-bottom: 8px; }
+.health-list { padding: 5px; }
+.health-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px; border-bottom: 1px solid rgba(255,255,255,.055); }
+.health-row:last-child { border-bottom: 0; }
+.health-row strong { font-size: 11px; }
+.health-message { margin-top: 3px; color: #7f8292; font-size: 9px; max-width: 250px; overflow-wrap: anywhere; }
+.health-chip { font-size: 9px; font-weight: 700; text-transform: uppercase; border: 1px solid currentColor; border-radius: 999px; padding: 3px 6px; opacity: .95; }
+.diagnostic-footnote { color: #777b8d; font-size: 9px; margin: 8px 2px; }
+
+@media (max-width: 520px) {
+  .workspace-grid { grid-template-columns: 1fr; }
+  .conversation-list { max-height: 38vh; }
+  .preview-panel { max-height: none; }
+}
