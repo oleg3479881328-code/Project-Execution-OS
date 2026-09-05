@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "42c492a4c923c1aadc24fe0b3149dad0c761014d",
-  "generated_at": "2026-09-05T12:22:33-04:00",
+  "repository_commit": "2d3cd7d128abffbd8326d1aab7671b4e7c958621",
+  "generated_at": "2026-09-05T12:23:12-04:00",
   "artifact_count": 571,
   "artifacts": [
     {
@@ -4510,7 +4510,7 @@
       "domain": "video-production",
       "status": null,
       "date": null,
-      "sha256": "abecc3ade0a4b18b066f61553a0a381ae23c948c2d2901be227d3de546995f56",
+      "sha256": "7056bc8c5b13c8717611f19a3bb0f54721ee8b675da3e10d9e002a3286863991",
       "headings": [
         "Video Production Ready Solutions",
         "Purpose",
@@ -4524,6 +4524,7 @@
         "Remotion",
         "MoviePy",
         "Transcription / Captions",
+        "Whisper Transcribe AI — connected ChatGPT integration",
         "Whisper / Faster-Whisper",
         "Platform Captions",
         "AI Voice",
@@ -4959,13 +4960,14 @@
       "domain": "youtube",
       "status": null,
       "date": null,
-      "sha256": "596572564b3e32311b0cfc002b57ac8044cda3b626ffadff533f0ea50d0e01b0",
+      "sha256": "9a26364d6fe074174e4f6008f27c978e06c083cc5e7c5cbaf40f0d04a7667fe2",
       "headings": [
         "YouTube Ready Solutions",
         "Purpose",
         "Official YouTube Surfaces",
         "Reusable Tool Paths",
         "Manual Channel Operations",
+        "Research / Transcript Intake",
         "Platform-Neutral Production",
         "API Automation",
         "Analytics",
@@ -5157,7 +5159,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "ee17f7ccd3e44da621a2d547b963d52d3bf6d98425ddc28d582315b90f74e8b5",
+      "sha256": "8a6f60c80d9e2161c375747c1c7c9bbe26d59fdbb4882c76c2bc6ab8ddadc3d6",
       "headings": [
         "Capability Block Registry",
         "Purpose",
