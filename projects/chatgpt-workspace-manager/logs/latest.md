@@ -16,11 +16,13 @@ Machine validation is green for v0.1.1:
 - WXT production build: PASS;
 - unpacked artifact upload: PASS.
 
-Real-browser acceptance has started on the owner's active ChatGPT account.
+Real-browser acceptance is in progress on the owner's active ChatGPT account.
 
-## First Browser Finding
+## Browser Acceptance Milestones
 
-Observed on v0.1.0 after loading the unpacked extension into Chrome while the ChatGPT tab was already open:
+### v0.1.0 bridge failure
+
+Observed after loading the unpacked extension while the ChatGPT tab was already open:
 
 `CHATGPT_CONTENT_BRIDGE_MISSING: Could not establish connection. Receiving end does not exist.`
 
@@ -34,7 +36,9 @@ Immediate workaround for v0.1.0:
 
 - reload the ChatGPT tab once, then Sync.
 
-Permanent fix implemented in v0.1.1:
+### v0.1.1 self-heal fix
+
+Permanent fix implemented and machine-validated:
 
 - added `scripting` permission;
 - `ChatGPTAdapter` detects the missing receiving-end error;
@@ -43,11 +47,26 @@ Permanent fix implemented in v0.1.1:
 - reports explicit injection/retry diagnostics if recovery fails;
 - no automatic page reload is required, avoiding loss of unsent ChatGPT input.
 
-The v0.1.1 manifest was inspected after successful CI build and contains:
+The v0.1.1 manifest contains:
 
 - version `0.1.1`;
 - permissions: `storage`, `sidePanel`, `activeTab`, `scripting`;
 - host permissions only for `https://chatgpt.com/*` and `https://chat.openai.com/*`.
+
+### Live metadata sync — PASS
+
+Browser evidence on 2026-09-05:
+
+- v0.1.1 loaded as unpacked extension;
+- self-healing bridge succeeded without manual ChatGPT-tab reload;
+- live metadata sync completed successfully;
+- UI reported `Synced 1051 conversations`;
+- local Workspace list populated with 1051 conversation records;
+- cached/local workspace remained rendered in the Side Panel after sync.
+
+This confirms the live chain works against the owner's real account:
+
+`Side Panel -> self-heal bridge -> ChatGPT session -> conversation list API -> normalization -> IndexedDB -> Workspace UI`.
 
 ## Decisions Frozen
 
@@ -112,16 +131,13 @@ Secondary donors:
 
 ## Acceptance Boundary
 
-Do not begin archive/delete implementation until Slice 1 passes real-browser behavioral verification against the owner's ChatGPT account and adapter failure is demonstrated not to break cached workspace browsing.
+Do not begin archive/delete implementation until the remaining Slice 1 browser checks pass and adapter failure is demonstrated not to break cached workspace browsing.
 
-## Next Action
+## Next Browser Checks
 
-Install v0.1.1 in Chrome and continue real-browser acceptance:
-
-1. open ChatGPT;
-2. press Sync without manually reloading the tab;
-3. verify metadata list appears;
-4. open one conversation and verify on-demand preview;
-5. verify favorite and note persist;
-6. inspect Health after successful sync/read;
-7. only after these pass, review Slice 1 and decide whether to start Slice 2.
+1. Click one conversation and verify on-demand preview hydration.
+2. Mark a conversation favorite and verify persistence.
+3. Save a local note and verify persistence after reselect/reload.
+4. Open Health and verify session/list/read/local-db capabilities.
+5. Verify cached workspace remains browsable if live access is temporarily unavailable.
+6. After these pass, close Slice 1 and review Slice 2.
