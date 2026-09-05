@@ -6,9 +6,48 @@
 
 ## Current Status
 
-Architecture review completed and accepted for implementation as a private, unpacked owner-operated Chrome extension.
+Architecture accepted and Slice 1 implemented as a private, unpacked owner-operated Chrome extension.
 
-Architecture package and Slice 1 implementation handoff are committed.
+Machine validation is green for v0.1.1:
+
+- dependency install: PASS;
+- TypeScript: PASS;
+- unit tests: PASS;
+- WXT production build: PASS;
+- unpacked artifact upload: PASS.
+
+Real-browser acceptance has started on the owner's active ChatGPT account.
+
+## First Browser Finding
+
+Observed on v0.1.0 after loading the unpacked extension into Chrome while the ChatGPT tab was already open:
+
+`CHATGPT_CONTENT_BRIDGE_MISSING: Could not establish connection. Receiving end does not exist.`
+
+Root cause:
+
+- Side Panel extension context was running;
+- the pre-existing ChatGPT tab had not received the declarative content script because it predated the extension load/reload;
+- therefore Side Panel messaging had no receiving bridge.
+
+Immediate workaround for v0.1.0:
+
+- reload the ChatGPT tab once, then Sync.
+
+Permanent fix implemented in v0.1.1:
+
+- added `scripting` permission;
+- `ChatGPTAdapter` detects the missing receiving-end error;
+- it injects the built `/content-scripts/content.js` into the current ChatGPT tab via `browser.scripting.executeScript`;
+- waits briefly and retries the original request once;
+- reports explicit injection/retry diagnostics if recovery fails;
+- no automatic page reload is required, avoiding loss of unsent ChatGPT input.
+
+The v0.1.1 manifest was inspected after successful CI build and contains:
+
+- version `0.1.1`;
+- permissions: `storage`, `sidePanel`, `activeTab`, `scripting`;
+- host permissions only for `https://chatgpt.com/*` and `https://chat.openai.com/*`.
 
 ## Decisions Frozen
 
@@ -55,13 +94,11 @@ Secondary donors:
 - `TECHNICAL_ARCHITECTURE.md` — canonical contracts, DB, adapter, sync, bulk engine, health harness, tests and first implementation slice.
 - `CODEX_HANDOFF_SLICE_1.md` — bounded implementation contract for the first non-destructive vertical slice.
 
-## First Implementation Slice
-
-Build and validate:
+## Slice 1 Implemented
 
 1. WXT project shell;
 2. owner Side Panel shell;
-3. Dexie / IndexedDB schema + migrations;
+3. Dexie / IndexedDB schema;
 4. `ChatGPTAdapter` capability framework;
 5. metadata conversation sync;
 6. local Workspace list;
@@ -70,7 +107,8 @@ Build and validate:
 9. title / local metadata search;
 10. Health panel;
 11. diagnostics export;
-12. no destructive actions yet.
+12. self-healing content bridge in v0.1.1;
+13. no destructive actions yet.
 
 ## Acceptance Boundary
 
@@ -78,4 +116,12 @@ Do not begin archive/delete implementation until Slice 1 passes real-browser beh
 
 ## Next Action
 
-Execute `CODEX_HANDOFF_SLICE_1.md`. After Slice 1 is implemented, perform real-browser acceptance and review before Slice 2.
+Install v0.1.1 in Chrome and continue real-browser acceptance:
+
+1. open ChatGPT;
+2. press Sync without manually reloading the tab;
+3. verify metadata list appears;
+4. open one conversation and verify on-demand preview;
+5. verify favorite and note persist;
+6. inspect Health after successful sync/read;
+7. only after these pass, review Slice 1 and decide whether to start Slice 2.
