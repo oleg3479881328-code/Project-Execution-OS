@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2c8e3c53e2e56e8145a7a4820eede57469616f97",
-  "generated_at": "2026-09-05T10:12:49-04:00",
-  "artifact_count": 570,
+  "repository_commit": "42c492a4c923c1aadc24fe0b3149dad0c761014d",
+  "generated_at": "2026-09-05T12:22:33-04:00",
+  "artifact_count": 571,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7850,6 +7850,28 @@
         "Promotion gate",
         "Current recommendation",
         "Upstream references"
+      ]
+    },
+    {
+      "path": "docs/integrations/whisper-transcribe-ai/README.md",
+      "title": "Whisper Transcribe AI — Connected Integration",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "ACTIVE integration / PILOT validation",
+      "date": null,
+      "sha256": "7fd123b3a7c285f79f346358c452df6dd603980b21af8c7c7b117d1a6813fd13",
+      "headings": [
+        "Whisper Transcribe AI — Connected Integration",
+        "Purpose",
+        "Proven Connection Evidence — 2026-09-05",
+        "Important Validation Limitation",
+        "Recommended Routing",
+        "Best Uses",
+        "Relationship To Reusable Capability Library",
+        "Existing Solution First Rule",
+        "Security / Data Boundary",
+        "Related Nodes",
+        "Final Rule"
       ]
     },
     {
