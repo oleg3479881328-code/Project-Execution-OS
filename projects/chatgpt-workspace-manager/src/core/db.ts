@@ -48,10 +48,19 @@ export function defaultOwnerMetadata(conversationId: string): OwnerConversationM
 export async function upsertConversationMetadata(items: ProviderConversation[]): Promise<number> {
   if (items.length === 0) return 0;
   await db.transaction('rw', db.conversations, db.ownerMetadata, async () => {
-    await db.conversations.bulkPut(items);
     for (const item of items) {
-      const existing = await db.ownerMetadata.get(item.id);
-      if (!existing) await db.ownerMetadata.add(defaultOwnerMetadata(item.id));
+      const existingConversation = await db.conversations.get(item.id);
+      await db.conversations.put({
+        ...existingConversation,
+        ...item,
+        contentHydrated: existingConversation?.contentHydrated ?? item.contentHydrated,
+        lastHydratedAt: existingConversation?.lastHydratedAt,
+        messageCount: existingConversation?.messageCount ?? item.messageCount,
+        providerMissing: false
+      });
+
+      const existingOwner = await db.ownerMetadata.get(item.id);
+      if (!existingOwner) await db.ownerMetadata.add(defaultOwnerMetadata(item.id));
     }
   });
   return items.length;
