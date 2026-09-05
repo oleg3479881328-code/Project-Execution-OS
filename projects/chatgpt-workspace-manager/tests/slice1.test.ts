@@ -5,6 +5,7 @@ import {
   getWorkspaceConversations,
   latestCapabilities,
   recordCapabilities,
+  setSetting,
   updateOwnerMetadata,
   upsertConversationMetadata
 } from '../src/core/db';
@@ -119,6 +120,38 @@ describe('Slice 1 canonicalization and local workspace', () => {
     const list = latest.find((item) => item.capability === 'list-conversations');
     expect(list?.status).toBe('unavailable');
     expect(list?.diagnosticCode).toBe('LIST_HTTP_500');
+  });
+
+  it('shows offline-test evidence only while offline test mode is enabled', async () => {
+    await recordCapabilities([
+      {
+        capability: 'list-conversations',
+        status: 'healthy',
+        strategy: 'live-api',
+        checkedAt: 100,
+        message: 'Validated by successful sync.'
+      },
+      {
+        capability: 'list-conversations',
+        status: 'unavailable',
+        strategy: 'local',
+        checkedAt: 200,
+        message: 'Intentionally blocked by Offline test mode.',
+        diagnosticCode: 'OFFLINE_TEST_MODE'
+      }
+    ]);
+
+    await setSetting('offlineMode', true);
+    let latest = await latestCapabilities();
+    let list = latest.find((item) => item.capability === 'list-conversations');
+    expect(list?.status).toBe('unavailable');
+    expect(list?.diagnosticCode).toBe('OFFLINE_TEST_MODE');
+
+    await setSetting('offlineMode', false);
+    latest = await latestCapabilities();
+    list = latest.find((item) => item.capability === 'list-conversations');
+    expect(list?.status).toBe('healthy');
+    expect(list?.checkedAt).toBe(100);
   });
 
   it('sanitizes bearer tokens and JWT-like strings from diagnostics errors', () => {
