@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a4f1055dd61bbbedd92d74fb9df175569bf8a717",
-  "generated_at": "2026-09-05T09:51:05-04:00",
-  "artifact_count": 568,
+  "repository_commit": "7ada3f61d81eb41a2ecfae6ed7e1b2c52c125294",
+  "generated_at": "2026-09-05T09:51:26-04:00",
+  "artifact_count": 569,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10466,6 +10466,26 @@
         "First Implementation Slice",
         "Second Slice",
         "Architecture Decision"
+      ]
+    },
+    {
+      "path": "projects/chatgpt-workspace-manager/logs/latest.md",
+      "title": "ChatGPT Workspace Manager — Latest State",
+      "type": "project-artifact",
+      "domain": "chatgpt-workspace-manager",
+      "status": null,
+      "date": null,
+      "sha256": "817bb113aedcb323b77b0ad5e848961e831fe6a805757fa952ebe0a6d1de5152",
+      "headings": [
+        "ChatGPT Workspace Manager — Latest State",
+        "Date",
+        "Current Status",
+        "Decisions Frozen",
+        "Donor Conclusions",
+        "Architecture Files",
+        "First Implementation Slice",
+        "Acceptance Boundary",
+        "Next Action"
       ]
     },
     {
