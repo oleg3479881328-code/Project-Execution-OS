@@ -122,14 +122,21 @@ export async function recordCapabilities(states: CapabilityHealth[]): Promise<vo
 
 export async function latestCapabilities(): Promise<CapabilityHealth[]> {
   const all = await db.capabilities.orderBy('checkedAt').reverse().toArray();
-  const seen = new Set<string>();
-  const latest: CapabilityHealth[] = [];
+  const grouped = new Map<string, CapabilityHealth[]>();
+
   for (const state of all) {
-    if (seen.has(state.capability)) continue;
-    seen.add(state.capability);
-    latest.push(state);
+    const bucket = grouped.get(state.capability) ?? [];
+    bucket.push(state);
+    grouped.set(state.capability, bucket);
   }
-  return latest;
+
+  return Array.from(grouped.values()).map((states) => {
+    const newest = states[0]!;
+    if (newest.status !== 'unknown') return newest;
+
+    const latestValidated = states.find((state) => state.status !== 'unknown');
+    return latestValidated ?? newest;
+  });
 }
 
 export async function setSetting(key: string, value: unknown): Promise<void> {
