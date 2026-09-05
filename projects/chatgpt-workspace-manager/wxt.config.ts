@@ -1,8 +1,7 @@
 import { defineConfig } from 'wxt';
-import react from '@wxt-dev/module-react';
 
 export default defineConfig({
-  modules: [react()],
+  modules: ['@wxt-dev/module-react'],
   manifest: {
     name: 'ChatGPT Workspace Manager',
     description: 'Private local-first control center for managing ChatGPT conversations.',
