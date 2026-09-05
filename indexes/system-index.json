@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f260f292b7b3c34a9c037e267b77bfef0536b469",
-  "generated_at": "2026-09-05T14:24:53-04:00",
+  "repository_commit": "a2d2458ddb37092fed8b452e2465e70ad0e06fe9",
+  "generated_at": "2026-09-05T14:26:11-04:00",
   "artifact_count": 574,
   "artifacts": [
     {
@@ -10613,7 +10613,7 @@
       "domain": "chatgpt-workspace-manager",
       "status": null,
       "date": null,
-      "sha256": "774b9bb84f9f42c497af937bb507407164eff433251ad7a32bdba338503e8d8d",
+      "sha256": "bcbd3ab52098e9aa42c374763279b84599ec5b46ae7a8bd6e26b5758b8f6d826",
       "headings": [
         "ChatGPT Workspace Manager — Latest State",
         "Date",
@@ -10624,6 +10624,8 @@
         "Live metadata sync — PASS",
         "On-demand conversation hydration — PASS",
         "Owner favorite + local note persistence — PASS",
+        "Health screen evidence bookkeeping — BUG FOUND IN v0.1.1",
+        "v0.1.2 Health + offline acceptance fix",
         "Decisions Frozen",
         "Donor Conclusions",
         "Architecture Files",
