@@ -120,17 +120,15 @@ export async function recordCapabilities(states: CapabilityHealth[]): Promise<vo
   await db.capabilities.bulkAdd(states);
 }
 
-export async function clearOfflineTestCapabilities(): Promise<number> {
-  return db.capabilities
-    .filter((state) => state.diagnosticCode === 'OFFLINE_TEST_MODE')
-    .delete();
-}
-
 export async function latestCapabilities(): Promise<CapabilityHealth[]> {
   const all = await db.capabilities.orderBy('checkedAt').reverse().toArray();
+  const offlineMode = (await db.settings.get('offlineMode'))?.value === true;
+  const visible = offlineMode
+    ? all
+    : all.filter((state) => state.diagnosticCode !== 'OFFLINE_TEST_MODE');
   const grouped = new Map<string, CapabilityHealth[]>();
 
-  for (const state of all) {
+  for (const state of visible) {
     const bucket = grouped.get(state.capability) ?? [];
     bucket.push(state);
     grouped.set(state.capability, bucket);
