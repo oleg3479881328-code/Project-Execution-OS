@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ccb0f09a361555462f915adfcff4da737b6d1a5d",
-  "generated_at": "2026-09-05T14:31:58-04:00",
+  "repository_commit": "59a901a84fcb2b484d8a3d937461dc60270c0812",
+  "generated_at": "2026-09-05T14:33:12-04:00",
   "artifact_count": 574,
   "artifacts": [
     {
@@ -10613,22 +10613,21 @@
       "domain": "chatgpt-workspace-manager",
       "status": null,
       "date": null,
-      "sha256": "bcbd3ab52098e9aa42c374763279b84599ec5b46ae7a8bd6e26b5758b8f6d826",
+      "sha256": "54a278c1ae9a2e94da98422615d3d590225b2c4fdea5406a3017a11ece786b7a",
       "headings": [
         "ChatGPT Workspace Manager — Latest State",
         "Date",
         "Current Status",
         "Browser Acceptance Milestones",
         "v0.1.0 bridge failure",
-        "v0.1.1 self-heal fix",
         "Live metadata sync — PASS",
         "On-demand conversation hydration — PASS",
         "Owner favorite + local note persistence — PASS",
-        "Health screen evidence bookkeeping — BUG FOUND IN v0.1.1",
-        "v0.1.2 Health + offline acceptance fix",
+        "Health screen evidence bookkeeping — BUG FOUND AND FIXED",
+        "Offline test diagnostics — PASS FOR HEALTH / LOCAL STORAGE LAYER",
+        "Offline test exit health restoration — EDGE CASE FOUND AND FIXED IN v0.1.3",
         "Decisions Frozen",
         "Donor Conclusions",
-        "Architecture Files",
         "Slice 1 Implemented",
         "Acceptance Boundary",
         "Next Browser Checks"
