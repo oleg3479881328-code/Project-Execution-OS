@@ -1,4 +1,4 @@
-import { defineBackground } from 'wxt/sandbox';
+import { browser, defineBackground } from '#imports';
 
 export default defineBackground(() => {
   if (browser.sidePanel?.setPanelBehavior) {
