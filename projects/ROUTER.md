@@ -25,6 +25,7 @@ A project may route onward through its own routers, registries, indexes, collect
 - Design Picker -> `design-picker/PROJECT.md`
 - Personal Secretary OS / personal secretary / secretary / assistant mode -> `personal-secretary-os/PROJECT.md`
 - Reels Factory MVP -> `reels-factory-mvp/PROJECT.md`
+- SOFT / software umbrella -> `soft/PROJECT.md`
 - SOLANA / Crypto-Web3 umbrella -> `https://github.com/oleg3479881328-code/SOLANA/blob/main/PROJECT.md`
 - TikTok Research Sorter -> `tiktok-research-sorter/PROJECT.md`
 - Tusia / Tasha Hurley Weddings -> `tusia-tasha-hurley/PROJECT.md`
