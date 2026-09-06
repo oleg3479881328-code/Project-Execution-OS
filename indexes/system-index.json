@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "05f01f7db527bc2e01c181e8351093467a840888",
-  "generated_at": "2026-09-06T13:34:58-04:00",
-  "artifact_count": 580,
+  "repository_commit": "fc112b89ad3a44b8953dcab57e1a4f2c2119adf7",
+  "generated_at": "2026-09-06T13:35:13-04:00",
+  "artifact_count": 581,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -11419,6 +11419,24 @@
         "Current Focus",
         "Next Safe Action",
         "Do Not Repeat / Constraints"
+      ]
+    },
+    {
+      "path": "projects/soft/logs/latest.md",
+      "title": "SOFT — latest log",
+      "type": "project-artifact",
+      "domain": "soft",
+      "status": null,
+      "date": null,
+      "sha256": "f6c6fb359c8325a5baf090745150dd67301b74364b5d4c5b56a750d02dbf5c4d",
+      "headings": [
+        "SOFT — latest log",
+        "2026-09-06 — Drive organization and re-entry bootstrap",
+        "Owner intent",
+        "Changes completed",
+        "Technical note",
+        "Validation",
+        "Next action"
       ]
     },
     {
