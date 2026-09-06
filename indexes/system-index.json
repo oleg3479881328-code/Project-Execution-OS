@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7bce4a924be9c264c62bd6d925370761c58fa939",
-  "generated_at": "2026-09-06T13:58:59-04:00",
-  "artifact_count": 581,
+  "repository_commit": "b99494736f90e681f58f0446c6e3ebad14a53573",
+  "generated_at": "2026-09-06T14:10:20-04:00",
+  "artifact_count": 582,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8378,6 +8378,26 @@
         "Why This Exists",
         "When to Use",
         "When Not to Use"
+      ]
+    },
+    {
+      "path": "knowledge-library/patterns/interaction-motion-dna-from-working-donors-2026-09.md",
+      "title": "Interaction / Motion DNA From Working Donors",
+      "type": "knowledge-entry",
+      "domain": "knowledge:patterns",
+      "status": null,
+      "date": null,
+      "sha256": "b6b06456ab497bf5864b0afd1f386e4c0990e11f45e8264d275e2de8714624ee",
+      "headings": [
+        "Interaction / Motion DNA From Working Donors",
+        "Source / Evidence",
+        "Problem / Context",
+        "Candidate Reusable Pattern",
+        "Applies To",
+        "Triggers",
+        "Do Not Load When",
+        "Adaptation Notes",
+        "Risks / Validation Still Required"
       ]
     },
     {
