@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8dc35eb6e98f4de1a87263e0532593910e3c05d8",
-  "generated_at": "2026-09-06T08:10:02-04:00",
+  "repository_commit": "0bfd8619f03a734dda0824279b7ab999d3059b5f",
+  "generated_at": "2026-09-06T08:10:42-04:00",
   "artifact_count": 577,
   "artifacts": [
     {
@@ -10668,26 +10668,24 @@
       "domain": "chatgpt-workspace-manager",
       "status": null,
       "date": null,
-      "sha256": "9c120b2288a902c28d57a9cba83a0e9784a457b859fc1309d1e2123d576a4111",
+      "sha256": "7e3cc726774b92fe9b9023e1cd71d2a3eef104ca4709e78acfde30a705a8d029",
       "headings": [
         "ChatGPT Workspace Manager — Latest State",
         "Date",
         "Current Status",
-        "Browser Acceptance Milestones",
-        "v0.1.0 bridge failure",
-        "Live metadata sync — PASS",
-        "On-demand conversation hydration — PASS",
-        "Owner favorite + local note persistence — PASS WITHIN ONE EXTENSION INSTALLATION",
-        "Health screen evidence bookkeeping — BUG FOUND AND FIXED",
-        "Offline test diagnostics — PASS FOR HEALTH / LOCAL STORAGE LAYER",
-        "Offline test exit health restoration — EDGE CASE FOUND AND FIXED IN v0.1.3",
-        "v0.1.3 browser result — STABLE LOCAL IDENTITY PROBLEM DISCOVERED",
-        "v0.1.4 Stable Identity — IMPLEMENTED AND MACHINE-VALIDATED",
-        "Decisions Frozen",
-        "Donor Conclusions",
-        "Slice 1 Implemented",
-        "Acceptance Boundary",
-        "Next Browser Checks"
+        "Browser Acceptance Already Passed",
+        "Important Lifecycle Finding",
+        "Stable Identity",
+        "v0.1.5 Update-Safe — IMPLEMENTED",
+        "Permanent update contract",
+        "Storage protection",
+        "Full Workspace Backup",
+        "Full Workspace Restore",
+        "v0.1.5 Machine Validation",
+        "Project Execution OS Integrity",
+        "Canonical Project Files",
+        "Current Acceptance Boundary",
+        "Next Browser Acceptance"
       ]
     },
     {
