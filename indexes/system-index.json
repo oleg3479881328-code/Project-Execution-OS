@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "719eb00a40e8e3f38a1e04da1e992c51e835f9f0",
-  "generated_at": "2026-09-06T11:54:26-04:00",
+  "repository_commit": "4738ed812c6a1d69c394a7fec072236aaaadac06",
+  "generated_at": "2026-09-06T11:54:54-04:00",
   "artifact_count": 578,
   "artifacts": [
     {
@@ -4319,9 +4319,9 @@
       "title": "AI Video Stacks",
       "type": "domain-block-artifact",
       "domain": "video-production",
-      "status": null,
+      "status": "candidate — local validation required.",
       "date": null,
-      "sha256": "9ea9e15caefc2782f2a6adcf450a19bb63ea427c51554e902562c8a7b785f58d",
+      "sha256": "6b849693fe46730d94c7c6311c5501c18258983848e9384b89bf2ba78c6f7d88",
       "headings": [
         "AI Video Stacks",
         "Purpose",
@@ -4331,6 +4331,7 @@
         "Stack 4 — Multilingual AI Localization",
         "Stack 5 — AI Avatar Video",
         "Stack 6 — QuizLight Card Generator",
+        "Stack 7 — Codex + Blender Programmable 3D/VFX",
         "AI Review Rules",
         "Final Rule"
       ]
@@ -4541,12 +4542,13 @@
       "domain": "video-production",
       "status": null,
       "date": null,
-      "sha256": "745ceece291aa7c02509791fe912b24c34eedb900be6984d3dfadfe8939bef40",
+      "sha256": "f5559390f3d1afa227cf8475d38b38ba86cb6acc002ae8b43bdd9f19d05970ae",
       "headings": [
         "Video Production References",
         "Purpose",
         "Source Hierarchy",
         "Core Tools",
+        "Blender / Programmable 3D/VFX",
         "Transcription / Speech",
         "Automation",
         "Platform Documentation",
