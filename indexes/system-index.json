@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4b917af8d30c7fcf124e78f92b1054b80669c8d1",
-  "generated_at": "2026-09-06T08:07:13-04:00",
+  "repository_commit": "962857059fbb88d891fa342a6369f6a4dbf657ba",
+  "generated_at": "2026-09-06T08:08:03-04:00",
   "artifact_count": 575,
   "artifacts": [
     {
@@ -10528,12 +10528,13 @@
       "domain": "chatgpt-workspace-manager",
       "status": null,
       "date": null,
-      "sha256": "d34875d8024b6d08bc1fe5e0ab58665d692f44bde3a8ac4fe5b626b13fba83d0",
+      "sha256": "fe6b6a1293673f5caa9520868bfd27a584146c3b9372dcef4b2f7d2ee09e3766",
       "headings": [
         "ChatGPT Workspace Manager — Stable Extension Identity",
         "Decision",
-        "Why",
-        "Rule",
+        "Important distinction",
+        "Frozen update rule starting with v0.1.5",
+        "Storage protection",
         "Acceptance"
       ]
     },
