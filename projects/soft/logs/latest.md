@@ -1,5 +1,33 @@
 # SOFT — latest log
 
+## 2026-09-06 — Framer platform + interaction donor capture
+
+### Captured
+
+- Added Framer to the SOFT Master Software Inventory and Third-Party Software Index as `EXTERNAL / CANDIDATE DONOR`.
+- Created a dedicated SOFT Drive folder and durable note for Framer.
+- Preserved the source screenshot from the Marina ui ux design / Framer post.
+- Preserved the two remix donor links shown in the post:
+  - parallax: https://framer.link/05gE4Zj
+  - chimes: https://framer.link/CfiBxSz
+- Revalidated current Framer platform facts from official Framer sources before storing them: visual website builder, AI, CMS, SEO, hosting/publishing, developer extensions, remix links and external-agent support for Codex in ChatGPT, Claude Code and Cursor.
+- Captured the cross-project `Interaction / Motion DNA From Working Donors` idea as a central PEOS knowledge candidate, not an active mandatory rule.
+
+### Durable locations
+
+- Framer folder: https://drive.google.com/drive/folders/1YIsQeV7NfhyqxWOQ4nkUMf1rHEsq1i3k
+- Framer note: https://docs.google.com/document/d/19iKp-YMkOq6Ac3nYmmhvCuLqD3o5_9HLbdBEkiUoy-M/edit
+- Source screenshot: https://drive.google.com/file/d/1qxVmVKotwD2yJRdJeusp7DAbwRxFbOpk/view
+- Master Inventory: https://docs.google.com/document/d/1yTWfazVPhs-AWdSsvS4Q6xyNd7bXKtqi6EvrmQMdAOk/edit
+- Third-Party Index: https://docs.google.com/document/d/1C-F_ukN2AlryP-_FxlJqFIKSbKjat8kzzMw8HsaSPH0/edit
+- Central knowledge candidate: `knowledge-library/patterns/interaction-motion-dna-from-working-donors-2026-09.md`
+
+### Current decision
+
+Do not adopt Framer as a replacement for the current custom-code/Vercel stack yet. Treat it as a candidate donor/platform for rapid premium demos, Automatic Website Factory evaluation, Design Picker interaction donors and reusable motion/interaction extraction. Revalidate current pricing, plan limits, lock-in/export constraints and code ownership at any adoption decision.
+
+---
+
 ## 2026-09-06 — Cross-source software revision and master inventory
 
 ### Owner intent
