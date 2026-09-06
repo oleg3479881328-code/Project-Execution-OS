@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "962857059fbb88d891fa342a6369f6a4dbf657ba",
-  "generated_at": "2026-09-06T08:08:03-04:00",
-  "artifact_count": 575,
+  "repository_commit": "4eea94556963540a5e490887d833e1e12430b8da",
+  "generated_at": "2026-09-06T08:08:19-04:00",
+  "artifact_count": 576,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10621,6 +10621,24 @@
         "First Implementation Slice",
         "Second Slice",
         "Architecture Decision"
+      ]
+    },
+    {
+      "path": "projects/chatgpt-workspace-manager/UPDATE_SAFETY.md",
+      "title": "ChatGPT Workspace Manager — Update-Safe Owner Procedure",
+      "type": "project-artifact",
+      "domain": "chatgpt-workspace-manager",
+      "status": null,
+      "date": null,
+      "sha256": "eb2e6cd11bac9eb9440c8b317509e3f6a7d462cdee3cb6ead3126868b03185ac",
+      "headings": [
+        "ChatGPT Workspace Manager — Update-Safe Owner Procedure",
+        "Permanent installation",
+        "Routine update",
+        "Never do this for a normal update",
+        "Workspace backup",
+        "Workspace restore",
+        "Storage policy"
       ]
     },
     {
