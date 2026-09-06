@@ -6,7 +6,7 @@
 
 ## Current Status
 
-Architecture accepted. Slice 1 is implemented and browser-validated on the owner's real ChatGPT account. The v0.1.5 Update-Safe layer is implemented and machine-validated; final Chrome acceptance is pending.
+Architecture accepted. Slice 1 is implemented and browser-validated on the owner's real ChatGPT account. The v0.1.5 Update-Safe layer is implemented and fully machine-validated. Final owner-browser acceptance is the only remaining gate before Slice 2.
 
 ## Browser Acceptance Already Passed
 
@@ -23,7 +23,7 @@ Architecture accepted. Slice 1 is implemented and browser-validated on the owner
 
 Browser testing across multiple unpacked version folders showed that local metadata could be re-synced while hydrated message cache and owner-only test data from an earlier installation were not present in the next installation.
 
-The important correction is:
+The corrected lifecycle rule is:
 
 - stable manifest identity is necessary but not sufficient;
 - routine updates must not use Chrome `Remove`;
@@ -92,9 +92,11 @@ Restore flow:
 
 Invalid backup input is rejected before the database is modified.
 
-## v0.1.5 Machine Validation
+## Final v0.1.5 Machine Validation
 
-GitHub Actions `ChatGPT Workspace Manager CI` passed on 2026-09-06:
+Clean validation PR `#146` passed both required gates on 2026-09-06.
+
+### ChatGPT Workspace Manager CI — PASS
 
 - dependency install: PASS;
 - TypeScript: PASS;
@@ -108,14 +110,33 @@ GitHub Actions `ChatGPT Workspace Manager CI` passed on 2026-09-06:
 
 Build output size: approximately 324 KB unpacked.
 
-## Project Execution OS Integrity
+### Project Execution OS Integrity — PASS
 
-The first v0.1.5 validation PR exposed project-registration debt rather than extension-code failure:
+- project structure: PASS;
+- projects router integrity: PASS;
+- system context manifest: PASS;
+- completion contract: PASS;
+- hygiene persistence tests: PASS;
+- system hygiene audit: PASS.
 
-- missing `projects/chatgpt-workspace-manager/PROJECT_STATE.md`;
-- missing ChatGPT Workspace Manager route in `projects/ROUTER.md`.
+The earlier registration debt was fixed by adding:
 
-Both are now corrected. A fresh validation run is required to prove the overall Project Execution OS gate is green.
+- `projects/chatgpt-workspace-manager/PROJECT_STATE.md`;
+- ChatGPT Workspace Manager route in `projects/ROUTER.md`.
+
+## Artifact Inspection — PASS
+
+The final CI ZIP was unpacked and inspected directly.
+
+Confirmed in built `manifest.json`:
+
+- version `0.1.5`;
+- pinned manifest `key` present;
+- permissions: `storage`, `sidePanel`, `activeTab`, `scripting`, `unlimitedStorage`;
+- host permissions only for `chatgpt.com` and `chat.openai.com`;
+- Side Panel, background worker and content script present.
+
+Built sidepanel bundle contains `Backup workspace`, `Restore backup` and `pre-restore` safety flow.
 
 ## Canonical Project Files
 
