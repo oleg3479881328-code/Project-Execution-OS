@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "fc112b89ad3a44b8953dcab57e1a4f2c2119adf7",
-  "generated_at": "2026-09-06T13:35:13-04:00",
+  "repository_commit": "64d19af6002c7b2a4e9a1edc53ebc66fb8e09519",
+  "generated_at": "2026-09-06T13:57:57-04:00",
   "artifact_count": 581,
   "artifacts": [
     {
@@ -11410,12 +11410,12 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "dd3c17cd691f76aab3f6ce51146b99b8e46ee660e2f9d9333c247a3505c7269a",
+      "sha256": "6c3719c583756af2e61bbe949034118bab6b1bc6933cb8ad08ae938cc8bacefd",
       "headings": [
         "SOFT — PROJECT_STATE.md",
         "Status",
-        "Current Working Structure",
-        "Completed",
+        "Canonical Entry And Storage",
+        "Completed In First Revision",
         "Current Focus",
         "Next Safe Action",
         "Do Not Repeat / Constraints"
