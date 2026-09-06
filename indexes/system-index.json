@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "10aa228cfa752d138099b2d95c09b69a9d683da0",
-  "generated_at": "2026-09-06T13:58:33-04:00",
+  "repository_commit": "7bce4a924be9c264c62bd6d925370761c58fa939",
+  "generated_at": "2026-09-06T13:58:59-04:00",
   "artifact_count": 581,
   "artifacts": [
     {
@@ -11428,15 +11428,20 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "f6c6fb359c8325a5baf090745150dd67301b74364b5d4c5b56a750d02dbf5c4d",
+      "sha256": "2366d2e6192d072010b43d03a7df3bcb39e43b94b3d1ab212173bf69b0acaf0f",
       "headings": [
         "SOFT — latest log",
-        "2026-09-06 — Drive organization and re-entry bootstrap",
+        "2026-09-06 — Cross-source software revision and master inventory",
         "Owner intent",
-        "Changes completed",
-        "Technical note",
-        "Validation",
-        "Next action"
+        "Sources reviewed",
+        "Durable artifacts created",
+        "Main internal software families captured",
+        "Third-party software families captured",
+        "Duplicate / legacy findings",
+        "New-chat behavior changed",
+        "Project state synchronization",
+        "Next action",
+        "2026-09-06 — Drive organization and re-entry bootstrap"
       ]
     },
     {
