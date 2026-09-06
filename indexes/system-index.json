@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "85644521bab57086663d5a60b8eb855d715f56ea",
-  "generated_at": "2026-09-06T13:34:38-04:00",
-  "artifact_count": 579,
+  "repository_commit": "05f01f7db527bc2e01c181e8351093467a840888",
+  "generated_at": "2026-09-06T13:34:58-04:00",
+  "artifact_count": 580,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -11401,6 +11401,24 @@
         "Next Practical Step",
         "Key Decisions And Constraints",
         "Read Next"
+      ]
+    },
+    {
+      "path": "projects/soft/PROJECT_STATE.md",
+      "title": "SOFT — PROJECT_STATE.md",
+      "type": "project-artifact",
+      "domain": "soft",
+      "status": null,
+      "date": null,
+      "sha256": "dd3c17cd691f76aab3f6ce51146b99b8e46ee660e2f9d9333c247a3505c7269a",
+      "headings": [
+        "SOFT — PROJECT_STATE.md",
+        "Status",
+        "Current Working Structure",
+        "Completed",
+        "Current Focus",
+        "Next Safe Action",
+        "Do Not Repeat / Constraints"
       ]
     },
     {
