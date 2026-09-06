@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ba2677579f415a25a65de2eae71bffa14c879013",
-  "generated_at": "2026-09-06T09:10:32-04:00",
+  "repository_commit": "389ec650029b0417f6795ac504db44cc2c06d408",
+  "generated_at": "2026-09-06T09:10:59-04:00",
   "artifact_count": 577,
   "artifacts": [
     {
@@ -7795,23 +7795,27 @@
     },
     {
       "path": "docs/integrations/cline-glm-5-3-flash/README.md",
-      "title": "Cline + GLM-5.3-Flash Integration Candidate",
+      "title": "Cline + GLM-5.3-Flash Integration",
       "type": "system-standard",
       "domain": "system",
-      "status": "CANDIDATE / research-verified, not yet locally validated",
+      "status": "LOCALLY VALIDATED SECONDARY EXECUTOR",
       "date": null,
-      "sha256": "7e217a4f6c3890879a1d65feee1de87a9452718d498b8eea0aa1955f41d1bb3d",
+      "sha256": "9f79ee910af54507ef791211f66e3183378660f70d1da33f192571aa8daa3fe7",
       "headings": [
-        "Cline + GLM-5.3-Flash Integration Candidate",
+        "Cline + GLM-5.3-Flash Integration",
         "Purpose",
-        "Current route",
-        "Important boundary",
+        "Canonical validated route",
+        "Validated environment",
+        "Smoke-test evidence",
+        "Billing UI rule",
+        "Recovery procedure",
+        "Do not use these routes when restoring the free setup",
+        "Available Cline agent capabilities",
         "Intended Project Execution OS role",
-        "Model snapshot from the 2026-09-05 research pass",
-        "Benchmark rule",
+        "Important boundary",
         "Availability rule",
-        "Validation plan",
-        "Canonical research note",
+        "Promotion test still pending",
+        "Canonical research and evidence note",
         "Related nodes",
         "Final rule"
       ]
