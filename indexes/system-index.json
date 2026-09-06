@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4eea94556963540a5e490887d833e1e12430b8da",
-  "generated_at": "2026-09-06T08:08:19-04:00",
-  "artifact_count": 576,
+  "repository_commit": "ac04b42cea1dd175d558c7e01f53c9e55aafb93a",
+  "generated_at": "2026-09-06T08:09:27-04:00",
+  "artifact_count": 577,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10572,6 +10572,26 @@
         "Donor Strategy",
         "Acceptance Gate Before Implementation",
         "Immediate Next Action"
+      ]
+    },
+    {
+      "path": "projects/chatgpt-workspace-manager/PROJECT_STATE.md",
+      "title": "ChatGPT Workspace Manager — Project State",
+      "type": "project-artifact",
+      "domain": "chatgpt-workspace-manager",
+      "status": "in-progress",
+      "date": "2026-09-06",
+      "sha256": "afa0b7f988d06ca839b871e5da8000396737062f4dda76a0eac49c818bf6681a",
+      "headings": [
+        "ChatGPT Workspace Manager — Project State",
+        "Current Phase",
+        "Product Direction",
+        "Browser-Validated Slice 1",
+        "Update-Safety Decision",
+        "v0.1.5 Machine Validation",
+        "Active Files",
+        "Explicitly Deferred Until Slice 2",
+        "Next Practical Step"
       ]
     },
     {
