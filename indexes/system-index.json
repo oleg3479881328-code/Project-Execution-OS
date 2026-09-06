@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "9a44aaed116002d78abaf44a07748a0eb0d3f56a",
-  "generated_at": "2026-09-06T14:10:45-04:00",
-  "artifact_count": 582,
+  "repository_commit": "258fd48ba3dc0062e1b1d357b029a39721c6fa81",
+  "generated_at": "2026-09-06T15:43:23-04:00",
+  "artifact_count": 583,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10502,6 +10502,23 @@
         "Task packet",
         "Expected output",
         "MVP acceptance test"
+      ]
+    },
+    {
+      "path": "projects/aws/PROJECT.md",
+      "title": "AWS Project",
+      "type": "project-artifact",
+      "domain": "aws",
+      "status": null,
+      "date": null,
+      "sha256": "1b5a9bc566a8c8b34bc855e665e35ba4edfdd21386e2bb36d66caab40d13de8c",
+      "headings": [
+        "AWS Project",
+        "Status",
+        "Purpose",
+        "Canonical Current State",
+        "Key Operational Links",
+        "Project Rules"
       ]
     },
     {
