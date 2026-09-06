@@ -21,6 +21,7 @@ import type {
   WorkspaceConversation
 } from '../../src/core/models';
 import { chatGPTAdapter } from '../../src/providers/chatgpt/adapter';
+import BackupControls from './BackupControls';
 
 const VERSION = browser.runtime.getManifest().version;
 
@@ -217,7 +218,11 @@ export default function App() {
     setOfflineMode(next);
     await setSetting('offlineMode', next);
     setError(null);
-    setStatus(next ? 'Offline test mode enabled — live ChatGPT access blocked by the extension' : 'Offline test mode disabled — live ChatGPT access restored');
+    setStatus(
+      next
+        ? 'Offline test mode enabled — live ChatGPT access blocked by the extension'
+        : 'Offline test mode disabled — live ChatGPT access restored'
+    );
     await runHealth(false, next);
   }
 
@@ -307,7 +312,7 @@ export default function App() {
     anchor.href = url;
     anchor.download = `chatgpt-workspace-manager-diagnostics-${Date.now()}.json`;
     anchor.click();
-    URL.revokeObjectURL(url);
+    window.setTimeout(() => URL.revokeObjectURL(url), 1_000);
   }
 
   return (
@@ -448,9 +453,14 @@ export default function App() {
             <button className="primary" onClick={() => void runHealth()}>
               Run checks
             </button>
-            <button onClick={() => void toggleOfflineMode()}>{offlineMode ? 'Disable offline test' : 'Enable offline test'}</button>
+            <button onClick={() => void toggleOfflineMode()}>
+              {offlineMode ? 'Disable offline test' : 'Enable offline test'}
+            </button>
             <button onClick={() => void exportDiagnostics()}>Export diagnostics</button>
           </div>
+
+          <BackupControls extensionVersion={VERSION} />
+
           <div className="health-list">
             {capabilities.map((capability) => (
               <div key={capability.capability} className="health-row">
@@ -468,6 +478,7 @@ export default function App() {
             {offlineMode
               ? 'Offline test mode blocks live ChatGPT calls inside the extension; local cache remains active.'
               : 'Diagnostics exclude conversation titles and message content by default.'}
+            {' '}Runtime ID: {browser.runtime.id}. Update by replacing files in the permanent install folder and pressing Reload in chrome://extensions; never Remove for routine updates.
           </div>
         </section>
       )}
