@@ -1,52 +1,84 @@
 # SOFT — latest log
 
-## 2026-09-06 — Drive organization and re-entry bootstrap
+## 2026-09-06 — Cross-source software revision and master inventory
 
 ### Owner intent
 
-Make the SOFT Google Drive source self-explanatory so a new chat can immediately understand the project, know where material belongs, and recover the correct canonical sources without relying on prior chat context.
+Review everything we already have related to software and make SOFT the central discovery layer so future chats reuse existing work instead of rediscovering or rebuilding it.
 
-### Changes completed
+### Sources reviewed
 
-- Created top-level Drive routing folders under SOFT:
-  - `00 — PROJECT GUIDE`
-  - `01 — OUR SOFTWARE`
-  - `02 — THIRD-PARTY SOFTWARE`
-  - `90 — INBOX — TO SORT`
-- Organized project-control area under `00 — PROJECT GUIDE`.
-- Created `SOFT — DRIVE GUIDE — READ FIRST` with:
-  - project purpose;
-  - new-chat entry sequence;
-  - folder meanings;
-  - file placement rules;
-  - naming guidance;
-  - source-of-truth precedence;
-  - key project links.
-- Created `SOFT — SOURCE MAP` with explicit roles for:
-  - Project Execution OS global START_HERE;
-  - canonical SOFT `PROJECT.md`;
-  - SOFT Drive root;
-  - OUR SOFTWARE / THIRD-PARTY SOFTWARE / INBOX sections;
-  - official vendor sources;
-  - our verified tests;
-  - community evidence;
-  - chat/model memory.
-- Updated `projects/soft/PROJECT.md` to match the actual Drive structure.
-- Created `PROJECT_STATE.md` because SOFT now has meaningful execution state.
+- active software projects registered in Project Execution OS;
+- current project entry/state for key internal software projects;
+- historical Google Drive `Projects` area;
+- targeted Drive searches for extensions, extractors, collectors, NVIDIA, Graphify, Vercel, Netlify, Website Intelligence and related tooling;
+- relevant File Library specifications, bookmarks and software/reference corpora.
 
-### Technical note
+### Durable artifacts created
 
-The Google Drive connector can create folders but its delete action rejected folder URLs. Two initially unnecessary helper folders were therefore repurposed into useful project-control routing nodes instead of being left as garbage:
-- `01 — GUIDES & INDEXES`
-- `02 — SOURCE MAP`
+- `SOFT — MASTER SOFTWARE INVENTORY`
+  - https://docs.google.com/document/d/1yTWfazVPhs-AWdSsvS4Q6xyNd7bXKtqi6EvrmQMdAOk/edit
+- `SOFT — OUR SOFTWARE INDEX`
+  - https://docs.google.com/document/d/1nzxaCsFTF7Z7VGFfYziysByeR63eMOELpDT5rBcTDHk/edit
+- `SOFT — THIRD-PARTY SOFTWARE INDEX`
+  - https://docs.google.com/document/d/1C-F_ukN2AlryP-_FxlJqFIKSbKjat8kzzMw8HsaSPH0/edit
+- `SOFT — DUPLICATES & LEGACY CLEANUP QUEUE`
+  - https://docs.google.com/document/d/1lBpoB-bbj4ihk6VW_gny_XbdfYCVD8Im0u6z3OTaBuc/edit
 
-### Validation
+### Main internal software families captured
 
-- Main Guide is stored under the SOFT project-control tree.
-- Source Map is stored under the source-map tree.
-- Canonical project links in Drive and GitHub point to the same SOFT project.
-- No product-specific folders were created because no concrete product material has yet been placed into SOFT.
+- Project Execution OS;
+- ChatGPT Workspace Manager;
+- TikTok Research Sorter;
+- Design Picker;
+- AI Hands;
+- Visitor Analytics Control Plane;
+- Reels Factory MVP;
+- Personal Secretary OS;
+- Automatic Website Factory;
+- Universal Site Design Extractor;
+- Olga Instagram Collector;
+- Simple Voice Chat Extension / Звонилка;
+- Website Intelligence / Site Baseline Scanner;
+- Graphify-related integration/material;
+- google-memory;
+- ClientCollector;
+- VideoReelsCombain;
+- `_repo-analysis`, `WEB`, `VIDEO` legacy workspaces;
+- old SOLANA Drive material linked to its newer external canonical routing.
+
+### Third-party software families captured
+
+AI/development, hosting/infrastructure, analytics, design/dev donors, media/3D/video, browser/research/ingestion and transcription tools already used or researched. The index distinguishes adopted/current-use solutions from donors/candidates.
+
+### Duplicate / legacy findings
+
+- multiple Simple Voice Chat copies plus a broken backup;
+- multiple Netlify folders;
+- multiple Vercel folders;
+- repeated Graphify standards/folders;
+- multiple generic `extractor` folders;
+- repeated PEOS snapshot files such as WORKFLOW_LOG/HISTORY/README/chrome-extension documentation.
+
+No destructive cleanup was performed. Cleanup requires canonical comparison first and explicit owner approval before deletion/consolidation.
+
+### New-chat behavior changed
+
+`SOFT — DRIVE GUIDE — READ FIRST` now routes software work through:
+
+`Master Software Inventory → Our/Third-Party Index → canonical source → Existing Solution First → fresh research/build only if still necessary`.
+
+### Project state synchronization
+
+- `PROJECT.md` updated with inventory links and routing.
+- `PROJECT_STATE.md` updated to mark first cross-source inventory complete and continuous intake/canonicalization active.
 
 ### Next action
 
-Route the next real software item through Existing Solution First, then classify it into OUR SOFTWARE, THIRD-PARTY SOFTWARE, or temporary INBOX only when unresolved.
+Continue adding every meaningful software finding to the existing SOFT inventory/index. For legacy items, canonicalize one family at a time; do not mass-clean Drive.
+
+---
+
+## 2026-09-06 — Drive organization and re-entry bootstrap
+
+Initial SOFT Drive routing, Drive Guide and Source Map were created before the cross-source revision. That bootstrap is now superseded operationally by the Master Software Inventory routing above, while the original Drive structure remains current.
