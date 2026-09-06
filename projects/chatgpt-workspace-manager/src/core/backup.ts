@@ -56,6 +56,14 @@ export async function createWorkspaceBackup(extensionVersion: string): Promise<W
   };
 }
 
+export function workspaceBackupCounts(backup: WorkspaceBackup): WorkspaceBackupCounts {
+  return {
+    conversations: backup.data.conversations.length,
+    messages: backup.data.messages.length,
+    ownerMetadata: backup.data.ownerMetadata.length
+  };
+}
+
 export async function restoreWorkspaceBackup(input: unknown): Promise<WorkspaceBackupCounts> {
   const backup = validateWorkspaceBackup(input);
 
@@ -67,13 +75,11 @@ export async function restoreWorkspaceBackup(input: unknown): Promise<WorkspaceB
     db.settings,
     db.capabilities,
     async () => {
-      await Promise.all([
-        db.conversations.clear(),
-        db.messages.clear(),
-        db.ownerMetadata.clear(),
-        db.settings.clear(),
-        db.capabilities.clear()
-      ]);
+      await db.conversations.clear();
+      await db.messages.clear();
+      await db.ownerMetadata.clear();
+      await db.settings.clear();
+      await db.capabilities.clear();
 
       if (backup.data.conversations.length) await db.conversations.bulkPut(backup.data.conversations);
       if (backup.data.messages.length) await db.messages.bulkPut(backup.data.messages);
@@ -81,24 +87,21 @@ export async function restoreWorkspaceBackup(input: unknown): Promise<WorkspaceB
       if (backup.data.settings.length) await db.settings.bulkPut(backup.data.settings);
       if (backup.data.capabilities.length) await db.capabilities.bulkAdd(backup.data.capabilities);
 
-      await db.settings.put({ key: 'offlineMode', value: false, updatedAt: Date.now() });
+      const restoredAt = Date.now();
+      await db.settings.put({ key: 'offlineMode', value: false, updatedAt: restoredAt });
       await db.settings.put({
         key: 'lastRestore',
         value: {
-          restoredAt: Date.now(),
+          restoredAt,
           backupExportedAt: backup.exportedAt,
           sourceExtensionVersion: backup.extensionVersion
         },
-        updatedAt: Date.now()
+        updatedAt: restoredAt
       });
     }
   );
 
-  return {
-    conversations: backup.data.conversations.length,
-    messages: backup.data.messages.length,
-    ownerMetadata: backup.data.ownerMetadata.length
-  };
+  return workspaceBackupCounts(backup);
 }
 
 export function validateWorkspaceBackup(input: unknown): WorkspaceBackup {
@@ -110,6 +113,20 @@ export function validateWorkspaceBackup(input: unknown): WorkspaceBackup {
   }
   if (candidate.formatVersion !== WORKSPACE_BACKUP_VERSION) {
     throw new Error(`BACKUP_VERSION_UNSUPPORTED: Expected format version ${WORKSPACE_BACKUP_VERSION}.`);
+  }
+  if (typeof candidate.exportedAt !== 'string' || !candidate.exportedAt) {
+    throw new Error('BACKUP_INVALID: Missing exportedAt.');
+  }
+  if (typeof candidate.extensionVersion !== 'string' || !candidate.extensionVersion) {
+    throw new Error('BACKUP_INVALID: Missing extensionVersion.');
+  }
+  if (typeof candidate.dbSchemaVersion !== 'number' || !Number.isFinite(candidate.dbSchemaVersion)) {
+    throw new Error('BACKUP_INVALID: Missing dbSchemaVersion.');
+  }
+  if (candidate.dbSchemaVersion > DB_SCHEMA_VERSION) {
+    throw new Error(
+      `BACKUP_DB_NEWER: Backup DB schema ${candidate.dbSchemaVersion} is newer than supported schema ${DB_SCHEMA_VERSION}.`
+    );
   }
   if (!candidate.data || typeof candidate.data !== 'object') {
     throw new Error('BACKUP_INVALID: Missing data section.');
@@ -125,6 +142,46 @@ export function validateWorkspaceBackup(input: unknown): WorkspaceBackup {
   ];
   for (const [name, value] of arrays) {
     if (!Array.isArray(value)) throw new Error(`BACKUP_INVALID: data.${name} must be an array.`);
+  }
+
+  for (const conversation of data.conversations) {
+    if (!conversation || typeof conversation !== 'object' || typeof conversation.id !== 'string' || !conversation.id) {
+      throw new Error('BACKUP_INVALID: Conversation record missing id.');
+    }
+    if (conversation.provider !== 'chatgpt') {
+      throw new Error('BACKUP_INVALID: Unsupported conversation provider.');
+    }
+  }
+
+  for (const message of data.messages) {
+    if (
+      !message ||
+      typeof message !== 'object' ||
+      typeof message.key !== 'string' ||
+      !message.key ||
+      typeof message.conversationId !== 'string' ||
+      !message.conversationId
+    ) {
+      throw new Error('BACKUP_INVALID: Message record missing key or conversationId.');
+    }
+  }
+
+  for (const owner of data.ownerMetadata) {
+    if (!owner || typeof owner !== 'object' || typeof owner.conversationId !== 'string' || !owner.conversationId) {
+      throw new Error('BACKUP_INVALID: Owner metadata record missing conversationId.');
+    }
+  }
+
+  for (const setting of data.settings) {
+    if (!setting || typeof setting !== 'object' || typeof setting.key !== 'string' || !setting.key) {
+      throw new Error('BACKUP_INVALID: Setting record missing key.');
+    }
+  }
+
+  for (const capability of data.capabilities) {
+    if (!capability || typeof capability !== 'object' || typeof capability.capability !== 'string') {
+      throw new Error('BACKUP_INVALID: Capability record missing capability.');
+    }
   }
 
   return candidate as WorkspaceBackup;
