@@ -20,6 +20,7 @@ A project may route onward through its own routers, registries, indexes, collect
 
 - Green Apple / `20260516-green-apple` -> `20260516-green-apple/PROJECT.md`
 - AI Hands -> `ai-hands/PROJECT.md`
+- ChatGPT Workspace Manager -> `chatgpt-workspace-manager/PROJECT.md`
 - Codex -> `codex/PROJECT.md`
 - Design Picker -> `design-picker/PROJECT.md`
 - Personal Secretary OS / personal secretary / secretary / assistant mode -> `personal-secretary-os/PROJECT.md`
