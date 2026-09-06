@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "258fd48ba3dc0062e1b1d357b029a39721c6fa81",
-  "generated_at": "2026-09-06T15:43:23-04:00",
-  "artifact_count": 583,
+  "repository_commit": "7b57158ff6314c9173b2351e7fb2a42fe1cecdc8",
+  "generated_at": "2026-09-06T15:43:48-04:00",
+  "artifact_count": 584,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10502,6 +10502,28 @@
         "Task packet",
         "Expected output",
         "MVP acceptance test"
+      ]
+    },
+    {
+      "path": "projects/aws/CURRENT_STATE.md",
+      "title": "AWS — Current State",
+      "type": "project-artifact",
+      "domain": "aws",
+      "status": null,
+      "date": null,
+      "sha256": "aa8c5909538ff2f6e16ee47030d5da3c7c0c496a57db0141b00db245eba4fc69",
+      "headings": [
+        "AWS — Current State",
+        "Account / Region / Credits",
+        "Explore AWS Rewards",
+        "Olga Polo Remote Workstation",
+        "EC2",
+        "Tailscale / Remote Access",
+        "Owner UX Target",
+        "Auto-stop Policy",
+        "Software Target On Remote Windows",
+        "Active Execution Task",
+        "Previous Cleanup Context"
       ]
     },
     {
