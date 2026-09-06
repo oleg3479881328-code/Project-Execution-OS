@@ -20,6 +20,18 @@ Preserve source URLs for video-production tools and workflows. Official document
 - https://www.remotion.dev/docs/
 - https://zulko.github.io/moviepy/
 
+## Blender / Programmable 3D/VFX
+
+- https://www.blender.org/
+- https://docs.blender.org/api/current/
+- https://pimenov.ai/knowledge/blender-codex-pervaya-3d-scena/
+- https://github.com/webita/blender-codex-mcp
+- https://github.com/bestmaa/codex-blender
+
+Research note:
+
+`knowledge-library/patterns/blender-codex-programmable-3d-vfx-backend-2026-09.md`
+
 ## Transcription / Speech
 
 - https://github.com/openai/whisper
