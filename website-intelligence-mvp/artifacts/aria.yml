@@ -1,0 +1,210 @@
+- banner:
+  - button "Open Menu"
+- main:
+  - article:
+    - article:
+      - heading "Romantic Floral Tented Wedding at Peterloon Estate" [level=1]
+      - link "Weddings":
+        - /url: /blog/category/Weddings
+      - paragraph:
+        - emphasis: Catherine & E.J.
+      - paragraph:
+        - link "As Seen in Ruffled Blog":
+          - /url: https://ruffledblog.com/beautiful-pastel-wedding-peterloon-estate/
+          - emphasis: As Seen in Ruffled Blog
+        - emphasis: "|"
+        - text: "Design and planning:"
+        - link "KMC Weddings & Events":
+          - /url: https://kmcweddings.com
+          - emphasis: KMC Weddings & Events
+        - emphasis: "|"
+        - text: "Venue:"
+        - link "Peterloon Estate in Cincinnati":
+          - /url: /peterloon-estate-wedding-photographer
+          - emphasis: Peterloon Estate in Cincinnati
+        - emphasis: "|"
+        - text: "Floral:"
+        - emphasis
+        - link "The Budding Florist":
+          - /url: https://www.thebuddingfloristcincy.com/
+          - emphasis: The Budding Florist
+      - img "Peterloon Estate Wedding"
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img "Peterloon Estate Wedding"
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img "Peterloon Estate Wedding"
+      - img
+      - img "Peterloon Estate Wedding"
+      - img
+      - img "Peterloon Estate Wedding"
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img "Peterloon Estate Wedding"
+      - img
+      - img
+      - img
+      - img "Peterloon Estate Wedding"
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img "Peterloon Estate Wedding"
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img "Peterloon Estate Wedding"
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img "Peterloon Estate Wedding"
+      - img
+      - img "Peterloon Estate Wedding"
+      - img "Peterloon Estate Custom Tented Wedding"
+      - img "Peterloon Estate Custom Tented Wedding"
+      - img "Peterloon Estate Custom Tented Wedding"
+      - img
+      - img "Peterloon Estate Custom Tented Wedding"
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img "Peterloon Estate Custom Tented Wedding"
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img "Peterloon Estate Custom Tented Wedding"
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - img
+      - 'heading "Vendors: Photographer: Brittany Bays Planner: KMC Weddings & Events Venue: Peterloon Estate Florist: The Budding Florist Cincy Videography: Kayla & Alex Weddings Rentals: All Occasions Event Rental, Aiden & Grace, Fox Wedding Designs Stationery: Poeme Catering: Jeff Thomas Catering Cake: A Spoon Fulla Sugar Hair & Makeup: AV Beauty Bar Menswear: Generation Tux Bridal Gown Shop: Marie Gabriel Couture Bridal Bridal Gown Designer: Nicole Milano Engagement and Wedding Rings: Tiffany’s" [level=2]'
+      - link "Peterloon Estate":
+        - /url: /blog/tag/Peterloon+Estate
+      - text: •
+      - link "Cincinnati":
+        - /url: /blog/tag/Cincinnati
+- contentinfo:
+  - link:
+    - /url: /home
+  - link:
+    - /url: /home
+  - heading "Menu" [level=3]:
+    - emphasis: Menu
+  - img
+  - heading "Home" [level=4]:
+    - link "Home":
+      - /url: /home
+  - heading "About" [level=4]:
+    - link "About":
+      - /url: /about
+  - heading "Weddings" [level=4]:
+    - link "Weddings":
+      - /url: /weddings
+  - heading "Proposals" [level=4]:
+    - link "Proposals":
+      - /url: /proposals
+  - heading "Couples" [level=4]:
+    - link "Couples":
+      - /url: /couples
+  - heading "Editorial" [level=4]:
+    - link "Editorial":
+      - /url: /cincinnati-portrait-photographer
+  - heading "Blog" [level=4]:
+    - link "Blog":
+      - /url: /blog
+  - link "Contact":
+    - /url: /contact
+  - heading "Read the Reviews" [level=4]:
+    - link "Read the Reviews":
+      - /url: https://www.google.com/search?q=Brittany+Bays+Photography&stick=H4sIAAAAAAAA_-NgU1I1qLAwSEk2MExNTE1LSrM0MUqzMqgwTjJNMjdLNDKxSDE3MjFPXsQq6VSUWVKSmFep4JRYWawQkJFfkp9elFiQUQkAhYFX9EUAAAA&hl=en&mat=CdkRjOVNESqJElcBqiIDwvt27CR8KXyaHaRlhdVHxQXiRzVlL-3Fk4Qo0c0i5h9Tlz8weit75RSPhZFZ-DAaJ41fAFjIv7X3XHAYxeSC0vXTZ8Y8eiZDAiqnve0UX2j1dKM&authuser=0#mpd=~9883731358479290841/customers/reviews
+  - heading "Featured venues" [level=4]:
+    - link "Featured venues":
+      - /url: /venues
+  - navigation:
+    - link "Instagram":
+      - /url: https://www.instagram.com/brittanybaysphotography/
+      - img
+    - link "Facebook":
+      - /url: https://www.facebook.com/BrittanyBaysPhotography
+      - img
+  - separator
+  - heading "Newly Engaged?" [level=2]
+  - paragraph:
+    - emphasis: Drop your email below to receive my complimentary wedding planning guide full of expert tips and links to my favorite Cincinnati vendors.
+  - group:
+    - textbox "First Name"
+    - textbox "Last Name"
+  - textbox "Email Address"
+  - button "→"
+  - paragraph
+  - paragraph:
+    - emphasis: Brittany Bays is a fine art editorial wedding photographer capturing magnificent weddings, proposals, portraits and engagements in Cincinnati, Ohio and beyond.
+  - separator
+  - paragraph:
+    - emphasis: © Brittany Bays Photography |
+    - link "Cincinnati Wedding Photographers":
+      - /url: /cincinnati-wedding-photographer
+      - emphasis: Cincinnati Wedding Photographers
+    - emphasis: ‍ ‍
+    - text: "|"
+    - link "Privacy Policy":
+      - /url: /privacy-policy
+      - emphasis: Privacy Policy
+  - img
