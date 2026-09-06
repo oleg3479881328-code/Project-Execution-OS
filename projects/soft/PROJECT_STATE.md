@@ -5,10 +5,10 @@
 - Project: `SOFT`
 - State: active
 - Mode: collect + evaluate + reuse + build
-- Current phase: durable project re-entry and Drive organization initialized
+- Current phase: first cross-source software inventory completed; continuous intake + canonicalization
 - Last state update: 2026-09-06
 
-## Current Working Structure
+## Canonical Entry And Storage
 
 Canonical project entrypoint:
 - `projects/soft/PROJECT.md`
@@ -16,46 +16,58 @@ Canonical project entrypoint:
 Canonical Drive root:
 - https://drive.google.com/drive/folders/1wlTvVm6UN0yYEzz_hDRCtNfu3LpXl04M
 
-Drive routing:
-- `00 — PROJECT GUIDE` — orientation/source map
-- `01 — OUR SOFTWARE` — our software artifacts/materials
-- `02 — THIRD-PARTY SOFTWARE` — external software artifacts/materials
-- `90 — INBOX — TO SORT` — temporary intake only
-
-Primary Drive orientation document:
+Primary Drive orientation:
 - https://docs.google.com/document/d/1DAErwDeXGAD6u7nqUn1dMFMui3LJsmbLw23cJUgsB-E/edit
 
-Source map:
+Master Software Inventory:
+- https://docs.google.com/document/d/1yTWfazVPhs-AWdSsvS4Q6xyNd7bXKtqi6EvrmQMdAOk/edit
+
+Our Software Index:
+- https://docs.google.com/document/d/1nzxaCsFTF7Z7VGFfYziysByeR63eMOELpDT5rBcTDHk/edit
+
+Third-Party Software Index:
+- https://docs.google.com/document/d/1C-F_ukN2AlryP-_FxlJqFIKSbKjat8kzzMw8HsaSPH0/edit
+
+Duplicates & Legacy Cleanup Queue:
+- https://docs.google.com/document/d/1lBpoB-bbj4ihk6VW_gny_XbdfYCVD8Im0u6z3OTaBuc/edit
+
+Source Map:
 - https://docs.google.com/document/d/1qsoAXlHiZ-8W6_vzxTD2rNrZApBgfZfZRUWBNXQ0oCQ/edit
 
-## Completed
+## Completed In First Revision
 
-- SOFT registered in `projects/ROUTER.md`.
-- Canonical `PROJECT.md` created and updated.
-- SOFT Drive folder created under the existing software `Projects` area.
-- Minimum classification structure created in Drive.
-- New-chat Drive Guide created with explicit entry, placement and precedence rules.
-- Source Map created to prevent confusion between GitHub, Drive, official sources, our tests and chat/model memory.
+- Reviewed active software projects registered in Project Execution OS.
+- Reviewed the historical Google Drive `Projects` area and targeted software/tool searches.
+- Reviewed relevant File Library software specifications and AI/dev/media tool corpora.
+- Built one Master Software Inventory with status labels and canonical links.
+- Built separate indexes for our software and third-party software.
+- Created a no-delete cleanup queue for duplicate/legacy material.
+- Added legacy discoveries such as Simple Voice Chat, Graphify, google-memory, ClientCollector, VideoReelsCombain, generic WEB/VIDEO workspaces and old SOLANA material.
+- Recorded duplicate families including multiple Netlify, Vercel, Graphify and extractor copies.
+- Updated the Drive Guide so new chats enter through the inventory before doing fresh software research.
 
 ## Current Focus
 
-Start using SOFT for actual software intake while preserving existing canonical project/repository ownership where it already exists.
+Use SOFT as the discovery/control plane for all software-related work while leaving code and live project state in their existing canonical repositories/projects.
+
+Second focus: gradually canonicalize legacy items without destructive cleanup until each duplicate family has been compared.
 
 ## Next Safe Action
 
-On the next software item:
-1. Existing Solution First.
-2. Determine whether an existing specific project/repository already owns it.
-3. If ours and no narrower canonical location exists, route durable material to `01 — OUR SOFTWARE`.
-4. If third-party, route durable material to `02 — THIRD-PARTY SOFTWARE`.
-5. Use `90 — INBOX — TO SORT` only when classification is genuinely unresolved.
-6. Create product-specific subfolders only when real material exists.
+For every new software-related request:
+1. Enter through Project Execution OS.
+2. Open SOFT Master Software Inventory.
+3. Check Our Software Index or Third-Party Software Index.
+4. Follow the canonical project/source when one exists.
+5. Apply Existing Solution First before fresh research or new implementation.
+6. Capture meaningful new findings back into the relevant SOFT index/inventory.
+7. If touching a legacy/duplicate item, open the Cleanup Queue first.
 
 ## Do Not Repeat / Constraints
 
-- Do not create a parallel SOFT source-code repository merely because SOFT is an umbrella project.
-- Do not duplicate canonical source code or live state from existing software projects.
-- Do not scatter durable artifacts into Drive root.
-- Do not use chat history as project memory.
-- Do not create hypothetical empty product trees.
+- Do not create a parallel SOFT source-code repository just to centralize software.
+- Do not copy canonical source code/live state into SOFT when a narrower project already owns it.
+- Do not delete or consolidate legacy Drive copies before canonical comparison and explicit owner approval for destructive cleanup.
+- Do not treat historical installed-software lists as current machine truth without local revalidation.
+- Do not perform fresh third-party research if the existing SOFT record already answers the question, except when time-sensitive facts require current official verification.
 - Preserve source links and verification status for third-party claims.
