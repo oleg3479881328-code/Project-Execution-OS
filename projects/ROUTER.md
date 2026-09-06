@@ -18,6 +18,7 @@ A project may route onward through its own routers, registries, indexes, collect
 
 ## Registered Projects
 
+- AWS / AWS infrastructure / Olga Polo remote workstation -> `aws/PROJECT.md`
 - Green Apple / `20260516-green-apple` -> `20260516-green-apple/PROJECT.md`
 - AI Hands -> `ai-hands/PROJECT.md`
 - ChatGPT Workspace Manager -> `chatgpt-workspace-manager/PROJECT.md`
@@ -74,7 +75,7 @@ Verify the target exists before registering it.
 
 `START_HERE.md` is the global door.
 
-`docs/ROUTER.md` is the global live map.
+`docs/ROUTER.md` is the projects-level map.
 
 This file is the projects-level map.
 
