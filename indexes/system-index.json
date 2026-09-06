@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "389ec650029b0417f6795ac504db44cc2c06d408",
-  "generated_at": "2026-09-06T09:10:59-04:00",
-  "artifact_count": 577,
+  "repository_commit": "719eb00a40e8e3f38a1e04da1e992c51e835f9f0",
+  "generated_at": "2026-09-06T11:54:26-04:00",
+  "artifact_count": 578,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8333,6 +8333,30 @@
         "Related Existing Standard",
         "Required Integration Follow-Up",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "knowledge-library/patterns/blender-codex-programmable-3d-vfx-backend-2026-09.md",
+      "title": "Blender + Codex as Programmable 3D/VFX Backend",
+      "type": "knowledge-entry",
+      "domain": "knowledge:patterns",
+      "status": "candidate reusable pattern — validation required",
+      "date": null,
+      "sha256": "b0ac4af8ebcbe27435cb32aa5f169cf7b5c82afff55b1936957c10e11afb9672",
+      "headings": [
+        "Blender + Codex as Programmable 3D/VFX Backend",
+        "Core Finding",
+        "Existing-Solution-First Decision",
+        "Why This Matters",
+        "Recommended Hybrid Stack",
+        "Example Relevance — Champagne Video",
+        "Validation Gates",
+        "First Local Validation",
+        "Hardware Note",
+        "MCP Boundary",
+        "Promotion Rule",
+        "Sources",
+        "Final Decision"
       ]
     },
     {
