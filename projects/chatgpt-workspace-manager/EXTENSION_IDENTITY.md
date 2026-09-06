@@ -2,27 +2,48 @@
 
 ## Decision
 
-Starting with v0.1.4, the private unpacked extension uses a pinned manifest `key` so Chrome derives the same extension ID regardless of which folder the unpacked build is loaded from.
+Starting with v0.1.4, the private unpacked extension uses a pinned manifest `key` so Chrome derives the same extension ID for every build.
 
 Expected stable Chrome extension ID:
 
 `ejpgnlcdfbbjkhlnbfonplngcfcjmbaa`
 
-## Why
+## Important distinction
 
-Before v0.1.4, each version was commonly extracted into a different folder and loaded as a fresh unpacked extension. Chrome can therefore assign a different unpacked extension origin/ID, which also means a different extension IndexedDB origin. The browser acceptance run exposed the consequence: metadata could be re-synced, but locally hydrated messages and owner-only metadata from an earlier installation were not present in the new installation.
+A stable ID protects the extension origin across builds, but it does **not** make uninstall/reinstall a safe update procedure. Removing an extension can remove its extension-owned local storage. Therefore the update contract is stricter than “same ID”.
 
-## Rule
+## Frozen update rule starting with v0.1.5
 
-- Do not change the manifest `key` unless intentionally creating a new extension identity.
-- Treat the `key` as public identity material, not a secret.
-- Future unpacked builds may be loaded from different folders while retaining the same extension ID.
-- The transition to v0.1.4 is a one-time identity reset from prior path-derived development IDs.
-- After v0.1.4, owner-local IndexedDB state is expected to survive normal version updates as long as Chrome recognizes the same pinned extension ID.
+1. Keep one permanent install directory, recommended:
+   `C:\ChatGPT-Workspace-Manager\`
+2. Load that directory once with `Load unpacked`.
+3. Before an update, use `Health -> Backup workspace`.
+4. Extract the new build to a temporary directory.
+5. Copy/replace the new build files into the same permanent install directory.
+6. Open `chrome://extensions` and press `Reload` on ChatGPT Workspace Manager.
+7. Never use `Remove` for a routine version update.
+
+The pinned manifest key remains a second line of protection against accidental ID drift.
+
+## Storage protection
+
+Starting with v0.1.5 the manifest also requests `unlimitedStorage` because this owner tool may keep a large IndexedDB cache and future search indexes.
+
+The extension also provides full Workspace Backup/Restore:
+
+- provider conversation metadata;
+- hydrated/cached messages;
+- favorites, notes and owner metadata;
+- settings except transient Offline test state;
+- capability/health history.
+
+Restore validates the backup before replacing the database and downloads a pre-restore safety backup of the current Workspace first.
 
 ## Acceptance
 
-1. Load v0.1.4 and confirm Chrome reports extension ID `ejpgnlcdfbbjkhlnbfonplngcfcjmbaa`.
-2. Sync conversations, hydrate one conversation, create a test favorite/note.
-3. Load a later build from a different folder.
-4. Confirm the extension ID remains `ejpgnlcdfbbjkhlnbfonplngcfcjmbaa` and the local data is still present.
+1. Install v0.1.5 from the permanent folder and confirm ID `ejpgnlcdfbbjkhlnbfonplngcfcjmbaa`.
+2. Sync conversations, hydrate one conversation, add a favorite and note.
+3. Export Workspace backup.
+4. Update a later build by replacing files in the same permanent folder and pressing `Reload`, without `Remove`.
+5. Confirm ID, local metadata and hydrated messages remain present.
+6. Restore the exported backup into a disposable/test state and confirm data round-trips correctly.
