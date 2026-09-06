@@ -91,6 +91,43 @@ Flow:
 
 `video -> transcript -> phrase selection -> translation -> context extraction -> clip bounds -> card image/context -> save`
 
+## Stack 7 — Codex + Blender Programmable 3D/VFX
+
+Status: candidate — local validation required.
+
+Use when generative video alone does not provide enough deterministic control over cameras, 3D objects, lighting, particles, depth, repeatable animation, or compositing layers.
+
+Default flow:
+
+`Codex local -> Python / bpy -> Blender CLI/background -> .blend + preview/control frames -> rendered frames -> ffmpeg -> final video`
+
+Recommended hybrid flow:
+
+`AI generation / ComfyUI -> Blender -> ffmpeg`
+
+Responsibilities:
+
+- AI / ComfyUI: generation, cleanup, segmentation, enhancement and stylistic layers;
+- Blender: camera, geometry, animation, 3D assets, lighting, particles, depth and deterministic VFX;
+- ffmpeg: frame/video assembly, transcode and delivery.
+
+Existing-solution-first rule:
+
+- start with Blender's official Python API and CLI/background execution;
+- do not build a custom Blender bridge first;
+- evaluate existing Blender/Codex MCP projects only when live scene inspection, viewport screenshots, iterative scene mutation, or in-process execution is needed;
+- promote this stack to a validated capability only after a reproducible local test produces a valid `.blend` and preview render.
+
+Validation gates:
+
+1. one static preview frame;
+2. several control frames;
+3. full animation only after visual correctness is established.
+
+Canonical research note:
+
+`knowledge-library/patterns/blender-codex-programmable-3d-vfx-backend-2026-09.md`
+
 ## AI Review Rules
 
 Before publishing:
