@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "0bfd8619f03a734dda0824279b7ab999d3059b5f",
-  "generated_at": "2026-09-06T08:10:42-04:00",
+  "repository_commit": "3ca961f2c8dd87120c2992151fe18449024f8000",
+  "generated_at": "2026-09-06T08:13:08-04:00",
   "artifact_count": 577,
   "artifacts": [
     {
@@ -10668,7 +10668,7 @@
       "domain": "chatgpt-workspace-manager",
       "status": null,
       "date": null,
-      "sha256": "7e3cc726774b92fe9b9023e1cd71d2a3eef104ca4709e78acfde30a705a8d029",
+      "sha256": "63d154b7aa128475be7cc9360766c3512440f20aa4d0683682d85381368ef4ef",
       "headings": [
         "ChatGPT Workspace Manager — Latest State",
         "Date",
@@ -10681,8 +10681,10 @@
         "Storage protection",
         "Full Workspace Backup",
         "Full Workspace Restore",
-        "v0.1.5 Machine Validation",
-        "Project Execution OS Integrity",
+        "Final v0.1.5 Machine Validation",
+        "ChatGPT Workspace Manager CI — PASS",
+        "Project Execution OS Integrity — PASS",
+        "Artifact Inspection — PASS",
         "Canonical Project Files",
         "Current Acceptance Boundary",
         "Next Browser Acceptance"
