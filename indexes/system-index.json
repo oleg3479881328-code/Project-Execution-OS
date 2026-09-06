@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b99494736f90e681f58f0446c6e3ebad14a53573",
-  "generated_at": "2026-09-06T14:10:20-04:00",
+  "repository_commit": "9a44aaed116002d78abaf44a07748a0eb0d3f56a",
+  "generated_at": "2026-09-06T14:10:45-04:00",
   "artifact_count": 582,
   "artifacts": [
     {
@@ -11448,9 +11448,13 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "2366d2e6192d072010b43d03a7df3bcb39e43b94b3d1ab212173bf69b0acaf0f",
+      "sha256": "db2523d4d0c47f87dc1d4e4b6206e9b0c4854557856cbe1617f7765476fc1f82",
       "headings": [
         "SOFT — latest log",
+        "2026-09-06 — Framer platform + interaction donor capture",
+        "Captured",
+        "Durable locations",
+        "Current decision",
         "2026-09-06 — Cross-source software revision and master inventory",
         "Owner intent",
         "Sources reviewed",
