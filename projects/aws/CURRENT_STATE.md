@@ -7,9 +7,9 @@ Last updated: 2026-09-06
 - AWS account ID: `102885960265`
 - Primary region: `us-east-2` (Ohio)
 - Account plan preflight reported by Codex: `PAID / ACTIVE`
-- AWS credits visible in Console Home after Explore AWS reward completion: `$60.00`
-- Current month cost at the time of capture: `$0.00`
-- Forecast shown at the time of capture: approximately `$0.12`
+- AWS credits / account-plan balance reported after workstation validation: `$60`
+- Current month cost at the earlier capture point: `$0.00`
+- Forecast shown at that earlier capture point: approximately `$0.12`
 - `Days remaining` widget was unable to load in Console Home.
 - October 4, 2026 was confirmed as the completion deadline for the Bedrock Explore AWS reward activity; do not treat that date as the Free Plan expiration date without separate account-plan evidence.
 
@@ -45,6 +45,7 @@ Purpose: provide a familiar remote Windows/browser environment with fast datacen
 - AWS Security Group inbound rules: none
 - Dedicated SSM role/profile used for remote management
 - Dedicated EC2 key pair created; private PEM is stored locally outside repositories and must never be committed or pasted into chat/issues.
+- Final validated state on 2026-09-06: `stopped`.
 
 ### Tailscale / Remote Access
 
@@ -54,15 +55,22 @@ https://console.tailscale.com/admin/machines
 Tailnet/account used during setup:
 `oleg3479881328@gmail.com`
 
-Known machines at capture time:
-- Local laptop: `victus` — Tailscale IPv4 `100.94.62.103` — Windows 11 25H2 — Connected
-- AWS Windows server: `ec2amaz-2ein5f9` — Tailscale IPv4 `100.81.114.123` — Windows Server 2022 — Connected
+Known machines:
+- Local laptop: `victus` — Tailscale IPv4 `100.94.62.103`
+- AWS Windows server: `EC2AMAZ-2EIN5F9` — Tailscale IPv4 `100.81.114.123`
+
+Validated behavior:
+- Remote Windows is authenticated to the same tailnet.
+- Tailscale runs unattended on the AWS Windows server.
+- Full EC2 `stop` / `start` validation completed successfully.
+- After a full stop/start, Tailscale automatically reconnected without requiring a new interactive login.
+- The remote Tailscale address remained `100.81.114.123` after the stop/start test.
 
 Security design:
 - Do not expose TCP 3389 publicly.
 - AWS Security Group remains with no inbound rules.
-- Windows RDP firewall scope on the remote machine is restricted to the Tailscale address range/private path.
-- RDP target should be the Tailscale/private address, currently `100.81.114.123`, not the EC2 public IP.
+- Windows RDP firewall scope is restricted to Tailscale range `100.64.0.0/10`.
+- RDP target is the Tailscale/private address `100.81.114.123`, not the EC2 public IP.
 - This allows access from any physical network/location as long as the user's device is authenticated to the Tailscale tailnet.
 
 ### Owner UX Target
@@ -91,20 +99,29 @@ Launcher target behavior:
 - Google Chrome
 - Google Drive for desktop, intended in Stream files mode after owner sign-in
 - 7-Zip
-- Olga Polo transfer folder, e.g. `C:\OlgaPolo-Transfer\Downloads`
+- Olga Polo transfer folder: `C:\OlgaPolo-Transfer\Downloads`
 
-Do not store Google/Wix/PassGallery passwords in project files or automation scripts.
+Provisioning rule:
+- unattended setup may install/configure software and infrastructure;
+- do not enter or store Google/Wix/PassGallery credentials during infrastructure provisioning;
+- owner signs into those services separately when needed.
 
-## Active Execution Task
+## Execution / Validation Report
 
-Current implementation / validation task:
+Canonical execution task:
 https://github.com/oleg3479881328-code/AI-Coordination-Hub/issues/3
 
-At this capture point:
-- local Tailscale was installed and authenticated;
-- remote Tailscale was installed and the AWS machine appeared online in the tailnet;
-- EC2 exists and is running during provisioning;
-- remaining work includes final software configuration, one-click launcher, idle-stop logic, start/connect/stop validation, and final state `STOPPED`.
+Final report:
+https://github.com/oleg3479881328-code/AI-Coordination-Hub/issues/3#issuecomment-5563266466
+
+Validated final state reported on 2026-09-06:
+- EC2 left `stopped`;
+- unattended Tailscale confirmed across full stop/start cycle;
+- no repeated Tailscale login required;
+- RDP available only via Tailscale/private overlay;
+- no public RDP exposure;
+- AWS Security Group has no inbound rules;
+- account-plan / credits balance reported as `$60`.
 
 ## Previous Cleanup Context
 
