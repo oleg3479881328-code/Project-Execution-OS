@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "cc31e5aa5bb0928553eac0f169f5eaa926c3ec13",
-  "generated_at": "2026-09-06T20:14:53-04:00",
+  "repository_commit": "ada9031dbd3169e59ea8a39031f9a182a5d69228",
+  "generated_at": "2026-09-06T21:12:09-04:00",
   "artifact_count": 584,
   "artifacts": [
     {
@@ -10511,7 +10511,7 @@
       "domain": "aws",
       "status": null,
       "date": null,
-      "sha256": "83277c187a2bbbe7e4e3ee6da2198297918765568d4a6a81d7fba469b69eddfc",
+      "sha256": "d110c4c1db77a8b8e0ae238986e4f658f4c00ca195c0f4bf32e2f7cbfd7c764d",
       "headings": [
         "AWS — Current State",
         "Account / Region / Credits",
@@ -10519,7 +10519,7 @@
         "Olga Polo Remote Workstation",
         "EC2",
         "Tailscale / Remote Access",
-        "Owner UX Target",
+        "Owner UX — Final Validated State",
         "Auto-stop Policy",
         "Software Target On Remote Windows",
         "Execution / Validation Report",
