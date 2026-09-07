@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2509d35bdcc08c13520aa246eef311b73a9f59ae",
-  "generated_at": "2026-09-06T15:44:03-04:00",
+  "repository_commit": "cc31e5aa5bb0928553eac0f169f5eaa926c3ec13",
+  "generated_at": "2026-09-06T20:14:53-04:00",
   "artifact_count": 584,
   "artifacts": [
     {
@@ -10511,7 +10511,7 @@
       "domain": "aws",
       "status": null,
       "date": null,
-      "sha256": "aa8c5909538ff2f6e16ee47030d5da3c7c0c496a57db0141b00db245eba4fc69",
+      "sha256": "83277c187a2bbbe7e4e3ee6da2198297918765568d4a6a81d7fba469b69eddfc",
       "headings": [
         "AWS — Current State",
         "Account / Region / Credits",
@@ -10522,7 +10522,7 @@
         "Owner UX Target",
         "Auto-stop Policy",
         "Software Target On Remote Windows",
-        "Active Execution Task",
+        "Execution / Validation Report",
         "Previous Cleanup Context"
       ]
     },
