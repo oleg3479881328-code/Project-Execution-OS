@@ -73,19 +73,26 @@ Security design:
 - RDP target is the Tailscale/private address `100.81.114.123`, not the EC2 public IP.
 - This allows access from any physical network/location as long as the user's device is authenticated to the Tailscale tailnet.
 
-### Owner UX Target
+### Owner UX — Final Validated State
 
-Normal operation must require one owner-facing action only:
+Normal operation requires one owner-facing action only:
 - desktop shortcut / launcher: `OLGA POLO — AWS PC`
 
-Launcher target behavior:
-1. Verify local AWS CLI/authentication and local Tailscale availability.
-2. Start `OlgaPolo-Remote-Worker` if stopped.
-3. Wait for AWS/Windows/Tailscale readiness.
-4. Resolve/use the remote Tailscale address.
-5. Open RDP automatically through Tailscale.
-6. After the RDP session closes, offer to stop the EC2 instance immediately.
-7. Leave the machine stopped when not needed.
+Validated launcher behavior:
+1. Launches from the user's existing Windows one-click Explorer setting.
+2. Ensures local Tailscale availability before connecting.
+3. Starts `OlgaPolo-Remote-Worker` when EC2 is stopped.
+4. Waits for AWS/Windows readiness and then separately waits for the remote Tailscale peer to become available.
+5. Opens RDP automatically through Tailscale to `100.81.114.123`.
+6. RDP is configured for fullscreen, multi-monitor, local audio playback, and clipboard redirection.
+7. After the RDP session closes, the launcher stops the EC2 instance.
+8. Final validated state after the end-to-end test: EC2 `STOPPED`.
+
+Launcher defects found and corrected during real desktop validation:
+- malformed PowerShell heredoc termination for the generated RDP file;
+- PowerShell function-name collision causing recursive `aws` calls / `CallDepthOverflow`; corrected to explicit `aws.exe` invocation;
+- launcher previously checked Tailscale too early after Windows boot; dedicated wait for the remote Tailscale peer was added;
+- AWS CLI pager was disabled for unattended launcher execution.
 
 ### Auto-stop Policy
 
@@ -111,16 +118,23 @@ Provisioning rule:
 Canonical execution task:
 https://github.com/oleg3479881328-code/AI-Coordination-Hub/issues/3
 
-Final report:
+Earlier infrastructure validation report:
 https://github.com/oleg3479881328-code/AI-Coordination-Hub/issues/3#issuecomment-5563266466
 
+Final one-click launcher validation report:
+https://github.com/oleg3479881328-code/AI-Coordination-Hub/issues/3#issuecomment-5563627845
+
 Validated final state reported on 2026-09-06:
-- EC2 left `stopped`;
+- existing desktop shortcut `OLGA POLO — AWS PC` preserved;
+- launcher validated from the owner's real Windows desktop flow;
+- one-click launch works with the owner's Windows Explorer setting;
+- fullscreen, multi-monitor, local audio, and clipboard enabled;
 - unattended Tailscale confirmed across full stop/start cycle;
 - no repeated Tailscale login required;
 - RDP available only via Tailscale/private overlay;
 - no public RDP exposure;
 - AWS Security Group has no inbound rules;
+- EC2 is left `STOPPED` after the session;
 - account-plan / credits balance reported as `$60`.
 
 ## Previous Cleanup Context
