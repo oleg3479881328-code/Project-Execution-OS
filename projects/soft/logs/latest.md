@@ -1,5 +1,39 @@
 # SOFT — latest log
 
+## 2026-09-08 — Refero Styles / MCP design-intelligence donor capture
+
+### Captured
+
+- Added Refero Styles / Refero MCP to SOFT as `EXTERNAL / CANDIDATE DONOR`.
+- Verified the current Refero Styles flow from official sources: real website styles are exposed as AI-readable design systems with colors, typography, spacing, components, `DESIGN.md`, Tailwind v4, CSS Variables and Design Tokens.
+- Verified an individual Linear style page to confirm that the export is not just marketing copy: it contains concrete design tokens, type scale, spacing, radii, shadows, layout constraints, component recipes and do/don't guidance.
+- Verified the current Refero MCP positioning: agent research over structured metadata for real product screens and user flows, with official support for ChatGPT/Codex and other MCP-capable tools.
+- Recorded current official scale claims as time-sensitive evidence only: Styles headline says 2,000+ AI-readable design systems; MCP page says 142,000+ screens and 12,000+ user flows.
+- Recorded current access boundary: Refero says DESIGN.md examples can be browsed/copied free; Refero MCP requires Pro. Pricing/terms/limits must be revalidated at adoption time.
+
+### Design Picker impact
+
+Refero is now the strongest direct external candidate for the design-research / style-intelligence layer because it already demonstrates much of the flow we want:
+
+`real reference -> structured style extraction -> DESIGN.md/design tokens -> AI agent context -> implementation`
+
+It does not automatically replace our local Design Picker because our system still needs owner selection, partial donor mixing, rejected directions, project boards, reusable pattern records and portable Markdown/JSON export under our control.
+
+### Durable locations updated
+
+- SOFT Master Software Inventory: https://docs.google.com/document/d/1yTWfazVPhs-AWdSsvS4Q6xyNd7bXKtqi6EvrmQMdAOk/edit
+- SOFT Third-Party Software Index: https://docs.google.com/document/d/1C-F_ukN2AlryP-_FxlJqFIKSbKjat8kzzMw8HsaSPH0/edit
+- Design Block donors: https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/blocks/design/DONORS.md
+- Design Picker project entrypoint: https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/projects/design-picker/PROJECT.md
+- Source: https://styles.refero.design/
+- MCP: https://refero.design/mcp
+
+### Current decision
+
+Do not build a competing style-intelligence crawler before benchmarking Refero. First test the free Styles + `DESIGN.md` path against our local Design Picker MVP. If that covers the research/style-extraction layer well, keep our custom work focused on the parts Refero does not own: owner decisions, multi-donor composition, project-specific pattern selection, durable local catalog and execution handoff. Treat paid MCP integration as optional until a real workflow proves the value.
+
+---
+
 ## 2026-09-06 — Framer platform + interaction donor capture
 
 ### Captured
