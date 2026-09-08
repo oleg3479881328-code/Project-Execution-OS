@@ -1,0 +1,296 @@
+{
+  "llama3.2:3b": {
+    "B": [
+      {
+        "rep": 1,
+        "success": true,
+        "latency_s": 46.042,
+        "compression_ratio": 0.244011,
+        "summary": "Evidenced Database Lock Error",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "local_sufficient",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 2,
+        "success": true,
+        "latency_s": 17.228,
+        "compression_ratio": 0.263906,
+        "summary": "Evidenced database lock issue in sqlite3 during pipeline build",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 3,
+        "success": true,
+        "latency_s": 17.872,
+        "compression_ratio": 0.250914,
+        "summary": "database is locked in sqlite3.OperationalError",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      }
+    ],
+    "C": [
+      {
+        "rep": 1,
+        "success": true,
+        "latency_s": 15.482,
+        "compression_ratio": 0.183788,
+        "summary": "Repetitive error in logs during build process",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 2,
+        "success": true,
+        "latency_s": 12.925,
+        "compression_ratio": 0.174692,
+        "summary": "log with warnings and errors in a large repetitive log file",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 3,
+        "success": true,
+        "latency_s": 26.401,
+        "compression_ratio": 0.161851,
+        "summary": "Hybrid Agent issue-27-hybrid-agent",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "local_sufficient",
+        "hallucinated_paths": 0
+      }
+    ],
+    "D": [
+      {
+        "rep": 1,
+        "success": true,
+        "latency_s": 52.335,
+        "compression_ratio": 0.332203,
+        "summary": "keyword_match in hybrid-agent tool",
+        "excerpt_count": 5,
+        "suspect_count": 2,
+        "recommendation": "local_sufficient",
+        "hallucinated_paths": 0
+      }
+    ]
+  },
+  "qwen3:4b": {
+    "B": [
+      {
+        "rep": 1,
+        "success": true,
+        "latency_s": 370.165,
+        "compression_ratio": 0.326837,
+        "summary": "qwen3:4b output",
+        "excerpt_count": 0,
+        "suspect_count": 0,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 2,
+        "success": true,
+        "latency_s": 251.925,
+        "compression_ratio": 0.336581,
+        "summary": "qwen3:4b output",
+        "excerpt_count": 0,
+        "suspect_count": 0,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 3,
+        "success": true,
+        "latency_s": 585.904,
+        "compression_ratio": 0.328867,
+        "summary": "qwen3:4b output",
+        "excerpt_count": 0,
+        "suspect_count": 0,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      }
+    ],
+    "C": [],
+    "D": []
+  },
+  "qwen2.5-coder:7b": {
+    "B": [
+      {
+        "rep": 1,
+        "success": false,
+        "latency_s": 24.853,
+        "compression_ratio": null,
+        "summary": null,
+        "excerpt_count": 0,
+        "suspect_count": 0,
+        "recommendation": null,
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 2,
+        "success": false,
+        "latency_s": 15.144,
+        "compression_ratio": null,
+        "summary": null,
+        "excerpt_count": 0,
+        "suspect_count": 0,
+        "recommendation": null,
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 3,
+        "success": false,
+        "latency_s": 13.859,
+        "compression_ratio": null,
+        "summary": null,
+        "excerpt_count": 0,
+        "suspect_count": 0,
+        "recommendation": null,
+        "hallucinated_paths": 0
+      }
+    ],
+    "C": [
+      {
+        "rep": 1,
+        "success": true,
+        "latency_s": 15.063,
+        "compression_ratio": 0.203852,
+        "summary": "The log indicates repeated npm installs and webpack builds with retries upon encountering a TypeError in 'src/app.js'.",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 2,
+        "success": true,
+        "latency_s": 11.71,
+        "compression_ratio": 0.216426,
+        "summary": "The log file contains repeated warnings about deprecated packages and critical errors in src/app.js at line 42. These errors indicate a potential issue with an undefined property being accessed.",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 3,
+        "success": true,
+        "latency_s": 13.866,
+        "compression_ratio": 0.225789,
+        "summary": "The log contains multiple build attempts with repeated errors in src/app.js:42. The latest attempt is still in progress.",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      }
+    ],
+    "D": [
+      {
+        "rep": 1,
+        "success": true,
+        "latency_s": 15.315,
+        "compression_ratio": 0.192978,
+        "summary": "The code contains definitions and functions for handling file operations and network requests, with a focus on error handling and logging.",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "local_sufficient",
+        "hallucinated_paths": 0
+      }
+    ]
+  },
+  "deepseek-coder:6.7b": {
+    "B": [
+      {
+        "rep": 1,
+        "success": true,
+        "latency_s": 57.813,
+        "compression_ratio": 0.308161,
+        "summary": "Multiple ERROR messages are found in the log file, suggesting a database lock issue. Database is locked multiple times.",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "local_sufficient",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 2,
+        "success": false,
+        "latency_s": 122.08,
+        "compression_ratio": null,
+        "summary": null,
+        "excerpt_count": 0,
+        "suspect_count": 0,
+        "recommendation": null,
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 3,
+        "success": true,
+        "latency_s": 23.882,
+        "compression_ratio": 0.266342,
+        "summary": "Identified potential issues with a locked sqlite3 database in a log file.",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      }
+    ],
+    "C": [
+      {
+        "rep": 1,
+        "success": true,
+        "latency_s": 57.509,
+        "compression_ratio": 0.307116,
+        "summary": "There are two ERROR log entries indicating the issue Cannot read properties of undefined (reading 'config') in src/app.js:42. The deprecation warning for lodash is also present.",
+        "excerpt_count": 3,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 2,
+        "success": true,
+        "latency_s": 42.301,
+        "compression_ratio": 0.11236,
+        "summary": "Webpack and npm build logs showing progress, warning, and error messages during the build process.",
+        "excerpt_count": 0,
+        "suspect_count": 0,
+        "recommendation": "local_sufficient",
+        "hallucinated_paths": 0
+      },
+      {
+        "rep": 3,
+        "success": true,
+        "latency_s": 38.372,
+        "compression_ratio": 0.205725,
+        "summary": "A TypeError occurred in src/app.js:42 reading 'config'. The error occurred multiple times in different build stages.",
+        "excerpt_count": 1,
+        "suspect_count": 1,
+        "recommendation": "cloud",
+        "hallucinated_paths": 0
+      }
+    ],
+    "D": [
+      {
+        "rep": 1,
+        "success": false,
+        "latency_s": 68.876,
+        "compression_ratio": null,
+        "summary": null,
+        "excerpt_count": 0,
+        "suspect_count": 0,
+        "recommendation": null,
+        "hallucinated_paths": 0
+      }
+    ]
+  }
+}

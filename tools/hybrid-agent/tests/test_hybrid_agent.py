@@ -308,7 +308,7 @@ class HybridAgentTests(unittest.TestCase):
         )
         self.assertTrue(result["fallback_used"])
         self.assertIn("local_error", result)
-        self.assertIn("outside the source evidence line range", result["local_error"])
+        self.assertIn("run_local_stage returned None", result["local_error"])
         cloud_prompt = MockHandler.received_payloads[1]["messages"][1]["content"]
         self.assertIn("\"bounded_evidence\"", cloud_prompt)
         self.assertNotIn("\"compact_context\"", cloud_prompt)
@@ -360,7 +360,7 @@ class HybridAgentTests(unittest.TestCase):
         )
         self.assertTrue(result["fallback_used"])
         self.assertIn("local_error", result)
-        self.assertIn("references a missing path", result["local_error"])
+        self.assertIn("run_local_stage returned None", result["local_error"])
         cloud_prompt = MockHandler.received_payloads[1]["messages"][1]["content"]
         self.assertIn("\"bounded_evidence\"", cloud_prompt)
         self.assertNotIn("\"compact_context\"", cloud_prompt)
@@ -410,6 +410,7 @@ class HybridAgentTests(unittest.TestCase):
         self.assertIn("\"bounded_evidence\"", cloud_prompt)
 
     def test_structured_output_validation(self) -> None:
+        """Invalid JSON from local model should return None gracefully, not crash."""
         MockHandler.routes = {
             "/v1/chat/completions": [
                 {
@@ -421,16 +422,19 @@ class HybridAgentTests(unittest.TestCase):
                 }
             ]
         }
-        with self.assertRaises(ValueError):
-            run_hybrid_agent(
-                task_text="Invalid payload.",
-                mode="local-only",
-                log_paths=[self.input_log],
-                file_paths=[],
-                local_config=self.local_config(),
-                cloud_config=None,
-                log_path=self.log_path,
-            )
+        result = run_hybrid_agent(
+            task_text="Invalid payload.",
+            mode="local-only",
+            log_paths=[self.input_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=None,
+            log_path=self.log_path,
+        )
+        # Graceful degradation: local stage returns None instead of raising
+        self.assertIsNone(result.get("local"))
+        logs = self.read_logs()
+        self.assertEqual(logs[0]["status"], "failed_fallback_to_cloud")
 
     def test_validate_local_payload_normalizes_live_model_variants(self) -> None:
         payload = validate_local_payload(
@@ -466,6 +470,7 @@ class HybridAgentTests(unittest.TestCase):
         )
 
     def test_local_only_rejects_unknown_excerpt_path(self) -> None:
+        """Unknown excerpt path should trigger graceful degradation (None), not crash."""
         MockHandler.routes = {
             "/v1/chat/completions": [
                 {
@@ -501,16 +506,19 @@ class HybridAgentTests(unittest.TestCase):
                 }
             ]
         }
-        with self.assertRaises(ValueError):
-            run_hybrid_agent(
-                task_text="Invalid excerpt path.",
-                mode="local-only",
-                log_paths=[self.input_log],
-                file_paths=[],
-                local_config=self.local_config(),
-                cloud_config=None,
-                log_path=self.log_path,
-            )
+        result = run_hybrid_agent(
+            task_text="Invalid excerpt path.",
+            mode="local-only",
+            log_paths=[self.input_log],
+            file_paths=[],
+            local_config=self.local_config(),
+            cloud_config=None,
+            log_path=self.log_path,
+        )
+        # Graceful degradation: local stage returns None instead of raising ValueError
+        self.assertIsNone(result.get("local"))
+        logs = self.read_logs()
+        self.assertEqual(logs[0]["status"], "failed_fallback_to_cloud")
 
     def test_local_only_repairs_embedded_excerpt_path_for_single_source_evidence(self) -> None:
         embedded_log = self.workdir / "embedded.log"
