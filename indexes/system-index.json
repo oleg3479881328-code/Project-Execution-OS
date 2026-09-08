@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ada9031dbd3169e59ea8a39031f9a182a5d69228",
-  "generated_at": "2026-09-06T21:12:09-04:00",
+  "repository_commit": "6fe11c5f26ac7e4bcfc240f13b34d7665de3d609",
+  "generated_at": "2026-09-08T08:35:26-04:00",
   "artifact_count": 584,
   "artifacts": [
     {
@@ -1141,9 +1141,9 @@
       "title": "Design Block Donors",
       "type": "domain-block-artifact",
       "domain": "design",
-      "status": null,
+      "status": "EXTERNAL / CANDIDATE DONOR`.",
       "date": null,
-      "sha256": "570037ccb159efa49d983efed91ff5dc996a08f024ce5bcd288c6f840d6d37c8",
+      "sha256": "910a173d6b1c0963ea24774533192b3f4c3b540e9fce751a0f106dbabed5150b",
       "headings": [
         "Design Block Donors",
         "Purpose",
@@ -1156,6 +1156,7 @@
         "Google Stitch",
         "screenshot-to-code / v0.diy",
         "AI UX Playground",
+        "Refero / Refero Styles / Refero MCP",
         "What Stays Custom",
         "Final Rule"
       ]
