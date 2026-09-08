@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "115ba51f55a2514edc6cb9c004c2d8ae81a44fce",
-  "generated_at": "2026-09-08T08:35:39-04:00",
+  "repository_commit": "3620bc2a0fc4ebd882c895e1c26297451132b3ea",
+  "generated_at": "2026-09-08T08:36:48-04:00",
   "artifact_count": 584,
   "artifacts": [
     {
@@ -11488,9 +11488,14 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "db2523d4d0c47f87dc1d4e4b6206e9b0c4854557856cbe1617f7765476fc1f82",
+      "sha256": "7bd8b97756c7970cc3e21b388fcb84fd98d6be19b296b3e5d249ba13bd9bb7cd",
       "headings": [
         "SOFT — latest log",
+        "2026-09-08 — Refero Styles / MCP design-intelligence donor capture",
+        "Captured",
+        "Design Picker impact",
+        "Durable locations updated",
+        "Current decision",
         "2026-09-06 — Framer platform + interaction donor capture",
         "Captured",
         "Durable locations",
