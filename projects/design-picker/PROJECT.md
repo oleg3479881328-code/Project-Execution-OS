@@ -46,7 +46,13 @@ Before custom implementation, apply:
 
 `docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
 
-The first research candidates are Linkwarden and Karakeep. The project must decide whether to adapt an existing solution, integrate with one, or build a bounded custom MVP only after comparing fit, licensing, complexity, and UX gaps.
+Current research candidates:
+
+- Refero Styles / Refero MCP — direct design-research and AI-readable style/reference candidate. It already provides real design references, structured design-system extraction, `DESIGN.md`, design tokens and agent connectivity through MCP. Treat it as the strongest current external candidate for the research/style-intelligence layer, not as an automatic replacement for our project-board/decision workflow.
+- Linkwarden — open-source reference/bookmark manager candidate for durable catalog/storage patterns.
+- Karakeep — open-source reference/bookmark manager candidate for durable catalog/storage patterns.
+
+The project must decide whether to adapt an existing solution, integrate with one, or build a bounded custom MVP only after comparing fit, licensing, complexity, UX gaps and data portability.
 
 ## Storage Layers
 
@@ -57,4 +63,4 @@ The first research candidates are Linkwarden and Karakeep. The project must deci
 
 ## Next Practical Step
 
-Validate the local MVP on a real donor shortlist, then decide whether the next step is Linkwarden-backed preview integration or richer project-board workflow.
+Validate the local MVP on a real donor shortlist while testing the free Refero Styles workflow as a benchmark: compare our URL import, visual browsing, owner selection, pattern extraction and Markdown/JSON export against Refero's reference + `DESIGN.md` flow. Then decide whether Refero MCP should be integrated as an external research/data layer or whether manual/free `DESIGN.md` import is sufficient. Linkwarden/Karakeep remain candidates for catalog/storage integration where useful.
