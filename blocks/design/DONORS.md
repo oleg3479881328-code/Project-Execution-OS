@@ -72,6 +72,28 @@ Borrow:
 - make UX evaluation part of the workflow, not an optional afterthought;
 - keep the system teachable for future agents.
 
+### Refero / Refero Styles / Refero MCP
+
+Status: `EXTERNAL / CANDIDATE DONOR`.
+
+Borrow:
+
+- make design research happen before the agent starts coding;
+- use real shipped product screens and user flows as evidence instead of generic taste adjectives;
+- convert a visual reference into AI-readable design context such as colors, typography, spacing, shapes, components, tokens and do/don't rules;
+- use `DESIGN.md` as a compact transport format from donor analysis into Codex/Cursor/Claude/v0-style execution;
+- support search by page type, UX pattern, UI pattern, product category, visual style and similar-reference intent;
+- expose structured reference metadata to agents through MCP instead of forcing the agent to reason only from screenshots;
+- keep a strict "reference, not clone" boundary: extract the system, hierarchy and reusable patterns rather than reproducing a source product exactly.
+
+Important fit for our system:
+
+- Refero Styles is a strong donor for `Design Picker` because it already demonstrates the flow `reference library -> owner/agent selection -> structured style extraction -> implementation context`;
+- Refero MCP is a candidate external research/data layer for agent-driven design discovery;
+- the local `Design Picker` still owns our project boards, owner decisions, rejected directions, reusable pattern records and portable export format unless a later evaluation proves an external product can replace those needs cleanly.
+
+Revalidate pricing, access limits, terms and MCP availability at adoption time. Do not make paid Refero access a mandatory dependency of the reusable Design Block.
+
 ## What Stays Custom
 
 This block stays custom in these areas:
