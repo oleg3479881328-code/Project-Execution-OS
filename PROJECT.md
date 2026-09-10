@@ -13,6 +13,95 @@
 - Reduce repeated engineering by separating domain knowledge, reusable executable capabilities, workflow orchestration, and project-specific application logic.
 - Make capability readiness visible and testable through owner-facing application surfaces.
 
+## System Architecture
+
+Project Execution OS is the control plane around four application/execution layers.
+
+```text
+PROJECT EXECUTION OS — CONTROL PLANE
+  owner intent
+  routing
+  context selection
+  standards / policy
+  durable project-memory ownership
+  approvals / review
+  readiness / evidence rules
+  transfer continuity
+
+        ↓ selects / governs / verifies
+
+DOMAIN KNOWLEDGE
+        ↓
+EXECUTABLE CAPABILITY
+        ↓
+WORKFLOW / APPLICATION ADAPTER
+        ↓
+OWNER-FACING UI / WORKING INTERFACE
+```
+
+The control plane is a logical responsibility set, not one monolithic file or runtime.
+
+External runtimes, models, SaaS tools, APIs, plugins, harnesses and future execution engines may perform work beneath this boundary. They do not become the canonical control plane merely because they can execute work.
+
+The four layers remain replaceable and composable:
+
+- `blocks/<domain>/` owns reusable domain knowledge and decision guidance;
+- `capabilities/<capability-id>/` owns bounded reusable executable operations behind stable contracts;
+- workflows and application adapters own sequencing and application/business decisions without copying capability provider logic;
+- `apps/` and other approved interfaces own user interaction and presentation, not canonical capability implementation or global project memory.
+
+Detailed audit evidence: `docs/research/PEOS_TOP_DOWN_ARCHITECTURE_AUDIT_2026-09-09.md`.
+
+## Canonical Ownership Rule
+
+Every durable truth type has one authoritative owner. Other surfaces may link, summarize, index, cache or render that truth, but must not silently become a parallel source of truth.
+
+| Truth type | Canonical owner |
+| --- | --- |
+| global system entry | `START_HERE.md` |
+| live global navigation | `docs/ROUTER.md` and routed child navigation nodes |
+| high-level PEOS architecture and boundaries | `PROJECT.md` |
+| current PEOS continuity | `PROJECT_STATE.md` + `logs/latest.md` |
+| project identity / local entry | that project's canonical `PROJECT.md` or approved entrypoint |
+| project status / blocker / next action | that project's canonical state/log |
+| mandatory operating rule | the owning standard |
+| reusable knowledge | owning project knowledge or reviewed `knowledge-library/` entry |
+| reusable executable capability readiness | `capability-library/REGISTRY.md` |
+| external tool / stack adoption status | `docs/TOOL_STACK_AUDIT.md` |
+| application-specific UI / orchestration | owning application/project |
+| heavy/source file assets | the project's approved durable storage layer |
+
+When information appears in several interfaces, resolve conflicts through this ownership map and the routed owning artifact rather than by choosing the most recent-looking duplicate.
+
+## Readiness And Evidence Rule
+
+Do not collapse architectural role and proof of readiness into one ambiguous label.
+
+Internal executable capabilities use the capability lifecycle in `capability-library/REGISTRY.md`:
+
+```text
+idea -> candidate -> validated -> production -> deprecated -> retired
+```
+
+Reusable knowledge uses the lifecycle in `docs/KNOWLEDGE_SYSTEM.md`.
+
+External tools and integrations use `docs/TOOL_STACK_AUDIT.md` for adoption role. When evidence level matters, distinguish adoption role from evidence state:
+
+```text
+ADOPTION ROLE
+core | active | project-specific | candidate | legacy
+
+EVIDENCE STATE
+known
+-> researched
+-> accessible / connected
+-> technically proven
+-> workflow proven
+-> owner confirmed
+```
+
+A researched, saved, installed or connected tool must not be described as operational unless the evidence required for that claim exists.
+
 ## Source Of Truth
 
 - This repository is the committed source of truth for `Project Execution OS` standards, templates, skills, reusable repository artifacts, capability registry state, and application adapters.
@@ -33,6 +122,7 @@
 - Established `START_HERE.md` as the stable top-level entrypoint and `docs/ROUTER.md` as the live internal router.
 - Built central standards for lifecycle, context assembly, repository memory, review, research, handoff, bootstrap, harness engineering, and composable capability blocks.
 - Separated domain blocks, executable capability blocks, workflow composition, and application adapters.
+- Completed the 2026-09-09 top-down architecture audit and explicitly fixed the control-plane, canonical-ownership, and readiness/evidence boundaries without introducing a competing architecture.
 - Registered the initial media capability chain: download, probe, audio extraction, transcription, and clipping.
 - Implemented `media.probe` version `0.1.0` as the first executable candidate capability.
 - Passed local, CLI, contract, smoke, and GitHub Actions validation for `media.probe`.
@@ -64,13 +154,14 @@
 
 - Do not duplicate evolving system logic into ad hoc files when repository standards already define it.
 - `Existing Solution First` applies before inventing new providers or central mechanisms.
-- `PROJECT.md` is the canonical local project entrypoint.
+- `PROJECT.md` is the canonical local project entrypoint and high-level architecture owner for Project Execution OS itself.
 - Active projects must maintain `PROJECT_STATE.md` and `logs/latest.md` after meaningful changes.
 - `blocks/<domain>/` stores reusable domain knowledge and decision guidance.
 - `capabilities/<capability-id>/` stores one bounded reusable technical operation behind stable contracts.
 - `apps/<application>/` owns application UI, interaction, and application-specific orchestration without copying provider logic.
 - Package-first remains the default; do not create one microservice per block without evidence.
 - `candidate` means code and minimum verification exist; it does not equal owner-confirmed or production-ready.
+- Adoption role and evidence/readiness are separate dimensions for external tools when that distinction affects execution or claims.
 - Do not extract a common capability SDK from one implementation alone.
 
 ## Read Next
@@ -79,9 +170,10 @@
 2. `docs/ROUTER.md`
 3. `PROJECT_STATE.md`
 4. `logs/latest.md`
-5. `apps/block-studio/README.md`
-6. `apps/block-studio/VALIDATION.md`
-7. `capability-library/REGISTRY.md`
-8. `capabilities/media-probe/BLOCK.md`
-9. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
-10. `PROJECT_INDEX.md` only when broader navigation is needed
+5. `docs/research/PEOS_TOP_DOWN_ARCHITECTURE_AUDIT_2026-09-09.md`
+6. `apps/block-studio/README.md`
+7. `apps/block-studio/VALIDATION.md`
+8. `capability-library/REGISTRY.md`
+9. `capabilities/media-probe/BLOCK.md`
+10. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
+11. `PROJECT_INDEX.md` only when broader navigation is needed
