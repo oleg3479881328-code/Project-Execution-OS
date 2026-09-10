@@ -1,49 +1,102 @@
 # Latest Executor Status
 
-Date: 2026-08-30
-Marker: HYGIENE_PROMOTION_AND_DECISION_GATES_SET
-Task-ID: peos-hygiene-followup
-Status: The shallow-history lesson was promoted from transient executor state into a permanent indexing rule, production-repository hygiene was explicitly scheduled for Olga, Tusia was explicitly deferred until a canonical source repository exists, and open-ended Codex/Archify tracks received dated decision gates.
+Date: 2026-09-09
+Marker: PEOS_TOP_DOWN_ARCHITECTURE_AUDIT_ACCEPTED
+Task-ID: peos-top-down-architecture-audit-2026-09-09
+Status: Completed the top-down architecture review of Project Execution OS and integrated the accepted clarification into the canonical project entrypoint without creating a competing startup workflow, fixed hierarchy, or parallel architecture standard.
 
-Permanent knowledge promotion:
-- `docs/INDEXING_STANDARD.md` now contains `Git History Completeness Rule`;
-- rule: never treat Git-history-derived hygiene telemetry from a shallow repository as complete repository activity evidence;
-- structural current-tree checks may remain valid on shallow clones, but history-dependent activity telemetry must be marked unreliable until full history is available;
-- applies to CI, local human runs, Codex/agent checkouts, temporary worktrees, external reviewers, and future repository analytics.
+## Verdict
 
-Verification of promoted rule:
-- commit: `55805a3ca77b7cb3de540ba5b2292da421f700e7`;
-- integrity workflow: PASS;
-- refresh-index workflow: PASS.
+```text
+KEEP CURRENT ARCHITECTURE
+NO STRUCTURAL REWRITE
+STRENGTHEN CANONICAL OWNERSHIP + READINESS EVIDENCE
+```
 
-Production hygiene rollout:
-- Olga repository verified accessible: `oleg3479881328-code/olga-polo-weddings-web`;
-- created issue: https://github.com/oleg3479881328-code/olga-polo-weddings-web/issues/128
-- target decision date: `2026-09-06`;
-- MVP scope: demo/template remnants, suspicious duplicate/legacy routes, broken internal links where deterministically detectable, stale/missing live-QA/deploy evidence, and deterministic source/generated disagreements;
-- Existing Solution First: extend current repo QA/CI where possible; do not create parallel validation infrastructure without need;
-- human-judgment signals remain non-destructive review signals.
+## Canonical architecture now explicit
 
-Tusia boundary:
-- no accessible canonical Tusia source repository was found in the connected GitHub installation on 2026-08-30;
-- do not duplicate Olga hygiene work into an invented or non-canonical repository;
-- trigger: reuse/adapt the Olga hygiene contract when a canonical Tusia source repository exists and is ready for CI-backed production QA.
+```text
+PROJECT EXECUTION OS — CONTROL PLANE
+  owner intent
+  routing
+  context selection
+  standards / policy
+  durable project-memory ownership
+  approvals / review
+  readiness / evidence rules
+  transfer continuity
 
-Codex App Server / DeepSeek Harness decision gate:
-- Issue #113 already contains completed comparative research and a current verdict: Codex App Server is the first bounded POC candidate; DeepSeek Harness remains donor/secondary multi-provider candidate;
-- Issue #113 updated with target decision date `2026-09-06`;
-- by that date: run the bounded read-only Codex App Server POC and record `ADOPT / REJECT / DEFER`, or document a concrete blocker and exact restart trigger;
-- current Prompt Bridge/worker transport must not be removed until the POC proves equal or better control, observability, recovery, and durable evidence.
+        ↓ governs
 
-Archify decision gate:
-- Issue #132 technical pilot status is already `TECHNICAL PASS — OWNER REVIEW PENDING`;
-- Issue #132 updated with target owner decision date `2026-09-02`;
-- owner verdict must be `GO / NO-GO / DEFER`;
-- owner review must verify no invented topology, successful orientation to the global entry/execution route, and material orientation improvement versus ROUTER-only navigation;
-- technical renderer success alone is insufficient for promotion.
+DOMAIN KNOWLEDGE
+-> EXECUTABLE CAPABILITY
+-> WORKFLOW / APPLICATION ADAPTER
+-> OWNER-FACING UI
+```
 
-Next-Safe-Action:
-1. execute Olga issue #128 as a bounded project-specific hygiene MVP;
-2. complete Archify owner visual decision by 2026-09-02;
-3. execute Codex App Server bounded POC / decision gate by 2026-09-06;
-4. reuse Olga hygiene in Tusia only after a canonical Tusia source repo exists.
+The control plane is a logical responsibility set, not a monolithic file or runtime. External harnesses, models, SaaS tools, APIs and plugins remain replaceable execution-plane components.
+
+## Changes made
+
+- created audit evidence: `docs/research/PEOS_TOP_DOWN_ARCHITECTURE_AUDIT_2026-09-09.md`;
+- updated `PROJECT.md` with the canonical top-level architecture map;
+- added a canonical ownership map to `PROJECT.md`;
+- made external-tool adoption role explicitly separate from evidence/readiness state;
+- updated `PROJECT_STATE.md` and re-entry paths;
+- preserved existing capability lifecycle and Knowledge System ownership instead of creating a new lifecycle standard.
+
+## Canonical ownership highlights
+
+- system entry -> `START_HERE.md`;
+- live navigation -> `docs/ROUTER.md` + child routers;
+- high-level PEOS architecture -> `PROJECT.md`;
+- current PEOS continuity -> `PROJECT_STATE.md` + `logs/latest.md`;
+- mandatory rule -> owning standard;
+- reusable knowledge -> owning project knowledge or reviewed `knowledge-library/` entry;
+- executable capability readiness -> `capability-library/REGISTRY.md`;
+- external tool/stack adoption status -> `docs/TOOL_STACK_AUDIT.md`;
+- application UI/orchestration -> owning application/project;
+- heavy/source files -> approved durable project storage.
+
+## External tool evidence model
+
+Adoption role and evidence are now treated as separate axes when the distinction affects execution or readiness claims.
+
+```text
+ADOPTION ROLE
+core | active | project-specific | candidate | legacy
+
+EVIDENCE STATE
+known
+-> researched
+-> accessible / connected
+-> technically proven
+-> workflow proven
+-> owner confirmed
+```
+
+Do not call a tool operational merely because it is researched, saved, installed, or connected.
+
+## Rejected architecture changes
+
+- fixed five-part physical PEOS hierarchy;
+- monolithic central kernel;
+- duplicate project-memory architecture per AI interface;
+- treating ChatGPT/Codex/Notion/GitHub UI as universal canonical memory;
+- treating external researched tools as internal validated capabilities;
+- creating a new parallel readiness/lifecycle standard.
+
+## Verification
+
+- audit file created successfully;
+- `PROJECT.md` updated successfully;
+- `PROJECT_STATE.md` updated successfully;
+- architecture remains compatible with existing `CONTEXT_ASSEMBLY_STANDARD.md`, `KNOWLEDGE_SYSTEM.md`, `HARNESS_ENGINEERING_STANDARD.md`, `COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`, `apps/README.md`, and `capability-library/REGISTRY.md`;
+- no startup/router rewrite was introduced.
+
+## Next-Safe-Action
+
+1. Use `PROJECT.md` as the canonical high-level architecture owner.
+2. During the next meaningful `TOOL_STACK_AUDIT.md` update, add evidence state only for tools where readiness ambiguity affects execution, cost, security, or routing; do not perform ceremonial mass migration.
+3. Keep capability readiness in `capability-library/REGISTRY.md` and knowledge lifecycle in `docs/KNOWLEDGE_SYSTEM.md`.
+4. Continue current Codex/DeepSeek execution-plane research and Archify visualization track under the clarified control-plane boundary.
