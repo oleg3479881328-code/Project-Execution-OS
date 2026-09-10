@@ -2,7 +2,7 @@
 
 ## Status
 
-`active — routed project; Knowledge DB is canonical; Website/Page Factory integration active`
+`active — routed project; Knowledge DB is canonical; single-wedding client-validation pilot now precedes broad Page Factory scale`
 
 ## Project
 
@@ -10,7 +10,7 @@ Tusia / Tasha Hurley Weddings is the structured knowledge, research, SEO/AEO and
 
 ## Purpose
 
-Build a durable Knowledge Engine for Tasha's wedding ecosystem and use only approved, evidence-backed structured data to produce venue and real-wedding pages without inventing facts, losing provenance, duplicating identities, or replacing existing public URLs silently.
+Build a durable Knowledge Engine for Tasha's wedding ecosystem and use only approved, evidence-backed structured data to produce venue and real-wedding pages without inventing facts, losing provenance, duplicating identities, replacing existing public URLs silently, or forcing the client to rewrite generic AI-generated content.
 
 ## Project Type
 
@@ -111,13 +111,15 @@ Research dry runs are evidence/candidate layers until explicitly promoted into t
 
 The Knowledge Database already conforms substantially to the global Project Knowledge Database standard. It contains the canonical entity graph plus media, URL, QA, dashboard and production-queue layers.
 
-The Website/Page Factory contract is:
+The Website/Page Factory contract is now:
 
-`sources -> identity resolution -> Knowledge DB -> SEO Production Queue -> QA gates -> Page Factory -> preview -> technical QA -> explicit release -> verification -> feedback to Knowledge DB`
+`sources -> identity resolution -> Knowledge DB -> SEO Production Queue -> QA gates -> Page Factory -> preview -> client validation -> technical QA -> explicit release -> verification -> feedback to Knowledge DB`
 
 No page may bypass the queue and QA gates.
 
-The current queue already contains real-wedding / venue candidates including Ashley & Steve, Deanna & Sam, Ammie & Mark, Alexa & John, Malkah & Ryan, Sophie & Kendall and unresolved review-derived weddings.
+**New client-validation rule, 2026-09-10:** do not broadly scale the wedding/venue content pattern until one complete real-wedding pilot is built from Tasha's real source material and approved as directionally correct.
+
+The current queue already contains real-wedding / venue candidates including Ashley & Steve, Deanna & Sam, Ammie & Mark, Alexa & John, Malkah & Ryan, Sophie & Kendall and unresolved review-derived weddings. If Tasha supplies a different wedding as the pilot, that supplied wedding becomes the client-validation candidate and must enter through the same canonical data/queue path.
 
 ## Done So Far
 
@@ -131,23 +133,54 @@ The current queue already contains real-wedding / venue candidates including Ash
 - Unresolved identity pass completed through TASK 16 without speculative merges.
 - Reverse venue/vendor discovery completed through TASK 17 as dry-run research.
 - Google Drive root normalized into five project folders.
-- Project now has a canonical routed entrypoint in Project Execution OS.
+- Project has a canonical routed entrypoint in Project Execution OS.
 - Existing `tasha-hurley-weddings-web` repository is explicitly linked as the Website/Page Factory execution layer.
-- Page Factory venue/wedding data records now preserve canonical `pageCandidateId`, `eventId`, and `venueEntityId` lineage.
+- Page Factory venue/wedding data records preserve canonical `pageCandidateId`, `eventId`, and `venueEntityId` lineage.
+- Client feedback from 2026-09-10 converted into an explicit single-wedding pilot gate and minimal client-input contract.
 
 ## Current Focus
 
-Connect the existing Knowledge DB cleanly to Website/Page Factory execution while preserving Tasha's real site shell and navigation.
+Prove the content/SEO system on **one real wedding** before broad production scale.
 
-Use **SEO Production Queue** as the canonical Page Queue. Website execution must consume approved rows from this queue plus linked canonical IDs, evidence, media and URL decisions.
+Tasha has confirmed that SEO is wanted. Her current objection is not the SEO goal; it is client workload and generic AI-generated copy that does not sound like her or contain enough real wedding substance.
+
+The client-facing workflow must therefore minimize her contribution and review burden.
+
+### Three-part pilot input from Tasha
+
+1. One wedding gallery / selected photographs.
+2. One Tasha-authored blog/page/block that shows the desired voice, content feel and/or presentation.
+3. Real first-party wedding material such as officiant/ceremony text, couple story or other personal details.
+
+### What the system must do without pushing work back to Tasha
+
+- structure the wedding story from real evidence;
+- preserve Tasha's voice rather than default AI prose;
+- create venue/vendor/search context only where supported by facts;
+- handle filenames, alt text, metadata, structured data, internal links and other SEO/AEO work under the hood;
+- preserve the existing website shell, menu and transitions;
+- keep image swapping/removal simple;
+- deliver one finished preview for approval rather than fragments that require extensive rewriting.
+
+## Client Timing / Engagement Rule
+
+September–October 2026 are high-load months for Tasha: weddings, gallery delivery and immediate client work take priority.
+
+Do not push broad SEO/site work during this period. A single pilot can proceed if/when she sends the three-part source bundle.
+
+November 2026 is the preferred window for broader optimization and scaling after the pilot direction is validated.
 
 ## Next Practical Step
 
-Normalize the existing SEO Production Queue to the global Page Queue contract, then process the highest-priority approved venue/wedding page through the full path:
+Wait for Tasha's three-part source bundle for one real wedding.
 
-`queue -> evidence/media readiness -> URL decision -> preview -> technical QA -> explicit publish approval`
+Once received:
 
-Do not publish directly from research notes or dry-run candidate workbooks.
+`first-party sources + gallery -> canonical evidence/media/IDs -> SEO Production Queue -> Page Factory -> finished preview -> Tasha validation -> technical QA -> release decision`
+
+Only after she approves the direction should the accepted page/content pattern be reused at scale.
+
+Queue normalization remains necessary infrastructure work, but it is not the client's next action and must not generate a large review burden before the pilot is proven.
 
 ## Key Decisions And Constraints
 
@@ -163,6 +196,11 @@ Do not publish directly from research notes or dry-run candidate workbooks.
 - Preview/staging is not production approval.
 - Dry-run research findings must be reviewed/promoted before they become canonical facts.
 - Preserve Tasha's real site navigation/experience; venue pages contain weddings and should not become a disconnected replacement site.
+- Do not replace or rebuild Tasha's existing website simply to support the Page Factory.
+- Generic AI copy is not an acceptable production default. AI may structure, edit and transform source material, but wedding-specific public copy must be grounded in approved facts and should be guided by Tasha's own writing/style reference.
+- Do not make the client perform bulk SEO work or rewrite piles of unfinished generated text.
+- One approved real-wedding pilot is the gate before mass production.
+- Minimize client burden in September–October 2026; broader active optimization is expected in November.
 
 ## Read Next
 
