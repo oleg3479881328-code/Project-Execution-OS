@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "00a4f4accf0a6a3eb9c92ec203c16f2a438c7943",
-  "generated_at": "2026-09-10T12:48:34-04:00",
+  "repository_commit": "5cc3bd76031bb2f7f12e792147a74553b20dced6",
+  "generated_at": "2026-09-10T12:49:00-04:00",
   "artifact_count": 585,
   "artifacts": [
     {
@@ -11852,7 +11852,7 @@
       "domain": "tusia-tasha-hurley",
       "status": null,
       "date": null,
-      "sha256": "dfa163838492ad23de9b5e68500ff95b09b720aaf1c172a0b7f60d0203dc31ee",
+      "sha256": "7d41181d462d591554c5bdd706f4c01b5cb192bf6555ce3d91e8288666cbc006",
       "headings": [
         "Tusia / Tasha Hurley Weddings",
         "Status",
@@ -11869,6 +11869,9 @@
         "Current Status",
         "Done So Far",
         "Current Focus",
+        "Three-part pilot input from Tasha",
+        "What the system must do without pushing work back to Tasha",
+        "Client Timing / Engagement Rule",
         "Next Practical Step",
         "Key Decisions And Constraints",
         "Read Next"
