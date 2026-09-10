@@ -2,7 +2,7 @@
 project_name: Project Execution OS
 project_mode: compact
 status: transfer_ready
-updated_at: 2026-08-30
+updated_at: 2026-09-09
 source_of_truth: repository
 active_branch: main
 ---
@@ -13,14 +13,34 @@ active_branch: main
 
 `Project Execution OS` is active and transfer-ready.
 
-The repository contains all four intended layers:
+The canonical top-level architecture is now explicit:
 
 ```text
+Project Execution OS — control plane
+  -> owner intent / routing / context / policy / memory ownership / review / evidence / continuity
+
+        ↓ governs
+
 domain knowledge
 -> executable capability
 -> workflow / application adapter
 -> owner-facing UI
 ```
+
+The 2026-09-09 top-down architecture audit confirmed that the current routed architecture should be kept. No fixed five-box rewrite, monolithic kernel, or competing startup architecture is justified.
+
+Canonical audit:
+
+`docs/research/PEOS_TOP_DOWN_ARCHITECTURE_AUDIT_2026-09-09.md`
+
+`PROJECT.md` now explicitly owns the high-level architecture map, canonical truth-ownership map, and readiness/evidence boundary.
+
+Two cross-cutting maturity rules are now explicit:
+
+1. every durable truth type has one canonical owner; other surfaces may link, summarize, index, cache or render it but must not silently become parallel truth;
+2. external-tool architectural role and proof/readiness are separate dimensions, so `researched`, `connected`, `technically proven`, `workflow proven`, and `owner confirmed` cannot be conflated.
+
+Internal capability readiness remains owned by `capability-library/REGISTRY.md`. Reusable knowledge lifecycle remains owned by `docs/KNOWLEDGE_SYSTEM.md`. External tool/stack adoption status remains owned by `docs/TOOL_STACK_AUDIT.md`.
 
 A new architecture research track is active: determine whether official Codex App Server / Codex harness interfaces can replace or simplify parts of the current manual/bridge-based worker handoff while preserving Project Execution OS ownership of routing, memory, approvals, review, and durable evidence.
 
@@ -28,6 +48,47 @@ Research task: https://github.com/oleg3479881328-code/Project-Execution-OS/issue
 Trigger reference: https://pimenov.ai/articles/codex-stanovitsya-platformoy-agent-vnutri-raboty/
 
 This is research only. No runtime replacement, Prompt Bridge removal, or architecture migration is approved until primary-source evidence is reviewed.
+
+## Latest Architecture Milestone — 2026-09-09 — Top-Down Audit
+
+Audit scope:
+
+```text
+control plane
+knowledge
+actionable capabilities
+workflow / composition
+applications / UI
+canonical ownership
+readiness / evidence
+```
+
+Verdict:
+
+```text
+KEEP CURRENT ARCHITECTURE
+NO STRUCTURAL REWRITE
+MAKE OWNERSHIP AND READINESS BOUNDARIES EXPLICIT
+```
+
+Accepted changes:
+
+- `PROJECT.md` now states that Project Execution OS is the logical control plane around four application/execution layers;
+- the control plane owns intent, routing, context rules, standards/policy, durable project-memory ownership, approvals/review, evidence/readiness semantics, and transfer continuity;
+- external runtimes remain optional execution planes and replaceable implementation surfaces;
+- a canonical ownership map now names the authoritative owner for system entry, navigation, architecture, project state, standards, knowledge, capability readiness, external tool adoption status, application orchestration, and durable file assets;
+- internal capability readiness keeps the existing `idea -> candidate -> validated -> production -> deprecated -> retired` lifecycle;
+- external tools keep architectural adoption role separate from evidence state;
+- the second-opinion five-part model was accepted only as an explanatory lens, not as a replacement physical architecture.
+
+Rejected changes:
+
+- fixed-depth or fixed-five-part hierarchy;
+- monolithic central kernel;
+- new parallel startup workflow;
+- moving canonical project memory into ChatGPT/Codex/Notion/another interface by default;
+- treating researched external tools as operational capabilities;
+- creating a new lifecycle standard where existing canonical artifacts already own the behavior.
 
 ## Latest Integration Milestone — 2026-08-30 — Archify Candidate
 
@@ -216,6 +277,8 @@ Archify is an orthogonal visualization/evidence candidate. It must not be confus
 
 ## Current Focus
 
+- Preserve the clarified control-plane / canonical-ownership / readiness boundaries in future architecture work.
+- Apply external-tool evidence state only where it affects routing, execution, cost, security, or readiness claims; do not mass-create registry ceremony.
 - Research Issue #113: official Codex App Server / Harness integration surface and fit with Project Execution OS.
 - Reconcile DeepSeek Harness donor findings with the Codex research before choosing any execution runtime.
 - Run Issue #132: Archify self-map pilot against Project Execution OS and keep Archify at `CANDIDATE` until evidence exists.
@@ -229,11 +292,13 @@ Archify is an orthogonal visualization/evidence candidate. It must not be confus
 
 ```text
 Architecture track:
-1. Complete/review Issue #113 against official OpenAI primary sources.
-2. Compare Codex runtime capabilities with the DeepSeek Harness extraction audit.
-3. Run the independent Archify self-map pilot from Issue #132; do not treat it as an execution-runtime decision.
-4. Define one execution-plane candidate matrix.
-5. Only then decide whether one isolated read-only runtime POC is justified.
+1. Treat PROJECT.md as canonical high-level architecture owner.
+2. When docs/TOOL_STACK_AUDIT.md is next materially updated, record evidence state for tools where readiness ambiguity matters; do not perform a ceremonial mass migration.
+3. Complete/review Issue #113 against official OpenAI primary sources.
+4. Compare Codex runtime capabilities with the DeepSeek Harness extraction audit.
+5. Run the independent Archify self-map pilot from Issue #132; do not treat it as an execution-runtime decision.
+6. Define one execution-plane candidate matrix.
+7. Only then decide whether one isolated read-only runtime POC is justified.
 
 Capability track:
 1. Open Block Studio on the owner's Windows computer.
@@ -250,23 +315,26 @@ Capability track:
 3. `PROJECT.md`
 4. `PROJECT_STATE.md`
 5. `logs/latest.md`
-6. `docs/HARNESS_ENGINEERING_STANDARD.md`
-7. `docs/research/DEEPSEEK_HARNESS_EXTRACTION_AUDIT_2026-08-29.md`
-8. `docs/REVIEW_STANDARD.md`
-9. `docs/research/VIBECODING_WITHOUT_CHAOS_GAP_ANALYSIS_2026-08-28.md`
-10. `docs/CODEX_HANDOFF_STANDARD.md`
-11. Issue #113 — Codex App Server / Harness research
-12. `docs/integrations/archify/README.md`
-13. Issue #132 — Archify self-map pilot
-14. `apps/README.md`
-15. `apps/block-studio/README.md`
-16. `apps/block-studio/VALIDATION.md`
-17. `capability-library/REGISTRY.md`
-18. `capabilities/media-probe/BLOCK.md`
-19. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
+6. `docs/research/PEOS_TOP_DOWN_ARCHITECTURE_AUDIT_2026-09-09.md`
+7. `docs/HARNESS_ENGINEERING_STANDARD.md`
+8. `docs/research/DEEPSEEK_HARNESS_EXTRACTION_AUDIT_2026-08-29.md`
+9. `docs/REVIEW_STANDARD.md`
+10. `docs/research/VIBECODING_WITHOUT_CHAOS_GAP_ANALYSIS_2026-08-28.md`
+11. `docs/CODEX_HANDOFF_STANDARD.md`
+12. Issue #113 — Codex App Server / Harness research
+13. `docs/integrations/archify/README.md`
+14. Issue #132 — Archify self-map pilot
+15. `apps/README.md`
+16. `apps/block-studio/README.md`
+17. `apps/block-studio/VALIDATION.md`
+18. `capability-library/REGISTRY.md`
+19. `capabilities/media-probe/BLOCK.md`
+20. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md`
+21. `docs/TOOL_STACK_AUDIT.md`
 
 ## Known Blockers
 
+- External tool inventory does not yet consistently expose a separate evidence-state field; the architectural rule is now explicit, but normalization should happen only during meaningful tool-audit updates rather than by ritual mass editing.
 - Codex App Server / Harness fit has not yet been verified against current official OpenAI sources; Issue #113 is open.
 - DeepSeek Harness is rapidly evolving, so direct runtime integration has upgrade-churn risk.
 - No execution-plane POC has yet proved that a third-party harness deletes enough custom orchestration to justify adoption.
@@ -278,6 +346,10 @@ Capability track:
 
 ## Do-Not-Break Rules
 
+- Do not replace the recursive routed architecture with a fixed five-box physical hierarchy.
+- Do not create a monolithic control-plane file or runtime merely to mirror the conceptual architecture.
+- Do not create parallel truth when an existing canonical owner exists.
+- Do not treat an external tool's adoption role as proof that it is accessible, technically proven, workflow proven, or owner confirmed.
 - Do not replace or delete the current worker handoff/Prompt Bridge based only on donor research.
 - Do not start competing DeepSeek and Codex runtime migrations in parallel.
 - Do not treat DeepSeek Harness integration as approved production architecture without an isolated evidence-backed POC.
