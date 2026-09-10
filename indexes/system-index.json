@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c238f4ada662df3cd6eef8315dfaa01216c399c1",
-  "generated_at": "2026-09-09T20:41:50-04:00",
+  "repository_commit": "00a4f4accf0a6a3eb9c92ec203c16f2a438c7943",
+  "generated_at": "2026-09-10T12:48:34-04:00",
   "artifact_count": 585,
   "artifacts": [
     {
@@ -83,11 +83,14 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "f2b4dd5ace015e90dda4db1bc0e1bedeafceab07ed3fa1d24a069adf4d1ae40d",
+      "sha256": "4e54c7694f386584efab9f42c10f50418d05c59e6c1f18813baf4cdac6c3a4ac",
       "headings": [
         "PROJECT.md",
         "Project",
         "Purpose",
+        "System Architecture",
+        "Canonical Ownership Rule",
+        "Readiness And Evidence Rule",
         "Source Of Truth",
         "Current Status",
         "Done So Far",
@@ -129,10 +132,11 @@
       "domain": "system",
       "status": "transfer_ready",
       "date": "- `docs/KNOWLEDGE_SYSTEM.md` -> v3;",
-      "sha256": "b2ad8d3da6aa042cd156917236d384e0b7471293c641f4e82a12f039a6d7fb12",
+      "sha256": "e1236aed563462016f0b9a4a2b386d2cc69d87c657a2c595ca8bad636074d5de",
       "headings": [
         "PROJECT_STATE.md",
         "Current State",
+        "Latest Architecture Milestone — 2026-09-09 — Top-Down Audit",
         "Latest Integration Milestone — 2026-08-30 — Archify Candidate",
         "Latest Standards Milestone — 2026-08-29 — Knowledge Promotion Gate",
         "Previous Standards Milestone — 2026-08-29 — DeepSeek Harness Extraction",
@@ -9551,11 +9555,19 @@
       "title": "Latest Executor Status",
       "type": "repository-artifact",
       "domain": "system",
-      "status": "The shallow-history lesson was promoted from transient executor state into a permanent indexing rule, production-repository hygiene was explicitly scheduled for Olga, Tusia was explicitly deferred until a canonical source repository exists, and open-ended Codex/Archify tracks received dated decision gates.",
-      "date": "2026-08-30",
-      "sha256": "ad2adc85f7ca1b532d0d20d3bcbc83b967d0ed627c2c56cfb3cc3a3bf389dda4",
+      "status": "Completed the top-down architecture review of Project Execution OS and integrated the accepted clarification into the canonical project entrypoint without creating a competing startup workflow, fixed hierarchy, or parallel architecture standard.",
+      "date": "2026-09-09",
+      "sha256": "dbb89d82b6aeef0995ee41a00bb11ad7df127809d128492daa35a3a7aff3b3de",
       "headings": [
-        "Latest Executor Status"
+        "Latest Executor Status",
+        "Verdict",
+        "Canonical architecture now explicit",
+        "Changes made",
+        "Canonical ownership highlights",
+        "External tool evidence model",
+        "Rejected architecture changes",
+        "Verification",
+        "Next-Safe-Action"
       ]
     },
     {
@@ -11869,7 +11881,7 @@
       "domain": "tusia-tasha-hurley",
       "status": "in-progress",
       "date": null,
-      "sha256": "eacef7cac3d69cdad6ff351b504d16913c3834d6aaac5c5a8e585e1a232c1ae0",
+      "sha256": "4eff8c5a8642b3d04153bec484e93a5b15a45f7dac1d1636da9a4f1aaed28a0c",
       "headings": [
         "Tusia / Tasha Hurley Weddings — Project State",
         "Current Phase",
@@ -11878,11 +11890,16 @@
         "Queue Rule",
         "Website / Page Factory Repository",
         "Website Rule",
+        "Client Signal — 2026-09-10",
+        "Three-Part Client Input Contract",
+        "Pilot Output Contract",
+        "Client-Validation Gate",
         "Current Database Layers",
         "Research State",
         "Current Known Queue",
         "Active Risks / Cleanup",
         "Next Practical Step",
+        "Timing / Client Load",
         "Stop Conditions"
       ]
     },
