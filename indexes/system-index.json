@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "5cc3bd76031bb2f7f12e792147a74553b20dced6",
-  "generated_at": "2026-09-10T12:49:00-04:00",
-  "artifact_count": 585,
+  "repository_commit": "2efa15217fc0f6d4e85af89eb2208030fb70f7f5",
+  "generated_at": "2026-09-10T12:49:33-04:00",
+  "artifact_count": 586,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -11907,20 +11907,47 @@
       ]
     },
     {
+      "path": "projects/tusia-tasha-hurley/logs/2026-09-10-single-wedding-client-validation-pilot.md",
+      "title": "Tusia / Tasha Hurley Weddings — Client Validation Pivot",
+      "type": "project-artifact",
+      "domain": "tusia-tasha-hurley",
+      "status": null,
+      "date": null,
+      "sha256": "fa654f4953cb8ff19896c34bad8abe0e9ca766c216a06dafd48da140954f2fa4",
+      "headings": [
+        "Tusia / Tasha Hurley Weddings — Client Validation Pivot",
+        "Date",
+        "Source",
+        "Classification",
+        "What Tasha Confirmed",
+        "Agreed Minimal Client Input",
+        "Decision",
+        "Content Rule",
+        "SEO / AEO Rule",
+        "Website Rule",
+        "Client Review Contract",
+        "Timing / Engagement",
+        "Architecture Impact",
+        "New Practical Next Step",
+        "Core Lesson For This Project"
+      ]
+    },
+    {
       "path": "projects/tusia-tasha-hurley/logs/latest.md",
       "title": "Latest Log",
       "type": "project-artifact",
       "domain": "tusia-tasha-hurley",
       "status": null,
       "date": null,
-      "sha256": "8cab835bfc060e73fb92b6ee069e33412d140ead464f5f9f671a9c769b6db97b",
+      "sha256": "248e35de0abc49e692c05ef0510112f417fed4a93fcbc72463549f81e2dcdb56",
       "headings": [
         "Latest Log",
         "Date",
         "Executor",
         "Action",
         "Result",
-        "Verification",
+        "New Production Contract",
+        "Validation Gate",
         "Next Action"
       ]
     },
