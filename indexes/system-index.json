@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "aeef046240f6ccc11f8417cb6456b1f5ee198d67",
-  "generated_at": "2026-09-11T10:19:13-04:00",
-  "artifact_count": 588,
+  "repository_commit": "c3ff054c0ac66cc46e5ae9909be15106d7ec2c4f",
+  "generated_at": "2026-09-11T10:45:29-04:00",
+  "artifact_count": 589,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -4503,6 +4503,45 @@
         "ffmpeg-skill",
         "Recommended PEOS Architecture",
         "Adoption Decision",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/GENERATIVE_FRAME_PRODUCTION.md",
+      "title": "Generative Frame Production",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "a580f2b426fd194b7c1a38fdd1f3361d4983911dd9d68e46611e2ee5edb5eab5",
+      "headings": [
+        "Generative Frame Production",
+        "Purpose",
+        "Core Decision",
+        "Four Production Modes",
+        "1. Deterministic frame-addressable composition",
+        "2. Keyframe-to-video generative interpolation",
+        "3. Video-to-video temporal stylization",
+        "4. Literal frame repair / image-per-frame intervention",
+        "Keyframe Architecture",
+        "Conditioning Hierarchy",
+        "Blender / DCC Hybrid Pattern",
+        "2D / Krita Hybrid Pattern",
+        "Temporal Consistency Rule",
+        "Local Revision Model",
+        "Relationship To Frame-Addressable Production",
+        "Recommended PEOS Stack",
+        "Current Donor/Tool Roles",
+        "ComfyUI",
+        "Wan FLF2V family",
+        "ToonCrafter",
+        "Krita AI Diffusion",
+        "EbSynth",
+        "Remotion",
+        "FFmpeg / ffmpeg-skill",
+        "Hardware / Infrastructure Rule",
+        "Validation Plan",
+        "Source Review Note — 2026-09-11",
         "Final Rule"
       ]
     },
