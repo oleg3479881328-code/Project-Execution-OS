@@ -1,6 +1,6 @@
 # AWS — Current State
 
-Last updated: 2026-09-06
+Last updated: 2026-09-11
 
 ## Account / Region / Credits
 
@@ -112,6 +112,32 @@ Provisioning rule:
 - unattended setup may install/configure software and infrastructure;
 - do not enter or store Google/Wix/PassGallery credentials during infrastructure provisioning;
 - owner signs into those services separately when needed.
+
+## Friend Internet Test Workstation — Current Accepted State
+
+Purpose: disposable AWS Windows machine for a friend to test internet/work experience through AWS using ordinary Windows Remote Desktop.
+
+Accepted simplified operating model as of 2026-09-11:
+- the EC2 test machine is already running when the friend uses it;
+- the friend receives one minimal `.bat` launcher only;
+- double-clicking the BAT opens standard Windows `mstsc.exe` directly in fullscreen;
+- fixed RDP target currently recorded as `16.58.32.86`;
+- no Lambda, API Gateway, custom control-plane, Tailscale, VPN, Fleet Manager, WorkSpaces/AppStream, AWS CLI, or AWS credentials are required on the friend's PC;
+- owner-side start/stop remains separate from the friend's launcher;
+- the BAT is intentionally minimal and only opens the RDP session;
+- this state is tracked in AI Coordination Hub Issue #5 and the AWS project handoff/entrypoint files.
+
+Security note for the current test state:
+- the dedicated test machine currently has an RDP rule allowing `0.0.0.0/0`;
+- this broad ingress is explicitly temporary and applies only to the disposable test machine;
+- it must not be copied to the Olga Polo workstation or treated as the normal production security pattern;
+- after testing, tighten/remove the rule as soon as practical.
+
+Canonical execution thread:
+https://github.com/oleg3479881328-code/AI-Coordination-Hub/issues/5
+
+Current decision comment:
+https://github.com/oleg3479881328-code/AI-Coordination-Hub/issues/5#issuecomment-5641736595
 
 ## Execution / Validation Report
 
