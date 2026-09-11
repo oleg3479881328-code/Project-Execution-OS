@@ -20,6 +20,25 @@ Preserve source URLs for video-production tools and workflows. Official document
 - https://www.remotion.dev/docs/
 - https://zulko.github.io/moviepy/
 
+## Programmable Video / Frame Production Donors
+
+- https://github.com/Vincentwei1021/anything2explainer
+- https://github.com/Vincentwei1021/video-talkcraft
+- https://github.com/kajisho5/ffmpeg-skill
+
+Internal synthesis:
+
+- `FRAME_ADDRESSABLE_PRODUCTION.md`
+- `DONOR_REVIEW_2026-09-11.md`
+
+License note at review time:
+
+- anything2explainer — PolyForm Noncommercial; commercial toolkit use requires author authorization.
+- video-talkcraft — PolyForm Noncommercial; commercial toolkit use requires author authorization.
+- ffmpeg-skill — MIT according to its repository.
+
+Revalidate licenses and Remotion terms before commercial adoption.
+
 ## Blender / Programmable 3D/VFX
 
 - https://www.blender.org/
@@ -54,7 +73,7 @@ Research note:
 
 ## Freshness Rule
 
-Re-check platform monetization rules, API availability, watermark/reuse policies, tool versions, and AI-provider capabilities before making implementation or business commitments.
+Re-check platform monetization rules, API availability, watermark/reuse policies, tool versions, licenses, and AI-provider capabilities before making implementation or business commitments.
 
 ## Final Rule
 
