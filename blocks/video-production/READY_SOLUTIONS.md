@@ -44,6 +44,26 @@ Use for:
 - concatenation;
 - normalization.
 
+### ffmpeg-skill
+
+Repository:
+
+`https://github.com/kajisho5/ffmpeg-skill`
+
+Status: strong external execution donor / candidate ready solution; MIT license according to the repository.
+
+Use when an AI agent needs a structured local FFmpeg execution layer with:
+
+- probe-first media inspection;
+- typed operations instead of ad-hoc shell/filter strings;
+- lossless-first behavior when possible;
+- dry-run and structured JSON results;
+- output verification;
+- contact-sheet inspection support;
+- local/offline operation.
+
+Correct role: media execution, finishing and validation layer. Do not treat it as the primary complex motion-design authoring engine.
+
 ### CapCut Desktop
 
 Use for:
@@ -61,7 +81,13 @@ Use when:
 
 - videos should be generated programmatically from React code;
 - template-driven rendering matters;
+- exact-frame / deterministic rendering matters;
+- shot-level incremental rendering is useful;
 - automation and version control matter.
+
+For the PEOS frame-addressable architecture, read:
+
+`FRAME_ADDRESSABLE_PRODUCTION.md`
 
 ### MoviePy
 
@@ -69,6 +95,53 @@ Use when:
 
 - Python-based composition or experiments are useful;
 - lightweight scripted editing is enough.
+
+## Programmatic Explainer / Frame-Production Donors
+
+### anything2explainer
+
+Repository:
+
+`https://github.com/Vincentwei1021/anything2explainer`
+
+Status: external candidate donor.
+
+Strong donor patterns:
+
+- topic/article -> research -> narration -> exact frame timeline -> storyboard -> Remotion scenes -> QC -> render;
+- exact global frame ranges for narration and shots;
+- semantic beat anchors inside shots;
+- frame-driven keyframes/interpolation;
+- still/preview checks before full production;
+- motion-density QC.
+
+License boundary: PolyForm Noncommercial; commercial use of the toolkit requires authorization from the author. Treat it as architecture/methodology donor unless license clearance exists.
+
+### video-talkcraft
+
+Repository:
+
+`https://github.com/Vincentwei1021/video-talkcraft`
+
+Status: external candidate donor; strongest current donor for reusable frame-production engine patterns.
+
+Strong donor patterns:
+
+- word-level narration alignment;
+- explicit absolute / shot-local / Sequence-local time handling;
+- reusable motion-card vocabulary;
+- per-shot segment render cache;
+- changed-shot ± neighbour re-render;
+- master-audio-separate assembly;
+- frame-count assertions;
+- still/burst/contact-sheet review;
+- editable workbench over structured project data.
+
+License boundary: PolyForm Noncommercial; commercial use of the toolkit requires authorization from the author. Treat it as architecture/methodology donor unless license clearance exists.
+
+Comparison and PEOS adoption decision:
+
+`DONOR_REVIEW_2026-09-11.md`
 
 ## Transcription / Captions
 
@@ -159,4 +232,4 @@ Before accepting a donor repo or automation:
 
 ## Final Rule
 
-Do not build a custom video tool until yt-dlp, ffmpeg, connected transcription providers, local transcription tooling, template rendering, and automation platforms have been considered.
+Do not build a custom video tool until yt-dlp, ffmpeg, connected transcription providers, local transcription tooling, template rendering, frame-addressable rendering patterns, and automation platforms have been considered.
