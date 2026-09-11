@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "574c001af557d0fe208ea3f39dd4d48f2cc9948a",
-  "generated_at": "2026-09-11T10:45:46-04:00",
-  "artifact_count": 589,
+  "repository_commit": "f1c1e5edb90f01efa5f45eec7fa2bd2009ea7b1a",
+  "generated_at": "2026-09-11T14:24:05-04:00",
+  "artifact_count": 590,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -8511,6 +8511,32 @@
         "Related Existing Standard",
         "Required Integration Follow-Up",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "knowledge-library/patterns/ai-frontend-existing-solution-first-toolchain-2026-09.md",
+      "title": "AI Frontend Existing Solution First Toolchain",
+      "type": "knowledge-entry",
+      "domain": "knowledge:patterns",
+      "status": "candidate",
+      "date": "2026-09-11",
+      "sha256": "7369cd9baab2ec9a8543d94a31ed1551ee8480c68ba4baeda0165bd6c1feac77",
+      "headings": [
+        "AI Frontend Existing Solution First Toolchain",
+        "Source / Evidence",
+        "Problem / Context",
+        "Candidate Pattern",
+        "Tool Roles",
+        "21st.dev / Magic MCP",
+        "Impeccable",
+        "Humanizer",
+        "Claude Code Setup",
+        "Applies To",
+        "Triggers",
+        "Do Not Load When",
+        "Adaptation Notes",
+        "Risks",
+        "Verification / Review Status"
       ]
     },
     {
