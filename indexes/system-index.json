@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "88cab373e271bc1eb815fde9639d3fafa5e5382f",
-  "generated_at": "2026-09-11T10:17:45-04:00",
-  "artifact_count": 587,
+  "repository_commit": "1983f155a7e88a7fad6748ea53171ca49b5716c4",
+  "generated_at": "2026-09-11T10:18:23-04:00",
+  "artifact_count": 588,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -4422,6 +4422,47 @@
         "Pattern 5 — Human Review Gate",
         "Pattern 6 — Analytics Loop",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/video-production/DONOR_REVIEW_2026-09-11.md",
+      "title": "Video Production Donor Review — 2026-09-11",
+      "type": "domain-block-artifact",
+      "domain": "video-production",
+      "status": null,
+      "date": null,
+      "sha256": "60daef6ac207d452fafc8aab9dc07417a6d0bf65bbafd7703c0b5b6e223a2ad0",
+      "headings": [
+        "Video Production Donor Review — 2026-09-11",
+        "Scope",
+        "Executive Decision",
+        "Comparison Matrix",
+        "anything2explainer — What To Reuse Conceptually",
+        "Strong donor patterns",
+        "What Not To Adopt As Core",
+        "Main lesson",
+        "video-talkcraft — What To Reuse Conceptually",
+        "Strongest donor patterns",
+        "Why It Is The Stronger Engine Donor",
+        "Main lesson",
+        "ffmpeg-skill — What To Reuse / Adopt",
+        "Strong donor patterns",
+        "Correct Role",
+        "PEOS Gap Found",
+        "Recommended Modules For Our Video Factory",
+        "Module A — Narrative Alignment",
+        "Module B — Shot Graph",
+        "Module C — Beat Timeline",
+        "Module D — Keyframe/Motion Layer",
+        "Module E — Motion Recipes",
+        "Module F — Frame Renderer",
+        "Module G — Incremental Render Cache",
+        "Module H — Media Finishing",
+        "Module I — Frame QC",
+        "Module J — Owner Workbench",
+        "Recommended Validation Project",
+        "License Boundary",
+        "Final Decision"
       ]
     },
     {
