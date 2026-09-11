@@ -55,9 +55,10 @@ Use this block for:
 - AI avatars;
 - multilingual video factories;
 - gadget, facts, cinema, educational, or language-learning content;
-- QuizLight video-card creation workflows;
+- QuizLight video-card extraction workflows;
 - automated media pipelines;
 - frame-addressable / frame-exact video production;
+- generative frame production, keyframe-to-video interpolation, video-to-video stylization, and selective frame repair;
 - programmatic motion graphics and explainer video rendering;
 - shot-level incremental rendering and exact-frame QA;
 - monetization and scaling decisions for video projects;
@@ -87,22 +88,23 @@ Smallest useful path:
 4. `TOOL_SELECTION_MATRIX.md`
 5. `VIDEO_PIPELINES.md`
 6. `FRAME_ADDRESSABLE_PRODUCTION.md` when exact-frame rendering, programmatic explainers, shot caching, keyframes, or owner editing workbenches matter
-7. `CONTENT_FACTORY_PATTERNS.md`
-8. `SHORT_FORM_PATTERNS.md`
-9. `AUTOMATION_PATTERNS.md` when automation matters
-10. `YT_DLP_AND_FFMPEG.md` for download/transcode work
-11. `CAPCUT.md` for desktop editing workflows
-12. `AI_VIDEO_STACKS.md` for AI-enhanced pipelines
-13. `VOICE_AND_AVATAR.md` when voice or avatar layers matter
-14. `PLATFORM_PATTERNS.md` before publication
-15. `MONETIZATION.md` when business model matters
-16. `IMPLEMENTATION_HANDOFF.md` before executor handoff
-17. `DONOR_REVIEW_2026-09-11.md` when comparing Remotion explainer donors or `ffmpeg-skill`
-18. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md` when functionality should be reusable across applications
-19. `capability-library/REGISTRY.md` before assuming a reusable implementation is ready
-20. `VALIDATION_BACKLOG.md` before treating research as verified
-21. `REFERENCES.md` when freshness or authority matters
-22. `blocks/youtube/BLOCK.md` when YouTube-specific platform decisions matter
+7. `GENERATIVE_FRAME_PRODUCTION.md` when keyframe synthesis, FLF2V, video-to-video, ComfyUI/Krita/Blender hybrid workflows, or local generative frame repair matter
+8. `CONTENT_FACTORY_PATTERNS.md`
+9. `SHORT_FORM_PATTERNS.md`
+10. `AUTOMATION_PATTERNS.md` when automation matters
+11. `YT_DLP_AND_FFMPEG.md` for download/transcode work
+12. `CAPCUT.md` for desktop editing workflows
+13. `AI_VIDEO_STACKS.md` for AI-enhanced pipelines
+14. `VOICE_AND_AVATAR.md` when voice or avatar layers matter
+15. `PLATFORM_PATTERNS.md` before publication
+16. `MONETIZATION.md` when business model matters
+17. `IMPLEMENTATION_HANDOFF.md` before executor handoff
+18. `DONOR_REVIEW_2026-09-11.md` when comparing Remotion explainer donors or `ffmpeg-skill`
+19. `docs/COMPOSABLE_CAPABILITY_BLOCKS_STANDARD.md` when functionality should be reusable across applications
+20. `capability-library/REGISTRY.md` before assuming a reusable implementation is ready
+21. `VALIDATION_BACKLOG.md` before treating research as verified
+22. `REFERENCES.md` when freshness or authority matters
+23. `blocks/youtube/BLOCK.md` when YouTube-specific platform decisions matter
 
 Do not load every file by default. Load only the files relevant to the active workflow.
 
@@ -123,6 +125,7 @@ Before implementing video download, probing, audio extraction, transcription, cl
 - tool-selection decision;
 - capability composition plan;
 - frame-addressable timeline / shot / beat / keyframe model;
+- generative keyframe/interpolation/stylization plan;
 - incremental shot-render plan;
 - frame/burst/contact-sheet QA plan;
 - yt-dlp/ffmpeg execution plan;
@@ -149,5 +152,7 @@ Keep unstable platform rules, tool capabilities, and monetization requirements i
 Build pipelines that are repeatable, rights-aware, measurable, automatable, and composed from validated capability blocks.
 
 For programmable video, prefer a deterministic timeline + shot/beat/keyframe source model over treating the rendered MP4 as the editable source of truth.
+
+For generative video, keep approved keyframes, conditioning state, model/seed/settings provenance, and local-repair boundaries as durable production state rather than treating a generated clip as an opaque one-off.
 
 Avoid one-off duplicated implementations unless they are intentionally used as bounded validation prototypes.
