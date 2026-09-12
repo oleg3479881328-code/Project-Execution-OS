@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4da418cafda6da1441f76943c6545e6547594185",
-  "generated_at": "2026-09-12T13:58:00-04:00",
+  "repository_commit": "04be4598cb55f79249e32eb1fd5439a73494fef7",
+  "generated_at": "2026-09-12T13:58:56-04:00",
   "artifact_count": 593,
   "artifacts": [
     {
@@ -11772,9 +11772,16 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "7bd8b97756c7970cc3e21b388fcb84fd98d6be19b296b3e5d249ba13bd9bb7cd",
+      "sha256": "e1127fe196e54a15bc76311f0bc6a33bbd4a0bb88a2eaa0c5356faea170be4bf",
       "headings": [
         "SOFT — latest log",
+        "2026-09-12 — Blender AI Production project + donor consolidation",
+        "Owner intent",
+        "Captured",
+        "Architecture decision",
+        "First acceptance case",
+        "Durable locations",
+        "Next action",
         "2026-09-08 — Refero Styles / MCP design-intelligence donor capture",
         "Captured",
         "Design Picker impact",
