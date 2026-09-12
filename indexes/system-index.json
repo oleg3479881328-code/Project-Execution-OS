@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "04be4598cb55f79249e32eb1fd5439a73494fef7",
-  "generated_at": "2026-09-12T13:58:56-04:00",
-  "artifact_count": 593,
+  "repository_commit": "00fa839d1b1fdb90b2b199b1b286cead2460186a",
+  "generated_at": "2026-09-12T14:00:12-04:00",
+  "artifact_count": 594,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10752,6 +10752,31 @@
         "Canonical Current State",
         "Key Operational Links",
         "Project Rules"
+      ]
+    },
+    {
+      "path": "projects/blender-ai-production/AGENTS.md",
+      "title": "Blender AI Production — Agent Instructions",
+      "type": "project-artifact",
+      "domain": "blender-ai-production",
+      "status": null,
+      "date": null,
+      "sha256": "7e72a3e0fae6b61d02d2f0f5d87a264e04d20f7cdaff570dd67bc72dddf9254a",
+      "headings": [
+        "Blender AI Production — Agent Instructions",
+        "Required Entry Order",
+        "Authority And Roles",
+        "Existing Solution First",
+        "Blender Scene Mutation Contract",
+        "Simulation / FX Contract",
+        "Frame / Video Production Contract",
+        "Validation Ladder",
+        "Failure / Refinement Loop",
+        "Executor Job Packet",
+        "Cost And Efficiency Rule",
+        "Security",
+        "Current First Acceptance Case",
+        "Required Deeper References When Relevant"
       ]
     },
     {
