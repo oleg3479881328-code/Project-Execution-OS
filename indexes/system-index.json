@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "08f6a1c657d3105922387cfc8a435d321d0e2a7d",
-  "generated_at": "2026-09-12T15:59:03-04:00",
+  "repository_commit": "6a0c09259d06de3d6ee39332e095c0eb9baf4c72",
+  "generated_at": "2026-09-12T15:59:17-04:00",
   "artifact_count": 595,
   "artifacts": [
     {
@@ -1147,7 +1147,7 @@
       "domain": "design",
       "status": "EXTERNAL / CANDIDATE DONOR`.",
       "date": null,
-      "sha256": "910a173d6b1c0963ea24774533192b3f4c3b540e9fce751a0f106dbabed5150b",
+      "sha256": "2752246e3b803c50a82c73334f4a799403fcb38644e1a9bc0a47745bbf2fe232",
       "headings": [
         "Design Block Donors",
         "Purpose",
@@ -1161,6 +1161,7 @@
         "screenshot-to-code / v0.diy",
         "AI UX Playground",
         "Refero / Refero Styles / Refero MCP",
+        "ux-ui-agent-skills",
         "What Stays Custom",
         "Final Rule"
       ]
