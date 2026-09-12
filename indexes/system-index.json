@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7c7806c2d2b3c20c0dbe6d433409e862ad6c0ffc",
-  "generated_at": "2026-09-12T14:16:41-04:00",
-  "artifact_count": 594,
+  "repository_commit": "08f6a1c657d3105922387cfc8a435d321d0e2a7d",
+  "generated_at": "2026-09-12T15:59:03-04:00",
+  "artifact_count": 595,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -1452,6 +1452,44 @@
         "Usage Meter",
         "Upgrade Prompt",
         "Settings Page",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "blocks/design/UX_UI_AGENT_SKILLS_DONOR_REVIEW_2026-09-12.md",
+      "title": "UX/UI Agent Skills — Donor Review",
+      "type": "domain-block-artifact",
+      "domain": "design",
+      "status": "EXTERNAL / STRONG DONOR / CANDIDATE FIRST-CLASS DESIGN-ENGINEERING TOOL",
+      "date": "2026-09-12",
+      "sha256": "c30d0c8c54c72c02808a4e7a0e1cd8240e62859270ec054eba258a2c688e7190",
+      "headings": [
+        "UX/UI Agent Skills — Donor Review",
+        "Purpose",
+        "Decision",
+        "Strongest Reusable Findings",
+        "1. Screenshot/reference -> design system -> code",
+        "2. Three-tier token architecture",
+        "3. Deterministic design QA",
+        "4. Audit-first redesign",
+        "5. Named aesthetic systems as translation input",
+        "6. Framework adapter protocol",
+        "7. State-aware component discipline",
+        "Relationship To Existing PEOS Design Stack",
+        "Refero / Refero Styles",
+        "21st.dev / Magic MCP",
+        "PEOS Taste Frontend Execution Standard",
+        "Impeccable",
+        "Candidate Production Chain",
+        "Current SOFT/PEOS Use Cases",
+        "Do Not Adopt Blindly",
+        "Adoption Path",
+        "Phase 1 — pattern extraction",
+        "Phase 2 — controlled pilot",
+        "Phase 3 — PEOS-native wrapper",
+        "Phase 4 — CI integration",
+        "License / Version Notes",
+        "Source Trail",
         "Final Rule"
       ]
     },
