@@ -20,6 +20,9 @@ The first concrete acceptance case is the frozen-champagne shot: a foreground su
 Canonical project entrypoint:
 - `projects/blender-ai-production/PROJECT.md`
 
+Local agent / execution contract:
+- `projects/blender-ai-production/AGENTS.md`
+
 Current operational state:
 - `projects/blender-ai-production/PROJECT_STATE.md`
 
@@ -42,6 +45,12 @@ Existing internal research to reuse rather than repeat:
   https://docs.google.com/document/d/1ws9EXpciQxrF1_A-p8UVB6BchxKgs8cli-qBtId41Us/edit
 - Cinematic Subject Isolation Workflows:
   https://docs.google.com/document/d/1Slck3DEFjxywm7iZ0vmSz9V0JoPcwOhopduC0wT-2s4/edit
+- PEOS Frame-Addressable Video Production:
+  `../../blocks/video-production/FRAME_ADDRESSABLE_PRODUCTION.md`
+- PEOS Generative Frame Production:
+  `../../blocks/video-production/GENERATIVE_FRAME_PRODUCTION.md`
+- AI Hands bounded-executor architecture:
+  `../ai-hands/PROJECT.md`
 - SOFT project entrypoint:
   `../soft/PROJECT.md`
 - Existing Solution First:
@@ -69,11 +78,14 @@ External primary / donor sources:
 ## Done So Far
 
 - Reused the existing SOFT Blender, ComfyUI, frame-generation and subject-isolation research.
+- Reused the existing PEOS AI Hands controller/executor role split rather than inventing another generic agent runtime.
+- Reused the PEOS frame-addressable and generative-frame production patterns for selective rerender, exact timing and local repair.
 - Audited selected donor patterns from `arjun988/blender-skills` and `RobLe3/cc-blender-skill`.
 - Identified the official Blender Lab MCP server as the first official baseline to benchmark.
 - Captured the Pat Simmons/Astra workflow as a donor pattern rather than a model requirement.
 - Recorded the preferred hybrid control pattern: MCP for live inspection/correction; `bpy`/saved Python for deterministic repeatable scene construction.
 - Established a durable Drive folder and research/donor audit.
+- Added a project-local agent/execution contract for future chats/executors.
 
 ## Current Focus
 
@@ -113,6 +125,8 @@ Do not restart the experiment.
 
 - `Existing Solution First` is mandatory: reuse/configure/integrate/adapt before building new Blender-agent infrastructure.
 - Strong reasoning stays at the coordination/review layer; executor work should be bounded and testable whenever possible.
+- Reuse `AI Hands` for the generic controller/executor contract rather than maintaining a competing agent framework.
+- Reuse PEOS frame-addressable/generative-frame patterns for exact timing, local repair and incremental rerender.
 - Do not infer that GPT-6 Astra is required merely because the source video used it.
 - Do not bulk-install donor skill libraries. Inspect and selectively reuse only the relevant pieces.
 - One writer may mutate a given `.blend` scene at a time. Parallel agents may research/review but must not race scene writes.
@@ -128,10 +142,14 @@ Do not restart the experiment.
 
 ## Read Next
 
-1. `PROJECT_STATE.md`
-2. `logs/latest.md`
-3. Drive donor audit: https://docs.google.com/document/d/1_Ftr5qRFPhbPcjS1baNQ1kEZaYxVuohnmDQZFmklL3I/edit
-4. Existing MCP research: https://docs.google.com/document/d/1NDScqwJL9V5j2Pyh_WijYh-aDay3aSMaWUfj-qyeEj8/edit
-5. Frame-by-frame research: https://docs.google.com/document/d/1ws9EXpciQxrF1_A-p8UVB6BchxKgs8cli-qBtId41Us/edit
-6. Subject-isolation research: https://docs.google.com/document/d/1Slck3DEFjxywm7iZ0vmSz9V0JoPcwOhopduC0wT-2s4/edit
-7. `../../docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
+1. `AGENTS.md`
+2. `PROJECT_STATE.md`
+3. `logs/latest.md`
+4. Drive donor audit: https://docs.google.com/document/d/1_Ftr5qRFPhbPcjS1baNQ1kEZaYxVuohnmDQZFmklL3I/edit
+5. `../../blocks/video-production/FRAME_ADDRESSABLE_PRODUCTION.md`
+6. `../../blocks/video-production/GENERATIVE_FRAME_PRODUCTION.md`
+7. Existing MCP research: https://docs.google.com/document/d/1NDScqwJL9V5j2Pyh_WijYh-aDay3aSMaWUfj-qyeEj8/edit
+8. Frame-by-frame research: https://docs.google.com/document/d/1ws9EXpciQxrF1_A-p8UVB6BchxKgs8cli-qBtId41Us/edit
+9. Subject-isolation research: https://docs.google.com/document/d/1Slck3DEFjxywm7iZ0vmSz9V0JoPcwOhopduC0wT-2s4/edit
+10. `../ai-hands/PROJECT.md`
+11. `../../docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
