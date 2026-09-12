@@ -1,5 +1,49 @@
 # SOFT — latest log
 
+## 2026-09-12 — Blender AI Production project + donor consolidation
+
+### Owner intent
+
+Turn the ongoing Blender/ComfyUI work into one durable project so future chats do not restart research or scatter experiments.
+
+### Captured
+
+- Created dedicated PEOS project `projects/blender-ai-production/` and registered it in the projects router.
+- Created a canonical SOFT Drive folder for durable file artifacts and a research/donor audit.
+- Reused existing internal research on Blender MCP, Blender → ComfyUI frame workflows and cinematic subject isolation instead of repeating it.
+- Consolidated the Pat Simmons / GPT-6 Astra Blender case study as a donor pattern, not a model requirement.
+- Inspected selected reusable patterns from `arjun988/blender-skills` and `RobLe3/cc-blender-skill`.
+- Recorded official Blender Lab MCP as the official baseline to benchmark before custom/community MCP adoption.
+- Preserved the Pat Simmons `blender-production.zip` source, while explicitly marking its package contents as not yet directly audited.
+
+### Architecture decision
+
+Preferred production pattern:
+
+`strong coordinator/reviewer → bounded executor → Blender MCP + bpy/Python → deterministic render passes → ComfyUI where useful → FFmpeg → visual/temporal QA`
+
+Current practical executor evidence is Codex/local agent in the neighboring test. Luna remains a candidate cost-optimized hands layer until it is actually benchmarked.
+
+### First acceptance case
+
+Frozen champagne: foreground subject may move while the background and champagne splash/droplets remain frozen at stable coordinates. The project must prove deterministic control, occlusion, temporal continuity and selective rerender behavior, not just produce a pretty generative clip.
+
+### Durable locations
+
+- Project entrypoint: https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/projects/blender-ai-production/PROJECT.md
+- Current state: https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/projects/blender-ai-production/PROJECT_STATE.md
+- Current project log: https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/projects/blender-ai-production/logs/latest.md
+- Drive folder: https://drive.google.com/drive/folders/1tynpKSjLZHbEpU1jetSiwzI9vTzDBZtZ
+- Research & donor audit: https://docs.google.com/document/d/1_Ftr5qRFPhbPcjS1baNQ1kEZaYxVuohnmDQZFmklL3I/edit
+- SOFT Master Software Inventory updated: https://docs.google.com/document/d/1yTWfazVPhs-AWdSsvS4Q6xyNd7bXKtqi6EvrmQMdAOk/edit
+- SOFT Our Software Index updated: https://docs.google.com/document/d/1nzxaCsFTF7Z7VGFfYziysByeR63eMOELpDT5rBcTDHk/edit
+
+### Next action
+
+Do not restart the neighboring test. Reconcile its concrete output/evidence into the new project, inspect the actual Pat Simmons package, then benchmark official Blender MCP vs the strongest community alternative on a tiny deterministic scene before deciding the final execution stack.
+
+---
+
 ## 2026-09-08 — Refero Styles / MCP design-intelligence donor capture
 
 ### Captured
@@ -8,7 +52,7 @@
 - Verified the current Refero Styles flow from official sources: real website styles are exposed as AI-readable design systems with colors, typography, spacing, components, `DESIGN.md`, Tailwind v4, CSS Variables and Design Tokens.
 - Verified an individual Linear style page to confirm that the export is not just marketing copy: it contains concrete design tokens, type scale, spacing, radii, shadows, layout constraints, component recipes and do/don't guidance.
 - Verified the current Refero MCP positioning: agent research over structured metadata for real product screens and user flows, with official support for ChatGPT/Codex and other MCP-capable tools.
-- Recorded current official scale claims as time-sensitive evidence only: Styles headline says 2,000+ AI-readable design systems; MCP page says 142,000+ screens and 12,000+ user flows.
+- Recorded current official scale claims as time-sensitive evidence only: Styles headline says 2,000+ AI-readable design systems; MCP page says 142,000+ screens / 12,000+ flows.
 - Recorded current access boundary: Refero says DESIGN.md examples can be browsed/copied free; Refero MCP requires Pro. Pricing/terms/limits must be revalidated at adoption time.
 
 ### Design Picker impact
