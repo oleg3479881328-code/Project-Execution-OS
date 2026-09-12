@@ -94,6 +94,33 @@ Important fit for our system:
 
 Revalidate pricing, access limits, terms and MCP availability at adoption time. Do not make paid Refero access a mandatory dependency of the reusable Design Block.
 
+### ux-ui-agent-skills
+
+Status: `EXTERNAL / STRONG DONOR / CANDIDATE FIRST-CLASS DESIGN-ENGINEERING TOOL`.
+
+Official source: `https://github.com/plugin87/ux-ui-agent-skills`.
+
+Borrow:
+
+- route a request to the smallest relevant design skill/context instead of loading a monolithic design prompt;
+- convert screenshots and approved visual references into a coherent design system before generating code;
+- use three-tier design tokens: `Primitive -> Semantic -> Component`;
+- treat redesign as an audit-first workflow that preserves working behavior;
+- keep design logic framework-agnostic through adapter contracts;
+- require state-aware component specifications rather than default-state-only mockups;
+- verify measurable design correctness with deterministic gates for tokens, hardcoded values, contrast, accessibility, responsive behavior, RTL, focus/keyboard behavior, motion reduction, overflow and visual regression;
+- keep objective correctness separate from subjective design quality.
+
+Important fit for our system:
+
+- this is a strong technical layer under the PEOS Design Block, not a replacement for the Design Block;
+- the highest-value initial candidates are `image-to-code`, token architecture, design QA, audit-first redesign and adapter patterns;
+- pair its deterministic QA with PEOS Taste guidance during implementation and Impeccable/manual review after implementation;
+- do not install the donor wholesale at the PEOS root or allow its `CLAUDE.md`/router to replace PEOS routing;
+- pilot selected capabilities on a real surface before promoting them from candidate to adopted.
+
+Detailed review: `blocks/design/UX_UI_AGENT_SKILLS_DONOR_REVIEW_2026-09-12.md`.
+
 ## What Stays Custom
 
 This block stays custom in these areas:
