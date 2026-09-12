@@ -21,6 +21,7 @@ A project may route onward through its own routers, registries, indexes, collect
 - AWS / AWS infrastructure / Olga Polo remote workstation -> `aws/PROJECT.md`
 - Green Apple / `20260516-green-apple` -> `20260516-green-apple/PROJECT.md`
 - AI Hands -> `ai-hands/PROJECT.md`
+- Blender AI Production / Blender + ComfyUI + FFmpeg / AI-managed Blender production -> `blender-ai-production/PROJECT.md`
 - ChatGPT Workspace Manager -> `chatgpt-workspace-manager/PROJECT.md`
 - Codex -> `codex/PROJECT.md`
 - Design Picker -> `design-picker/PROJECT.md`
