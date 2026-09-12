@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "91019b638baecce0c692dc48bffcb6926a0f2409",
-  "generated_at": "2026-09-12T13:57:37-04:00",
-  "artifact_count": 592,
+  "repository_commit": "4da418cafda6da1441f76943c6545e6547594185",
+  "generated_at": "2026-09-12T13:58:00-04:00",
+  "artifact_count": 593,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10568,7 +10568,7 @@
       "domain": "ROUTER.md",
       "status": null,
       "date": null,
-      "sha256": "bc1674bdbe3884e8e07d96c5d8f1cbea8705cbec77c8750b01ed1f8a7ed7df95",
+      "sha256": "995c71619a9ccf34da937621dadcefb3c5cde78df53adc470b38276f5dc08782",
       "headings": [
         "Projects Router",
         "Purpose",
@@ -10805,6 +10805,27 @@
         "Do Not Repeat",
         "Next Safe Actions",
         "Durable Locations"
+      ]
+    },
+    {
+      "path": "projects/blender-ai-production/logs/latest.md",
+      "title": "Blender AI Production — latest log",
+      "type": "project-artifact",
+      "domain": "blender-ai-production",
+      "status": null,
+      "date": null,
+      "sha256": "d79fc8c91c1906228f6b7d865f5921aab279aea1ca08e0e8218976abfe11eb0f",
+      "headings": [
+        "Blender AI Production — latest log",
+        "2026-09-12 — Project bootstrap + donor consolidation",
+        "Owner intent",
+        "Project created",
+        "Existing Solution First work completed",
+        "Main architecture decision",
+        "Donor patterns selected",
+        "First acceptance case",
+        "Verification boundary",
+        "Next action"
       ]
     },
     {
