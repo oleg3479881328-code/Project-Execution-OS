@@ -4,7 +4,7 @@
 
 - Name: `Blender AI Production`
 - Type: AI-assisted 3D / VFX production pipeline project under SOFT
-- Status: active — research consolidated, practical pipeline testing in progress
+- Status: active — deep donor research consolidated, practical pipeline testing in progress
 - Parent umbrella: `SOFT`
 
 ## Purpose
@@ -56,70 +56,89 @@ Existing internal research to reuse rather than repeat:
 - Existing Solution First:
   `../../docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
 
-External primary / donor sources:
+Key external primary / donor sources:
 
 - User-supplied Pat Simmons video: https://youtu.be/-545TXdfrTQ
 - Pat Simmons case-study article: https://www.aiformortals.co/blog/gpt-6-astra-blender-fallingwater
 - Blender Lab official MCP Server: https://www.blender.org/lab/mcp-server/
-- `arjun988/blender-skills`: https://github.com/arjun988/blender-skills
-- `RobLe3/cc-blender-skill`: https://github.com/RobLe3/cc-blender-skill
-- `PatrykIti/blender-ai-mcp`: https://github.com/PatrykIti/blender-ai-mcp
+- `ahujasid/blender-mcp`: https://github.com/ahujasid/blender-mcp
 - `djeada/blender-mcp-server`: https://github.com/djeada/blender-mcp-server
+- `PatrykIti/blender-ai-mcp`: https://github.com/PatrykIti/blender-ai-mcp
+- `dcc-mcp/dcc-mcp-blender`: https://github.com/dcc-mcp/dcc-mcp-blender
+- `jangtrinh/design-os-3d-blender`: https://github.com/jangtrinh/design-os-3d-blender
+- `gaoypeng/3dcodebench`: https://github.com/gaoypeng/3dcodebench
+- `ifBars/blender-agent-studio`: https://github.com/ifBars/blender-agent-studio
+- `XliuXjianX/blender-production-skills`: https://github.com/XliuXjianX/blender-production-skills
+- `RobLe3/cc-blender-skill`: https://github.com/RobLe3/cc-blender-skill
+- `arjun988/blender-skills`: https://github.com/arjun988/blender-skills
+- `AIGODLIKE/ComfyUI-BlenderAI-node`: https://github.com/AIGODLIKE/ComfyUI-BlenderAI-node
 - Pat Simmons `blender-production` package source: https://fallingwater-astra.vercel.app/blender-production.zip
+
+Detailed strengths, risks, licenses, snapshot maturity signals and adoption decisions live in the Drive donor audit. Do not duplicate that full research in this entrypoint.
 
 ## Current Status
 
-- Research from the video, prior SOFT work and existing Blender/ComfyUI material has been consolidated.
-- The project is now registered as a dedicated workstream instead of remaining a loose SOFT discussion.
+- Research from the source video, prior SOFT work, existing Blender/ComfyUI material and a deep GitHub donor sweep has been consolidated.
+- The project is registered as a dedicated workstream instead of remaining a loose SOFT discussion.
 - A practical zero-touch chain is already being tested in a neighboring work chat around Codex/local execution → Blender → render passes → ComfyUI → FFmpeg.
-- That practical work must be reconciled into this durable project state; it must not be restarted merely because this project was created.
+- That practical work must be reconciled into durable state; it must not be restarted merely because this project exists.
 - No end-to-end production-quality frozen-champagne result is yet recorded here as verified.
+- No live MCP implementation has yet been selected as final.
+- Luna remains a candidate hands model, not a verified default executor.
 
 ## Done So Far
 
-- Reused the existing SOFT Blender, ComfyUI, frame-generation and subject-isolation research.
-- Reused the existing PEOS AI Hands controller/executor role split rather than inventing another generic agent runtime.
-- Reused the PEOS frame-addressable and generative-frame production patterns for selective rerender, exact timing and local repair.
-- Audited selected donor patterns from `arjun988/blender-skills` and `RobLe3/cc-blender-skill`.
-- Identified the official Blender Lab MCP server as the first official baseline to benchmark.
-- Captured the Pat Simmons/Astra workflow as a donor pattern rather than a model requirement.
-- Recorded the preferred hybrid control pattern: MCP for live inspection/correction; `bpy`/saved Python for deterministic repeatable scene construction.
-- Established a durable Drive folder and research/donor audit.
-- Added a project-local agent/execution contract for future chats/executors.
+- Reused existing SOFT Blender, ComfyUI, frame-generation and subject-isolation research.
+- Reused PEOS AI Hands controller/executor role split rather than inventing another generic agent runtime.
+- Reused PEOS frame-addressable and generative-frame patterns for exact timing, local repair and incremental rerender.
+- Completed a deeper GitHub donor sweep across MCP/control, production skills, deterministic/headless execution, validation/benchmarking and Blender↔ComfyUI integration.
+- Identified official Blender Lab MCP as the official live-control baseline and `ahujasid/blender-mcp` as the maturity/community comparator.
+- Identified `djeada/blender-mcp-server` as a strong donor for safe async/headless/physics execution and `PatrykIti/blender-ai-mcp` as a strong donor for typed macro/assertion control.
+- Identified `jangtrinh/design-os-3d-blender` as the closest donor for structured deterministic hands execution and `gaoypeng/3dcodebench` as the benchmark-methodology donor for model/economics testing.
+- Identified optional Blender↔ComfyUI donors without making embedded integration an MVP dependency.
+- Corrected unverified donor names from prior chat so they cannot silently become project facts.
+- Established a durable Drive folder, detailed donor audit, current state, log and project-local execution contract.
 
 ## Current Focus
 
-Turn the current research and neighboring practical test into one repeatable production architecture with measurable acceptance gates.
+Prove the smallest reliable execution architecture before synthesizing a custom production skill.
 
 Target architecture:
 
 ```text
 strong coordinator / reviewer
         ↓
-bounded executor jobs (current practical executor: Codex/local agent)
+bounded executor job
         ↓
-Blender MCP + bpy/Python
+appropriate hands model
+        ├── LIVE: MCP for inspect / screenshot / targeted edit
+        └── HEAVY: saved bpy script → isolated Blender headless process
         ↓
-geometry / camera / physics / frozen FX / render passes
+deterministic assertions + render evidence
         ↓
-ComfyUI where AI isolation/look processing is useful
+geometry / camera / physics / frozen FX / beauty-depth-normal-mask-ID passes
+        ↓
+ComfyUI via explicit API/file contract where AI processing adds value
         ↓
 FFmpeg deterministic assembly
         ↓
 visual + temporal QA
 ```
 
-A cheaper executor model such as Luna may be evaluated as the hands layer, but it is not yet recorded as the verified executor of the current practical pipeline.
+A cheaper executor model such as Luna may be evaluated in the hands slot, but only through the same acceptance contract and measured benchmark used for stronger executors.
 
 ## Next Practical Step
 
-Do not restart the experiment.
+Do not restart the neighboring experiment.
 
-1. Reconcile the outputs/status of the already-running neighboring Blender/ComfyUI test into `PROJECT_STATE.md` and `logs/latest.md`.
-2. Directly inspect the Pat Simmons `blender-production.zip` package before adopting anything from it.
-3. Benchmark the official Blender Lab MCP server against the strongest community candidate on a tiny deterministic scene.
-4. Extract only the donor skills/patterns that solve demonstrated gaps.
-5. Use the frozen-champagne shot as the first real acceptance test.
+1. Reconcile its current outputs/status into `PROJECT_STATE.md` and `logs/latest.md`.
+2. Directly inspect Pat Simmons `blender-production.zip` before adopting anything from it.
+3. Define one tiny deterministic benchmark job packet with scene truth + proof render.
+4. Benchmark live control: official Blender Lab MCP vs `ahujasid/blender-mcp` and one production-oriented candidate.
+5. Benchmark deterministic/headless execution using saved scripts + structured success/failure/evidence.
+6. Adapt a small 3DCodeBench-style comparison for the hands model; test Luna only if it is technically available in the chosen execution surface.
+7. Promote only proven donor patterns into a compact project Blender Production Skill.
+8. Continue to the frozen-champagne acceptance shot.
 
 ## Key Decisions And Constraints
 
@@ -128,17 +147,21 @@ Do not restart the experiment.
 - Reuse `AI Hands` for the generic controller/executor contract rather than maintaining a competing agent framework.
 - Reuse PEOS frame-addressable/generative-frame patterns for exact timing, local repair and incremental rerender.
 - Do not infer that GPT-6 Astra is required merely because the source video used it.
-- Do not bulk-install donor skill libraries. Inspect and selectively reuse only the relevant pieces.
+- Do not treat MCP as the only execution path; use headless deterministic Blender jobs when that is safer or cheaper.
+- Do not bulk-install donor skill libraries. Inspect and selectively reuse only relevant pieces.
+- Do not copy donor code when licensing is missing/unclear; architecture patterns may be studied separately.
 - One writer may mutate a given `.blend` scene at a time. Parallel agents may research/review but must not race scene writes.
-- Preserve accepted `.blend` checkpoints before risky changes.
+- Preserve accepted `.blend` checkpoints before risky changes and save per phase for long jobs.
 - Verify the active `.blend` file before mutation.
 - Prototype simulations / FX at low resolution before expensive bake/render.
-- Visual evidence is required. API success, object counts or script completion alone do not prove a correct shot.
-- Prefer selective re-render of failed frame ranges over rebuilding an accepted sequence.
-- Keep known defects/limitations explicit; do not hide failure behind materials, lighting or AI stylization.
-- Blender MCP / generated Python can execute arbitrary local code. Use isolation, limited permissions, backups and safe checkpoints.
+- Deterministic checks and visual evidence are both required. API success, validator success, object counts or agent self-report alone do not prove a correct shot.
+- Prefer selective rerender of failed frame ranges over rebuilding an accepted sequence.
+- Keep known defects/limitations explicit; do not hide physics/geometry defects with AI stylization.
+- Blender MCP / generated Python can execute arbitrary local code. Use isolation, limited permissions, approved roots, backups and safe checkpoints.
+- Keep Blender→ComfyUI boundary explicit (beauty/depth/normal/mask/ID + metadata) until embedded integration proves objectively useful.
 - Do not claim the Pat Simmons `blender-production.zip` has been audited until its actual contents are inspected.
-- Do not claim Blender ↔ ComfyUI ↔ FFmpeg is production-ready until an end-to-end artifact and QA evidence are recorded.
+- Do not claim Luna economics or production readiness until task-specific benchmark evidence exists.
+- Unverified names `RFingAdam`, `newo-ether`, and `comfyui-blender-temporal` are not project donors unless a real source is later established.
 
 ## Read Next
 
