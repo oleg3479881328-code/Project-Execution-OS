@@ -35,6 +35,7 @@ Do not append an unrelated next-project question after answering the active requ
 - idea or reference that should be preserved but is not yet a project -> `docs/REFERENCE_IDEA_CAPTURE_STANDARD.md`
 - durable file creation, artifact storage destination, folder placement, cleanup, import, upload, export, backup, or concern about scattered files -> `docs/FILE_ORGANIZATION_STANDARD.md`
 - lifecycle or storage-layer decision -> `docs/PROJECT_LIFECYCLE_MODEL.md`
+- website creation, website production, building a new website, build a website, creating websites from prior work, reusable website-production knowledge, project for creating websites, создание сайтов, проект создания сайтов, сборка сайта, разработка сайта, or end-to-end site implementation -> `projects/website-creation/PROJECT.md`
 - website design, landing-page design, page structure, wireframe, UI system, responsive UI spec, or website design review -> `blocks/design/BLOCK.md`
 - Impeccable, AI-coded frontend design QA, AI-slop review, frontend design detector, UI polish/audit after AI coding, or design quality gate for coded web UI -> `blocks/design/IMPECCABLE_DESIGN_QA_GATE.md`
 - Chrome Extension, browser extension, Manifest V3, extension content scripts, extension service workers, Chrome Web Store publishing, extension monetization, or extension payments -> `blocks/chrome-extension/BLOCK.md`
