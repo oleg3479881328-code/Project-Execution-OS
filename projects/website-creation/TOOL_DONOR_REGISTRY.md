@@ -1,226 +1,163 @@
-# Website Creation — TOOL_DONOR_REGISTRY.md
+# Website Creator — TOOL_DONOR_REGISTRY.md
 
 ## Purpose
 
-Website-specific view of tools, platforms, libraries and donors already researched or used across SOFT, Olga Polo, Automatic Website Factory and PEOS Design work.
+Global website-specific view of reusable internal tools, external platforms, libraries and design/process donors.
 
-This is a routing layer, not a substitute for the canonical SOFT inventory or current official documentation.
+This registry is client-agnostic. Time-sensitive third-party facts must be revalidated against current official documentation at adoption time.
 
 Status meanings:
-- `ADOPTED / PROVEN` — used successfully in our production/workflow.
-- `INTERNAL / ACTIVE` — our existing capability/project.
-- `STRONG DONOR / CANDIDATE` — researched and promising, not universal default.
-- `EXTERNAL / CONDITIONAL` — useful platform/tool; choose task-by-task.
-- `HISTORICAL / REVALIDATE` — prior research whose current product facts must be checked before adoption.
+- `ADOPTED / PROVEN` — successfully used/validated in our production methodology.
+- `INTERNAL / ACTIVE` — our reusable capability/project.
+- `STRONG DONOR / CANDIDATE` — researched and promising, not a universal default.
+- `EXTERNAL / CONDITIONAL` — choose project-by-project.
 
-## Internal capabilities
+## Internal Capabilities
 
 ### PEOS Design Block — ADOPTED / PROVEN
-
 Canonical: `../../blocks/design/BLOCK.md`
-
-Role: upstream website-design orchestration: business/user goal, donor research, visual selection, page strategy, sections/components, responsive behavior, motion, implementation handoff, Taste execution guidance and final design QA.
+Role: website-design orchestration, donor research, page strategy, sections/components, responsive/motion standards, implementation handoff and design QA.
 
 ### Design Picker — INTERNAL / ACTIVE
-
-Canonical:
-https://github.com/oleg3479881328-code/Project-Execution-OS/tree/main/projects/design-picker
-
-Role: import/browse visual donors, choose reusable patterns and export design direction/brief.
+Canonical: https://github.com/oleg3479881328-code/Project-Execution-OS/tree/main/projects/design-picker
+Role: collect/import visual references, select reusable patterns, produce design direction/brief.
 
 ### Universal Site Design Extractor — INTERNAL / ACTIVE PROTOTYPE
-
-Status/source:
-https://docs.google.com/document/d/1albuaKqO3Dy_rJmXbAPofP89B6R3_NItzH5raYaF7_I/edit
-
-Role: full-site design/structure extraction and normalized artifacts such as `DESIGN.md`, tokens, DTCG/Tailwind/evidence exports. Use for approved donor analysis; do not assume perfect cloning or animation extraction without revalidation.
+Role: extract site structure/design evidence into reusable artifacts such as design notes/tokens/evidence exports. Use after donor selection and normalize results into the target design system. Do not assume pixel-perfect cloning or universal animation/framework extraction unless current tests prove it.
 
 ### Website Intelligence / Site Baseline Scanner — INTERNAL / EXISTING
-
-Role: existing-site qualification/audit and full-site baseline capture. Exact standalone canonical packaging still needs normalization; current evidence lives through Automatic Website Factory and Olga baseline work.
-
-### Olga production stack — ADOPTED / PROVEN DONOR
-
-Repo:
-https://github.com/oleg3479881328-code/olga-polo-weddings-web
-
-Role: real production reference for structured data, reusable renderers, Puck authoring, staged release, PR/CI/Vercel, SEO/schema/canonical, live QA and rollback discipline.
+Role: inspect/qualify an existing website and capture a baseline before redesign/replacement. Standalone packaging remains subject to normalization.
 
 ### Visitor Analytics Control Plane — INTERNAL / ACTIVE
+Canonical: https://github.com/oleg3479881328-code/Project-Execution-OS/tree/main/projects/visitor-analytics-control-plane
+Role: reusable analytics/control layer; current internal direction favors a lightweight default with deeper product analytics only when justified.
 
-Canonical:
-https://github.com/oleg3479881328-code/Project-Execution-OS/tree/main/projects/visitor-analytics-control-plane
+## Visual Editor / CMS Technologies
 
-Current architecture selects Umami v3 as default analytics core, PostHog only when deeper product analytics is justified.
+### Puck — ADOPTED / PROVEN OPTION
+Role: structured React page/block authoring surface suitable for bounded visual editing. It is an implementation option that satisfies parts of `EDITOR_CREATION_STANDARD.md`, not a mandatory dependency for every website.
 
-## Adopted libraries/patterns from Olga
+### react-easy-crop — ADOPTED / PROVEN OPTION
+Role: visual, non-destructive crop/move/zoom interaction in an isolated overlay/modal. Preferred over custom pointer-coordinate crop math when using compatible React stacks.
 
-### Puck — ADOPTED / PROVEN
-
-Role: structured page/block visual authoring layer in Olga editor. Treat it as a proven donor for bounded client-safe authoring, not an automatic requirement for every site.
-
-### react-easy-crop — ADOPTED / PROVEN
-
-Current Olga source:
-https://docs.google.com/document/d/1HWHTwXX2KvK-gPUqN3nIrlrh642IeDSWTiVg4vqK9v4/edit
-
-Role: isolated non-destructive image crop/pan/zoom UI outside Puck coordinate transforms. Chosen specifically after custom pointer math caused drift/breakage.
-
-## Design research / Style DNA
-
-### Refero Styles / Refero MCP — STRONG DONOR / CANDIDATE
-
-Official:
-https://styles.refero.design/
-https://refero.design/mcp
-
-Role: visual research, real product screens/flows, style-system references, DESIGN.md/tokens. Current SOFT decision: benchmark as design intelligence before expanding custom tooling; do not make paid MCP mandatory. Revalidate current pricing/limits.
-
-### Framer — STRONG DONOR / CANDIDATE
-
-Durable note:
-https://docs.google.com/document/d/19iKp-YMkOq6Ac3nYmmhvCuLqD3o5_9HLbdBEkiUoy-M/edit
-
-Role: premium website/design/motion donor, rapid demos, interaction DNA, possible factory execution option. Compare against custom-code/Vercel and revalidate lock-in/pricing before adoption.
-
-### UX-UI Agent Skills (plugin87) — STRONG DONOR / CANDIDATE FIRST-CLASS DESIGN-ENGINEERING TOOL
-
-SOFT review:
-https://docs.google.com/document/d/1fvthph93xy6TcnQ7WMGSvsc2YUK6VdIrplDYjnQX6U0/edit
-
-Official repo:
-https://github.com/plugin87/ux-ui-agent-skills
-
-Decision: do not replace PEOS Design Block and do not wholesale-install at PEOS root. Highest-value donor concepts:
-- image-to-code as screenshot -> inferred design language -> tokens -> components -> rendered comparison;
-- Primitive -> Semantic -> Component token architecture;
-- apply-aesthetic as translation into semantic colors/type/spacing/radius/shadows/motion, not brand cloning;
-- deterministic QA for contrast, accessibility, hardcodes, states, responsive behavior, reduced motion, keyboard/focus, overflow;
-- redesign sequence `Scan -> Diagnose -> Direct -> Apply -> Verify`;
-- framework adapter contracts;
-- selective loading of only the required skill/knowledge.
-
-Candidate chain:
-`PEOS Design Block -> Existing Solution First -> donor/reference research -> Design Picker -> UX-UI Agent specialist capability -> Codex implementation -> deterministic QA -> PEOS Taste -> Impeccable/manual visual QA -> release`.
-
-### 21st.dev / Magic MCP — STRONG COMPONENT DONOR / CANDIDATE
-
-Role: Existing Solution First discovery for already-solved frontend components/patterns before custom generation. Normalize selected patterns into project tokens/requirements and still run accessibility/design QA.
-
-### Impeccable — CANDIDATE FIRST-CLASS FRONTEND QA
-
-Canonical PEOS gate:
-`../../blocks/design/IMPECCABLE_DESIGN_QA_GATE.md`
-
-Role: downstream visible frontend/design quality critique and polish. Complements deterministic QA; does not replace it.
-
-### Humanizer — CANDIDATE TEXT QA
-
-Role: optional final editorial QA for public-facing/client-tone copy. Do not frame as guaranteed AI-detector bypass.
-
-### Ready-made component/design donors already reviewed
-
-Automatic Website Factory / PEOS research has also covered conditional donors such as shadcn/ui, coss ui, Beautiful UI, beUI, Rare UI and Transitions.dev. These are candidates, not universal dependencies; check compatibility, license, accessibility and performance before use.
-
-## Website execution / provisioning platforms
-
-### Vercel — ADOPTED / PROVEN
-
-Role: current production/preview deployment for Olga code-based pages; immutable deployments and Instant Rollback are part of the proven release model.
-
-### Netlify — EXTERNAL / CONDITIONAL
-
-Role: deployment/CDN/functions alternative. Historical Drive duplicates exist; use SOFT canonicalization before relying on old notes.
-
-### Showit — ADOPTED IN OLGA / CONDITIONAL ELSEWHERE
-
-Role: Olga premium human-facing site during MVP while programmatic Next.js pages were safely isolated on Vercel. Strong donor for visual workflow and staged migration architecture, not a universal factory backend.
+### react-moveable — ADOPTED / PROVEN OPTION
+Role: direct resize handles for supported visual blocks; persist semantic percentage/layout values rather than editor-only pixels.
 
 ### WordPress — EXTERNAL / CONDITIONAL
+Role: mature CMS/ownership ecosystem where WordPress editing/plugin/deployment requirements fit the project.
 
-Role: CMS ecosystem / ownership-friendly execution path. Current usage decision depends on project requirements; 10Web research is one managed AI/white-label route.
+## Design / Style / Component Donors
+
+### Refero Styles / Refero MCP — STRONG DONOR / CANDIDATE
+Official: https://styles.refero.design/ and https://refero.design/mcp
+Role: design research, real product screens/flows, style-system references and token/design-language intelligence. Revalidate current access/pricing/limits.
+
+### Framer — STRONG DONOR / CANDIDATE
+Role: premium visual website builder, rapid demo surface, layout/motion/interaction donor and possible execution platform. Evaluate lock-in, export/ownership, CMS, hosting and cost per project.
+
+### UX-UI Agent Skills — STRONG DONOR / CANDIDATE
+Official: https://github.com/plugin87/ux-ui-agent-skills
+Useful concepts:
+- image/screenshot → inferred design language → tokens → components → rendered comparison;
+- Primitive → Semantic → Component token architecture;
+- aesthetic translation rather than brand pixel cloning;
+- deterministic contrast/a11y/state/responsive QA;
+- redesign sequence `Scan → Diagnose → Direct → Apply → Verify`;
+- framework adapters;
+- selective loading of only needed design knowledge.
+
+Use as a specialist layer under PEOS/Website Creator orchestration, not as the master project authority.
+
+### 21st.dev / Magic MCP — STRONG COMPONENT DONOR / CANDIDATE
+Role: Existing Solution First component/pattern discovery before custom generation. Normalize selected components into project tokens/requirements and still run accessibility/design QA.
+
+### Impeccable — CANDIDATE FRONTEND QA
+Canonical PEOS gate: `../../blocks/design/IMPECCABLE_DESIGN_QA_GATE.md`
+Role: downstream visible frontend/design critique and polish. Complements deterministic QA.
+
+### Humanizer — CANDIDATE TEXT QA
+Role: optional editorial pass for public-facing/client-tone copy. Do not frame as guaranteed detector bypass.
+
+### Conditional component/motion donors
+Research has included ecosystems such as shadcn/ui, coss ui, Beautiful UI, beUI, Rare UI and Transitions.dev. Evaluate compatibility, license, accessibility and performance before use.
+
+## Hosting / Deployment / Site Platforms
+
+### Vercel — ADOPTED / PROVEN OPTION
+Role: code-based preview/production deployment, immutable deployments and rollback-friendly workflow. Use when compatible with the chosen stack.
+
+### Netlify — EXTERNAL / CONDITIONAL
+Role: deployment/CDN/functions alternative. Revalidate current pricing/features before adoption.
+
+### Showit — EXTERNAL / CONDITIONAL
+Role: high-control visual website platform; useful where its visual workflow and CMS model match the project. Not a universal backend.
 
 ### Duda — HIGH-PRIORITY FACTORY CANDIDATE
-
-Automatic Website Factory donor analysis:
-https://docs.google.com/document/d/1KVTz8XyZfwMN2rILqeiOkqaSHGDIsyT3AR2WIrQEIuM/edit
-
-Previously verified strengths: AI/site generation APIs, template/Instant Website paths, client accounts and granular/content-only permissions, white-label editor/preview/access. Revalidate current API/pricing/ownership rules at execution time.
+Role: generated/template site execution, client accounts/permissions, white-label editor/preview workflows and provisioning APIs where current product capabilities satisfy requirements. Revalidate current API/pricing/export/ownership.
 
 ### 10Web — HIGH-PRIORITY FACTORY CANDIDATE
-
-Same donor analysis above. Previously verified strengths: AI site generation API/WordPress route, sitemap/styles/secondary pages, white-label reseller/client/site/billing infrastructure. Revalidate current product terms before execution.
+Role: managed AI/WordPress site generation and white-label/reseller/client infrastructure where an ownership-friendly WordPress path is useful. Revalidate current APIs/terms/pricing.
 
 ### FieldLaunch — STRONG PROCESS DONOR
-
-Role: end-to-end Hunt -> Enrich -> Generate -> Deploy -> Outreach process and preview-first sales sequencing.
+Role: end-to-end acquisition-to-preview process patterns such as Hunt → Enrich → Generate → Deploy → Outreach.
 
 ### LeadX — STRONG ACQUISITION DONOR
-
-Role: prospect discovery, no-site/weak-site scoring, acquisition control plane and CRM/webhook workflow.
+Role: prospect discovery, no-site/weak-site scoring and CRM/webhook acquisition-control patterns.
 
 ### Devonz — EXTERNAL / DONOR
-
-Role: full-stack vibe-coding platform saved for comparison; not selected as default.
+Role: full-stack AI/vibe-coding platform reference; not a default.
 
 ### Bolt.diy / Bolt.new family — EXTERNAL / DONOR
+Role: AI web-app/site generation references; not canonical production infrastructure.
 
-Role: AI web-app generation references; not selected as canonical production workflow.
-
-## Research / extraction / implementation support
+## Research / Extraction / Implementation Support
 
 ### Firecrawl — RECOMMENDED ON-DEMAND EXTRACTION LAYER
-
-Role: external website search/scrape/crawl/extract when ordinary web access or project files are insufficient. Choose CLI/skill/MCP based on task and token/runtime needs.
+Role: external site search/scrape/crawl/extract when normal web access or known evidence is insufficient. Select CLI/agent skill/MCP based on task/runtime efficiency.
 
 ### Playwright CLI / MCP — RECOMMENDED QA-BROWSER LAYER
-
-Role: deterministic live UI/browser verification, forms/flows/regressions and accessibility-snapshot interaction. Prefer the smallest adequate interface; persistent MCP is not mandatory for every test.
+Role: deterministic live UI verification, forms, interaction flows, regressions and accessibility-snapshot automation. Use the lightest interface that meets the task.
 
 ### Context7 — RECOMMENDED CURRENT-DOCS LAYER
-
-Role: current/version-specific framework/library/API documentation to reduce stale implementation assumptions. It is not a replacement for code review or business reasoning.
+Role: current/version-specific framework/library/API documentation to reduce stale implementation assumptions.
 
 ### Codex — ADOPTED EXECUTION TOOL
+Role: code implementation/review after Website Creator has established requirements and acceptance criteria. Executor, not product/design authority.
 
-Role: code implementation/review within our Git/PEOS workflow when the task is sufficiently specified.
+## Analytics / Validation
 
-## Analytics / validation
+### Google Search Console — ADOPTED / PROVEN
+Role: indexing, canonical diagnostics, query/page/impression/click validation.
 
-### Google Search Console — ADOPTED / PROVEN FOR SEARCH VALIDATION
+### GA4 / GTM — EXTERNAL / CONDITIONAL
+Role: conversion/event attribution when the project requires it.
 
-Olga evidence demonstrates its role in indexation, canonical diagnostics, query/page/impression/click monitoring.
-
-### GA4 / GTM — CONDITIONAL MEASUREMENT LAYER
-
-Used/planned where conversion/search attribution requires it. Olga TSEO architecture defines candidate inquiry events.
-
-### Umami v3 — SELECTED DEFAULT ANALYTICS CORE FOR INTERNAL CONTROL PLANE
-
-Use for privacy-conscious cross-project analytics when the Visitor Analytics Control Plane is deployed.
+### Umami — SELECTED LIGHTWEIGHT INTERNAL DIRECTION
+Role: privacy-conscious analytics core for reusable cross-project analytics where deployed.
 
 ### PostHog — ESCALATION OPTION
+Role: deeper product analytics/experimentation only when justified.
 
-Use only when deeper product analytics/experimentation justifies the additional system.
+## Selection Rule
 
-## Current selection rule
+Do not ask “which website builder is best?” without a project contract.
 
-Do not ask “which website builder do we use?” in the abstract.
+Evaluate tools/platforms against:
 
-Route by project need:
-1. define business/user goal and required ownership/editing model;
-2. check existing project stack and proven Olga patterns;
-3. search PEOS Design/Website Creation/SOFT before inventing;
-4. use ready-made platform/component/library when it satisfies quality/control/ownership/economics;
-5. custom-build only the verified gaps;
-6. run deterministic + visual + live QA before release.
+1. business/user goal;
+2. design quality/control;
+3. structured content/data requirements;
+4. editing/permission model;
+5. SEO/schema/canonical control;
+6. preview/release/rollback workflow;
+7. ownership/export/domain transfer;
+8. API/integration quality;
+9. performance/accessibility;
+10. cost and time per delivered site;
+11. maintenance and lock-in.
 
-## Canonical software source
+Prefer integration over rebuilding solved infrastructure. Custom-build only the demonstrated gap.
 
-SOFT Master Software Inventory:
-https://docs.google.com/document/d/1yTWfazVPhs-AWdSsvS4Q6xyNd7bXKtqi6EvrmQMdAOk/edit
+## Final Rule
 
-SOFT Third-Party Software Index:
-https://docs.google.com/document/d/1C-F_ukN2AlryP-_FxlJqFIKSbKjat8kzzMw8HsaSPH0/edit
-
-Time-sensitive third-party claims in this file are routing context only and must be revalidated against current official sources when making an adoption/purchase/implementation decision.
+Tools serve Website Creator standards. A tool or external donor does not become the architecture merely because it is convenient or fashionable.
