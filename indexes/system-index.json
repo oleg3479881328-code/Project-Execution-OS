@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6a0c09259d06de3d6ee39332e095c0eb9baf4c72",
-  "generated_at": "2026-09-12T15:59:17-04:00",
-  "artifact_count": 595,
+  "repository_commit": "04d7efdba776aecb58baea1a2eee9d4381dc0668",
+  "generated_at": "2026-09-13T11:36:42-04:00",
+  "artifact_count": 596,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10816,6 +10816,38 @@
         "Security",
         "Current First Acceptance Case",
         "Required Deeper References When Relevant"
+      ]
+    },
+    {
+      "path": "projects/blender-ai-production/FAILURE_REGISTER.md",
+      "title": "Blender AI Production — FAILURE_REGISTER.md",
+      "type": "project-artifact",
+      "domain": "blender-ai-production",
+      "status": "active project runbook / do-not-repeat register",
+      "date": "2026-09-13",
+      "sha256": "ca7d6f426740da1b90cd67e38258a40ed5147ab5f35a376d82ab05436082ae48",
+      "headings": [
+        "Blender AI Production — FAILURE_REGISTER.md",
+        "Purpose",
+        "Governing Rule",
+        "Failure Register",
+        "F-01 — Wrong deliverable class: generated image instead of Blender result",
+        "F-02 — Script incorrectly depended on a sidecar GLB being beside the Python file",
+        "F-03 — Unsafe output-path inference from `__file__`",
+        "F-04 — Windows backslash path caused Python `unicodeescape` syntax failure",
+        "F-05 — Render was visually washed out / nearly white",
+        "F-06 — Blender 5.0+ removed legacy `Action.fcurves`",
+        "F-07 — Blender 5.x video output requires `media_type='VIDEO'` before `file_format='FFMPEG'`",
+        "F-08 — Orbit camera parenting/transform order was unsafe",
+        "F-09 — Exact MP4 filename assumption was wrong",
+        "F-10 — Fragmented patch delivery created avoidable confusion",
+        "F-11 — Syntax verification was presented too close to runtime verification",
+        "F-12 — We coded first and consulted official Blender docs too late",
+        "Mandatory Preflight For Future Blender Scripts",
+        "Preferred Video Production Rule",
+        "Known Good / Known Verified From This Test",
+        "Related Project Rules",
+        "Final Do-Not-Repeat Rule"
       ]
     },
     {
