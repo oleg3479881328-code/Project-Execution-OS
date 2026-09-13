@@ -1,334 +1,267 @@
-# Website Creation — EDITOR_CREATION_STANDARD.md
+# Website Creator — UNIVERSAL VISUAL EDITOR STANDARD
 
 ## Status
 
-`CURRENT / CANONICAL REUSABLE EDITOR STANDARD`
+`CURRENT / CANONICAL / CLIENT-AGNOSTIC`
 
 Created: 2026-09-13
 
-## Why This Standard Exists
+## Purpose
 
-A new chat may read old editor notes and still build the wrong editor because descriptive history is not an implementation contract.
+Define the required behavior, data model and acceptance criteria for a reusable visual website editor.
 
-For Website Creation, the Olga editor is now treated as a **golden reusable production donor**. When a new project needs a visual/client editor, the executor must inspect the actual current editor source and golden screenshots before designing or coding anything.
+This standard is self-contained. It does not depend on any client project or client-specific codebase.
 
-Do **not** recreate the editor from memory, from a generic CMS idea, or from a summary alone.
+Golden visual references stored in Website Creator Drive are behavioral acceptance evidence, not client references:
 
-## Golden Source Order
-
-Use sources in this order:
-
-1. Current Olga editor code — executable truth.
-2. Golden visual screenshots — visible acceptance reference.
-3. Current Olga Image Editor migration/architecture snapshot — rationale and known failure modes.
-4. Older task notes only when historical evidence is needed.
-
-### Current executable source
-
-Repository:
-https://github.com/oleg3479881328-code/olga-polo-weddings-web
-
-Primary reusable files:
-
-- `app/editor/EditableImageFrame.tsx`
-- `app/editor/EditableImageFrame.module.css`
-- `app/editor/ImageCropDialog.tsx`
-- `app/editor/ImageCropDialog.module.css`
-- `app/editor/ImageInspectorPanel.tsx`
-- `app/editor/image-crop-model.ts`
-- venue/wedding editor consumers and shared `ImageAssetField` / media helpers
-
-### Current architecture snapshot
-
-https://docs.google.com/document/d/1HWHTwXX2KvK-gPUqN3nIrlrh642IeDSWTiVg4vqK9v4/edit
-
-### Golden visual references
-
-Main selected-image editor:
-https://drive.google.com/file/d/1Ru4q2lxz299P-C8Spz8v9Ww6j286iMtB/view
-
-Crop / move modal:
-https://drive.google.com/file/d/1pfpdTfBZRVW4cSKJxjQHfVxUIuthGdef/view
-
-These are acceptance references, not decorative screenshots.
+- Main selected-image editor:
+  https://drive.google.com/file/d/1Ru4q2lxz299P-C8Spz8v9Ww6j286iMtB/view
+- Crop / move modal:
+  https://drive.google.com/file/d/1pfpdTfBZRVW4cSKJxjQHfVxUIuthGdef/view
 
 ## Core Product Model
 
-The editor is not “a form next to a page.”
+The editor is not merely a form beside a preview.
 
-It is a visual page editor with three coordinated control surfaces:
+It is a visual page editor with three coordinated surfaces:
 
-1. **Page/block structure** — Puck controls the page/block model.
-2. **Direct manipulation on canvas** — selecting an image exposes an inline floating toolbar and resize handles.
-3. **Detailed inspector** — the right-side IMAGE panel exposes the same underlying image state and actions.
+1. **Page/block structure** — page composition and block hierarchy.
+2. **Direct manipulation on canvas** — select/edit visible elements in context.
+3. **Contextual inspector** — detailed properties/actions for the selected element.
 
-The floating toolbar and right inspector must operate on the same state and event handlers. They are two views of one editing model, not parallel implementations.
+All surfaces operate on the same underlying state. Do not implement parallel unsynchronized editing models.
 
 ## Required Editor Shell
 
-The working Olga editor establishes this visual/interaction structure:
+A full visual-editor implementation should support the applicable parts of this structure:
 
 - top application bar with page identity and release controls;
-- left sidebar for Blocks / Outline;
+- left structure/sidebar for blocks and/or outline;
 - central live visual canvas;
-- right inspector panel;
-- selected content is edited in context on the real visual page;
-- image-specific controls appear only when an image is selected;
-- crop/move opens as a focused modal overlay rather than forcing precision editing into the narrow inspector.
+- right contextual inspector;
+- selected content edited in context on the rendered page;
+- element-specific controls appear when that element is selected;
+- precision visual operations such as crop/move open in a focused overlay when a narrow inspector is not suitable.
 
-For a new site, the labels/categories may change, but the interaction model should not be casually replaced.
+Exact branding/layout may vary; the interaction model is the contract.
 
-## Required Selected-Image Behavior
+## Selected Image Contract
 
-Clicking an editable image must:
+Selecting an editable image should, where applicable:
 
-- select that image block;
-- show a visible selected frame/outline;
-- show the floating image toolbar above the selected image;
-- show the IMAGE inspector on the right;
-- expose side resize handles when block resizing is allowed.
+- make that image the single active image target;
+- show a visible selected outline/frame;
+- expose a compact floating toolbar near the image;
+- expose the contextual IMAGE inspector;
+- expose visual resize handles when block resizing is permitted.
 
-Double-clicking a crop-enabled image may open the crop editor directly.
-
-Only one image should be the active image-editing target at a time.
+Double-click may open crop/move directly for crop-enabled images.
 
 ## Floating Image Toolbar Contract
 
-The current toolbar is the compact direct-manipulation surface.
+The direct-manipulation toolbar should provide the compact equivalents of:
 
-It includes, in this order/conceptual grouping:
-
-- replace photograph action;
-- frame shape selector: `Natural / Landscape / Portrait / Square`;
-- `Crop` action;
-- display mode selector: `Fill / Whole`;
-- block size control when resizing is allowed;
-- text/details control for alt text and caption/credit;
+- replace image;
+- shape/frame selector: `Natural / Landscape / Portrait / Square`;
+- crop/move action;
+- display mode: `Fill / Whole`;
+- block size control when resizing is permitted;
+- text/details for alt text and caption/credit;
 - reset crop;
-- remove photograph.
+- remove image.
 
-The exact styling may evolve, but new editors must not remove the direct on-canvas workflow and force every operation into raw numeric fields.
+Do not force common visual operations into raw numeric fields when a direct manipulation control is more natural.
 
 ## Right IMAGE Inspector Contract
 
-The detailed inspector must include the same image model, currently grouped as:
-
 ### Image
+- current image state/preview;
+- replace/upload;
+- remove;
+- URL/path input when the implementation supports it.
 
-- current image preview/state;
-- Replace file;
-- Remove;
-- URL/input path support where applicable.
-
-### Frame & crop
-
+### Frame & Crop
 - Shape: Natural / Landscape / Portrait / Square;
-- clear help/state text;
+- clear current-state/help text;
 - `Edit crop / move photo`;
-- Display mode:
-  - `Fill frame`;
-  - `Show whole photo`;
+- `Fill frame`;
+- `Show whole photo`;
 - `Reset crop`.
 
-### Block size & position
-
-When layout resize is permitted:
-
-- width percentage control;
+### Block Size & Position
+When layout resizing is allowed:
+- width percentage;
 - Left / Center / Right alignment.
 
 ### Text
-
 - Alt text;
 - Caption / credit.
 
-The inspector is contextual. Hero-specific fields may map to hero storage names, but the editing behavior should remain consistent with normal image blocks.
+Hero/feature images may store values under different field names, but visible editing behavior should stay consistent unless an intentional exception is documented.
 
 ## Crop / Move Modal Contract
 
-Crop is a visual manipulation task and must remain visual.
-
-The current working implementation uses `react-easy-crop` in a portal/modal isolated from Puck transforms.
+Crop is a visual manipulation task.
 
 Required UX:
 
-- modal/backdrop above the editor;
+- focused modal/backdrop above the editor;
 - fixed crop frame with image moving underneath it;
-- visible grid;
-- drag photograph to position it;
-- mouse/touch interaction, not numeric X/Y entry as the primary UI;
-- zoom range from 1× to 3×;
-- minus / range slider / current zoom label / plus;
+- visible composition grid;
+- drag/touch image positioning;
+- visual zoom control;
+- recommended zoom range around 1×–3× unless project requirements justify another range;
+- minus / slider / current zoom label / plus controls;
 - Reset;
 - Cancel;
 - Apply crop;
-- Escape closes/cancels;
-- clicking backdrop may cancel;
-- saved crop reopens in its previous position.
+- Escape cancels/closes;
+- backdrop click may cancel;
+- reopening restores the saved crop.
 
-Changing Shape from Natural to Landscape/Portrait/Square should automatically enter the crop workflow.
+Changing Shape from Natural to a forced aspect such as Landscape/Portrait/Square should enter the crop workflow automatically when practical.
 
 ## Shape / Display Semantics
 
 ### Natural
-
-- source photograph is shown without forced crop shape;
-- crop action is disabled/not applicable.
+- preserve source aspect;
+- no forced crop frame;
+- crop action may be disabled/not applicable.
 
 ### Landscape / Portrait / Square
+- selected shape defines crop-frame aspect;
+- changing shape clears incompatible exact crop state;
+- default to fill behavior and open crop/move when appropriate.
 
-- selected shape defines the crop frame aspect;
-- shape change clears incompatible previous crop state;
-- default crop workflow enters `Fill` mode.
+### Fill Frame
+- image fills the selected frame;
+- exact crop metadata may be active;
+- crop/move is available.
 
-### Fill frame
-
-- crop metadata is active;
-- image fills the chosen frame;
-- crop/move editor is available.
-
-### Show whole photo
-
-- display switches to fit/contain behavior;
-- whole source image is visible;
-- zoom resets to 1;
-- exact crop is not used for rendering.
+### Show Whole Photo
+- fit/contain semantics;
+- entire source image visible;
+- zoom normally resets to 1;
+- exact crop should not determine rendering while in whole-photo mode.
 
 ## Data Contract
 
-Image editing is non-destructive.
+Image manipulation is non-destructive by default.
 
-The source image is not rewritten merely because the user crops, moves or zooms it.
+Do not rewrite the original image merely because the user crops/moves/zooms it.
 
-Persist display metadata such as:
+Persist semantic display metadata such as:
 
-- `ratio` / hero equivalent;
+- `ratio`;
 - `fitMode`;
 - `zoom`;
 - `focalX`;
 - `focalY`;
-- exact crop area percentages:
+- exact crop percentages:
   - `cropAreaX`;
   - `cropAreaY`;
   - `cropAreaWidth`;
   - `cropAreaHeight`;
-- `visualWidth` when block resizing is allowed;
+- `visualWidth` where resizable;
 - `visualAlign`;
 - `imageAlt`;
 - caption/credit.
 
-Crop area is stored in percentages so it is resolution-independent.
+Store exact crop area in percentages so it is resolution-independent.
 
-The crop center may update focal X/Y for compatibility, but focal coordinates are not the primary user interaction.
+Focal coordinates may be derived from crop center for compatibility, but numeric focal X/Y is not the primary client-facing crop UX.
 
 ## Replace / Reset Semantics
 
-Replacing the underlying image must reset incompatible crop state rather than applying the old crop blindly to a different photograph.
+Replacing the source image must clear incompatible crop state.
 
-Current reset behavior returns crop state to:
+Recommended reset state:
 
-- no exact crop area;
-- focal point 50 / 50;
+- no exact crop;
+- focal 50 / 50;
 - zoom 1;
-- fill mode.
+- fill mode for forced-aspect shapes.
 
-Changing shape also clears incompatible old crop state and recenters/resets zoom.
+Changing shape should also clear incompatible crop metadata and recenter/reset zoom.
 
-## Block Resize Contract
+## Visual Block Resize Contract
 
-Normal editable image blocks may expose visual width resizing.
+Resizable image blocks may expose direct left/right handles with aspect ratio preserved.
 
-Current proven implementation uses `react-moveable` with left/right resize handles and keeps aspect ratio.
+At resize completion:
 
-On resize end:
+- convert rendered size to a bounded percentage/semantic layout value;
+- persist that semantic value;
+- keep alignment explicit.
 
-- rendered width is converted to a bounded percentage of the parent;
-- percentage is persisted;
-- alignment remains explicit Left / Center / Right.
+Editor pixel width must not become canonical page content.
 
-Do not treat pixel width in the editor as canonical page content.
+Some feature/hero blocks may intentionally disallow free width resizing while still sharing crop/image behavior.
 
-Hero images may intentionally disable this block-resize behavior while still sharing crop/image controls.
+## Recommended Implementation Options
 
-## Proven Technical Architecture
+The contract is stack-independent. In compatible React projects, proven implementation options include:
 
-Current Olga implementation uses:
+- **Puck** for structured page/block authoring;
+- **react-easy-crop** for isolated visual crop/move/zoom;
+- **react-moveable** for direct resize handles;
+- portal/overlay isolation for crop UI;
+- shared state/event bridge so toolbar and inspector stay synchronized;
+- shared crop model/helpers for normalization and rendering.
 
-- **Puck** — page/block editor and structured authoring surface;
-- **EditableImageFrame** — shared selected-image editing wrapper;
-- **ImageInspectorPanel** — right inspector using the same image state;
-- **react-easy-crop** — crop/move/zoom inside isolated modal;
-- **react-moveable** — visual width handles for supported image blocks;
-- event-based patch/selection bridge so editor surfaces stay synchronized;
-- shared crop model/helpers for normalized percentages and rendering.
-
-For a new site using the same React/Puck family, this should be **reused/adapted from the actual implementation**, not rebuilt from prose.
-
-If another frontend stack is chosen, preserve the interaction/data contract even if the underlying libraries differ.
+These libraries are options, not the standard itself. A different stack is acceptable if it satisfies the same behavior/data/acceptance contract.
 
 ## Explicitly Forbidden Failure Modes
 
-Do not repeat these known bad approaches:
+Do not use:
 
-- custom pointer-to-Puck coordinate crop math;
-- arbitrary coefficients added to “fix” crop drift;
-- numeric focalX/focalY controls as the main client-facing crop UX;
-- separate unrelated crop implementations for Hero vs regular images;
-- separate unrelated logic for Weddings vs Venues when shared behavior applies;
-- editor-only geometry hacks that make editor output differ from public rendering;
-- modifying page/template/content data to hide an editor-component bug;
-- using a stale local draft problem as evidence that the component architecture is wrong;
-- replacing the working visual/direct-manipulation pattern with a generic property form because it is easier to code;
-- declaring the editor “done” because controls exist without comparing behavior visually against the golden reference.
+- custom pointer-to-transformed-editor coordinate crop math when a proven crop library solves it;
+- arbitrary coefficients added to compensate for crop drift;
+- raw focalX/focalY numeric fields as the primary crop UX;
+- separate unrelated crop implementations for feature vs normal images without a real requirement;
+- duplicated editor logic across page types when behavior is shared;
+- editor-only geometry hacks that render differently on the public site;
+- page/content mutation to disguise an editor-component bug;
+- stale local draft/state corruption as justification for rewriting canonical content;
+- a generic property form as a replacement for required direct-manipulation behavior simply because it is easier to implement;
+- declaring the editor complete because controls exist without visual/behavioral acceptance.
 
-## Diagnosis Rule Before Fixing Editor Problems
+## Diagnosis Rule Before Fixing
 
-Before changing code, classify the failure:
+Classify the failure first:
 
 1. shared editor component/interaction bug;
 2. local browser draft/state corruption;
-3. content/template mutation;
-4. media asset/path problem;
-5. release/deploy mismatch.
+3. real content/template mutation;
+4. media asset/path issue;
+5. persistence/API issue;
+6. release/deploy mismatch.
 
 Fix the correct layer only.
 
-## Reuse Rule For New Website Projects
-
-When a new website requires a visual editor:
-
-1. open this standard;
-2. inspect the current Olga editor code;
-3. inspect both golden screenshots;
-4. identify which existing components can be reused directly;
-5. preserve the data/interaction contract;
-6. adapt branding/content block schema only where the new project actually differs;
-7. run visual acceptance against the golden behavior before inventing new editor UX.
-
-The default is **adapt the proven editor**, not “design another editor inspired by Olga.”
-
 ## Minimum Acceptance Test
 
-A new implementation is not accepted until all applicable items pass:
+A visual-editor implementation is not accepted until applicable items pass:
 
 - selecting an image visibly activates it;
-- floating toolbar appears and controls the same state as right inspector;
+- floating toolbar and right inspector edit the same state;
 - replace/remove work;
-- shape change works and opens crop where required;
-- crop modal allows drag + zoom and stores/reopens crop correctly;
+- shape changes behave correctly;
+- crop modal supports drag + zoom;
+- crop persists and reopens correctly;
 - Fill vs Whole behaves correctly;
 - reset is deterministic;
-- block resize handles persist percentage width where supported;
+- visual resize persists semantic width where supported;
 - alignment persists;
-- alt/caption edit correctly;
-- Hero and normal image blocks share behavior unless an intentional documented exception exists;
-- editor rendering and public rendering agree;
-- reload does not silently lose persisted state;
-- no local draft corruption is mistaken for canonical content;
-- visual result is compared to the golden screenshots, not merely asserted from code.
+- alt/caption persist;
+- shared image behavior is consistent across applicable block types;
+- editor and public rendering agree;
+- reload does not lose saved state;
+- client/local draft corruption does not silently become canonical content;
+- result is visually compared with the Website Creator golden references when reproducing this editor pattern.
 
 ## Final Rule
 
-For Website Creation, **the working Olga editor is a reusable production component and behavioral standard, not merely historical inspiration**.
+Website Creator owns this editor behavior as a universal reusable capability.
 
-When the owner asks for “the editor like we made for Olga,” the executor must reuse this golden implementation contract first and may deviate only for a stated project requirement.
+Implementations may change technology or styling, but they must not silently replace the direct-manipulation interaction/data contract with a weaker generic editor.
