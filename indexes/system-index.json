@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "288f975f0689c8e9e989827916e0d4db39d25f3f",
-  "generated_at": "2026-09-13T18:36:18-04:00",
+  "repository_commit": "91f6890fd96f093dc03c1b6c6a77f377289d0d27",
+  "generated_at": "2026-09-13T18:41:06-04:00",
   "artifact_count": 604,
   "artifacts": [
     {
@@ -12421,20 +12421,25 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "eb7893feb5a9000d1a26c39a6884f282595d97d2b67804a88f0a2feaf91ed887",
+      "sha256": "a50ccabec2c4212ad738e4d0e349a1217aa6ecfc185b54e31b6072fa033c6956",
       "headings": [
         "Website Creation — PROJECT_STATE.md",
         "Status",
         "Why This Project Exists",
-        "Current Decision",
-        "Canonical Drive Root",
-        "High-Value Existing Sources Already Recovered",
-        "Olga Polo",
+        "Current Architecture Decision",
+        "Canonical Entry And Storage",
+        "PEOS Routing Is Now Wired",
+        "Drive Structure Created",
+        "Principal Knowledge Already Consolidated",
+        "Olga Polo — principal production donor",
+        "Tusia / Tasha Hurley — second live production source",
+        "Design / UI / Motion",
+        "Tools / Software",
         "Automatic Website Factory",
-        "Our Website Tools / Research",
-        "Known Reusable Production Knowledge To Normalize",
-        "Immediate Work Queue",
-        "Important Boundary"
+        "Current Default Website Production Model",
+        "Current Rule For New Website Work",
+        "Remaining Audit Boundary",
+        "Next Safe Action"
       ]
     },
     {
