@@ -4,154 +4,136 @@
 
 - Project: `Website Creation`
 - State: active
-- Phase: consolidation / normalization / source recovery
+- Phase: canonical project bootstrap complete; high-value cross-project consolidation complete; long-tail source audit remains appendable
 - Last updated: 2026-09-13
 
 ## Why This Project Exists
 
-The owner started another website-building chat and discovered that a fresh chat could not recover the large body of website-production knowledge already created. The immediate task is therefore to make website creation a first-class durable project with one canonical re-entry path.
+The owner started a separate website-building chat and discovered that a fresh chat did not recover the large body of prior website-production work. Website Creation is now a first-class durable project so future website work re-enters through canonical sources rather than chat memory.
 
-## Current Decision
+## Current Architecture Decision
 
-`Website Creation` is the umbrella project for website creation knowledge and production methodology.
+- `Website Creation` is the umbrella project for reusable website-production knowledge and methodology.
+- `Olga Polo Weddings` remains its own live client/project source of truth and is the principal proven production donor.
+- `Tusia / Tasha Hurley` remains its own live project and is a second production/generalization source.
+- `Automatic Website Factory` remains an active child initiative/use case for scaled local-business discovery → preview → sales.
+- `SOFT` remains the generic software/tool discovery layer.
+- PEOS `blocks/design/BLOCK.md` remains the canonical website-design orchestrator.
+- Live code/client data are linked from their canonical owners rather than copied into another stale mirror.
 
-`Automatic Website Factory` is retained as a narrower initiative/use case underneath this umbrella. It is not discarded and must not be duplicated unnecessarily.
+## Canonical Entry And Storage
 
-`Olga Polo Weddings` remains its own live client/project source of truth. Website Creation treats it as the principal proven production donor and extracts reusable patterns while leaving client-specific facts in place.
+Project entrypoint:
+- `projects/website-creation/PROJECT.md`
 
-## Canonical Drive Root
+Task router:
+- `projects/website-creation/ROUTER.md`
 
-https://drive.google.com/drive/folders/15DIWML8HiLSJrNfP5r7IyZu_YkrD2GTU
+Full cross-project source registry:
+- `projects/website-creation/SOURCE_REGISTRY.md`
 
-## High-Value Existing Sources Already Recovered
+Website-specific tool/donor registry:
+- `projects/website-creation/TOOL_DONOR_REGISTRY.md`
 
-### Olga Polo
+Tusia/Tasha reusable source:
+- `projects/website-creation/sources/TUSIA_TASHA_HURLEY.md`
 
-- Current canonical project protocol:
-  https://docs.google.com/document/d/17-MZN4RO3N-_xdwFSC10VIBBTD0FP_ZIGcvVtdrlOe8/edit
-- Full project protocol/history archive:
-  https://docs.google.com/document/d/1-sjGRcDwV_7hW9wuTyG1Co8smkfvOJS6JPrTXt_aoKI/edit
-- Publication decisions/evidence archive:
-  https://docs.google.com/document/d/1zMmnZmYNfOQBWF1zyIiXXdKEuHqqs8tJFJIwIwybF_g/edit
-- Knowledge database:
-  https://docs.google.com/spreadsheets/d/1b45_FTuiv6o-ThfsSLZsKeU6UGeAKcCnFHFsGYxADWk/edit
-- SEO transformation log:
-  https://docs.google.com/document/d/1REOp90bA-470yFYJ8ioQKtlEB0ZazUHF889gX6omzU8/edit
-- Master handoff 2026-08-28:
-  https://docs.google.com/document/d/1VaYCQG9z6IUQwDF52myeHiTsVLYRsGuefJV7_i3G8OI/edit
-- Migration snapshot 2026-08-28:
-  https://docs.google.com/document/d/1-IwEFGKDXgfPZwFy8DSHPde23m8oyBWDbpxSzuK2g2A/edit
-- Full venue + wedding standards audit 2026-09-11:
-  https://docs.google.com/document/d/1-xgS-SvOES80gN9chR4VRAvw4SRCxIkxgZSZJVfTscI/edit
-- Full site baseline scan task 2026-08-29:
-  https://docs.google.com/document/d/1Pazge8Ce5ggjPtRqocGM-KtMuVoExIWHDitx7Hu0oe4/edit
-- Homepage image SEO audit 2026-09-09:
-  https://docs.google.com/document/d/1EFd3_HKvGifLaXEf8bIHraiSnnW4yDtshCPfxgDu2rQ/edit
-- Matt & Morgan page gold standard:
-  https://docs.google.com/document/d/1A-JDGag_kq6jWZbtdvYKKtYhI5wafWt-Excyb6Q83sA/edit
+Drive root:
+- https://drive.google.com/drive/folders/15DIWML8HiLSJrNfP5r7IyZu_YkrD2GTU
+
+Drive READ FIRST:
+- https://docs.google.com/document/d/1tlKReO5Z1cr9QcM65Byy4YtTccMGvIje0gWTgyt4Q0Q/edit
+
+Drive Master Index:
+- https://docs.google.com/document/d/1Pwzrxg8c_kWGb4QOPotlX0BlSod2CcCjUCFiT4Uu89g/edit
+
+## PEOS Routing Is Now Wired
+
+Global routing distinguishes full website production from design-only work:
+
+- website creation / website production / building a new site / `создание сайтов` / `проект создания сайтов` → `projects/website-creation/PROJECT.md`;
+- website design / landing design / wireframe / UI-system review → `blocks/design/BLOCK.md`.
+
+The projects registry also includes `Website Creation` as a registered project.
+
+This is the critical fix for fresh-chat continuity.
+
+## Drive Structure Created
+
+- `00 — PROJECT CORE` — READ FIRST / project orientation.
+- `01 — SOURCE REGISTRY` — Master Index and source maps.
+- `02 — OLGA POLO REUSABLE` — reusable production knowledge from Olga.
+- `03 — DESIGN UI MOTION` — PEOS design system, donors, extraction, motion and QA.
+- `04 — CMS EDITOR CONTENT` — Puck/editor/content/image-editing patterns.
+- `05 — SEO AEO CONTENT FACTORY` — search/content-factory/page-queue/indexation knowledge.
+- `06 — BUILD DEPLOY INFRA` — Git/PR/CI, preview/release, Vercel/Showit/Netlify, live QA/rollback.
+- `07 — AI SITE BUILDERS & DONORS` — Duda/10Web/FieldLaunch/LeadX/Framer/AI-builder research.
+- `08 — AUTOMATIC WEBSITE FACTORY` — child initiative map to its existing canonical project.
+- `09 — TOOLS & EXTRACTORS` — extractor, Design Picker, baseline scanning, browser/QA/docs tooling.
+- `90 — INBOX — TO SORT` — temporary intake only.
+
+The main working folders now contain human-facing READ ME indexes with canonical links and boundaries; they are not empty category placeholders.
+
+## Principal Knowledge Already Consolidated
+
+### Olga Polo — principal production donor
+
+Indexed current Olga protocol, operational algorithms, canonical publication policy, Gold Standard, live GitHub repository, publication pipeline, visual QA, Showit + Vercel TSEO architecture, Knowledge Database, image editor architecture, SEO/GSC/migration/sitemap evidence, publication history and handoffs.
+
+Key generalized lessons include:
+
+- facts/evidence and stable entity identity before generation;
+- structured data/content separated from rendering;
+- reusable page families/renderers with publishability gates;
+- immutable original media vs traceable delivery derivatives;
+- Puck as a proven bounded editor/authoring donor;
+- isolated `react-easy-crop` non-destructive crop/pan/zoom rather than custom transformed coordinate math;
+- staging/release semantics rather than equating files/build/deploy with publication;
+- Git branch/PR/CI → preview → merge → deploy → live desktop/mobile QA;
+- rollback to known-good state;
+- canonical/schema/sitemap/indexing/image SEO as production contracts;
+- search performance verified through real GSC/indexation evidence.
+
+### Tusia / Tasha Hurley — second live production source
+
+Captured the reusable Knowledge DB → SEO Production Queue → QA → Page Factory contract, preservation of existing site navigation/experience, URL/redirect asset discipline, no-invention rules, media provenance, one-real-page pilot before broad scale, client-voice grounding and minimization of client rewriting/SEO burden.
+
+### Design / UI / Motion
+
+Connected PEOS Design Block, Design Picker, Universal Site Design Extractor, Refero, Framer, UX-UI Agent Skills donor review, 21st.dev/Magic MCP, Taste guidance, deterministic accessibility/responsive/state QA and Impeccable/manual visual QA.
+
+### Tools / Software
+
+Connected SOFT Master Software Inventory and website-specific tool registry including Website Intelligence/Site Baseline Scanner, Universal Site Design Extractor, Firecrawl, Playwright, Context7, Codex, Vercel/Netlify/Showit/WordPress and relevant analytics tooling.
 
 ### Automatic Website Factory
 
-- Project:
-  https://docs.google.com/document/d/1QrJzBt0o55Bp38RBvo2DDgcVaBBPvxJDXUDOf2GOdpI/edit
-- Project state:
-  https://docs.google.com/document/d/1igLranCr462Em9aiHDzPrNXsf_DaoFDtkSa15FHLg0c/edit
-- Design integration:
-  https://docs.google.com/document/d/1eGT-NwYiyfwF1KG1JrBfmZebh1TZOzjvJY5vc7wP6fA/edit
-- Donor decomposition (LeadX / Duda / 10Web / FieldLaunch):
-  https://docs.google.com/document/d/1KVTz8XyZfwMN2rILqeiOkqaSHGDIsyT3AR2WIrQEIuM/edit
-- Donors and ready-made options review:
-  https://docs.google.com/document/d/1njAbLfODR9XYVJ3ZJTG7-ECTjAbtCYTqMC5AQ8iO4xg/edit
-- Prewitt Auto Repair benchmark:
-  https://docs.google.com/document/d/1WRIegloiO2dX9Nx9z8Drn-MJdccbXHIZzhaIBvWoPjg/edit
+Preserved its original canonical project and indexed Duda, 10Web, LeadX, FieldLaunch and the Prewitt Auto Repair benchmark. Important boundary: the benchmark packet is ready, but recorded project state does not show the real Duda/10Web vendor generation as completed; do not invent a winner.
 
-### Our Website Tools / Research
+## Current Default Website Production Model
 
-- Universal Site Design Extractor status/source:
-  https://docs.google.com/document/d/1albuaKqO3Dy_rJmXbAPofP89B6R3_NItzH5raYaF7_I/edit
-- Browser Extensions master index:
-  https://docs.google.com/document/d/1gpvYZdiRiNAubbwq6OFoWIiDgiJI9Pgl279LqkFcwDM/edit
-- SOFT Olga Image Editor migration snapshot:
-  https://docs.google.com/document/d/1HWHTwXX2KvK-gPUqN3nIrlrh642IeDSWTiVg4vqK9v4/edit
-- Framer platform/interaction donor:
-  https://docs.google.com/document/d/19iKp-YMkOq6Ac3nYmmhvCuLqD3o5_9HLbdBEkiUoy-M/edit
-- ChatGPT Website Creation Methods:
-  https://docs.google.com/document/d/1VMfc8aag1cMaSDC_zTps_ju2CDb3dQ0mgZG6ka54-mE/edit
-- SOFT master software inventory:
-  https://docs.google.com/document/d/1yTWfazVPhs-AWdSsvS4Q6xyNd7bXKtqi6EvrmQMdAOk/edit
-- SOFT third-party software index:
-  https://docs.google.com/document/d/1C-F_ukN2AlryP-_FxlJqFIKSbKjat8kzzMw8HsaSPH0/edit
+`research / identity → goal + conversion path → information architecture → donor/design research → structured content/data → implementation → safe editor/CMS when needed → SEO/AEO/structured data → deterministic + visual QA → preview/staging → release gates → production deploy → live verification → analytics/search/conversion measurement`
 
-## Known Reusable Production Knowledge To Normalize
+For the website-factory use case:
 
-1. Research and evidence
-   - public-source business research;
-   - entity dossier / canonical identity;
-   - source confidence and no-invention rules;
-   - existing-site baseline/audit.
+`prospect discovery → qualification → dossier → site → safe editor → QA → preview → outreach/trial → sale → domain/ownership transfer → support`.
 
-2. Design
-   - donor-first selection;
-   - Universal Site Design Extractor;
-   - structured tokens/layout/responsive evidence;
-   - business-archetype design profiles;
-   - section/component/UI libraries;
-   - motion and interaction donors;
-   - Taste anti-slop execution and Impeccable/manual design QA.
+## Current Rule For New Website Work
 
-3. Content / data model
-   - JSON/structured content separated from rendering;
-   - entity registries, IDs, slugs and source/status metadata;
-   - reusable page renderers;
-   - staged content and publication manifests;
-   - media accounting and explicit exclusions.
+1. Enter through PEOS `START_HERE.md`.
+2. Route to Website Creation.
+3. Open only the relevant source/tool/design branch.
+4. Apply Existing Solution First.
+5. Reuse current proven patterns/tools before creating a new mechanism.
+6. Keep project/client-specific live truth in its canonical owner.
+7. Promote genuinely reusable new lessons back into Website Creation.
 
-4. Editor / CMS
-   - client-safe editing;
-   - block editor patterns;
-   - image replacement/removal;
-   - crop/zoom/focal-position controls;
-   - preview versus publish semantics;
-   - content-only permissions where required.
+## Remaining Audit Boundary
 
-5. SEO/AEO
-   - title/description/alt rules;
-   - canonical and robots/sitemap;
-   - schema/JSON-LD;
-   - local/venue/entity clusters;
-   - pSEO/content factories;
-   - indexing verification;
-   - AI search/AEO/GEO considerations.
+The high-value/current sources required to make the project useful are consolidated and routed. Do **not** claim every historical Drive duplicate, every legacy `WEB` folder, every old chat artifact or backup copy has been exhaustively inspected and normalized yet.
 
-6. Build / deploy / release
-   - code-first implementations;
-   - GitHub/Codex review;
-   - preview deploys;
-   - build gates and asset checks;
-   - Vercel production deployment;
-   - rollback and live verification;
-   - domain/DNS and ownership transfer.
+The registry is intentionally appendable. Long-tail legacy material should be added only after comparison, with current/canonical vs history/duplicate status preserved. This avoids turning Website Creation into another stale archive dump.
 
-7. Alternative execution stacks
-   - Showit and extracted-design-to-code workflow;
-   - WordPress paths;
-   - Framer donors/components;
-   - Duda;
-   - 10Web;
-   - Netlify;
-   - ChatGPT site-building research;
-   - ready-made component/design systems.
+## Next Safe Action
 
-## Immediate Work Queue
-
-- Build a complete source registry grouped by website lifecycle stage.
-- Search Olga Polo for reusable website-production documents that are not yet in the registry.
-- Search SOFT for website tools/donors/extensions and attach them to the registry.
-- Recover canonical GitHub repositories/source paths for active website code and tools.
-- Extract generalized standards from Olga-specific documents without moving client facts.
-- Mark duplicates/legacy snapshots versus current canonical sources.
-- Make this project the default route whenever the owner says “project for creating websites”, “website creation”, “сайты”, or asks to build a new site using prior work.
-
-## Important Boundary
-
-The consolidation is not complete merely because this file contains a list. The registry must continue growing as sources are recovered. Do not claim “all material is captured” until the source audit has been completed across Drive, GitHub, SOFT and relevant project files.
+Use this project on the next real website build. When a missing prior artifact or reusable pattern is encountered, recover it from its canonical source and add it to `SOURCE_REGISTRY.md` or `TOOL_DONOR_REGISTRY.md` instead of rebuilding from memory.
