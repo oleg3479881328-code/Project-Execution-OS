@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "04d7efdba776aecb58baea1a2eee9d4381dc0668",
-  "generated_at": "2026-09-13T11:36:42-04:00",
+  "repository_commit": "0ec71ee9ec009b04ce341230743e1893d1484ca3",
+  "generated_at": "2026-09-13T11:37:09-04:00",
   "artifact_count": 596,
   "artifacts": [
     {
@@ -10800,7 +10800,7 @@
       "domain": "blender-ai-production",
       "status": null,
       "date": null,
-      "sha256": "7e72a3e0fae6b61d02d2f0f5d87a264e04d20f7cdaff570dd67bc72dddf9254a",
+      "sha256": "298138fa93c06e791588581f3832a4fb121987ae54a925e93b45d0e5dec6c6e5",
       "headings": [
         "Blender AI Production — Agent Instructions",
         "Required Entry Order",
