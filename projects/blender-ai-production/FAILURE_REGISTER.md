@@ -348,6 +348,70 @@ This is not optional. It is a concrete application of `../../docs/EXISTING_SOLUT
 
 Highest-priority process correction from this test.
 
+---
+
+### F-13 — Damped Track orbit allowed camera roll / sideways frames
+
+**Observed result**
+
+The v11 still render was upright and colored, but sampled frames from the 5-second 360° MP4 showed the house rotated sideways or upside down during parts of the orbit.
+
+**Root cause**
+
+The orbit camera used `Damped Track`. Blender's official 5.2 manual states that Damped Track points an object at a target using a pure swing rotation and does not expose an explicit Up axis. For an orbiting camera we need the image horizon constrained as well as the look-at direction.
+
+Official source:
+
+- Track To Constraint, Blender 5.2 Manual: https://docs.blender.org/manual/en/5.2/animation/constraints/tracking/track_to.html
+- Damped Track Constraint, Blender 5.2 Manual: https://docs.blender.org/manual/en/latest/animation/constraints/tracking/damped_track.html
+
+**Prevention**
+
+For a normal upright architectural orbit:
+
+1. do not parent the camera to a rotating pivot when that parent rotation can introduce roll;
+2. drive camera world X/Y directly around the center with `cos(frame)` / `sin(frame)`;
+3. keep camera world Z constant;
+4. use `Track To` with camera `Track Axis = -Z` and `Up Axis = Y`;
+5. preflight representative frames and verify camera local Y remains aligned with world-up before rendering 120 frames.
+
+Blender 5.2 documents the `sin(frame)` / `cos(frame)` orbit pattern directly in the Drivers workflow examples.
+
+Official source:
+
+- Driver Workflow & Examples — Scripted Expression: Orbit a Point: https://docs.blender.org/manual/en/5.2/animation/drivers/workflow_examples.html
+
+**Status**
+
+Verified temporal/camera failure; v12 correction follows official Blender orbit + Track To pattern.
+
+---
+
+### F-14 — Viewport material color is not enough; construct render shader graph explicitly
+
+**Observed result**
+
+The v10 PNG and MP4 rendered almost monochrome even though the Blender viewport showed colored materials. v11, which explicitly built each material's `Material Output <- Principled BSDF` graph and assigned Base Color on the actual shader, restored obvious green/brown/blue render colors.
+
+**What went wrong**
+
+The earlier helper searched for a Principled node by display name and also set `material.diffuse_color`. That was too fragile: viewport color is not proof that the render shader graph is correctly wired.
+
+**Prevention**
+
+For generated render materials:
+
+1. set `material.use_nodes = True`;
+2. explicitly create or verify one `ShaderNodeBsdfPrincipled` and one `ShaderNodeOutputMaterial`;
+3. explicitly link BSDF output to Material Output Surface;
+4. set Base Color / Roughness / Metallic on the shader inputs;
+5. treat `diffuse_color` only as a viewport convenience, not render truth;
+6. render one still and inspect/analyze the actual PNG before starting animation.
+
+**Status**
+
+Verified visual failure + successful correction in v11 still render.
+
 ## Mandatory Preflight For Future Blender Scripts
 
 Before generating a substantial script or a full bundle:
@@ -366,6 +430,8 @@ Before generating a substantial script or a full bundle:
 12. **Package whole revision** — deliver one complete bundle, not a chain of patches.
 13. **Verification labels** — distinguish syntax/API/runtime/artifact/visual/temporal verification.
 14. **Preserve evidence** — keep the failed screenshot/error/output and the last accepted `.blend` checkpoint.
+15. **Camera horizon QA** — for orbit cameras, verify Track To / Up-axis behavior at representative frames before a full render.
+16. **Render-shader QA** — verify the actual material node graph and actual rendered still, not just viewport color.
 
 ## Preferred Video Production Rule
 
@@ -378,12 +444,21 @@ For repeatable production delivery:
 ```text
 Blender renders numbered frames
 -> deterministic frame-count/file checks
--> FFmpeg assembles exact final MP4
--> ffprobe verifies duration/fps/codec
+-> FFmpeg assembly
+-> media probe verifies duration/fps/codec
 -> sampled-frame/contact-sheet temporal QA
 ```
 
-This better matches the existing project architecture and avoids coupling final delivery naming/encoding to Blender UI/API quirks.
+When staying fully inside Blender, the preferred assembly path is:
+
+```text
+Blender PNG sequence
+-> Blender Video Sequencer
+-> built-in FFmpeg MPEG-4/H.264
+-> exact output normalization
+```
+
+This avoids losing already-rendered 3D frames when the encoding step fails.
 
 ## Known Good / Known Verified From This Test
 
@@ -392,7 +467,9 @@ This better matches the existing project architecture and avoids coupling final 
 - Blender 5.x requires the current layered/slotted Action model; legacy `Action.fcurves` is removed in 5.0.
 - Blender 5.x requires setting `ImageFormatSettings.media_type` before `file_format`.
 - Direct Blender MPEG-4/H.264 output succeeded after using the documented media-type order.
-- The direct animation output filename may include a frame-range suffix; exact naming remains a separate normalization concern.
+- Blender PNG-sequence -> Video Sequencer -> H.264 MP4 works as the preferred robust native pipeline.
+- Explicit Principled BSDF shader graphs restored colored final renders in the v11 test.
+- `Damped Track` is not accepted as the default upright architectural-orbit constraint; use world-space orbit drivers + `Track To` with explicit Up axis.
 
 ## Related Project Rules
 
