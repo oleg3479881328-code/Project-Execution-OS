@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "44e562ab6e274148c26116e51318e9131dc3554d",
-  "generated_at": "2026-09-13T19:00:16-04:00",
+  "repository_commit": "7bd24f7835da54514f2f982ed020dfc3454d8cf4",
+  "generated_at": "2026-09-13T19:05:35-04:00",
   "artifact_count": 605,
   "artifacts": [
     {
@@ -12431,29 +12431,23 @@
     },
     {
       "path": "projects/website-creation/PROJECT.md",
-      "title": "Website Creation — PROJECT.md",
+      "title": "Website Creator — PROJECT.md",
       "type": "project-artifact",
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "f7b0adde90e4fa6f19f1db6c102965529d9102506ecaa47950e05fe4c3a1c61f",
+      "sha256": "f8a148155f1be19d1a33be4c066e4cf3ce9062719a33fd982b370d4b33ec8e2d",
       "headings": [
-        "Website Creation — PROJECT.md",
+        "Website Creator — PROJECT.md",
         "Project",
         "Purpose",
+        "No Client Dependency Rule",
         "Scope",
         "Canonical Storage",
-        "Key Source Projects",
-        "Olga Polo Weddings — principal verified production donor",
-        "Tusia / Tasha Hurley — second live production source",
-        "Automatic Website Factory",
-        "PEOS Design Block",
-        "SOFT",
         "Existing Solution First",
-        "Core Production Principle",
-        "Current Phase",
+        "Default Production Chain",
+        "Core Principles",
         "Read Next",
-        "Constraints",
         "Success Condition"
       ]
     },
