@@ -12,9 +12,9 @@
 
 `Website Creation` is the canonical entrypoint for everything we have learned, built, tested, standardized, or adopted for creating websites.
 
-The problem this project solves is context fragmentation: website knowledge currently lives across Olga Polo Weddings, Automatic Website Factory, SOFT, PEOS Design Block, design-extractor work, editor/CMS work, deployment/infrastructure notes, SEO/AEO systems, AI website-builder research, separate chats, and external donor reviews.
+The project solves context fragmentation: website knowledge has accumulated across Olga Polo Weddings, Tusia/Tasha Hurley, Automatic Website Factory, SOFT, PEOS Design Block, design-extractor work, editor/CMS work, deployment/infrastructure notes, SEO/AEO systems, AI website-builder research, separate chats and external donor reviews.
 
-This project must let a new chat answer: **how do we create a site using our existing proven system?** without reconstructing the method from memory.
+A fresh chat must be able to answer: **how do we create this site using our existing proven system?** without asking the owner to reconstruct prior work from memory.
 
 ## Scope
 
@@ -40,7 +40,13 @@ The project covers the full website lifecycle:
 ## Canonical Storage
 
 - PEOS project entrypoint: this file.
+- Current state: `PROJECT_STATE.md`.
+- Task router: `ROUTER.md`.
+- Cross-project knowledge/source index: `SOURCE_REGISTRY.md`.
+- Website tool/donor index: `TOOL_DONOR_REGISTRY.md`.
 - Project Drive root: https://drive.google.com/drive/folders/15DIWML8HiLSJrNfP5r7IyZu_YkrD2GTU
+- Drive READ FIRST: https://docs.google.com/document/d/1tlKReO5Z1cr9QcM65Byy4YtTccMGvIje0gWTgyt4Q0Q/edit
+- Drive Master Index: https://docs.google.com/document/d/1Pwzrxg8c_kWGb4QOPotlX0BlSod2CcCjUCFiT4Uu89g/edit
 - GitHub remains canonical for reusable standards, project routing and code-backed technical truth.
 - Existing source projects remain canonical for their own live code/state. Website Creation links to them and extracts reusable knowledge instead of copying live state blindly.
 
@@ -66,9 +72,24 @@ Olga Polo is currently the richest real production source. Reusable layers inclu
 
 Client-specific wedding facts remain in the Olga Polo project. Reusable production patterns are generalized here.
 
+### Tusia / Tasha Hurley — second live production source
+
+This project supplies a second real implementation of the structured website-production model and helps test which Olga-derived patterns generalize.
+
+Reusable contributions include:
+
+- canonical Knowledge Database plus IDs/crosswalk/evidence/media/QA;
+- explicit SEO Production Queue between research and Page Factory;
+- preservation of an existing site shell/navigation instead of unnecessary rebuild;
+- existing URL/redirect asset discipline;
+- one real complete pilot before broad page-factory scale;
+- client-voice grounding and minimization of client rewriting/SEO burden.
+
+Route: `sources/TUSIA_TASHA_HURLEY.md`.
+
 ### Automatic Website Factory
 
-This becomes a child initiative/use case of Website Creation rather than the umbrella itself. It contributes:
+This is a child initiative/use case of Website Creation rather than the umbrella itself. It contributes:
 
 - preview-first local-business sales model;
 - prospect discovery/qualification architecture;
@@ -79,7 +100,7 @@ This becomes a child initiative/use case of Website Creation rather than the umb
 ### PEOS Design Block
 
 Canonical reusable website-design workflow:
-- `blocks/design/BLOCK.md`
+- `../../blocks/design/BLOCK.md`
 
 It owns donor-first design research, page strategy, section/UI systems, responsive/motion standards, Taste execution guidance and design QA.
 
@@ -91,8 +112,8 @@ SOFT remains the software discovery/control plane for tools, extensions, SaaS, f
 
 Mandatory order before inventing a new website workflow or tool:
 
-1. Website Creation project knowledge and source registry.
-2. Relevant live source project (especially Olga Polo when applicable).
+1. Website Creation project knowledge, source registry and tool/donor registry.
+2. Relevant live source project (especially Olga Polo or Tusia when applicable).
 3. PEOS reusable standards/blocks.
 4. SOFT software inventory and our existing tools/extensions.
 5. Official product documentation / proven external solutions.
@@ -103,7 +124,7 @@ Canonical standard: `../../docs/EXISTING_SOLUTION_FIRST_STANDARD.md`.
 
 ## Core Production Principle
 
-Do not equate generated code, a template, or a local preview with a finished website.
+Do not equate generated code, a template, a successful build, or a local/preview URL with a finished website.
 
 A general production chain is:
 
@@ -115,17 +136,19 @@ For sales-factory use cases this extends to:
 
 ## Current Phase
 
-Full consolidation and normalization of all existing website-creation knowledge.
+Canonical bootstrap and the first high-value cross-project consolidation pass are complete.
 
-The goal of this phase is not to invent another workflow. It is to recover, classify, link and generalize the large body of work already completed across projects.
+The project is now usable as the default website-creation re-entry point. Source recovery remains intentionally appendable: long-tail legacy Drive copies, old chat artifacts and historical duplicates are added only after comparison rather than dumped here blindly.
 
 ## Read Next
 
 1. `PROJECT_STATE.md`
 2. `ROUTER.md`
 3. `SOURCE_REGISTRY.md`
-4. `logs/latest.md`
-5. `../../blocks/design/BLOCK.md` when the active task concerns website design/UI.
+4. `TOOL_DONOR_REGISTRY.md` when tools/platforms/donors matter
+5. `sources/TUSIA_TASHA_HURLEY.md` when that production source is relevant
+6. `logs/latest.md`
+7. `../../blocks/design/BLOCK.md` when the active task concerns website design/UI.
 
 ## Constraints
 
@@ -135,6 +158,7 @@ The goal of this phase is not to invent another workflow. It is to recover, clas
 - Treat chat memory as convenience, never as canonical website-production memory.
 - Time-sensitive third-party pricing/features/licensing must be revalidated from current official sources.
 - Existing Solution First is mandatory.
+- Do not claim every historical duplicate or old chat artifact has been exhaustively normalized unless an actual audit proves it.
 
 ## Success Condition
 
