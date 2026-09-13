@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ae2f69df4f59287405ee7bb96af0e597c7bcbfd2",
-  "generated_at": "2026-09-13T19:14:53-04:00",
-  "artifact_count": 605,
+  "repository_commit": "96da16660769d5ff4f1b2c41616d3b0f1ec20861",
+  "generated_at": "2026-09-13T19:40:22-04:00",
+  "artifact_count": 606,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12586,6 +12586,48 @@
         "Knowledge Promotion Flow",
         "Current Universal Editor Contract",
         "Next Maintenance Rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/reviews/SECOND_OPINION_DECISION_2026-09-13.md",
+      "title": "Website Creator — Second-Opinion Decision Review",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "ACCEPTED DECISION RECORD",
+      "date": "2026-09-13",
+      "sha256": "8eab34dc53dad9e4b9854a56d99dde8e471756688c920a82479c81072637a62e",
+      "headings": [
+        "Website Creator — Second-Opinion Decision Review",
+        "Purpose",
+        "Governing Boundary",
+        "Decision Matrix",
+        "1. “Website Creator is a specification, not a system”",
+        "2. Canonical platform-independent Site Model",
+        "3. Reference renderer",
+        "4. Stop all further standards work until Site Model exists",
+        "5. Visual editor build-vs-buy review",
+        "6. Freeze implementation-specific editor expansion until comparison",
+        "7. Design duplication between Website Creator and PEOS Design Block",
+        "8. Deterministic browser QA with Playwright",
+        "9. Website Factory: integrate provisioning/hosting/permissions instead of rebuilding by default",
+        "10. B12 as an additional factory comparison candidate",
+        "11. Client isolation / multi-tenancy model",
+        "12. Content history / rollback separate from code rollback",
+        "13. Version the golden editor references",
+        "14. Per-task loading manifest / mechanical routing enforcement",
+        "15. Revalidation governance for third-party facts",
+        "16. SEO/AEO 2026 corrections from the review",
+        "17. Simplify tool status taxonomy to DECIDED/CANDIDATE/REJECTED",
+        "18. Website Creator should grow a deeper internal OS now",
+        "19. Website Creator → Site Instance model",
+        "20. Fixed scaling breakpoint (for example “switch around 20 sites”)",
+        "Accepted Target Architecture",
+        "Accepted Priority Order",
+        "P0",
+        "P1",
+        "P2",
+        "P3 / Evidence-triggered",
+        "Final Decision"
       ]
     },
     {
