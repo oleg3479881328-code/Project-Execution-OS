@@ -2,53 +2,66 @@
 
 Date: 2026-09-13
 
-## Architecture Correction
+## Event
 
-Owner clarified that Website Creator must be global and must not reference a particular client project as an architectural source or dependency.
+Independent architecture/technical second-opinion review completed and was processed through Website Creator's own decision pass.
 
-## Decision
+The review was **not** applied wholesale.
 
-Website Creator is now client-agnostic and self-contained.
+Canonical decision record:
+`../reviews/SECOND_OPINION_DECISION_2026-09-13.md`
 
-Client-project learning may be promoted only after it is generalized, de-identified and expressed as an independent reusable standard/component/algorithm/test. The originating client project is not part of Website Creator runtime knowledge.
+## Main Decision
 
-## Changes
+Keep Website Creator as a **global PEOS website-production knowledge/control plane plus reusable capability system**.
 
-- visible project name changed from `Website Creation` to `Website Creator`;
-- technical path `projects/website-creation/` retained for routing stability;
-- `PROJECT.md` rewritten around global reusable website production;
-- `PROJECT_STATE.md` rewritten with the No Client Dependency / Knowledge Promotion rules;
-- `ROUTER.md` no longer routes into client projects;
-- `SOURCE_REGISTRY.md` replaced with a global capability/standards registry;
-- `TOOL_DONOR_REGISTRY.md` rewritten without client-specific architecture dependencies;
-- `EDITOR_CREATION_STANDARD.md` converted into a Universal Visual Editor Standard;
-- golden editor screenshots remain in Website Creator Drive as anonymous behavioral acceptance references;
-- client-specific source notes are being removed from the Website Creator core;
-- Drive naming/indexes are being normalized to the same global architecture.
+Do not turn it immediately into one monolithic website-builder runtime.
+
+Add a reusable execution contract beneath it:
+
+`Website Creator standards → Site Model / Site Instance → renderer/editor/platform adapters → QA/release/deploy`.
+
+## Accepted / Modified Changes
+
+- created `SITE_MODEL_STANDARD.md`;
+- Site Model is accepted as the platform-independent execution contract for a concrete site;
+- `Site Model v0.1` must be derived from the first real new-site build, not from an abstract universal schema exercise;
+- first reference renderer/adapter should be built alongside that v0.1 validation;
+- PEOS Design Block is the single design workflow authority; Website Creator no longer repeats a second design pipeline in `SOURCE_REGISTRY.md`;
+- Playwright promoted to default deterministic browser-QA direction where applicable;
+- editor behavioral contract preserved, but major new implementation-specific editor work now requires build-vs-buy/adapt comparison;
+- Storyblok, Sanity Visual Editing and Builder.io added only as editor research/comparison candidates, not defaults;
+- Website Factory keeps research/design/content/QA intelligence under our control while preferring ready-made generic provisioning/hosting/permissions when real comparison proves fit;
+- Duda and 10Web remain candidates; B12 added as a research candidate; no winner selected;
+- content history/rollback added as a production editing requirement;
+- multi-client Site Instance isolation accepted as a requirement before shared live multi-client operation;
+- golden editor references must become version-addressable/hash/revision-backed;
+- time-sensitive third-party adoption facts require source/date revalidation;
+- time-sensitive SEO/AEO claims from the review remain pending official revalidation before canonical update.
+
+## Explicit Rejections
+
+- do not treat “no monolithic runtime yet” as proof Website Creator is architecturally invalid;
+- do not halt all standards work until Site Model exists;
+- do not select an editor/CMS/factory vendor from research alone;
+- do not create a deeper Website Creator OS/runtime layer by anticipation;
+- do not use a fixed site-count breakpoint as a universal scaling rule;
+- do not simplify the tool registry taxonomy unless real operational confusion proves it necessary.
+
+## Current P0
+
+1. Use the next real new-site build to derive the concrete `Site Model v0.1`.
+2. Build the first real renderer/adapter against it.
+3. Before major new editor infrastructure, run a real internal-vs-external editor comparison against `EDITOR_CREATION_STANDARD.md`.
+
+## Current P1
+
+- Playwright browser QA;
+- identical-input Website Factory candidate comparison;
+- keep all design-process evolution in `blocks/design/` rather than duplicating it here.
 
 ## Core Principle
 
-Website Creator may know **what works**. It should not need to know **which client originally taught us that it works**.
+**Architecture now moves forward through real production evidence.**
 
-## Knowledge Promotion Flow
-
-`PROJECT-SPECIFIC FINDING → VERIFY → GENERALIZE → DE-IDENTIFY → DEFINE REUSABLE CONTRACT / COMPONENT / TEST → STORE IN WEBSITE CREATOR → USE INDEPENDENTLY`
-
-## Current Universal Editor Contract
-
-The visual editor is now defined globally by behavior/data rather than by a client implementation:
-
-- visual canvas + structure + contextual inspector;
-- direct image-selection toolbar;
-- visual crop/move/zoom modal;
-- non-destructive percentage crop metadata;
-- replace/remove/reset/shape/fill/whole/size/alignment/text controls;
-- shared state between toolbar and inspector;
-- editor/public-render parity;
-- persistence and visual acceptance gates.
-
-Compatible technical options include Puck, react-easy-crop and react-moveable, but the behavioral contract is authoritative.
-
-## Next Maintenance Rule
-
-Any future reusable learning must be written into Website Creator in universal form. Do not add a client project link as a shortcut to required production knowledge.
+Do not add abstract layers merely because they sound scalable. Promote what repeated real work proves reusable.
