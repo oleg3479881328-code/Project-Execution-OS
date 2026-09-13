@@ -1,139 +1,86 @@
-# Website Creation — PROJECT_STATE.md
+# Website Creator — PROJECT_STATE.md
 
 ## Status
 
-- Project: `Website Creation`
+- Project: `Website Creator`
 - State: active
-- Phase: canonical project bootstrap complete; high-value cross-project consolidation complete; long-tail source audit remains appendable
+- Phase: global system normalization
 - Last updated: 2026-09-13
 
-## Why This Project Exists
+## Architecture Decision
 
-The owner started a separate website-building chat and discovered that a fresh chat did not recover the large body of prior website-production work. Website Creation is now a first-class durable project so future website work re-enters through canonical sources rather than chat memory.
+Website Creator is a **global self-contained website-production system**.
 
-## Current Architecture Decision
+It must not use client projects as canonical knowledge dependencies. Client-derived learning is allowed only after promotion into generalized Website Creator standards/capabilities with client names, client URLs and project-specific assumptions removed.
 
-- `Website Creation` is the umbrella project for reusable website-production knowledge and methodology.
-- `Olga Polo Weddings` remains its own live client/project source of truth and is the principal proven production donor.
-- `Tusia / Tasha Hurley` remains its own live project and is a second production/generalization source.
-- `Automatic Website Factory` remains an active child initiative/use case for scaled local-business discovery → preview → sales.
-- `SOFT` remains the generic software/tool discovery layer.
-- PEOS `blocks/design/BLOCK.md` remains the canonical website-design orchestrator.
-- Live code/client data are linked from their canonical owners rather than copied into another stale mirror.
+Technical path remains `projects/website-creation/` for compatibility; visible project name is `Website Creator`.
 
-## Canonical Entry And Storage
+## Canonical Core
 
-Project entrypoint:
-- `projects/website-creation/PROJECT.md`
-
-Task router:
-- `projects/website-creation/ROUTER.md`
-
-Full cross-project source registry:
-- `projects/website-creation/SOURCE_REGISTRY.md`
-
-Website-specific tool/donor registry:
-- `projects/website-creation/TOOL_DONOR_REGISTRY.md`
-
-Tusia/Tasha reusable source:
-- `projects/website-creation/sources/TUSIA_TASHA_HURLEY.md`
+- `PROJECT.md` — global purpose and boundaries.
+- `ROUTER.md` — narrow task routing.
+- `SOURCE_REGISTRY.md` — global standards/capability registry.
+- `TOOL_DONOR_REGISTRY.md` — reusable tools/platforms/donors.
+- `EDITOR_CREATION_STANDARD.md` — universal visual editor contract.
+- `logs/latest.md` — latest architecture decision/change.
 
 Drive root:
-- https://drive.google.com/drive/folders/15DIWML8HiLSJrNfP5r7IyZu_YkrD2GTU
+https://drive.google.com/drive/folders/15DIWML8HiLSJrNfP5r7IyZu_YkrD2GTU
 
-Drive READ FIRST:
-- https://docs.google.com/document/d/1tlKReO5Z1cr9QcM65Byy4YtTccMGvIje0gWTgyt4Q0Q/edit
+## Global Capability Layers
 
-Drive Master Index:
-- https://docs.google.com/document/d/1Pwzrxg8c_kWGb4QOPotlX0BlSod2CcCjUCFiT4Uu89g/edit
+1. Research / evidence / site baseline.
+2. Strategy / conversion / information architecture.
+3. Design / UI / motion / design-system extraction.
+4. Structured content and page-data models.
+5. Universal visual editor / CMS / safe authoring.
+6. Media and image manipulation.
+7. SEO / AEO / pSEO / structured data / indexing.
+8. Build / deployment / preview / release / rollback.
+9. Browser QA / accessibility / responsive / visual QA.
+10. Analytics / search / conversion validation.
+11. AI-assisted implementation and automation.
+12. Automatic local-business website factory workflows.
 
-## PEOS Routing Is Now Wired
+## Universal Visual Editor State
 
-Global routing distinguishes full website production from design-only work:
+The image/editor work has been promoted into a client-neutral contract. Website Creator owns the behavior now.
 
-- website creation / website production / building a new site / `создание сайтов` / `проект создания сайтов` → `projects/website-creation/PROJECT.md`;
-- website design / landing design / wireframe / UI-system review → `blocks/design/BLOCK.md`.
+Core interaction contract:
 
-The projects registry also includes `Website Creation` as a registered project.
+- visual page canvas, not only property forms;
+- block/page structure + direct manipulation + right inspector;
+- selected image gets visible selection state, floating toolbar and contextual inspector;
+- crop/move is a visual modal with drag + zoom, not numeric focal coordinates as the primary UX;
+- non-destructive crop metadata stored in resolution-independent percentages;
+- shape, fill/whole-photo, replace, remove, reset, width/alignment, alt and caption behavior;
+- optional direct resize handles persisting percentage width;
+- shared state between toolbar and inspector;
+- editor/public-render parity;
+- deterministic reload persistence;
+- golden visual references stored inside Website Creator Drive as anonymous acceptance evidence.
 
-This is the critical fix for fresh-chat continuity.
+Implementation choices currently accepted as useful reusable solutions include Puck, `react-easy-crop` and `react-moveable`, but the behavioral contract is authoritative; a different stack may satisfy the same contract.
 
-## Drive Structure Created
+## Knowledge Promotion Rule
 
-- `00 — PROJECT CORE` — READ FIRST / project orientation.
-- `01 — SOURCE REGISTRY` — Master Index and source maps.
-- `02 — OLGA POLO REUSABLE` — reusable production knowledge from Olga.
-- `03 — DESIGN UI MOTION` — PEOS design system, donors, extraction, motion and QA.
-- `04 — CMS EDITOR CONTENT` — Puck/editor/content/image-editing patterns.
-- `05 — SEO AEO CONTENT FACTORY` — search/content-factory/page-queue/indexation knowledge.
-- `06 — BUILD DEPLOY INFRA` — Git/PR/CI, preview/release, Vercel/Showit/Netlify, live QA/rollback.
-- `07 — AI SITE BUILDERS & DONORS` — Duda/10Web/FieldLaunch/LeadX/Framer/AI-builder research.
-- `08 — AUTOMATIC WEBSITE FACTORY` — child initiative map to its existing canonical project.
-- `09 — TOOLS & EXTRACTORS` — extractor, Design Picker, baseline scanning, browser/QA/docs tooling.
-- `90 — INBOX — TO SORT` — temporary intake only.
+When useful learning appears in any external/client project:
 
-The main working folders now contain human-facing READ ME indexes with canonical links and boundaries; they are not empty category placeholders.
+`PROJECT-SPECIFIC FINDING → VERIFY → GENERALIZE → DE-IDENTIFY → DEFINE CONTRACT / ALGORITHM / COMPONENT / TEST → STORE IN WEBSITE CREATOR → USE WITHOUT SOURCE PROJECT`
 
-## Principal Knowledge Already Consolidated
+Do not store a client-project link as a substitute for the generalized knowledge.
 
-### Olga Polo — principal production donor
+## Current Default Production Model
 
-Indexed current Olga protocol, operational algorithms, canonical publication policy, Gold Standard, live GitHub repository, publication pipeline, visual QA, Showit + Vercel TSEO architecture, Knowledge Database, image editor architecture, SEO/GSC/migration/sitemap evidence, publication history and handoffs.
+`research → strategy/IA → donor/design system → structured content/data → implementation → editor when needed → SEO/technical QA → responsive/visual QA → preview → release → production → live verification → measurement`
 
-Key generalized lessons include:
+## Current Work Remaining
 
-- facts/evidence and stable entity identity before generation;
-- structured data/content separated from rendering;
-- reusable page families/renderers with publishability gates;
-- immutable original media vs traceable delivery derivatives;
-- Puck as a proven bounded editor/authoring donor;
-- isolated `react-easy-crop` non-destructive crop/pan/zoom rather than custom transformed coordinate math;
-- staging/release semantics rather than equating files/build/deploy with publication;
-- Git branch/PR/CI → preview → merge → deploy → live desktop/mobile QA;
-- rollback to known-good state;
-- canonical/schema/sitemap/indexing/image SEO as production contracts;
-- search performance verified through real GSC/indexation evidence.
+- remove remaining client-specific wording/links from Website Creator registries and Drive indexes;
+- rename Drive surfaces from `Website Creation` to `Website Creator`;
+- normalize the production-standards folder so it is not named after a client;
+- keep long-tail historical material outside the core unless it is promoted into a global reusable artifact.
 
-### Tusia / Tasha Hurley — second live production source
+## Final Boundary
 
-Captured the reusable Knowledge DB → SEO Production Queue → QA → Page Factory contract, preservation of existing site navigation/experience, URL/redirect asset discipline, no-invention rules, media provenance, one-real-page pilot before broad scale, client-voice grounding and minimization of client rewriting/SEO burden.
-
-### Design / UI / Motion
-
-Connected PEOS Design Block, Design Picker, Universal Site Design Extractor, Refero, Framer, UX-UI Agent Skills donor review, 21st.dev/Magic MCP, Taste guidance, deterministic accessibility/responsive/state QA and Impeccable/manual visual QA.
-
-### Tools / Software
-
-Connected SOFT Master Software Inventory and website-specific tool registry including Website Intelligence/Site Baseline Scanner, Universal Site Design Extractor, Firecrawl, Playwright, Context7, Codex, Vercel/Netlify/Showit/WordPress and relevant analytics tooling.
-
-### Automatic Website Factory
-
-Preserved its original canonical project and indexed Duda, 10Web, LeadX, FieldLaunch and the Prewitt Auto Repair benchmark. Important boundary: the benchmark packet is ready, but recorded project state does not show the real Duda/10Web vendor generation as completed; do not invent a winner.
-
-## Current Default Website Production Model
-
-`research / identity → goal + conversion path → information architecture → donor/design research → structured content/data → implementation → safe editor/CMS when needed → SEO/AEO/structured data → deterministic + visual QA → preview/staging → release gates → production deploy → live verification → analytics/search/conversion measurement`
-
-For the website-factory use case:
-
-`prospect discovery → qualification → dossier → site → safe editor → QA → preview → outreach/trial → sale → domain/ownership transfer → support`.
-
-## Current Rule For New Website Work
-
-1. Enter through PEOS `START_HERE.md`.
-2. Route to Website Creation.
-3. Open only the relevant source/tool/design branch.
-4. Apply Existing Solution First.
-5. Reuse current proven patterns/tools before creating a new mechanism.
-6. Keep project/client-specific live truth in its canonical owner.
-7. Promote genuinely reusable new lessons back into Website Creation.
-
-## Remaining Audit Boundary
-
-The high-value/current sources required to make the project useful are consolidated and routed. Do **not** claim every historical Drive duplicate, every legacy `WEB` folder, every old chat artifact or backup copy has been exhaustively inspected and normalized yet.
-
-The registry is intentionally appendable. Long-tail legacy material should be added only after comparison, with current/canonical vs history/duplicate status preserved. This avoids turning Website Creation into another stale archive dump.
-
-## Next Safe Action
-
-Use this project on the next real website build. When a missing prior artifact or reusable pattern is encountered, recover it from its canonical source and add it to `SOURCE_REGISTRY.md` or `TOOL_DONOR_REGISTRY.md` instead of rebuilding from memory.
+Website Creator may know **what works**. It should not need to know **which client originally taught us that it works**.
