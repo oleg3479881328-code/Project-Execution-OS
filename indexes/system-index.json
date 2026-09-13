@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "b60af690f6c77c7f89757257f37dc8d36b528897",
-  "generated_at": "2026-09-13T19:42:31-04:00",
+  "repository_commit": "54a463a79b86d33161b20d853765946160915c07",
+  "generated_at": "2026-09-13T19:42:58-04:00",
   "artifact_count": 607,
   "artifacts": [
     {
@@ -12394,12 +12394,13 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "f338d6201028665770bbf1b18cf7930412c08d28781ba3bd4e7cd8dde7d73627",
+      "sha256": "100f919f70704c27b71c1510d16dce785207e745116ee1d1e8e2d2ae160f75b2",
       "headings": [
         "Website Creator — UNIVERSAL VISUAL EDITOR STANDARD",
         "Status",
         "Purpose",
         "Core Product Model",
+        "Site Model Binding",
         "Required Editor Shell",
         "Selected Image Contract",
         "Floating Image Toolbar Contract",
@@ -12418,9 +12419,11 @@
         "Replace / Reset Semantics",
         "Visual Block Resize Contract",
         "Recommended Implementation Options",
+        "Build-vs-Buy / Adapt Gate",
         "Explicitly Forbidden Failure Modes",
         "Diagnosis Rule Before Fixing",
         "Minimum Acceptance Test",
+        "Golden Reference Versioning Rule",
         "Final Rule"
       ]
     },
