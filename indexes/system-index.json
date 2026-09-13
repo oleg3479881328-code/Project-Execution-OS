@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "63953f68505e372910b41e24ba54a0f21031f7c0",
-  "generated_at": "2026-09-13T19:40:54-04:00",
+  "repository_commit": "fa2ac6679a48ac93b1686eb62619991be4823501",
+  "generated_at": "2026-09-13T19:41:14-04:00",
   "artifact_count": 607,
   "artifacts": [
     {
@@ -12431,7 +12431,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "f8a148155f1be19d1a33be4c066e4cf3ce9062719a33fd982b370d4b33ec8e2d",
+      "sha256": "5f26e9ffbf0596603af76fde4e25c5535b4dc8fd1d944354ead786c61469aedc",
       "headings": [
         "Website Creator — PROJECT.md",
         "Project",
@@ -12442,6 +12442,7 @@
         "Existing Solution First",
         "Default Production Chain",
         "Core Principles",
+        "Architecture Review Rule",
         "Read Next",
         "Success Condition"
       ]
