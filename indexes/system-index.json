@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "0ec71ee9ec009b04ce341230743e1893d1484ca3",
-  "generated_at": "2026-09-13T11:37:09-04:00",
-  "artifact_count": 596,
+  "repository_commit": "fe7ee361cdfa50dfa3acd78fc2975a0517a27180",
+  "generated_at": "2026-09-13T14:31:09-04:00",
+  "artifact_count": 597,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7034,6 +7034,34 @@
         "Why This Architecture",
         "Risks",
         "Next Implementation Packet",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "docs/OPERATOR_UX_STANDARD.md",
+      "title": "Operator UX Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": "Active system standard",
+      "date": "2026-09-13",
+      "sha256": "a441d999edbefbeafeefb4f885d7161aee53f85297db3592626c3d150cc11124",
+      "headings": [
+        "Operator UX Standard",
+        "Purpose",
+        "Core Invariant",
+        "1. Action-First When Human Action Is Required",
+        "2. Bounded Multi-Step Owner Work",
+        "3. Persistent State Visibility",
+        "4. Tangent Suppression",
+        "5. Visible Completion",
+        "6. Error Shape",
+        "7. Time Estimates",
+        "8. Small Visible Working Set",
+        "9. Remove Non-Operational Filler",
+        "10. Voice-Friendly Compatibility",
+        "Override Order",
+        "Relationship To Existing PEOS Rules",
+        "Source / Donor Attribution",
         "Final Rule"
       ]
     },
