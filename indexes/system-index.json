@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "49c6e6d15ba133d9d50fe5e8fec5d73c63c5e8f8",
-  "generated_at": "2026-09-13T18:31:03-04:00",
-  "artifact_count": 601,
+  "repository_commit": "31a7eb6bb1b6163d1124f95aa652e0155105e33e",
+  "generated_at": "2026-09-13T18:31:30-04:00",
+  "artifact_count": 602,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -10635,7 +10635,7 @@
       "domain": "ROUTER.md",
       "status": null,
       "date": null,
-      "sha256": "995c71619a9ccf34da937621dadcefb3c5cde78df53adc470b38276f5dc08782",
+      "sha256": "450f63a5e29f76c39511278d15a9c75ac1f03416d16c75c8472f2b32eb73246b",
       "headings": [
         "Projects Router",
         "Purpose",
@@ -12490,6 +12490,24 @@
         "10. Core reusable website-production model distilled from existing work",
         "11. Archive / duplicate rule",
         "12. Audit status"
+      ]
+    },
+    {
+      "path": "projects/website-creation/logs/latest.md",
+      "title": "Website Creation — latest",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": null,
+      "date": "2026-09-13",
+      "sha256": "bb2411a6c03a8fffe874506ff89d526a0fe08845d3a1c4aab91f6154f1f8a0e4",
+      "headings": [
+        "Website Creation — latest",
+        "Trigger",
+        "Decisions",
+        "Created",
+        "Initial source audit coverage",
+        "Important generalized lessons already captured",
+        "Next maintenance rule"
       ]
     },
     {
