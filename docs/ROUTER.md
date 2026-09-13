@@ -67,6 +67,7 @@ Do not append an unrelated next-project question after answering the active requ
 - already-decided Codex execution handoff -> `docs/CODEX_HANDOFF_ENTRYPOINT.md`
 - `0.2`, `02`, check executor reply, check executor answer, проверить ответ исполнителя, or status check of an executor handoff -> `docs/COMMAND_02_EXECUTOR_REPLY_CHECK_STANDARD.md`
 - communication channel, connected-agent communication, message transport, `01`, `10`, channel selection, route recovery, or coordination-path uncertainty -> `blocks/communication-channel/BLOCK.md`
+- owner-facing execution output, operator UX, action-first owner steps, progress or state visibility, completion/error shape, concise execution status, or response ergonomics -> `docs/OPERATOR_UX_STANDARD.md`
 - stable ChatGPT system-layer configuration -> `docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md`
 - central knowledge capture, promotion, review, selective loading or retirement -> `docs/KNOWLEDGE_SYSTEM.md`
 - repository-memory question for this system or a GitHub-backed project -> `docs/REPOSITORY_MEMORY_STANDARD.md`
