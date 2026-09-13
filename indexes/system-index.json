@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "91f6890fd96f093dc03c1b6c6a77f377289d0d27",
-  "generated_at": "2026-09-13T18:41:06-04:00",
+  "repository_commit": "f1c0b4421b2e0e3555d179d7bf58f1177fc2ffeb",
+  "generated_at": "2026-09-13T18:41:26-04:00",
   "artifact_count": 604,
   "artifacts": [
     {
@@ -12558,15 +12558,29 @@
       "domain": "website-creation",
       "status": null,
       "date": "2026-09-13",
-      "sha256": "bb2411a6c03a8fffe874506ff89d526a0fe08845d3a1c4aab91f6154f1f8a0e4",
+      "sha256": "63afef994c7fc07517de3bd5afa151da988871339804355b1728daaea62a7af1",
       "headings": [
         "Website Creation — latest",
         "Trigger",
-        "Decisions",
-        "Created",
-        "Initial source audit coverage",
-        "Important generalized lessons already captured",
-        "Next maintenance rule"
+        "Architecture Decision",
+        "PEOS Routing Change",
+        "GitHub Project Layer Created",
+        "Drive Project Created",
+        "Human-Facing Drive Indexes Created",
+        "Project Core",
+        "Source Registry",
+        "Olga Reusable",
+        "Design / UI / Motion",
+        "CMS / Editor / Content",
+        "SEO / AEO / Content Factory",
+        "Build / Deploy / Infra",
+        "AI Site Builders & Donors",
+        "Automatic Website Factory",
+        "Tools & Extractors",
+        "Source Audit Coverage",
+        "Important Generalized Lessons Captured",
+        "Important Evidence Boundary",
+        "Maintenance Rule"
       ]
     },
     {
