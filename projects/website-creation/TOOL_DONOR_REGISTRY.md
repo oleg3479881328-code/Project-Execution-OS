@@ -6,17 +6,26 @@ Global website-specific view of reusable internal tools, external platforms, lib
 
 This registry is client-agnostic. Time-sensitive third-party facts must be revalidated against current official documentation at adoption time.
 
+## Validation Rule
+
+For any adoption decision that depends on current pricing, API behavior, licensing, export, ownership, permissions, hosting or product features:
+
+- record the source/date of the validation in the decision artifact;
+- revalidate when the decision is actually executed or materially revisited;
+- do not promote a research claim directly into a permanent default.
+
 Status meanings:
 - `ADOPTED / PROVEN` — successfully used/validated in our production methodology.
 - `INTERNAL / ACTIVE` — our reusable capability/project.
 - `STRONG DONOR / CANDIDATE` — researched and promising, not a universal default.
 - `EXTERNAL / CONDITIONAL` — choose project-by-project.
+- `RESEARCH CANDIDATE` — added to a comparison set; current official capabilities still require direct validation before adoption.
 
 ## Internal Capabilities
 
 ### PEOS Design Block — ADOPTED / PROVEN
 Canonical: `../../blocks/design/BLOCK.md`
-Role: website-design orchestration, donor research, page strategy, sections/components, responsive/motion standards, implementation handoff and design QA.
+Role: single website-design orchestration authority for donor research, page strategy, sections/components, responsive/motion standards, implementation handoff and design QA.
 
 ### Design Picker — INTERNAL / ACTIVE
 Canonical: https://github.com/oleg3479881328-code/Project-Execution-OS/tree/main/projects/design-picker
@@ -34,14 +43,27 @@ Role: reusable analytics/control layer; current internal direction favors a ligh
 
 ## Visual Editor / CMS Technologies
 
-### Puck — ADOPTED / PROVEN OPTION
-Role: structured React page/block authoring surface suitable for bounded visual editing. It is an implementation option that satisfies parts of `EDITOR_CREATION_STANDARD.md`, not a mandatory dependency for every website.
+The Universal Visual Editor contract is canonical. Tool choice is an implementation decision.
 
-### react-easy-crop — ADOPTED / PROVEN OPTION
+Before major new implementation-specific editor infrastructure, compare the strongest internal and external options against the same `EDITOR_CREATION_STANDARD.md` acceptance criteria.
+
+### Puck — PROVEN IMPLEMENTATION OPTION / DEFAULT DECISION PENDING
+Role: structured React page/block authoring surface suitable for bounded visual editing. It is a proven implementation option that can satisfy parts of `EDITOR_CREATION_STANDARD.md`, but it is not a universal default until build-vs-buy/adapt comparison is recorded.
+
+### react-easy-crop — PROVEN IMPLEMENTATION OPTION
 Role: visual, non-destructive crop/move/zoom interaction in an isolated overlay/modal. Preferred over custom pointer-coordinate crop math when using compatible React stacks.
 
-### react-moveable — ADOPTED / PROVEN OPTION
+### react-moveable — PROVEN IMPLEMENTATION OPTION
 Role: direct resize handles for supported visual blocks; persist semantic percentage/layout values rather than editor-only pixels.
+
+### Storyblok — RESEARCH CANDIDATE
+Role: external visual/headless CMS candidate for the editor build-vs-buy comparison. Validate current visual editing, structured content, permissions, versioning, image handling, export/ownership, pricing and integration behavior from official sources before scoring.
+
+### Sanity Visual Editing — RESEARCH CANDIDATE
+Role: external structured-content + visual editing candidate. Validate current visual editing workflow, schema ownership, preview/editor integration, permissions, versioning, media and pricing from official sources before scoring.
+
+### Builder.io — RESEARCH CANDIDATE
+Role: external visual builder/CMS candidate, especially relevant where high-volume marketing/page composition matters. Validate current framework integration, content model, permissions, export/ownership, experimentation and pricing before scoring.
 
 ### WordPress — EXTERNAL / CONDITIONAL
 Role: mature CMS/ownership ecosystem where WordPress editing/plugin/deployment requirements fit the project.
@@ -93,10 +115,13 @@ Role: deployment/CDN/functions alternative. Revalidate current pricing/features 
 Role: high-control visual website platform; useful where its visual workflow and CMS model match the project. Not a universal backend.
 
 ### Duda — HIGH-PRIORITY FACTORY CANDIDATE
-Role: generated/template site execution, client accounts/permissions, white-label editor/preview workflows and provisioning APIs where current product capabilities satisfy requirements. Revalidate current API/pricing/export/ownership.
+Role: factory execution candidate for generated/template sites, client editing/permissions, preview/provisioning and white-label workflows where current capabilities satisfy requirements. Revalidate current API/MCP/pricing/export/ownership/permission behavior from official sources before testing.
 
 ### 10Web — HIGH-PRIORITY FACTORY CANDIDATE
-Role: managed AI/WordPress site generation and white-label/reseller/client infrastructure where an ownership-friendly WordPress path is useful. Revalidate current APIs/terms/pricing.
+Role: managed AI/WordPress site generation and white-label/reseller/client infrastructure where an ownership-friendly WordPress path is useful. Revalidate current APIs/terms/pricing before testing.
+
+### B12 — RESEARCH FACTORY CANDIDATE
+Role: additional service-business/factory comparison candidate surfaced by the 2026-09-13 independent review. Do not assume fit or current capabilities; verify official product, ownership/editor/automation/pricing behavior before inclusion in an identical-input test.
 
 ### FieldLaunch — STRONG PROCESS DONOR
 Role: end-to-end acquisition-to-preview process patterns such as Hunt → Enrich → Generate → Deploy → Outreach.
@@ -115,8 +140,16 @@ Role: AI web-app/site generation references; not canonical production infrastruc
 ### Firecrawl — RECOMMENDED ON-DEMAND EXTRACTION LAYER
 Role: external site search/scrape/crawl/extract when normal web access or known evidence is insufficient. Select CLI/agent skill/MCP based on task/runtime efficiency.
 
-### Playwright CLI / MCP — RECOMMENDED QA-BROWSER LAYER
-Role: deterministic live UI verification, forms, interaction flows, regressions and accessibility-snapshot automation. Use the lightest interface that meets the task.
+### Playwright CLI / MCP — ADOPTED DEFAULT QA-BROWSER LAYER
+Role: deterministic live UI verification, forms, interaction flows, regressions, responsive checks and accessibility-snapshot automation. Use the lightest interface that meets the task.
+
+This is the default browser automation direction for Website Creator QA where browser-level validation is applicable; it does not replace human visual/taste review.
+
+### Percy — EXTERNAL / CONDITIONAL VISUAL REGRESSION CANDIDATE
+Role: screenshot-baseline/diff workflow when a project needs managed visual regression. Validate current integration/pricing before adoption.
+
+### Chromatic — EXTERNAL / CONDITIONAL VISUAL REGRESSION CANDIDATE
+Role: component/story-based visual regression and review when a component catalogue/workflow justifies it. Validate current integration/pricing before adoption.
 
 ### Context7 — RECOMMENDED CURRENT-DOCS LAYER
 Role: current/version-specific framework/library/API documentation to reduce stale implementation assumptions.
@@ -137,6 +170,42 @@ Role: privacy-conscious analytics core for reusable cross-project analytics wher
 
 ### PostHog — ESCALATION OPTION
 Role: deeper product analytics/experimentation only when justified.
+
+## Editor Comparison Rule
+
+For a real editor build-vs-buy/adapt spike, use one representative site/page set and score each option against at least:
+
+1. Website Creator behavioral editor acceptance contract;
+2. structured content/Site Model compatibility;
+3. image crop/move/zoom and media handling;
+4. draft/version/history/rollback;
+5. permissions/client isolation;
+6. preview/public-render parity;
+7. SEO/control surface;
+8. integration/API quality;
+9. ownership/export/lock-in;
+10. implementation and recurring cost;
+11. migration/recovery risk.
+
+Do not select a winner from documentation alone.
+
+## Factory Comparison Rule
+
+Use the same verified business dossier/Site Model input across candidate platforms where possible.
+
+Record:
+- output quality;
+- generation/provisioning time;
+- editor usability;
+- permissions;
+- ownership/export/domain transfer;
+- hosting/deployment behavior;
+- API/automation surface;
+- per-preview/per-live-site cost;
+- support/maintenance burden;
+- lock-in and recovery path.
+
+No platform is the Website Factory default until real evidence is captured.
 
 ## Selection Rule
 
@@ -160,4 +229,4 @@ Prefer integration over rebuilding solved infrastructure. Custom-build only the 
 
 ## Final Rule
 
-Tools serve Website Creator standards. A tool or external donor does not become the architecture merely because it is convenient or fashionable.
+Tools serve Website Creator standards. A tool or external donor does not become the architecture merely because it is convenient, fashionable, already known, or recommended by a review.
