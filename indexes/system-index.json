@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7bd24f7835da54514f2f982ed020dfc3454d8cf4",
-  "generated_at": "2026-09-13T19:05:35-04:00",
+  "repository_commit": "c986f71effe1ae499f0ce53ee1ce0e1be1ec4892",
+  "generated_at": "2026-09-13T19:06:00-04:00",
   "artifact_count": 605,
   "artifacts": [
     {
@@ -12453,45 +12453,39 @@
     },
     {
       "path": "projects/website-creation/PROJECT_STATE.md",
-      "title": "Website Creation — PROJECT_STATE.md",
+      "title": "Website Creator — PROJECT_STATE.md",
       "type": "project-artifact",
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "a50ccabec2c4212ad738e4d0e349a1217aa6ecfc185b54e31b6072fa033c6956",
+      "sha256": "8e9100a411e3ea88d976bb992ede37f14801ccd1d192480af15bef040d97c422",
       "headings": [
-        "Website Creation — PROJECT_STATE.md",
+        "Website Creator — PROJECT_STATE.md",
         "Status",
-        "Why This Project Exists",
-        "Current Architecture Decision",
-        "Canonical Entry And Storage",
-        "PEOS Routing Is Now Wired",
-        "Drive Structure Created",
-        "Principal Knowledge Already Consolidated",
-        "Olga Polo — principal production donor",
-        "Tusia / Tasha Hurley — second live production source",
-        "Design / UI / Motion",
-        "Tools / Software",
-        "Automatic Website Factory",
-        "Current Default Website Production Model",
-        "Current Rule For New Website Work",
-        "Remaining Audit Boundary",
-        "Next Safe Action"
+        "Architecture Decision",
+        "Canonical Core",
+        "Global Capability Layers",
+        "Universal Visual Editor State",
+        "Knowledge Promotion Rule",
+        "Current Default Production Model",
+        "Current Work Remaining",
+        "Final Boundary"
       ]
     },
     {
       "path": "projects/website-creation/ROUTER.md",
-      "title": "Website Creation — ROUTER.md",
+      "title": "Website Creator — ROUTER.md",
       "type": "project-artifact",
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "60666b121041a051f8c7754366c3c25a1bfcdff1af9faf0b2b860c0fbbc92a71",
+      "sha256": "acc7d925ca4b409b80b84096ae3eef0e3c162a5eac8ee9878e684433fc6a9434",
       "headings": [
-        "Website Creation — ROUTER.md",
+        "Website Creator — ROUTER.md",
         "Purpose",
         "Routes",
         "Loading Rule",
+        "Client-Agnostic Rule",
         "Final Rule"
       ]
     },
