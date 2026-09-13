@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "54a463a79b86d33161b20d853765946160915c07",
-  "generated_at": "2026-09-13T19:42:58-04:00",
+  "repository_commit": "e238b065796ae69657d423bb870c4154a4234736",
+  "generated_at": "2026-09-13T19:43:25-04:00",
   "artifact_count": 607,
   "artifacts": [
     {
@@ -12625,16 +12625,16 @@
       "domain": "website-creation",
       "status": null,
       "date": "2026-09-13",
-      "sha256": "fa306bd14aa15016e0e0d97215082b77d1f23a71d810c7287d4f9967e9733f6f",
+      "sha256": "5ff4f45e58f7a7e7cf17c4334938841b1785d697e790078b33bd44b21bbd88dc",
       "headings": [
         "Website Creator — latest",
-        "Architecture Correction",
-        "Decision",
-        "Changes",
-        "Core Principle",
-        "Knowledge Promotion Flow",
-        "Current Universal Editor Contract",
-        "Next Maintenance Rule"
+        "Event",
+        "Main Decision",
+        "Accepted / Modified Changes",
+        "Explicit Rejections",
+        "Current P0",
+        "Current P1",
+        "Core Principle"
       ]
     },
     {
