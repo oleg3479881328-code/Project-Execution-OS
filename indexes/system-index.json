@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8c15e0701f2f0911e99df93343289e7b74e6c39f",
-  "generated_at": "2026-09-13T18:35:47-04:00",
-  "artifact_count": 603,
+  "repository_commit": "288f975f0689c8e9e989827916e0d4db39d25f3f",
+  "generated_at": "2026-09-13T18:36:18-04:00",
+  "artifact_count": 604,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12444,7 +12444,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "f428a469fc131a371ae463949f0e1170e7edb7d9b33846f07b8fa5ea1e4ba1e0",
+      "sha256": "c71153096bc7f79ab190eace3449ac54062ab09a9a31f73b1c859e28008381bd",
       "headings": [
         "Website Creation — ROUTER.md",
         "Purpose",
@@ -12562,6 +12562,24 @@
         "Initial source audit coverage",
         "Important generalized lessons already captured",
         "Next maintenance rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/sources/TUSIA_TASHA_HURLEY.md",
+      "title": "Website Creation Source — Tusia / Tasha Hurley",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": null,
+      "date": null,
+      "sha256": "260258df8b16b61dcbf5ba259fd1fca41a77550a544ed7b2c3883c1ef4ce456f",
+      "headings": [
+        "Website Creation Source — Tusia / Tasha Hurley",
+        "Status",
+        "Why It Matters To Website Creation",
+        "Reusable Patterns Already Proven/Adopted In The Project",
+        "Current Pilot Principle",
+        "Generalization Value",
+        "Boundary"
       ]
     },
     {
