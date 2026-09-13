@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ad20121b45222e67e903f4ffbf5d904b049665c4",
-  "generated_at": "2026-09-13T14:32:38-04:00",
+  "repository_commit": "5d65272a7abac00cebacf53d274edd1e0a3f2c01",
+  "generated_at": "2026-09-13T16:04:46-04:00",
   "artifact_count": 597,
   "artifacts": [
     {
@@ -10853,7 +10853,7 @@
       "domain": "blender-ai-production",
       "status": "active project runbook / do-not-repeat register",
       "date": "2026-09-13",
-      "sha256": "ca7d6f426740da1b90cd67e38258a40ed5147ab5f35a376d82ab05436082ae48",
+      "sha256": "dfd4ebcdd834facf5011cfdb4089530b02708c15316078a0139da850eb263f63",
       "headings": [
         "Blender AI Production — FAILURE_REGISTER.md",
         "Purpose",
@@ -10871,6 +10871,8 @@
         "F-10 — Fragmented patch delivery created avoidable confusion",
         "F-11 — Syntax verification was presented too close to runtime verification",
         "F-12 — We coded first and consulted official Blender docs too late",
+        "F-13 — Damped Track orbit allowed camera roll / sideways frames",
+        "F-14 — Viewport material color is not enough; construct render shader graph explicitly",
         "Mandatory Preflight For Future Blender Scripts",
         "Preferred Video Production Rule",
         "Known Good / Known Verified From This Test",
