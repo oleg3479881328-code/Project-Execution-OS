@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f1c0b4421b2e0e3555d179d7bf58f1177fc2ffeb",
-  "generated_at": "2026-09-13T18:41:26-04:00",
+  "repository_commit": "dc560fc0a9f8f515bb8ec34ac4599ff0abbae9d7",
+  "generated_at": "2026-09-13T18:41:50-04:00",
   "artifact_count": 604,
   "artifacts": [
     {
@@ -12394,7 +12394,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "22b947795b5c35aac1fe2e20f4ffca46193a3c88fb75d3e9435b70e59dee95ed",
+      "sha256": "f7b0adde90e4fa6f19f1db6c102965529d9102506ecaa47950e05fe4c3a1c61f",
       "headings": [
         "Website Creation — PROJECT.md",
         "Project",
@@ -12403,6 +12403,7 @@
         "Canonical Storage",
         "Key Source Projects",
         "Olga Polo Weddings — principal verified production donor",
+        "Tusia / Tasha Hurley — second live production source",
         "Automatic Website Factory",
         "PEOS Design Block",
         "SOFT",
