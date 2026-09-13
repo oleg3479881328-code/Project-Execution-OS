@@ -31,7 +31,7 @@ A project may route onward through its own routers, registries, indexes, collect
 - SOLANA / Crypto-Web3 umbrella -> `https://github.com/oleg3479881328-code/SOLANA/blob/main/PROJECT.md`
 - TikTok Research Sorter -> `tiktok-research-sorter/PROJECT.md`
 - Tusia / Tasha Hurley Weddings -> `tusia-tasha-hurley/PROJECT.md`
-- Website Creation / website production / site building / создание сайтов / проект создания сайтов -> `website-creation/PROJECT.md`
+- Website Creator / website creation / website production / site building / создание сайтов / проект создания сайтов -> `website-creation/PROJECT.md`
 - Циолковский / Есенин / Лермонтов archival research -> `tsiolkovsky-yesenin-lermontov-research/PROJECT.md`
 - Visitor Analytics Control Plane -> `visitor-analytics-control-plane/PROJECT.md`
 
