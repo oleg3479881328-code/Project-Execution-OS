@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a9d5eb8361f18a35322e14993838d150ab300b08",
-  "generated_at": "2026-09-13T19:41:42-04:00",
+  "repository_commit": "79d422b98ef35c8e97c673a54004557944d5cb20",
+  "generated_at": "2026-09-13T19:42:07-04:00",
   "artifact_count": 607,
   "artifacts": [
     {
@@ -12527,7 +12527,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "f292142177615bb8f2812c4d149994471d559d0199ce0011b28c065da2c37830",
+      "sha256": "67e9a61125f8d82dd439784e376946e8d19408b7c2ec78d3f5253f554c06127e",
       "headings": [
         "Website Creator — SOURCE_REGISTRY.md",
         "Purpose",
@@ -12536,12 +12536,13 @@
         "2. Research & Evidence",
         "3. Strategy & Information Architecture",
         "4. Design / UI / Motion",
-        "5. Content & Data Model",
+        "5. Site Model / Content & Data",
         "6. Universal Visual Editor / CMS",
         "7. Media",
         "8. SEO & Discovery",
         "9. Build & Release",
         "10. QA",
+        "Default browser-QA direction",
         "Deterministic / technical",
         "Visual / experiential",
         "Release/live",
