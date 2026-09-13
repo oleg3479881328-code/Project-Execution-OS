@@ -19,6 +19,8 @@ Golden visual references stored in Website Creator Drive are behavioral acceptan
 - Crop / move modal:
   https://drive.google.com/file/d/1pfpdTfBZRVW4cSKJxjQHfVxUIuthGdef/view
 
+Current Drive links are temporary acceptance references. They must be normalized into a version-addressable/hash/revision-backed form so the standard cannot silently point at changed evidence.
+
 ## Core Product Model
 
 The editor is not merely a form beside a preview.
@@ -30,6 +32,21 @@ It is a visual page editor with three coordinated surfaces:
 3. **Contextual inspector** — detailed properties/actions for the selected element.
 
 All surfaces operate on the same underlying state. Do not implement parallel unsynchronized editing models.
+
+## Site Model Binding
+
+When Website Creator uses a canonical Site Model, the editor must edit that canonical state or a deterministic mapped representation of it.
+
+Required properties:
+
+- editor state and public-render state have an explicit mapping;
+- vendor/editor-specific IDs stay in an adapter/binding layer where practical;
+- content edits must not require reconstructing the site from prose;
+- secrets/credentials do not belong in editor content state;
+- draft/editing state is distinct from published state;
+- production content editing requires history/revision/rollback semantics appropriate to the chosen CMS/storage layer.
+
+See `SITE_MODEL_STANDARD.md`.
 
 ## Required Editor Shell
 
@@ -211,6 +228,28 @@ The contract is stack-independent. In compatible React projects, proven implemen
 
 These libraries are options, not the standard itself. A different stack is acceptable if it satisfies the same behavior/data/acceptance contract.
 
+## Build-vs-Buy / Adapt Gate
+
+Before major new implementation-specific editor infrastructure is built, perform a real comparison against mature external editor/CMS candidates listed in `TOOL_DONOR_REGISTRY.md`.
+
+Use the same representative site/page set and score every option — internal or external — against the same contract.
+
+At minimum compare:
+
+- direct-manipulation UX;
+- Site Model / structured-content compatibility;
+- crop/media behavior;
+- draft/version/history/rollback;
+- permissions/client isolation;
+- preview/public-render parity;
+- SEO/control surface;
+- API/integration quality;
+- export/ownership/lock-in;
+- implementation + recurring cost;
+- migration/recovery risk.
+
+Do not select a winner from documentation alone. Do not discard a proven internal implementation merely because an external platform exists. Do not keep building custom infrastructure merely because an internal implementation already exists.
+
 ## Explicitly Forbidden Failure Modes
 
 Do not use:
@@ -224,7 +263,8 @@ Do not use:
 - page/content mutation to disguise an editor-component bug;
 - stale local draft/state corruption as justification for rewriting canonical content;
 - a generic property form as a replacement for required direct-manipulation behavior simply because it is easier to implement;
-- declaring the editor complete because controls exist without visual/behavioral acceptance.
+- declaring the editor complete because controls exist without visual/behavioral acceptance;
+- treating a vendor's default editor behavior as accepted when it fails the Website Creator contract.
 
 ## Diagnosis Rule Before Fixing
 
@@ -257,11 +297,20 @@ A visual-editor implementation is not accepted until applicable items pass:
 - shared image behavior is consistent across applicable block types;
 - editor and public rendering agree;
 - reload does not lose saved state;
+- content revision/history/rollback path exists when production editing requires it;
 - client/local draft corruption does not silently become canonical content;
 - result is visually compared with the Website Creator golden references when reproducing this editor pattern.
+
+## Golden Reference Versioning Rule
+
+Before the editor standard is used as a long-term regression baseline, each golden reference must have a durable version identity: repository commit/hash, immutable artifact reference, or recorded Drive revision/checksum.
+
+A replaceable current-state link alone is not sufficient permanent acceptance evidence.
 
 ## Final Rule
 
 Website Creator owns this editor behavior as a universal reusable capability.
 
 Implementations may change technology or styling, but they must not silently replace the direct-manipulation interaction/data contract with a weaker generic editor.
+
+The behavioral contract survives tool changes; implementation technology remains subject to Existing Solution First and evidence-based comparison.
