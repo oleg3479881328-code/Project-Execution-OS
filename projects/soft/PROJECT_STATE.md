@@ -6,7 +6,7 @@
 - State: active
 - Mode: collect + evaluate + reuse + build
 - Current phase: first cross-source software inventory completed; continuous intake + canonicalization
-- Last state update: 2026-09-06
+- Last state update: 2026-09-13
 
 ## Canonical Entry And Storage
 
@@ -45,6 +45,7 @@ Source Map:
 - Added legacy discoveries such as Simple Voice Chat, Graphify, google-memory, ClientCollector, VideoReelsCombain, generic WEB/VIDEO workspaces and old SOLANA material.
 - Recorded duplicate families including multiple Netlify, Vercel, Graphify and extractor copies.
 - Updated the Drive Guide so new chats enter through the inventory before doing fresh software research.
+- Captured `ayghri/i-have-adhd` as an `EXTERNAL / STRONG AGENT-UX DONOR`, created a dedicated SOFT review, and adapted the selected principles into the active PEOS `docs/OPERATOR_UX_STANDARD.md` instead of installing the external skill wholesale.
 
 ## Current Focus
 
