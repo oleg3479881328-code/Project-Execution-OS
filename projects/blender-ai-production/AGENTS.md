@@ -9,7 +9,8 @@ Before project work:
 3. Read `projects/blender-ai-production/PROJECT.md`.
 4. Read `PROJECT_STATE.md` when current execution state, continuation, prior tests or handoff context matter.
 5. Read `logs/latest.md` when the latest result/blocker matters.
-6. Load only the task-relevant deeper sources.
+6. Read `FAILURE_REGISTER.md` before Blender scripting, animation, render automation or video-output work.
+7. Load only the task-relevant deeper sources.
 
 Do not reconstruct the project from chat memory when durable state exists.
 
@@ -30,12 +31,17 @@ Reuse the AI Hands role contract rather than creating a second generic agent fra
 Before creating an adapter, MCP bridge, Blender skill, simulation helper, QA loop or media execution utility:
 
 1. check this project's donor audit;
-2. check SOFT Master Software Inventory;
-3. check the Video Production Block / capability registry when media execution is involved;
-4. prefer official Blender APIs/MCP where they fit;
-5. reuse/configure/integrate/adapt a proven donor before building custom code.
+2. check `FAILURE_REGISTER.md` for a prior failure/fix covering the same surface;
+3. check SOFT Master Software Inventory;
+4. check the Video Production Block / capability registry when media execution is involved;
+5. identify the exact installed Blender version when Blender Python/API behavior is involved;
+6. check official Blender release notes / Python API for that version before writing version-sensitive code;
+7. prefer official Blender APIs/MCP where they fit;
+8. reuse/configure/integrate/adapt a proven donor before building custom code.
 
 Do not bulk-install donor skill collections. Select only what solves a demonstrated gap.
+
+Do not answer a Blender API failure with another speculative patch before checking the failure register and current official documentation.
 
 ## Blender Scene Mutation Contract
 
@@ -47,6 +53,8 @@ Do not bulk-install donor skill collections. Select only what solves a demonstra
 - Use MCP for live scene inspection, bounded actions, screenshots/renders and targeted corrections.
 - Treat context-sensitive Blender operators carefully; do not assume UI context.
 - Do not overwrite an accepted baseline with an experimental repair.
+- For the owner's current Windows Blender workflow, use the explicit approved output root `C:/Users/oleg3/OneDrive/Desktop/BLEND` unless the owner changes it; do not infer a production path from `__file__`.
+- Generated Python must use safe Windows path syntax (project default: forward slashes), including inside docstrings.
 
 ## Simulation / FX Contract
 
@@ -70,7 +78,9 @@ Key rules:
 - approved state must be reproducible from durable project data;
 - repair/rerender bounded frame windows or shot segments when possible;
 - do not regenerate the whole film because one interval failed;
-- final MP4 is a delivery artifact, not the editable source of truth.
+- final MP4 is a delivery artifact, not the editable source of truth;
+- for repeatable production delivery, prefer numbered frames from Blender plus deterministic FFmpeg assembly when that avoids Blender movie-output naming/encoding quirks;
+- direct Blender FFmpeg output is acceptable for previews only after target-version API preflight.
 
 ## Validation Ladder
 
@@ -78,13 +88,18 @@ A step is not complete because code executed without error.
 
 After meaningful mutations, validate in this order as applicable:
 
-1. structural/data validation — expected objects, names, transforms, frame ranges, caches and output paths exist;
-2. deterministic checks — frame counts, fixed coordinates, masks/passes, file existence, media probe;
-3. visual checks — viewport screenshot, render still, contact sheet or sampled frames;
-4. temporal checks — burst review around freeze/transition frames and neighbouring-frame comparison;
-5. acceptance criteria — compare against the actual requested shot behavior.
+1. syntax/static validation — Python parses and package files are complete;
+2. API preflight — required target-Blender properties/enums exist for the installed version;
+3. structural/data validation — expected objects, names, transforms, frame ranges, caches and output paths exist;
+4. deterministic checks — frame counts, fixed coordinates, masks/passes, file existence, media probe;
+5. Blender runtime check — the script actually executes in the target Blender version;
+6. visual checks — viewport screenshot, render still, contact sheet or sampled frames;
+7. temporal checks — burst review around freeze/transition frames and neighbouring-frame comparison;
+8. acceptance criteria — compare against the actual requested shot behavior.
 
 If a visual/temporal defect remains, report failure honestly and preserve evidence.
+
+Never report `syntax PASS` as if it proved Blender runtime/API compatibility.
 
 ## Failure / Refinement Loop
 
@@ -94,10 +109,12 @@ Adapt the reusable pattern from `RobLe3/cc-blender-skill` rather than blindly re
 2. preserve the failed artifact;
 3. capture the smallest evidence set that proves the failure;
 4. classify the failure dimension;
-5. check whether an existing skill/method already solves it;
-6. improve/reuse the method before another broad rebuild when the same failure repeats;
-7. repair only the affected artifact/range;
-8. revalidate neighbours and downstream outputs.
+5. check `FAILURE_REGISTER.md` for the same error/failure pattern;
+6. check whether an existing skill/method or official version-specific API already solves it;
+7. improve/reuse the method before another broad rebuild when the same failure repeats;
+8. repair only the affected artifact/range;
+9. revalidate neighbours and downstream outputs;
+10. if the failure/fix is new and materially reusable, update the failure register before declaring completion.
 
 ## Executor Job Packet
 
@@ -158,6 +175,7 @@ After the freeze point:
 
 ## Required Deeper References When Relevant
 
+- Project failure / do-not-repeat register: `FAILURE_REGISTER.md`
 - Drive donor audit: https://docs.google.com/document/d/1_Ftr5qRFPhbPcjS1baNQ1kEZaYxVuohnmDQZFmklL3I/edit
 - Video Production Block: `../../blocks/video-production/BLOCK.md`
 - Frame-addressable production: `../../blocks/video-production/FRAME_ADDRESSABLE_PRODUCTION.md`
