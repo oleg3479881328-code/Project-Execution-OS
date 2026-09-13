@@ -1,36 +1,42 @@
-# Website Creation — ROUTER.md
+# Website Creator — ROUTER.md
 
 ## Purpose
 
-Route website-creation work to the smallest useful source without loading the entire project.
+Route Website Creator work to the smallest global reusable standard/capability required for the task.
 
 ## Routes
 
 - project orientation / current state / where are we now -> `PROJECT_STATE.md`
-- complete source catalogue / prior work / find what we already have -> `SOURCE_REGISTRY.md`
-- website tools / SaaS / libraries / extensions / execution platforms / donors / what have we already researched -> `TOOL_DONOR_REGISTRY.md`, then follow the canonical SOFT/source link when needed
+- find an existing reusable website capability / standard / production contract -> `SOURCE_REGISTRY.md`
+- tools / SaaS / libraries / frameworks / execution platforms / donors -> `TOOL_DONOR_REGISTRY.md`
 - website design / visual direction / donor analysis / sections / UI / responsive / motion / design QA -> `../../blocks/design/BLOCK.md`
-- automatic local-business website generation / prospect discovery / preview-first selling / Duda / 10Web / LeadX / FieldLaunch -> Automatic Website Factory sources listed in `SOURCE_REGISTRY.md`
-- Olga Polo website production patterns / publication workflow / SEO / programmatic pages -> Olga Polo sources listed in `SOURCE_REGISTRY.md`; read canonical current source before archives
-- visual editor creation / editor like Olga / image editor / CMS editor / safe client editing / crop / move / zoom / focal / image resize / direct-manipulation image editing -> `EDITOR_CREATION_STANDARD.md`, then inspect the current Olga editor code and golden visual references linked there
-- Tusia / Tasha Hurley website production / second-client generalization / Page Queue to Page Factory / client-voice pilot -> `sources/TUSIA_TASHA_HURLEY.md`, then canonical Tusia project
-- CMS/content model / structured authoring / publication states not specifically about visual editor UI -> `SOURCE_REGISTRY.md` Editor/CMS sources
-- design extraction / reverse engineering / site style capture -> Universal Site Design Extractor sources in `SOURCE_REGISTRY.md`
-- SEO / AEO / GEO / pSEO / schema / sitemap / indexing -> `SOURCE_REGISTRY.md` SEO/AEO sources plus relevant reusable PEOS standards when present
-- deployment / GitHub / Vercel / Netlify / DNS / preview / release / rollback -> `SOURCE_REGISTRY.md` Build & Release sources plus `TOOL_DONOR_REGISTRY.md` where platform selection matters
-- ChatGPT / AI-assisted site-building method comparison -> `SOURCE_REGISTRY.md` AI Website Creation sources and `TOOL_DONOR_REGISTRY.md`
-- new site implementation -> first recover relevant existing knowledge through this router, then apply `../../docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
+- visual editor / image editor / CMS editor / safe client editing / crop / move / zoom / image resize / direct manipulation -> `EDITOR_CREATION_STANDARD.md`
+- research / entity dossier / evidence / existing-site audit -> `SOURCE_REGISTRY.md` Research & Evidence section
+- information architecture / conversion / page strategy -> `SOURCE_REGISTRY.md` Strategy & IA section
+- structured content / page data / reusable renderers / publication states -> `SOURCE_REGISTRY.md` Content & Data section
+- media / image derivatives / galleries / crop metadata -> `SOURCE_REGISTRY.md` Media section and `EDITOR_CREATION_STANDARD.md` when interaction is involved
+- SEO / local SEO / AEO / GEO / pSEO / schema / canonical / sitemap / indexing -> `SOURCE_REGISTRY.md` SEO & Discovery section
+- implementation / Git / preview / staging / release / rollback / Vercel / Netlify / DNS / domain -> `SOURCE_REGISTRY.md` Build & Release section plus `TOOL_DONOR_REGISTRY.md`
+- accessibility / responsive checks / browser QA / visual QA -> `SOURCE_REGISTRY.md` QA section
+- analytics / search validation / conversion measurement -> `SOURCE_REGISTRY.md` Measurement section
+- automated local-business website production / prospect discovery / preview-first selling -> `SOURCE_REGISTRY.md` Website Factory section
+- AI-assisted website creation / coding-agent workflow -> `TOOL_DONOR_REGISTRY.md` and applicable production standard
+- new site implementation -> recover the relevant Website Creator standards first, apply `../../docs/EXISTING_SOLUTION_FIRST_STANDARD.md`, then implement
 
 ## Loading Rule
 
-Do not mass-read every source by default. Start from the relevant category and expand only when the task requires it.
+Do not mass-read the whole project. Load the narrowest standard required by the active task.
 
-For a new website, the default path is:
+Default new-site path:
 
-`PROJECT.md → PROJECT_STATE.md → ROUTER.md → relevant reusable sources → design block if visual work is needed → implementation`.
+`PROJECT.md → PROJECT_STATE.md → ROUTER.md → relevant Website Creator standard(s) → Design Block when visual work is required → implementation → QA/release gates`.
 
-For any request that includes a client-facing visual editor, the executor must read `EDITOR_CREATION_STANDARD.md` before implementation.
+For any client-facing visual editor task, read `EDITOR_CREATION_STANDARD.md` before implementation.
+
+## Client-Agnostic Rule
+
+Do not route from Website Creator into a client project to obtain required production knowledge. If a reusable fact exists only in a client project, promote/generalize it into Website Creator first.
 
 ## Final Rule
 
-Website Creation is the umbrella. Source projects stay canonical for their own live state; this router makes their reusable website knowledge discoverable.
+Website Creator owns reusable website-production knowledge. Client projects consume Website Creator; Website Creator does not depend on client projects.
