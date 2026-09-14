@@ -17,6 +17,10 @@ test('shared Website Creator editor loads and draft/publish changes reach the pu
   await expect(page.getByRole('button', { name: /^Save$/ }).first()).toBeVisible({ timeout: 15_000 })
   await expect(page.getByRole('button', { name: /Publish/i }).first()).toBeVisible({ timeout: 15_000 })
 
+  const editorCanvas = page.frameLocator('iframe').first()
+  await expect(editorCanvas.getByText('Diagnose. Repair. Drive.').first()).toBeVisible({ timeout: 15_000 })
+  await expect(editorCanvas.getByText('Explore our services').first()).toBeVisible({ timeout: 15_000 })
+
   const match = page.url().match(/\/admin\/puck-editor\/pages\/([^/?#]+)/)
   expect(match?.[1]).toBeTruthy()
   const pageId = match![1]
@@ -63,5 +67,6 @@ test('shared Website Creator editor loads and draft/publish changes reach the pu
 
   await page.goto('/editor')
   await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
+  await expect(page.frameLocator('iframe').first().getByText('Diagnose. Repair. Drive.').first()).toBeVisible({ timeout: 15_000 })
   await page.screenshot({ path: 'test-results/website-creator-editor.png', fullPage: true })
 })
