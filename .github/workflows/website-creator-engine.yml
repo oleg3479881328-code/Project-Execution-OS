@@ -37,6 +37,8 @@ jobs:
       PAYLOAD_SECRET: ci-test-secret-not-for-production
       NEXT_PUBLIC_SERVER_URL: http://127.0.0.1:3000
       PLAYWRIGHT_BASE_URL: http://127.0.0.1:3000
+      WC_ADMIN_EMAIL: ci-admin@website-creator.invalid
+      WC_ADMIN_PASSWORD: ci-only-password-ChangeMe-2026
 
     steps:
       - uses: actions/checkout@v4
@@ -50,24 +52,32 @@ jobs:
           cache-dependency-path: projects/website-creation/engine/package.json
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm check
+      - name: Generate initial production migration when migrations are not committed yet
+        run: |
+          if [ ! -f src/migrations/index.ts ]; then
+            pnpm payload migrate:create initial --skip-empty
+          fi
       - run: pnpm seed:csg
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
-      - name: Start engine and run browser smoke
+      - name: Start engine and run browser acceptance
         run: |
           pnpm start > /tmp/website-creator-engine.log 2>&1 &
           for i in {1..60}; do
-            if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then
+            if curl --fail --silent http://127.0.0.1:3000/health > /dev/null; then
               break
             fi
             sleep 1
           done
+          curl --fail http://127.0.0.1:3000/health
           curl --fail http://127.0.0.1:3000/
           pnpm test:e2e
-      - name: Upload browser evidence
+      - name: Upload browser and migration evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: website-creator-car-garage-evidence
-          path: projects/website-creation/engine/test-results/
+          path: |
+            projects/website-creation/engine/test-results/
+            projects/website-creation/engine/src/migrations/
           if-no-files-found: ignore
