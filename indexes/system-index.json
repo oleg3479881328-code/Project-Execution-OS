@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e238b065796ae69657d423bb870c4154a4234736",
-  "generated_at": "2026-09-13T19:43:25-04:00",
-  "artifact_count": 607,
+  "repository_commit": "2fc6baff0c687dcb23e8c0b3656c742b40f9aebf",
+  "generated_at": "2026-09-14T11:32:01-04:00",
+  "artifact_count": 608,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12677,6 +12677,49 @@
         "P2",
         "P3 / Evidence-triggered",
         "Final Decision"
+      ]
+    },
+    {
+      "path": "projects/website-creation/reviews/SPEED_SYSTEM_REVIEW_2026-09-14.md",
+      "title": "Website Creator — Independent Speed & Ready-Solutions Review",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "REVIEW ONLY — no architecture changes applied by this document",
+      "date": "2026-09-14",
+      "sha256": "290c9b922c181e4635426d52f6c8dd18d873e9dae8274ca445ca039b06e7e27f",
+      "headings": [
+        "Website Creator — Independent Speed & Ready-Solutions Review",
+        "Executive conclusion",
+        "Real-case evidence: Car Service Garage",
+        "Root causes",
+        "1. No early execution-lane decision",
+        "2. Ready Site Stacks are custom-code biased",
+        "3. The Design Block is too deep for every site",
+        "4. Custom editor work begins too early",
+        "5. Vercel is being used as a development laboratory",
+        "6. Architect and executor are conflated",
+        "7. No speed SLO",
+        "Recommended new operating model",
+        "Step 0 — classify the job",
+        "EXPRESS",
+        "CONTROLLED / PREMIUM MARKETING",
+        "CODE-OWNED",
+        "FACTORY / WHITE-LABEL",
+        "Highest-priority ready-made solution findings",
+        "Relume Publish — highest-priority immediate test",
+        "Framer 3.0 / Agents — promote from donor to execution candidate",
+        "Webflow AI — serious execution candidate",
+        "Wix Harmony / Wix Studio — serious local-business/agency candidate",
+        "B12 3.0 — speed benchmark for local service businesses",
+        "v0 / Replit / Lovable / Bolt — code-generation lane",
+        "Storyblok / Sanity / Builder.io — editor/CMS layer",
+        "Playwright — deterministic QA default",
+        "Proposed fast production chain",
+        "Design approval gate",
+        "Speed targets to test",
+        "Immediate recommendation for Car Service Garage",
+        "Architecture verdict",
+        "Final conclusion"
       ]
     },
     {
