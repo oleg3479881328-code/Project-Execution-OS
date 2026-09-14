@@ -1,3 +1,4 @@
+import { createMediaField, type MediaReference } from '@delmaredigital/payload-puck/fields'
 import type { ComponentConfig } from '@puckeditor/core'
 import React from 'react'
 
@@ -27,8 +28,8 @@ export const HeroSectionConfig: ComponentConfig<any> = {
     primaryHref: { type: 'text', label: 'Primary CTA URL' },
     secondaryLabel: { type: 'text', label: 'Secondary CTA label' },
     secondaryHref: { type: 'text', label: 'Secondary CTA URL' },
-    imageUrl: { type: 'text', label: 'Image URL (optional)' },
-    imageAlt: { type: 'text', label: 'Image alt text' },
+    image: createMediaField({ label: 'Hero image' }),
+    imageAlt: { type: 'text', label: 'Image alt override' },
   },
   defaultProps: {
     eyebrow: 'Independent service · Local experts',
@@ -39,13 +40,14 @@ export const HeroSectionConfig: ComponentConfig<any> = {
     primaryHref: 'tel:+10000000000',
     secondaryLabel: 'Explore services',
     secondaryHref: '#services',
-    imageUrl: '',
+    image: null,
     imageAlt: '',
   },
-  render: ({ eyebrow, title, highlight, body, primaryLabel, primaryHref, secondaryLabel, secondaryHref, imageUrl, imageAlt }) => {
+  render: ({ eyebrow, title, highlight, body, primaryLabel, primaryHref, secondaryLabel, secondaryHref, image, imageAlt }) => {
     const highlightedTitle = highlight && title.includes(highlight)
       ? <>{title.slice(0, title.indexOf(highlight))}<span>{highlight}</span>{title.slice(title.indexOf(highlight) + highlight.length)}</>
       : title
+    const heroImage = image as MediaReference | null
 
     return (
       <section className="wc-hero" data-wc-section="hero">
@@ -59,8 +61,8 @@ export const HeroSectionConfig: ComponentConfig<any> = {
               <ActionLink label={secondaryLabel} href={secondaryHref} secondary />
             </div>
           </div>
-          <div className="wc-hero__visual" aria-hidden={!imageUrl}>
-            {imageUrl ? <img src={imageUrl} alt={imageAlt || ''} /> : <div className="wc-hero__visual-placeholder">SERVICE / CRAFT / TRUST</div>}
+          <div className="wc-hero__visual" aria-hidden={!heroImage?.url}>
+            {heroImage?.url ? <img src={heroImage.url} alt={imageAlt || heroImage.alt || ''} /> : <div className="wc-hero__visual-placeholder">SERVICE / CRAFT / TRUST</div>}
           </div>
         </div>
       </section>
