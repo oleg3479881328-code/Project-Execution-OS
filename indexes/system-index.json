@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2fc6baff0c687dcb23e8c0b3656c742b40f9aebf",
-  "generated_at": "2026-09-14T11:32:01-04:00",
-  "artifact_count": 608,
+  "repository_commit": "280dacf5c23ab53417453bcdf47e5e80a5bdd7d4",
+  "generated_at": "2026-09-14T12:12:33-04:00",
+  "artifact_count": 609,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12424,6 +12424,30 @@
         "Diagnosis Rule Before Fixing",
         "Minimum Acceptance Test",
         "Golden Reference Versioning Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/OWN_SYSTEM_EXECUTION_STANDARD.md",
+      "title": "Website Creator — OWN SYSTEM EXECUTION STANDARD",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": null,
+      "date": null,
+      "sha256": "faacab189ba8acdc335096de4ba561c22c3dfc555f86752bffa94971cc094e4b",
+      "headings": [
+        "Website Creator — OWN SYSTEM EXECUTION STANDARD",
+        "Status",
+        "Owner Intent",
+        "Core Rule",
+        "Ownership Boundary",
+        "Existing Solution First — Correct Interpretation",
+        "No Silent Platform Rule",
+        "Target Execution Architecture",
+        "Speed Principle",
+        "Fresh-Chat Contract",
+        "Car Service Garage Validation Rule",
+        "Acceptance Gate",
         "Final Rule"
       ]
     },
