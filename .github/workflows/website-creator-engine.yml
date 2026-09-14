@@ -10,9 +10,6 @@ on:
       - 'projects/website-creation/engine/**'
       - '.github/workflows/website-creator-engine.yml'
 
-permissions:
-  contents: write
-
 jobs:
   build-and-runtime-smoke:
     runs-on: ubuntu-latest
@@ -45,8 +42,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 10.27.0
@@ -57,41 +52,12 @@ jobs:
           cache-dependency-path: projects/website-creation/engine/package.json
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm check
-      - name: Ensure committed production migration and schema snapshot exist
-        id: migration
+      - name: Require committed production migration artifacts
         run: |
           set -euo pipefail
-          if [ ! -f src/migrations/index.ts ]; then
-            pnpm payload migrate:create initial --skip-empty
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          elif ! compgen -G 'src/migrations/*.json' > /dev/null; then
-            tmpdir="$(mktemp -d)"
-            mkdir -p "$tmpdir/original"
-            cp -a src/migrations/. "$tmpdir/original/"
-            rm -rf src/migrations
-            pnpm payload migrate:create snapshot-base --skip-empty
-            snapshot="$(find src/migrations -maxdepth 1 -name '*.json' -type f | head -n 1)"
-            test -n "$snapshot"
-            cp "$snapshot" "$tmpdir/initial.json"
-            rm -rf src/migrations
-            mkdir -p src/migrations
-            cp -a "$tmpdir/original/." src/migrations/
-            cp "$tmpdir/initial.json" src/migrations/20260914_171640_initial.json
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Commit generated migration artifacts
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.migration.outputs.changed == 'true'
-        working-directory: .
-        run: |
-          set -euo pipefail
-          git config user.name "website-creator-ci"
-          git config user.email "actions@users.noreply.github.com"
-          git add projects/website-creation/engine/src/migrations
-          git commit -m "Commit Website Creator database migration artifacts [skip ci]"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          test -f src/migrations/index.ts
+          compgen -G 'src/migrations/*.ts' > /dev/null
+          compgen -G 'src/migrations/*.json' > /dev/null
       - name: Verify production migrations on an empty database
         run: NODE_ENV=production pnpm payload migrate
       - run: NODE_ENV=production pnpm seed:csg
