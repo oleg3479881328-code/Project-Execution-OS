@@ -47,7 +47,7 @@ export const carServiceGarage: SiteInstanceV01 = {
               primaryHref: 'tel:+15138006462',
               secondaryLabel: 'Explore services',
               secondaryHref: '#services',
-              imageUrl: '',
+              image: null,
               imageAlt: 'Professional auto repair garage',
             },
           },
