@@ -108,7 +108,7 @@ export const ServicesSectionConfig: ComponentConfig<any> = {
     intro: 'A focused set of services built around solving the actual problem.',
     services: [],
   },
-  render: ({ eyebrow, heading, intro, services = [] }: { eyebrow?: string; heading?: string; intro?: string; services?: ServiceItem[] }) => (
+  render: ({ eyebrow, heading, intro, services = [] }) => (
     <section className="wc-section wc-services" id="services" data-wc-section="services">
       <div className="wc-shell">
         <div className="wc-section-head">
@@ -119,7 +119,7 @@ export const ServicesSectionConfig: ComponentConfig<any> = {
           <p>{intro}</p>
         </div>
         <div className="wc-services__grid">
-          {services.map((service, index) => (
+          {(services as ServiceItem[]).map((service, index) => (
             <article className="wc-service-card" key={`${service.title || 'service'}-${index}`}>
               <div className="wc-service-card__kicker">{service.kicker || String(index + 1).padStart(2, '0')}</div>
               <h3>{service.title}</h3>
@@ -165,13 +165,13 @@ export const ProcessSectionConfig: ComponentConfig<any> = {
     heading: 'From problem to solution.',
     steps: [],
   },
-  render: ({ eyebrow, heading, steps = [] }: { eyebrow?: string; heading?: string; steps?: ProcessStep[] }) => (
+  render: ({ eyebrow, heading, steps = [] }) => (
     <section className="wc-section wc-process" data-wc-section="process">
       <div className="wc-shell">
         <div className="wc-eyebrow wc-eyebrow--accent">{eyebrow}</div>
         <h2>{heading}</h2>
         <div className="wc-process__grid">
-          {steps.map((step, index) => (
+          {(steps as ProcessStep[]).map((step, index) => (
             <article className="wc-process-step" key={`${step.number || index}-${step.title || ''}`}>
               <div className="wc-process-step__number">{step.number || String(index + 1).padStart(2, '0')}</div>
               <h3>{step.title}</h3>
