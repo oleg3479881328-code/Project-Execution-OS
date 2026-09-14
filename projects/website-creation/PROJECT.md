@@ -77,21 +77,25 @@ Website Creator covers the complete website lifecycle:
 - Website tool/donor registry: `TOOL_DONOR_REGISTRY.md`.
 - Site Model / Site Instance contract: `SITE_MODEL_STANDARD.md`.
 - Universal visual editor standard: `EDITOR_CREATION_STANDARD.md`.
+- **Running shared engine implementation:** `engine/`.
+- Engine entrypoint / local-run contract: `engine/README.md`.
+- Engine verification state / evidence: `engine/STATUS.md`.
 - Second-opinion decision record: `reviews/SECOND_OPINION_DECISION_2026-09-13.md`.
 - Project Drive root: https://drive.google.com/drive/folders/15DIWML8HiLSJrNfP5r7IyZu_YkrD2GTU
-- GitHub/PEOS remains canonical for reusable standards and routing.
+- GitHub/PEOS remains canonical for reusable standards, routing and shared engine code.
 
 ## Existing Solution First
 
 Before inventing a new website mechanism:
 
 1. Check Website Creator standards, components and tool registry.
-2. Check reusable PEOS standards/blocks.
-3. Check generic internal tools and SOFT inventory.
-4. Check current official documentation and proven external solutions.
-5. Prefer a mature open-source/self-hostable/replaceable building block when it can live inside our architecture and preserve our canonical Site Model/data ownership.
-6. Adapt/integrate first.
-7. Custom-build only the verified gap.
+2. Check the running shared engine in `engine/`.
+3. Check reusable PEOS standards/blocks.
+4. Check generic internal tools and SOFT inventory.
+5. Check current official documentation and proven external solutions.
+6. Prefer a mature open-source/self-hostable/replaceable building block when it can live inside our architecture and preserve our canonical Site Model/data ownership.
+7. Adapt/integrate first.
+8. Custom-build only the verified gap.
 
 A third-party hosted platform must not silently become the Website Creator foundation. Hosted services may be optional adapters or temporary infrastructure only when explicitly selected and replaceable.
 
@@ -101,7 +105,7 @@ Canonical standards:
 
 ## Default Production Chain
 
-`RESEARCH READY → SITE MODEL DRAFT → STRATEGY / IA READY → DESIGN SYSTEM READY → CONTENT / DATA READY → REUSABLE ENGINE / RENDERER BOUND → EDITOR READY (when needed) → SEO / TECHNICAL QA → VISUAL / RESPONSIVE QA → PREVIEW / STAGING → RELEASE GATES → PRODUCTION DEPLOY → LIVE VERIFY → MEASURE / IMPROVE`
+`RESEARCH READY → SITE MODEL DRAFT → STRATEGY / IA READY → DESIGN SYSTEM READY → CONTENT / DATA READY → SHARED ENGINE / RENDERER BOUND → EDITOR READY (when needed) → SEO / TECHNICAL QA → VISUAL / RESPONSIVE QA → PREVIEW / STAGING → RELEASE GATES → PRODUCTION DEPLOY → LIVE VERIFY → MEASURE / IMPROVE`
 
 The exact ordering between Site Model, strategy, design and content may iterate during a real build; the important rule is that reusable execution must converge on a machine-readable site contract instead of leaving every layer to invent its own page state.
 
@@ -140,12 +144,14 @@ Do not rebuild Website Creator around a review without an explicit decision reco
 
 1. `PROJECT_STATE.md`
 2. `OWN_SYSTEM_EXECUTION_STANDARD.md`
-3. `SITE_MODEL_STANDARD.md`
-4. `ROUTER.md`
-5. the narrow standard selected by the router
-6. `SOURCE_REGISTRY.md` when locating a reusable capability
-7. `TOOL_DONOR_REGISTRY.md` when selecting implementation building blocks
-8. `../../blocks/design/BLOCK.md` for website design/UI work
+3. `engine/STATUS.md` when implementation/runtime state matters
+4. `SITE_MODEL_STANDARD.md`
+5. `ROUTER.md`
+6. the narrow standard selected by the router
+7. `engine/README.md` for shared-engine implementation work
+8. `SOURCE_REGISTRY.md` when locating a reusable capability
+9. `TOOL_DONOR_REGISTRY.md` when selecting implementation building blocks
+10. `../../blocks/design/BLOCK.md` for website design/UI work
 
 ## Success Condition
 

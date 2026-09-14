@@ -4,81 +4,83 @@ Date: 2026-09-14
 
 ## Event
 
-Owner clarified the execution objective after the speed review and Car Service Garage experiment:
+The first real reusable Website Creator Engine implementation was created and runtime-verified.
 
-**Website Creator must be our own fast reusable website-production system that any fresh chat/agent can enter and use without reconstructing the architecture, inventing one-off infrastructure, or silently introducing an arbitrary hosted platform.**
+Engine path:
+`../engine/`
 
-Canonical new standard:
-`../OWN_SYSTEM_EXECUTION_STANDARD.md`
+Verification state:
+`../engine/STATUS.md`
 
-## Main Decision
+## Main Result
 
-Target pattern:
+The architecture is no longer only prose.
 
-`ONE REUSABLE WEBSITE CREATOR ENGINE → MANY SITE INSTANCES`
+A real self-hostable execution path now exists:
 
-Website Creator remains the global knowledge/control plane, but reusable execution is now explicitly part of the intended system boundary.
+`Site Instance → Payload/Puck canonical page state → shared Next.js renderer → production server → Playwright QA`
 
-A new site should reuse the shared Site Model, component registry, editor, renderer, content/media model, QA and deployment adapters.
+Current implementation binding:
 
-## Existing Solution First — Clarified
+- Payload CMS;
+- PostgreSQL;
+- Puck via the MIT `@delmaredigital/payload-puck` integration;
+- Next.js / React;
+- Playwright;
+- Docker Compose for local PostgreSQL.
 
-"Own system" does not mean building every primitive from scratch.
+No Puck Cloud, Payload Cloud, Replit, Wix, Framer or other hosted website builder is required.
 
-Prefer mature open-source/self-hostable/replaceable building blocks when they:
+## Existing Solution First Applied
 
-- reduce total build time;
-- preserve canonical Site Model/data ownership;
-- fit behind Website Creator contracts;
-- can be replaced without rebuilding every Site Instance.
+Instead of writing our own Payload↔Puck bridge, Website Creator uses the existing MIT `@delmaredigital/payload-puck` integration and follows its proven Payload App Router patterns.
 
-Custom-build only the verified missing reusable capability.
+The binding remains replaceable. Website Creator Site Model, contracts and Site Instances remain ours.
 
-## No Silent Platform Rule
+## Car Service Garage Validation — Slice 1
 
-A fresh chat/executor must not silently introduce Replit, Wix, Framer, Webflow, a hosted CMS, a coding sandbox, a new deployment architecture or another external foundation merely because it is convenient.
+Car Service Garage was converted into the first `0.1-draft` Site Instance fixture and seeded into the shared engine.
 
-External products may remain donors, benchmarks, optional adapters or explicitly accepted infrastructure. They are not allowed to redefine Website Creator architecture without an explicit decision.
+Verified workflow run:
+- Website Creator Engine run: `34869753523`
+- source commit: `87a7a3db5b16526f6832343df062f5d0de0e64de`
 
-The Replit prototype path introduced in chat is not canonical and must not be treated as Website Creator architecture.
+Passed:
 
-## Fresh-Chat Contract
+1. dependency installation;
+2. TypeScript check;
+3. PostgreSQL/Payload initialization;
+4. Car Service Garage seed;
+5. production Next.js build;
+6. production server start;
+7. HTTP request to the public renderer;
+8. Playwright desktop render assertions;
+9. Playwright mobile render assertions;
+10. desktop/mobile screenshot evidence upload.
 
-Every fresh chat working on a site must start through:
+The first build-only workflow had already passed on commit `aa9c389c0e2e48595b133592ef579b1e5a439cff`; the second run extended verification through real seed + runtime + browser QA.
 
-`PROJECT.md → PROJECT_STATE.md → OWN_SYSTEM_EXECUTION_STANDARD.md → SITE_MODEL_STANDARD.md → ROUTER.md → narrow task standards`
+## What This Does Not Yet Prove
 
-Then classify the work as:
+Do not overstate this milestone.
 
-1. `SITE INSTANCE WORK` — use existing shared engine capabilities; or
-2. `WEBSITE CREATOR CORE WORK` — add one genuinely missing reusable capability.
+The current public evidence is intentionally primitive visually. It validates the shared plumbing and canonical render path, not yet:
 
-No normal third path exists for one-off client infrastructure.
-
-## Car Service Garage Role
-
-Car Service Garage is the first validation case for the shared engine.
-
-Use it to derive/prove:
-
-- Site Model v0.1;
-- first reusable component set;
-- first shared renderer;
-- first shared editor implementation;
-- save/reload/publish loop;
-- deterministic QA loop.
-
-Do not make Car Service Garage itself the canonical engine and do not create a new client-specific editor/deploy stack around it.
+- pixel-level Car Service Garage design parity;
+- reusable branded section components;
+- full visual-editor save/reload/publish interaction through browser UI;
+- image crop/move/zoom/resize acceptance;
+- history/rollback acceptance;
+- second unrelated Site Instance reuse.
 
 ## Current P0
 
-1. Validate Car Service Garage as a Site Instance of the shared engine.
-2. Derive real Site Model v0.1.
-3. Establish first reusable components.
-4. Bind one reusable editor to canonical site state.
-5. Establish one reusable renderer.
-6. Prove save → reload → publish → public render without manual frontend reconstruction.
-7. Verify that the next site can start from the same engine instead of rebuilding generic plumbing.
+1. Build the first generic reusable section/component set in `engine/`.
+2. Recompose Car Service Garage from those components without client-specific core assumptions.
+3. Prove Puck editor interaction against the same canonical state.
+4. Prove save → reload → draft/publish → public render.
+5. Add media editing behavior required by `EDITOR_CREATION_STANDARD.md`.
+6. Keep deterministic desktop/mobile browser evidence.
 
 ## Core Principle
 

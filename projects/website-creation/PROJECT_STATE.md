@@ -4,14 +4,14 @@
 
 - Project: `Website Creator`
 - State: active
-- Phase: own-system execution direction fixed; first shared-engine validation next
+- Phase: **first shared engine runtime verified; reusable component/editor workflow validation next**
 - Last updated: 2026-09-14
 
 ## Architecture Decision
 
 Website Creator is a **global self-contained website-production knowledge/control plane plus reusable execution capability system**.
 
-Owner intent is now explicit:
+Owner intent is explicit:
 
 **Website Creator must be our own fast reusable system that any fresh chat/agent can enter and use without reconstructing the architecture, inventing a new stack, or silently introducing an arbitrary hosted platform.**
 
@@ -30,6 +30,9 @@ Technical path remains `projects/website-creation/` for compatibility; visible p
 - `TOOL_DONOR_REGISTRY.md` — reusable implementation building blocks/platforms/donors.
 - `SITE_MODEL_STANDARD.md` — platform-independent Site Model / Site Instance execution contract.
 - `EDITOR_CREATION_STANDARD.md` — universal visual editor contract.
+- `engine/` — running shared Website Creator implementation.
+- `engine/README.md` — implementation/local-run entrypoint.
+- `engine/STATUS.md` — latest verified engine evidence and next implementation slice.
 - `reviews/SECOND_OPINION_DECISION_2026-09-13.md` — accepted/modified/rejected decisions from the independent review.
 - `reviews/SPEED_SYSTEM_REVIEW_2026-09-14.md` — speed bottleneck / ready-solution review; evidence, not automatic architecture authority.
 - `logs/latest.md` — latest architecture decision/change.
@@ -56,6 +59,30 @@ Website Creator owns reusable:
 9. Agent/fresh-chat entrypoint and routing.
 
 Site Instances contain site-specific data/configuration/content/assets and deployment references, not new copies of generic infrastructure.
+
+## First Engine — Verified 2026-09-14
+
+A real shared engine now exists at `engine/`.
+
+Current implementation binding:
+
+- Next.js / React renderer;
+- Payload CMS self-hosted backend;
+- PostgreSQL;
+- Puck visual editing through the MIT `@delmaredigital/payload-puck` integration;
+- Playwright deterministic browser QA;
+- Docker Compose local PostgreSQL;
+- no Puck Cloud, Payload Cloud, Replit, Wix, Framer or other hosted-builder dependency.
+
+Verified GitHub Actions runtime path:
+
+`install → TypeScript check → seed Car Service Garage Site Instance into PostgreSQL/Payload → production build → start production server → HTTP root check → Playwright desktop/mobile render checks`.
+
+All of those steps passed on Website Creator Engine workflow run `34869753523` for commit `87a7a3db5b16526f6832343df062f5d0de0e64de`.
+
+Desktop/mobile screenshots were captured as workflow evidence. See `engine/STATUS.md`.
+
+This validates the plumbing/runtime, not yet the final visual component system or full editor acceptance contract.
 
 ## No Silent Platform Rule
 
@@ -89,31 +116,29 @@ Custom-build only the missing reusable layer.
 
 Status:
 - direction accepted;
-- `v0.1` schema not frozen;
-- first concrete schema should be derived from the Car Service Garage validation case rather than abstract completeness planning;
-- machine-readable TypeScript types + JSON Schema (or equivalent) remain the target;
-- one real reusable renderer/adapter must consume the model before v0.1 is validated;
-- later different Site Instances must test what belongs in universal core vs extensions.
+- first concrete `0.1-draft` TypeScript Site Instance shape now exists in `engine/src/site-model/types.ts`;
+- Car Service Garage is represented as the first fixture/Site Instance in `engine/src/sites/car-service-garage.ts`;
+- the draft model is successfully consumed by a real seed → Payload/Puck state → renderer → browser QA path;
+- **v0.1 is not frozen yet**;
+- next different Site Instances must determine what belongs in the universal core vs extensions;
+- machine-readable JSON Schema/equivalent remains a later promotion after the shape survives more than one site.
 
 ## Universal Visual Editor State
 
 The editor remains defined first by its client-neutral behavior/acceptance contract.
 
-Core interaction contract:
+The first embedded implementation is now wired through Puck + Payload and compiles/runs inside the shared engine.
 
-- visual page canvas, not only property forms;
-- block/page structure + direct manipulation + right inspector;
-- selected image gets visible selection state, floating toolbar and contextual inspector;
-- crop/move is a visual modal with drag + zoom, not numeric focal coordinates as primary UX;
-- non-destructive crop metadata stored in resolution-independent percentages;
-- shape, fill/whole-photo, replace, remove, reset, width/alignment, alt and caption behavior;
-- optional direct resize handles persisting percentage width;
-- shared state between toolbar and inspector;
-- editor/public-render parity;
-- deterministic reload persistence;
-- golden visual references as acceptance evidence.
+Still to prove through real editor interaction tests:
 
-Implementation must prefer an embedded/open/self-hostable reusable building block when it meets this contract. The editor itself must be built once as Website Creator capability, not separately for each site.
+- save/reload persistence through the UI;
+- explicit draft vs publish behavior from the editor;
+- image replace/crop/move/zoom/size behavior;
+- toolbar/inspector parity;
+- editor/public-render parity after interactive changes;
+- history/rollback path.
+
+Do not build those separately in a client project. Extend the shared engine and test once.
 
 ## Car Service Garage Validation
 
@@ -121,13 +146,15 @@ Car Service Garage is the first validation case for the shared-engine architectu
 
 It is evidence/input, not the canonical engine.
 
-Validation goal:
+Verified so far:
 
-`Car Service Garage data/content/assets → Site Model v0.1 → shared components → shared editor → shared renderer → QA → deploy adapter`
+`Car Service Garage Site Instance → seed into canonical page state → shared renderer → production server → Playwright desktop/mobile QA`.
 
-Success requires that another site can then start from the same engine without rebuilding editor/renderer/deploy plumbing.
+The current rendered evidence intentionally uses the integration's basic components; it proves reusable plumbing, not pixel-perfect parity with the earlier Car Service Garage visual design.
 
-Do not create a new client-specific editor or a collection of disposable probe projects as the normal implementation path.
+Next Car Service Garage slice:
+
+`reusable generic component set → stronger visual parity → editor interaction/save/publish tests → media editing acceptance`.
 
 ## Fresh-Chat Contract
 
@@ -136,9 +163,10 @@ Every fresh chat working on Website Creator or a new site must start with:
 1. `PROJECT.md`
 2. `PROJECT_STATE.md`
 3. `OWN_SYSTEM_EXECUTION_STANDARD.md`
-4. `SITE_MODEL_STANDARD.md`
-5. `ROUTER.md`
-6. only the narrow task standards needed
+4. `engine/STATUS.md` when implementation/runtime state matters
+5. `SITE_MODEL_STANDARD.md`
+6. `ROUTER.md`
+7. only the narrow task standards needed
 
 Then classify the work as exactly one of:
 
@@ -163,16 +191,23 @@ The key speed rule is reuse: do not rebuild generic infrastructure inside a site
 
 ## Current Priorities
 
-### P0
-- validate the shared-engine pattern on Car Service Garage;
-- derive real `Site Model v0.1` from that validation;
-- establish the first reusable component set;
-- establish one reusable renderer;
-- bind one reusable editor implementation to canonical site state;
-- prove save/reload/publish without manual frontend reconstruction.
+### P0 — current
+- build the first **generic reusable component set** inside the shared engine;
+- move Car Service Garage from primitive Puck blocks to those reusable components without putting client-specific assumptions in core;
+- prove editor UI `edit → save → reload → draft/publish → public render`;
+- implement/test the media interaction subset required by `EDITOR_CREATION_STANDARD.md`;
+- keep browser evidence for desktop/mobile after each accepted slice.
+
+### P0 — verified
+- shared engine repository path exists;
+- Payload + PostgreSQL persistence path initializes;
+- Car Service Garage seed succeeds;
+- TypeScript check succeeds;
+- production build succeeds;
+- production server starts and serves canonical Site Instance content;
+- Playwright verifies desktop/mobile render path.
 
 ### P1
-- use Playwright as default deterministic browser QA where applicable;
 - define a stable deployment adapter path rather than deployment probing;
 - measure wall-clock time by phase;
 - ensure a second Site Instance can start without rebuilding generic plumbing.
