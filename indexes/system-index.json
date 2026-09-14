@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e617e95fc6d383112c7a9e731959a887728b8a38",
-  "generated_at": "2026-09-14T12:13:44-04:00",
-  "artifact_count": 609,
+  "repository_commit": "aa9c389c0e2e48595b133592ef579b1e5a439cff",
+  "generated_at": "2026-09-14T12:34:06-04:00",
+  "artifact_count": 610,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12645,6 +12645,21 @@
         "Factory Comparison Rule",
         "Selection Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/engine/README.md",
+      "title": "Website Creator Engine",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": null,
+      "date": null,
+      "sha256": "1045c9e5f16e086cb2c8ae4405e817792ee1a998ac71bdf28fb299ababb1da1d",
+      "headings": [
+        "Website Creator Engine",
+        "Architecture",
+        "Local start",
+        "v0.1 acceptance slice"
       ]
     },
     {
