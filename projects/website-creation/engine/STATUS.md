@@ -1,7 +1,7 @@
 # Website Creator Engine — STATUS
 
 Date: 2026-09-14
-Status: ACTIVE — shared runtime + editor loop + first media field verified
+Status: ACTIVE — shared runtime + live editor loop + first media field verified
 
 ## Verified Engine Boundary
 
@@ -17,11 +17,11 @@ Implementation binding:
 - Puck through `@delmaredigital/payload-puck`;
 - Playwright;
 - Docker Compose for local database startup;
-- Render staging deployment adapter prepared through root `render.yaml`.
+- Render staging deployment adapter through root `render.yaml`.
 
 No Puck Cloud, Payload Cloud, Replit, Wix, Framer or other hosted website-builder dependency is required.
 
-## Latest Full Verification
+## Latest Full CI Verification
 
 Commit: `4304a3b2df1906da63f398f9cb2295151c2fe363`
 Workflow: Website Creator Engine run `34876621298`
@@ -45,13 +45,59 @@ Verified in one clean run:
 - editor screenshot/evidence upload;
 - first reusable Hero media field wired editor-only so the server renderer remains build-safe.
 
+## Live Render Verification
+
+Blueprint: `Website Creator Engine`
+
+Web service:
+- name: `website-creator-engine`;
+- service id: `srv-dak6rte1egvs739bc1j0`;
+- region: Ohio;
+- plan: free;
+- primary URL: `https://website-creator-engine.onrender.com`;
+- health path: `/health`;
+- root dir: `projects/website-creation/engine`;
+- runtime: Docker;
+- auto-deploy: enabled from `main`.
+
+Database:
+- name: `website-creator-postgres`;
+- resource id: `dpg-dak33ie1egvs739cfi90-a`;
+- PostgreSQL 16;
+- region: Ohio;
+- associated through Blueprint `fromDatabase.connectionString` rather than copied credentials.
+
+First Blueprint deploy:
+- deploy id: `dep-dak6rtm1egvs739bc27g`;
+- result: LIVE;
+- migrations completed;
+- Car Service Garage Site Instance seeded;
+- Next.js bound to Render port 10000;
+- Render reported `Your service is live`.
+
+Admin bootstrap deploy:
+- deploy id: `dep-dak6ulu1egvs739bmsh0`;
+- result: LIVE;
+- Website Creator admin account created through environment-driven bootstrap;
+- no admin password is stored in this repository.
+
+Owner-browser proof on 2026-09-14:
+- `/editor` redirected to Payload login before authentication;
+- login succeeded;
+- canonical Puck route opened at `/admin/puck-editor/pages/1`;
+- Car Service Garage homepage rendered in the editor canvas;
+- generic Puck Blocks/Outline/History UI visible;
+- reusable Hero selected with Website Creator fields visible in the right inspector;
+- Save and Publish controls visible;
+- published status visible.
+
 ## Editor Architecture Proof
 
 The shared component renderer remains server-safe.
 
 Client-only editor capabilities such as Payload/Puck `createMediaField()` are added only in `src/puck/editor-config.ts` and are not invoked from the server-renderer component module.
 
-This boundary is now protected by the same production build + browser acceptance workflow that caught the original server/client regression.
+This boundary is protected by the same production build + browser acceptance workflow that caught the original server/client regression.
 
 Current reusable section registry:
 - Hero;
@@ -62,31 +108,13 @@ Current reusable section registry:
 
 Current editor proof:
 - `/editor` resolves to the canonical Puck editing route;
+- authenticated owner can enter the live editor;
 - Save and Publish actions are present;
 - draft and published states are behaviorally distinct;
 - version/history API path responds;
 - public renderer reflects published edits and not draft-only edits;
 - original content can be restored;
 - Hero uses the Payload/Puck media picker in the editor.
-
-## Render Staging State
-
-Render workspace is connected and actionable from ChatGPT.
-
-A free Ohio PostgreSQL staging instance has been created:
-- Render resource: `website-creator-postgres`;
-- resource id: `dpg-dak33ie1egvs739cfi90-a`;
-- PostgreSQL 16;
-- state verified as available.
-
-The root `render.yaml` is the canonical free staging Blueprint and references this database by name through `fromDatabase.connectionString`.
-
-Important connector boundary:
-- Render's current direct `create_web_service` action only accepts literal environment-variable values and does not expose `fromDatabase` references;
-- it also does not support the complete Docker/Blueprint configuration used by Website Creator;
-- therefore the web service must be created/adopted through Render Blueprint sync, after which normal Render deploy/status/log actions can be managed from ChatGPT.
-
-Do not copy database passwords/connection strings into Git or chat as a workaround.
 
 ## Site Model Evidence
 
@@ -103,20 +131,21 @@ The current shape is empirically sufficient for the first seed/render/editor/QA 
 ## Current Limitations / Not Yet Verified
 
 - visual parity with the final accepted Car Service Garage design direction;
-- direct image crop/move/zoom/resize interaction contract;
+- direct per-instance image crop/move/zoom/resize interaction contract;
 - full toolbar/inspector parity for image manipulation;
 - version restore through owner-facing editor UI (API/version path exists);
 - multi-site isolation under shared live operation;
 - second Site Instance reuse;
-- live Render web-service URL and production HTTP verification (waiting only on Blueprint resource creation/sync, not on engine build correctness).
+- durable production media storage (free staging filesystem is not the production target).
 
 ## Next Required Slice
 
-1. Create/sync the free Render staging Blueprint from the repository root `render.yaml` so it adopts/references `website-creator-postgres` and creates `website-creator-engine`.
-2. Verify live `/health`, `/`, `/editor`, logs and first deploy.
-3. Add the direct image interaction subset from `EDITOR_CREATION_STANDARD.md` (crop/move/zoom/size) as reusable editor capability, not client-specific code.
-4. Validate a second, meaningfully different Site Instance without rebuilding generic infrastructure.
-5. Promote only recurring Site Model/component contracts proven by both sites.
+1. Add the direct per-instance image interaction subset from `EDITOR_CREATION_STANDARD.md` as reusable Website Creator capability, not client-specific code.
+2. Prefer proven building blocks: Payload/Puck media selection, percentage-based crop metadata, `react-easy-crop` for crop/pan/zoom, and `react-moveable` only where direct canvas resize is needed and proven stable.
+3. Verify editor/public-render parity after image edits and persistence after reload.
+4. Bring Car Service Garage visual output to the accepted reference direction using only shared components and Site Instance data.
+5. Validate a second, meaningfully different Site Instance without rebuilding generic infrastructure.
+6. Promote only recurring Site Model/component contracts proven by both sites.
 
 ## Fresh-Chat Instruction
 
