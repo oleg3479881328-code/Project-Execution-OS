@@ -1,4 +1,5 @@
 import type { SiteInstanceV01 } from '../site-model/types'
+import { carServiceGarageMedia as media } from './car-service-garage-media'
 
 export const carServiceGarage: SiteInstanceV01 = {
   schemaVersion: '0.1-draft',
@@ -47,8 +48,14 @@ export const carServiceGarage: SiteInstanceV01 = {
               primaryHref: 'tel:+15138006462',
               secondaryLabel: 'Explore services',
               secondaryHref: '#services',
-              image: null,
-              imageAlt: 'Professional auto repair garage',
+              image: media.hero,
+              imageAlt: media.hero.alt,
+              imageCredit: '',
+              imageRatio: 'portrait',
+              imageFitMode: 'fill',
+              imageZoom: 1,
+              imageFocalX: 55,
+              imageFocalY: 50,
             },
           },
           {
@@ -59,12 +66,12 @@ export const carServiceGarage: SiteInstanceV01 = {
               heading: 'Explore our services',
               intro: 'Each service starts with the same principle: understand the cause before replacing parts.',
               services: [
-                { kicker: '01 · DIAGNOSTICS', title: 'Engine diagnostics', body: 'Warning lights, drivability problems and root-cause troubleshooting before parts are replaced.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462' },
-                { kicker: '02 · BRAKES', title: 'Brake service', body: 'Pads, rotors, hubs and related brake-system repair with proper inspection.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462' },
-                { kicker: '03 · CHASSIS', title: 'Suspension & steering', body: 'Wheel-end, steering and suspension work for predictable handling and safe road manners.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462' },
-                { kicker: '04 · MAINTENANCE', title: 'Oil change & preventive service', body: 'Oil, filters and fluid checks as part of a sensible maintenance routine.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462' },
-                { kicker: '05 · ELECTRICAL', title: 'Electrical systems', body: 'Starting, charging, wiring and dashboard-system diagnostics.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462' },
-                { kicker: '06 · MAJOR REPAIR', title: 'Engine & transmission work', body: 'Major mechanical jobs and component replacement when diagnosis truly calls for it.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462' },
+                { kicker: '01 · DIAGNOSTICS', title: 'Engine diagnostics', body: 'Warning lights, drivability problems and root-cause troubleshooting before parts are replaced.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462', image: media.diagnostics, imageAlt: media.diagnostics.alt },
+                { kicker: '02 · BRAKES', title: 'Brake service', body: 'Pads, rotors, hubs and related brake-system repair with proper inspection.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462', image: media.brakes, imageAlt: media.brakes.alt },
+                { kicker: '03 · CHASSIS', title: 'Suspension & steering', body: 'Wheel-end, steering and suspension work for predictable handling and safe road manners.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462', image: media.suspension, imageAlt: media.suspension.alt },
+                { kicker: '04 · MAINTENANCE', title: 'Oil change & preventive service', body: 'Oil, filters and fluid checks as part of a sensible maintenance routine.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462', image: media.oil, imageAlt: media.oil.alt },
+                { kicker: '05 · ELECTRICAL', title: 'Electrical systems', body: 'Starting, charging, wiring and dashboard-system diagnostics.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462', image: media.electrical, imageAlt: media.electrical.alt },
+                { kicker: '06 · MAJOR REPAIR', title: 'Engine & transmission work', body: 'Major mechanical jobs and component replacement when diagnosis truly calls for it.', actionLabel: 'Schedule service', actionHref: 'tel:+15138006462', image: media.major, imageAlt: media.major.alt },
               ],
             },
           },
