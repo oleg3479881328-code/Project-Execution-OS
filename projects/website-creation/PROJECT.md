@@ -15,7 +15,21 @@
 
 It contains reusable website-production knowledge as **its own standards, contracts, capabilities, tools and acceptance gates**. A fresh chat must be able to build a new site from this project without opening any client project or reconstructing prior work from memory.
 
-Website Creator is not required to become one monolithic website-builder runtime. Reusable execution capabilities may live beneath it as Site Models, renderers, editor/CMS bindings, platform adapters and QA tools.
+Website Creator is not a dispatcher that chooses a different hosted website-builder product for every site. The target is **our own reusable Website Creator engine**, assembled from replaceable proven building blocks where useful, and consumed by many Site Instances.
+
+Canonical own-system rule: `OWN_SYSTEM_EXECUTION_STANDARD.md`.
+
+## Own System Rule
+
+`ONE REUSABLE WEBSITE CREATOR ENGINE → MANY SITE INSTANCES`.
+
+A new website should reuse the shared Site Model, component registry, editor, renderer, content/media model, QA and deployment adapters.
+
+A new chat must not silently introduce a hosted builder, coding sandbox, new editor, new deployment architecture or client-specific infrastructure merely because it is convenient.
+
+If a reusable capability is missing, improve the shared Website Creator engine once and then reuse it.
+
+"Own system" does not mean writing every primitive from scratch. Existing Solution First still applies: prefer mature open-source/self-hostable/replaceable building blocks when they fit our contracts and preserve ownership of canonical site state.
 
 ## No Client Dependency Rule
 
@@ -57,6 +71,7 @@ Website Creator covers the complete website lifecycle:
 
 - Project entrypoint: this file.
 - Current state: `PROJECT_STATE.md`.
+- Own-system execution rule: `OWN_SYSTEM_EXECUTION_STANDARD.md`.
 - Task router: `ROUTER.md`.
 - Global capability/standards registry: `SOURCE_REGISTRY.md`.
 - Website tool/donor registry: `TOOL_DONOR_REGISTRY.md`.
@@ -74,33 +89,41 @@ Before inventing a new website mechanism:
 2. Check reusable PEOS standards/blocks.
 3. Check generic internal tools and SOFT inventory.
 4. Check current official documentation and proven external solutions.
-5. Adapt/integrate an existing solution where it meets the requirement.
-6. Custom-build only the verified gap.
+5. Prefer a mature open-source/self-hostable/replaceable building block when it can live inside our architecture and preserve our canonical Site Model/data ownership.
+6. Adapt/integrate first.
+7. Custom-build only the verified gap.
 
-Canonical standard: `../../docs/EXISTING_SOLUTION_FIRST_STANDARD.md`.
+A third-party hosted platform must not silently become the Website Creator foundation. Hosted services may be optional adapters or temporary infrastructure only when explicitly selected and replaceable.
+
+Canonical standards:
+- `../../docs/EXISTING_SOLUTION_FIRST_STANDARD.md`
+- `OWN_SYSTEM_EXECUTION_STANDARD.md`
 
 ## Default Production Chain
 
-`RESEARCH READY → SITE MODEL DRAFT → STRATEGY / IA READY → DESIGN SYSTEM READY → CONTENT / DATA READY → IMPLEMENTED / RENDERER BOUND → EDITOR READY (when needed) → SEO / TECHNICAL QA → VISUAL / RESPONSIVE QA → PREVIEW / STAGING → RELEASE GATES → PRODUCTION DEPLOY → LIVE VERIFY → MEASURE / IMPROVE`
+`RESEARCH READY → SITE MODEL DRAFT → STRATEGY / IA READY → DESIGN SYSTEM READY → CONTENT / DATA READY → REUSABLE ENGINE / RENDERER BOUND → EDITOR READY (when needed) → SEO / TECHNICAL QA → VISUAL / RESPONSIVE QA → PREVIEW / STAGING → RELEASE GATES → PRODUCTION DEPLOY → LIVE VERIFY → MEASURE / IMPROVE`
 
 The exact ordering between Site Model, strategy, design and content may iterate during a real build; the important rule is that reusable execution must converge on a machine-readable site contract instead of leaving every layer to invent its own page state.
 
 For automated local-business sales workflows:
 
-`DISCOVERY → QUALIFICATION → DOSSIER → SITE MODEL POPULATED → EXECUTION / PLATFORM BINDING → SAFE EDITOR → QA → PREVIEW → OUTREACH / TRIAL → SALE → DOMAIN / OWNERSHIP TRANSFER → SUPPORT`
+`DISCOVERY → QUALIFICATION → DOSSIER → SITE MODEL POPULATED → SHARED WEBSITE CREATOR ENGINE → SAFE EDITOR → QA → PREVIEW → OUTREACH / TRIAL → SALE → DOMAIN / OWNERSHIP TRANSFER → SUPPORT`
 
 ## Core Principles
 
 - Generated code is not a finished website.
 - A successful build is not a published website.
 - A preview URL is not production approval.
-- Website Creator is the global knowledge/control plane; the Site Model is a reusable execution contract for a concrete site.
+- Website Creator is the global knowledge/control plane plus reusable execution system; the Site Model is the reusable execution contract for a concrete site.
+- New sites consume shared capabilities; they do not rebuild generic infrastructure.
 - Structured facts/content should be separable from rendering when scale/reuse requires it.
 - Media transformations should be traceable and non-destructive where practical.
 - Editing and publishing are distinct states.
 - Deterministic QA and visual QA solve different problems; both may be required.
 - Live deployed behavior is part of acceptance.
 - Repeated successful work should be promoted into deterministic reusable capabilities.
+- Open-source/self-hostable components are preferred when they reduce build time without owning canonical site state.
+- Do not introduce arbitrary hosted execution dependencies without explicit architecture justification.
 - Do not create a deeper runtime/OS layer merely in anticipation of future scale; require production evidence.
 
 ## Architecture Review Rule
@@ -116,15 +139,16 @@ Do not rebuild Website Creator around a review without an explicit decision reco
 ## Read Next
 
 1. `PROJECT_STATE.md`
-2. `ROUTER.md`
-3. the narrow standard selected by the router
-4. `SITE_MODEL_STANDARD.md` for Site Model / Site Instance / renderer-adapter work
-5. `SOURCE_REGISTRY.md` when locating a reusable capability
-6. `TOOL_DONOR_REGISTRY.md` when selecting tools/platforms
-7. `../../blocks/design/BLOCK.md` for website design/UI work
+2. `OWN_SYSTEM_EXECUTION_STANDARD.md`
+3. `SITE_MODEL_STANDARD.md`
+4. `ROUTER.md`
+5. the narrow standard selected by the router
+6. `SOURCE_REGISTRY.md` when locating a reusable capability
+7. `TOOL_DONOR_REGISTRY.md` when selecting implementation building blocks
+8. `../../blocks/design/BLOCK.md` for website design/UI work
 
 ## Success Condition
 
-A fresh chat can enter Website Creator and execute a new website project using only global reusable Website Creator / PEOS knowledge, without needing to know which client project originally taught us a given technique.
+A fresh chat can enter Website Creator and create or update a site by using the shared Website Creator engine, contracts and reusable capabilities, without needing a client project, rebuilding editor/renderer/deploy plumbing, inventing a new architecture, or introducing an arbitrary execution platform.
 
-As real sites are produced, reusable execution state should converge on a validated Site Model + adapter/renderer pattern rather than repeated per-site reinvention.
+As real sites are produced, reusable execution state should converge on a validated Site Model + shared component/editor/renderer/QA/adapters pattern rather than repeated per-site reinvention.
