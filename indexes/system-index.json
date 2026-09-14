@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "87a7a3db5b16526f6832343df062f5d0de0e64de",
-  "generated_at": "2026-09-14T12:37:14-04:00",
-  "artifact_count": 610,
+  "repository_commit": "2bdc51255d3d09118ed558e083a341c274f1ca3c",
+  "generated_at": "2026-09-14T12:42:21-04:00",
+  "artifact_count": 611,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12458,7 +12458,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "1d6355962dd6c067a40cfd225a500eea7a3b0ed50bbeba6aec5cb5ff52c15768",
+      "sha256": "26671c72d08c7102b283324e7826a87c88c8eecf3ca50a78bdd8244016ab2036",
       "headings": [
         "Website Creator — PROJECT.md",
         "Project",
@@ -12482,13 +12482,14 @@
       "domain": "website-creation",
       "status": "- direction accepted;",
       "date": null,
-      "sha256": "e2b941bc5c6b790ec9c9927b6a77292b06634ffb1f334f5b63b070be51615804",
+      "sha256": "0ee0f9e4dae104f4bf942e3e7e12eab99f0405057cec8d668651161d99d6768e",
       "headings": [
         "Website Creator — PROJECT_STATE.md",
         "Status",
         "Architecture Decision",
         "Canonical Core",
         "System Boundary",
+        "First Engine — Verified 2026-09-14",
         "No Silent Platform Rule",
         "Existing Solution First — Current Interpretation",
         "Site Model State",
@@ -12498,7 +12499,8 @@
         "Knowledge Promotion Rule",
         "Current Default Production Model",
         "Current Priorities",
-        "P0",
+        "P0 — current",
+        "P0 — verified",
         "P1",
         "P2",
         "Final Boundary"
@@ -12511,7 +12513,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "098d74a41ab8168c33c1869d348ad81adbcdc1ee98e450303748febd0bc3be91",
+      "sha256": "a2a7b5944daeaa00eea24701ee6243c93ed08d23b1e80ef04673ca069923d922",
       "headings": [
         "Website Creator — ROUTER.md",
         "Purpose",
@@ -12663,21 +12665,42 @@
       ]
     },
     {
+      "path": "projects/website-creation/engine/STATUS.md",
+      "title": "Website Creator Engine — STATUS",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "ACTIVE — runtime slice 1 verified",
+      "date": "2026-09-14",
+      "sha256": "d96114c064de83b09380cffc5d56d41c3086a5102bd821888b3395127f46ad45",
+      "headings": [
+        "Website Creator Engine — STATUS",
+        "Verified Engine Boundary",
+        "Verification Evidence",
+        "Build verification",
+        "Runtime/browser verification",
+        "Current Visual Evidence",
+        "Site Model Evidence",
+        "Current Limitations / Not Yet Verified",
+        "Next Required Slice",
+        "Slice 2 — reusable component system + editor loop",
+        "Fresh-Chat Instruction"
+      ]
+    },
+    {
       "path": "projects/website-creation/logs/latest.md",
       "title": "Website Creator — latest",
       "type": "project-artifact",
       "domain": "website-creation",
       "status": null,
       "date": "2026-09-14",
-      "sha256": "e4c21bb8fcae9febb2bd2f6e465c53d99b0e18949eda6a490d324049b90121cc",
+      "sha256": "7f7a8c46aaf483c63e6af2ea0dd2ad335427ec0d81ea9fcdbf40f3efd9f995b5",
       "headings": [
         "Website Creator — latest",
         "Event",
-        "Main Decision",
-        "Existing Solution First — Clarified",
-        "No Silent Platform Rule",
-        "Fresh-Chat Contract",
-        "Car Service Garage Role",
+        "Main Result",
+        "Existing Solution First Applied",
+        "Car Service Garage Validation — Slice 1",
+        "What This Does Not Yet Prove",
         "Current P0",
         "Core Principle"
       ]
