@@ -11,7 +11,7 @@ on:
       - '.github/workflows/website-creator-engine.yml'
 
 jobs:
-  build:
+  build-and-runtime-smoke:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -36,6 +36,7 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/website_creator
       PAYLOAD_SECRET: ci-test-secret-not-for-production
       NEXT_PUBLIC_SERVER_URL: http://127.0.0.1:3000
+      PLAYWRIGHT_BASE_URL: http://127.0.0.1:3000
 
     steps:
       - uses: actions/checkout@v4
@@ -49,4 +50,24 @@ jobs:
           cache-dependency-path: projects/website-creation/engine/package.json
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm check
+      - run: pnpm seed:csg
       - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Start engine and run browser smoke
+        run: |
+          pnpm start > /tmp/website-creator-engine.log 2>&1 &
+          for i in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail http://127.0.0.1:3000/
+          pnpm test:e2e
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-creator-car-garage-evidence
+          path: projects/website-creation/engine/test-results/
+          if-no-files-found: ignore
