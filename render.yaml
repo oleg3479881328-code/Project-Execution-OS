@@ -1,3 +1,5 @@
+# Free staging Blueprint for Website Creator Engine.
+# Render Free Postgres expires after 30 days. Use render.production.yaml for durable production.
 services:
   - type: web
     name: website-creator-engine
@@ -13,12 +15,10 @@ services:
           property: connectionString
       - key: PAYLOAD_SECRET
         generateValue: true
-      - key: WC_ADMIN_EMAIL
-        sync: false
-      - key: WC_ADMIN_PASSWORD
-        sync: false
 
 databases:
   - name: website-creator-postgres
     plan: free
     region: ohio
+    postgresMajorVersion: "16"
+    ipAllowList: []
