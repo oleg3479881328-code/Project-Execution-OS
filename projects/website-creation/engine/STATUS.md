@@ -1,13 +1,13 @@
 # Website Creator Engine — STATUS
 
 Date: 2026-09-14
-Status: ACTIVE — runtime slice 1 verified
+Status: ACTIVE — shared runtime + editor loop + first media field verified
 
 ## Verified Engine Boundary
 
 Current reusable runtime:
 
-`Site Instance → deterministic seed → Payload/Puck page state → shared renderer → public website → Playwright QA`
+`Site Instance → deterministic seed → Payload/Puck page state → shared renderer → authenticated visual editor → draft/publish/version state → public website → Playwright QA`
 
 Implementation binding:
 
@@ -16,60 +16,77 @@ Implementation binding:
 - PostgreSQL;
 - Puck through `@delmaredigital/payload-puck`;
 - Playwright;
-- Docker Compose for local database startup.
+- Docker Compose for local database startup;
+- Render staging deployment adapter prepared through root `render.yaml`.
 
 No Puck Cloud, Payload Cloud, Replit, Wix, Framer or other hosted website-builder dependency is required.
 
-## Verification Evidence
+## Latest Full Verification
 
-### Build verification
-
-Commit: `aa9c389c0e2e48595b133592ef579b1e5a439cff`
-Workflow: Website Creator Engine run `34869438872`
+Commit: `4304a3b2df1906da63f398f9cb2295151c2fe363`
+Workflow: Website Creator Engine run `34876621298`
 Result: PASS
 
-Verified:
-- package install;
-- TypeScript check;
-- production build.
-
-### Runtime/browser verification
-
-Commit: `87a7a3db5b16526f6832343df062f5d0de0e64de`
-Workflow: Website Creator Engine run `34869753523`
-Result: PASS
-
-Verified:
-- PostgreSQL service startup;
+Verified in one clean run:
 - dependency install;
 - TypeScript check;
-- Car Service Garage seed into Payload/Puck page state;
-- production build;
-- Chromium install;
-- production server start;
-- HTTP `/` response;
-- Playwright public-render marker;
-- hero text;
-- services heading;
-- telephone CTA href;
-- desktop render at 1440px;
-- mobile render at 390px;
-- screenshots exported as workflow artifact.
+- committed production migration artifacts;
+- migrations applied to an empty PostgreSQL database;
+- Car Service Garage seed;
+- production Next.js build;
+- Chromium installation;
+- production server startup;
+- health/public HTTP checks;
+- authenticated Puck editor load;
+- draft mutation not visible publicly;
+- versions endpoint available;
+- publish mutation visible publicly;
+- restore of original published content;
+- editor screenshot/evidence upload;
+- first reusable Hero media field wired editor-only so the server renderer remains build-safe.
 
-Workflow artifact:
-- name: `website-creator-car-garage-evidence`
-- artifact id: `10358542922`
-- digest: `sha256:0ee82a07f788d8c317b3e1c0784e34ea8235bb0da3a38be4b1b2a5678bdefc0b`
+## Editor Architecture Proof
 
-## Current Visual Evidence
+The shared component renderer remains server-safe.
 
-The screenshots show the canonical content successfully rendered at desktop and mobile sizes.
+Client-only editor capabilities such as Payload/Puck `createMediaField()` are added only in `src/puck/editor-config.ts` and are not invoked from the server-renderer component module.
 
-They are intentionally plain because slice 1 uses the integration's basic Heading/Text/Button component set.
+This boundary is now protected by the same production build + browser acceptance workflow that caught the original server/client regression.
 
-This is a **plumbing/runtime acceptance result**, not visual-design acceptance.
+Current reusable section registry:
+- Hero;
+- Services;
+- Process;
+- Call to Action;
+- Footer.
 
-Do not compare this slice to the final Car Service Garage design for quality parity yet.
+Current editor proof:
+- `/editor` resolves to the canonical Puck editing route;
+- Save and Publish actions are present;
+- draft and published states are behaviorally distinct;
+- version/history API path responds;
+- public renderer reflects published edits and not draft-only edits;
+- original content can be restored;
+- Hero uses the Payload/Puck media picker in the editor.
+
+## Render Staging State
+
+Render workspace is connected and actionable from ChatGPT.
+
+A free Ohio PostgreSQL staging instance has been created:
+- Render resource: `website-creator-postgres`;
+- resource id: `dpg-dak33ie1egvs739cfi90-a`;
+- PostgreSQL 16;
+- state verified as available.
+
+The root `render.yaml` is the canonical free staging Blueprint and references this database by name through `fromDatabase.connectionString`.
+
+Important connector boundary:
+- Render's current direct `create_web_service` action only accepts literal environment-variable values and does not expose `fromDatabase` references;
+- it also does not support the complete Docker/Blueprint configuration used by Website Creator;
+- therefore the web service must be created/adopted through Render Blueprint sync, after which normal Render deploy/status/log actions can be managed from ChatGPT.
+
+Do not copy database passwords/connection strings into Git or chat as a workaround.
 
 ## Site Model Evidence
 
@@ -81,33 +98,25 @@ First Site Instance fixture:
 
 State: `0.1-draft`, not frozen.
 
-The current shape is empirically sufficient for the first seed/render/QA cycle. It must survive at least one additional, meaningfully different Site Instance before universal fields are promoted/frozen.
+The current shape is empirically sufficient for the first seed/render/editor/QA cycle. It must survive at least one additional, meaningfully different Site Instance before universal fields are promoted/frozen.
 
 ## Current Limitations / Not Yet Verified
 
-- generic branded component registry;
-- visual parity with the accepted Car Service Garage direction;
-- editor UI login/create-admin automation;
-- editor drag/reorder interaction;
-- editor save/reload persistence through UI;
-- draft vs publish through editor UI;
-- image replace/crop/move/zoom/resize;
-- editor/public-render parity after edits;
-- revision/history/rollback interaction;
-- multi-site isolation;
-- replaceable production deploy adapter;
-- second Site Instance reuse.
+- visual parity with the final accepted Car Service Garage design direction;
+- direct image crop/move/zoom/resize interaction contract;
+- full toolbar/inspector parity for image manipulation;
+- version restore through owner-facing editor UI (API/version path exists);
+- multi-site isolation under shared live operation;
+- second Site Instance reuse;
+- live Render web-service URL and production HTTP verification (waiting only on Blueprint resource creation/sync, not on engine build correctness).
 
 ## Next Required Slice
 
-### Slice 2 — reusable component system + editor loop
-
-1. Add generic Website Creator section components (start with Hero, Services, Process, CTA, Contact/Footer) using neutral names and reusable props.
-2. Extend Puck config using the official integration extension mechanism; do not fork the editor.
-3. Recompose Car Service Garage using those generic components.
-4. Add editor interaction verification: edit → save → reload → draft/publish → public render.
-5. Add the minimal media interaction path required to begin testing `EDITOR_CREATION_STANDARD.md`.
-6. Capture desktop/mobile screenshots and compare to the current Car Service Garage baseline direction.
+1. Create/sync the free Render staging Blueprint from the repository root `render.yaml` so it adopts/references `website-creator-postgres` and creates `website-creator-engine`.
+2. Verify live `/health`, `/`, `/editor`, logs and first deploy.
+3. Add the direct image interaction subset from `EDITOR_CREATION_STANDARD.md` (crop/move/zoom/size) as reusable editor capability, not client-specific code.
+4. Validate a second, meaningfully different Site Instance without rebuilding generic infrastructure.
+5. Promote only recurring Site Model/component contracts proven by both sites.
 
 ## Fresh-Chat Instruction
 
