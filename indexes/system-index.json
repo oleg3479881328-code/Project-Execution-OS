@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7010b4533a861553d9f995cb2e2a377f056b7f82",
-  "generated_at": "2026-09-14T13:21:41-04:00",
+  "repository_commit": "8b70f079af71f1855d858e0a755ee8b0584416b7",
+  "generated_at": "2026-09-14T13:29:35-04:00",
   "artifact_count": 611,
   "artifacts": [
     {
@@ -210,13 +210,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "7c9052ca0c0d8f8a7db661ae9caf7df1ba4618225823450d23785960b4b1c640",
+      "sha256": "a26dd3585b7a756979f2eff18605f5a193d630faf0d68fa772ec9efe59eafe14",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v16`",
+        "Profile: `knowledge-aware-core-v17`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -12656,12 +12656,15 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "1045c9e5f16e086cb2c8ae4405e817792ee1a998ac71bdf28fb299ababb1da1d",
+      "sha256": "dcef314cfda9369fc9dfcec2654d655b4c5bca8dfe3d8f15a98658edf70e7976",
       "headings": [
         "Website Creator Engine",
         "Architecture",
-        "Local start",
-        "v0.1 acceptance slice"
+        "Fastest local start",
+        "Source-development start",
+        "Production deployment",
+        "Verification",
+        "Current editor/media boundary"
       ]
     },
     {
