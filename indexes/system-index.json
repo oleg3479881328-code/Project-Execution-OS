@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "e18e8927d0b07c40ca1d7fc94576ffbfeab8d700",
-  "generated_at": "2026-09-14T13:48:22-04:00",
+  "repository_commit": "dec85d409d0a8006432157b5e8b7aeba2b039bb6",
+  "generated_at": "2026-09-14T18:15:21-04:00",
   "artifact_count": 611,
   "artifacts": [
     {
@@ -12672,15 +12672,15 @@
       "title": "Website Creator Engine — STATUS",
       "type": "project-artifact",
       "domain": "website-creation",
-      "status": "ACTIVE — shared runtime + editor loop + first media field verified",
+      "status": "ACTIVE — shared runtime + live editor loop + first media field verified",
       "date": "2026-09-14",
-      "sha256": "1cfb80a071a352881c25e63f981734ce86a5a652e68cd707f60366f5345de826",
+      "sha256": "5f759a49453f6307ae8366b72ef1dd3d63ace9b75850dcd295f7a22400823ff0",
       "headings": [
         "Website Creator Engine — STATUS",
         "Verified Engine Boundary",
-        "Latest Full Verification",
+        "Latest Full CI Verification",
+        "Live Render Verification",
         "Editor Architecture Proof",
-        "Render Staging State",
         "Site Model Evidence",
         "Current Limitations / Not Yet Verified",
         "Next Required Slice",
