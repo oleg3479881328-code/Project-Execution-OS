@@ -45,6 +45,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 10.27.0
@@ -83,12 +85,16 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.migration.outputs.changed == 'true'
         working-directory: .
         run: |
+          set -euo pipefail
           git config user.name "website-creator-ci"
           git config user.email "actions@users.noreply.github.com"
           git add projects/website-creation/engine/src/migrations
           git commit -m "Commit Website Creator database migration artifacts [skip ci]"
-          git push
-      - run: pnpm seed:csg
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Verify production migrations on an empty database
+        run: NODE_ENV=production pnpm payload migrate
+      - run: NODE_ENV=production pnpm seed:csg
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
       - name: Start engine and run browser acceptance
