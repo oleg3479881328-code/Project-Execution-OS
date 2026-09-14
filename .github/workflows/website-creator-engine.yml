@@ -10,6 +10,9 @@ on:
       - 'projects/website-creation/engine/**'
       - '.github/workflows/website-creator-engine.yml'
 
+permissions:
+  contents: write
+
 jobs:
   build-and-runtime-smoke:
     runs-on: ubuntu-latest
@@ -52,11 +55,39 @@ jobs:
           cache-dependency-path: projects/website-creation/engine/package.json
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm check
-      - name: Generate initial production migration when migrations are not committed yet
+      - name: Ensure committed production migration and schema snapshot exist
+        id: migration
         run: |
+          set -euo pipefail
           if [ ! -f src/migrations/index.ts ]; then
             pnpm payload migrate:create initial --skip-empty
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          elif ! compgen -G 'src/migrations/*.json' > /dev/null; then
+            tmpdir="$(mktemp -d)"
+            mkdir -p "$tmpdir/original"
+            cp -a src/migrations/. "$tmpdir/original/"
+            rm -rf src/migrations
+            pnpm payload migrate:create snapshot-base --skip-empty
+            snapshot="$(find src/migrations -maxdepth 1 -name '*.json' -type f | head -n 1)"
+            test -n "$snapshot"
+            cp "$snapshot" "$tmpdir/initial.json"
+            rm -rf src/migrations
+            mkdir -p src/migrations
+            cp -a "$tmpdir/original/." src/migrations/
+            cp "$tmpdir/initial.json" src/migrations/20260914_171640_initial.json
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
+      - name: Commit generated migration artifacts
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.migration.outputs.changed == 'true'
+        working-directory: .
+        run: |
+          git config user.name "website-creator-ci"
+          git config user.email "actions@users.noreply.github.com"
+          git add projects/website-creation/engine/src/migrations
+          git commit -m "Commit Website Creator database migration artifacts [skip ci]"
+          git push
       - run: pnpm seed:csg
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
