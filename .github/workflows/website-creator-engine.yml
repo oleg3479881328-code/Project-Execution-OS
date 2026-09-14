@@ -1,0 +1,52 @@
+name: Website Creator Engine
+
+on:
+  push:
+    paths:
+      - 'projects/website-creation/engine/**'
+      - '.github/workflows/website-creator-engine.yml'
+  pull_request:
+    paths:
+      - 'projects/website-creation/engine/**'
+      - '.github/workflows/website-creator-engine.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: website_creator
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    defaults:
+      run:
+        working-directory: projects/website-creation/engine
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/website_creator
+      PAYLOAD_SECRET: ci-test-secret-not-for-production
+      NEXT_PUBLIC_SERVER_URL: http://127.0.0.1:3000
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.27.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: projects/website-creation/engine/package.json
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build
