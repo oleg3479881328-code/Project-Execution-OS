@@ -37,7 +37,7 @@ export default buildConfig({
   plugins: [
     createPuckPlugin({
       pagesCollection: 'pages',
-      editorStylesheets: ['/site.css'],
+      editorStylesheets: ['/site.css', '/image-editor.css'],
       previewUrl: (page) => (page.isHomepage ? '/' : `/${page.slug || ''}`),
     }),
   ],
