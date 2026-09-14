@@ -9,7 +9,7 @@ export const Media: CollectionConfig = {
     delete: ({ req }) => Boolean(req.user),
   },
   upload: {
-    staticDir: 'media',
+    staticDir: process.env.MEDIA_DIR || 'media',
     mimeTypes: ['image/*'],
   },
   fields: [
