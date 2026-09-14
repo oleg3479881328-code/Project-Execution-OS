@@ -1,9 +1,10 @@
-import { baseConfig } from '@delmaredigital/payload-puck/config'
 import { PageRenderer } from '@delmaredigital/payload-puck/render'
 import config from '@payload-config'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
+
+import { websiteConfig } from '@/puck/config'
 
 export const dynamic = 'force-dynamic'
 
@@ -44,7 +45,7 @@ export default async function PublicPage({ params }: Args) {
 
   return (
     <main data-site-renderer="website-creator-v0.1">
-      <PageRenderer config={baseConfig} data={page.puckData} />
+      <PageRenderer config={websiteConfig} data={page.puckData} />
     </main>
   )
 }
