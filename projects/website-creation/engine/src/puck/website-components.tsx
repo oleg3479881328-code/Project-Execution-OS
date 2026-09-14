@@ -1,6 +1,13 @@
-import { createMediaField, type MediaReference } from '@delmaredigital/payload-puck/fields'
 import type { ComponentConfig } from '@puckeditor/core'
 import React from 'react'
+
+type MediaReference = {
+  id: string | number
+  url: string
+  alt?: string
+  width?: number
+  height?: number
+}
 
 type LinkProps = {
   label?: string
@@ -28,7 +35,6 @@ export const HeroSectionConfig: ComponentConfig<any> = {
     primaryHref: { type: 'text', label: 'Primary CTA URL' },
     secondaryLabel: { type: 'text', label: 'Secondary CTA label' },
     secondaryHref: { type: 'text', label: 'Secondary CTA URL' },
-    image: createMediaField({ label: 'Hero image' }),
     imageAlt: { type: 'text', label: 'Image alt override' },
   },
   defaultProps: {
