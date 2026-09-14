@@ -9,6 +9,10 @@ type MediaReference = {
   height?: number
 }
 
+type ImageRatio = 'natural' | 'landscape' | 'portrait' | 'square'
+type ImageFitMode = 'fill' | 'fit'
+type ImageAlign = 'left' | 'center' | 'right'
+
 type LinkProps = {
   label?: string
   href?: string
@@ -24,6 +28,69 @@ function ActionLink({ label, href, secondary = false }: LinkProps) {
   )
 }
 
+const ratioField = {
+  type: 'select' as const,
+  label: 'Image shape',
+  options: [
+    { label: 'Natural', value: 'natural' },
+    { label: 'Landscape', value: 'landscape' },
+    { label: 'Portrait', value: 'portrait' },
+    { label: 'Square', value: 'square' },
+  ],
+}
+
+const fitModeField = {
+  type: 'select' as const,
+  label: 'Image fit',
+  options: [
+    { label: 'Fill frame (crop)', value: 'fill' },
+    { label: 'Fit full photograph', value: 'fit' },
+  ],
+}
+
+function PublicImageFrame({
+  image,
+  alt,
+  caption,
+  ratio = 'landscape',
+  fitMode = 'fill',
+  zoom = 1,
+  focalX = 50,
+  focalY = 50,
+  visualWidth,
+  visualAlign = 'center',
+  className = '',
+}: {
+  image?: MediaReference | null
+  alt?: string
+  caption?: string
+  ratio?: ImageRatio
+  fitMode?: ImageFitMode
+  zoom?: number
+  focalX?: number
+  focalY?: number
+  visualWidth?: number
+  visualAlign?: ImageAlign
+  className?: string
+}) {
+  if (!image?.url) return null
+  const style = {
+    '--wc-image-focal-x': `${focalX}%`,
+    '--wc-image-focal-y': `${focalY}%`,
+    '--wc-image-zoom': String(zoom),
+    ...(typeof visualWidth === 'number' ? { width: `${Math.max(28, Math.min(100, visualWidth))}%` } : {}),
+  } as React.CSSProperties
+
+  return (
+    <figure className={`wc-public-image ${className}`.trim()} data-ratio={ratio} data-fit={fitMode} data-visual-align={visualAlign} style={style}>
+      <div className="wc-public-image__frame" data-ratio={ratio} data-fit={fitMode}>
+        <img src={image.url} alt={alt || image.alt || ''} />
+      </div>
+      {caption ? <figcaption>{caption}</figcaption> : null}
+    </figure>
+  )
+}
+
 export const HeroSectionConfig: ComponentConfig<any> = {
   label: 'Hero',
   fields: {
@@ -36,6 +103,12 @@ export const HeroSectionConfig: ComponentConfig<any> = {
     secondaryLabel: { type: 'text', label: 'Secondary CTA label' },
     secondaryHref: { type: 'text', label: 'Secondary CTA URL' },
     imageAlt: { type: 'text', label: 'Image alt override' },
+    imageCredit: { type: 'text', label: 'Image caption / credit' },
+    imageRatio: ratioField,
+    imageFitMode: fitModeField,
+    imageZoom: { type: 'number', label: 'Image zoom', min: 1, max: 3 },
+    imageFocalX: { type: 'number', label: 'Image focal X (%)', min: 0, max: 100 },
+    imageFocalY: { type: 'number', label: 'Image focal Y (%)', min: 0, max: 100 },
   },
   defaultProps: {
     eyebrow: 'Independent service · Local experts',
@@ -48,8 +121,14 @@ export const HeroSectionConfig: ComponentConfig<any> = {
     secondaryHref: '#services',
     image: null,
     imageAlt: '',
+    imageCredit: '',
+    imageRatio: 'portrait',
+    imageFitMode: 'fill',
+    imageZoom: 1,
+    imageFocalX: 50,
+    imageFocalY: 50,
   },
-  render: ({ eyebrow, title, highlight, body, primaryLabel, primaryHref, secondaryLabel, secondaryHref, image, imageAlt }) => {
+  render: ({ eyebrow, title, highlight, body, primaryLabel, primaryHref, secondaryLabel, secondaryHref, image, imageAlt, imageCredit, imageRatio, imageFitMode, imageZoom, imageFocalX, imageFocalY }) => {
     const highlightedTitle = highlight && title.includes(highlight)
       ? <>{title.slice(0, title.indexOf(highlight))}<span>{highlight}</span>{title.slice(title.indexOf(highlight) + highlight.length)}</>
       : title
@@ -67,9 +146,21 @@ export const HeroSectionConfig: ComponentConfig<any> = {
               <ActionLink label={secondaryLabel} href={secondaryHref} secondary />
             </div>
           </div>
-          <div className="wc-hero__visual" aria-hidden={!heroImage?.url}>
-            {heroImage?.url ? <img src={heroImage.url} alt={imageAlt || heroImage.alt || ''} /> : <div className="wc-hero__visual-placeholder">SERVICE / CRAFT / TRUST</div>}
-          </div>
+          {heroImage?.url ? (
+            <PublicImageFrame
+              image={heroImage}
+              alt={imageAlt}
+              caption={imageCredit}
+              ratio={imageRatio || 'portrait'}
+              fitMode={imageFitMode || 'fill'}
+              zoom={imageZoom ?? 1}
+              focalX={imageFocalX ?? 50}
+              focalY={imageFocalY ?? 50}
+              className="wc-hero__image"
+            />
+          ) : (
+            <div className="wc-hero__visual"><div className="wc-hero__visual-placeholder">SERVICE / CRAFT / TRUST</div></div>
+          )}
         </div>
       </section>
     )
@@ -82,6 +173,8 @@ type ServiceItem = {
   body?: string
   actionLabel?: string
   actionHref?: string
+  image?: MediaReference | null
+  imageAlt?: string
 }
 
 export const ServicesSectionConfig: ComponentConfig<any> = {
@@ -99,6 +192,7 @@ export const ServicesSectionConfig: ComponentConfig<any> = {
         body: { type: 'textarea', label: 'Description' },
         actionLabel: { type: 'text', label: 'Action label' },
         actionHref: { type: 'text', label: 'Action URL' },
+        imageAlt: { type: 'text', label: 'Image alt' },
       },
       defaultItemProps: (index: number) => ({
         kicker: String(index + 1).padStart(2, '0'),
@@ -106,6 +200,8 @@ export const ServicesSectionConfig: ComponentConfig<any> = {
         body: 'Describe this service and the customer outcome.',
         actionLabel: 'Learn more',
         actionHref: '#contact',
+        image: null,
+        imageAlt: '',
       }),
       getItemSummary: (item: ServiceItem) => item.title || 'Untitled service',
     },
@@ -129,13 +225,58 @@ export const ServicesSectionConfig: ComponentConfig<any> = {
         <div className="wc-services__grid">
           {(services as ServiceItem[]).map((service, index) => (
             <article className="wc-service-card" key={`${service.title || 'service'}-${index}`}>
-              <div className="wc-service-card__kicker">{service.kicker || String(index + 1).padStart(2, '0')}</div>
-              <h3>{service.title}</h3>
-              <p>{service.body}</p>
-              {service.actionLabel && service.actionHref ? <a href={service.actionHref}>{service.actionLabel}<span aria-hidden="true"> →</span></a> : null}
+              {service.image?.url ? <img className="wc-service-card__image" src={service.image.url} alt={service.imageAlt || service.image.alt || ''} /> : null}
+              <div className="wc-service-card__body">
+                <div className="wc-service-card__kicker">{service.kicker || String(index + 1).padStart(2, '0')}</div>
+                <h3>{service.title}</h3>
+                <p>{service.body}</p>
+                {service.actionLabel && service.actionHref ? <a href={service.actionHref}>{service.actionLabel}<span aria-hidden="true"> →</span></a> : null}
+              </div>
             </article>
           ))}
         </div>
+      </div>
+    </section>
+  ),
+}
+
+export const ImageSectionConfig: ComponentConfig<any> = {
+  label: 'Image',
+  fields: {
+    imageAlt: { type: 'text', label: 'Alt text' },
+    caption: { type: 'text', label: 'Caption / credit' },
+    ratio: ratioField,
+    fitMode: fitModeField,
+    zoom: { type: 'number', label: 'Zoom', min: 1, max: 3 },
+    focalX: { type: 'number', label: 'Focal X (%)', min: 0, max: 100 },
+    focalY: { type: 'number', label: 'Focal Y (%)', min: 0, max: 100 },
+    visualWidth: { type: 'number', label: 'Width (%)', min: 28, max: 100 },
+    visualAlign: {
+      type: 'select',
+      label: 'Alignment',
+      options: [
+        { label: 'Left', value: 'left' },
+        { label: 'Center', value: 'center' },
+        { label: 'Right', value: 'right' },
+      ],
+    },
+  },
+  defaultProps: {
+    image: null,
+    imageAlt: '',
+    caption: '',
+    ratio: 'landscape',
+    fitMode: 'fill',
+    zoom: 1,
+    focalX: 50,
+    focalY: 50,
+    visualWidth: 100,
+    visualAlign: 'center',
+  },
+  render: ({ image, imageAlt, caption, ratio, fitMode, zoom, focalX, focalY, visualWidth, visualAlign }) => (
+    <section className="wc-section wc-image-section" data-wc-section="image">
+      <div className="wc-shell">
+        <PublicImageFrame image={image as MediaReference | null} alt={imageAlt} caption={caption} ratio={ratio} fitMode={fitMode} zoom={zoom} focalX={focalX} focalY={focalY} visualWidth={visualWidth} visualAlign={visualAlign} />
       </div>
     </section>
   ),
@@ -264,6 +405,7 @@ export const FooterSectionConfig: ComponentConfig<any> = {
 export const websiteComponents = {
   HeroSection: HeroSectionConfig,
   ServicesSection: ServicesSectionConfig,
+  ImageSection: ImageSectionConfig,
   ProcessSection: ProcessSectionConfig,
   CtaSection: CtaSectionConfig,
   FooterSection: FooterSectionConfig,
