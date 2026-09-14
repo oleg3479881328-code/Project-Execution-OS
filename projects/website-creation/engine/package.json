@@ -7,6 +7,7 @@
     "dev": "next dev",
     "build": "pnpm generate:importmap && next build",
     "start": "next start",
+    "start:prod": "payload migrate && pnpm seed:csg && next start",
     "check": "tsc --noEmit",
     "payload": "payload",
     "generate:importmap": "payload generate:importmap",
