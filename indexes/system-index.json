@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "280dacf5c23ab53417453bcdf47e5e80a5bdd7d4",
-  "generated_at": "2026-09-14T12:12:33-04:00",
+  "repository_commit": "740e438078f98986cb546225b931139b0c248da3",
+  "generated_at": "2026-09-14T12:12:57-04:00",
   "artifact_count": 609,
   "artifacts": [
     {
@@ -12458,11 +12458,12 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "5f26e9ffbf0596603af76fde4e25c5535b4dc8fd1d944354ead786c61469aedc",
+      "sha256": "1d6355962dd6c067a40cfd225a500eea7a3b0ed50bbeba6aec5cb5ff52c15768",
       "headings": [
         "Website Creator — PROJECT.md",
         "Project",
         "Purpose",
+        "Own System Rule",
         "No Client Dependency Rule",
         "Scope",
         "Canonical Storage",
