@@ -86,7 +86,11 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
           <button type="button" aria-label="Cancel crop" onClick={onCancel}>×</button>
         </div>
 
-        <div className="wc-crop-dialog__stage" data-testid="wc-crop-stage">
+        <div
+          className="wc-crop-dialog__stage"
+          data-testid="wc-crop-stage"
+          style={{ position: 'relative', height: 'min(56vh, 560px)', minHeight: 320, overflow: 'hidden', isolation: 'isolate' }}
+        >
           <Cropper
             image={imageUrl}
             crop={crop}
@@ -104,7 +108,7 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
           />
         </div>
 
-        <div className="wc-crop-dialog__controls">
+        <div className="wc-crop-dialog__controls" style={{ position: 'relative', zIndex: 2 }}>
           <label>
             <span>Zoom · {zoom.toFixed(2)}×</span>
             <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', alignItems: 'center', gap: 10 }}>
