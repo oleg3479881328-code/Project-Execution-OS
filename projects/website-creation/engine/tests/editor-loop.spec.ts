@@ -15,7 +15,17 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await page.goto('/editor')
   await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
   await expect(page.getByRole('button', { name: /^Save$/ }).first()).toBeVisible({ timeout: 15_000 })
-  await expect(page.getByRole('button', { name: /Publish/i }).first()).toBeVisible({ timeout: 15_000 })
+  await expect(page.getByRole('button', { name: /^Publish$/ }).first()).toBeVisible({ timeout: 15_000 })
+
+  const match = page.url().match(/\/admin\/puck-editor\/pages\/([^/?#]+)/)
+  expect(match?.[1]).toBeTruthy()
+  const pageId = match![1]
+
+  const readResponse = await page.request.get(`/api/puck/pages/${pageId}`)
+  expect(readResponse.ok()).toBeTruthy()
+  const readJson = await readResponse.json()
+  const originalData = readJson.doc.puckData
+  expect(originalData?.content?.length).toBeGreaterThan(0)
 
   const editorCanvas = page.frameLocator('iframe').first()
   await expect(editorCanvas.getByText('Diagnose. Repair. Drive.').first()).toBeVisible({ timeout: 15_000 })
@@ -86,6 +96,51 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(cropDialog).toHaveCount(0)
   await expect(heroFrame).toHaveAttribute('data-crop', 'precise')
 
+  const firstSavedCrop = {
+    x: await heroFrame.getAttribute('data-crop-x'),
+    y: await heroFrame.getAttribute('data-crop-y'),
+    width: await heroFrame.getAttribute('data-crop-width'),
+    height: await heroFrame.getAttribute('data-crop-height'),
+  }
+  expect(firstSavedCrop.x).toBeTruthy()
+  expect(firstSavedCrop.y).toBeTruthy()
+  expect(firstSavedCrop.width).toBeTruthy()
+  expect(firstSavedCrop.height).toBeTruthy()
+
+  // Reopen must restore the exact saved percentage rectangle. Escape and Cancel must not mutate it.
+  await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
+  await expect(cropDialog).toBeVisible()
+  await expect(cropDialog.getByText('Saved crop restored. Drag the photograph or adjust zoom.')).toBeVisible()
+  await expect(cropDialog).toHaveAttribute('data-initial-crop-x', firstSavedCrop.x!)
+  await expect(cropDialog).toHaveAttribute('data-initial-crop-y', firstSavedCrop.y!)
+  await expect(cropDialog).toHaveAttribute('data-initial-crop-width', firstSavedCrop.width!)
+  await expect(cropDialog).toHaveAttribute('data-initial-crop-height', firstSavedCrop.height!)
+  await page.keyboard.press('Escape')
+  await expect(cropDialog).toHaveCount(0)
+  await expect(heroFrame).toHaveAttribute('data-crop-x', firstSavedCrop.x!)
+  await expect(heroFrame).toHaveAttribute('data-crop-y', firstSavedCrop.y!)
+
+  await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
+  await expect(cropDialog).toBeVisible()
+  await cropDialog.getByRole('button', { name: 'Cancel', exact: true }).click()
+  await expect(cropDialog).toHaveCount(0)
+  await expect(heroFrame).toHaveAttribute('data-crop-x', firstSavedCrop.x!)
+  await expect(heroFrame).toHaveAttribute('data-crop-y', firstSavedCrop.y!)
+
+  // Reset must clear a precise crop back to the default/legacy semantics.
+  await inspector.getByRole('button', { name: 'Reset crop' }).click()
+  await expect(heroFrame).toHaveAttribute('data-crop', 'legacy')
+
+  // Create a fresh precise crop and prove it survives the integration's real Save → reload → Publish lifecycle.
+  await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
+  await expect(cropDialog).toBeVisible()
+  await cropDialog.getByRole('slider', { name: 'Crop zoom' }).fill('1.30')
+  await expect(cropDialog.getByText('Zoom · 1.30×')).toBeVisible()
+  await expect(cropDialog.getByRole('button', { name: 'Apply crop' })).toBeEnabled()
+  await cropDialog.getByRole('button', { name: 'Apply crop' }).click()
+  await expect(cropDialog).toHaveCount(0)
+  await expect(heroFrame).toHaveAttribute('data-crop', 'precise')
+
   const savedCrop = {
     x: await heroFrame.getAttribute('data-crop-x'),
     y: await heroFrame.getAttribute('data-crop-y'),
@@ -97,76 +152,59 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   expect(savedCrop.width).toBeTruthy()
   expect(savedCrop.height).toBeTruthy()
 
-  // Reopen must restore the exact saved percentage rectangle. Escape and Cancel must not mutate it.
-  await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
-  await expect(cropDialog).toBeVisible()
-  await expect(cropDialog.getByText('Saved crop restored. Drag the photograph or adjust zoom.')).toBeVisible()
-  await expect(cropDialog).toHaveAttribute('data-initial-crop-x', savedCrop.x!)
-  await expect(cropDialog).toHaveAttribute('data-initial-crop-y', savedCrop.y!)
-  await expect(cropDialog).toHaveAttribute('data-initial-crop-width', savedCrop.width!)
-  await expect(cropDialog).toHaveAttribute('data-initial-crop-height', savedCrop.height!)
-  await page.keyboard.press('Escape')
-  await expect(cropDialog).toHaveCount(0)
+  const saveResponsePromise = page.waitForResponse((response) => (
+    response.url().includes(`/api/puck/pages/${pageId}`)
+    && response.request().method() === 'PATCH'
+  ))
+  await page.getByRole('button', { name: /^Save$/ }).first().click()
+  const saveResponse = await saveResponsePromise
+  expect(saveResponse.ok()).toBeTruthy()
+  const saveBody = JSON.parse(saveResponse.request().postData() || '{}')
+  expect(saveBody.draft).toBe(true)
+  await expect(page.getByText('Unpublished Changes').first()).toBeVisible({ timeout: 10_000 })
+
+  await page.reload()
+  await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
+  await expect(heroFrame).toBeVisible({ timeout: 15_000 })
+  await expect(heroFrame).toHaveAttribute('data-crop', 'precise')
   await expect(heroFrame).toHaveAttribute('data-crop-x', savedCrop.x!)
   await expect(heroFrame).toHaveAttribute('data-crop-y', savedCrop.y!)
+  await expect(heroFrame).toHaveAttribute('data-crop-width', savedCrop.width!)
+  await expect(heroFrame).toHaveAttribute('data-crop-height', savedCrop.height!)
 
-  await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
-  await expect(cropDialog).toBeVisible()
-  await cropDialog.getByRole('button', { name: 'Cancel', exact: true }).click()
-  await expect(cropDialog).toHaveCount(0)
-  await expect(heroFrame).toHaveAttribute('data-crop-x', savedCrop.x!)
-  await expect(heroFrame).toHaveAttribute('data-crop-y', savedCrop.y!)
-
-  // Restore the initial image state so this acceptance run remains repeatable.
-  await inspector.getByRole('button', { name: 'Reset crop' }).click()
-  await expect(heroFrame).toHaveAttribute('data-crop', 'legacy')
-
-  // Replace remains a contextual toolbar action, but delegates selection/upload to the proven Payload media picker.
-  await editorCanvas.getByRole('button', { name: 'Replace photograph' }).click()
-  const mediaHeading = page.getByRole('heading', { name: 'Select Media' })
-  await expect(mediaHeading).toBeVisible({ timeout: 5_000 })
-  await expect(page.getByRole('button', { name: 'Upload New' })).toBeVisible()
-  await mediaHeading.locator('..').locator('button').click()
-  await expect(mediaHeading).toHaveCount(0)
-
-  const match = page.url().match(/\/admin\/puck-editor\/pages\/([^/?#]+)/)
-  expect(match?.[1]).toBeTruthy()
-  const pageId = match![1]
-
-  const readResponse = await page.request.get(`/api/puck/pages/${pageId}`)
-  expect(readResponse.ok()).toBeTruthy()
-  const readJson = await readResponse.json()
-  const originalData = readJson.doc.puckData
-  expect(originalData?.content?.length).toBeGreaterThan(0)
-
-  const marker = 'EDITOR LOOP VERIFIED — draft then publish'
-  const draftData = structuredClone(originalData)
-  const hero = draftData.content.find((item: any) => item.type === 'HeroSection')
-  expect(hero).toBeTruthy()
-  hero.props.body = marker
-
-  const draftResponse = await page.request.patch(`/api/puck/pages/${pageId}`, {
-    data: { puckData: draftData, draft: true },
-  })
-  expect(draftResponse.ok()).toBeTruthy()
-
+  // Save is draft-only: the public renderer must still expose the previous published image state.
   await page.goto('/')
-  await expect(page.getByText(marker)).toHaveCount(0)
-  await expect(page.locator('.wc-hero__image img')).toBeVisible()
-  await expect(page.locator('.wc-service-card__image')).toHaveCount(6)
+  const publicHeroFrame = page.locator('.wc-hero__image .wc-public-image__frame').first()
+  await expect(publicHeroFrame).toBeVisible({ timeout: 10_000 })
+  await expect(publicHeroFrame).toHaveAttribute('data-crop', 'legacy')
 
-  const versionsResponse = await page.request.get(`/api/puck/pages/${pageId}/versions?limit=5`)
-  expect(versionsResponse.status()).not.toBe(404)
-  expect(versionsResponse.ok()).toBeTruthy()
+  // Reopen the editor draft and publish through the integration's real owner-facing control.
+  await page.goto('/editor')
+  await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
+  await expect(heroFrame).toBeVisible({ timeout: 15_000 })
+  await expect(heroFrame).toHaveAttribute('data-crop', 'precise')
+  await expect(heroFrame).toHaveAttribute('data-crop-x', savedCrop.x!)
 
-  const publishResponse = await page.request.patch(`/api/puck/pages/${pageId}`, {
-    data: { puckData: draftData, _status: 'published' },
-  })
+  const publishResponsePromise = page.waitForResponse((response) => (
+    response.url().includes(`/api/puck/pages/${pageId}`)
+    && response.request().method() === 'PATCH'
+  ))
+  await page.getByRole('button', { name: /^Publish$/ }).first().click()
+  const publishResponse = await publishResponsePromise
   expect(publishResponse.ok()).toBeTruthy()
+  const publishBody = JSON.parse(publishResponse.request().postData() || '{}')
+  expect(publishBody._status).toBe('published')
+  await expect(page.getByText('Published').first()).toBeVisible({ timeout: 10_000 })
 
   await page.goto('/')
-  await expect(page.getByText(marker)).toBeVisible({ timeout: 10_000 })
+  await expect(publicHeroFrame).toBeVisible({ timeout: 10_000 })
+  await expect(publicHeroFrame).toHaveAttribute('data-crop', 'precise')
+  await expect(publicHeroFrame).toHaveAttribute('data-crop-x', savedCrop.x!)
+  await expect(publicHeroFrame).toHaveAttribute('data-crop-y', savedCrop.y!)
+  await expect(publicHeroFrame).toHaveAttribute('data-crop-width', savedCrop.width!)
+  await expect(publicHeroFrame).toHaveAttribute('data-crop-height', savedCrop.height!)
 
+  // Restore the canonical seeded published state so the acceptance remains repeatable.
   const restoreResponse = await page.request.patch(`/api/puck/pages/${pageId}`, {
     data: { puckData: originalData, _status: 'published' },
   })
@@ -174,9 +212,24 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
 
   await page.goto('/')
   await expect(page.getByText('Clear answers before parts get replaced. Diagnostics, maintenance and major mechanical work for the cars you depend on.')).toBeVisible()
+  await expect(publicHeroFrame).toHaveAttribute('data-crop', 'legacy')
 
+  const versionsResponse = await page.request.get(`/api/puck/pages/${pageId}/versions?limit=5`)
+  expect(versionsResponse.status()).not.toBe(404)
+  expect(versionsResponse.ok()).toBeTruthy()
+
+  // Replace remains a contextual toolbar action, but delegates selection/upload to the proven Payload media picker.
   await page.goto('/editor')
   await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
-  await expect(page.frameLocator('iframe').first().getByText('Diagnose. Repair. Drive.').first()).toBeVisible({ timeout: 15_000 })
+  await expect(heroFrame).toBeVisible({ timeout: 15_000 })
+  await heroFrame.click({ position: { x: 80, y: 80 } })
+  await expect(editorCanvas.getByRole('toolbar', { name: 'Image controls' })).toBeVisible()
+  await editorCanvas.getByRole('button', { name: 'Replace photograph' }).click()
+  const mediaHeading = page.getByRole('heading', { name: 'Select Media' })
+  await expect(mediaHeading).toBeVisible({ timeout: 5_000 })
+  await expect(page.getByRole('button', { name: 'Upload New' })).toBeVisible()
+  await mediaHeading.locator('..').locator('button').click()
+  await expect(mediaHeading).toHaveCount(0)
+
   await page.screenshot({ path: 'test-results/website-creator-editor.png', fullPage: true })
 })
