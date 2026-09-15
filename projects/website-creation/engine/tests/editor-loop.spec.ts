@@ -45,11 +45,11 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   // Inspector and canvas toolbar must edit the same canonical image state.
   await inspector.getByRole('button', { name: 'Fit full photo' }).click()
   await expect(heroFrame).toHaveAttribute('data-fit', 'fit')
-  await expect(inspector.getByText('Fit shows the full photograph. Switch to Fill to reposition it inside the frame.')).toBeVisible()
+  await expect(inspector.getByText('Fit shows the full photograph. Switch to Fill to crop it.')).toBeVisible()
   await expect(editorCanvas.getByRole('button', { name: 'Fill frame / crop' })).toBeVisible()
   await editorCanvas.getByRole('button', { name: 'Fill frame / crop' }).click()
   await expect(heroFrame).toHaveAttribute('data-fit', 'fill')
-  await expect(inspector.getByText('Use Crop / move photograph, then drag the photograph inside its frame.')).toBeVisible()
+  await expect(inspector.getByText('Use Crop / move photograph to open the focused crop dialog.')).toBeVisible()
 
   const ranges = inspector.locator('input[type="range"]')
   const zoom = ranges.nth(0)
