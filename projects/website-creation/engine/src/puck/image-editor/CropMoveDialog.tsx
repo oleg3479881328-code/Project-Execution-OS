@@ -47,7 +47,10 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
   const [completedArea, setCompletedArea] = useState<CropAreaPercentages | null>(() => initialArea ? normalizeArea(initialArea) : null)
 
   useEffect(() => {
-    const ownerWindow = dialogRef.current?.ownerDocument.defaultView ?? window
+    const dialog = dialogRef.current
+    const ownerWindow = dialog?.ownerDocument.defaultView ?? window
+    dialog?.focus({ preventScroll: true })
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return
       event.preventDefault()
@@ -70,6 +73,7 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
   return (
     <div
       ref={dialogRef}
+      tabIndex={-1}
       className="wc-crop-dialog"
       role="dialog"
       aria-modal="true"
