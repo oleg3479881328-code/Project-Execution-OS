@@ -85,9 +85,22 @@ function ImagePatchBridge({ children }: { children: ReactNode }) {
   return <>{children}</>
 }
 
+function ImageFieldsSlot({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <div data-wc-image-inspector-slot="" />
+      {children}
+    </>
+  )
+}
+
 export const imageEditorPlugin: Plugin = {
   name: 'website-creator-image-editor',
   overrides: {
     puck: ({ children }) => <ImagePatchBridge>{children}</ImagePatchBridge>,
+    // Puck's official `fields` override is the native extension point for the
+    // right-hand fields panel. The image inspector portals into this slot so it
+    // participates in Puck layout instead of floating over Save / Publish.
+    fields: ({ children }) => <ImageFieldsSlot>{children}</ImageFieldsSlot>,
   },
 }
