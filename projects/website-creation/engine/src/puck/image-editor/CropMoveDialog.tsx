@@ -43,6 +43,10 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
       aria-modal="true"
       aria-label="Crop and move photograph"
       data-wc-crop-dialog
+      data-initial-crop-x={initialArea?.x}
+      data-initial-crop-y={initialArea?.y}
+      data-initial-crop-width={initialArea?.width}
+      data-initial-crop-height={initialArea?.height}
       onPointerDown={(event) => event.stopPropagation()}
       onClick={(event) => event.stopPropagation()}
     >
@@ -50,7 +54,7 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
         <div className="wc-crop-dialog__header">
           <div>
             <strong>Crop / move photograph</strong>
-            <span>Drag the photograph. Use zoom for a tighter crop.</span>
+            <span>{initialArea ? 'Saved crop restored. Drag the photograph or adjust zoom.' : 'Drag the photograph. Use zoom for a tighter crop.'}</span>
           </div>
           <button type="button" aria-label="Cancel crop" onClick={onCancel}>×</button>
         </div>
