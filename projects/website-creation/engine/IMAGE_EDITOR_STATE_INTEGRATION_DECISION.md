@@ -18,12 +18,12 @@ For reusable image editing:
 6. keep crop interaction transient until Apply;
 7. persist only finite normalized percentage crop geometry;
 8. render IMAGE controls inside Puck's official `Plugin.overrides.fields` layout;
-9. use the existing owner-facing Save and Publish controls for image persistence;
-10. do not create a parallel selection store, image store, crop engine, or client-specific editor.
+9. use the existing owner-facing Save and Publish controls for crop, alt, caption and other semantic image properties;
+10. do not create a parallel selection store, image store, crop engine, metadata store or client-specific editor.
 
 Canonical relationship:
 
-`Puck selection → selected image component → transient image UI → Apply → Puck component data → Save Draft → reload → Publish → public renderer`
+`Puck selection → selected image component → transient image UI → semantic component data → Save Draft → reload → Publish → public renderer`
 
 ## Atomic State Integration
 
@@ -62,7 +62,7 @@ Rejected approach:
 
 Reason: a fixed shell inspector can physically overlap native owner controls such as Save / Publish. Native layout integration preserves editor ownership and removes positional coupling.
 
-Puck may keep multiple fields containers mounted for responsive/editor states. Therefore the engine must not portal into the first matching DOM node. Only the actually visible official fields host may advertise the IMAGE inspector target.
+Puck may keep multiple fields containers mounted for responsive/editor states. Only the actually visible official fields host may advertise the IMAGE inspector target.
 
 Canonical relationship:
 
@@ -95,6 +95,33 @@ Rules:
 - image replacement or shape change resets precise crop;
 - Reset crop clears precise crop and returns to legacy/default semantics.
 
+A real pointer drag is now part of acceptance. The test drags inside the actual `react-easy-crop` stage with Playwright mouse events, then proves the persisted crop rectangle center moved away from the default 50/50 center. Direct test mutation of crop state is not accepted as drag evidence.
+
+## Alt / Caption Metadata
+
+Alt text and caption/credit are ordinary semantic properties of the same Puck component data.
+
+For Hero:
+
+`IMAGE Alt text → imageAlt`
+
+`IMAGE Caption / credit → caption adapter → imageCredit`
+
+The public renderer consumes those same persisted properties. There is no separate image-metadata database or save path.
+
+Accepted lifecycle:
+
+```text
+IMAGE inspector edit
+  → atomic component replacement
+  → editor canvas reflects metadata
+  → Save Draft
+  → full reload restores metadata
+  → public renderer keeps previous published metadata
+  → Publish
+  → public renderer receives the exact saved metadata
+```
+
 ## Owner Save / Publish Lifecycle
 
 Website Creator does not add an image-specific persistence system.
@@ -102,15 +129,15 @@ Website Creator does not add an image-specific persistence system.
 Accepted lifecycle:
 
 ```text
-precise crop Apply
+semantic image edit
   → canonical Puck component data
   → owner Save
   → draft PATCH
-  → full editor reload restores exact crop
+  → full editor reload restores exact image state
   → public renderer remains on previous published image state
   → owner Publish
   → published PATCH
-  → public renderer receives the same crop metadata
+  → public renderer receives the same image state
 ```
 
 Bindings:
@@ -137,17 +164,26 @@ Clean precise-crop baseline:
 Native fields + owner persistence acceptance:
 - run `35003482852`;
 - commit `727f4f00ea241a9d349acc51266ca673ca6ab0f5`;
-- TypeScript, migrations, production seed, production build, Chromium install, browser acceptance and evidence upload all passed;
-- IMAGE inspector rendered through Puck's official fields override;
-- only the visible fields host received the inspector;
-- native Save / Publish remained unobstructed and click-driven;
-- precise crop saved through owner Save using draft semantics;
-- exact crop survived full editor reload;
-- public renderer retained previous published crop while draft-only state existed;
-- owner Publish promoted the exact same precise crop into the public renderer;
-- seeded published state was restored after verification.
+- native IMAGE panel, unobstructed Save/Publish, draft reload, public isolation and Publish parity passed.
 
-Run `35003482852` is the canonical evidence for the current owner-facing semantic image-state lifecycle.
+Real pointer drag acceptance:
+- run `35004130921`;
+- commit `3ee78386aedaa77169b33587509b685921a1a364`;
+- real pointer drag changed normalized crop position;
+- the moved crop survived Save Draft, reload, public isolation and Publish.
+
+Alt/caption acceptance:
+- run `35004973259`;
+- commit `01d6d6950c3a58d5f47a5a4db562118f301d09cb`;
+- Hero alt and caption/credit were edited through the real IMAGE inspector;
+- both survived owner Save Draft and full editor reload;
+- neither leaked to the public renderer while draft-only;
+- both appeared exactly after owner Publish;
+- moved precise crop continued to pass in the same lifecycle;
+- seeded published state was restored;
+- TypeScript, migrations, production seed, build, Chromium, browser acceptance and evidence upload all passed.
+
+Run `35004973259` is the canonical evidence for the current owner-facing Hero semantic image lifecycle.
 
 ## Rejected Alternatives
 
@@ -158,8 +194,10 @@ Run `35003482852` is the canonical evidence for the current owner-facing semanti
 - portalling into the first fields node found in the DOM;
 - custom crop engine;
 - pixel-only crop persistence;
+- direct test mutation as proof of pointer drag;
 - Escape handling only in the source iframe;
 - image-specific Save/Publish store;
+- separate alt/caption metadata store;
 - external demo-host seed media;
 - test-only re-clicks after every image property mutation;
 - client-specific editor workaround.
@@ -176,6 +214,8 @@ Run `35003482852` is the canonical evidence for the current owner-facing semanti
 - crop modal keyboard ownership follows its actual shell document;
 - transient crop geometry remains local until Apply;
 - only finite normalized crop percentages enter canonical data;
+- actual pointer interaction is required when claiming drag acceptance;
+- alt/caption are canonical component properties, not a side store;
 - Save Draft persists semantic image state without publishing it;
 - reload restores saved draft image state exactly;
 - public rendering ignores draft-only image state;
@@ -187,13 +227,11 @@ Run `35003482852` is the canonical evidence for the current owner-facing semanti
 
 Continue with:
 
-- deterministic pointer drag/move gesture coverage in the existing `react-easy-crop` dialog and carry that result through Save/reload/Publish;
-- alt/caption persistence;
-- applicable alignment and visual-width persistence;
+- alignment + visual-width persistence on reusable `ImageSection`;
+- use that same work to prove shared image behavior beyond Hero;
 - replace/remove persistence through Payload Media;
-- another reusable image block;
 - owner-facing version restore;
-- direct semantic resize only where the component contract permits it.
+- direct semantic resize where the reusable component contract permits it.
 
 ## Final Rule
 
