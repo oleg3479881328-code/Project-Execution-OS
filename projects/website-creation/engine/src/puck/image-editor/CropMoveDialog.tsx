@@ -16,7 +16,11 @@ type Props = {
   onApply: (area: CropAreaPercentages) => void
 }
 
-function roundArea(area: CropAreaPercentages): CropAreaPercentages {
+function normalizeArea(area: CropAreaPercentages): CropAreaPercentages | null {
+  const values = [area.x, area.y, area.width, area.height]
+  if (!values.every((value) => Number.isFinite(value))) return null
+  if (area.width <= 0 || area.height <= 0 || area.width > 100 || area.height > 100) return null
+
   return {
     x: Math.round(area.x * 1000) / 1000,
     y: Math.round(area.y * 1000) / 1000,
@@ -38,7 +42,8 @@ function clampZoom(value: number) {
 export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, initialArea, onCancel, onApply }: Props) {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
-  const [completedArea, setCompletedArea] = useState<CropAreaPercentages | null>(initialArea ?? null)
+  const [mediaLoaded, setMediaLoaded] = useState(false)
+  const [completedArea, setCompletedArea] = useState<CropAreaPercentages | null>(() => initialArea ? normalizeArea(initialArea) : null)
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -103,7 +108,8 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
             initialCroppedAreaPercentages={initialArea ?? undefined}
             onCropChange={setCrop}
             onZoomChange={setZoom}
-            onCropComplete={(area) => setCompletedArea(roundArea(area))}
+            onMediaLoaded={() => setMediaLoaded(true)}
+            onCropComplete={(area) => setCompletedArea(normalizeArea(area))}
             mediaProps={{ alt: imageAlt || 'Photograph being cropped' }}
           />
         </div>
@@ -112,7 +118,7 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
           <label>
             <span>Zoom · {zoom.toFixed(2)}×</span>
             <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', alignItems: 'center', gap: 10 }}>
-              <button type="button" aria-label="Zoom out crop" disabled={zoom <= 1} onClick={() => nudgeZoom(-0.1)}>−</button>
+              <button type="button" aria-label="Zoom out crop" disabled={!mediaLoaded || zoom <= 1} onClick={() => nudgeZoom(-0.1)}>−</button>
               <input
                 aria-label="Crop zoom"
                 type="range"
@@ -120,18 +126,19 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
                 max="3"
                 step="0.01"
                 value={zoom}
+                disabled={!mediaLoaded}
                 onChange={(event) => setZoom(Number(event.currentTarget.value))}
               />
-              <button type="button" aria-label="Zoom in crop" disabled={zoom >= 3} onClick={() => nudgeZoom(0.1)}>+</button>
+              <button type="button" aria-label="Zoom in crop" disabled={!mediaLoaded || zoom >= 3} onClick={() => nudgeZoom(0.1)}>+</button>
             </div>
           </label>
           <div className="wc-crop-dialog__actions">
-            <button type="button" onClick={reset}>Reset</button>
+            <button type="button" disabled={!mediaLoaded} onClick={reset}>Reset</button>
             <button type="button" onClick={onCancel}>Cancel</button>
             <button
               type="button"
               className="is-primary"
-              disabled={!completedArea}
+              disabled={!mediaLoaded || !completedArea}
               onClick={() => completedArea && onApply(completedArea)}
             >
               Apply crop
