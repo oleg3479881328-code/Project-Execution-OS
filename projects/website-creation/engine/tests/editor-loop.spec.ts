@@ -34,7 +34,7 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(inspector).toBeVisible()
   await expect(inspector.getByText('Hero photograph')).toBeVisible()
 
-  // Use the visible inspector control to prove the official Puck setData bridge persists a real user edit.
+  // Exercise sequential image edits. The photograph must remain selected after each atomic Puck update.
   const shape = inspector.locator('select').first()
   await expect(shape).toBeVisible()
   await shape.selectOption('square')
@@ -42,12 +42,20 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await shape.selectOption('portrait')
   await expect(heroFrame).toHaveAttribute('data-ratio', 'portrait')
 
+  const ranges = inspector.locator('input[type="range"]')
+  const zoom = ranges.nth(0)
+  await zoom.fill('1.25')
+  await expect(inspector.getByText('Zoom · 1.25×')).toBeVisible()
+  await zoom.fill('1')
+  await expect(inspector.getByText('Zoom · 1.00×')).toBeVisible()
+
   // Replace remains a contextual toolbar action, but delegates selection/upload to the proven Payload media picker.
   await editorCanvas.getByRole('button', { name: 'Replace photograph' }).click()
-  await expect(page.getByRole('heading', { name: 'Select Media' })).toBeVisible({ timeout: 5_000 })
+  const mediaHeading = page.getByRole('heading', { name: 'Select Media' })
+  await expect(mediaHeading).toBeVisible({ timeout: 5_000 })
   await expect(page.getByRole('button', { name: 'Upload New' })).toBeVisible()
-  await page.keyboard.press('Escape')
-  await expect(page.getByRole('heading', { name: 'Select Media' })).toHaveCount(0)
+  await mediaHeading.locator('..').locator('button').click()
+  await expect(mediaHeading).toHaveCount(0)
 
   const match = page.url().match(/\/admin\/puck-editor\/pages\/([^/?#]+)/)
   expect(match?.[1]).toBeTruthy()
