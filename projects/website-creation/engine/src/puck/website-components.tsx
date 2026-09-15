@@ -12,6 +12,7 @@ type MediaReference = {
 type ImageRatio = 'natural' | 'landscape' | 'portrait' | 'square'
 type ImageFitMode = 'fill' | 'fit'
 type ImageAlign = 'left' | 'center' | 'right'
+type CropAreaPercentages = { x: number; y: number; width: number; height: number }
 
 type LinkProps = {
   label?: string
@@ -48,6 +49,34 @@ const fitModeField = {
   ],
 }
 
+const cropField = (label: string) => ({ type: 'number' as const, label, min: 0, max: 100 })
+
+function readCropArea(
+  x?: number | null,
+  y?: number | null,
+  width?: number | null,
+  height?: number | null,
+): CropAreaPercentages | null {
+  if (![x, y, width, height].every((value) => typeof value === 'number' && Number.isFinite(value))) return null
+  const area = { x: x as number, y: y as number, width: width as number, height: height as number }
+  if (area.width <= 0 || area.height <= 0 || area.width > 100 || area.height > 100) return null
+  return area
+}
+
+function preciseCropImageStyle(area: CropAreaPercentages | null): React.CSSProperties | undefined {
+  if (!area) return undefined
+  return {
+    position: 'absolute',
+    width: `${10000 / area.width}%`,
+    height: 'auto',
+    maxWidth: 'none',
+    left: `${-(area.x / area.width) * 100}%`,
+    top: `${-(area.y / area.height) * 100}%`,
+    transform: 'none',
+    objectFit: 'fill',
+  }
+}
+
 function PublicImageFrame({
   image,
   alt,
@@ -57,6 +86,10 @@ function PublicImageFrame({
   zoom = 1,
   focalX = 50,
   focalY = 50,
+  cropAreaX,
+  cropAreaY,
+  cropAreaWidth,
+  cropAreaHeight,
   visualWidth,
   visualAlign = 'center',
   className = '',
@@ -69,11 +102,18 @@ function PublicImageFrame({
   zoom?: number
   focalX?: number
   focalY?: number
+  cropAreaX?: number | null
+  cropAreaY?: number | null
+  cropAreaWidth?: number | null
+  cropAreaHeight?: number | null
   visualWidth?: number
   visualAlign?: ImageAlign
   className?: string
 }) {
   if (!image?.url) return null
+  const cropArea = fitMode === 'fill' && ratio !== 'natural'
+    ? readCropArea(cropAreaX, cropAreaY, cropAreaWidth, cropAreaHeight)
+    : null
   const style = {
     '--wc-image-focal-x': `${focalX}%`,
     '--wc-image-focal-y': `${focalY}%`,
@@ -83,8 +123,17 @@ function PublicImageFrame({
 
   return (
     <figure className={`wc-public-image ${className}`.trim()} data-ratio={ratio} data-fit={fitMode} data-visual-align={visualAlign} style={style}>
-      <div className="wc-public-image__frame" data-ratio={ratio} data-fit={fitMode}>
-        <img src={image.url} alt={alt || image.alt || ''} />
+      <div
+        className="wc-public-image__frame"
+        data-ratio={ratio}
+        data-fit={fitMode}
+        data-crop={cropArea ? 'precise' : 'legacy'}
+        data-crop-x={cropArea?.x}
+        data-crop-y={cropArea?.y}
+        data-crop-width={cropArea?.width}
+        data-crop-height={cropArea?.height}
+      >
+        <img src={image.url} alt={alt || image.alt || ''} style={preciseCropImageStyle(cropArea)} />
       </div>
       {caption ? <figcaption>{caption}</figcaption> : null}
     </figure>
@@ -109,6 +158,10 @@ export const HeroSectionConfig: ComponentConfig<any> = {
     imageZoom: { type: 'number', label: 'Image zoom', min: 1, max: 3 },
     imageFocalX: { type: 'number', label: 'Image focal X (%)', min: 0, max: 100 },
     imageFocalY: { type: 'number', label: 'Image focal Y (%)', min: 0, max: 100 },
+    imageCropAreaX: cropField('Crop X (%)'),
+    imageCropAreaY: cropField('Crop Y (%)'),
+    imageCropAreaWidth: cropField('Crop width (%)'),
+    imageCropAreaHeight: cropField('Crop height (%)'),
   },
   defaultProps: {
     eyebrow: 'Independent service · Local experts',
@@ -127,8 +180,12 @@ export const HeroSectionConfig: ComponentConfig<any> = {
     imageZoom: 1,
     imageFocalX: 50,
     imageFocalY: 50,
+    imageCropAreaX: null,
+    imageCropAreaY: null,
+    imageCropAreaWidth: null,
+    imageCropAreaHeight: null,
   },
-  render: ({ eyebrow, title, highlight, body, primaryLabel, primaryHref, secondaryLabel, secondaryHref, image, imageAlt, imageCredit, imageRatio, imageFitMode, imageZoom, imageFocalX, imageFocalY }) => {
+  render: ({ eyebrow, title, highlight, body, primaryLabel, primaryHref, secondaryLabel, secondaryHref, image, imageAlt, imageCredit, imageRatio, imageFitMode, imageZoom, imageFocalX, imageFocalY, imageCropAreaX, imageCropAreaY, imageCropAreaWidth, imageCropAreaHeight }) => {
     const highlightedTitle = highlight && title.includes(highlight)
       ? <>{title.slice(0, title.indexOf(highlight))}<span>{highlight}</span>{title.slice(title.indexOf(highlight) + highlight.length)}</>
       : title
@@ -156,6 +213,10 @@ export const HeroSectionConfig: ComponentConfig<any> = {
               zoom={imageZoom ?? 1}
               focalX={imageFocalX ?? 50}
               focalY={imageFocalY ?? 50}
+              cropAreaX={imageCropAreaX}
+              cropAreaY={imageCropAreaY}
+              cropAreaWidth={imageCropAreaWidth}
+              cropAreaHeight={imageCropAreaHeight}
               className="wc-hero__image"
             />
           ) : (
@@ -250,6 +311,10 @@ export const ImageSectionConfig: ComponentConfig<any> = {
     zoom: { type: 'number', label: 'Zoom', min: 1, max: 3 },
     focalX: { type: 'number', label: 'Focal X (%)', min: 0, max: 100 },
     focalY: { type: 'number', label: 'Focal Y (%)', min: 0, max: 100 },
+    cropAreaX: cropField('Crop X (%)'),
+    cropAreaY: cropField('Crop Y (%)'),
+    cropAreaWidth: cropField('Crop width (%)'),
+    cropAreaHeight: cropField('Crop height (%)'),
     visualWidth: { type: 'number', label: 'Width (%)', min: 28, max: 100 },
     visualAlign: {
       type: 'select',
@@ -270,13 +335,17 @@ export const ImageSectionConfig: ComponentConfig<any> = {
     zoom: 1,
     focalX: 50,
     focalY: 50,
+    cropAreaX: null,
+    cropAreaY: null,
+    cropAreaWidth: null,
+    cropAreaHeight: null,
     visualWidth: 100,
     visualAlign: 'center',
   },
-  render: ({ image, imageAlt, caption, ratio, fitMode, zoom, focalX, focalY, visualWidth, visualAlign }) => (
+  render: ({ image, imageAlt, caption, ratio, fitMode, zoom, focalX, focalY, cropAreaX, cropAreaY, cropAreaWidth, cropAreaHeight, visualWidth, visualAlign }) => (
     <section className="wc-section wc-image-section" data-wc-section="image">
       <div className="wc-shell">
-        <PublicImageFrame image={image as MediaReference | null} alt={imageAlt} caption={caption} ratio={ratio} fitMode={fitMode} zoom={zoom} focalX={focalX} focalY={focalY} visualWidth={visualWidth} visualAlign={visualAlign} />
+        <PublicImageFrame image={image as MediaReference | null} alt={imageAlt} caption={caption} ratio={ratio} fitMode={fitMode} zoom={zoom} focalX={focalX} focalY={focalY} cropAreaX={cropAreaX} cropAreaY={cropAreaY} cropAreaWidth={cropAreaWidth} cropAreaHeight={cropAreaHeight} visualWidth={visualWidth} visualAlign={visualAlign} />
       </div>
     </section>
   ),
