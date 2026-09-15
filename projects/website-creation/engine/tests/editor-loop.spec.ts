@@ -29,15 +29,20 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(editorCanvas.getByRole('toolbar', { name: 'Image controls' })).toBeVisible()
   await expect(editorCanvas.getByRole('button', { name: 'Replace photograph' })).toBeVisible()
   await expect(editorCanvas.getByRole('button', { name: /Crop \/ move photograph/ })).toBeVisible()
-  await expect(page.locator('[data-wc-image-inspector="hero"]')).toBeVisible()
-  await expect(page.getByText('Hero photograph')).toBeVisible()
 
-  const shape = editorCanvas.getByRole('combobox', { name: 'Frame shape' })
+  const inspector = page.locator('[data-wc-image-inspector="hero"]')
+  await expect(inspector).toBeVisible()
+  await expect(inspector.getByText('Hero photograph')).toBeVisible()
+
+  // Use the visible inspector control to prove the official Puck setData bridge persists a real user edit.
+  const shape = inspector.locator('select').first()
+  await expect(shape).toBeVisible()
   await shape.selectOption('square')
   await expect(heroFrame).toHaveAttribute('data-ratio', 'square')
   await shape.selectOption('portrait')
   await expect(heroFrame).toHaveAttribute('data-ratio', 'portrait')
 
+  // Replace remains a contextual toolbar action, but delegates selection/upload to the proven Payload media picker.
   await editorCanvas.getByRole('button', { name: 'Replace photograph' }).click()
   await expect(page.getByRole('heading', { name: 'Select Media' })).toBeVisible({ timeout: 5_000 })
   await expect(page.getByRole('button', { name: 'Upload New' })).toBeVisible()
