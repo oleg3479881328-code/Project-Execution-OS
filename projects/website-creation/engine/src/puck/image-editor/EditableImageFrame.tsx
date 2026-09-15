@@ -101,6 +101,15 @@ function ToolbarIcon({ kind }: { kind: 'replace' | 'crop' | 'fit' | 'fill' | 're
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M9 7V4h6v3m-8 0 1 13h8l1-13M10 10v7m4-7v7"/></svg>
 }
 
+function getNativeInspectorHost(): HTMLElement | null {
+  try {
+    const doc = window.parent && window.parent !== window ? window.parent.document : document
+    return doc.querySelector<HTMLElement>('[data-wc-image-inspector-slot]')
+  } catch {
+    return null
+  }
+}
+
 export default function EditableImageFrame({
   blockId,
   image,
@@ -142,11 +151,27 @@ export default function EditableImageFrame({
 
   useEffect(() => {
     if (portalRef.current) registerOverlayPortal(portalRef.current)
+
+    // The IMAGE inspector belongs inside Puck's official `fields` override,
+    // not as a fixed layer over the editor shell. Keep the host synchronized
+    // with that native slot in case the fields panel remounts on selection.
+    let ownerDocument: Document
     try {
-      setInspectorHost(window.parent && window.parent !== window ? window.parent.document.body : document.body)
+      ownerDocument = window.parent && window.parent !== window ? window.parent.document : document
     } catch {
-      setInspectorHost(document.body)
+      setInspectorHost(null)
+      return
     }
+
+    const syncHost = () => setInspectorHost(ownerDocument.querySelector<HTMLElement>('[data-wc-image-inspector-slot]'))
+    syncHost()
+
+    const OwnerMutationObserver = ownerDocument.defaultView?.MutationObserver
+    if (!OwnerMutationObserver) return
+
+    const observer = new OwnerMutationObserver(syncHost)
+    observer.observe(ownerDocument.documentElement, { childList: true, subtree: true })
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
@@ -226,6 +251,7 @@ export default function EditableImageFrame({
   } as CSSProperties
 
   function activate() {
+    setInspectorHost(getNativeInspectorHost())
     setActive(true)
     dispatchEditorEvent('wc-image-layout-activate', { blockId })
   }
@@ -352,17 +378,15 @@ export default function EditableImageFrame({
 
   const inspector = active && inspectorHost
     ? createPortal(
-        <div style={{ position: 'fixed', top: 56, right: 0, bottom: 0, zIndex: 100000, width: 'clamp(330px, 28vw, 450px)', overflowY: 'auto', borderLeft: '1px solid var(--puck-color-border, #dcdcdc)', background: 'var(--puck-color-surface, #fff)', boxShadow: '-12px 0 28px rgba(0,0,0,.08)' }}>
-          <ImageInspectorPanel
-            selection={{ blockId, variant, allowLayoutResize }}
-            value={{ image, imageAlt, caption, ratio, fitMode: draftFitMode, zoom: draftZoom, focalX: draftFocalX, focalY: draftFocalY, cropArea: draftCropArea, visualWidth: width, visualAlign: align }}
-            onPatch={commitInspector}
-            onClose={() => {
-              emitAdjusting(false)
-              setActive(false)
-            }}
-          />
-        </div>,
+        <ImageInspectorPanel
+          selection={{ blockId, variant, allowLayoutResize }}
+          value={{ image, imageAlt, caption, ratio, fitMode: draftFitMode, zoom: draftZoom, focalX: draftFocalX, focalY: draftFocalY, cropArea: draftCropArea, visualWidth: width, visualAlign: align }}
+          onPatch={commitInspector}
+          onClose={() => {
+            emitAdjusting(false)
+            setActive(false)
+          }}
+        />,
         inspectorHost
       )
     : null
