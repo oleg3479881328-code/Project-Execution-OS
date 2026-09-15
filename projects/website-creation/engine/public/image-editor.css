@@ -155,17 +155,21 @@
 }
 
 .wc-crop-dialog {
-  position: fixed;
+  position: fixed !important;
   inset: 0;
-  z-index: 1000000;
+  z-index: 2147483647 !important;
+  isolation: isolate;
   display: grid;
   place-items: center;
   padding: 28px;
+  pointer-events: auto;
   background: rgba(3,5,7,.88);
   font-family: Arial, sans-serif;
 }
 
 .wc-crop-dialog__panel {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-rows: auto minmax(360px, 1fr) auto;
   width: min(920px, 94vw);
@@ -180,6 +184,8 @@
 }
 
 .wc-crop-dialog__header {
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -203,15 +209,21 @@
 
 .wc-crop-dialog__stage {
   position: relative;
+  z-index: 1;
   min-height: 360px;
+  overflow: hidden;
   background: #080a0d;
 }
 
 .wc-crop-dialog__controls {
+  position: relative;
+  z-index: 3;
   display: grid;
   gap: 16px;
   padding: 18px 20px 20px;
+  pointer-events: auto;
   border-top: 1px solid rgba(255,255,255,.12);
+  background: #111419;
 }
 .wc-crop-dialog__controls label { display: grid; gap: 8px; color: rgba(255,255,255,.76); font-size: 12px; }
 .wc-crop-dialog__controls input[type="range"] { width: 100%; }
