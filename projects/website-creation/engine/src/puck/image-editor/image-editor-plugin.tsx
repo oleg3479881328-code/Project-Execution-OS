@@ -1,9 +1,7 @@
 'use client'
 
 import { useEffect, type ReactNode } from 'react'
-import { createUsePuck, type Data, type Plugin } from '@puckeditor/core'
-
-const usePuck = createUsePuck()
+import { useGetPuck, type Plugin } from '@puckeditor/core'
 
 type ImagePatchDetail = {
   blockId?: string
@@ -11,29 +9,41 @@ type ImagePatchDetail = {
 }
 
 function ImagePatchBridge({ children }: { children: ReactNode }) {
-  const data = usePuck((state) => state.appState.data)
-  const dispatch = usePuck((state) => state.dispatch)
+  const getPuck = useGetPuck()
 
   useEffect(() => {
     const onImagePatch = (event: Event) => {
       const detail = (event as CustomEvent<ImagePatchDetail>).detail
       if (!detail?.blockId || !detail.patch) return
 
-      const next = {
-        ...data,
-        content: (data.content ?? []).map((block) =>
-          block.props?.id === detail.blockId
-            ? { ...block, props: { ...block.props, ...detail.patch } }
-            : block
-        ),
-      } as Data
+      const puck = getPuck()
+      const selector = puck.getSelectorForId(detail.blockId)
+      const current = puck.getItemById(detail.blockId)
 
-      dispatch({ type: 'setData', data: next })
+      if (!selector?.zone || !current) return
+
+      // Puck documents `setData` as an expensive whole-tree replacement and
+      // recommends atomic actions where possible. Replacing the selected node
+      // keeps its id and itemSelector stable, matching the proven Olga editor
+      // behavior where a photograph remains active across sequential edits.
+      puck.dispatch({
+        type: 'replace',
+        destinationIndex: selector.index,
+        destinationZone: selector.zone,
+        data: {
+          ...current,
+          props: {
+            ...current.props,
+            ...detail.patch,
+          },
+        },
+        ui: { itemSelector: selector },
+      })
     }
 
     window.addEventListener('wc-image-layout-change', onImagePatch)
     return () => window.removeEventListener('wc-image-layout-change', onImagePatch)
-  }, [data, dispatch])
+  }, [getPuck])
 
   return <>{children}</>
 }
