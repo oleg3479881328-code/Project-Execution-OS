@@ -142,16 +142,18 @@ export default function ImageInspectorPanel({ selection, value, onPatch, onClose
             disabled={value.ratio === 'natural' || value.fitMode === 'fit'}
             onClick={toggleAdjusting}
           >
-            {adjusting ? 'Done moving crop' : 'Crop / move photograph'}
+            {adjusting ? 'Crop dialog open' : 'Crop / move photograph'}
           </button>
           <div style={{ color: 'var(--puck-color-text-secondary, #666)', fontSize: 11, lineHeight: 1.45 }}>
             {value.ratio === 'natural'
               ? 'Choose Landscape, Portrait or Square to crop.'
               : value.fitMode === 'fit'
-                ? 'Fit shows the full photograph. Switch to Fill to reposition it inside the frame.'
+                ? 'Fit shows the full photograph. Switch to Fill to crop it.'
                 : adjusting
-                  ? 'Drag the photograph directly on the canvas. Use the Zoom slider for scale.'
-                  : 'Use Crop / move photograph, then drag the photograph inside its frame.'}
+                  ? 'Drag and zoom inside the crop dialog. Apply saves the crop; Cancel leaves the photograph unchanged.'
+                  : value.cropArea
+                    ? 'A saved crop is active. Open Crop / move photograph to adjust it.'
+                    : 'Use Crop / move photograph to open the focused crop dialog.'}
           </div>
         </div>
       </div>
