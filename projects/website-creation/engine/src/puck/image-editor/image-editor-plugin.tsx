@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, type ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { useGetPuck, type Plugin } from '@puckeditor/core'
 
 type ImagePatchDetail = {
@@ -86,9 +86,34 @@ function ImagePatchBridge({ children }: { children: ReactNode }) {
 }
 
 function ImageFieldsSlot({ children }: { children: ReactNode }) {
+  const slotRef = useRef<HTMLDivElement | null>(null)
+  const [visible, setVisible] = useState(false)
+
+  useLayoutEffect(() => {
+    const slot = slotRef.current
+    if (!slot) return
+
+    const syncVisibility = () => {
+      setVisible(slot.getClientRects().length > 0 && slot.offsetWidth > 0)
+    }
+
+    syncVisibility()
+
+    const OwnerResizeObserver = slot.ownerDocument.defaultView?.ResizeObserver
+    if (!OwnerResizeObserver) return
+
+    const observer = new OwnerResizeObserver(syncVisibility)
+    observer.observe(slot)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
-      <div data-wc-image-inspector-slot="" />
+      <div
+        ref={slotRef}
+        data-wc-image-inspector-slot={visible ? '' : undefined}
+        style={{ minHeight: 1, width: '100%' }}
+      />
       {children}
     </>
   )
@@ -99,8 +124,10 @@ export const imageEditorPlugin: Plugin = {
   overrides: {
     puck: ({ children }) => <ImagePatchBridge>{children}</ImagePatchBridge>,
     // Puck's official `fields` override is the native extension point for the
-    // right-hand fields panel. The image inspector portals into this slot so it
-    // participates in Puck layout instead of floating over Save / Publish.
+    // right-hand fields panel. Puck can keep multiple field panels mounted for
+    // responsive/editor states, so only the actually visible host advertises
+    // the image-inspector slot. This keeps IMAGE inside native layout without
+    // floating over Save / Publish or portalling into a hidden panel.
     fields: ({ children }) => <ImageFieldsSlot>{children}</ImageFieldsSlot>,
   },
 }
