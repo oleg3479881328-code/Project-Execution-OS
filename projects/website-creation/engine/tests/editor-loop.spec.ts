@@ -131,12 +131,28 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await inspector.getByRole('button', { name: 'Reset crop' }).click()
   await expect(heroFrame).toHaveAttribute('data-crop', 'legacy')
 
-  // Create a fresh precise crop and prove it survives the integration's real Save → reload → Publish lifecycle.
+  // Create a fresh precise crop, move the photograph with a real pointer drag,
+  // then prove that moved semantic crop survives Save → reload → Publish.
   await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
   await expect(cropDialog).toBeVisible()
   await cropDialog.getByRole('slider', { name: 'Crop zoom' }).fill('1.3')
   await expect(cropDialog.getByText('Zoom · 1.30×')).toBeVisible()
   await expect(cropDialog.getByRole('button', { name: 'Apply crop' })).toBeEnabled()
+
+  const cropStage = cropDialog.getByTestId('wc-crop-stage')
+  const stageBox = await cropStage.boundingBox()
+  expect(stageBox).toBeTruthy()
+  const dragStartX = stageBox!.x + stageBox!.width * 0.5
+  const dragStartY = stageBox!.y + stageBox!.height * 0.5
+  await page.mouse.move(dragStartX, dragStartY)
+  await page.mouse.down()
+  await page.mouse.move(
+    dragStartX + Math.min(90, stageBox!.width * 0.18),
+    dragStartY + Math.min(45, stageBox!.height * 0.1),
+    { steps: 10 },
+  )
+  await page.mouse.up()
+
   await cropDialog.getByRole('button', { name: 'Apply crop' }).click()
   await expect(cropDialog).toHaveCount(0)
   await expect(heroFrame).toHaveAttribute('data-crop', 'precise')
@@ -151,6 +167,15 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   expect(savedCrop.y).toBeTruthy()
   expect(savedCrop.width).toBeTruthy()
   expect(savedCrop.height).toBeTruthy()
+
+  // A centered percentage crop has a 50/50 center. A real drag must move the
+  // persisted semantic rectangle away from that center on at least one axis.
+  const savedCropCenterX = Number(savedCrop.x) + Number(savedCrop.width) / 2
+  const savedCropCenterY = Number(savedCrop.y) + Number(savedCrop.height) / 2
+  expect(
+    Math.abs(savedCropCenterX - 50) > 0.25
+      || Math.abs(savedCropCenterY - 50) > 0.25,
+  ).toBeTruthy()
 
   const saveResponsePromise = page.waitForResponse((response) => (
     response.url().includes(`/api/puck/pages/${pageId}`)
