@@ -74,7 +74,44 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   const cropDialog = page.getByRole('dialog', { name: 'Crop and move photograph' })
   await expect(cropDialog).toBeVisible()
   const cropZoom = cropDialog.getByRole('slider', { name: 'Crop zoom' })
-  await cropDialog.getByRole('button', { name: 'Zoom in crop' }).click()
+  const zoomInCrop = cropDialog.getByRole('button', { name: 'Zoom in crop' })
+  const hitTarget = await zoomInCrop.evaluate((button) => {
+    const rect = button.getBoundingClientRect()
+    const x = rect.left + rect.width / 2
+    const y = rect.top + rect.height / 2
+    const hit = document.elementFromPoint(x, y) as HTMLElement | null
+    const chain: Array<Record<string, string>> = []
+    let current = hit
+    for (let index = 0; current && index < 6; index += 1, current = current.parentElement) {
+      const style = getComputedStyle(current)
+      chain.push({
+        tag: current.tagName,
+        id: current.id,
+        className: String(current.className || ''),
+        position: style.position,
+        zIndex: style.zIndex,
+        pointerEvents: style.pointerEvents,
+        overflow: style.overflow,
+      })
+    }
+    return {
+      point: { x, y },
+      button: {
+        tag: button.tagName,
+        className: String((button as HTMLElement).className || ''),
+        rect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
+      },
+      hit: hit ? {
+        tag: hit.tagName,
+        id: hit.id,
+        className: String(hit.className || ''),
+        outerHTML: hit.outerHTML.slice(0, 800),
+      } : null,
+      chain,
+    }
+  })
+  console.log('WC_CROP_HIT_TARGET', JSON.stringify(hitTarget))
+  await zoomInCrop.click()
   await expect(cropDialog.getByText('Zoom · 1.10×')).toBeVisible()
   await cropDialog.getByRole('button', { name: 'Reset' }).click()
   await expect(cropDialog.getByText('Zoom · 1.00×')).toBeVisible()
