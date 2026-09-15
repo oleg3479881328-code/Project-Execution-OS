@@ -74,6 +74,10 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   const cropDialog = page.getByRole('dialog', { name: 'Crop and move photograph' })
   await expect(cropDialog).toBeVisible()
   const cropZoom = cropDialog.getByRole('slider', { name: 'Crop zoom' })
+  await cropDialog.getByRole('button', { name: 'Zoom in crop' }).click()
+  await expect(cropDialog.getByText('Zoom · 1.10×')).toBeVisible()
+  await cropDialog.getByRole('button', { name: 'Reset' }).click()
+  await expect(cropDialog.getByText('Zoom · 1.00×')).toBeVisible()
   await cropZoom.fill('1.35')
   await expect(cropDialog.getByText('Zoom · 1.35×')).toBeVisible()
   await expect(cropDialog.getByRole('button', { name: 'Apply crop' })).toBeEnabled()
@@ -92,7 +96,7 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   expect(savedCrop.width).toBeTruthy()
   expect(savedCrop.height).toBeTruthy()
 
-  // Reopen must restore the exact saved percentage rectangle; Cancel must not mutate it.
+  // Reopen must restore the exact saved percentage rectangle. Escape and Cancel must not mutate it.
   await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
   await expect(cropDialog).toBeVisible()
   await expect(cropDialog.getByText('Saved crop restored. Drag the photograph or adjust zoom.')).toBeVisible()
@@ -100,6 +104,13 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(cropDialog).toHaveAttribute('data-initial-crop-y', savedCrop.y!)
   await expect(cropDialog).toHaveAttribute('data-initial-crop-width', savedCrop.width!)
   await expect(cropDialog).toHaveAttribute('data-initial-crop-height', savedCrop.height!)
+  await page.keyboard.press('Escape')
+  await expect(cropDialog).toHaveCount(0)
+  await expect(heroFrame).toHaveAttribute('data-crop-x', savedCrop.x!)
+  await expect(heroFrame).toHaveAttribute('data-crop-y', savedCrop.y!)
+
+  await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
+  await expect(cropDialog).toBeVisible()
   await cropDialog.getByRole('button', { name: 'Cancel' }).click()
   await expect(cropDialog).toHaveCount(0)
   await expect(heroFrame).toHaveAttribute('data-crop-x', savedCrop.x!)
