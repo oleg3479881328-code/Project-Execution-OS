@@ -36,6 +36,10 @@ const heroConfig: ComponentConfig<any> = {
     imageZoom,
     imageFocalX,
     imageFocalY,
+    imageCropAreaX,
+    imageCropAreaY,
+    imageCropAreaWidth,
+    imageCropAreaHeight,
   }) => {
     const highlightedTitle = highlight && title.includes(highlight)
       ? <>{title.slice(0, title.indexOf(highlight))}<span>{highlight}</span>{title.slice(title.indexOf(highlight) + highlight.length)}</>
@@ -64,6 +68,10 @@ const heroConfig: ComponentConfig<any> = {
             zoom={imageZoom ?? 1}
             focalX={imageFocalX ?? 50}
             focalY={imageFocalY ?? 50}
+            cropAreaX={imageCropAreaX}
+            cropAreaY={imageCropAreaY}
+            cropAreaWidth={imageCropAreaWidth}
+            cropAreaHeight={imageCropAreaHeight}
             allowLayoutResize={false}
           />
         </div>
@@ -78,7 +86,7 @@ const imageSectionConfig: ComponentConfig<any> = {
     ...ImageSectionConfig.fields,
     image: createMediaField({ label: 'Image' }),
   },
-  render: ({ id, image, imageAlt, caption, ratio, fitMode, zoom, focalX, focalY, visualWidth, visualAlign }) => (
+  render: ({ id, image, imageAlt, caption, ratio, fitMode, zoom, focalX, focalY, cropAreaX, cropAreaY, cropAreaWidth, cropAreaHeight, visualWidth, visualAlign }) => (
     <section className="wc-section wc-image-section" data-wc-section="image">
       <div className="wc-shell">
         <PersistentEditableImageFrame
@@ -91,6 +99,10 @@ const imageSectionConfig: ComponentConfig<any> = {
           zoom={zoom ?? 1}
           focalX={focalX ?? 50}
           focalY={focalY ?? 50}
+          cropAreaX={cropAreaX}
+          cropAreaY={cropAreaY}
+          cropAreaWidth={cropAreaWidth}
+          cropAreaHeight={cropAreaHeight}
           visualWidth={visualWidth ?? 100}
           visualAlign={visualAlign || 'center'}
         />
