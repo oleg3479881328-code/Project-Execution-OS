@@ -1,7 +1,7 @@
 # Website Creator Engine — STATUS
 
 Date: 2026-09-15
-Status: ACTIVE — shared runtime + live editor loop + first image-editor interaction slice FULL GREEN
+Status: ACTIVE — shared runtime + live editor loop + precise crop interaction slice FULL GREEN
 
 ## Verified Engine Boundary
 
@@ -15,6 +15,7 @@ Implementation binding:
 - Payload CMS;
 - PostgreSQL;
 - Puck through `@delmaredigital/payload-puck`;
+- `react-easy-crop` 6.2.3 for focused crop/move/zoom interaction;
 - Playwright;
 - Docker Compose for local database startup;
 - Render staging deployment adapter through root `render.yaml`.
@@ -23,8 +24,8 @@ No Puck Cloud, Payload Cloud, Replit, Wix, Framer or other hosted website-builde
 
 ## Latest Full CI Verification
 
-Commit: `2c9f3e63d037e7ebd4aeeb7d5727de61c4cad9cd`
-Workflow: Website Creator Engine run `34916717349`
+Commit: `767502a3690e460f38207c9fd8bfa8d2dc3ef290`
+Workflow: Website Creator Engine run `34994907552`
 Job: `build-and-runtime-smoke`
 Result: PASS / FULL GREEN
 
@@ -41,16 +42,25 @@ Verified in one clean run:
 - authenticated editor load;
 - Hero image selection with contextual toolbar + IMAGE inspector;
 - sequential Shape change `portrait → square → portrait` without losing the active edit target;
-- sequential zoom edits while the same image remains active;
-- Replace action opening the Payload media picker;
-- supported media-picker close path;
+- Fit/Whole and Fill semantics operating on the same canonical image state;
+- legacy zoom/focal controls and Reset returning the image to legacy/default crop semantics;
+- focused Crop / move dialog backed by `react-easy-crop`;
+- crop zoom + Reset + Apply producing finite percentage crop geometry;
+- applied precise crop persisted in Puck state and rendered as `data-crop="precise"`;
+- reopening the crop dialog restoring the exact saved percentage rectangle;
+- Escape closing the shell modal without mutating saved crop state;
+- explicit Cancel closing the shell modal without mutating saved crop state;
+- Reset crop returning from precise crop to legacy/default semantics;
+- Replace action opening the Payload media picker and exposing Upload New;
 - draft mutation remaining invisible publicly;
 - versions endpoint availability;
 - publish mutation becoming visible publicly;
 - restoration of original published content;
 - browser/migration evidence upload.
 
-The previous red run `34915425336` is superseded by this green run. Do not reopen the old selection-persistence diagnosis unless a regression reproduces it.
+The diagnostic event trace used to locate the original non-finite crop geometry failure was removed before this clean verification. The acceptance now relies only on product-visible state and behavior.
+
+Earlier crop diagnostic run `34990898658` on commit `471f74cd53e9331a3273e8e78a5cd80f66a4f1cf` also passed, but the clean run above is the canonical evidence.
 
 ## Image Editor State Integration — Accepted Architecture
 
@@ -71,7 +81,25 @@ Architecture rule:
 
 `Puck selectedItem/itemSelector = source of truth → local image active state is derived/restored from it → no parallel selection model.`
 
+Precise crop metadata is also canonical component data, not editor-only DOM geometry. The crop dialog keeps transient interaction state locally and commits the normalized percentage rectangle only on Apply.
+
 Detailed decision record: `IMAGE_EDITOR_STATE_INTEGRATION_DECISION.md`.
+
+## Deterministic Seed Media Boundary
+
+Car Service Garage seed media no longer depends on the old external demo host, whose hard-coded `/assets/...` URLs returned 404.
+
+Deterministic engine-owned fixtures now live under:
+
+`public/seed-media/`
+
+They are same-origin test/seed fixtures for CI, local development and staging. They are not a replacement for real customer photography.
+
+Real owner-selected photographs continue to use Payload's Media collection and picker.
+
+Architecture rule:
+
+`deterministic seed evidence = same-origin engine fixture; real mutable site media = Payload Media.`
 
 ## Older Green Baseline
 
@@ -152,7 +180,10 @@ Current editor proof:
 - original content can be restored;
 - Hero uses the Payload/Puck media picker in the editor;
 - selected Hero image stays active through sequential atomic property replacements;
-- contextual toolbar and inspector remain available after Shape/zoom edits.
+- contextual toolbar and inspector remain available after Shape/zoom edits;
+- Fill/Whole and Reset semantics are browser-accepted;
+- precise crop Apply/reopen/Escape/Cancel behavior is browser-accepted;
+- crop geometry is persisted as normalized finite percentage metadata.
 
 ## Site Model Evidence
 
@@ -168,20 +199,17 @@ The current shape is empirically sufficient for the first seed/render/editor/QA 
 
 ## Current Limitations / Not Yet Verified
 
-The first image-editor continuity bug is solved, but the universal editor contract is not yet complete.
+The precise crop slice is accepted, but the universal editor contract is not yet complete.
 
 Still not fully browser-accepted end-to-end:
-- crop/move modal drag behavior;
-- crop persistence and reopen behavior;
-- Fill vs Whole semantics;
-- Reset crop semantics;
+- pointer drag/move gesture inside the cropper as a separate deterministic acceptance action;
 - alignment persistence;
 - visual width/direct resize persistence where applicable;
 - alt/caption persistence;
 - replace/remove persistence and editor/public-render parity;
-- image changes surviving Save Draft + reload;
-- image changes remaining draft-only until Publish;
-- image changes appearing publicly after Publish;
+- image changes surviving the owner-facing Save Draft action + full editor reload;
+- image changes remaining draft-only until owner-facing Publish;
+- the same image changes appearing publicly after owner-facing Publish;
 - version restore through owner-facing editor UI;
 - shared image behavior across more than the Hero block;
 - visual parity with the final accepted Car Service Garage design direction;
@@ -194,10 +222,10 @@ Still not fully browser-accepted end-to-end:
 Continue the universal image-editor acceptance contract in the shared engine, not client-specific code.
 
 Priority order:
-1. Add deterministic Playwright coverage for Fill / Whole + Reset semantics on the selected Hero image.
-2. Add crop/move modal acceptance: open, drag/zoom, Apply, reopen, verify persisted crop metadata/visual state.
-3. Verify Save Draft + reload persistence for image state while public remains unchanged.
-4. Verify Publish makes the same image state reach the public renderer.
+1. Verify an image-state change through the real owner-facing `Save` / Save Draft control, reload the editor, and prove the same semantic image state survives.
+2. Prove that saved draft image state remains absent from the public renderer until Publish.
+3. Publish through the owner-facing editor control and prove the same image state reaches the public renderer.
+4. Add deterministic pointer drag/move coverage inside the existing `react-easy-crop` dialog without replacing the library.
 5. Add replace/remove persistence coverage using the Payload media picker without relying on disposable client-specific assets.
 6. Expand the same image behavior to another applicable reusable block before calling the contract universal.
 7. Only then move to direct resize where the component contract actually permits it.
