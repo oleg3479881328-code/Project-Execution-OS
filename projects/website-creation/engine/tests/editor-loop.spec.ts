@@ -69,8 +69,9 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(inspector.getByText('Vertical · 50%')).toBeVisible()
 
   // Crop / move is library-backed and persists a percentage crop rectangle only on Apply.
+  // The focused dialog is an editor-shell overlay, while the photograph itself remains in Puck's canvas iframe.
   await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
-  const cropDialog = editorCanvas.getByRole('dialog', { name: 'Crop and move photograph' })
+  const cropDialog = page.getByRole('dialog', { name: 'Crop and move photograph' })
   await expect(cropDialog).toBeVisible()
   const cropZoom = cropDialog.getByRole('slider', { name: 'Crop zoom' })
   await cropZoom.fill('1.35')
