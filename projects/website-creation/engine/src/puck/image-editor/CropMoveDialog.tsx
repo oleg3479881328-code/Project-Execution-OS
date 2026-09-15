@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Cropper from 'react-easy-crop'
 import type { CropAreaPercentages, ImageRatio } from './types'
 
@@ -40,19 +40,21 @@ function clampZoom(value: number) {
 }
 
 export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, initialArea, onCancel, onApply }: Props) {
+  const dialogRef = useRef<HTMLDivElement | null>(null)
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [mediaLoaded, setMediaLoaded] = useState(false)
   const [completedArea, setCompletedArea] = useState<CropAreaPercentages | null>(() => initialArea ? normalizeArea(initialArea) : null)
 
   useEffect(() => {
+    const ownerWindow = dialogRef.current?.ownerDocument.defaultView ?? window
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return
       event.preventDefault()
       onCancel()
     }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
+    ownerWindow.addEventListener('keydown', onKeyDown)
+    return () => ownerWindow.removeEventListener('keydown', onKeyDown)
   }, [onCancel])
 
   const reset = () => {
@@ -67,6 +69,7 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
 
   return (
     <div
+      ref={dialogRef}
       className="wc-crop-dialog"
       role="dialog"
       aria-modal="true"
