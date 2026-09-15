@@ -6,35 +6,32 @@ Scope: shared Website Creator engine image-editor integration with Puck
 
 ## Decision
 
-Puck owns canonical editor selection.
+Puck owns canonical editor selection, Puck owns the native fields layout, and the existing Payload/Puck draft/publish lifecycle owns persistence.
 
-For reusable image editing inside the Website Creator engine:
+For reusable image editing:
 
-1. identify the edited Puck component by its stable component ID;
-2. resolve the current selector with Puck APIs;
-3. mutate only that component using the atomic `replace` action;
-4. preserve the component ID and `ui.itemSelector`;
-5. if the rendered image component remounts, restore only its transient local `active` UI state from Puck's canonical `selectedItem`;
-6. do not create a second selection store or parallel page-state model.
+1. identify the edited component by stable Puck component ID;
+2. resolve its selector through Puck APIs;
+3. mutate only that component with atomic `replace`;
+4. preserve component ID and `ui.itemSelector`;
+5. derive/restore transient local image activation from Puck `selectedItem` after remount;
+6. keep crop interaction transient until Apply;
+7. persist only finite normalized percentage crop geometry;
+8. render IMAGE controls inside Puck's official `Plugin.overrides.fields` layout;
+9. use the existing owner-facing Save and Publish controls for image persistence;
+10. do not create a parallel selection store, image store, crop engine, or client-specific editor.
 
 Canonical relationship:
 
-`Puck selectedItem/itemSelector → selected component identity → transient image active UI derived/restored from that identity`
+`Puck selection → selected image component → transient image UI → Apply → Puck component data → Save Draft → reload → Publish → public renderer`
 
-## Why
-
-The first generalized image-editor implementation used whole-page `setData` for image-property changes. Puck documents `setData` as expensive and recommends more atomic actions where possible.
-
-The engine was changed to use Puck `replace` for the selected component. That correctly updated the image data and preserved component identity, but the rendered component could still remount. The image frame inherited from the proven Olga interaction owned its visual `active` state locally, so a remount could make the inspector/toolbar appear to disappear even while Puck still considered the component selected.
-
-The correct fix is not to replace Puck selection with custom state. The adapter restores the local active image UI from Puck's canonical selection after remount.
-
-## Implementation Binding
+## Atomic State Integration
 
 Primary files:
 
 - `src/puck/image-editor/image-editor-plugin.tsx`
 - `src/puck/image-editor/PersistentEditableImageFrame.tsx`
+- `src/puck/image-editor/EditableImageFrame.tsx`
 - `src/puck/editor-config.client.tsx`
 - `tests/editor-loop.spec.ts`
 
@@ -45,165 +42,159 @@ image control
   → wc-image-layout-change
   → getSelectorForId(blockId)
   → getItemById(blockId)
-  → dispatch({ type: 'replace', ... , ui: { itemSelector: selector } })
-  → Puck state updates
-  → rendered component may remount
-  → PersistentEditableImageFrame reads selectedItem
-  → local image active UI is restored for the same selected component
+  → dispatch({ type: 'replace', ..., ui: { itemSelector: selector } })
+  → Puck state update
 ```
 
-The plugin may rebroadcast image activation into the same-origin editor canvas after replacement as a compatibility bridge for the inherited event-driven image UI. That bridge is not canonical state.
+Puck may remount the rendered component after `replace`. Local `active` UI may be restored from canonical Puck selection, but that local state is never a second source of truth.
+
+## Native IMAGE Inspector Boundary
+
+The IMAGE inspector belongs inside Puck's native right-hand fields layout.
+
+Accepted extension point:
+
+`Plugin.overrides.fields`
+
+Rejected approach:
+
+`document.body + fixed top/right coordinates`
+
+Reason: a fixed shell inspector can physically overlap native owner controls such as Save / Publish. Native layout integration preserves editor ownership and removes positional coupling.
+
+Puck may keep multiple fields containers mounted for responsive/editor states. Therefore the engine must not portal into the first matching DOM node. Only the actually visible official fields host may advertise the IMAGE inspector target.
+
+Canonical relationship:
+
+`Puck fields override → visible native fields host → IMAGE inspector`
 
 ## Crop Dialog / Shell Boundary
 
-The reusable Crop / move interaction is backed by `react-easy-crop` 6.2.3 rather than a custom crop engine.
+Crop / move uses `react-easy-crop` 6.2.3. The photograph stays in Puck's canvas iframe; the focused crop dialog lives in the editor-shell document.
 
-The photograph being edited remains rendered inside Puck's canvas iframe. The focused crop dialog is a portal in the editor-shell document.
+Rules:
 
-Therefore:
-
-- crop-dialog CSS must be available in the Payload/editor shell, not only inside the canvas iframe;
-- keyboard ownership belongs to the shell modal while it is open;
-- the dialog must take focus on open;
-- Escape handling must bind to the dialog's actual `ownerDocument.defaultView`, not assume the source iframe window;
-- Cancel and Escape close the dialog without committing transient crop state.
-
-Canonical relationship:
-
-`canvas image in Puck iframe → open focused shell modal → transient local crop interaction → Apply only → canonical Puck component data`
-
-The shell modal is an editor integration boundary, not a parallel page-state model.
+- crop modal CSS must be loaded in the shell;
+- the modal takes focus on open;
+- Escape handling binds to the modal's real `ownerDocument.defaultView`;
+- Cancel and Escape do not commit transient crop state;
+- Apply is the only path from transient crop interaction to canonical Puck data.
 
 ## Precise Crop Geometry
 
-Precise crop data is persisted as a normalized percentage rectangle rather than editor-only pixel geometry.
-
-The stored semantic fields represent:
-
-- crop X percentage;
-- crop Y percentage;
-- crop width percentage;
-- crop height percentage.
-
-The renderer prefers that precise rectangle when present. Existing `focalX` / `focalY` / `zoom` behavior remains the legacy fallback.
+Precise crop metadata is stored as normalized percentage rectangle fields: X, Y, width, height.
 
 Rules:
 
-- `react-easy-crop` may only commit geometry after the media is loaded;
-- every crop value must be finite before persistence;
-- invalid / non-finite geometry is rejected at the product boundary rather than serialized;
-- Apply commits the normalized rectangle;
-- reopen restores that exact rectangle;
-- Fit/Whole may hide crop visually without destroying the saved precise rectangle, so returning to Fill can restore it;
-- changing the image source or changing shape resets precise crop because the old crop geometry no longer describes the new media/frame contract;
-- Reset crop clears precise crop and returns to the legacy/default crop semantics.
+- media must be loaded before geometry can be committed;
+- every persisted crop value must be finite;
+- invalid/non-finite geometry is rejected;
+- reopen restores the exact saved rectangle;
+- legacy `focalX` / `focalY` / `zoom` remains fallback behavior;
+- Fit/Whole may hide a precise crop without destroying it;
+- image replacement or shape change resets precise crop;
+- Reset crop clears precise crop and returns to legacy/default semantics.
 
-Transient cropper state is local UI state until Apply. Canonical persisted crop metadata remains Puck component data.
+## Owner Save / Publish Lifecycle
+
+Website Creator does not add an image-specific persistence system.
+
+Accepted lifecycle:
+
+```text
+precise crop Apply
+  → canonical Puck component data
+  → owner Save
+  → draft PATCH
+  → full editor reload restores exact crop
+  → public renderer remains on previous published image state
+  → owner Publish
+  → published PATCH
+  → public renderer receives the same crop metadata
+```
+
+Bindings:
+
+- Save uses draft semantics and must not publish image changes;
+- reload must restore the same saved semantic image state;
+- public rendering ignores draft-only image changes;
+- Publish promotes the already-saved semantic image state rather than recomputing it;
+- acceptance restores seeded published state afterward so tests remain repeatable.
 
 ## Deterministic Seed Media Boundary
 
-The original Car Service Garage seed referenced hard-coded assets on an unrelated demo deployment. Those URLs returned 404 and caused the crop library to have no usable media geometry.
+CI/local/staging seed images are same-origin engine-owned fixtures under `public/seed-media/`.
 
-The accepted fix is not another external media host and not a custom crop workaround.
+They exist for deterministic evidence only. Real mutable customer media continues through Payload Media.
 
-Deterministic seed evidence now uses same-origin engine-owned fixtures under `public/seed-media/`.
+## Canonical Evidence
 
-Rules:
-
-- CI/local/staging seed fixtures must be self-contained and same-origin;
-- deterministic fixtures exist only to make engine behavior reproducible;
-- they do not replace real customer photography;
-- real owner-selected media continues through Payload Media.
-
-Canonical relationship:
-
-`deterministic engine fixture for seed/QA ≠ mutable customer media; customer media remains Payload-owned.`
-
-## Verified Evidence
-
-Superseded failing run:
-- GitHub Actions run `34915425336`;
-- first `portrait → square` mutation rendered correctly;
-- the next shape operation timed out because the active image inspector/interaction target was no longer usable after the replacement lifecycle.
-
-Selection-continuity green run:
-- GitHub Actions run `34916717349`;
-- commit `2c9f3e63d037e7ebd4aeeb7d5727de61c4cad9cd`;
-- sequential `portrait → square → portrait` edits passed while the same image remained actively editable;
-- sequential zoom edits passed;
-- Payload media picker opened from the contextual Replace action;
-- the rest of the draft/version/publish/restore browser loop also passed.
-
-Crop diagnostic green run:
-- GitHub Actions run `34990898658`;
-- commit `471f74cd53e9331a3273e8e78a5cd80f66a4f1cf`;
-- finite percentage crop Apply passed;
-- reopen restored exact crop metadata;
-- Escape and explicit Cancel preserved saved crop state.
-
-Canonical clean crop acceptance:
-- GitHub Actions run `34994907552`;
+Clean precise-crop baseline:
+- run `34994907552`;
 - commit `767502a3690e460f38207c9fd8bfa8d2dc3ef290`;
-- temporary crop event diagnostics were removed before the run;
-- TypeScript, migrations, production seed, production build, Chromium install and browser acceptance all passed;
-- browser evidence upload passed;
-- this is the canonical acceptance evidence for the current crop slice.
+- Apply/reopen/Escape/Cancel/Reset all passed without diagnostic trace code.
+
+Native fields + owner persistence acceptance:
+- run `35003482852`;
+- commit `727f4f00ea241a9d349acc51266ca673ca6ab0f5`;
+- TypeScript, migrations, production seed, production build, Chromium install, browser acceptance and evidence upload all passed;
+- IMAGE inspector rendered through Puck's official fields override;
+- only the visible fields host received the inspector;
+- native Save / Publish remained unobstructed and click-driven;
+- precise crop saved through owner Save using draft semantics;
+- exact crop survived full editor reload;
+- public renderer retained previous published crop while draft-only state existed;
+- owner Publish promoted the exact same precise crop into the public renderer;
+- seeded published state was restored after verification.
+
+Run `35003482852` is the canonical evidence for the current owner-facing semantic image-state lifecycle.
 
 ## Rejected Alternatives
 
-### Whole-page `setData` for every image control
-Rejected for this integration because it replaces more state than necessary and can destabilize transient editor UI.
-
-### Separate Website Creator image-selection store
-Rejected because Puck already owns canonical selected component state. A parallel store would create synchronization and lifecycle failure modes.
-
-### Custom crop engine
-Rejected. `react-easy-crop` already provides the required mature drag/zoom/crop interaction model. Website Creator should own only the integration and semantic persistence layer.
-
-### Keeping crop geometry as pixel-only editor state
-Rejected because public rendering and reload persistence require portable semantic data independent of the editor viewport dimensions.
-
-### Listening for Escape only in the source canvas iframe
-Rejected because the crop dialog is portaled into the shell document. A focused modal must own keyboard input in its actual document/window.
-
-### External demo-host seed images
-Rejected because deterministic engine QA must not depend on unrelated deployments or disposable asset URLs.
-
-### Fixing the Playwright test by re-clicking the image after every property change
-Rejected as the product behavior. The editor contract requires the selected image to remain actively editable through ordinary sequential control changes.
-
-### Client-specific workaround
-Rejected. The behavior belongs to the shared Website Creator editor adapter and must work for every Site Instance that uses the same reusable image component.
+- whole-page `setData` for ordinary image-property edits;
+- separate Website Creator image-selection store;
+- fixed IMAGE inspector over the editor shell;
+- magic top/right offsets to avoid header controls;
+- portalling into the first fields node found in the DOM;
+- custom crop engine;
+- pixel-only crop persistence;
+- Escape handling only in the source iframe;
+- image-specific Save/Publish store;
+- external demo-host seed media;
+- test-only re-clicks after every image property mutation;
+- client-specific editor workaround.
 
 ## Invariants Going Forward
 
-- component ID must not change during ordinary image-property edits;
 - canonical selection stays in Puck UI state;
-- image property changes use atomic component mutation where supported;
-- transient visual activation may be derived from canonical selection after remount;
-- toolbar, inspector and canvas must operate on the same selected image state;
-- crop modal focus/keyboard handling follows the modal's actual owner document;
-- transient cropper geometry stays local until Apply;
-- only finite normalized crop percentages may enter canonical state;
-- public rendering consumes persisted semantic image metadata rather than editor-only geometry;
-- deterministic seed media is same-origin and engine-owned;
-- real mutable site media remains managed by Payload Media;
-- any future editor/crop library replacement must preserve this behavioral contract even if the concrete APIs change.
+- ordinary image changes use atomic component mutation;
+- local activation is derived from canonical selection;
+- toolbar, inspector and canvas operate on the same selected image state;
+- IMAGE inspector lives in Puck's official fields layout;
+- only the visible Puck fields host receives the IMAGE portal;
+- Save / Publish remain unobstructed and normally clickable;
+- crop modal keyboard ownership follows its actual shell document;
+- transient crop geometry remains local until Apply;
+- only finite normalized crop percentages enter canonical data;
+- Save Draft persists semantic image state without publishing it;
+- reload restores saved draft image state exactly;
+- public rendering ignores draft-only image state;
+- Publish promotes the same semantic image state into public rendering;
+- deterministic seed media is engine-owned and same-origin;
+- real mutable media remains Payload Media owned.
 
 ## Next Acceptance Work
 
-Selection continuity and the focused precise crop slice are accepted. The universal image editor is still broader than this slice.
-
 Continue with:
-- owner-facing Save Draft / reload persistence for semantic image state;
-- draft/public isolation for the same image state;
-- owner-facing Publish parity;
-- deterministic pointer drag/move gesture coverage in the existing cropper;
-- replace/remove persistence;
-- alt/caption and applicable alignment/size persistence;
-- another applicable reusable image block;
+
+- deterministic pointer drag/move gesture coverage in the existing `react-easy-crop` dialog and carry that result through Save/reload/Publish;
+- alt/caption persistence;
+- applicable alignment and visual-width persistence;
+- replace/remove persistence through Payload Media;
+- another reusable image block;
+- owner-facing version restore;
 - direct semantic resize only where the component contract permits it.
 
 ## Final Rule
 
-Puck selection and component data are the source of truth. Website Creator integrates mature image-editing primitives around that state; it does not compete with them or rebuild them from scratch.
+Puck selection, Puck fields layout, and the Payload/Puck page lifecycle are the source of truth. Website Creator integrates mature image-editing primitives around those contracts; it does not rebuild or compete with them.
