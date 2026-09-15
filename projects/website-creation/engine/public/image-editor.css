@@ -25,6 +25,7 @@
 .wc-image-frame[data-ratio="landscape"] { aspect-ratio: 1.55 / 1; }
 .wc-public-image__frame[data-ratio="portrait"],
 .wc-image-frame[data-ratio="portrait"] { aspect-ratio: .82 / 1; }
+.wc-hero__image .wc-public-image__frame[data-ratio="portrait"],
 .wc-editable-image--hero .wc-image-frame[data-ratio="portrait"] { aspect-ratio: .9 / 1; }
 .wc-public-image__frame[data-ratio="square"],
 .wc-image-frame[data-ratio="square"] { aspect-ratio: 1 / 1; }
@@ -76,9 +77,6 @@
 
 /* Proven Olga image interaction contract, generalized for Website Creator. */
 .wc-image-frame.is-selected { outline: 2px solid var(--puck-color-selection-border, #65a8e8); outline-offset: -2px; }
-.wc-image-frame.is-adjusting { touch-action: none; cursor: grab; outline: 2px solid var(--puck-color-interactive, #0158ad); outline-offset: -2px; }
-.wc-image-frame.is-adjusting:active { cursor: grabbing; }
-.wc-image-frame.is-adjusting img { transition: none !important; }
 
 .wc-image-toolbar {
   position: absolute;
@@ -130,25 +128,6 @@
 .wc-image-toolbar__divider { width: 1px; height: 20px; margin: 0 3px; background: rgba(255,255,255,.22); }
 .wc-image-toolbar__zoom { min-width: 42px; text-align: center; font-size: 10px; font-variant-numeric: tabular-nums; opacity: .82; }
 
-.wc-image-edit-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 12px;
-  z-index: 21;
-  transform: translateX(-50%);
-  max-width: calc(100% - 24px);
-  padding: 7px 10px;
-  border-radius: 999px;
-  background: rgba(24,23,19,.82);
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  line-height: 1.25;
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
 .wc-image-edit-badge {
   position: absolute;
   right: 10px;
@@ -175,6 +154,81 @@
   text-transform: uppercase;
 }
 
+.wc-crop-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(3,5,7,.88);
+  font-family: Arial, sans-serif;
+}
+
+.wc-crop-dialog__panel {
+  display: grid;
+  grid-template-rows: auto minmax(360px, 1fr) auto;
+  width: min(920px, 94vw);
+  height: min(760px, 92vh);
+  min-height: 560px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 12px;
+  background: #111419;
+  box-shadow: 0 28px 80px rgba(0,0,0,.55);
+  color: #fff;
+}
+
+.wc-crop-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.wc-crop-dialog__header > div { display: grid; gap: 4px; }
+.wc-crop-dialog__header strong { font-size: 15px; }
+.wc-crop-dialog__header span { color: rgba(255,255,255,.62); font-size: 12px; }
+.wc-crop-dialog__header button {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.wc-crop-dialog__stage {
+  position: relative;
+  min-height: 360px;
+  background: #080a0d;
+}
+
+.wc-crop-dialog__controls {
+  display: grid;
+  gap: 16px;
+  padding: 18px 20px 20px;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+.wc-crop-dialog__controls label { display: grid; gap: 8px; color: rgba(255,255,255,.76); font-size: 12px; }
+.wc-crop-dialog__controls input[type="range"] { width: 100%; }
+.wc-crop-dialog__actions { display: flex; justify-content: flex-end; gap: 10px; }
+.wc-crop-dialog__actions button {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 6px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+.wc-crop-dialog__actions button.is-primary { border-color: #fff; background: #fff; color: #111419; }
+.wc-crop-dialog__actions button:disabled { cursor: not-allowed; opacity: .45; }
+
 .wc-editable-image { scale: var(--wc-review-scale, 1); transform-origin: var(--wc-fit-origin, top center); margin-bottom: calc(24px - var(--wc-fit-collapse, 0px)); }
 .moveable-control-box { z-index: 90 !important; }
 
@@ -189,8 +243,6 @@
 @media (max-width: 720px) {
   .wc-image-toolbar { left: 6px; right: 6px; max-width: none; overflow-x: auto; transform: translateY(-100%); }
   .wc-image-toolbar__zoom { display: none; }
-}
-
-@media (max-width: 620px) {
-  .wc-image-edit-hint { white-space: normal; width: max-content; }
+  .wc-crop-dialog { padding: 12px; }
+  .wc-crop-dialog__panel { width: 100%; height: 94vh; min-height: 0; grid-template-rows: auto minmax(260px, 1fr) auto; }
 }
