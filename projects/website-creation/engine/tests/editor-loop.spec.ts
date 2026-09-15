@@ -177,6 +177,15 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
       || Math.abs(savedCropCenterY - 50) > 0.25,
   ).toBeTruthy()
 
+  // Alt text and caption/credit are ordinary canonical image properties. They
+  // must ride the same owner Save/reload/Publish lifecycle as the moved crop.
+  const savedAlt = 'Website Creator acceptance mechanic photograph'
+  const savedCaption = 'Website Creator acceptance image credit'
+  await inspector.getByLabel('Alt text').fill(savedAlt)
+  await inspector.getByLabel('Caption / credit').fill(savedCaption)
+  await expect(heroFrame.locator('img')).toHaveAttribute('alt', savedAlt)
+  await expect(editorCanvas.getByText(savedCaption)).toBeVisible()
+
   const saveResponsePromise = page.waitForResponse((response) => (
     response.url().includes(`/api/puck/pages/${pageId}`)
     && response.request().method() === 'PATCH'
@@ -196,12 +205,17 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(heroFrame).toHaveAttribute('data-crop-y', savedCrop.y!)
   await expect(heroFrame).toHaveAttribute('data-crop-width', savedCrop.width!)
   await expect(heroFrame).toHaveAttribute('data-crop-height', savedCrop.height!)
+  await expect(heroFrame.locator('img')).toHaveAttribute('alt', savedAlt)
+  await expect(editorCanvas.getByText(savedCaption)).toBeVisible()
 
-  // Save is draft-only: the public renderer must still expose the previous published image state.
+  // Save is draft-only: public rendering must still expose the previous published image state and metadata.
   await page.goto('/')
-  const publicHeroFrame = page.locator('.wc-hero__image .wc-public-image__frame').first()
+  const publicHero = page.locator('.wc-hero__image .wc-public-image').first()
+  const publicHeroFrame = publicHero.locator('.wc-public-image__frame')
   await expect(publicHeroFrame).toBeVisible({ timeout: 10_000 })
   await expect(publicHeroFrame).toHaveAttribute('data-crop', 'legacy')
+  await expect(publicHero.locator('img')).not.toHaveAttribute('alt', savedAlt)
+  await expect(page.getByText(savedCaption)).toHaveCount(0)
 
   // Reopen the editor draft and publish through the integration's real owner-facing control.
   await page.goto('/editor')
@@ -209,6 +223,8 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(heroFrame).toBeVisible({ timeout: 15_000 })
   await expect(heroFrame).toHaveAttribute('data-crop', 'precise')
   await expect(heroFrame).toHaveAttribute('data-crop-x', savedCrop.x!)
+  await expect(heroFrame.locator('img')).toHaveAttribute('alt', savedAlt)
+  await expect(editorCanvas.getByText(savedCaption)).toBeVisible()
 
   const publishResponsePromise = page.waitForResponse((response) => (
     response.url().includes(`/api/puck/pages/${pageId}`)
@@ -228,6 +244,8 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(publicHeroFrame).toHaveAttribute('data-crop-y', savedCrop.y!)
   await expect(publicHeroFrame).toHaveAttribute('data-crop-width', savedCrop.width!)
   await expect(publicHeroFrame).toHaveAttribute('data-crop-height', savedCrop.height!)
+  await expect(publicHero.locator('img')).toHaveAttribute('alt', savedAlt)
+  await expect(publicHero.getByText(savedCaption)).toBeVisible()
 
   // Restore the canonical seeded published state so the acceptance remains repeatable.
   const restoreResponse = await page.request.patch(`/api/puck/pages/${pageId}`, {
@@ -238,6 +256,7 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await page.goto('/')
   await expect(page.getByText('Clear answers before parts get replaced. Diagnostics, maintenance and major mechanical work for the cars you depend on.')).toBeVisible()
   await expect(publicHeroFrame).toHaveAttribute('data-crop', 'legacy')
+  await expect(page.getByText(savedCaption)).toHaveCount(0)
 
   const versionsResponse = await page.request.get(`/api/puck/pages/${pageId}/versions?limit=5`)
   expect(versionsResponse.status()).not.toBe(404)
