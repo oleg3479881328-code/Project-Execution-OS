@@ -277,3 +277,141 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
 
   await page.screenshot({ path: 'test-results/website-creator-editor.png', fullPage: true })
 })
+
+test('reusable ImageSection persists visual width and alignment through owner Save and Publish', async ({ page }) => {
+  const email = process.env.WC_ADMIN_EMAIL
+  const password = process.env.WC_ADMIN_PASSWORD
+  expect(email, 'WC_ADMIN_EMAIL must be set for editor E2E').toBeTruthy()
+  expect(password, 'WC_ADMIN_PASSWORD must be set for editor E2E').toBeTruthy()
+
+  await page.goto('/admin/login')
+  await page.locator('#field-email').fill(email!)
+  await page.locator('#field-password').fill(password!)
+  await page.locator('form button[type="submit"]').click()
+  await expect(page).not.toHaveURL(/\/admin\/login/, { timeout: 15_000 })
+
+  await page.goto('/editor')
+  await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
+  const match = page.url().match(/\/admin\/puck-editor\/pages\/([^/?#]+)/)
+  expect(match?.[1]).toBeTruthy()
+  const pageId = match![1]
+
+  const publishedResponse = await page.request.get(`/api/puck/pages/${pageId}?draft=false`)
+  expect(publishedResponse.ok()).toBeTruthy()
+  const publishedJson = await publishedResponse.json()
+  const originalData = publishedJson.doc.puckData
+  expect(originalData?.content?.length).toBeGreaterThan(0)
+
+  const heroBlock = originalData.content.find((component: any) => component?.props?.id === 'hero')
+  expect(heroBlock?.props?.image?.url).toBeTruthy()
+
+  // Add a deterministic reusable ImageSection as draft-only test data. This is
+  // setup, not a client-specific production section; the original page is
+  // restored after acceptance.
+  const fixtureId = 'acceptance-image-section'
+  const imageSectionData = {
+    ...originalData,
+    content: [
+      ...originalData.content,
+      {
+        type: 'ImageSection',
+        props: {
+          id: fixtureId,
+          image: heroBlock.props.image,
+          imageAlt: 'Reusable ImageSection acceptance photograph',
+          caption: 'Reusable ImageSection acceptance fixture',
+          ratio: 'landscape',
+          fitMode: 'fill',
+          zoom: 1,
+          focalX: 50,
+          focalY: 50,
+          cropAreaX: null,
+          cropAreaY: null,
+          cropAreaWidth: null,
+          cropAreaHeight: null,
+          visualWidth: 100,
+          visualAlign: 'center',
+        },
+      },
+    ],
+  }
+
+  const setupResponse = await page.request.patch(`/api/puck/pages/${pageId}`, {
+    data: { puckData: imageSectionData, draft: true },
+  })
+  expect(setupResponse.ok()).toBeTruthy()
+
+  await page.goto('/editor')
+  await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
+  const editorCanvas = page.frameLocator('iframe').first()
+  const imageFigure = editorCanvas.locator('.wc-image-section .wc-editable-image--block').first()
+  const imageFrame = imageFigure.locator('.wc-image-frame')
+  await expect(imageFrame).toBeVisible({ timeout: 15_000 })
+  await imageFrame.click({ position: { x: 80, y: 80 } })
+
+  const inspector = page.locator(`[data-wc-image-inspector="${fixtureId}"]`)
+  await expect(inspector).toBeVisible()
+  await expect(inspector.getByText('Page photograph')).toBeVisible()
+  await expect(inspector.getByText('Width · 100%')).toBeVisible()
+
+  const width = inspector.getByLabel(/Width/)
+  await width.fill('64')
+  await expect(inspector.getByText('Width · 64%')).toBeVisible()
+  await expect(imageFigure).toHaveAttribute('style', /width: 64%/)
+
+  await inspector.getByRole('button', { name: 'Left', exact: true }).click()
+  await expect(imageFigure).toHaveAttribute('data-visual-align', 'left')
+  await inspector.getByRole('button', { name: 'Right', exact: true }).click()
+  await expect(imageFigure).toHaveAttribute('data-visual-align', 'right')
+
+  const saveResponsePromise = page.waitForResponse((response) => (
+    response.url().includes(`/api/puck/pages/${pageId}`)
+    && response.request().method() === 'PATCH'
+  ))
+  await page.getByRole('button', { name: /^Save$/ }).first().click()
+  const saveResponse = await saveResponsePromise
+  expect(saveResponse.ok()).toBeTruthy()
+  const saveBody = JSON.parse(saveResponse.request().postData() || '{}')
+  expect(saveBody.draft).toBe(true)
+
+  await page.reload()
+  await expect(imageFigure).toBeVisible({ timeout: 15_000 })
+  await expect(imageFigure).toHaveAttribute('style', /width: 64%/)
+  await expect(imageFigure).toHaveAttribute('data-visual-align', 'right')
+
+  // Draft-only test section must not leak into the published site.
+  await page.goto('/')
+  await expect(page.locator('[data-wc-section="image"]')).toHaveCount(0)
+
+  await page.goto('/editor')
+  await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
+  await expect(imageFigure).toBeVisible({ timeout: 15_000 })
+  await expect(imageFigure).toHaveAttribute('style', /width: 64%/)
+  await expect(imageFigure).toHaveAttribute('data-visual-align', 'right')
+
+  const publishResponsePromise = page.waitForResponse((response) => (
+    response.url().includes(`/api/puck/pages/${pageId}`)
+    && response.request().method() === 'PATCH'
+  ))
+  await page.getByRole('button', { name: /^Publish$/ }).first().click()
+  const publishResponse = await publishResponsePromise
+  expect(publishResponse.ok()).toBeTruthy()
+  const publishBody = JSON.parse(publishResponse.request().postData() || '{}')
+  expect(publishBody._status).toBe('published')
+
+  await page.goto('/')
+  const publicImageSection = page.locator('[data-wc-section="image"]').first()
+  const publicFigure = publicImageSection.locator('.wc-public-image')
+  await expect(publicFigure).toBeVisible({ timeout: 10_000 })
+  await expect(publicFigure).toHaveAttribute('style', /width: 64%/)
+  await expect(publicFigure).toHaveAttribute('data-visual-align', 'right')
+  await expect(publicImageSection.getByText('Reusable ImageSection acceptance fixture')).toBeVisible()
+
+  const restoreResponse = await page.request.patch(`/api/puck/pages/${pageId}`, {
+    data: { puckData: originalData, _status: 'published' },
+  })
+  expect(restoreResponse.ok()).toBeTruthy()
+
+  await page.goto('/')
+  await expect(page.locator('[data-wc-section="image"]')).toHaveCount(0)
+})
