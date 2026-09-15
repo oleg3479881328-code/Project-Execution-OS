@@ -42,12 +42,30 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await shape.selectOption('portrait')
   await expect(heroFrame).toHaveAttribute('data-ratio', 'portrait')
 
+  // Inspector and canvas toolbar must edit the same canonical image state.
+  await inspector.getByRole('button', { name: 'Fit full photo' }).click()
+  await expect(heroFrame).toHaveAttribute('data-fit', 'fit')
+  await expect(inspector.getByText('Fit shows the full photograph. Switch to Fill to reposition it inside the frame.')).toBeVisible()
+  await expect(editorCanvas.getByRole('button', { name: 'Fill frame / crop' })).toBeVisible()
+  await editorCanvas.getByRole('button', { name: 'Fill frame / crop' }).click()
+  await expect(heroFrame).toHaveAttribute('data-fit', 'fill')
+  await expect(inspector.getByText('Use Crop / move photograph, then drag the photograph inside its frame.')).toBeVisible()
+
   const ranges = inspector.locator('input[type="range"]')
   const zoom = ranges.nth(0)
+  const focalX = ranges.nth(1)
+  const focalY = ranges.nth(2)
   await zoom.fill('1.25')
   await expect(inspector.getByText('Zoom · 1.25×')).toBeVisible()
-  await zoom.fill('1')
+  await focalX.fill('35')
+  await focalY.fill('65')
+  await expect(inspector.getByText('Horizontal · 35%')).toBeVisible()
+  await expect(inspector.getByText('Vertical · 65%')).toBeVisible()
+  await inspector.getByRole('button', { name: 'Reset crop' }).click()
+  await expect(heroFrame).toHaveAttribute('data-fit', 'fill')
   await expect(inspector.getByText('Zoom · 1.00×')).toBeVisible()
+  await expect(inspector.getByText('Horizontal · 50%')).toBeVisible()
+  await expect(inspector.getByText('Vertical · 50%')).toBeVisible()
 
   // Replace remains a contextual toolbar action, but delegates selection/upload to the proven Payload media picker.
   await editorCanvas.getByRole('button', { name: 'Replace photograph' }).click()
