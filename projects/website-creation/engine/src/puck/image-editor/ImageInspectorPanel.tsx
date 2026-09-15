@@ -65,9 +65,10 @@ export default function ImageInspectorPanel({ selection, value, onPatch, onClose
   const [adjusting, setAdjusting] = useState(false)
 
   useEffect(() => {
+    // This panel is a view of the image frame's transient crop-dialog state.
+    // Do not emit `false` on mount/unmount: inserting another portal (the crop
+    // dialog) can remount this portal and would immediately close the dialog.
     setAdjusting(false)
-    emitAdjustMode(selection.blockId, false)
-    return () => emitAdjustMode(selection.blockId, false)
   }, [selection.blockId])
 
   useEffect(() => {
