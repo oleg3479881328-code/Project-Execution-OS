@@ -3,7 +3,7 @@
 import type { ComponentConfig } from '@puckeditor/core'
 import { editorConfig, extendConfig } from '@delmaredigital/payload-puck/config/editor'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
-import EditableImageFrame from './image-editor/EditableImageFrame'
+import PersistentEditableImageFrame from './image-editor/PersistentEditableImageFrame'
 import {
   HeroSectionConfig,
   ImageSectionConfig,
@@ -53,7 +53,7 @@ const heroConfig: ComponentConfig<any> = {
               {secondaryLabel && secondaryHref ? <a className="wc-button wc-button--secondary" href={secondaryHref}>{secondaryLabel}</a> : null}
             </div>
           </div>
-          <EditableImageFrame
+          <PersistentEditableImageFrame
             blockId={id}
             variant="hero"
             image={image ?? null}
@@ -81,7 +81,7 @@ const imageSectionConfig: ComponentConfig<any> = {
   render: ({ id, image, imageAlt, caption, ratio, fitMode, zoom, focalX, focalY, visualWidth, visualAlign }) => (
     <section className="wc-section wc-image-section" data-wc-section="image">
       <div className="wc-shell">
-        <EditableImageFrame
+        <PersistentEditableImageFrame
           blockId={id}
           image={image ?? null}
           imageAlt={imageAlt || image?.alt || ''}
