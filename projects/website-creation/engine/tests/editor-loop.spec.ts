@@ -134,7 +134,7 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   // Create a fresh precise crop and prove it survives the integration's real Save → reload → Publish lifecycle.
   await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
   await expect(cropDialog).toBeVisible()
-  await cropDialog.getByRole('slider', { name: 'Crop zoom' }).fill('1.30')
+  await cropDialog.getByRole('slider', { name: 'Crop zoom' }).fill('1.3')
   await expect(cropDialog.getByText('Zoom · 1.30×')).toBeVisible()
   await expect(cropDialog.getByRole('button', { name: 'Apply crop' })).toBeEnabled()
   await cropDialog.getByRole('button', { name: 'Apply crop' }).click()
