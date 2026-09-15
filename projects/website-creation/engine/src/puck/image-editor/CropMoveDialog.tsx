@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Cropper from 'react-easy-crop'
 import type { CropAreaPercentages, ImageRatio } from './types'
 
@@ -31,10 +31,34 @@ function aspectFor(ratio: Exclude<ImageRatio, 'natural'>, variant: 'hero' | 'blo
   return 1.55
 }
 
+function clampZoom(value: number) {
+  return Math.min(3, Math.max(1, value))
+}
+
 export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, initialArea, onCancel, onApply }: Props) {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [completedArea, setCompletedArea] = useState<CropAreaPercentages | null>(initialArea ?? null)
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      event.preventDefault()
+      onCancel()
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [onCancel])
+
+  const reset = () => {
+    setCrop({ x: 0, y: 0 })
+    setZoom(1)
+    setCompletedArea(null)
+  }
+
+  const nudgeZoom = (delta: number) => {
+    setZoom((current) => Math.round(clampZoom(current + delta) * 100) / 100)
+  }
 
   return (
     <div
@@ -47,7 +71,10 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
       data-initial-crop-y={initialArea?.y}
       data-initial-crop-width={initialArea?.width}
       data-initial-crop-height={initialArea?.height}
-      onPointerDown={(event) => event.stopPropagation()}
+      onPointerDown={(event) => {
+        event.stopPropagation()
+        if (event.target === event.currentTarget) onCancel()
+      }}
       onClick={(event) => event.stopPropagation()}
     >
       <div className="wc-crop-dialog__panel">
@@ -80,17 +107,22 @@ export default function CropMoveDialog({ imageUrl, imageAlt, ratio, variant, ini
         <div className="wc-crop-dialog__controls">
           <label>
             <span>Zoom · {zoom.toFixed(2)}×</span>
-            <input
-              aria-label="Crop zoom"
-              type="range"
-              min="1"
-              max="3"
-              step="0.01"
-              value={zoom}
-              onChange={(event) => setZoom(Number(event.currentTarget.value))}
-            />
+            <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', alignItems: 'center', gap: 10 }}>
+              <button type="button" aria-label="Zoom out crop" disabled={zoom <= 1} onClick={() => nudgeZoom(-0.1)}>−</button>
+              <input
+                aria-label="Crop zoom"
+                type="range"
+                min="1"
+                max="3"
+                step="0.01"
+                value={zoom}
+                onChange={(event) => setZoom(Number(event.currentTarget.value))}
+              />
+              <button type="button" aria-label="Zoom in crop" disabled={zoom >= 3} onClick={() => nudgeZoom(0.1)}>+</button>
+            </div>
           </label>
           <div className="wc-crop-dialog__actions">
+            <button type="button" onClick={reset}>Reset</button>
             <button type="button" onClick={onCancel}>Cancel</button>
             <button
               type="button"
