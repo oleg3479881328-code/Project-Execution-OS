@@ -1,7 +1,7 @@
 # Website Creator Engine — STATUS
 
 Date: 2026-09-15
-Status: ACTIVE — shared runtime + live editor loop + precise crop interaction slice FULL GREEN
+Status: ACTIVE — shared runtime + precise crop + owner Save/Publish image-state lifecycle FULL GREEN
 
 ## Verified Engine Boundary
 
@@ -24,12 +24,12 @@ No Puck Cloud, Payload Cloud, Replit, Wix, Framer or other hosted website-builde
 
 ## Latest Full CI Verification
 
-Commit: `767502a3690e460f38207c9fd8bfa8d2dc3ef290`
-Workflow: Website Creator Engine run `34994907552`
+Commit: `727f4f00ea241a9d349acc51266ca673ca6ab0f5`
+Workflow: Website Creator Engine run `35003482852`
 Job: `build-and-runtime-smoke`
 Result: PASS / FULL GREEN
 
-Verified in one clean run:
+Verified in one full run:
 - PostgreSQL startup;
 - checkout and dependency install;
 - TypeScript check;
@@ -41,6 +41,9 @@ Verified in one clean run:
 - production server startup;
 - authenticated editor load;
 - Hero image selection with contextual toolbar + IMAGE inspector;
+- IMAGE inspector integrated through Puck's official `fields` override instead of a fixed editor-shell layer;
+- only the actually visible Puck fields host advertises the IMAGE portal target, avoiding hidden responsive/editor panel instances;
+- native Puck Save / Publish controls remain unobstructed and normally clickable;
 - sequential Shape change `portrait → square → portrait` without losing the active edit target;
 - Fit/Whole and Fill semantics operating on the same canonical image state;
 - legacy zoom/focal controls and Reset returning the image to legacy/default crop semantics;
@@ -51,16 +54,27 @@ Verified in one clean run:
 - Escape closing the shell modal without mutating saved crop state;
 - explicit Cancel closing the shell modal without mutating saved crop state;
 - Reset crop returning from precise crop to legacy/default semantics;
-- Replace action opening the Payload media picker and exposing Upload New;
-- draft mutation remaining invisible publicly;
+- a fresh precise crop saved through the real owner-facing Puck `Save` action;
+- Save request using the integration's draft semantics (`draft: true`);
+- saved precise crop surviving a full editor reload with the exact same normalized rectangle;
+- draft-only precise crop remaining absent from the public renderer, which continued to expose the previous published legacy crop;
+- reopening the editor restoring the draft precise crop;
+- publishing through the real owner-facing Puck `Publish` action;
+- Publish request using `_status: 'published'`;
+- the exact saved precise crop becoming visible on the public renderer only after Publish;
+- restoration of the canonical seeded published state so acceptance remains repeatable;
 - versions endpoint availability;
-- publish mutation becoming visible publicly;
-- restoration of original published content;
+- Replace action opening the Payload media picker and exposing Upload New;
 - browser/migration evidence upload.
 
-The diagnostic event trace used to locate the original non-finite crop geometry failure was removed before this clean verification. The acceptance now relies only on product-visible state and behavior.
+This run is the canonical acceptance evidence for the current owner-facing semantic image-state lifecycle.
 
-Earlier crop diagnostic run `34990898658` on commit `471f74cd53e9331a3273e8e78a5cd80f66a4f1cf` also passed, but the clean run above is the canonical evidence.
+Earlier clean crop-only acceptance remains useful for regression comparison:
+- commit `767502a3690e460f38207c9fd8bfa8d2dc3ef290`;
+- Website Creator Engine run `34994907552`;
+- precise crop Apply/reopen/Escape/Cancel/Reset passed before the owner-facing Save/Publish slice was added.
+
+The diagnostic event trace used to locate the original non-finite crop geometry failure was removed before clean acceptance and is not part of the product contract.
 
 ## Image Editor State Integration — Accepted Architecture
 
@@ -81,7 +95,9 @@ Architecture rule:
 
 `Puck selectedItem/itemSelector = source of truth → local image active state is derived/restored from it → no parallel selection model.`
 
-Precise crop metadata is also canonical component data, not editor-only DOM geometry. The crop dialog keeps transient interaction state locally and commits the normalized percentage rectangle only on Apply.
+Precise crop metadata is canonical component data, not editor-only DOM geometry. The crop dialog keeps transient interaction state locally and commits the normalized percentage rectangle only on Apply.
+
+The IMAGE inspector belongs to Puck's native fields layout. Puck can keep multiple fields containers mounted for different editor/responsive states, so the integration portals only into the currently visible official fields host. It must never float over the editor header or interfere with Save / Publish.
 
 Detailed decision record: `IMAGE_EDITOR_STATE_INTEGRATION_DECISION.md`.
 
@@ -173,7 +189,8 @@ Current reusable section registry:
 Current editor proof:
 - `/editor` resolves to the canonical Puck editing route;
 - authenticated owner can enter the live editor;
-- Save and Publish actions are present;
+- Save and Publish actions are present and unobstructed by the image inspector;
+- IMAGE inspector uses Puck's official right-hand `fields` extension point;
 - draft and published states are behaviorally distinct;
 - version/history API path responds;
 - public renderer reflects published edits and not draft-only edits;
@@ -183,7 +200,10 @@ Current editor proof:
 - contextual toolbar and inspector remain available after Shape/zoom edits;
 - Fill/Whole and Reset semantics are browser-accepted;
 - precise crop Apply/reopen/Escape/Cancel behavior is browser-accepted;
-- crop geometry is persisted as normalized finite percentage metadata.
+- crop geometry is persisted as normalized finite percentage metadata;
+- precise crop survives owner-facing Save Draft and a full editor reload;
+- draft precise crop stays isolated from the public renderer;
+- owner-facing Publish moves the same precise crop into the public renderer.
 
 ## Site Model Evidence
 
@@ -199,7 +219,7 @@ The current shape is empirically sufficient for the first seed/render/editor/QA 
 
 ## Current Limitations / Not Yet Verified
 
-The precise crop slice is accepted, but the universal editor contract is not yet complete.
+The semantic precise-crop + owner Save/Publish lifecycle is accepted, but the universal editor contract is broader.
 
 Still not fully browser-accepted end-to-end:
 - pointer drag/move gesture inside the cropper as a separate deterministic acceptance action;
@@ -207,9 +227,6 @@ Still not fully browser-accepted end-to-end:
 - visual width/direct resize persistence where applicable;
 - alt/caption persistence;
 - replace/remove persistence and editor/public-render parity;
-- image changes surviving the owner-facing Save Draft action + full editor reload;
-- image changes remaining draft-only until owner-facing Publish;
-- the same image changes appearing publicly after owner-facing Publish;
 - version restore through owner-facing editor UI;
 - shared image behavior across more than the Hero block;
 - visual parity with the final accepted Car Service Garage design direction;
@@ -222,12 +239,12 @@ Still not fully browser-accepted end-to-end:
 Continue the universal image-editor acceptance contract in the shared engine, not client-specific code.
 
 Priority order:
-1. Verify an image-state change through the real owner-facing `Save` / Save Draft control, reload the editor, and prove the same semantic image state survives.
-2. Prove that saved draft image state remains absent from the public renderer until Publish.
-3. Publish through the owner-facing editor control and prove the same image state reaches the public renderer.
-4. Add deterministic pointer drag/move coverage inside the existing `react-easy-crop` dialog without replacing the library.
-5. Add replace/remove persistence coverage using the Payload media picker without relying on disposable client-specific assets.
-6. Expand the same image behavior to another applicable reusable block before calling the contract universal.
+1. Add deterministic pointer drag/move coverage inside the existing `react-easy-crop` dialog without replacing the library, and prove the resulting semantic crop persists through the already accepted Save/reload/Publish lifecycle.
+2. Add alt/caption persistence through owner-facing Save/reload/Publish.
+3. Add alignment and applicable visual-width persistence.
+4. Add replace/remove persistence coverage using the Payload media picker without relying on disposable client-specific assets.
+5. Expand the same image behavior to another applicable reusable block before calling the contract universal.
+6. Add version restore through owner-facing editor UI.
 7. Only then move to direct resize where the component contract actually permits it.
 8. Bring Car Service Garage visual output to the accepted reference direction using only shared components and Site Instance data.
 9. Validate a second, meaningfully different Site Instance without rebuilding generic infrastructure.
