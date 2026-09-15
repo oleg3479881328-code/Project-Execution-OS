@@ -63,9 +63,50 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(inspector.getByText('Vertical · 65%')).toBeVisible()
   await inspector.getByRole('button', { name: 'Reset crop' }).click()
   await expect(heroFrame).toHaveAttribute('data-fit', 'fill')
+  await expect(heroFrame).toHaveAttribute('data-crop', 'legacy')
   await expect(inspector.getByText('Zoom · 1.00×')).toBeVisible()
   await expect(inspector.getByText('Horizontal · 50%')).toBeVisible()
   await expect(inspector.getByText('Vertical · 50%')).toBeVisible()
+
+  // Crop / move is library-backed and persists a percentage crop rectangle only on Apply.
+  await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
+  const cropDialog = editorCanvas.getByRole('dialog', { name: 'Crop and move photograph' })
+  await expect(cropDialog).toBeVisible()
+  const cropZoom = cropDialog.getByRole('slider', { name: 'Crop zoom' })
+  await cropZoom.fill('1.35')
+  await expect(cropDialog.getByText('Zoom · 1.35×')).toBeVisible()
+  await expect(cropDialog.getByRole('button', { name: 'Apply crop' })).toBeEnabled()
+  await cropDialog.getByRole('button', { name: 'Apply crop' }).click()
+  await expect(cropDialog).toHaveCount(0)
+  await expect(heroFrame).toHaveAttribute('data-crop', 'precise')
+
+  const savedCrop = {
+    x: await heroFrame.getAttribute('data-crop-x'),
+    y: await heroFrame.getAttribute('data-crop-y'),
+    width: await heroFrame.getAttribute('data-crop-width'),
+    height: await heroFrame.getAttribute('data-crop-height'),
+  }
+  expect(savedCrop.x).toBeTruthy()
+  expect(savedCrop.y).toBeTruthy()
+  expect(savedCrop.width).toBeTruthy()
+  expect(savedCrop.height).toBeTruthy()
+
+  // Reopen must restore the exact saved percentage rectangle; Cancel must not mutate it.
+  await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
+  await expect(cropDialog).toBeVisible()
+  await expect(cropDialog.getByText('Saved crop restored. Drag the photograph or adjust zoom.')).toBeVisible()
+  await expect(cropDialog).toHaveAttribute('data-initial-crop-x', savedCrop.x!)
+  await expect(cropDialog).toHaveAttribute('data-initial-crop-y', savedCrop.y!)
+  await expect(cropDialog).toHaveAttribute('data-initial-crop-width', savedCrop.width!)
+  await expect(cropDialog).toHaveAttribute('data-initial-crop-height', savedCrop.height!)
+  await cropDialog.getByRole('button', { name: 'Cancel' }).click()
+  await expect(cropDialog).toHaveCount(0)
+  await expect(heroFrame).toHaveAttribute('data-crop-x', savedCrop.x!)
+  await expect(heroFrame).toHaveAttribute('data-crop-y', savedCrop.y!)
+
+  // Restore the initial image state so this acceptance run remains repeatable.
+  await inspector.getByRole('button', { name: 'Reset crop' }).click()
+  await expect(heroFrame).toHaveAttribute('data-crop', 'legacy')
 
   // Replace remains a contextual toolbar action, but delegates selection/upload to the proven Payload media picker.
   await editorCanvas.getByRole('button', { name: 'Replace photograph' }).click()
