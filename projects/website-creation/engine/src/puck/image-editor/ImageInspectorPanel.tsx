@@ -15,6 +15,15 @@ function emitAdjustMode(blockId: string, adjusting: boolean) {
   window.dispatchEvent(new CustomEvent('wc-image-adjust-mode', { detail: { blockId, adjusting } }))
 }
 
+function clearCropPatch() {
+  return {
+    cropAreaX: null,
+    cropAreaY: null,
+    cropAreaWidth: null,
+    cropAreaHeight: null,
+  }
+}
+
 const sectionStyle: React.CSSProperties = {
   padding: '16px 14px',
   borderTop: '1px solid var(--puck-color-border, #dedede)',
@@ -98,7 +107,11 @@ export default function ImageInspectorPanel({ selection, value, onPatch, onClose
       </div>
 
       <div style={sectionStyle}>
-        <MediaField value={value.image} onChange={(image) => onPatch({ image })} label="Image" />
+        <MediaField
+          value={value.image}
+          onChange={(image) => onPatch({ image, focalX: 50, focalY: 50, zoom: 1, ...clearCropPatch() })}
+          label="Image"
+        />
       </div>
 
       <div style={sectionStyle}>
@@ -106,7 +119,11 @@ export default function ImageInspectorPanel({ selection, value, onPatch, onClose
         <div style={{ display: 'grid', gap: 10 }}>
           <label>
             <span style={labelStyle}>Shape</span>
-            <select style={controlStyle} value={value.ratio} onChange={(event) => onPatch({ ratio: event.currentTarget.value })}>
+            <select
+              style={controlStyle}
+              value={value.ratio}
+              onChange={(event) => onPatch({ ratio: event.currentTarget.value, ...clearCropPatch() })}
+            >
               <option value="natural">Natural</option>
               <option value="landscape">Landscape</option>
               <option value="portrait">Portrait</option>
@@ -169,7 +186,7 @@ export default function ImageInspectorPanel({ selection, value, onPatch, onClose
             <span style={labelStyle}>Vertical · {Math.round(value.focalY)}%</span>
             <input style={{ width: '100%' }} type="range" min="0" max="100" step="1" value={value.focalY} onChange={(event) => onPatch({ focalY: Number(event.currentTarget.value) })} />
           </label>
-          <button type="button" style={{ ...buttonStyle, width: '100%' }} onClick={() => onPatch({ focalX: 50, focalY: 50, zoom: 1, fitMode: 'fill' })}>Reset crop</button>
+          <button type="button" style={{ ...buttonStyle, width: '100%' }} onClick={() => onPatch({ focalX: 50, focalY: 50, zoom: 1, fitMode: 'fill', ...clearCropPatch() })}>Reset crop</button>
         </div>
       </div>
 
