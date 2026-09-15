@@ -70,13 +70,6 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
 
   // Crop / move is library-backed and persists a percentage crop rectangle only on Apply.
   // The focused dialog is an editor-shell overlay, while the photograph itself remains in Puck's canvas iframe.
-  await page.evaluate(() => {
-    const traceWindow = window as typeof window & { __wcImagePatches?: unknown[] }
-    traceWindow.__wcImagePatches = []
-    window.addEventListener('wc-image-layout-change', (event) => {
-      traceWindow.__wcImagePatches?.push((event as CustomEvent).detail)
-    })
-  })
   await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
   const cropDialog = page.getByRole('dialog', { name: 'Crop and move photograph' })
   await expect(cropDialog).toBeVisible()
@@ -91,11 +84,6 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(cropDialog.getByRole('button', { name: 'Apply crop' })).toBeEnabled()
   await cropDialog.getByRole('button', { name: 'Apply crop' }).click()
   await expect(cropDialog).toHaveCount(0)
-  const cropPatchEvents = await page.evaluate(() => {
-    const traceWindow = window as typeof window & { __wcImagePatches?: unknown[] }
-    return traceWindow.__wcImagePatches ?? []
-  })
-  console.log('WC_CROP_PATCH_EVENTS', JSON.stringify(cropPatchEvents))
   await expect(heroFrame).toHaveAttribute('data-crop', 'precise')
 
   const savedCrop = {
