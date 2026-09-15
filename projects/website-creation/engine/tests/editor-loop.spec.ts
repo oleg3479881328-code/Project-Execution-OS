@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test('shared Website Creator editor loads and draft/publish changes reach the public renderer', async ({ page }) => {
+test('shared Website Creator editor loads, edits images, and draft/publish changes reach the public renderer', async ({ page }) => {
   const email = process.env.WC_ADMIN_EMAIL
   const password = process.env.WC_ADMIN_PASSWORD
   expect(email, 'WC_ADMIN_EMAIL must be set for editor E2E').toBeTruthy()
@@ -20,6 +20,42 @@ test('shared Website Creator editor loads and draft/publish changes reach the pu
   const editorCanvas = page.frameLocator('iframe').first()
   await expect(editorCanvas.getByText('Diagnose. Repair. Drive.').first()).toBeVisible({ timeout: 15_000 })
   await expect(editorCanvas.getByText('Explore our services').first()).toBeVisible({ timeout: 15_000 })
+  await expect(editorCanvas.locator('.wc-service-card__image')).toHaveCount(6)
+
+  // Proven Olga image interaction contract, now generalized for Website Creator.
+  const heroFrame = editorCanvas.locator('.wc-editable-image--hero .wc-image-frame').first()
+  await expect(heroFrame).toBeVisible({ timeout: 15_000 })
+  await heroFrame.click({ position: { x: 80, y: 80 } })
+  await expect(editorCanvas.getByRole('toolbar', { name: 'Image controls' })).toBeVisible()
+  await expect(editorCanvas.getByRole('button', { name: 'Replace photograph' })).toBeVisible()
+  await expect(editorCanvas.getByRole('button', { name: /Crop \/ move photograph/ })).toBeVisible()
+
+  const inspector = page.locator('[data-wc-image-inspector="hero"]')
+  await expect(inspector).toBeVisible()
+  await expect(inspector.getByText('Hero photograph')).toBeVisible()
+
+  // Exercise sequential image edits. The photograph must remain selected after each atomic Puck update.
+  const shape = inspector.locator('select').first()
+  await expect(shape).toBeVisible()
+  await shape.selectOption('square')
+  await expect(heroFrame).toHaveAttribute('data-ratio', 'square')
+  await shape.selectOption('portrait')
+  await expect(heroFrame).toHaveAttribute('data-ratio', 'portrait')
+
+  const ranges = inspector.locator('input[type="range"]')
+  const zoom = ranges.nth(0)
+  await zoom.fill('1.25')
+  await expect(inspector.getByText('Zoom · 1.25×')).toBeVisible()
+  await zoom.fill('1')
+  await expect(inspector.getByText('Zoom · 1.00×')).toBeVisible()
+
+  // Replace remains a contextual toolbar action, but delegates selection/upload to the proven Payload media picker.
+  await editorCanvas.getByRole('button', { name: 'Replace photograph' }).click()
+  const mediaHeading = page.getByRole('heading', { name: 'Select Media' })
+  await expect(mediaHeading).toBeVisible({ timeout: 5_000 })
+  await expect(page.getByRole('button', { name: 'Upload New' })).toBeVisible()
+  await mediaHeading.locator('..').locator('button').click()
+  await expect(mediaHeading).toHaveCount(0)
 
   const match = page.url().match(/\/admin\/puck-editor\/pages\/([^/?#]+)/)
   expect(match?.[1]).toBeTruthy()
@@ -44,6 +80,8 @@ test('shared Website Creator editor loads and draft/publish changes reach the pu
 
   await page.goto('/')
   await expect(page.getByText(marker)).toHaveCount(0)
+  await expect(page.locator('.wc-hero__image img')).toBeVisible()
+  await expect(page.locator('.wc-service-card__image')).toHaveCount(6)
 
   const versionsResponse = await page.request.get(`/api/puck/pages/${pageId}/versions?limit=5`)
   expect(versionsResponse.status()).not.toBe(404)
