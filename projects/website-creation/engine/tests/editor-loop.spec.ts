@@ -124,7 +124,7 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
 
   await editorCanvas.getByRole('button', { name: 'Crop / move photograph' }).click()
   await expect(cropDialog).toBeVisible()
-  await cropDialog.getByRole('button', { name: 'Cancel' }).click()
+  await cropDialog.getByRole('button', { name: 'Cancel', exact: true }).click()
   await expect(cropDialog).toHaveCount(0)
   await expect(heroFrame).toHaveAttribute('data-crop-x', savedCrop.x!)
   await expect(heroFrame).toHaveAttribute('data-crop-y', savedCrop.y!)
