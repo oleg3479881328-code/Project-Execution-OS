@@ -210,7 +210,7 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
 
   // Save is draft-only: public rendering must still expose the previous published image state and metadata.
   await page.goto('/')
-  const publicHero = page.locator('.wc-hero__image .wc-public-image').first()
+  const publicHero = page.locator('.wc-public-image.wc-hero__image').first()
   const publicHeroFrame = publicHero.locator('.wc-public-image__frame')
   await expect(publicHeroFrame).toBeVisible({ timeout: 10_000 })
   await expect(publicHeroFrame).toHaveAttribute('data-crop', 'legacy')
