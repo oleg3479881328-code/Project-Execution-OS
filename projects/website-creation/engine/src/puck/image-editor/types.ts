@@ -4,6 +4,13 @@ export type ImageRatio = 'natural' | 'landscape' | 'portrait' | 'square'
 export type ImageFitMode = 'fill' | 'fit'
 export type ImageAlign = 'left' | 'center' | 'right'
 
+export type CropAreaPercentages = {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
 export type EditableImageValue = {
   image: MediaReference | null
   imageAlt: string
@@ -13,6 +20,7 @@ export type EditableImageValue = {
   zoom: number
   focalX: number
   focalY: number
+  cropArea?: CropAreaPercentages | null
   visualWidth?: number
   visualAlign?: ImageAlign
 }
