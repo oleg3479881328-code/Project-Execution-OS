@@ -22,10 +22,9 @@ function ImagePatchBridge({ children }: { children: ReactNode }) {
 
       if (!selector?.zone || !current) return
 
-      // Puck documents `setData` as an expensive whole-tree replacement and
-      // recommends atomic actions where possible. Replacing the selected node
-      // keeps its id and itemSelector stable, matching the proven Olga editor
-      // behavior where a photograph remains active across sequential edits.
+      // Match Puck's own field editing path: update only the selected node.
+      // Whole-tree setData updates are intentionally avoided here because Puck
+      // documents them as expensive and they can reset transient editor state.
       puck.dispatch({
         type: 'replace',
         destinationIndex: selector.index,
@@ -38,6 +37,18 @@ function ImagePatchBridge({ children }: { children: ReactNode }) {
           },
         },
         ui: { itemSelector: selector },
+      })
+
+      // The replace action can remount the rendered component even though its
+      // Puck selection is preserved. Olga's image controls are event-driven, so
+      // re-emit the same activation after React commits the replacement. This
+      // keeps the photograph selected for sequential crop/shape/zoom edits.
+      window.requestAnimationFrame(() => {
+        window.dispatchEvent(
+          new CustomEvent('wc-image-layout-activate', {
+            detail: { blockId: detail.blockId },
+          }),
+        )
       })
     }
 
