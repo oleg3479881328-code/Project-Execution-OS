@@ -1,25 +1,13 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
+import type { CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { registerOverlayPortal } from '@puckeditor/core'
 import Moveable from 'react-moveable'
+import CropMoveDialog from './CropMoveDialog'
 import ImageInspectorPanel from './ImageInspectorPanel'
-import type { ImageAlign, ImageFitMode, ImageRatio, MediaReference } from './types'
-
-type DragState = {
-  pointerId: number
-  x: number
-  y: number
-  focalX: number
-  focalY: number
-  width: number
-  height: number
-  zoom: number
-}
-
-type CropPoint = { x: number; y: number }
+import type { CropAreaPercentages, ImageAlign, ImageFitMode, ImageRatio, MediaReference } from './types'
 
 type Props = {
   blockId: string
@@ -31,6 +19,10 @@ type Props = {
   zoom?: number
   focalX?: number
   focalY?: number
+  cropAreaX?: number | null
+  cropAreaY?: number | null
+  cropAreaWidth?: number | null
+  cropAreaHeight?: number | null
   variant?: 'hero' | 'block'
   visualWidth?: number
   visualAlign?: ImageAlign
@@ -39,6 +31,36 @@ type Props = {
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
+}
+
+function readCropArea(
+  x?: number | null,
+  y?: number | null,
+  width?: number | null,
+  height?: number | null,
+): CropAreaPercentages | null {
+  if (![x, y, width, height].every((value) => typeof value === 'number' && Number.isFinite(value))) return null
+  const area = { x: x as number, y: y as number, width: width as number, height: height as number }
+  if (area.width <= 0 || area.height <= 0 || area.width > 100 || area.height > 100) return null
+  return area
+}
+
+function preciseCropImageStyle(area: CropAreaPercentages | null): CSSProperties | undefined {
+  if (!area) return undefined
+  return {
+    position: 'absolute',
+    width: `${10000 / area.width}%`,
+    height: 'auto',
+    maxWidth: 'none',
+    left: `${-(area.x / area.width) * 100}%`,
+    top: `${-(area.y / area.height) * 100}%`,
+    transform: 'none',
+    objectFit: 'fill',
+  }
+}
+
+function cropNullPatch() {
+  return { cropAreaX: null, cropAreaY: null, cropAreaWidth: null, cropAreaHeight: null }
 }
 
 function dispatchEditorEvent(name: string, detail: Record<string, unknown>) {
@@ -60,6 +82,10 @@ function heroCropPatch(patch: Record<string, unknown>) {
     else if (key === 'zoom') mapped.imageZoom = value
     else if (key === 'focalX') mapped.imageFocalX = value
     else if (key === 'focalY') mapped.imageFocalY = value
+    else if (key === 'cropAreaX') mapped.imageCropAreaX = value
+    else if (key === 'cropAreaY') mapped.imageCropAreaY = value
+    else if (key === 'cropAreaWidth') mapped.imageCropAreaWidth = value
+    else if (key === 'cropAreaHeight') mapped.imageCropAreaHeight = value
     else if (key === 'caption') mapped.imageCredit = value
     else mapped[key] = value
   }
@@ -85,6 +111,10 @@ export default function EditableImageFrame({
   zoom = 1,
   focalX = 50,
   focalY = 50,
+  cropAreaX,
+  cropAreaY,
+  cropAreaWidth,
+  cropAreaHeight,
   variant = 'block',
   visualWidth,
   visualAlign = 'center',
@@ -97,20 +127,18 @@ export default function EditableImageFrame({
   const [draftFocalY, setDraftFocalY] = useState(clamp(focalY, 0, 100))
   const [draftZoom, setDraftZoom] = useState(clamp(zoom, 1, 3))
   const [draftFitMode, setDraftFitMode] = useState<ImageFitMode>(fitMode)
+  const [draftCropArea, setDraftCropArea] = useState<CropAreaPercentages | null>(() => readCropArea(cropAreaX, cropAreaY, cropAreaWidth, cropAreaHeight))
   const [reviewScale, setReviewScale] = useState(1)
   const [fitCollapse, setFitCollapse] = useState(0)
   const [inspectorHost, setInspectorHost] = useState<HTMLElement | null>(null)
-  const dragRef = useRef<DragState | null>(null)
-  const lastPanPointRef = useRef<CropPoint | null>(null)
-  const panReleaseCleanupRef = useRef<(() => void) | null>(null)
   const portalRef = useRef<HTMLElement | null>(null)
-  const cropFrameRef = useRef<HTMLDivElement | null>(null)
 
   const width = typeof visualWidth === 'number' ? clamp(visualWidth, 28, 100) : undefined
   const align: ImageAlign = visualAlign ?? 'center'
   const imageUrl = image?.url || ''
   const canCrop = Boolean(imageUrl) && ratio !== 'natural' && draftFitMode === 'fill'
   const canZoom = Boolean(imageUrl) && ratio !== 'natural' && draftFitMode === 'fill'
+  const cropRatio = ratio === 'natural' ? null : ratio
 
   useEffect(() => {
     if (portalRef.current) registerOverlayPortal(portalRef.current)
@@ -121,20 +149,13 @@ export default function EditableImageFrame({
     }
   }, [])
 
-  useEffect(() => () => {
-    panReleaseCleanupRef.current?.()
-    panReleaseCleanupRef.current = null
-    dragRef.current = null
-    lastPanPointRef.current = null
-  }, [])
-
   useEffect(() => {
-    if (dragRef.current) return
     setDraftFocalX(clamp(focalX, 0, 100))
     setDraftFocalY(clamp(focalY, 0, 100))
     setDraftZoom(clamp(zoom, 1, 3))
     setDraftFitMode(fitMode)
-  }, [focalX, focalY, zoom, fitMode])
+    setDraftCropArea(readCropArea(cropAreaX, cropAreaY, cropAreaWidth, cropAreaHeight))
+  }, [focalX, focalY, zoom, fitMode, cropAreaX, cropAreaY, cropAreaWidth, cropAreaHeight])
 
   useEffect(() => {
     const onActivate = (event: Event) => {
@@ -213,12 +234,23 @@ export default function EditableImageFrame({
     dispatchPatch(blockId, variant === 'hero' ? heroCropPatch(patch) : patch)
   }
 
+  function clearPreciseCrop() {
+    setDraftCropArea(null)
+    return cropNullPatch()
+  }
+
   function commitInspector(patch: Record<string, unknown>) {
+    let nextPatch = { ...patch }
     if (typeof patch.focalX === 'number') setDraftFocalX(clamp(patch.focalX, 0, 100))
     if (typeof patch.focalY === 'number') setDraftFocalY(clamp(patch.focalY, 0, 100))
     if (typeof patch.zoom === 'number') setDraftZoom(clamp(patch.zoom, 1, 3))
     if (patch.fitMode === 'fill' || patch.fitMode === 'fit') setDraftFitMode(patch.fitMode)
-    commit(patch)
+
+    const changesLegacyCrop = typeof patch.focalX === 'number'
+      || typeof patch.focalY === 'number'
+      || (typeof patch.zoom === 'number' && !patch.fitMode)
+    if (changesLegacyCrop) nextPatch = { ...nextPatch, ...clearPreciseCrop() }
+    commit(nextPatch)
   }
 
   function emitAdjusting(next: boolean) {
@@ -227,22 +259,30 @@ export default function EditableImageFrame({
   }
 
   function setShape(next: ImageRatio) {
-    if (next === 'natural') emitAdjusting(false)
-    commitInspector({ ratio: next })
+    emitAdjusting(false)
+    setDraftCropArea(null)
+    commit({ ratio: next, ...cropNullPatch() })
   }
 
   function setFit(next: ImageFitMode) {
+    emitAdjusting(false)
+    setDraftFitMode(next)
     if (next === 'fit') {
-      emitAdjusting(false)
-      commitInspector({ fitMode: 'fit', zoom: 1 })
+      setDraftZoom(1)
+      commit({ fitMode: 'fit', zoom: 1 })
     } else {
-      commitInspector({ fitMode: 'fill' })
+      commit({ fitMode: 'fill' })
     }
   }
 
   function resetCrop() {
     emitAdjusting(false)
-    commitInspector({ focalX: 50, focalY: 50, zoom: 1, fitMode: 'fill' })
+    setDraftFocalX(50)
+    setDraftFocalY(50)
+    setDraftZoom(1)
+    setDraftFitMode('fill')
+    setDraftCropArea(null)
+    commit({ focalX: 50, focalY: 50, zoom: 1, fitMode: 'fill', ...cropNullPatch() })
   }
 
   function inspectorRoot() {
@@ -278,130 +318,36 @@ export default function EditableImageFrame({
     else commitInspector({ image: null })
   }
 
-  function cropPoint(drag: DragState, clientX: number, clientY: number) {
-    const sensitivity = Math.max(1, drag.zoom)
-    return {
-      x: clamp(drag.focalX - ((clientX - drag.x) / drag.width) * 100 / sensitivity, 0, 100),
-      y: clamp(drag.focalY - ((clientY - drag.y) / drag.height) * 100 / sensitivity, 0, 100),
-    }
-  }
-
-  function clearPanReleaseListeners() {
-    panReleaseCleanupRef.current?.()
-    panReleaseCleanupRef.current = null
-  }
-
-  function finishPan(pointerId: number, clientX?: number, clientY?: number) {
-    const drag = dragRef.current
-    if (!drag || drag.pointerId !== pointerId) return
-    const point = typeof clientX === 'number' && typeof clientY === 'number'
-      ? cropPoint(drag, clientX, clientY)
-      : lastPanPointRef.current ?? { x: drag.focalX, y: drag.focalY }
-    dragRef.current = null
-    lastPanPointRef.current = null
-    clearPanReleaseListeners()
-    const frame = cropFrameRef.current
-    if (frame?.hasPointerCapture(pointerId)) {
-      try { frame.releasePointerCapture(pointerId) } catch { /* capture can already be gone */ }
-    }
-    setDraftFocalX(point.x)
-    setDraftFocalY(point.y)
-    commit({ focalX: Math.round(point.x * 10) / 10, focalY: Math.round(point.y * 10) / 10 })
-  }
-
-  function armPanReleaseListeners(pointerId: number, ownerWindow: Window) {
-    clearPanReleaseListeners()
-    const handlePointerUp = (event: PointerEvent) => {
-      if (event.pointerId === pointerId) finishPan(pointerId, event.clientX, event.clientY)
-    }
-    const handlePointerCancel = (event: PointerEvent) => {
-      if (event.pointerId === pointerId) finishPan(pointerId)
-    }
-    const handleMouseUp = (event: MouseEvent) => {
-      if (dragRef.current?.pointerId === pointerId) finishPan(pointerId, event.clientX, event.clientY)
-    }
-    const handleBlur = () => finishPan(pointerId)
-    ownerWindow.addEventListener('pointerup', handlePointerUp)
-    ownerWindow.addEventListener('pointercancel', handlePointerCancel)
-    ownerWindow.addEventListener('mouseup', handleMouseUp)
-    ownerWindow.addEventListener('blur', handleBlur)
-
-    let parentWindow: Window | null = null
-    let handleParentPointerUp: ((event: PointerEvent) => void) | null = null
-    let handleParentMouseUp: (() => void) | null = null
-    try {
-      if (ownerWindow.parent && ownerWindow.parent !== ownerWindow) {
-        parentWindow = ownerWindow.parent
-        handleParentPointerUp = (event: PointerEvent) => {
-          if (event.pointerId === pointerId) finishPan(pointerId)
-        }
-        handleParentMouseUp = () => finishPan(pointerId)
-        parentWindow.addEventListener('pointerup', handleParentPointerUp)
-        parentWindow.addEventListener('mouseup', handleParentMouseUp)
-      }
-    } catch {
-      parentWindow = null
-    }
-
-    panReleaseCleanupRef.current = () => {
-      ownerWindow.removeEventListener('pointerup', handlePointerUp)
-      ownerWindow.removeEventListener('pointercancel', handlePointerCancel)
-      ownerWindow.removeEventListener('mouseup', handleMouseUp)
-      ownerWindow.removeEventListener('blur', handleBlur)
-      if (parentWindow && handleParentPointerUp) parentWindow.removeEventListener('pointerup', handleParentPointerUp)
-      if (parentWindow && handleParentMouseUp) parentWindow.removeEventListener('mouseup', handleParentMouseUp)
-    }
-  }
-
-  function startPan(event: ReactPointerEvent<HTMLDivElement>) {
-    activate()
-    if (event.button !== 0 || !adjusting || !imageUrl || ratio === 'natural' || draftFitMode !== 'fill') return
-    event.preventDefault()
-    event.stopPropagation()
-    const rect = event.currentTarget.getBoundingClientRect()
-    event.currentTarget.setPointerCapture(event.pointerId)
-    dragRef.current = {
-      pointerId: event.pointerId,
-      x: event.clientX,
-      y: event.clientY,
-      focalX: draftFocalX,
-      focalY: draftFocalY,
-      width: Math.max(1, rect.width),
-      height: Math.max(1, rect.height),
-      zoom: draftZoom,
-    }
-    lastPanPointRef.current = { x: draftFocalX, y: draftFocalY }
-    armPanReleaseListeners(event.pointerId, event.currentTarget.ownerDocument.defaultView ?? window)
-  }
-
-  function movePan(event: ReactPointerEvent<HTMLDivElement>) {
-    const drag = dragRef.current
-    if (!drag || drag.pointerId !== event.pointerId) return
-    event.preventDefault()
-    event.stopPropagation()
-    const point = cropPoint(drag, event.clientX, event.clientY)
-    lastPanPointRef.current = point
-    setDraftFocalX(point.x)
-    setDraftFocalY(point.y)
-  }
-
-  function endPan(event: ReactPointerEvent<HTMLDivElement>) {
-    const drag = dragRef.current
-    if (!drag || drag.pointerId !== event.pointerId) return
-    event.preventDefault()
-    event.stopPropagation()
-    finishPan(event.pointerId, event.clientX, event.clientY)
-  }
-
   function setZoom(next: number) {
     const normalized = clamp(next, 1, 3)
     setDraftZoom(normalized)
+    setDraftCropArea(null)
+    const patch = { zoom: normalized, ...cropNullPatch() }
     if (normalized > 1 && draftFitMode === 'fit') {
       setDraftFitMode('fill')
-      commit({ zoom: normalized, fitMode: 'fill' })
+      commit({ ...patch, fitMode: 'fill' })
     } else {
-      commit({ zoom: normalized })
+      commit(patch)
     }
+  }
+
+  function applyPreciseCrop(area: CropAreaPercentages) {
+    setDraftCropArea(area)
+    setDraftFocalX(50)
+    setDraftFocalY(50)
+    setDraftZoom(1)
+    setDraftFitMode('fill')
+    commit({
+      cropAreaX: area.x,
+      cropAreaY: area.y,
+      cropAreaWidth: area.width,
+      cropAreaHeight: area.height,
+      focalX: 50,
+      focalY: 50,
+      zoom: 1,
+      fitMode: 'fill',
+    })
+    emitAdjusting(false)
   }
 
   const inspector = active && inspectorHost
@@ -409,7 +355,7 @@ export default function EditableImageFrame({
         <div style={{ position: 'fixed', top: 56, right: 0, bottom: 0, zIndex: 100000, width: 'clamp(330px, 28vw, 450px)', overflowY: 'auto', borderLeft: '1px solid var(--puck-color-border, #dcdcdc)', background: 'var(--puck-color-surface, #fff)', boxShadow: '-12px 0 28px rgba(0,0,0,.08)' }}>
           <ImageInspectorPanel
             selection={{ blockId, variant, allowLayoutResize }}
-            value={{ image, imageAlt, caption, ratio, fitMode: draftFitMode, zoom: draftZoom, focalX: draftFocalX, focalY: draftFocalY, visualWidth: width, visualAlign: align }}
+            value={{ image, imageAlt, caption, ratio, fitMode: draftFitMode, zoom: draftZoom, focalX: draftFocalX, focalY: draftFocalY, cropArea: draftCropArea, visualWidth: width, visualAlign: align }}
             onPatch={commitInspector}
             onClose={() => {
               emitAdjusting(false)
@@ -420,6 +366,23 @@ export default function EditableImageFrame({
         inspectorHost
       )
     : null
+
+  const cropDialog = adjusting && canCrop && cropRatio && typeof document !== 'undefined'
+    ? createPortal(
+        <CropMoveDialog
+          imageUrl={imageUrl}
+          imageAlt={imageAlt || image?.alt || ''}
+          ratio={cropRatio}
+          variant={variant}
+          initialArea={draftCropArea}
+          onCancel={() => emitAdjusting(false)}
+          onApply={applyPreciseCrop}
+        />,
+        document.body
+      )
+    : null
+
+  const preciseArea = draftFitMode === 'fill' && ratio !== 'natural' ? draftCropArea : null
 
   return (
     <>
@@ -436,7 +399,7 @@ export default function EditableImageFrame({
         {active ? (
           <div className="wc-image-toolbar" role="toolbar" aria-label="Image controls" onPointerDown={(event) => event.stopPropagation()} onClick={(event) => event.stopPropagation()}>
             <button type="button" className="wc-image-toolbar__button" title="Replace photograph" aria-label="Replace photograph" onClick={requestReplace}><ToolbarIcon kind="replace" /></button>
-            <button type="button" className={`wc-image-toolbar__button ${adjusting ? 'is-active' : ''}`} title={adjusting ? 'Finish moving crop' : 'Crop / move photograph'} aria-label={adjusting ? 'Finish moving crop' : 'Crop / move photograph'} disabled={!canCrop} onClick={() => emitAdjusting(!adjusting)}><ToolbarIcon kind="crop" /></button>
+            <button type="button" className={`wc-image-toolbar__button ${adjusting ? 'is-active' : ''}`} title="Crop / move photograph" aria-label="Crop / move photograph" disabled={!canCrop} onClick={() => emitAdjusting(true)}><ToolbarIcon kind="crop" /></button>
             <select className="wc-image-toolbar__select" aria-label="Frame shape" title="Frame shape" value={ratio} onChange={(event) => setShape(event.currentTarget.value as ImageRatio)}>
               <option value="natural">Natural</option><option value="landscape">Landscape</option><option value="portrait">Portrait</option><option value="square">Square</option>
             </select>
@@ -451,30 +414,19 @@ export default function EditableImageFrame({
         ) : null}
 
         <div
-          ref={cropFrameRef}
-          className={`wc-image-frame ${active ? 'is-selected' : ''} ${adjusting ? 'is-adjusting' : ''}`}
+          className={`wc-image-frame ${active ? 'is-selected' : ''}`}
           data-ratio={ratio}
           data-fit={draftFitMode}
           data-variant={variant}
+          data-crop={preciseArea ? 'precise' : 'legacy'}
+          data-crop-x={preciseArea?.x}
+          data-crop-y={preciseArea?.y}
+          data-crop-width={preciseArea?.width}
+          data-crop-height={preciseArea?.height}
           style={frameStyle}
-          onPointerDown={startPan}
-          onPointerMove={movePan}
-          onPointerUp={endPan}
-          onPointerCancel={(event) => finishPan(event.pointerId)}
-          onLostPointerCapture={(event) => {
-            if (dragRef.current?.pointerId === event.pointerId) finishPan(event.pointerId)
-          }}
-          onWheel={(event) => {
-            activate()
-            if (!adjusting || ratio === 'natural') return
-            event.preventDefault()
-            event.stopPropagation()
-            setZoom(draftZoom + (event.deltaY < 0 ? 0.08 : -0.08))
-          }}
           onClick={activate}
         >
-          {imageUrl ? <img src={imageUrl} alt={imageAlt || image?.alt || ''} /> : <div className="wc-image-missing">Select an image in the right panel</div>}
-          {active && adjusting ? <div className="wc-image-edit-hint">{ratio === 'natural' ? 'Choose Landscape, Portrait or Square' : draftFitMode === 'fit' ? 'Fit shows the full photograph' : 'Hold the left mouse button to move · release to stop · wheel or + / − to zoom'}</div> : null}
+          {imageUrl ? <img src={imageUrl} alt={imageAlt || image?.alt || ''} style={preciseCropImageStyle(preciseArea)} /> : <div className="wc-image-missing">Select an image in the right panel</div>}
         </div>
         {caption ? <figcaption>{caption}</figcaption> : null}
         {active && allowLayoutResize && !adjusting ? <div className="wc-image-edit-badge">Image selected · drag side handles to resize</div> : null}
@@ -518,6 +470,8 @@ export default function EditableImageFrame({
           }}
         />
       ) : null}
+
+      {cropDialog}
       {inspector}
     </>
   )
