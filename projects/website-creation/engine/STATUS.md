@@ -1,7 +1,7 @@
 # Website Creator Engine — STATUS
 
-Date: 2026-09-14
-Status: ACTIVE — shared runtime + live editor loop + first media field verified
+Date: 2026-09-15
+Status: ACTIVE — shared runtime + live editor loop + first image-editor interaction slice FULL GREEN
 
 ## Verified Engine Boundary
 
@@ -23,27 +23,63 @@ No Puck Cloud, Payload Cloud, Replit, Wix, Framer or other hosted website-builde
 
 ## Latest Full CI Verification
 
+Commit: `2c9f3e63d037e7ebd4aeeb7d5727de61c4cad9cd`
+Workflow: Website Creator Engine run `34916717349`
+Job: `build-and-runtime-smoke`
+Result: PASS / FULL GREEN
+
+Verified in one clean run:
+- PostgreSQL startup;
+- checkout and dependency install;
+- TypeScript check;
+- committed production migration artifacts;
+- migrations applied to an empty PostgreSQL database;
+- Car Service Garage production seed;
+- production Next.js build;
+- Chromium installation;
+- production server startup;
+- authenticated editor load;
+- Hero image selection with contextual toolbar + IMAGE inspector;
+- sequential Shape change `portrait → square → portrait` without losing the active edit target;
+- sequential zoom edits while the same image remains active;
+- Replace action opening the Payload media picker;
+- supported media-picker close path;
+- draft mutation remaining invisible publicly;
+- versions endpoint availability;
+- publish mutation becoming visible publicly;
+- restoration of original published content;
+- browser/migration evidence upload.
+
+The previous red run `34915425336` is superseded by this green run. Do not reopen the old selection-persistence diagnosis unless a regression reproduces it.
+
+## Image Editor State Integration — Accepted Architecture
+
+Selection remains canonical Puck UI state.
+
+Image-property mutations use Puck's atomic `replace` action rather than whole-page `setData`.
+
+The replacement preserves:
+- component ID;
+- destination zone/index;
+- `ui.itemSelector`.
+
+Puck may still remount the rendered component after `replace`. The adapted Olga image frame therefore restores its transient local `active` UI state from Puck's canonical `selectedItem` after remount. This is an adapter concern, not a second selection store.
+
+The bridge may also rebroadcast image activation into the same-origin Puck canvas after replacement, but canonical selection remains Puck-owned.
+
+Architecture rule:
+
+`Puck selectedItem/itemSelector = source of truth → local image active state is derived/restored from it → no parallel selection model.`
+
+Detailed decision record: `IMAGE_EDITOR_STATE_INTEGRATION_DECISION.md`.
+
+## Older Green Baseline
+
 Commit: `4304a3b2df1906da63f398f9cb2295151c2fe363`
 Workflow: Website Creator Engine run `34876621298`
 Result: PASS
 
-Verified in one clean run:
-- dependency install;
-- TypeScript check;
-- committed production migration artifacts;
-- migrations applied to an empty PostgreSQL database;
-- Car Service Garage seed;
-- production Next.js build;
-- Chromium installation;
-- production server startup;
-- health/public HTTP checks;
-- authenticated Puck editor load;
-- draft mutation not visible publicly;
-- versions endpoint available;
-- publish mutation visible publicly;
-- restore of original published content;
-- editor screenshot/evidence upload;
-- first reusable Hero media field wired editor-only so the server renderer remains build-safe.
+That baseline remains useful for regression comparison of the pre-image-editor runtime/editor loop.
 
 ## Live Render Verification
 
@@ -95,7 +131,7 @@ Owner-browser proof on 2026-09-14:
 
 The shared component renderer remains server-safe.
 
-Client-only editor capabilities such as Payload/Puck `createMediaField()` are added only in `src/puck/editor-config.ts` and are not invoked from the server-renderer component module.
+Client-only editor capabilities such as Payload/Puck `createMediaField()` are added only in `src/puck/editor-config.ts` / client editor configuration and are not invoked from the server-renderer component module.
 
 This boundary is protected by the same production build + browser acceptance workflow that caught the original server/client regression.
 
@@ -114,7 +150,9 @@ Current editor proof:
 - version/history API path responds;
 - public renderer reflects published edits and not draft-only edits;
 - original content can be restored;
-- Hero uses the Payload/Puck media picker in the editor.
+- Hero uses the Payload/Puck media picker in the editor;
+- selected Hero image stays active through sequential atomic property replacements;
+- contextual toolbar and inspector remain available after Shape/zoom edits.
 
 ## Site Model Evidence
 
@@ -130,22 +168,42 @@ The current shape is empirically sufficient for the first seed/render/editor/QA 
 
 ## Current Limitations / Not Yet Verified
 
+The first image-editor continuity bug is solved, but the universal editor contract is not yet complete.
+
+Still not fully browser-accepted end-to-end:
+- crop/move modal drag behavior;
+- crop persistence and reopen behavior;
+- Fill vs Whole semantics;
+- Reset crop semantics;
+- alignment persistence;
+- visual width/direct resize persistence where applicable;
+- alt/caption persistence;
+- replace/remove persistence and editor/public-render parity;
+- image changes surviving Save Draft + reload;
+- image changes remaining draft-only until Publish;
+- image changes appearing publicly after Publish;
+- version restore through owner-facing editor UI;
+- shared image behavior across more than the Hero block;
 - visual parity with the final accepted Car Service Garage design direction;
-- direct per-instance image crop/move/zoom/resize interaction contract;
-- full toolbar/inspector parity for image manipulation;
-- version restore through owner-facing editor UI (API/version path exists);
 - multi-site isolation under shared live operation;
 - second Site Instance reuse;
 - durable production media storage (free staging filesystem is not the production target).
 
 ## Next Required Slice
 
-1. Add the direct per-instance image interaction subset from `EDITOR_CREATION_STANDARD.md` as reusable Website Creator capability, not client-specific code.
-2. Prefer proven building blocks: Payload/Puck media selection, percentage-based crop metadata, `react-easy-crop` for crop/pan/zoom, and `react-moveable` only where direct canvas resize is needed and proven stable.
-3. Verify editor/public-render parity after image edits and persistence after reload.
-4. Bring Car Service Garage visual output to the accepted reference direction using only shared components and Site Instance data.
-5. Validate a second, meaningfully different Site Instance without rebuilding generic infrastructure.
-6. Promote only recurring Site Model/component contracts proven by both sites.
+Continue the universal image-editor acceptance contract in the shared engine, not client-specific code.
+
+Priority order:
+1. Add deterministic Playwright coverage for Fill / Whole + Reset semantics on the selected Hero image.
+2. Add crop/move modal acceptance: open, drag/zoom, Apply, reopen, verify persisted crop metadata/visual state.
+3. Verify Save Draft + reload persistence for image state while public remains unchanged.
+4. Verify Publish makes the same image state reach the public renderer.
+5. Add replace/remove persistence coverage using the Payload media picker without relying on disposable client-specific assets.
+6. Expand the same image behavior to another applicable reusable block before calling the contract universal.
+7. Only then move to direct resize where the component contract actually permits it.
+8. Bring Car Service Garage visual output to the accepted reference direction using only shared components and Site Instance data.
+9. Validate a second, meaningfully different Site Instance without rebuilding generic infrastructure.
+10. Promote only recurring Site Model/component contracts proven by both sites.
 
 ## Fresh-Chat Instruction
 
@@ -156,6 +214,7 @@ Before changing engine code:
 3. read `../OWN_SYSTEM_EXECUTION_STANDARD.md`;
 4. read this file;
 5. read `README.md`;
-6. read only the narrow contract relevant to the active change.
+6. read `../EDITOR_CREATION_STANDARD.md` for image/editor interaction work;
+7. read only the narrow implementation files/tests required for the active slice.
 
 Do not create another engine, another client editor or another deployment experiment. Extend this shared engine unless a documented architecture decision replaces a binding.
