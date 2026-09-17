@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TikTok Research Sorter — Design Preview</title>
+  <style>
+    /*
+      TikTok Research Sorter — автономный дизайн-стенд.
+
+      Назначение:
+      - открыть этот файл напрямую в браузере;
+      - менять внешний вид вместе с Codex без запуска Chrome Extension;
+      - после утверждения перенести стили в entrypoints/sidepanel/style.css.
+
+      Быстрая настройка дизайна начинается с переменных ниже.
+      Файл не использует chrome.*, npm, React, сеть или внешние шрифты.
+    */
+
+    :root {
+      color-scheme: dark;
+
+      --preview-bg: #080a0f;
+      --preview-panel: #11141c;
+      --preview-line: rgba(255, 255, 255, 0.09);
+      --preview-muted: #8c92a6;
+
+      --app-bg: #0d1018;
+      --surface: rgba(24, 28, 40, 0.94);
+      --surface-strong: #171b27;
+      --surface-soft: #101520;
+      --surface-input: #0f131e;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: #303648;
+      --text: #f4f5f9;
+      --text-soft: #d7d9e3;
+      --muted: #9499ad;
+      --muted-2: #777f95;
+      --accent: #7a5cff;
+      --accent-2: #d04fff;
+      --mint: #24e7ca;
+      --yellow: #ffd666;
+      --danger: #ff91a4;
+      --success: #79e5aa;
+
+      --radius-sm: 9px;
+      --radius-md: 13px;
+      --radius-lg: 16px;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+      --panel-width: 430px;
+      --app-gap: 14px;
+      --app-padding: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+      background: var(--preview-bg);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% -10%, rgba(122, 92, 255, 0.2), transparent 34%),
+        radial-gradient(circle at 95% 4%, rgba(36, 231, 202, 0.12), transparent 30%),
+        var(--preview-bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+    button { border: 0; cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: 0.45; }
+    a { color: inherit; }
+
+    .preview-workbench {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .preview-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 18px;
+      background: rgba(8, 10, 15, 0.88);
+      border-bottom: 1px solid var(--preview-line);
+      backdrop-filter: blur(18px);
+    }
+
+    .preview-title { min-width: 0; }
+    .preview-title strong { display: block; font-size: 13px; }
+    .preview-title span { display: block; margin-top: 2px; color: var(--preview-muted); font-size: 11px; }
+
+    .preview-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .preview-controls button,
+    .preview-controls label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 7px 10px;
+      color: #dfe2ec;
+      background: var(--preview-panel);
+      border: 1px solid var(--preview-line);
+      border-radius: 9px;
+      font-size: 11px;
+    }
+
+    .preview-controls button.active {
+      color: #fff;
+      border-color: rgba(122, 92, 255, 0.62);
+      box-shadow: 0 0 0 3px rgba(122, 92, 255, 0.13);
+    }
+
+    .preview-controls input[type="range"] { width: 120px; accent-color: var(--accent); }
+
+    .preview-stage {
+      display: grid;
+      place-items: start center;
+      padding: 28px 18px 60px;
+      overflow-x: auto;
+    }
+
+    .browser-frame {
+      width: min(100%, calc(var(--panel-width) + 2px));
+      min-width: 330px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--app-bg);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5);
+      transition: width 180ms ease;
+    }
+
+    .browser-chrome {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 40px;
+      padding: 8px 11px;
+      background: #151922;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .browser-dots { display: flex; gap: 5px; }
+    .browser-dots i { width: 8px; height: 8px; border-radius: 50%; background: #454b5d; }
+
+    .browser-address {
+      min-width: 0;
+      padding: 5px 8px;
+      overflow: hidden;
+      color: #8f95aa;
+      background: #0e1118;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 7px;
+      font-size: 9px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .browser-size { color: #7f8699; font-size: 9px; white-space: nowrap; }
+
+    .app-root {
+      min-height: 760px;
+      background: radial-gradient(circle at top right, #252037 0, transparent 42%), var(--app-bg);
+    }
+
+    .app-shell { display: grid; gap: var(--app-gap); padding: var(--app-padding); }
+    .hero { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #8d90a8;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { overflow-wrap: anywhere; }
+    h1 { margin: 0; font-size: 22px; line-height: 1.05; }
+    h2 { margin: 0; font-size: 18px; line-height: 1.15; }
+    h3 { margin: 0; font-size: 13px; line-height: 1.25; }
+
+    .subtitle { margin: 8px 0 0; color: #aeb2c6; font-size: 13px; line-height: 1.45; }
+
+    .status {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      color: #c9ccda;
+      background: #222735;
+      border-radius: 999px;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .status-complete { color: var(--success); background: #123424; }
+
+    .panel {
+      padding: 13px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .context-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 4px 10px;
+      align-items: center;
+    }
+
+    .context-panel > span { color: #8f95aa; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .context-panel > strong { min-width: 0; overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .context-panel > button { grid-column: 2; grid-row: 1 / span 2; padding: 7px 9px; }
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      padding: 4px;
+      background: #111621;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+    }
+
+    .mode-tabs button {
+      min-width: 0;
+      padding: 9px 7px;
+      color: #969bae;
+      background: transparent;
+      border-radius: 9px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .mode-tabs button.active {
+      color: #fff;
+      background: linear-gradient(135deg, rgba(122, 92, 255, 0.88), rgba(208, 79, 255, 0.74));
+      font-weight: 700;
+    }
+
+    .tab-count {
+      display: inline-grid;
+      place-items: center;
+      min-width: 18px;
+      height: 18px;
+      margin-left: 4px;
+      padding: 0 4px;
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      font-size: 9px;
+    }
+
+    .control-row, .toolbar, .actions { display: flex; align-items: end; gap: 9px; flex-wrap: wrap; }
+
+    label.field {
+      display: grid;
+      flex: 1;
+      min-width: 110px;
+      gap: 5px;
+      color: #aeb2c6;
+      font-size: 11px;
+    }
+
+    select, input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 8px 9px;
+      color: #f6f7fb;
+      background: var(--surface-input);
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-sm);
+      outline: none;
+    }
+
+    select:focus, input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(122, 92, 255, 0.15); }
+
+    .app-shell button { padding: 9px 12px; color: #f7f7fb; background: #303648; border-radius: var(--radius-sm); }
+    .app-shell button:hover { filter: brightness(1.08); }
+    .app-shell .primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); font-weight: 700; }
+    .app-shell .secondary { background: #292e3b; }
+    .app-shell .danger { margin-left: auto; color: #ff9bad; background: rgba(255, 145, 164, 0.07); }
+
+    .progress-track { height: 6px; margin-top: 12px; overflow: hidden; background: #0d1018; border-radius: 999px; }
+    .progress-fill { width: 68%; height: 100%; background: linear-gradient(90deg, var(--mint), var(--accent-2)); }
+    .scan-message { margin: 9px 0 0; color: #aeb2c6; font-size: 12px; }
+    .hint { margin: 6px 0 0; color: var(--muted-2); font-size: 10px; line-height: 1.4; }
+
+    .profile-card, .channel-card { position: relative; display: grid; gap: 13px; overflow: hidden; }
+
+    .profile-card::before, .channel-card::before {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 3px;
+      content: "";
+      background: linear-gradient(90deg, var(--mint), var(--accent), var(--accent-2));
+    }
+
+    .channel-card::before { background: linear-gradient(90deg, var(--yellow), var(--accent), var(--mint)); }
+
+    .profile-head, .channel-head {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+
+    .channel-head { grid-template-columns: 74px minmax(0, 1fr) auto; }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: #fff;
+      background:
+        radial-gradient(circle at 70% 22%, rgba(255, 255, 255, 0.35), transparent 16%),
+        linear-gradient(135deg, #27364c, #6840d8 60%, #e2509b);
+      border: 2px solid rgba(255, 255, 255, 0.16);
+      border-radius: 50%;
+      font-size: 18px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .channel-head .avatar { width: 74px; height: 74px; }
+    .identity { min-width: 0; }
+    .name-row { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .name-row h2 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .verified {
+      width: 17px;
+      height: 17px;
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      color: #fff;
+      background: #36a9ff;
+      border-radius: 50%;
+      font-size: 11px;
+    }
+
+    .identity > a, .channel-links a, .source-link, .video-author { color: #8fded3; font-size: 11px; text-decoration: none; }
+    .identity p { margin: 7px 0 5px; color: #d4d6e0; font-size: 11px; line-height: 1.45; }
+    .channel-links { display: flex; gap: 9px; flex-wrap: wrap; }
+
+    .completeness {
+      padding: 4px 7px;
+      color: var(--success);
+      background: rgba(18, 52, 36, 0.8);
+      border: 1px solid rgba(121, 229, 170, 0.2);
+      border-radius: 999px;
+      font-size: 8px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .channel-refresh { padding: 7px 9px !important; font-size: 10px; white-space: nowrap; }
+
+    .profile-stats, .channel-stats, .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .profile-stats article, .channel-stats article, .stats-grid article {
+      min-width: 0;
+      padding: 9px;
+      background: var(--surface-soft);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+    }
+
+    .stats-grid article { padding: 11px; background: var(--surface-strong); border-radius: 12px; }
+
+    .profile-stats span, .channel-stats span, .stats-grid span, .details span, .insights span, .topics > span {
+      display: block;
+      color: #8f95aa;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .profile-stats strong, .channel-stats strong, .stats-grid strong { display: block; margin-top: 4px; font-size: 15px; }
+    .stats-grid strong { font-size: 18px; }
+
+    .details, .insights {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 12px;
+      padding-top: 11px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .details div, .insights div { min-width: 0; }
+
+    .details strong, .insights strong {
+      display: block;
+      margin-top: 4px;
+      overflow-wrap: anywhere;
+      color: #e7e8ef;
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .insights strong { font-size: 11px; }
+    .topics { display: grid; gap: 7px; }
+    .topics > div, .hashtags { display: flex; gap: 5px; flex-wrap: wrap; }
+
+    .topics div > span {
+      padding: 5px 7px;
+      color: #6ee6d2;
+      background: rgba(36, 231, 202, 0.09);
+      border: 1px solid rgba(36, 231, 202, 0.16);
+      border-radius: 9px;
+      font-size: 9px;
+    }
+
+    .actions span { margin-left: auto; color: #9297aa; font-size: 11px; }
+    .video-list, .account-groups, .favorite-channel-groups { display: grid; gap: 10px; }
+
+    .video-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 11px;
+      padding: 9px;
+      background: rgba(22, 26, 38, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-md);
+    }
+
+    .video-card.selected { border-color: rgba(122, 92, 255, 0.85); box-shadow: 0 0 0 3px rgba(122, 92, 255, 0.14); }
+
+    .cover {
+      position: relative;
+      min-height: 132px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.64)),
+        radial-gradient(circle at 45% 28%, rgba(255, 255, 255, 0.42), transparent 8%),
+        linear-gradient(145deg, #1c2231, #7a5cff 52%, #d04fff);
+      border-radius: 9px;
+    }
+
+    .cover.alt {
+      background:
+        linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.64)),
+        radial-gradient(circle at 64% 34%, rgba(255, 255, 255, 0.38), transparent 9%),
+        linear-gradient(145deg, #14332f, #24b9a5 52%, #7568ff);
+    }
+
+    .cover.warm {
+      background:
+        linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.64)),
+        radial-gradient(circle at 40% 28%, rgba(255, 255, 255, 0.4), transparent 9%),
+        linear-gradient(145deg, #4b2923, #d06a4f 48%, #ffd666);
+    }
+
+    .cover::after {
+      position: absolute;
+      inset: auto 8px 8px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      content: "VIDEO PREVIEW";
+    }
+
+    .rank {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      z-index: 2;
+      padding: 3px 5px;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.68);
+      border-radius: 6px;
+      font-size: 10px;
+    }
+
+    .card-controls {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .favorite-star {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      padding: 0 !important;
+      color: var(--yellow) !important;
+      background: rgba(76, 54, 8, 0.94) !important;
+      border: 1px solid rgba(255, 214, 102, 0.48) !important;
+      border-radius: 50% !important;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.32);
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    .select-control {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 8px;
+      color: #e5e7ef;
+      background: rgba(8, 10, 16, 0.84);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 9px;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.26);
+      cursor: pointer;
+    }
+
+    .select-control input { width: 16px; height: 16px; margin: 0; accent-color: var(--accent); }
+    .select-control span { font-size: 9px; }
+    .video-copy { min-width: 0; padding-top: 3px; }
+    .video-author { display: inline-block; margin-bottom: 5px; padding-right: 40px; font-size: 10px; }
+    .metrics { display: flex; align-items: center; gap: 6px; padding-right: 38px; flex-wrap: wrap; }
+    .metrics strong { color: #fff; font-size: 12px; }
+    .metrics span { padding: 3px 6px; color: #d2c8ff; background: #2b2446; border-radius: 999px; font-size: 9px; }
+
+    .video-copy p {
+      display: -webkit-box;
+      margin: 8px 0;
+      overflow: hidden;
+      color: #d9dbe5;
+      font-size: 11px;
+      line-height: 1.4;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+
+    .micro-metrics { display: flex; gap: 8px; color: #9fa4b6; font-size: 10px; flex-wrap: wrap; }
+    .hashtags { margin-top: 8px; }
+    .hashtags span { color: #6ee6d2; font-size: 9px; }
+    .favorite-date { margin-top: 8px; color: #7f8599; font-size: 9px; }
+
+    .account-group, .favorite-channel-group {
+      display: grid;
+      gap: 9px;
+      padding: 12px;
+      background: rgba(16, 20, 30, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+    }
+
+    .favorite-channel-group {
+      gap: 10px;
+      padding: 10px;
+      background: rgba(12, 15, 23, 0.5);
+      border-color: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+    }
+
+    .account-group > header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+    .account-group > header a {
+      min-width: 0;
+      overflow: hidden;
+      color: #8fded3;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      text-overflow: ellipsis;
+    }
+
+    .account-group > header span { color: #8f95aa; font-size: 9px; text-align: right; }
+
+    .favorites-intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: linear-gradient(135deg, rgba(37, 32, 55, 0.96), rgba(24, 28, 40, 0.92));
+    }
+
+    .favorites-intro p:last-child { margin: 8px 0 0; color: #aeb2c6; font-size: 11px; line-height: 1.5; }
+
+    .favorites-intro > strong {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      flex: 0 0 58px;
+      place-items: center;
+      color: var(--yellow);
+      background: rgba(255, 214, 102, 0.1);
+      border: 1px solid rgba(255, 214, 102, 0.26);
+      border-radius: 50%;
+      font-size: 22px;
+    }
+
+    .empty { padding: 40px 10px; color: #8e93a5; border: 1px dashed #343a4c; border-radius: 14px; text-align: center; }
+    .view { display: contents; }
+    .view[hidden] { display: none; }
+
+    body.compact { --app-gap: 9px; --app-padding: 12px; }
+    body.compact .panel { padding: 10px; }
+    body.compact .video-card { padding: 7px; }
+
+    body.outline-mode .panel,
+    body.outline-mode .video-card,
+    body.outline-mode .account-group,
+    body.outline-mode .favorite-channel-group {
+      box-shadow: none;
+      outline: 1px solid rgba(255, 214, 102, 0.34);
+    }
+
+    @media (max-width: 720px) {
+      .preview-toolbar { align-items: flex-start; flex-direction: column; }
+      .preview-controls { justify-content: flex-start; }
+    }
+
+    @media (max-width: 560px) {
+      .channel-head { grid-template-columns: 64px minmax(0, 1fr); }
+      .channel-head .avatar { width: 64px; height: 64px; }
+      .channel-refresh { grid-column: 1 / -1; justify-self: start; }
+      .details, .insights { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 430px) {
+      .mode-tabs button { padding-inline: 4px; font-size: 10px; }
+      .select-control span { display: none; }
+      .metrics { padding-right: 30px; }
+    }
+
+    @media (min-width: 520px) {
+      .profile-stats, .channel-stats, .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .video-card { grid-template-columns: 112px minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-workbench">
+    <header class="preview-toolbar">
+      <div class="preview-title">
+        <strong>TikTok Research Sorter · автономный дизайн-стенд</strong>
+        <span>Меняйте CSS и разметку здесь, затем переносите утверждённые решения в React side panel.</span>
+      </div>
+
+      <div class="preview-controls" aria-label="Настройки предпросмотра">
+        <button type="button" data-width="360">360 px</button>
+        <button type="button" data-width="430" class="active">430 px</button>
+        <button type="button" data-width="520">520 px</button>
+        <button type="button" data-width="760">760 px</button>
+        <label>Ширина <input id="widthRange" type="range" min="330" max="900" value="430"></label>
+        <button type="button" id="densityButton">Компактно</button>
+        <button type="button" id="outlineButton">Контуры</button>
+      </div>
+    </header>
+
+    <main class="preview-stage">
+      <section class="browser-frame" aria-label="Предпросмотр боковой панели Chrome">
+        <header class="browser-chrome">
+          <div class="browser-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="browser-address">chrome-extension://preview/sidepanel.html</div>
+          <div class="browser-size"><span id="widthLabel">430</span> px</div>
+        </header>
+
+        <div class="app-root">
+          <main class="app-shell">
+            <header class="hero">
+              <div>
+                <p class="eyebrow">LOCAL-FIRST RESEARCH TOOL · v0.5.0</p>
+                <h1>TikTok Research Sorter</h1>
+                <p class="subtitle">Сохраняет ролики вместе с полной публичной информацией о каналах и создаёт готовые HTML-подборки.</p>
+              </div>
+              <span class="status status-complete">complete</span>
+            </header>
+
+            <section class="panel context-panel">
+              <span>Текущая вкладка</span>
+              <strong id="contextLabel">Профиль @weddingstudio</strong>
+              <button type="button">Обновить</button>
+            </section>
+
+            <nav class="mode-tabs" aria-label="Разделы">
+              <button type="button" class="active" data-view="profile">Профили</button>
+              <button type="button" data-view="tag">Хэштеги</button>
+              <button type="button" data-view="favorites">★ Избранное <span class="tab-count">3</span></button>
+            </nav>
+
+            <section class="panel scan-panel" id="scanPanel">
+              <div class="control-row">
+                <label class="field">Сканировать роликов<select><option>50</option><option>100</option><option selected>300</option><option>500</option></select></label>
+                <label class="field tag-only" hidden>Лучших с аккаунта<select><option selected>3</option></select></label>
+                <label class="field tag-only" hidden>Минимум просмотров<input type="number" value="100000"></label>
+                <button type="button" class="primary" id="scanButton">Сканировать профиль</button>
+                <button type="button" class="secondary">Стоп</button>
+              </div>
+              <div class="progress-track"><div class="progress-fill"></div></div>
+              <p class="scan-message" id="scanMessage">Собрано 204 из 300 роликов. Загружаем следующую порцию…</p>
+              <p class="hint tag-only" hidden>Выбираются лучшие ролики каждого аккаунта среди роликов, найденных на открытой странице хэштега.</p>
+            </section>
+
+            <section class="view" data-view-panel="profile">
+              <section class="panel profile-card">
+                <div class="profile-head">
+                  <a class="avatar" href="#" aria-label="Аватар канала">WS</a>
+                  <div class="identity">
+                    <div class="name-row"><h2>Wedding Studio</h2><span class="verified" title="Проверенный аккаунт">✓</span></div>
+                    <a href="#">@weddingstudio</a>
+                    <p>Идеи свадеб, декор и честные советы организатора. Cincinnati · Ohio.</p>
+                    <div class="channel-links"><a href="#">Сайт профиля ↗</a></div>
+                  </div>
+                </div>
+
+                <div class="profile-stats">
+                  <article><span>Подписчики</span><strong>486K</strong></article>
+                  <article><span>Подписки</span><strong>812</strong></article>
+                  <article><span>Друзья</span><strong>214</strong></article>
+                  <article><span>Лайки профиля</span><strong>12.8M</strong></article>
+                  <article><span>Видео в профиле</span><strong>742</strong></article>
+                  <article><span>Собрано видео</span><strong>300</strong></article>
+                  <article><span>Медиана просмотров</span><strong>184K</strong></article>
+                  <article><span>Средний ER</span><strong>8.42%</strong></article>
+                </div>
+
+                <div class="details">
+                  <div><span>User ID</span><strong>7012345678901234567</strong></div>
+                  <div><span>secUid</span><strong>MS4wLjABAAAAdesign-preview</strong></div>
+                  <div><span>Регион</span><strong>US</strong></div>
+                  <div><span>Язык</span><strong>en</strong></div>
+                  <div><span>Создан</span><strong>12 янв. 2020 г.</strong></div>
+                  <div><span>Закрытый аккаунт</span><strong>Нет</strong></div>
+                  <div><span>Коммерческий</span><strong>Да</strong></div>
+                  <div><span>Источник</span><strong>public-profile</strong></div>
+                </div>
+
+                <div class="insights">
+                  <div><span>Последнее сканирование</span><strong>14 июл. 2026, 11:20</strong></div>
+                  <div><span>Обновление профиля</span><strong>14 июл. 2026, 11:19</strong></div>
+                  <div><span>Покрытие</span><strong>300 из 742</strong></div>
+                  <div><span>Частота публикаций</span><strong>5.4 в неделю</strong></div>
+                </div>
+
+                <div class="topics"><span>Сильные темы</span><div><span>#weddingtok</span><span>#weddingplanner</span><span>#bride</span><span>#eventdesign</span></div></div>
+              </section>
+
+              <section class="panel toolbar">
+                <label class="field">Профиль<select><option>@weddingstudio</option></select></label>
+                <label class="field">Сортировка<select><option>Outlier Score</option></select></label>
+                <label class="field">Поиск<input type="text" placeholder="слово или #хештег"></label>
+                <label class="field">Outlier от<input type="number" value="2"></label>
+              </section>
+
+              <section class="stats-grid">
+                <article><span>Собрано роликов</span><strong>300</strong></article>
+                <article><span>Медиана просмотров</span><strong>184K</strong></article>
+                <article><span>Средний ER</span><strong>8.42%</strong></article>
+                <article><span>Макс. выброс</span><strong>12.7×</strong></article>
+              </section>
+
+              <section class="panel actions"><button type="button">CSV</button><button type="button">JSON</button><button type="button" class="danger">Удалить профиль</button><span>24 из 300</span></section>
+
+              <section class="video-list">
+                <article class="video-card">
+                  <a class="cover" href="#"><span class="rank">#1</span></a>
+                  <div class="card-controls"><button type="button" class="favorite-star" aria-label="В избранном">★</button></div>
+                  <div class="video-copy">
+                    <a class="video-author" href="#">@weddingstudio</a>
+                    <div class="metrics"><strong>2.4M просмотров</strong><span>12.7× outlier</span><span>ER 11.8%</span></div>
+                    <p>Гости не узнают стоимость каждой детали. Они запомнят только то, насколько красиво, удобно и спокойно им было.</p>
+                    <div class="micro-metrics"><span>♥ 226K</span><span>💬 3.8K</span><span>↗ 18K</span><span>182 дня</span></div>
+                    <div class="hashtags"><span>#weddingtok</span><span>#bride</span><span>#eventdesign</span></div>
+                  </div>
+                </article>
+
+                <article class="video-card">
+                  <a class="cover alt" href="#"><span class="rank">#2</span></a>
+                  <div class="card-controls"><button type="button" class="favorite-star" aria-label="В избранном">★</button></div>
+                  <div class="video-copy">
+                    <a class="video-author" href="#">@weddingstudio</a>
+                    <div class="metrics"><strong>1.1M просмотров</strong><span>7.2× outlier</span><span>ER 9.4%</span></div>
+                    <p>Что на самом деле покупает невеста, когда нанимает свадебного организатора: не цветы, а спокойствие.</p>
+                    <div class="micro-metrics"><span>♥ 94K</span><span>💬 1.2K</span><span>↗ 8.7K</span><span>94 дня</span></div>
+                    <div class="hashtags"><span>#weddingplanner</span><span>#weddingtips</span></div>
+                  </div>
+                </article>
+              </section>
+            </section>
+
+            <section class="view" data-view-panel="tag" hidden>
+              <section class="panel toolbar"><label class="field">Хэштег<select><option>#weddingplanner</option></select></label><a class="source-link" href="#">Открыть #weddingplanner ↗</a></section>
+
+              <section class="stats-grid">
+                <article><span>Просканировано</span><strong>486</strong></article>
+                <article><span>Аккаунтов</span><strong>129</strong></article>
+                <article><span>Выбрано роликов</span><strong>36</strong></article>
+                <article><span>Минимум просмотров</span><strong>100K</strong></article>
+              </section>
+
+              <section class="panel actions"><button type="button">CSV</button><button type="button">JSON</button><button type="button" class="danger">Удалить хэштег</button><span>12 аккаунтов</span></section>
+
+              <section class="account-groups">
+                <section class="account-group">
+                  <header><a href="#">@modernbride</a><span>3 лучших · максимум 3.8M</span></header>
+                  <div class="video-list">
+                    <article class="video-card">
+                      <a class="cover warm" href="#"><span class="rank">#1</span></a>
+                      <div class="card-controls"><button type="button" class="favorite-star">☆</button></div>
+                      <div class="video-copy">
+                        <div class="metrics"><strong>3.8M просмотров</strong><span>ER 13.1%</span></div>
+                        <p>Три решения, которые сразу делают свадебный стол визуально дороже без увеличения бюджета.</p>
+                        <div class="micro-metrics"><span>♥ 418K</span><span>💬 6.2K</span><span>↗ 29K</span></div>
+                        <div class="hashtags"><span>#weddingdecor</span><span>#brideideas</span></div>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="account-group">
+                  <header><a href="#">@eventtruths</a><span>3 лучших · максимум 1.9M</span></header>
+                  <div class="video-list">
+                    <article class="video-card">
+                      <a class="cover alt" href="#"><span class="rank">#1</span></a>
+                      <div class="card-controls"><button type="button" class="favorite-star">★</button></div>
+                      <div class="video-copy">
+                        <div class="metrics"><strong>1.9M просмотров</strong><span>ER 10.6%</span></div>
+                        <p>Большой бюджет сам по себе не создаёт впечатление. Его создают решения и внимание к гостям.</p>
+                        <div class="micro-metrics"><span>♥ 182K</span><span>💬 2.4K</span><span>↗ 14K</span></div>
+                        <div class="hashtags"><span>#eventplanner</span><span>#weddingtok</span></div>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+              </section>
+            </section>
+
+            <section class="view" data-view-panel="favorites" hidden>
+              <section class="panel favorites-intro">
+                <div><p class="eyebrow">ИЗБРАННОЕ</p><h2>Отбор роликов и каналов для отправки</h2><p>HTML-файл включает выбранные ролики и все публичные данные каналов, которые удалось получить от TikTok.</p></div>
+                <strong>3</strong>
+              </section>
+
+              <section class="panel actions"><button type="button">Выбрать все</button><button type="button">Снять выбор</button><button type="button" class="primary">Скачать HTML с каналами</button><button type="button" class="danger">Удалить выбранное</button><span>Выбрано: 2 · Каналов: 2</span></section>
+
+              <section class="favorite-channel-groups">
+                <section class="favorite-channel-group">
+                  <section class="panel channel-card">
+                    <div class="channel-head">
+                      <a class="avatar" href="#">WS</a>
+                      <div class="identity">
+                        <div class="name-row"><h2>Wedding Studio</h2><span class="verified">✓</span><span class="completeness">полные данные</span></div>
+                        <a href="#">@weddingstudio</a>
+                        <p>Идеи свадеб, декор и честные советы организатора.</p>
+                        <div class="channel-links"><a href="#">Профиль TikTok ↗</a><a href="#">Сайт ↗</a></div>
+                      </div>
+                      <button type="button" class="secondary channel-refresh">Обновить канал</button>
+                    </div>
+
+                    <div class="channel-stats">
+                      <article><span>Подписчики</span><strong>486K</strong></article>
+                      <article><span>Подписки</span><strong>812</strong></article>
+                      <article><span>Друзья</span><strong>214</strong></article>
+                      <article><span>Лайки профиля</span><strong>12.8M</strong></article>
+                      <article><span>Видео в профиле</span><strong>742</strong></article>
+                      <article><span>Собрано видео</span><strong>300</strong></article>
+                      <article><span>Медиана просмотров</span><strong>184K</strong></article>
+                      <article><span>Средний ER</span><strong>8.42%</strong></article>
+                    </div>
+
+                    <div class="details">
+                      <div><span>User ID</span><strong>7012345678901234567</strong></div>
+                      <div><span>secUid</span><strong>MS4wLjABAAAAdesign-preview</strong></div>
+                      <div><span>Регион</span><strong>US</strong></div>
+                      <div><span>Язык</span><strong>en</strong></div>
+                      <div><span>Создан</span><strong>12 янв. 2020 г.</strong></div>
+                      <div><span>Закрытый аккаунт</span><strong>Нет</strong></div>
+                      <div><span>Коммерческий</span><strong>Да</strong></div>
+                      <div><span>Источник</span><strong>public-profile</strong></div>
+                    </div>
+
+                    <div class="topics"><span>Сильные темы канала</span><div><span>#weddingtok</span><span>#weddingplanner</span><span>#bride</span></div></div>
+                  </section>
+
+                  <div class="video-list">
+                    <article class="video-card selected">
+                      <a class="cover" href="#"><span class="rank">#1</span></a>
+                      <div class="card-controls"><label class="select-control"><input type="checkbox" checked><span>Выбрано</span></label><button type="button" class="favorite-star">★</button></div>
+                      <div class="video-copy">
+                        <a class="video-author" href="#">@weddingstudio</a>
+                        <div class="metrics"><strong>2.4M просмотров</strong><span>12.7× outlier</span></div>
+                        <p>Гости не узнают стоимость каждой детали. Они запомнят только впечатление.</p>
+                        <div class="micro-metrics"><span>♥ 226K</span><span>💬 3.8K</span><span>↗ 18K</span></div>
+                        <div class="hashtags"><span>#weddingtok</span><span>#bride</span></div>
+                        <div class="favorite-date">Добавлено 14 июля 2026, 10:42</div>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="favorite-channel-group">
+                  <section class="panel channel-card">
+                    <div class="channel-head">
+                      <a class="avatar" href="#">ET</a>
+                      <div class="identity">
+                        <div class="name-row"><h2>Event Truths</h2><span class="completeness">полные данные</span></div>
+                        <a href="#">@eventtruths</a>
+                        <p>Честно о бюджете, гостях и современной организации мероприятий.</p>
+                        <div class="channel-links"><a href="#">Профиль TikTok ↗</a></div>
+                      </div>
+                      <button type="button" class="secondary channel-refresh">Обновить канал</button>
+                    </div>
+
+                    <div class="channel-stats">
+                      <article><span>Подписчики</span><strong>219K</strong></article>
+                      <article><span>Подписки</span><strong>364</strong></article>
+                      <article><span>Друзья</span><strong>91</strong></article>
+                      <article><span>Лайки профиля</span><strong>6.1M</strong></article>
+                    </div>
+                  </section>
+
+                  <div class="video-list">
+                    <article class="video-card selected">
+                      <a class="cover alt" href="#"><span class="rank">#1</span></a>
+                      <div class="card-controls"><label class="select-control"><input type="checkbox" checked><span>Выбрано</span></label><button type="button" class="favorite-star">★</button></div>
+                      <div class="video-copy">
+                        <a class="video-author" href="#">@eventtruths</a>
+                        <div class="metrics"><strong>1.9M просмотров</strong><span>ER 10.6%</span></div>
+                        <p>Большой бюджет сам по себе не создаёт впечатление. Его создают решения.</p>
+                        <div class="micro-metrics"><span>♥ 182K</span><span>💬 2.4K</span><span>↗ 14K</span></div>
+                        <div class="hashtags"><span>#eventplanner</span><span>#weddingtok</span></div>
+                        <div class="favorite-date">Добавлено 14 июля 2026, 10:51</div>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+              </section>
+            </section>
+          </main>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const root = document.documentElement;
+    const widthRange = document.querySelector('#widthRange');
+    const widthLabel = document.querySelector('#widthLabel');
+    const widthButtons = [...document.querySelectorAll('[data-width]')];
+    const viewButtons = [...document.querySelectorAll('[data-view]')];
+    const viewPanels = [...document.querySelectorAll('[data-view-panel]')];
+    const contextLabel = document.querySelector('#contextLabel');
+    const scanPanel = document.querySelector('#scanPanel');
+    const scanButton = document.querySelector('#scanButton');
+    const scanMessage = document.querySelector('#scanMessage');
+    const tagOnly = [...document.querySelectorAll('.tag-only')];
+
+    function setWidth(value) {
+      const normalized = Math.max(330, Math.min(900, Number(value)));
+      root.style.setProperty('--panel-width', `${normalized}px`);
+      widthRange.value = normalized;
+      widthLabel.textContent = normalized;
+      widthButtons.forEach((button) => button.classList.toggle('active', Number(button.dataset.width) === normalized));
+    }
+
+    widthButtons.forEach((button) => button.addEventListener('click', () => setWidth(button.dataset.width)));
+    widthRange.addEventListener('input', (event) => setWidth(event.target.value));
+
+    document.querySelector('#densityButton').addEventListener('click', (event) => {
+      document.body.classList.toggle('compact');
+      event.currentTarget.classList.toggle('active');
+    });
+
+    document.querySelector('#outlineButton').addEventListener('click', (event) => {
+      document.body.classList.toggle('outline-mode');
+      event.currentTarget.classList.toggle('active');
+    });
+
+    function setView(view) {
+      viewButtons.forEach((button) => button.classList.toggle('active', button.dataset.view === view));
+      viewPanels.forEach((panel) => { panel.hidden = panel.dataset.viewPanel !== view; });
+
+      const isFavorites = view === 'favorites';
+      const isTag = view === 'tag';
+      scanPanel.hidden = isFavorites;
+      tagOnly.forEach((element) => { element.hidden = !isTag; });
+
+      if (view === 'profile') {
+        contextLabel.textContent = 'Профиль @weddingstudio';
+        scanButton.textContent = 'Сканировать профиль';
+        scanMessage.textContent = 'Собрано 204 из 300 роликов. Загружаем следующую порцию…';
+      } else if (view === 'tag') {
+        contextLabel.textContent = 'Страница хэштега #weddingplanner';
+        scanButton.textContent = 'Сканировать хэштег';
+        scanMessage.textContent = 'Найдено 486 роликов из 129 публичных аккаунтов.';
+      } else {
+        contextLabel.textContent = 'Профиль @weddingstudio';
+      }
+    }
+
+    viewButtons.forEach((button) => button.addEventListener('click', () => setView(button.dataset.view)));
+
+    document.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.addEventListener('click', (event) => event.preventDefault());
+    });
+
+    document.querySelectorAll('.select-control input').forEach((checkbox) => {
+      checkbox.addEventListener('change', (event) => {
+        const card = event.target.closest('.video-card');
+        card.classList.toggle('selected', event.target.checked);
+        const label = event.target.nextElementSibling;
+        if (label) label.textContent = event.target.checked ? 'Выбрано' : 'Выбрать';
+      });
+    });
+  </script>
+</body>
+</html>
