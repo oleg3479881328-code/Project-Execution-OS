@@ -6,7 +6,7 @@
 - State: active
 - Mode: collect + evaluate + reuse + build
 - Current phase: first cross-source software inventory completed; continuous intake + canonicalization
-- Last state update: 2026-09-13
+- Last state update: 2026-09-17
 
 ## Canonical Entry And Storage
 
@@ -46,6 +46,7 @@ Source Map:
 - Recorded duplicate families including multiple Netlify, Vercel, Graphify and extractor copies.
 - Updated the Drive Guide so new chats enter through the inventory before doing fresh software research.
 - Captured `ayghri/i-have-adhd` as an `EXTERNAL / STRONG AGENT-UX DONOR`, created a dedicated SOFT review, and adapted the selected principles into the active PEOS `docs/OPERATOR_UX_STANDARD.md` instead of installing the external skill wholesale.
+- Captured `punkpeye/awesome-mcp-servers` as `EXTERNAL / STRONG MCP DISCOVERY CATALOG / META-DONOR`, mirrored it into the SOFT Master Software Inventory and Third-Party Software Index, and created a reviewed Reference Idea Library card. Discovery rule: internal SOFT/PEOS knowledge -> Official MCP Registry -> `awesome-mcp-servers` -> candidate canonical repo -> license/security/maintenance/current-fit checks -> isolated test. Presence in the catalog is not trust or adoption proof.
 
 ## Current Focus
 
