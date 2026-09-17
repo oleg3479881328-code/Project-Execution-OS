@@ -25,6 +25,7 @@ A project may route onward through its own routers, registries, indexes, collect
 - ChatGPT Workspace Manager -> `chatgpt-workspace-manager/PROJECT.md`
 - Codex -> `codex/PROJECT.md`
 - Design Picker -> `design-picker/PROJECT.md`
+- Olga Polo / Olga Polo Weddings / Olga Polo Weddings Web -> `https://github.com/oleg3479881328-code/olga-polo-weddings-web/blob/main/PROJECT.md`
 - Personal Secretary OS / personal secretary / secretary / assistant mode -> `personal-secretary-os/PROJECT.md`
 - Reels Factory MVP -> `reels-factory-mvp/PROJECT.md`
 - SOFT / software umbrella -> `soft/PROJECT.md`
