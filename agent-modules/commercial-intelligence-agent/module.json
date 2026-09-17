@@ -1,0 +1,29 @@
+{
+  "name": "commercial-intelligence-agent",
+  "version": "0.1.0",
+  "status": "candidate",
+  "description": "Minimal-input commercial intelligence module that turns a customer website into competitor, market, offer, funnel, SEO, lead, and sales-growth recommendations.",
+  "source_patterns": [
+    "https://github.com/asadcs/ai-competitor-analysis-agent-workflow",
+    "https://github.com/sneha1012/prospector-ai",
+    "https://github.com/GURPREETKAURJETHRA/AI-Lead-Generation-Agent",
+    "https://github.com/aman-ali65/AURA-SEO-Intelligence-Agent",
+    "https://docs.firecrawl.dev/introduction",
+    "https://docs.tavily.com/welcome",
+    "https://docs.apify.com/platform/actors",
+    "https://docs.langchain.com/oss/python/langgraph/overview",
+    "https://docs.crewai.com/"
+  ],
+  "owners": ["Oleg Povalyukhin"],
+  "applies_to": ["Project Execution OS", "commercial research", "sales growth diagnostics", "agent product discovery"],
+  "skills": [
+    "skills/commercial-intelligence-research/SKILL.md"
+  ],
+  "commands": [
+    "commands/run-commercial-intelligence-audit.md"
+  ],
+  "connectors_file": "connectors.json",
+  "handoff_contracts": [
+    "handoff-contracts/build-mvp.md"
+  ]
+}
