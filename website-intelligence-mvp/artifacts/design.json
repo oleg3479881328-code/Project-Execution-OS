@@ -1,0 +1,1088 @@
+{
+  "url": "https://brittanybays.com/blog/romantic-pastel-tented-wedding-at-peterloon-estate",
+  "extractedAt": "2026-08-16T19:04:43.969Z",
+  "meta": {
+    "snapshotId": "7454eb3f-fcb9-4725-8b19-85c59a4177aa",
+    "httpStatus": 200,
+    "dembrandtVersion": "0.28.0",
+    "schemaVersion": "1.7.0",
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "fontsReady": true,
+    "flags": {}
+  },
+  "siteName": "Brittany Bays Photography | Cincinnati Wedding Photographer",
+  "logo": null,
+  "logoInstances": [],
+  "favicons": [
+    {
+      "type": "icon",
+      "url": "https://images.squarespace-cdn.com/content/v1/63b5b60cf467144384904f5d/f5d0e817-ae49-4bbd-be82-0fd7d2145975/favicon.ico",
+      "sizes": null
+    },
+    {
+      "type": "og:image",
+      "url": "http://static1.squarespace.com/static/63b5b60cf467144384904f5d/63b5b640c3887a14463e7706/6402ac63f7cb793c1b867747/1773257139009/Screen+Shot+2023-01-08+at+3.05.35+PM.png?format=1500w",
+      "sizes": null
+    },
+    {
+      "type": "twitter:image",
+      "url": "http://static1.squarespace.com/static/63b5b60cf467144384904f5d/63b5b640c3887a14463e7706/6402ac63f7cb793c1b867747/1773257139009/Screen+Shot+2023-01-08+at+3.05.35+PM.png?format=1500w",
+      "sizes": null
+    }
+  ],
+  "colors": {
+    "semantic": {
+      "secondary": "rgb(255, 255, 255)",
+      "primary": "rgb(191, 191, 191)",
+      "background": "rgb(255, 255, 255)",
+      "text": "rgb(54, 54, 54)"
+    },
+    "palette": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "normalized": "#ffffff",
+        "count": 214,
+        "confidence": "high",
+        "sources": [
+          "tweak-blog-alternating-side-by",
+          "section-border",
+          "section-background"
+        ],
+        "lch": "lch(100% 0.028 53.346)",
+        "oklch": "oklch(100% 0 0)",
+        "role": "surface",
+        "onColor": "#000000",
+        "hover": "#d9d9d9"
+      },
+      {
+        "color": "rgb(54, 54, 54)",
+        "normalized": "#363636",
+        "count": 141,
+        "confidence": "high",
+        "sources": [
+          "tweak-blog-alternating-side-by",
+          "clearfix",
+          "header"
+        ],
+        "lch": "lch(22.615% 0.009 53.346)",
+        "oklch": "oklch(33.289% 0 0)",
+        "role": "neutral",
+        "onColor": "#ffffff",
+        "hover": "#414141"
+      },
+      {
+        "color": "rgb(191, 191, 191)",
+        "normalized": "#bfbfbf",
+        "count": 36,
+        "confidence": "high",
+        "sources": [
+          "sqs-block",
+          "\n",
+          "newsletter-form-button-label"
+        ],
+        "lch": "lch(77.34% 0.023 53.346)",
+        "oklch": "oklch(80.4658% 0 0)",
+        "role": "neutral",
+        "onColor": "#000000",
+        "hover": "#a2a2a2"
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "normalized": "#000000",
+        "count": 7,
+        "confidence": "medium",
+        "sources": [
+          "newsletter-form-field-element"
+        ],
+        "lch": "lch(0% 0 0)",
+        "oklch": "oklch(0% 0 0)",
+        "role": "surface",
+        "onColor": "#ffffff",
+        "hover": "#000000"
+      }
+    ],
+    "cssVariables": {
+      "--list-section-title-color": {
+        "value": "hsla(150,3%,49%,1)",
+        "hex": "#79817d",
+        "lch": "lch(53.206% 3.84 163.193)",
+        "oklch": "oklch(59.5295% 0.01122 164.641)"
+      },
+      "--image-block-card-image-title-bg-color": {
+        "value": "hsla(0,0%,100%,0)",
+        "hex": "#ffffff",
+        "lch": "lch(100% 0.028 53.346 / 0)",
+        "oklch": "oklch(100% 0 0 / 0)"
+      },
+      "--list-section-carousel-arrow-color": {
+        "value": "hsla(150,3%,49%,.7)",
+        "hex": "#79817d",
+        "lch": "lch(53.206% 3.84 163.193 / 0.7)",
+        "oklch": "oklch(59.5295% 0.01122 164.641 / 0.7)"
+      },
+      "--list-section-banner-slideshow-arrow-background-color": {
+        "value": "hsla(0,0%,21.18%,0)",
+        "hex": "#363636",
+        "lch": "lch(22.615% 0.009 53.346 / 0)",
+        "oklch": "oklch(33.289% 0 0 / 0)"
+      }
+    },
+    "detected": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "normalized": "#ffffff",
+        "count": 214,
+        "usageFrac": 0.47767857142857145,
+        "confidence": "high",
+        "sources": [
+          "tweak-blog-alternating-side-by",
+          "section-border",
+          "section-background",
+          "page-section",
+          "section-background-overlay"
+        ],
+        "isToken": true
+      },
+      {
+        "color": "rgb(54, 54, 54)",
+        "normalized": "#363636",
+        "count": 141,
+        "usageFrac": 0.31473214285714285,
+        "confidence": "high",
+        "sources": [
+          "tweak-blog-alternating-side-by",
+          "clearfix",
+          "header",
+          "header-announcement-bar-wrappe",
+          "header-border"
+        ],
+        "isToken": true
+      },
+      {
+        "color": "rgb(191, 191, 191)",
+        "normalized": "#bfbfbf",
+        "count": 36,
+        "usageFrac": 0.08035714285714286,
+        "confidence": "high",
+        "sources": [
+          "sqs-block",
+          "\n",
+          "newsletter-form-button-label"
+        ],
+        "isToken": true
+      },
+      {
+        "color": "rgb(247, 247, 247)",
+        "normalized": "#f7f7f7",
+        "count": 28,
+        "usageFrac": 0.0625,
+        "confidence": "high",
+        "sources": [
+          "sqs-block-button-element--smal"
+        ],
+        "isToken": true
+      },
+      {
+        "color": "rgb(186, 186, 186)",
+        "normalized": "#bababa",
+        "count": 14,
+        "usageFrac": 0.03125,
+        "confidence": "high",
+        "sources": [
+          "header-burger-btn",
+          "js-header-burger-open-title",
+          "burger-box",
+          "burger-inner",
+          "top-bun"
+        ],
+        "isToken": false
+      },
+      {
+        "color": "rgb(0, 0, 0)",
+        "normalized": "#000000",
+        "count": 7,
+        "usageFrac": 0.015625,
+        "confidence": "medium",
+        "sources": [
+          "newsletter-form-field-element"
+        ],
+        "isToken": false
+      },
+      {
+        "color": "rgb(187, 187, 187)",
+        "normalized": "#bbbbbb",
+        "count": 4,
+        "usageFrac": 0.008928571428571428,
+        "confidence": "low",
+        "sources": [],
+        "isToken": false
+      },
+      {
+        "color": "rgb(130, 143, 142)",
+        "normalized": "#828f8e",
+        "count": 2,
+        "usageFrac": 0.004464285714285714,
+        "confidence": "low",
+        "sources": [
+          "section-border",
+          "section-background"
+        ],
+        "isToken": false
+      },
+      {
+        "color": "rgb(166, 150, 164)",
+        "normalized": "#a696a4",
+        "count": 1,
+        "usageFrac": 0.002232142857142857,
+        "confidence": "low",
+        "sources": [
+          "header-border"
+        ],
+        "isToken": false
+      },
+      {
+        "color": "rgb(75, 81, 77)",
+        "normalized": "#4b514d",
+        "count": 1,
+        "usageFrac": 0.002232142857142857,
+        "confidence": "low",
+        "sources": [
+          "section-background-overlay"
+        ],
+        "isToken": false
+      }
+    ],
+    "_raw": [
+      {
+        "color": "rgb(0, 0, 0)",
+        "normalized": "#000000",
+        "count": 7
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "normalized": "#ffffff",
+        "count": 214
+      },
+      {
+        "color": "rgb(54, 54, 54)",
+        "normalized": "#363636",
+        "count": 141
+      },
+      {
+        "color": "rgb(186, 186, 186)",
+        "normalized": "#bababa",
+        "count": 14
+      },
+      {
+        "color": "rgb(191, 191, 191)",
+        "normalized": "#bfbfbf",
+        "count": 36
+      },
+      {
+        "color": "rgb(247, 247, 247)",
+        "normalized": "#f7f7f7",
+        "count": 28
+      }
+    ]
+  },
+  "typography": {
+    "styles": [
+      {
+        "context": "heading-1",
+        "count": 1,
+        "family": "freight-big-pro",
+        "fallbacks": null,
+        "size": "33.904px (2.12rem)",
+        "weight": 300,
+        "lineHeight": "1.40",
+        "spacing": "2.03424px",
+        "transform": null
+      },
+      {
+        "context": "heading-2",
+        "count": 3,
+        "family": "freight-big-pro",
+        "fallbacks": null,
+        "size": "22.714px (1.42rem)",
+        "weight": 300,
+        "lineHeight": "1.00",
+        "spacing": "1.36284px",
+        "transform": null
+      },
+      {
+        "context": "heading-3",
+        "count": 1,
+        "family": "freight-big-pro",
+        "fallbacks": null,
+        "size": "22.714px (1.42rem)",
+        "weight": 300,
+        "lineHeight": "1.28",
+        "spacing": "1.36284px",
+        "transform": null
+      },
+      {
+        "context": "text",
+        "count": 1,
+        "family": "freight-big-pro",
+        "fallbacks": null,
+        "size": "22.714px (1.42rem)",
+        "weight": 300,
+        "lineHeight": "1.28",
+        "spacing": "1.36284px",
+        "transform": null
+      },
+      {
+        "context": "body",
+        "count": 1,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "20.476px (1.28rem)",
+        "weight": 400,
+        "lineHeight": "1.70",
+        "spacing": "0.32px",
+        "transform": null
+      },
+      {
+        "context": "link",
+        "count": 12,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "16px (1.00rem)",
+        "weight": 400,
+        "lineHeight": "1.00",
+        "spacing": "0.32px",
+        "transform": null
+      },
+      {
+        "context": "body",
+        "count": 23,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "16px (1.00rem)",
+        "weight": 400,
+        "lineHeight": "1.00",
+        "spacing": "0.32px",
+        "transform": null
+      },
+      {
+        "context": "ui",
+        "count": 2,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "16px (1.00rem)",
+        "weight": 400,
+        "lineHeight": null,
+        "spacing": null,
+        "transform": null
+      },
+      {
+        "context": "body",
+        "count": 2,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "16px (1.00rem)",
+        "weight": 400,
+        "lineHeight": null,
+        "spacing": null,
+        "transform": null
+      },
+      {
+        "context": "text",
+        "count": 4,
+        "family": "adobe-caslon-pro",
+        "fallbacks": null,
+        "size": "16px (1.00rem)",
+        "weight": 400,
+        "lineHeight": "1.00",
+        "spacing": "0.16px",
+        "transform": null
+      },
+      {
+        "context": "link",
+        "count": 4,
+        "family": "adobe-caslon-pro",
+        "fallbacks": null,
+        "size": "16px (1.00rem)",
+        "weight": 400,
+        "lineHeight": "1.00",
+        "spacing": "0.16px",
+        "transform": null
+      },
+      {
+        "context": "ui",
+        "count": 2,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "16px (1.00rem)",
+        "weight": 400,
+        "lineHeight": "1.20",
+        "spacing": "4.8px",
+        "transform": "uppercase"
+      },
+      {
+        "context": "body",
+        "count": 1,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "16px (1.00rem)",
+        "weight": 400,
+        "lineHeight": "1.20",
+        "spacing": "4.8px",
+        "transform": "uppercase"
+      },
+      {
+        "context": "body",
+        "count": 18,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "13.696px (0.86rem)",
+        "weight": 400,
+        "lineHeight": "1.70",
+        "spacing": "0.32px",
+        "transform": null
+      },
+      {
+        "context": "link",
+        "count": 6,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "13.696px (0.86rem)",
+        "weight": 400,
+        "lineHeight": "1.70",
+        "spacing": "0.32px",
+        "transform": null
+      },
+      {
+        "context": "body",
+        "count": 2,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "13.696px (0.86rem)",
+        "weight": 400,
+        "lineHeight": "1.70",
+        "spacing": "0.27392px",
+        "transform": null
+      },
+      {
+        "context": "link",
+        "count": 1,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "13.696px (0.86rem)",
+        "weight": 400,
+        "lineHeight": "1.70",
+        "spacing": "0.27392px",
+        "transform": null
+      },
+      {
+        "context": "heading-4",
+        "count": 9,
+        "family": "freight-big-pro",
+        "fallbacks": null,
+        "size": "13.696px (0.86rem)",
+        "weight": 400,
+        "lineHeight": "1.50",
+        "spacing": "2.7392px",
+        "transform": "uppercase"
+      },
+      {
+        "context": "link",
+        "count": 9,
+        "family": "freight-big-pro",
+        "fallbacks": null,
+        "size": "13.696px (0.86rem)",
+        "weight": 400,
+        "lineHeight": "1.50",
+        "spacing": "2.7392px",
+        "transform": "uppercase"
+      },
+      {
+        "context": "body",
+        "count": 1,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "13.696px (0.86rem)",
+        "weight": 400,
+        "lineHeight": "1.70",
+        "spacing": "0.13696px",
+        "transform": null
+      },
+      {
+        "context": "link",
+        "count": 1,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "10.24px (0.64rem)",
+        "weight": 400,
+        "lineHeight": null,
+        "spacing": "3.072px",
+        "transform": "uppercase"
+      },
+      {
+        "context": "caption",
+        "count": 1,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "10px (0.63rem)",
+        "weight": 400,
+        "lineHeight": "1.00",
+        "spacing": "0.32px",
+        "transform": null
+      },
+      {
+        "context": "link",
+        "count": 16,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "9.088px (0.57rem)",
+        "weight": 400,
+        "lineHeight": "1.00",
+        "spacing": "2.36288px",
+        "transform": "uppercase"
+      },
+      {
+        "context": "link",
+        "count": 2,
+        "family": "Times New Roman",
+        "fallbacks": "Times",
+        "size": "0px (0.00rem)",
+        "weight": 400,
+        "lineHeight": "NaN",
+        "spacing": "0.32px",
+        "transform": null
+      }
+    ],
+    "sources": {
+      "googleFonts": [
+        "Cormorant"
+      ],
+      "adobeFonts": true,
+      "variableFonts": false,
+      "urls": [
+        "https://fonts.googleapis.com/css?family=Cormorant:300,400,500,600,700",
+        "https://use.typekit.net/af/17c760/00000000000000007735d892/31/a?subset_id=2&fvd=n6&v=3",
+        "https://use.typekit.net/af/17c760/00000000000000007735d892/31/d?subset_id=2&fvd=n6&v=3",
+        "https://use.typekit.net/af/17c760/00000000000000007735d892/31/l?subset_id=2&fvd=n6&v=3",
+        "https://use.typekit.net/af/4fb060/00000000000000007735d889/31/a?subset_id=2&fvd=i7&v=3",
+        "https://use.typekit.net/af/4fb060/00000000000000007735d889/31/d?subset_id=2&fvd=i7&v=3",
+        "https://use.typekit.net/af/4fb060/00000000000000007735d889/31/l?subset_id=2&fvd=i7&v=3",
+        "https://use.typekit.net/af/64a8db/000000000000000077359fa6/31/a?subset_id=2&fvd=i3&v=3",
+        "https://use.typekit.net/af/64a8db/000000000000000077359fa6/31/d?subset_id=2&fvd=i3&v=3",
+        "https://use.typekit.net/af/64a8db/000000000000000077359fa6/31/l?subset_id=2&fvd=i3&v=3",
+        "https://use.typekit.net/af/7aefe0/00000000000000007735d883/31/a?subset_id=2&fvd=i4&v=3",
+        "https://use.typekit.net/af/7aefe0/00000000000000007735d883/31/d?subset_id=2&fvd=i4&v=3",
+        "https://use.typekit.net/af/7aefe0/00000000000000007735d883/31/l?subset_id=2&fvd=i4&v=3",
+        "https://use.typekit.net/af/7f84d8/000000000000000077359f96/31/a?subset_id=2&fvd=n7&v=3",
+        "https://use.typekit.net/af/7f84d8/000000000000000077359f96/31/d?subset_id=2&fvd=n7&v=3",
+        "https://use.typekit.net/af/7f84d8/000000000000000077359f96/31/l?subset_id=2&fvd=n7&v=3",
+        "https://use.typekit.net/af/815b2a/00000000000000007735d887/31/a?subset_id=2&fvd=n7&v=3",
+        "https://use.typekit.net/af/815b2a/00000000000000007735d887/31/d?subset_id=2&fvd=n7&v=3",
+        "https://use.typekit.net/af/815b2a/00000000000000007735d887/31/l?subset_id=2&fvd=n7&v=3",
+        "https://use.typekit.net/af/c3d08f/000000000000000077359fa3/31/a?subset_id=2&fvd=n3&v=3",
+        "https://use.typekit.net/af/c3d08f/000000000000000077359fa3/31/d?subset_id=2&fvd=n3&v=3",
+        "https://use.typekit.net/af/c3d08f/000000000000000077359fa3/31/l?subset_id=2&fvd=n3&v=3",
+        "https://use.typekit.net/af/c9b150/00000000000000007735d880/31/a?subset_id=2&fvd=n4&v=3",
+        "https://use.typekit.net/af/c9b150/00000000000000007735d880/31/d?subset_id=2&fvd=n4&v=3",
+        "https://use.typekit.net/af/c9b150/00000000000000007735d880/31/l?subset_id=2&fvd=n4&v=3",
+        "https://use.typekit.net/af/f60ab3/000000000000000077359f99/31/a?subset_id=2&fvd=i7&v=3",
+        "https://use.typekit.net/af/f60ab3/000000000000000077359f99/31/d?subset_id=2&fvd=i7&v=3",
+        "https://use.typekit.net/af/f60ab3/000000000000000077359f99/31/l?subset_id=2&fvd=i7&v=3"
+      ],
+      "filteredFamilies": [
+        "sans-serif"
+      ],
+      "selfHostedFonts": [],
+      "customFonts": []
+    }
+  },
+  "spacing": {
+    "scaleType": "8px",
+    "commonValues": [
+      {
+        "px": "0.9088px",
+        "display": "0.9088px",
+        "rem": "0.06rem",
+        "count": 32,
+        "numericValue": 0.9088
+      },
+      {
+        "px": "1px",
+        "display": "1px",
+        "rem": "0.06rem",
+        "count": 4,
+        "numericValue": 1
+      },
+      {
+        "px": "1.92px",
+        "display": "1.92px",
+        "rem": "0.12rem",
+        "count": 2,
+        "numericValue": 1.92
+      },
+      {
+        "px": "3px",
+        "display": "3px",
+        "rem": "0.19rem",
+        "count": 6,
+        "numericValue": 3
+      },
+      {
+        "px": "5px",
+        "display": "5px",
+        "rem": "0.31rem",
+        "count": 2,
+        "numericValue": 5
+      },
+      {
+        "px": "8px",
+        "display": "8px",
+        "rem": "0.50rem",
+        "count": 12,
+        "numericValue": 8
+      },
+      {
+        "px": "10px",
+        "display": "10px",
+        "rem": "0.63rem",
+        "count": 3,
+        "numericValue": 10
+      },
+      {
+        "px": "13px",
+        "display": "13px",
+        "rem": "0.81rem",
+        "count": 1,
+        "numericValue": 13
+      },
+      {
+        "px": "15px",
+        "display": "15px",
+        "rem": "0.94rem",
+        "count": 4,
+        "numericValue": 15
+      },
+      {
+        "px": "15.36px",
+        "display": "15.36px",
+        "rem": "0.96rem",
+        "count": 2,
+        "numericValue": 15.36
+      },
+      {
+        "px": "16px",
+        "display": "16px",
+        "rem": "1.00rem",
+        "count": 14,
+        "numericValue": 16
+      },
+      {
+        "px": "17px",
+        "display": "17px",
+        "rem": "1.06rem",
+        "count": 10,
+        "numericValue": 17
+      },
+      {
+        "px": "21.12px",
+        "display": "21.12px",
+        "rem": "1.32rem",
+        "count": 2,
+        "numericValue": 21.12
+      },
+      {
+        "px": "22.4px",
+        "display": "22.4px",
+        "rem": "1.40rem",
+        "count": 2,
+        "numericValue": 22.4
+      },
+      {
+        "px": "24px",
+        "display": "24px",
+        "rem": "1.50rem",
+        "count": 2,
+        "numericValue": 24
+      },
+      {
+        "px": "30px",
+        "display": "30px",
+        "rem": "1.88rem",
+        "count": 2,
+        "numericValue": 30
+      },
+      {
+        "px": "42.24px",
+        "display": "42.24px",
+        "rem": "2.64rem",
+        "count": 16,
+        "numericValue": 42.24
+      },
+      {
+        "px": "57.6px",
+        "display": "57.6px",
+        "rem": "3.60rem",
+        "count": 6,
+        "numericValue": 57.6
+      },
+      {
+        "px": "67.7188px",
+        "display": "67.7188px",
+        "rem": "4.23rem",
+        "count": 2,
+        "numericValue": 67.7188
+      },
+      {
+        "px": "115.2px",
+        "display": "115.2px",
+        "rem": "7.20rem",
+        "count": 3,
+        "numericValue": 115.2
+      }
+    ]
+  },
+  "borderRadius": {
+    "values": [
+      {
+        "value": "2px",
+        "count": 1,
+        "elements": [
+          "badge"
+        ],
+        "confidence": "low",
+        "numericValue": 2
+      },
+      {
+        "value": "8px",
+        "count": 3,
+        "elements": [
+          "input"
+        ],
+        "confidence": "low",
+        "numericValue": 8
+      },
+      {
+        "value": "150px",
+        "count": 1,
+        "elements": [
+          "span"
+        ],
+        "confidence": "low",
+        "numericValue": 150
+      },
+      {
+        "value": "50%",
+        "count": 1,
+        "elements": [
+          "image"
+        ],
+        "confidence": "low",
+        "numericValue": 50
+      }
+    ]
+  },
+  "borders": {
+    "combinations": [
+      {
+        "width": "1px",
+        "style": "solid",
+        "color": "rgba(0, 0, 0, 0.12)",
+        "count": 3,
+        "elements": [
+          "input"
+        ],
+        "confidence": "low"
+      },
+      {
+        "width": "1px",
+        "style": "solid",
+        "color": "rgb(54, 54, 54)",
+        "count": 1,
+        "elements": [
+          "button"
+        ],
+        "confidence": "low"
+      },
+      {
+        "width": "1px",
+        "style": "solid",
+        "color": "rgb(247, 247, 247)",
+        "count": 1,
+        "elements": [
+          "button"
+        ],
+        "confidence": "low"
+      },
+      {
+        "width": "1px",
+        "style": "solid",
+        "color": "rgb(191, 191, 191)",
+        "count": 1,
+        "elements": [
+          "button"
+        ],
+        "confidence": "low"
+      },
+      {
+        "width": "1px",
+        "style": "solid",
+        "color": "rgb(193, 193, 193)",
+        "count": 1,
+        "elements": [
+          "textarea"
+        ],
+        "confidence": "low"
+      },
+      {
+        "width": "2px",
+        "style": "inset",
+        "color": "rgb(54, 54, 54)",
+        "count": 1,
+        "elements": [
+          "iframe"
+        ],
+        "confidence": "low"
+      }
+    ]
+  },
+  "shadows": [
+    {
+      "shadow": "rgb(54, 54, 54) 0px 0px 0px 0px",
+      "count": 1,
+      "confidence": "low"
+    },
+    {
+      "shadow": "rgb(128, 128, 128) 0px 0px 5px 0px",
+      "count": 1,
+      "confidence": "low"
+    }
+  ],
+  "gradients": [],
+  "motion": {
+    "durations": [
+      {
+        "value": "0.001s",
+        "ms": 1,
+        "count": 391
+      }
+    ],
+    "easings": [
+      {
+        "value": "ease",
+        "type": "ease",
+        "count": 361
+      },
+      {
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "type": "custom",
+        "count": 12
+      },
+      {
+        "value": "ease-in-out",
+        "type": "ease-in-out",
+        "count": 11
+      },
+      {
+        "value": "ease-out",
+        "type": "ease-out",
+        "count": 9
+      },
+      {
+        "value": "cubic-bezier(0.2, 0.6, 0.3, 1)",
+        "type": "custom",
+        "count": 6
+      },
+      {
+        "value": "linear",
+        "type": "linear",
+        "count": 4
+      }
+    ],
+    "animations": [],
+    "contexts": {
+      "media": {
+        "count": 9,
+        "durations": [
+          "0.001s"
+        ],
+        "easing": "ease",
+        "easingType": "ease",
+        "props": [
+          "opacity"
+        ]
+      },
+      "modal": {
+        "count": 4,
+        "durations": [
+          "0.001s"
+        ],
+        "easing": "ease",
+        "easingType": "ease",
+        "props": []
+      },
+      "hero": {
+        "count": 12,
+        "durations": [
+          "0.001s"
+        ],
+        "easing": "ease",
+        "easingType": "ease",
+        "props": [
+          "opacity",
+          "background",
+          "transform",
+          "padding"
+        ]
+      },
+      "nav": {
+        "count": 31,
+        "durations": [
+          "0.001s"
+        ],
+        "easing": "ease",
+        "easingType": "ease",
+        "props": [
+          "transform",
+          "opacity"
+        ]
+      },
+      "button": {
+        "count": 2,
+        "durations": [
+          "0.001s"
+        ],
+        "easing": "linear",
+        "easingType": "linear",
+        "props": [
+          "background-color",
+          "color"
+        ]
+      },
+      "link": {
+        "count": 33,
+        "durations": [
+          "0.001s"
+        ],
+        "easing": "ease",
+        "easingType": "ease",
+        "props": [
+          "opacity",
+          "background-color",
+          "color"
+        ]
+      },
+      "card": {
+        "count": 18,
+        "durations": [
+          "0.001s"
+        ],
+        "easing": "ease",
+        "easingType": "ease",
+        "props": []
+      },
+      "input": {
+        "count": 3,
+        "durations": [
+          "0.001s"
+        ],
+        "easing": "ease-out",
+        "easingType": "ease-out",
+        "props": [
+          "background",
+          "border"
+        ]
+      }
+    },
+    "interactiveDeltas": []
+  },
+  "components": {
+    "buttons": [],
+    "inputs": {
+      "text": [
+        {
+          "specificType": "text",
+          "states": {
+            "default": {
+              "backgroundColor": "rgb(255, 255, 255)",
+              "color": "rgb(0, 0, 0)",
+              "border": "1px solid rgba(0, 0, 0, 0.12)",
+              "borderRadius": "8px",
+              "padding": "3px 32px",
+              "boxShadow": "none",
+              "outline": "rgb(0, 0, 0) none 3px"
+            },
+            "focus": null
+          }
+        }
+      ],
+      "checkbox": [],
+      "radio": [],
+      "select": []
+    },
+    "links": [
+      {
+        "color": "rgb(54, 54, 54)",
+        "textDecoration": "none",
+        "fontWeight": "400",
+        "states": {
+          "default": {
+            "color": "rgb(54, 54, 54)",
+            "textDecoration": "none"
+          },
+          "hover": null
+        }
+      },
+      {
+        "color": "rgb(247, 247, 247)",
+        "textDecoration": "none",
+        "fontWeight": "400",
+        "states": {
+          "default": {
+            "color": "rgb(247, 247, 247)",
+            "textDecoration": "none"
+          },
+          "hover": null
+        }
+      },
+      {
+        "color": "rgb(255, 255, 255)",
+        "textDecoration": "none",
+        "fontWeight": "400",
+        "states": {
+          "default": {
+            "color": "rgb(255, 255, 255)",
+            "textDecoration": "none"
+          },
+          "hover": {}
+        }
+      }
+    ],
+    "badges": {
+      "all": [],
+      "byVariant": {
+        "error": [],
+        "warning": [],
+        "success": [],
+        "info": [],
+        "neutral": []
+      }
+    }
+  },
+  "breakpoints": [
+    {
+      "px": "767px"
+    },
+    {
+      "px": "768px"
+    }
+  ],
+  "iconSystem": [
+    {
+      "name": "SVG Icons",
+      "type": "svg"
+    }
+  ],
+  "frameworks": []
+}

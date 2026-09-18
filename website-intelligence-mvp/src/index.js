@@ -1,0 +1,14 @@
+import { mkdir, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { captureRaw } from './raw.js'; import { captureRendered } from './render.js'; import { extractMedia } from './media.js'; import { readable } from './readability.js'; import { writeReports } from './report.js';
+const run = promisify(execFile); const url = process.argv[2];
+if (!url) { console.error('Usage: npm run analyze -- <url>'); process.exit(2); }
+const projectDir = fileURLToPath(new URL('../', import.meta.url)); const outDir = fileURLToPath(new URL('../artifacts/', import.meta.url)); await mkdir(outDir, { recursive: true }); const crawledAt = new Date().toISOString();
+let raw, rendered, dembrandt = null;
+try { raw = await captureRaw(url); await writeFile(`${outDir}/raw.html`, raw.html); await writeFile(`${outDir}/headers.json`, JSON.stringify(raw.headers, null, 2)); raw.media = extractMedia(raw.html, raw.finalUrl); raw.readability = readable(raw.html, raw.finalUrl); await writeFile(`${outDir}/media.raw.json`, JSON.stringify(raw.media, null, 2)); } catch (error) { raw = { status: 0, finalUrl: url, media: [], readability: { chars: 0, words: 0 }, error: error.message }; }
+try { rendered = await captureRendered(url, outDir); await writeFile(`${outDir}/rendered.html`, rendered.html); await writeFile(`${outDir}/aria.yml`, rendered.aria || ''); await writeFile(`${outDir}/axe.json`, JSON.stringify(rendered.axe, null, 2)); rendered.media = extractMedia(rendered.html, rendered.finalUrl); rendered.readability = readable(rendered.html, rendered.finalUrl); await writeFile(`${outDir}/media.rendered.json`, JSON.stringify(rendered.media, null, 2)); } catch (error) { rendered = { finalUrl: url, media: [], readability: { chars: 0, words: 0 }, axe: { violations: [] }, consoleErrors: [], requestFailures: [], error: error.message }; }
+try { const command = `npx dembrandt ${url} --json-only`; const result = await run(process.platform === 'win32' ? 'cmd.exe' : 'sh', process.platform === 'win32' ? ['/d', '/c', command] : ['-c', command], { cwd: projectDir, timeout: 180000, maxBuffer: 20 * 1024 * 1024, windowsHide: true }); const start = result.stdout.indexOf('{'); const end = result.stdout.lastIndexOf('}'); dembrandt = start >= 0 && end > start ? result.stdout.slice(start, end + 1) : result.stdout; } catch (error) { dembrandt = JSON.stringify({ error: error.message, stderr: error.stderr }); }
+await writeFile(`${outDir}/design.json`, dembrandt || '{}');
+const report = await writeReports(outDir, { url, crawledAt, runtime: { node: process.version, playwright: 'latest', dembrandt: 'latest' }, raw, rendered }); console.log(JSON.stringify({ artifactDir: outDir, hypothesis_result: report.hypothesis_result, raw_images: report.raw.image_count, rendered_images: report.rendered.image_count }, null, 2));
