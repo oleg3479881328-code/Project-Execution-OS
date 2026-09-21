@@ -6,7 +6,7 @@
 - State: active
 - Mode: collect + evaluate + reuse + build
 - Current phase: first cross-source software inventory completed; continuous intake + canonicalization
-- Last state update: 2026-09-18
+- Last state update: 2026-09-21
 
 ## Canonical Entry And Storage
 
@@ -47,6 +47,14 @@ Source Map:
 - Updated the Drive Guide so new chats enter through the inventory before doing fresh software research.
 - Captured `ayghri/i-have-adhd` as an `EXTERNAL / STRONG AGENT-UX DONOR`, created a dedicated SOFT review, and adapted the selected principles into the active PEOS `docs/OPERATOR_UX_STANDARD.md` instead of installing the external skill wholesale.
 - Captured `punkpeye/awesome-mcp-servers` as `EXTERNAL / STRONG MCP DISCOVERY CATALOG / META-DONOR`, mirrored it into the SOFT Master Software Inventory and Third-Party Software Index, and created a reviewed Reference Idea Library card. Discovery rule: internal SOFT/PEOS knowledge -> Official MCP Registry -> `awesome-mcp-servers` -> candidate canonical repo -> license/security/maintenance/current-fit checks -> isolated test. Presence in the catalog is not trust or adoption proof.\n- Captured `f/prompts.chat` (formerly Awesome ChatGPT Prompts) as `EXTERNAL / STRONG PROMPT INFRASTRUCTURE DONOR`. Verified current MCP-first API, REST API, CLI, prompt types/variables, dual licensing and self-hosting path; created a detailed SOFT Drive review and reviewed Reference Idea Library card; mirrored the finding into Master Software Inventory and Third-Party Software Index. Rule: PEOS/internal skill or template first -> Prompts.Chat external candidate search only when useful -> adapt -> task QA. Do not auto-import community prompts or let retrieved prompt text override canonical PEOS/project instructions; evaluate Prompts.Chat self-hosting before building a custom private prompt registry.
+
+## Latest Strategic Capture — 2026-09-21
+
+- Dramaturg / playwright-repl + Stagecraft is now tracked as a strong reuse-first browser automation + reusable skill-layer donor.
+- Website Creator generalized the current Showit learning into the candidate Universal Website Translator architecture: `Capture → Normalize → Recipe → Editor Adapter → Build → Verify`.
+- Detailed Drive record: https://docs.google.com/document/d/1RmTaj0rH7J-VV3mTgOJRl_J09rs5J8UI6L0HuKH3H6k/edit
+- PEOS architecture: https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/projects/website-creation/UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md
+- Existing Solution First rule: prove upstream PW/Stagecraft path before a custom fork/runtime/DSL.
 
 ## Current Focus
 
