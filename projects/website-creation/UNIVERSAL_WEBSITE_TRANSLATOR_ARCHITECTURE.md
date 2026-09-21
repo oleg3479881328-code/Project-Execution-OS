@@ -192,3 +192,43 @@ Then repeat against a small representative Wix operation set.
 The strategic goal is not to build another browser automation engine.
 
 The strategic goal is to build the **minimum missing translation/control layer above a proven browser engine**.
+
+## 2026-09-21 — First Generated Universal Page Recipe
+
+The architecture now has a first real artifact, not only a conceptual target.
+
+Proof source:
+`https://aperolspritz.tonicsiteshop.com/portfolio`
+
+Generated chain:
+
+`Universal Site Fingerprint → Universal Page Recipe v1 → Showit Adapter Plan / Wix Adapter Plan`
+
+Artifact facts:
+- 17 sections;
+- 173 normalized elements;
+- authored widths 1200 desktop / 320 mobile;
+- source breakpoint 768 px;
+- 165/173 source elements mapped to DOM evidence;
+- normalized element kinds: text, image, button, divider, vector, icon, gallery, shape, unknown.
+
+Adapter translation:
+- Showit: 165 exact / 7 approximate / 1 unsupported;
+- Wix: 155 exact / 17 approximate / 1 unsupported.
+
+Status:
+- Recipe schema/generator: GENERATED / ARTIFACT VALIDATED on this source;
+- Showit adapter: translation artifact generated; execution must still route through the current Dramaturg capability registry;
+- Wix adapter: translation candidate only / NOT LIVE PROVEN.
+
+Canonical Drive folder:
+https://drive.google.com/drive/folders/10oR140lzuXUK7eDq2nx77-oc6yBlb3Kc
+
+Current generator:
+https://docs.google.com/document/d/1Qr421BsCleTjv6zCY_-S0tiAfUuPmJ50QLHK6e6O8bU/edit
+
+Compact machine recipe:
+https://docs.google.com/document/d/1yLWHj78strzY2eoetWczw1_AkynKSvLYImvTaqEET40/edit
+
+Architecture rule:
+the older direct fingerprint→Showit-plan translator remains a useful target-specific donor/compatibility route, but the preferred boundary is now `Fingerprint → Universal Page Recipe → Editor Adapter`.
