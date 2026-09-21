@@ -309,3 +309,12 @@ https://docs.google.com/document/d/1AKzgJUh2PWCirbYDmUb6cMUT1A1EumZ17rrW4nBKHTs/
 Bundle:
 https://drive.google.com/file/d/10Bo2-qO79pGfg4pQ81Wo1dIqiQiyWRx0/view
 
+## 2026-09-21 — Recorder-first / Inspector selector policy
+
+- Unknown Showit UI transition: use Dramaturg Recorder first; do not infer a selector.
+- If Recorder emits a broad/composite/unstable selector, use Inspector/picker on the exact physical control.
+- Treat the first timeout as the blocker; later failures may be cascading.
+- Promote a route to production only after live `.pw` completion.
+- Explicitly forbid `click "Canvas DefaultPage DefaultNoneFadeSlideBounceRotateZoomFlipRollLight Speed" --exact`.
+- Current live-proven Image Animation Fade path: `click "Animation" --exact` → `click css ".input__caret"` → `click "Fade" --exact` → Time/Delay inputs.
+- Recipe→Showit compiler V1.1 now rejects forbidden selectors before emission.
