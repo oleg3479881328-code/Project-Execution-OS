@@ -267,3 +267,25 @@ Decision:
 
 Current script:
 https://docs.google.com/document/d/1VfcBW28jxc5SizUqW2AMjw7LxAiei3SKN2vGaSen2Oo/edit
+
+## 2026-09-21 — Universal Page Recipe / Adapter Layer — FIRST ARTIFACT
+
+The missing normalization/translation layer now exists as a first real generated artifact.
+
+Aperol Portfolio proof:
+- 17 sections / 173 elements;
+- source authored widths 1200 / 320;
+- breakpoint 768;
+- Showit adapter translation: 165 exact / 7 approximate / 1 unsupported;
+- Wix adapter translation: 155 exact / 17 approximate / 1 unsupported.
+
+Current preferred flow:
+`source → ONE PASS fingerprint → Universal Page Recipe → editor adapter → build → verify`.
+
+The old direct fingerprint→Showit plan remains compatibility/donor knowledge and should not be deleted.
+
+Canonical artifact folder:
+https://drive.google.com/drive/folders/10oR140lzuXUK7eDq2nx77-oc6yBlb3Kc
+
+Next proof:
+consume one Recipe section through the Showit adapter using only current proven PW-first/accepted Dramaturg bricks, then perform readback + visual QA. Wix remains candidate until a representative brick set is live-proven.
