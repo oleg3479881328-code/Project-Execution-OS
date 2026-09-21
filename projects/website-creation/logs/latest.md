@@ -1,5 +1,18 @@
 # Website Creator — latest log
 
+## 2026-09-21 — Showit Exact PW Route Binding
+
+- Ingested the authoritative Showit exact-route registry supplied by the owner.
+- Bound Universal Page Recipe operations to exact Dramaturg .pw route statuses.
+- Added a conservative compiler that fails closed when an exact route is missing.
+- Aperol result: all 17 sections currently have at least one missing exact route; no selector guessing is permitted.
+- Selected Hero as first static proof candidate.
+- Hero remaining exact routes: Canvas background/transparent fill, PonteLight font, text color. Page-trigger behavior is separate.
+- Derived Drive binding: https://docs.google.com/document/d/1AKzgJUh2PWCirbYDmUb6cMUT1A1EumZ17rrW4nBKHTs/edit
+- Bundle: https://drive.google.com/file/d/10Bo2-qO79pGfg4pQ81Wo1dIqiQiyWRx0/view
+
+---
+
 ## 2026-09-21 — First Universal Page Recipe + Showit/Wix adapter artifacts
 
 - Built reusable `fingerprint-to-page-recipe.py`.
