@@ -81,3 +81,13 @@ For every new software-related request:
 - Do not treat historical installed-software lists as current machine truth without local revalidation.
 - Do not perform fresh third-party research if the existing SOFT record already answers the question, except when time-sensitive facts require current official verification.
 - Preserve source links and verification status for third-party claims.
+
+## Universal Site Fingerprint ONE PASS V2.1 — 2026-09-21
+
+- Status: `PROVEN LIVE / CURRENT ACCEPTED`.
+- Proof target: https://aperolspritz.tonicsiteshop.com/portfolio
+- Operator contract: `URL → one V2.1 Dramaturg run → one ZIP`.
+- Live proof: 4 responsive viewports, 45 runtime image assets, 6 runtime font assets, 8 motion samples, 21-file ZIP, 45,216,413 bytes, target unchanged.
+- Current script: https://docs.google.com/document/d/1VfcBW28jxc5SizUqW2AMjw7LxAiei3SKN2vGaSen2Oo/edit
+- Canonical toolkit: https://drive.google.com/drive/folders/1MJFDiy_gLMFY4R1GwaJ62sKiFKh7nUHF
+
