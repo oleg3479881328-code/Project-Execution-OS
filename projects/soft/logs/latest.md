@@ -1,5 +1,17 @@
 # SOFT — latest log
 
+## 2026-09-21 — Universal Site Fingerprint ONE PASS V2.1 accepted
+
+- Owner-run Dramaturg proof completed successfully on Aperol Portfolio.
+- Four responsive captures completed with explicit DOM-vs-runtime asset metrics.
+- Runtime image assets: 45; runtime font assets: 6.
+- Eight motion samples completed.
+- One ZIP: 21 files / 45,216,413 bytes / 151 browser-transfer chunks.
+- `targetChanged=false`; final V2.1 COMPLETE marker received.
+- Decision: V2.1 is now the current accepted one-pass fingerprint scanner.
+- Script: https://docs.google.com/document/d/1VfcBW28jxc5SizUqW2AMjw7LxAiei3SKN2vGaSen2Oo/edit
+
+---
 ## 2026-09-21 — Dramaturg / Stagecraft universal editor automation
 
 ### Captured
