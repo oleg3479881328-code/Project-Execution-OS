@@ -230,3 +230,22 @@ Prefer integration over rebuilding solved infrastructure. Custom-build only the 
 ## Final Rule
 
 Tools serve Website Creator standards. A tool or external donor does not become the architecture merely because it is convenient, fashionable, already known, or recommended by a review.
+
+### Dramaturg / playwright-repl + Stagecraft — STRONG DONOR / ACTIVE EVALUATION
+Official: https://github.com/stevez/playwright-repl
+
+Role: primary current candidate for real authenticated-Chrome automation and reusable browser/editor skills.
+
+Relevant current capabilities include Playwright execution in the real browser session, `.pw` keyword scripts, JavaScript fallback, recorder, picker, snapshot, run/step/editor surfaces, relay/MCP/HTTP paths, and Stagecraft reusable `SKILL.md` + `.pw`/`.js` skills with variables and replay.
+
+Website Creator decision 2026-09-21:
+- prefer PW-first automation for linear editor work;
+- use Stagecraft before inventing a custom brick runtime;
+- do not fork/rebuild the browser engine first;
+- build only the missing capture/normalization/editor-adapter/control layer after a real proof.
+
+Architecture:
+`UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md`
+
+Detailed durable note:
+https://docs.google.com/document/d/1RmTaj0rH7J-VV3mTgOJRl_J09rs5J8UI6L0HuKH3H6k/edit
