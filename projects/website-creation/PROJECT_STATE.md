@@ -289,3 +289,23 @@ https://drive.google.com/drive/folders/10oR140lzuXUK7eDq2nx77-oc6yBlb3Kc
 
 Next proof:
 consume one Recipe section through the Showit adapter using only current proven PW-first/accepted Dramaturg bricks, then perform readback + visual QA. Wix remains candidate until a representative brick set is live-proven.
+
+## Showit Exact PW Route Binding — 2026-09-21
+
+The Universal Page Recipe → Showit adapter is now bound to the owner-supplied authoritative exact-route registry `Showit — Exact Dramaturg PW Routes — 2026-09-21`.
+
+Execution rule: fail closed. Do not synthesize or guess selectors. Only use routes explicitly classified LIVE-PROVEN or RECORDER-PROVEN by the route registry.
+
+Current Aperol coverage result:
+- 17 recipe sections / 173 elements;
+- 0 sections have complete faithful exact-route coverage yet;
+- this is an execution-route gap, not a Recipe/capture gap;
+- first narrow proof candidate is `hero` (one Text element);
+- Hero exact blockers: Canvas background/transparent fill, PonteLight font route, text color; page-trigger behavior is deferred to a separate behavior proof.
+
+Derived Drive binding:
+https://docs.google.com/document/d/1AKzgJUh2PWCirbYDmUb6cMUT1A1EumZ17rrW4nBKHTs/edit
+
+Bundle:
+https://drive.google.com/file/d/10Bo2-qO79pGfg4pQ81Wo1dIqiQiyWRx0/view
+
