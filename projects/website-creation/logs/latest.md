@@ -1,5 +1,33 @@
 # Website Creator — latest log
 
+## 2026-09-21 — Universal Site Fingerprint ONE PASS V2.1 — PROVEN LIVE
+
+Owner-run proof target:
+https://aperolspritz.tonicsiteshop.com/portfolio
+
+Accepted evidence:
+- four responsive viewports completed;
+- desktop-1440: 416 nodes / 2 DOM img / 45 runtime image assets / 6 runtime font assets / 72 links;
+- desktop-1200: 417 nodes / 2 DOM img / 45 runtime image assets / 6 runtime font assets / 72 links;
+- tablet-1024: 417 nodes / 2 DOM img / 45 runtime image assets / 6 runtime font assets / 72 links;
+- mobile-390: 398 nodes / 2 DOM img / 45 runtime image assets / 6 runtime font assets / 72 links;
+- eight motion samples completed;
+- one 21-file ZIP built;
+- ZIP bytes: 45,216,413;
+- transfer chunks: 151;
+- targetChanged=false;
+- final marker: `UNIVERSAL SITE FINGERPRINT ONE-PASS V2.1: COMPLETE`.
+
+Decision:
+- V2.1 is now `PROVEN LIVE / CURRENT ACCEPTED`.
+- Default capture workflow is `URL → one V2.1 run → one ZIP`.
+- V2 remains historical proof; separate static/motion passes remain fallback/recovery knowledge rather than the default path.
+
+Current script:
+https://docs.google.com/document/d/1VfcBW28jxc5SizUqW2AMjw7LxAiei3SKN2vGaSen2Oo/edit
+
+---
+
 ## 2026-09-21 — Universal Website Translator / Dramaturg PW-first direction
 
 ### Captured
