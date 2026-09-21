@@ -308,3 +308,23 @@ When a new reusable discovery appears:
 ## Final Rule
 
 Website Creator is a **production control/capability system**, not an archive of client projects and not automatically a monolithic builder runtime. Store reusable knowledge here in universal form and validate execution architecture through real site production.
+
+## 14. Universal Website Translator / Browser Editor Automation
+
+Canonical architecture:
+- `UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md`
+- detailed Drive decision record: https://docs.google.com/document/d/1RmTaj0rH7J-VV3mTgOJRl_J09rs5J8UI6L0HuKH3H6k/edit
+
+Reusable chain:
+
+`source website → capture/fingerprint → normalize → universal recipe → editor adapter → build → verify`
+
+Current primary existing-solution candidate for the execution layer is Dramaturg / playwright-repl + Stagecraft.
+
+Rules:
+- native `.pw` first for linear browser/editor workflows;
+- JavaScript only for genuine program logic or unsupported cases;
+- do not create a second browser DSL or rebuild solved Playwright/Chrome runtime infrastructure before a concrete gap is proven;
+- keep capture/fingerprint, normalized recipe and target-editor implementation separate;
+- Showit is the first proof target; Wix is the next generic-editor proof candidate;
+- this path complements the Website Creator shared engine and Site Model rather than replacing them.
