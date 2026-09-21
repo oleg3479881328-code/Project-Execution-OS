@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "ac833afa2fdb6804b4f572ddf6e3ba8bb8e212e9",
-  "generated_at": "2026-09-18T12:38:51-04:00",
-  "artifact_count": 612,
+  "repository_commit": "aa58db241def09c72d96c398c372dc8d87cbab9d",
+  "generated_at": "2026-09-21T11:37:54-04:00",
+  "artifact_count": 613,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12652,6 +12652,31 @@
         "Editor Comparison Rule",
         "Factory Comparison Rule",
         "Selection Rule",
+        "Final Rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md",
+      "title": "Universal Website Translator — Dramaturg + Stagecraft Architecture",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "candidate / active research direction",
+      "date": "2026-09-21",
+      "sha256": "7681ffe96438e6e878dc14360a490c225ca78b825ca5d938182a0dfba85d2485",
+      "headings": [
+        "Universal Website Translator — Dramaturg + Stagecraft Architecture",
+        "Purpose",
+        "Core Decision",
+        "PW-First Rule",
+        "Stagecraft / Brick Layer",
+        "Capture Layer",
+        "Editor Adapter Boundary",
+        "Showit / Wix Proof Strategy",
+        "Scope: \"Almost Any Website\"",
+        "AI Role",
+        "Controlled Healing",
+        "Relationship To Website Creator",
+        "Next Proof",
         "Final Rule"
       ]
     },
