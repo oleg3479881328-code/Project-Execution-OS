@@ -1,5 +1,28 @@
 # SOFT — latest log
 
+## 2026-09-21 — Dramaturg / Stagecraft universal editor automation
+
+### Captured
+
+- Reclassified Dramaturg / playwright-repl + Stagecraft as `EXTERNAL / STRONG BROWSER-AUTOMATION ENGINE + SKILL-LAYER DONOR / ACTIVE EVALUATION`.
+- Verified the architectural direction is broader than Showit: normal browser-based editors/sites can potentially be automated through reusable PW/Stagecraft skills when their controls are accessible through Chrome/Playwright surfaces.
+- Captured the Website Creator higher-level pattern: `Capture → Normalize → Recipe → Editor Adapter → Build → Verify`.
+- Recorded Showit as first proof target and Wix as next generic-editor proof candidate.
+- Recorded the PW-first rule and explicit no-rebuild rule for existing runtime/parser/recorder/replay/MCP infrastructure.
+- Updated SOFT Master Software Inventory and Third-Party Software Index with canonical architecture links.
+
+### Durable locations
+
+- Detailed Drive architecture: https://docs.google.com/document/d/1RmTaj0rH7J-VV3mTgOJRl_J09rs5J8UI6L0HuKH3H6k/edit
+- PEOS / Website Creator architecture: https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/projects/website-creation/UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md
+- SOFT Master Software Inventory: https://docs.google.com/document/d/1yTWfazVPhs-AWdSsvS4Q6xyNd7bXKtqi6EvrmQMdAOk/edit
+- SOFT Third-Party Software Index: https://docs.google.com/document/d/1C-F_ukN2AlryP-_FxlJqFIKSbKjat8kzzMw8HsaSPH0/edit
+
+### Reuse decision
+
+Before building another browser automation extension, custom DSL, recorder, replay engine or Playwright bridge, benchmark and reuse Dramaturg / Stagecraft. Custom work should focus on the missing semantic brick/project/workflow UI and Website Creator translation/adapters only after a concrete gap is proven.
+
+---
 ## 2026-09-18 — Prompts.Chat prompt-infrastructure donor capture
 
 ### Owner intent
