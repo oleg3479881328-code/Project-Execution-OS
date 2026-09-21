@@ -5,7 +5,7 @@
 - Project: `Website Creator`
 - State: active
 - Phase: **first shared engine runtime verified; reusable component/editor workflow validation next**
-- Last updated: 2026-09-14
+- Last updated: 2026-09-21
 
 ## Architecture Decision
 
@@ -223,3 +223,21 @@ The key speed rule is reuse: do not rebuild generic infrastructure inside a site
 Website Creator may know **what works**. It should not need to know **which client originally taught us that it works**.
 
 And a fresh chat should not need to invent **how to build a website system** before it can build **a website**.
+
+## 2026-09-21 — Universal Website Translator Direction
+
+A second reusable execution path is now under active evaluation:
+
+`source website → capture/fingerprint → normalize → universal recipe → editor adapter → automated build → verify`.
+
+This does not replace the shared Website Creator engine. It adds a platform/editor translation path for cases where sites must be recreated or operated inside browser-based editors such as Showit or Wix.
+
+Current execution candidate: Dramaturg / playwright-repl + Stagecraft, with native `.pw` as the default for linear UI workflows and JavaScript as an escape hatch.
+
+Do not fork Dramaturg first. Prove one existing Showit PW operation as a parameterized Stagecraft skill against the real authenticated browser, then test a representative Wix operation set.
+
+Canonical architecture:
+`UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md`
+
+Detailed Drive record:
+https://docs.google.com/document/d/1RmTaj0rH7J-VV3mTgOJRl_J09rs5J8UI6L0HuKH3H6k/edit
