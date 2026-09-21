@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "aa58db241def09c72d96c398c372dc8d87cbab9d",
-  "generated_at": "2026-09-21T11:37:54-04:00",
+  "repository_commit": "81855a8aac8596a1ec2a457a729b12eb371962ec",
+  "generated_at": "2026-09-21T11:39:17-04:00",
   "artifact_count": 613,
   "artifacts": [
     {
@@ -12488,7 +12488,7 @@
       "domain": "website-creation",
       "status": "- direction accepted;",
       "date": null,
-      "sha256": "0ee0f9e4dae104f4bf942e3e7e12eab99f0405057cec8d668651161d99d6768e",
+      "sha256": "b65d6fad50091680e04009b948e512bba454f50d5fccdca85f87ee9002d6505c",
       "headings": [
         "Website Creator — PROJECT_STATE.md",
         "Status",
@@ -12509,7 +12509,8 @@
         "P0 — verified",
         "P1",
         "P2",
-        "Final Boundary"
+        "Final Boundary",
+        "2026-09-21 — Universal Website Translator Direction"
       ]
     },
     {
@@ -12567,7 +12568,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "67e9a61125f8d82dd439784e376946e8d19408b7c2ec78d3f5253f554c06127e",
+      "sha256": "e8ee0d21220545405b5a1767936522b1dcf8f05d0147fdb436313db05ada0ab3",
       "headings": [
         "Website Creator — SOURCE_REGISTRY.md",
         "Purpose",
@@ -12589,7 +12590,8 @@
         "11. Measurement & Optimization",
         "12. Website Factory",
         "13. Knowledge Maintenance",
-        "Final Rule"
+        "Final Rule",
+        "14. Universal Website Translator / Browser Editor Automation"
       ]
     },
     {
@@ -12599,7 +12601,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "b0387dd5a52836d9597fbab8e11b13b57ed296b51dce6bce00b39d898354bb76",
+      "sha256": "9956f21e037aa938dc4fb79282cd3e75fabea21dc87d5d6cc58ed182b0eef9c1",
       "headings": [
         "Website Creator — TOOL_DONOR_REGISTRY.md",
         "Purpose",
@@ -12652,7 +12654,8 @@
         "Editor Comparison Rule",
         "Factory Comparison Rule",
         "Selection Rule",
-        "Final Rule"
+        "Final Rule",
+        "Dramaturg / playwright-repl + Stagecraft — STRONG DONOR / ACTIVE EVALUATION"
       ]
     },
     {
@@ -12732,13 +12735,18 @@
     },
     {
       "path": "projects/website-creation/logs/latest.md",
-      "title": "Website Creator — latest",
+      "title": "Website Creator — latest log",
       "type": "project-artifact",
       "domain": "website-creation",
       "status": null,
       "date": "2026-09-14",
-      "sha256": "7f7a8c46aaf483c63e6af2ea0dd2ad335427ec0d81ea9fcdbf40f3efd9f995b5",
+      "sha256": "40fd65181b88302c57b2eadccb9986db822123cf941fa925747fd9a2a47edddb",
       "headings": [
+        "Website Creator — latest log",
+        "2026-09-21 — Universal Website Translator / Dramaturg PW-first direction",
+        "Captured",
+        "Durable locations",
+        "Next proof",
         "Website Creator — latest",
         "Event",
         "Main Result",
