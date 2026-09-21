@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "81855a8aac8596a1ec2a457a729b12eb371962ec",
-  "generated_at": "2026-09-21T11:39:17-04:00",
+  "repository_commit": "66c9d938e2c3f8c3f875d15bd982146d3e302fba",
+  "generated_at": "2026-09-21T11:40:01-04:00",
   "artifact_count": 613,
   "artifacts": [
     {
@@ -11896,12 +11896,13 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "9a43e29c1f95ab9f475145c849d77889d924fcb54f9dc33c1be61a512b974c1a",
+      "sha256": "19a85ab7ab7d7e29ee59621118b96cfc0a53b393031646ba68ed79762815468b",
       "headings": [
         "SOFT — PROJECT_STATE.md",
         "Status",
         "Canonical Entry And Storage",
         "Completed In First Revision",
+        "Latest Strategic Capture — 2026-09-21",
         "Current Focus",
         "Next Safe Action",
         "Do Not Repeat / Constraints"
@@ -11914,9 +11915,13 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "ce84a80781ecfe7a8b9b34e2162c560ce6d9b130671edaa0aa83b9e0921cbd35",
+      "sha256": "31bba5bd7a50da3ce52c7e3a5526da3c74937be849f6771157418a64405253c2",
       "headings": [
         "SOFT — latest log",
+        "2026-09-21 — Dramaturg / Stagecraft universal editor automation",
+        "Captured",
+        "Durable locations",
+        "Reuse decision",
         "2026-09-18 — Prompts.Chat prompt-infrastructure donor capture",
         "Owner intent",
         "Captured",
