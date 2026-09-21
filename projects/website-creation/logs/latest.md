@@ -1,5 +1,24 @@
 # Website Creator — latest log
 
+## 2026-09-21 — First Universal Page Recipe + Showit/Wix adapter artifacts
+
+- Built reusable `fingerprint-to-page-recipe.py`.
+- Generated a platform-neutral Recipe from Aperol Portfolio.
+- Recipe inventory: 17 sections / 173 elements.
+- Preserved exact Showit authored Desktop/Mobile geometry from exposed `init_data` and used DOM/computed style as verification.
+- Generated compact machine Recipe for durable handoff.
+- Generated Showit and Wix adapter plans.
+- Showit translation: 165 exact / 7 approximate / 1 unsupported.
+- Wix translation: 155 exact / 17 approximate / 1 unsupported.
+- Explicitly separated translation support from automation execution proof.
+- Marked old direct fingerprint→Showit translator as target-specific donor/compatibility knowledge rather than the preferred architecture.
+- No target editor mutation occurred.
+
+Durable folder:
+https://drive.google.com/drive/folders/10oR140lzuXUK7eDq2nx77-oc6yBlb3Kc
+
+---
+
 ## 2026-09-21 — Universal Site Fingerprint ONE PASS V2.1 — PROVEN LIVE
 
 Owner-run proof target:
