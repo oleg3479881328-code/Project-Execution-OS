@@ -1,3 +1,33 @@
+# Website Creator — latest log
+
+## 2026-09-21 — Universal Website Translator / Dramaturg PW-first direction
+
+### Captured
+
+- Generalized the current Showit/Dramaturg learning into a cross-editor architecture.
+- Recorded the chain `Capture → Normalize → Recipe → Editor Adapter → Build → Verify`.
+- Selected Dramaturg / playwright-repl + Stagecraft as the primary existing-solution candidate for the browser execution/skill layers.
+- Recorded PW-first rule: linear UI flows use native `.pw`; JS remains an escape hatch for real program logic.
+- Recorded that Stagecraft already provides much of the proposed brick model: SKILL.md, .pw/.js skills, variables, recording/replay and user skill discovery.
+- Defined Showit as first proof and Wix as second generic-editor proof candidate.
+- Explicitly rejected a premature Dramaturg fork or a second custom DSL/browser engine.
+- Preserved the boundary: capture/fingerprint, normalized recipe, and target editor implementation are separate layers.
+
+### Durable locations
+
+- Architecture: https://github.com/oleg3479881328-code/Project-Execution-OS/blob/main/projects/website-creation/UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md
+- Detailed Drive record: https://docs.google.com/document/d/1RmTaj0rH7J-VV3mTgOJRl_J09rs5J8UI6L0HuKH3H6k/edit
+- SOFT Master Software Inventory updated.
+- SOFT Third-Party Software Index updated.
+- Website Creator Automatic Website Factory README updated.
+- Website Creator Tools & Extractors README updated.
+
+### Next proof
+
+Known working Showit PW operation → Stagecraft skill → parameter → real Chrome replay/run → deterministic verification; then repeat with a small representative Wix operation set.
+
+---
+
 # Website Creator — latest
 
 Date: 2026-09-14
