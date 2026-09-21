@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6452c16d82c33dafc04ff7d77e6484f7bbcdc6cd",
-  "generated_at": "2026-09-21T13:00:58-04:00",
+  "repository_commit": "31812fe33ac54e35dbf07372212b8343c13b3898",
+  "generated_at": "2026-09-21T13:18:18-04:00",
   "artifact_count": 613,
   "artifacts": [
     {
@@ -12495,7 +12495,7 @@
       "domain": "website-creation",
       "status": "- direction accepted;",
       "date": null,
-      "sha256": "a826db168967786f62f47afa1c3c08ce044ebad115c365653fc7c584a2432f9f",
+      "sha256": "321bdd6658c983296c0a7f8753b95973ccaafe22f50cfe1cdf8befd66ac3fd73",
       "headings": [
         "Website Creator — PROJECT_STATE.md",
         "Status",
@@ -12519,7 +12519,8 @@
         "Final Boundary",
         "2026-09-21 — Universal Website Translator Direction",
         "2026-09-21 — Universal Site Fingerprint ONE PASS V2.1 — PROVEN LIVE",
-        "2026-09-21 — Universal Page Recipe / Adapter Layer — FIRST ARTIFACT"
+        "2026-09-21 — Universal Page Recipe / Adapter Layer — FIRST ARTIFACT",
+        "Showit Exact PW Route Binding — 2026-09-21"
       ]
     },
     {
@@ -12750,9 +12751,10 @@
       "domain": "website-creation",
       "status": null,
       "date": "2026-09-14",
-      "sha256": "0e521941f2f4595ef2df1c878a32092037cd92d785a0f832355b7875c47df0a4",
+      "sha256": "9f535aea71b95f760ad028ebcbd7aec8084dbe3e594cee5e828e40fb73cad558",
       "headings": [
         "Website Creator — latest log",
+        "2026-09-21 — Showit Exact PW Route Binding",
         "2026-09-21 — First Universal Page Recipe + Showit/Wix adapter artifacts",
         "2026-09-21 — Universal Site Fingerprint ONE PASS V2.1 — PROVEN LIVE",
         "2026-09-21 — Universal Website Translator / Dramaturg PW-first direction",
