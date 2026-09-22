@@ -105,6 +105,8 @@ logs/latest.md
 
 Use `docs/ALWAYS_TRANSFER_READY_STATE_STANDARD.md` for the continuity rules that begin after zero-state bootstrap.
 
+When the project purpose is known and the project has its first reusable architecture, workflow, ready solution, or accepted operating rule, create the canonical project textbook under `docs/PROJECT_TEXTBOOK_STANDARD.md`. Do not create an empty ceremonial textbook while purpose is still unknown.
+
 ## File Placement Rule
 
 Every file created during bootstrap or later execution must follow `docs/FILE_ORGANIZATION_STANDARD.md`.
@@ -164,6 +166,7 @@ For projects outside this repository, central-system references must use canonic
 7. Mark unconfirmed purpose explicitly as unknown when it is still unknown.
 8. Obtain or continue defining the project purpose.
 9. After purpose is confirmed, route into the minimal appropriate lifecycle, structure, research, or execution standards.
+10. Once reusable project knowledge exists, create or link the single canonical project textbook and keep it current instead of creating chat-by-chat handoff manuals.
 
 ## Related Nodes
 
@@ -171,6 +174,7 @@ For projects outside this repository, central-system references must use canonic
 - `Start New Project.md` — new-project route
 - `docs/PROJECT_LIFECYCLE_MODEL.md` — layer and persistence decisions
 - `docs/PROJECT_ENTRYPOINT_STANDARD.md` — ongoing entrypoint contract, including ChatGPT Project pointer behavior
+- `docs/PROJECT_TEXTBOOK_STANDARD.md` — canonical reusable project-solution manual for new chats and executors
 - `docs/PROJECT_MEMORY_STANDARD.md` — durable memory and re-entry rules
 - `docs/PROJECT_STRUCTURE_STANDARD.md` — file or versioned structure when justified
 - `docs/FILE_ORGANIZATION_STANDARD.md` — global canonical placement rule for every durable artifact
