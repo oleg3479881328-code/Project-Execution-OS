@@ -90,13 +90,15 @@ If the entrypoint does not answer these clearly, it is incomplete.
 
 Every canonical live project entrypoint should include, in compact form: Project; Purpose; Source Of Truth; Source Trail; Current Status; Done So Far; Current Focus; Next Practical Step; Key Decisions And Constraints; Read Next.
 
+When a canonical project textbook exists, `Read Next` should link to it for reusable project solutions and hard operating knowledge. The entrypoint should not duplicate the textbook.
+
 Follow `docs/SOURCE_TRACEABILITY_STANDARD.md` for recoverable underlying sources and evidence. Unknown fields are allowed when truthful; invented fields are not.
 
 ## What The Project Entrypoint Must Not Become
 
 The project entrypoint must not become the global system router, full project history, full rules document, transcript dump, research archive, or hidden second state database.
 
-History belongs in logs/workflow runs/databases/supporting pages. Rules belong in standards/project rules. The project entrypoint remains the shortest reliable project-level front door after routing selects that project.
+History belongs in logs/workflow runs/databases/supporting pages. Reusable project solution knowledge belongs in the canonical project textbook under `docs/PROJECT_TEXTBOOK_STANDARD.md`. Rules belong in standards/project rules. The project entrypoint remains the shortest reliable project-level front door after routing selects that project.
 
 ## Repository Legacy Migration Rule
 
