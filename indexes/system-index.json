@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6abf946b4a6bed6f2f6351f13908fd39e281c281",
-  "generated_at": "2026-09-21T13:46:49-04:00",
-  "artifact_count": 613,
+  "repository_commit": "6dc722b026ba11ee1ddf82cd92e5e3262d87b981",
+  "generated_at": "2026-09-22T12:06:39-04:00",
+  "artifact_count": 614,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -7117,7 +7117,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "00331ed0615f2b81d589d1f232f8db3e144f67bed42f10a5dad1cc2a6e840e72",
+      "sha256": "ae7730c300d920dc6812b7c4ceca98b83ff3b04e356ae605c3bf8bdfaceb3c82",
       "headings": [
         "Project Bootstrap Standard",
         "Purpose",
@@ -7143,7 +7143,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "5edb35f0f37779f942c584fc03e87984d3b04d6ed7506da469f156845c3150d1",
+      "sha256": "37d222ceec0a05d7ddc9995f428d8eafd7f5f5ba739c8cd9e7e8205c9e8b4736",
       "headings": [
         "Project Entrypoint Standard",
         "Purpose",
@@ -7301,6 +7301,34 @@
       ]
     },
     {
+      "path": "docs/PROJECT_TEXTBOOK_STANDARD.md",
+      "title": "Project Textbook Standard",
+      "type": "system-standard",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "ba2022f43c79432a6026f9f23e6737c75f50369f34d134e13df3f41cf6dc397e",
+      "headings": [
+        "Project Textbook Standard",
+        "Purpose",
+        "Core Rule",
+        "Relationship To Other Project Artifacts",
+        "What Belongs In The Textbook",
+        "What Must Not Become Textbook Content",
+        "Knowledge Promotion",
+        "Existing-Solution-First Requirement",
+        "Naming",
+        "Storage",
+        "New Project Rule",
+        "Project Entrypoint Rule",
+        "Maintenance Rule",
+        "Replacement Rule",
+        "New Chat Reading Rule",
+        "Anti-Bureaucracy Rule",
+        "Final Rule"
+      ]
+    },
+    {
       "path": "docs/REFERENCE_IDEA_CAPTURE_STANDARD.md",
       "title": "Reference Idea Capture Standard",
       "type": "system-standard",
@@ -7408,7 +7436,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "309e6667e8d06cbc122a7c34e9382cff960c121ef9f1c1a71eb7c3370488d84f",
+      "sha256": "bf9517fc51722dc0595d532143d2effbe75f875e4d091bcc32e951a8dfb7d029",
       "headings": [
         "Project Execution OS Router",
         "Purpose",
