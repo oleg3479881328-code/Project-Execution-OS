@@ -318,3 +318,30 @@ https://drive.google.com/file/d/10Bo2-qO79pGfg4pQ81Wo1dIqiQiyWRx0/view
 - Explicitly forbid `click "Canvas DefaultPage DefaultNoneFadeSlideBounceRotateZoomFlipRollLight Speed" --exact`.
 - Current live-proven Image Animation Fade path: `click "Animation" --exact` → `click css ".input__caret"` → `click "Fade" --exact` → Time/Delay inputs.
 - Recipe→Showit compiler V1.1 now rejects forbidden selectors before emission.
+
+## 2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE
+
+Owner-run proof target: https://venues.olgapoloweddings.com/
+
+Accepted evidence:
+- 4 responsive viewports completed;
+- each viewport reported 59 links;
+- raw anchor occurrences: 236 (=59×4);
+- normalized Link Graph: 46 unique anchors;
+- structured navigation items: 1;
+- forms: 0;
+- 8 motion samples completed;
+- one 22-file ZIP built;
+- ZIP bytes: 98,991,721;
+- transfer chunks: 330;
+- targetChanged=false;
+- final marker: `UNIVERSAL SITE FINGERPRINT ONE-PASS V2.2: COMPLETE`.
+
+Decision:
+- V2.2 supersedes V2.1 as current accepted scanner.
+- Links are first-class reconstruction evidence.
+- Canonical package now includes `normalized/link-graph.json` in addition to raw per-viewport link evidence.
+- Default translator input path: `URL → V2.2 fingerprint ZIP → Universal Page Recipe → editor adapter`.
+
+Current V2.2 script:
+https://docs.google.com/document/d/1me66NNjOsvO-0KXO7F8lgG490s-nKwWnUtMvVA-I-qk/edit
