@@ -345,3 +345,14 @@ Decision:
 
 Current V2.2 script:
 https://docs.google.com/document/d/1me66NNjOsvO-0KXO7F8lgG490s-nKwWnUtMvVA-I-qk/edit
+
+
+## 2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED
+- Source proof: https://venues.olgapoloweddings.com/
+- Runtime: PROVEN LIVE using existing exact source tab; no newPage/goto dependency.
+- Physical ZIP independently verified: 64 files; ZIP CRC PASS; manifest exact 64/64; all JSON valid.
+- Image asset pack: 38/38 downloaded, 0 failed, 0 skipped, 26,155,646 bytes; 36 JPEG + 1 SVG + 1 GIF; all 36 DOM currentSrc assets covered across all four viewports.
+- Link Graph: 46 unique anchors / 236 raw occurrences / 37 internal / 8 external-by-origin / 1 mailto.
+- Showit handoff files embedded: 00-SHOWIT-NEW-CHAT-START-HERE.md and showit/reconstruction-contract.json.
+- ZIP SHA-256: 5f9746326c3f4983079ae0f98a780acf0b5fa0ab28e1aff57cedd18f28a9913e.
+- V2.3.1 supersedes V2.2 as CURRENT Showit-first portable capture package. V2.2 remains historical PROVEN LIVE.
