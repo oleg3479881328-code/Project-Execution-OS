@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8140b49219f4cc550af64293f6f80c191c1285fe",
-  "generated_at": "2026-09-22T17:46:10-04:00",
+  "repository_commit": "fcceb1d69a2a3b5b45cb0e78769a70eed778505e",
+  "generated_at": "2026-09-22T21:13:49-04:00",
   "artifact_count": 614,
   "artifacts": [
     {
@@ -11924,7 +11924,7 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "81da467e6637d7160245545aa4bbf62fdc1333f97d7840527525f91d18f55576",
+      "sha256": "3ef8418cb6231176d30ebd2d3785f84c6c084e7073c6643093c7fabcc51df81c",
       "headings": [
         "SOFT — PROJECT_STATE.md",
         "Status",
@@ -11935,7 +11935,8 @@
         "Next Safe Action",
         "Do Not Repeat / Constraints",
         "Universal Site Fingerprint ONE PASS V2.1 — 2026-09-21",
-        "2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE"
+        "2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE",
+        "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED"
       ]
     },
     {
@@ -11945,7 +11946,7 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "d32b791ec4c397a6de96ff06fb8cfe4d368e830f174f86ca201a08b485f50286",
+      "sha256": "60d28a29b50c649c8b740d003b411286052b815ccb280a669e14c78a8ee36108",
       "headings": [
         "SOFT — latest log",
         "2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE",
@@ -11986,7 +11987,8 @@
         "New-chat behavior changed",
         "Project state synchronization",
         "Next action",
-        "2026-09-06 — Drive organization and re-entry bootstrap"
+        "2026-09-06 — Drive organization and re-entry bootstrap",
+        "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED"
       ]
     },
     {
@@ -12525,7 +12527,7 @@
       "domain": "website-creation",
       "status": "- direction accepted;",
       "date": null,
-      "sha256": "74498bd6f876a0d85f403474ecf855ac402b8ac111c4424bdc85e0952a5ddd31",
+      "sha256": "ebf8d0ab1a6540ee61adcc8d6eb231c75fe0ee1d5ba2bc392b2eee55226185b6",
       "headings": [
         "Website Creator — PROJECT_STATE.md",
         "Status",
@@ -12552,7 +12554,8 @@
         "2026-09-21 — Universal Page Recipe / Adapter Layer — FIRST ARTIFACT",
         "Showit Exact PW Route Binding — 2026-09-21",
         "2026-09-21 — Recorder-first / Inspector selector policy",
-        "2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE"
+        "2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE",
+        "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED"
       ]
     },
     {
@@ -12783,7 +12786,7 @@
       "domain": "website-creation",
       "status": null,
       "date": "2026-09-14",
-      "sha256": "e5a43635debfbf9293aa775e9989a99b11516f575e21e91fff5f3e5bf829c97f",
+      "sha256": "ec939cb2c2abc46c66718fa0c60ba64894566f463cbb0628bd5b8b9d48590cb6",
       "headings": [
         "Website Creator — latest log",
         "2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE",
@@ -12801,7 +12804,8 @@
         "Car Service Garage Validation — Slice 1",
         "What This Does Not Yet Prove",
         "Current P0",
-        "Core Principle"
+        "Core Principle",
+        "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED"
       ]
     },
     {
