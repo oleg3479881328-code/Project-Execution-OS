@@ -128,3 +128,16 @@ https://docs.google.com/document/d/1me66NNjOsvO-0KXO7F8lgG490s-nKwWnUtMvVA-I-qk/
 - Showit handoff files embedded: 00-SHOWIT-NEW-CHAT-START-HERE.md and showit/reconstruction-contract.json.
 - ZIP SHA-256: 5f9746326c3f4983079ae0f98a780acf0b5fa0ab28e1aff57cedd18f28a9913e.
 - V2.3.1 supersedes V2.2 as CURRENT Showit-first portable capture package. V2.2 remains historical PROVEN LIVE.
+
+
+## 2026-09-25 — Archify — STRONG ARCHITECTURE-VISUALIZATION DONOR / CANDIDATE INTEGRATION
+
+- Official: https://github.com/tt-a1i/archify
+- Internal SOFT search before capture found no existing Archify record.
+- Snapshot: MIT; latest stable release `v2.16.0` published 2026-08-30; current `main` identifies `2.17.0-dev.1`; Node.js >=18.
+- Current GitHub snapshot on 2026-09-25: about 71.6k stars / 4.8k forks.
+- Core capability: agent-authored typed JSON IR -> schema/layout validation -> deterministic delivery -> self-contained interactive HTML for architecture, workflow, sequence, data-flow and lifecycle maps, with static/video exports.
+- Existing Solution First comparison: this does not replace Graphify or Mermaid. Graphify remains the stronger codebase graph/evidence extraction layer; Mermaid remains the lightweight text-diagram fallback; Archify is a candidate validated presentation/communication layer.
+- Candidate integration path: `repository -> Graphify/direct source evidence -> bounded architecture facts -> Archify -> validated HTML/export -> human visual review`.
+- Decision: strong donor, not yet globally adopted or installed. First acceptance step is a bounded pilot on one real PEOS/SOFT architecture/workflow and comparison against Mermaid-only output.
+- Privacy/ops note: packaged update awareness can perform a fixed outbound GET; use `ARCHIFY_UPDATE_CHECK_DISABLED=1` when zero-network execution is desired.
