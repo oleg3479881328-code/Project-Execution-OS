@@ -28,22 +28,13 @@ jobs:
           cookies="${RUNNER_TEMP}/vercel-cookies.txt"
           mkdir -p "$out"
 
-          # The protected legacy deployment contains the approved original donor files.
-          # Bootstrap a temporary Vercel share cookie, then recover the exact binaries.
           curl --fail --location --silent --show-error --cookie-jar "$cookies" "$share" -o "${RUNNER_TEMP}/share-bootstrap.html"
 
           for name in hero diagnostics brakes suspension oil electrical major; do
             target="$out/$name.webp"
             curl --fail --location --silent --show-error --cookie "$cookies" "$origin/assets/$name.webp" -o "$target"
             test -s "$target"
-            python - "$target" <<'PY'
-import pathlib, sys
-p = pathlib.Path(sys.argv[1])
-data = p.read_bytes()
-if len(data) < 12 or data[:4] != b'RIFF' or data[8:12] != b'WEBP':
-    raise SystemExit(f'Not a WebP binary: {p} ({len(data)} bytes)')
-print(f'VERIFIED WEBP {p} {len(data)} bytes')
-PY
+            python -c "import pathlib,sys; p=pathlib.Path(sys.argv[1]); d=p.read_bytes(); assert len(d)>=12 and d[:4]==b'RIFF' and d[8:12]==b'WEBP', f'Not a WebP binary: {p} ({len(d)} bytes)'; print(f'VERIFIED WEBP {p} {len(d)} bytes')" "$target"
           done
           sha256sum "$out"/*.webp
       - name: Commit recovered assets to this branch
