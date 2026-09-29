@@ -45,7 +45,7 @@ test('CSG Puck editor uses GitHub-backed draft, media, publish, and reload state
     const form = new FormData()
     form.append('file', new File([binary], 'csg-upload.png', { type: 'image/png' }))
     form.append('alt', 'Git-backed uploaded CSG image')
-    const response = await fetch('/api/csg/media', { method: 'POST', body: form })
+    const response = await fetch('/api/csg/assets', { method: 'POST', body: form })
     return { ok: response.ok, body: await response.json() }
   })
   expect(upload.ok, JSON.stringify(upload.body)).toBeTruthy()

@@ -171,4 +171,4 @@ export function createWebsiteEditorConfig(mediaEndpoint = '/api/media') {
 }
 
 export const websiteEditorConfig = createWebsiteEditorConfig()
-export const csgWebsiteEditorConfig = createWebsiteEditorConfig('/api/csg/media')
+export const csgWebsiteEditorConfig = createWebsiteEditorConfig('/api/csg/assets')
