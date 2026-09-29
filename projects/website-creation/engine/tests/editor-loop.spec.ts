@@ -18,11 +18,11 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(page.getByRole('button', { name: /Publish/i }).first()).toBeVisible({ timeout: 15_000 })
 
   const editorCanvas = page.frameLocator('iframe').first()
-  await expect(editorCanvas.getByText('Diagnose. Repair. Drive.').first()).toBeVisible({ timeout: 15_000 })
-  await expect(editorCanvas.getByText('Explore our services').first()).toBeVisible({ timeout: 15_000 })
-  await expect(editorCanvas.locator('.wc-service-card__image')).toHaveCount(6)
+  await expect(editorCanvas.getByText('Reliable auto service for your everyday car').first()).toBeVisible({ timeout: 15_000 })
+  await expect(editorCanvas.getByText('Everyday service, handled carefully.').first()).toBeVisible({ timeout: 15_000 })
+  await expect(editorCanvas.locator('.wc-service-card__image')).toHaveCount(4)
 
-  // Proven Olga image interaction contract, now generalized for Website Creator.
+  // Proven Olga image interaction contract, generalized for Website Creator.
   const heroFrame = editorCanvas.locator('.wc-editable-image--hero .wc-image-frame').first()
   await expect(heroFrame).toBeVisible({ timeout: 15_000 })
   await heroFrame.click({ position: { x: 80, y: 80 } })
@@ -39,8 +39,8 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await expect(shape).toBeVisible()
   await shape.selectOption('square')
   await expect(heroFrame).toHaveAttribute('data-ratio', 'square')
-  await shape.selectOption('portrait')
-  await expect(heroFrame).toHaveAttribute('data-ratio', 'portrait')
+  await shape.selectOption('landscape')
+  await expect(heroFrame).toHaveAttribute('data-ratio', 'landscape')
 
   const ranges = inspector.locator('input[type="range"]')
   const zoom = ranges.nth(0)
@@ -81,7 +81,7 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   await page.goto('/')
   await expect(page.getByText(marker)).toHaveCount(0)
   await expect(page.locator('.wc-hero__image img')).toBeVisible()
-  await expect(page.locator('.wc-service-card__image')).toHaveCount(6)
+  await expect(page.locator('.wc-service-card__image')).toHaveCount(4)
 
   const versionsResponse = await page.request.get(`/api/puck/pages/${pageId}/versions?limit=5`)
   expect(versionsResponse.status()).not.toBe(404)
@@ -101,10 +101,10 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
   expect(restoreResponse.ok()).toBeTruthy()
 
   await page.goto('/')
-  await expect(page.getByText('Clear answers before parts get replaced. Diagnostics, maintenance and major mechanical work for the cars you depend on.')).toBeVisible()
+  await expect(page.getByText('Tire service, auto electrical diagnostics, routine oil changes and interior detailing — clear, practical work for the car you rely on every day.')).toBeVisible()
 
   await page.goto('/editor')
   await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
-  await expect(page.frameLocator('iframe').first().getByText('Diagnose. Repair. Drive.').first()).toBeVisible({ timeout: 15_000 })
+  await expect(page.frameLocator('iframe').first().getByText('Reliable auto service for your everyday car').first()).toBeVisible({ timeout: 15_000 })
   await page.screenshot({ path: 'test-results/website-creator-editor.png', fullPage: true })
 })
