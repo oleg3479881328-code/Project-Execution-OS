@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7b29a886275e8d1dda0e1fb77ff131ac95f90ecc",
-  "generated_at": "2026-09-29T15:49:40-04:00",
+  "repository_commit": "eba522d1a3de07fbf2e0a82c4933790d4fb1b115",
+  "generated_at": "2026-09-29T19:39:06-04:00",
   "artifact_count": 615,
   "artifacts": [
     {
@@ -210,13 +210,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "a26dd3585b7a756979f2eff18605f5a193d630faf0d68fa772ec9efe59eafe14",
+      "sha256": "bb3712cb2a47f921ce086e6ecb10235c3b3e7c8f8903fe904efb430a425a8180",
       "headings": [
         "System Context Manifest — Project Execution OS",
         "Purpose",
         "Manifest Version",
         "Generated At",
-        "Profile: `knowledge-aware-core-v17`",
+        "Profile: `knowledge-aware-core-v18`",
         "Ordered Files",
         "SHA-256 Fingerprint",
         "Loading Rule",
@@ -12737,13 +12737,14 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "29ea00b4280b21cfc8aca35ead2e63e7f116a65df5117cd9002e0f658dff39b3",
+      "sha256": "7d715cf0b30c99fbc2023678034208a38adcb4ac1dc9b73e85f1a34e3fec8bff",
       "headings": [
         "Website Creator Engine",
         "Architecture",
         "Fastest local start",
         "Source-development start",
         "Production deployment",
+        "Car Service Garage free Git-backed mode",
         "Verification",
         "Current editor/media boundary"
       ]
