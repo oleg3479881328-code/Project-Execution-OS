@@ -22,13 +22,28 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          base='https://car-service-garage-ohio-q4uzoh0ky-oleg3479881328-codes-projects.vercel.app/assets'
+          origin='https://car-service-garage-ohio-q4uzoh0ky-oleg3479881328-codes-projects.vercel.app'
+          share='https://car-service-garage-ohio-q4uzoh0ky-oleg3479881328-codes-projects.vercel.app/?_vercel_share=e3jAblgIZk0vyjBoz5ZBxhiGvdaF7kV9'
           out='projects/website-creation/engine/public/assets'
+          cookies="${RUNNER_TEMP}/vercel-cookies.txt"
           mkdir -p "$out"
+
+          # The protected legacy deployment contains the approved original donor files.
+          # Bootstrap a temporary Vercel share cookie, then recover the exact binaries.
+          curl --fail --location --silent --show-error --cookie-jar "$cookies" "$share" -o "${RUNNER_TEMP}/share-bootstrap.html"
+
           for name in hero diagnostics brakes suspension oil electrical major; do
-            curl --fail --location --silent --show-error "$base/$name.webp" -o "$out/$name.webp"
-            test -s "$out/$name.webp"
-            file "$out/$name.webp"
+            target="$out/$name.webp"
+            curl --fail --location --silent --show-error --cookie "$cookies" "$origin/assets/$name.webp" -o "$target"
+            test -s "$target"
+            python - "$target" <<'PY'
+import pathlib, sys
+p = pathlib.Path(sys.argv[1])
+data = p.read_bytes()
+if len(data) < 12 or data[:4] != b'RIFF' or data[8:12] != b'WEBP':
+    raise SystemExit(f'Not a WebP binary: {p} ({len(data)} bytes)')
+print(f'VERIFIED WEBP {p} {len(data)} bytes')
+PY
           done
           sha256sum "$out"/*.webp
       - name: Commit recovered assets to this branch
@@ -42,5 +57,5 @@ jobs:
             echo 'No asset changes to commit.'
             exit 0
           fi
-          git commit -m 'Recover approved Car Service Garage assets [skip ci]'
+          git commit -m 'Recover verified Car Service Garage WebP assets [skip ci]'
           git push origin HEAD:fix/csg-preflight-assets-storage-20260929
