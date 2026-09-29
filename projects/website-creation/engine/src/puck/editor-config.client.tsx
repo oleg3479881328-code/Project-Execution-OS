@@ -123,14 +123,52 @@ const editorWebsiteComponents = {
   ImageSection: imageSectionConfig,
 }
 
-export const websiteEditorConfig = extendConfig({
-  base: editorConfig,
-  components: editorWebsiteComponents,
-  categories: {
-    website: {
-      title: 'Website Sections',
-      components: [...marketingComponentNames, ...websiteComponentNames],
-      defaultExpanded: true,
+export function createWebsiteEditorConfig(mediaEndpoint = '/api/media') {
+  const mediaField = (label: string) => createMediaField({ label, apiEndpoint: mediaEndpoint })
+  const csgHeroConfig: ComponentConfig<any> = {
+    ...heroConfig,
+    fields: {
+      ...HeroSectionConfig.fields,
+      image: mediaField('Hero image'),
     },
-  },
-})
+  }
+  const csgImageSectionConfig: ComponentConfig<any> = {
+    ...imageSectionConfig,
+    fields: {
+      ...ImageSectionConfig.fields,
+      image: mediaField('Image'),
+    },
+  }
+  const csgServicesConfig: ComponentConfig<any> = {
+    ...servicesConfig,
+    fields: {
+      ...ServicesSectionConfig.fields,
+      services: {
+        ...(ServicesSectionConfig.fields?.services as any),
+        arrayFields: {
+          ...serviceFields,
+          image: mediaField('Service image'),
+        },
+      },
+    },
+  }
+  return extendConfig({
+    base: editorConfig,
+    components: {
+      ...editorWebsiteComponents,
+      HeroSection: csgHeroConfig,
+      ServicesSection: csgServicesConfig,
+      ImageSection: csgImageSectionConfig,
+    },
+    categories: {
+      website: {
+        title: 'Website Sections',
+        components: [...marketingComponentNames, ...websiteComponentNames],
+        defaultExpanded: true,
+      },
+    },
+  })
+}
+
+export const websiteEditorConfig = createWebsiteEditorConfig()
+export const csgWebsiteEditorConfig = createWebsiteEditorConfig('/api/csg/assets')

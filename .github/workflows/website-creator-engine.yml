@@ -13,32 +13,21 @@ on:
 jobs:
   build-and-runtime-smoke:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: website_creator
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     defaults:
       run:
         working-directory: projects/website-creation/engine
 
     env:
-      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/website_creator
-      PAYLOAD_SECRET: ci-test-secret-not-for-production
+      CSG_GITHUB_MODE: '1'
+      CSG_GITHUB_API_BASE_URL: http://127.0.0.1:4010
+      CSG_GITHUB_TOKEN: ci-mock-github-token
+      CSG_EDITOR_USERNAME: editor
+      CSG_EDITOR_PASSWORD: ci-editor-password
+      CSG_EDITOR_SESSION_SECRET: ci-editor-session-secret
+      CSG_GITHUB_LIVE_READBACK: '1'
       NEXT_PUBLIC_SERVER_URL: http://127.0.0.1:3000
       PLAYWRIGHT_BASE_URL: http://127.0.0.1:3000
-      WC_ADMIN_EMAIL: ci-admin@website-creator.invalid
-      WC_ADMIN_PASSWORD: ci-only-password-ChangeMe-2026
 
     steps:
       - uses: actions/checkout@v4
@@ -52,29 +41,11 @@ jobs:
           cache-dependency-path: projects/website-creation/engine/package.json
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm check
-      - name: Require committed production migration artifacts
-        run: |
-          set -euo pipefail
-          test -f src/migrations/index.ts
-          compgen -G 'src/migrations/*.ts' > /dev/null
-          compgen -G 'src/migrations/*.json' > /dev/null
-      - name: Verify production migrations on an empty database
-        run: NODE_ENV=production pnpm payload migrate
-      - run: NODE_ENV=production pnpm seed:csg
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
       - name: Start engine and run browser acceptance
         run: |
-          pnpm start > /tmp/website-creator-engine.log 2>&1 &
-          for i in {1..60}; do
-            if curl --fail --silent http://127.0.0.1:3000/health > /dev/null; then
-              break
-            fi
-            sleep 1
-          done
-          curl --fail http://127.0.0.1:3000/health
-          curl --fail http://127.0.0.1:3000/
-          pnpm test:e2e
+          pnpm exec playwright test
       - name: Upload browser and migration evidence
         if: always()
         uses: actions/upload-artifact@v4

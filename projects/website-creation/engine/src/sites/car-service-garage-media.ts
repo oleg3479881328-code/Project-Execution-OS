@@ -1,6 +1,6 @@
 import type { MediaReference } from '../puck/image-editor/types'
 
-const approvedPhotoBase = 'https://car-service-garage-ohio.vercel.app/assets'
+const approvedPhotoBase = '/assets'
 
 const seed = (id: string, filename: string, alt: string): MediaReference => ({
   id: `seed-csg-${id}`,
