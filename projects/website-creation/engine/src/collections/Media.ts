@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+const isVercelRuntime = process.env.VERCEL === '1'
+
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
@@ -10,10 +12,10 @@ export const Media: CollectionConfig = {
   },
   upload: {
     staticDir: process.env.MEDIA_DIR || 'media',
-    // Vercel's filesystem is ephemeral. The official Blob adapter disables
-    // local storage when configured; keep the fallback disabled in production
-    // so a missing Blob token cannot masquerade as durable media persistence.
-    disableLocalStorage: process.env.NODE_ENV === 'production' && !process.env.BLOB_READ_WRITE_TOKEN,
+    // Vercel's filesystem is ephemeral, so production uploads there must use
+    // the official Blob adapter. Other hosts may deliberately provide a
+    // persistent filesystem through MEDIA_DIR and must keep local storage on.
+    disableLocalStorage: isVercelRuntime && !process.env.BLOB_READ_WRITE_TOKEN,
     mimeTypes: ['image/*'],
   },
   fields: [
