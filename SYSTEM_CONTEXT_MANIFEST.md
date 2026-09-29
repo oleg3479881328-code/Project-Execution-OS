@@ -8,20 +8,20 @@ It identifies the intended ordered context foundation. It does not prove provide
 
 ## Manifest Version
 
-`system-context-manifest-v17`
+`system-context-manifest-v18`
 
 ## Generated At
 
-`2026-09-14`
+`2026-09-29`
 
-## Profile: `knowledge-aware-core-v17`
+## Profile: `knowledge-aware-core-v18`
 
 ### Ordered Files
 
 ```text
 docs/integrations/chatgpt/CORE_SYSTEM_PROMPT.md=c1929769bdd5813970dd3041daf71dd0c5ee22e6
 START_HERE.md=2eef6685fc545e022129a70c3a655c9f83cc0e40
-docs/ROUTER.md=4dfde07f39010d66466f45ea4383b7aee8fb81a0
+docs/ROUTER.md=cf24479fdf19be7b9fd9af63a5484e31d0e6b60b
 docs/CONTEXT_ASSEMBLY_STANDARD.md=546ad502d3c692b7cb7c1cbf37ea2fe691a5d48c
 docs/KNOWLEDGE_SYSTEM.md=10d26cf87d50d4cae35100e246fa717b30b69abf
 ```
@@ -29,7 +29,7 @@ docs/KNOWLEDGE_SYSTEM.md=10d26cf87d50d4cae35100e246fa717b30b69abf
 ### SHA-256 Fingerprint
 
 ```text
-860a92a41b22e64d38093f25e46e14dfc7da59dfe95df41488f0defdbef3763b
+a93129a1d0a4d0e8770131d0fb3743d601d0ac0a9ca7911ad6d3c3487ceac647
 ```
 
 ### Loading Rule
@@ -65,6 +65,7 @@ Append only the routed node, project orientation, task-specific evidence, select
 - `knowledge-aware-core-v14`
 - `knowledge-aware-core-v15`
 - `knowledge-aware-core-v16`
+- `knowledge-aware-core-v17`
 
 ## Update Rule
 
