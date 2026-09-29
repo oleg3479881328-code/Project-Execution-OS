@@ -1,0 +1,35 @@
+/* Light-minimal theme refinements loaded after shared image-editor presentation rules. */
+.wc-hero .wc-hero__image,
+.wc-hero .wc-editable-image--hero {
+  min-height: 280px;
+}
+
+.wc-hero .wc-hero__image .wc-public-image__frame,
+.wc-hero .wc-editable-image--hero .wc-image-frame {
+  min-height: 280px;
+}
+
+.wc-services .wc-service-card__image {
+  height: 130px;
+}
+
+.wc-services .wc-service-card__body {
+  padding: 14px 14px 16px;
+}
+
+.wc-services .wc-service-card__body h3 {
+  margin-top: 6px;
+}
+
+@media (max-width: 680px) {
+  .wc-hero .wc-hero__image,
+  .wc-hero .wc-editable-image--hero,
+  .wc-hero .wc-hero__image .wc-public-image__frame,
+  .wc-hero .wc-editable-image--hero .wc-image-frame {
+    min-height: 240px;
+  }
+
+  .wc-services .wc-service-card__image {
+    height: 180px;
+  }
+}
