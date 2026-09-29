@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "3fac7cab5057def9bfea121f9db8277bd573aaa0",
-  "generated_at": "2026-09-29T14:46:59-04:00",
-  "artifact_count": 614,
+  "repository_commit": "35dc5c865f366a2053a5cc9baa45ef853ef1def6",
+  "generated_at": "2026-09-29T14:50:46-04:00",
+  "artifact_count": 615,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12778,6 +12778,26 @@
       "sha256": "3a8d8f477f2204f351e00470a8e8a0e1bdf53b107b0b571a7adb9072502405ec",
       "headings": [
         "Car Service Garage seed media"
+      ]
+    },
+    {
+      "path": "projects/website-creation/logs/2026-09-29-car-service-garage-light-minimal-vercel.md",
+      "title": "Car Service Garage — Light Minimal landing + editor + Vercel release handoff",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "CODE/EDITOR ACCEPTED; PRODUCTION VERCEL RELEASE BLOCKED BEFORE FIRST DEPLOYMENT",
+      "date": "2026-09-29",
+      "sha256": "658baf6dc4de12816f6d3d52b196888311895f08a63c1619b370887e86a679fd",
+      "headings": [
+        "Car Service Garage — Light Minimal landing + editor + Vercel release handoff",
+        "Owner assignment",
+        "Canonical route used",
+        "Implemented",
+        "Acceptance evidence",
+        "Vercel state / one-pass gate",
+        "Runtime dependency gate before Vercel connection",
+        "Exact next action",
+        "Do not repeat"
       ]
     },
     {
