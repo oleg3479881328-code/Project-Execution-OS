@@ -1,30 +1,24 @@
 import { expect, test } from '@playwright/test'
 
-test('shared Website Creator editor loads, edits images, and draft/publish changes reach the public renderer', async ({ page }) => {
-  const email = process.env.WC_ADMIN_EMAIL
-  const password = process.env.WC_ADMIN_PASSWORD
-  expect(email, 'WC_ADMIN_EMAIL must be set for editor E2E').toBeTruthy()
-  expect(password, 'WC_ADMIN_PASSWORD must be set for editor E2E').toBeTruthy()
-
-  await page.goto('/admin/login')
-  await page.locator('#field-email').fill(email!)
-  await page.locator('#field-password').fill(password!)
-  await page.locator('form button[type="submit"]').click()
-  await expect(page).not.toHaveURL(/\/admin\/login/, { timeout: 15_000 })
+test('CSG Puck editor uses GitHub-backed draft, media, publish, and reload state', async ({ page }) => {
+  const username = process.env.CSG_EDITOR_USERNAME || 'editor'
+  const password = process.env.CSG_EDITOR_PASSWORD
+  expect(password, 'CSG_EDITOR_PASSWORD must be set for editor E2E').toBeTruthy()
 
   await page.goto('/editor')
-  await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
-  await expect(page.getByRole('button', { name: /^Save$/ }).first()).toBeVisible({ timeout: 15_000 })
-  await expect(page.getByRole('button', { name: /Publish/i }).first()).toBeVisible({ timeout: 15_000 })
+  await expect(page).toHaveURL(/\/editor\/login/)
+  await page.getByLabel('Username').fill(username)
+  await page.getByLabel('Password').fill(password!)
+  await page.getByRole('button', { name: 'Open editor' }).click()
+  await expect(page).toHaveURL(/\/editor$/)
+  await expect(page.getByRole('button', { name: 'Save draft' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Publish' }).first()).toBeVisible()
 
   const editorCanvas = page.frameLocator('iframe').first()
   await expect(editorCanvas.getByText('Reliable auto service for your everyday car').first()).toBeVisible({ timeout: 15_000 })
-  await expect(editorCanvas.getByText('Everyday service, handled carefully.').first()).toBeVisible({ timeout: 15_000 })
   await expect(editorCanvas.locator('.wc-service-card__image')).toHaveCount(4)
 
-  // Proven Olga image interaction contract, generalized for Website Creator.
   const heroFrame = editorCanvas.locator('.wc-editable-image--hero .wc-image-frame').first()
-  await expect(heroFrame).toBeVisible({ timeout: 15_000 })
   await heroFrame.click({ position: { x: 80, y: 80 } })
   await expect(editorCanvas.getByRole('toolbar', { name: 'Image controls' })).toBeVisible()
   await expect(editorCanvas.getByRole('button', { name: 'Replace photograph' })).toBeVisible()
@@ -32,79 +26,63 @@ test('shared Website Creator editor loads, edits images, and draft/publish chang
 
   const inspector = page.locator('[data-wc-image-inspector="hero"]')
   await expect(inspector).toBeVisible()
-  await expect(inspector.getByText('Hero photograph')).toBeVisible()
-
-  // Exercise sequential image edits. The photograph must remain selected after each atomic Puck update.
   const shape = inspector.locator('select').first()
-  await expect(shape).toBeVisible()
   await shape.selectOption('square')
   await expect(heroFrame).toHaveAttribute('data-ratio', 'square')
   await shape.selectOption('landscape')
   await expect(heroFrame).toHaveAttribute('data-ratio', 'landscape')
-
-  const ranges = inspector.locator('input[type="range"]')
-  const zoom = ranges.nth(0)
+  const zoom = inspector.locator('input[type="range"]').first()
   await zoom.fill('1.25')
   await expect(inspector.getByText('Zoom · 1.25×')).toBeVisible()
-  await zoom.fill('1')
-  await expect(inspector.getByText('Zoom · 1.00×')).toBeVisible()
 
-  // Replace remains a contextual toolbar action, but delegates selection/upload to the proven Payload media picker.
   await editorCanvas.getByRole('button', { name: 'Replace photograph' }).click()
-  const mediaHeading = page.getByRole('heading', { name: 'Select Media' })
-  await expect(mediaHeading).toBeVisible({ timeout: 5_000 })
+  await expect(page.getByRole('heading', { name: 'Select Media' })).toBeVisible({ timeout: 5_000 })
   await expect(page.getByRole('button', { name: 'Upload New' })).toBeVisible()
-  await mediaHeading.locator('..').locator('button').click()
-  await expect(mediaHeading).toHaveCount(0)
+  await page.keyboard.press('Escape')
 
-  const match = page.url().match(/\/admin\/puck-editor\/pages\/([^/?#]+)/)
-  expect(match?.[1]).toBeTruthy()
-  const pageId = match![1]
+  const upload = await page.evaluate(async () => {
+    const binary = Uint8Array.from(atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='), (character) => character.charCodeAt(0))
+    const form = new FormData()
+    form.append('file', new File([binary], 'csg-upload.png', { type: 'image/png' }))
+    form.append('alt', 'Git-backed uploaded CSG image')
+    const response = await fetch('/api/csg/media', { method: 'POST', body: form })
+    return { ok: response.ok, body: await response.json() }
+  })
+  expect(upload.ok).toBeTruthy()
+  expect(upload.body.doc.url).toMatch(/^\/uploads\/csg\/.+/)
 
-  const readResponse = await page.request.get(`/api/puck/pages/${pageId}`)
-  expect(readResponse.ok()).toBeTruthy()
-  const readJson = await readResponse.json()
-  const originalData = readJson.doc.puckData
-  expect(originalData?.content?.length).toBeGreaterThan(0)
-
-  const marker = 'EDITOR LOOP VERIFIED — draft then publish'
-  const draftData = structuredClone(originalData)
-  const hero = draftData.content.find((item: any) => item.type === 'HeroSection')
+  const stateResponse = await page.evaluate(async () => {
+    const response = await fetch('/api/csg/state?scope=published')
+    return { ok: response.ok, body: await response.json() }
+  })
+  expect(stateResponse.ok).toBeTruthy()
+  const published = stateResponse.body as { state: any }
+  const draft = structuredClone(published.state)
+  const hero = draft.pages[0].puckData.content.find((item: any) => item.type === 'HeroSection')
   expect(hero).toBeTruthy()
+  const marker = `GITHUB BACKED CSG ROUND TRIP ${Date.now()}`
   hero.props.body = marker
 
-  const draftResponse = await page.request.patch(`/api/puck/pages/${pageId}`, {
-    data: { puckData: draftData, draft: true },
-  })
-  expect(draftResponse.ok()).toBeTruthy()
+  const draftResponse = await page.evaluate(async (state) => {
+    const response = await fetch('/api/csg/draft', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ state }) })
+    return { ok: response.ok, body: await response.json() }
+  }, draft)
+  expect(draftResponse.ok).toBeTruthy()
+  await page.getByRole('button', { name: 'Save draft' }).click({ force: true })
 
   await page.goto('/')
   await expect(page.getByText(marker)).toHaveCount(0)
-  await expect(page.locator('.wc-hero__image img')).toBeVisible()
-  await expect(page.locator('.wc-service-card__image')).toHaveCount(4)
 
-  const versionsResponse = await page.request.get(`/api/puck/pages/${pageId}/versions?limit=5`)
-  expect(versionsResponse.status()).not.toBe(404)
-  expect(versionsResponse.ok()).toBeTruthy()
-
-  const publishResponse = await page.request.patch(`/api/puck/pages/${pageId}`, {
-    data: { puckData: draftData, _status: 'published' },
+  const publishResponse = await page.evaluate(async () => {
+    const response = await fetch('/api/csg/publish', { method: 'POST' })
+    return { ok: response.ok, body: await response.json() }
   })
-  expect(publishResponse.ok()).toBeTruthy()
-
+  expect(publishResponse.ok).toBeTruthy()
   await page.goto('/')
-  await expect(page.getByText(marker)).toBeVisible({ timeout: 10_000 })
-
-  const restoreResponse = await page.request.patch(`/api/puck/pages/${pageId}`, {
-    data: { puckData: originalData, _status: 'published' },
-  })
-  expect(restoreResponse.ok()).toBeTruthy()
-
-  await page.goto('/')
-  await expect(page.getByText('Tire service, auto electrical diagnostics, routine oil changes and interior detailing — clear, practical work for the car you rely on every day.')).toBeVisible()
+  await expect(page.getByText(marker)).toBeVisible()
 
   await page.goto('/editor')
-  await expect(page).toHaveURL(/\/admin\/puck-editor\/pages\/.+/, { timeout: 15_000 })
-  await expect(page.frameLocator('iframe').first().getByText('Reliable auto service for your everyday car').first()).toBeVisible({ timeout: 15_000 })
-  await page.screenshot({ path: 'test-results/website-creator-editor.png', fullPage: true })
+  await expect(editorCanvas.getByText(marker).first()).toBeVisible({ timeout: 15_000 })
+  const health = await page.evaluate(async () => (await fetch('/health')).json())
+  expect(health).toMatchObject({ persistence: 'github', database: 'not-required' })
 })

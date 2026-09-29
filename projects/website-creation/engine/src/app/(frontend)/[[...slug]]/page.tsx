@@ -4,13 +4,22 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
+import { readCsgState } from '@/csg/github'
 import { websiteConfig } from '@/puck/config'
+import { carServiceGarage } from '@/sites/car-service-garage'
 
 export const dynamic = 'force-dynamic'
 
 type Args = { params: Promise<{ slug?: string[] }> }
 
 async function getPage(slugParts?: string[]) {
+  if (process.env.CSG_GITHUB_MODE !== '0') {
+    const state = process.env.CSG_GITHUB_LIVE_READBACK === '1'
+      ? await readCsgState('main')
+      : carServiceGarage
+    const slug = slugParts?.join('/') || ''
+    return state.pages.find((page) => slug ? page.slug === slug : page.isHomepage || page.slug === 'home')
+  }
   const payload = await getPayload({ config })
   const slug = slugParts?.join('/') || ''
   const where = slug

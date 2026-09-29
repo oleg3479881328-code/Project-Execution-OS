@@ -64,6 +64,21 @@ Blob. In production, local media storage is disabled when the token is absent;
 do not deploy without configuring the token. Local development may omit it and
 uses the configured `MEDIA_DIR` only for local testing.
 
+### Car Service Garage free Git-backed mode
+
+The Car Service Garage Site Instance uses `CSG_GITHUB_MODE=1` for its free
+production path. The public renderer reads the committed
+`src/sites/car-service-garage-state.json`, while the authenticated Puck editor
+loads the staging branch, saves drafts through the GitHub Data API, and publishes
+by merging the staging branch into `main`. New images are content-addressed and
+stored under `public/uploads/csg/` in the repository.
+
+This mode does not require `DATABASE_URL`, Render Postgres, Vercel Blob, or
+`BLOB_READ_WRITE_TOKEN`. It requires only the server-side GitHub token and
+editor session secrets listed in `.env.example`. Set `CSG_GITHUB_MODE=0` only
+when deliberately running the Payload/PostgreSQL compatibility path for another
+Site Instance.
+
 `render.yaml` is included as the first replaceable deployment adapter. The application itself does not depend on Render.
 
 Production start command:
