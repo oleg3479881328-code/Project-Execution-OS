@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { createPuckPlugin } from '@delmaredigital/payload-puck/plugin'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
@@ -35,6 +36,13 @@ export default buildConfig({
   }),
   collections: [Users, Media],
   plugins: [
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
     createPuckPlugin({
       pagesCollection: 'pages',
       editorStylesheets: ['/site.css', '/image-editor.css', '/theme-light-minimal.css'],
