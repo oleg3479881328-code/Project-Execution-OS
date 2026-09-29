@@ -55,7 +55,14 @@ The runtime is host-portable. Production requirements are:
 - `DATABASE_URL`;
 - long random `PAYLOAD_SECRET`;
 - `WC_ADMIN_EMAIL` and `WC_ADMIN_PASSWORD` for first-run admin bootstrap;
+- `BLOB_READ_WRITE_TOKEN` and the official Payload Vercel Blob adapter for persistent production media;
 - HTTPS at the hosting layer.
+
+When `BLOB_READ_WRITE_TOKEN` is present, the `media` collection uses the official
+`@payloadcms/storage-vercel-blob` adapter and uploaded files are stored in Vercel
+Blob. In production, local media storage is disabled when the token is absent;
+do not deploy without configuring the token. Local development may omit it and
+uses the configured `MEDIA_DIR` only for local testing.
 
 `render.yaml` is included as the first replaceable deployment adapter. The application itself does not depend on Render.
 

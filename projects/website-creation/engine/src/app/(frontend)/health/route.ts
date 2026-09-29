@@ -12,6 +12,11 @@ export async function GET() {
       ok: true,
       service: 'website-creator-engine',
       database: 'reachable',
+      media: process.env.BLOB_READ_WRITE_TOKEN
+        ? 'vercel-blob'
+        : process.env.NODE_ENV === 'production'
+          ? 'disabled-until-vercel-blob-is-configured'
+          : 'local-filesystem',
     })
   } catch (error) {
     return Response.json(
