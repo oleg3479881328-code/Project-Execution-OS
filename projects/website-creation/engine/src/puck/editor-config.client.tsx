@@ -4,6 +4,7 @@ import type { ComponentConfig } from '@puckeditor/core'
 import { editorConfig, extendConfig } from '@delmaredigital/payload-puck/config/editor'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
 import PersistentEditableImageFrame from './image-editor/PersistentEditableImageFrame'
+import { marketingComponents, marketingComponentNames } from './marketing-components'
 import {
   HeroSectionConfig,
   ImageSectionConfig,
@@ -116,6 +117,7 @@ const servicesConfig: ComponentConfig<any> = {
 
 const editorWebsiteComponents = {
   ...websiteComponents,
+  ...marketingComponents,
   HeroSection: heroConfig,
   ServicesSection: servicesConfig,
   ImageSection: imageSectionConfig,
@@ -127,7 +129,7 @@ export const websiteEditorConfig = extendConfig({
   categories: {
     website: {
       title: 'Website Sections',
-      components: websiteComponentNames,
+      components: [...marketingComponentNames, ...websiteComponentNames],
       defaultExpanded: true,
     },
   },
