@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "bebb3bf7e7b98bfd31201bcc711d34442e250ab5",
-  "generated_at": "2026-09-30T12:36:29-04:00",
-  "artifact_count": 623,
+  "repository_commit": "d0c3fc051893926aaf21fb66b1d1da9576ffebde",
+  "generated_at": "2026-09-30T14:51:24-04:00",
+  "artifact_count": 624,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12752,6 +12752,49 @@
         "Integrated owner-run acceptance — PASS",
         "Important boundary",
         "Transport lesson / do not repeat"
+      ]
+    },
+    {
+      "path": "projects/website-creation/adapters/showit/SHOWIT_PROGRAMMATIC_API_STANDARD.md",
+      "title": "Showit Programmatic API — Canonical Execution Standard",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "CANONICAL / CURRENT",
+      "date": "2026-09-30",
+      "sha256": "8998aea06449d9f03e5fa7b23789e2789be277eafd02af49945c1d0c753451f2",
+      "headings": [
+        "Showit Programmatic API — Canonical Execution Standard",
+        "1. Purpose",
+        "2. Hard Boundary: Work On the Page the Owner Supplies",
+        "3. Programmatic Architecture",
+        "4. Current Accepted Capability Status",
+        "`PROVEN LIVE`",
+        "`NOT YET ACCEPTED AS GENERAL PRODUCTION CAPABILITY`",
+        "5. Runtime Environment",
+        "6. Exact Current-Page Discovery",
+        "Safety rule",
+        "7. Load Contract",
+        "8. Authentication Contract",
+        "Security rules",
+        "9. Whole-Page Save Contract",
+        "10. Concurrency / ETag Rule",
+        "11. Canvas / Block Model",
+        "12. Text Element Contract",
+        "13. Image / Graphic Contract",
+        "14. New Local Media Upload Contract",
+        "15. One-Save Rule",
+        "16. Durable Readback Is Mandatory",
+        "17. Visual QA Rule",
+        "18. Existing Reusable Implementation",
+        "Important status split",
+        "19. `buildPage()` Current Contract",
+        "20. Fresh Chat Execution Algorithm",
+        "FRESH",
+        "RESUME",
+        "21. No-Invention Rule",
+        "22. Acceptance Definition",
+        "23. Authoritative References",
+        "Final Rule"
       ]
     },
     {
