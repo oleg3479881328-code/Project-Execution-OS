@@ -45,6 +45,127 @@ v0 is the implementation layer.
 
 It is not allowed to become design authority when exact donor evidence exists.
 
+## ZERO-GUESS PRE-FLIGHT GATE — REQUIRED BEFORE ANY STRICT 1:1 EXECUTION
+
+This gate was added after the 2026-09-30 Family Lab → Olga Newborn proof exposed a process error: the execution prompt demanded full-page numeric parity before the TECH SPEC actually contained full-page numeric evidence. The gallery had complete RAW geometry, but header/logo/navigation/title/footer/section-boundary records were incomplete. That forced the executor to stop later and caused avoidable rework.
+
+### Rule
+
+**Never send a strict 1:1 implementation prompt until measurement coverage has been audited against the requested acceptance scope.**
+
+Before execution, produce a `MEASUREMENT COVERAGE MATRIX` for every requested viewport and every page domain that will later be audited.
+
+Minimum domains for full-page strict reconstruction:
+
+1. PAGE / BODY
+   - clientWidth
+   - scrollWidth
+   - document/page height
+   - background
+   - overflow state
+
+2. HEADER
+   - x/y/width/height
+   - background/style
+   - visibility state
+
+3. BRAND / LOGO
+   - x/y/width/height
+   - typography or asset-box geometry
+   - visibility state
+
+4. NAVIGATION
+   - containers
+   - every visible nav item
+   - x/y/width/height
+   - typography
+   - responsive visibility/state
+
+5. PAGE TITLE / KEY TEXT
+   - x/y/width/height
+   - font family
+   - font size
+   - font weight
+   - line-height
+   - letter-spacing
+   - alignment / transform / color
+
+6. CONTENT / GALLERY
+   - every required slot x/y/width/height
+   - object-fit/object-position if applicable
+   - ordering
+   - visibility state
+
+7. SECTION BOUNDARIES
+   - section x/y/width/height or explicit start/end Y
+   - backgrounds
+
+8. FOOTER
+   - x/y/width/height
+   - child text/link geometry
+   - typography
+   - responsive state
+
+9. RESPONSIVE STATE
+   - each accepted viewport is its own contract
+   - elements added/removed/hidden/repositioned must be captured, not inferred
+
+10. STYLE EVIDENCE REQUIRED BY ACCEPTANCE
+   - typography
+   - colors/backgrounds
+   - borders/radius/opacity where visible and acceptance-relevant
+
+### Coverage matrix status values
+
+For every domain/property use exactly one of:
+
+- `MEASURED` — authoritative RAW value exists;
+- `NOT_APPLICABLE` — element/property does not exist at that viewport;
+- `MISSING_REFERENCE` — acceptance requires it but authoritative evidence is absent.
+
+### Hard gate
+
+If ANY property required by the requested acceptance criteria is `MISSING_REFERENCE`:
+
+**DO NOT ISSUE THE IMPLEMENTATION PROMPT YET.**
+
+First:
+
+`MISSING_REFERENCE -> return to fingerprint/raw evidence -> extract measurement -> add to TECH SPEC -> re-run coverage matrix`
+
+Only after all required rows are `MEASURED` or `NOT_APPLICABLE` may implementation begin.
+
+### Acceptance-scope consistency rule
+
+Do not ask the executor to prove a metric that the evidence package cannot independently specify.
+
+Examples:
+
+- If acceptance asks for `footer max X/Y/W/H deviation`, RAW must contain footer geometry.
+- If acceptance asks for exact nav typography, RAW must contain per-element nav typography.
+- If acceptance asks for responsive visibility parity, RAW must contain visibility/display state per viewport.
+- If acceptance asks for full-page height parity, RAW must contain page/document height per viewport.
+
+**Acceptance criteria and evidence coverage must be generated as a matched pair.**
+
+### Package completeness checklist
+
+A strict full-page TECH SPEC is not complete merely because it contains:
+
+- screenshots;
+- design notes;
+- image geometry;
+- overall page dimensions.
+
+For a full-page numeric reconstruction it must also contain the non-gallery critical geometry needed by the acceptance contract.
+
+The operator must explicitly state one of these before handing work to v0:
+
+- `PRE-FLIGHT COVERAGE: PASS — execution may begin`
+- `PRE-FLIGHT COVERAGE: BLOCKED — missing references listed below`
+
+No silent transition from incomplete evidence to execution is allowed.
+
 ## Core Communication Pattern
 
 Use this short authority reminder whenever v0 becomes confused:
@@ -57,6 +178,16 @@ Use this short authority reminder whenever v0 becomes confused:
 - do not publish
 
 When v0 asks a question that the TECH SPEC already answers, do not paraphrase the design again. Point it to the exact canonical artifact and restate the authority split.
+
+## One-Block Operator Rule
+
+When the user needs a prompt to give an executor, return **one complete copy-paste block** containing every mandatory instruction.
+
+Do not put required instructions after the block as “also add this” or “I would also tell it”.
+
+Anything required for execution or acceptance belongs inside the single block.
+
+Explanatory commentary may follow only if it is non-required context.
 
 ## What v0 Must Never Do In Strict 1:1 Mode
 
@@ -149,22 +280,22 @@ At mobile 390, all image slots may form one vertical flow only if the measured m
 
 ## Geometry QA Contract
 
-Strict geometry QA must compare every slot against source measurements.
+Strict geometry QA must compare every requested element against source measurements.
 
-For every slot and viewport compare:
+For every measured element and viewport compare:
 
 - actual X vs expected X;
 - actual Y vs expected Y;
 - actual WIDTH vs expected WIDTH;
 - actual HEIGHT vs expected HEIGHT.
 
-Required final report:
+Required final report for each audited domain:
 
 1. maximum X deviation;
 2. maximum Y deviation;
 3. maximum WIDTH deviation;
 4. maximum HEIGHT deviation;
-5. worst offending slot for each metric.
+5. worst offending element for each metric.
 
 Current proof acceptance target:
 
@@ -182,6 +313,21 @@ Secondary checks such as:
 - correct column count;
 
 are useful but do not replace geometry parity.
+
+## Evidence Completeness Before QA
+
+Before asking for a QA category, verify the RAW package contains the source values needed to calculate that category.
+
+Examples:
+
+- Gallery QA requires slot geometry RAW.
+- Header QA requires header/logo geometry RAW.
+- Navigation QA requires nav container/item geometry and typography RAW.
+- Title QA requires title geometry and typography RAW.
+- Footer QA requires footer/child geometry RAW.
+- Full-page QA requires page metrics and section-boundary RAW.
+
+If evidence is missing, the correct status is `BLOCKED BEFORE EXECUTION`, not “let the executor try and discover the gap later.”
 
 ## Client-Link Preservation Rule
 
@@ -219,14 +365,32 @@ Key artifacts:
 - `05 — v0 EXECUTION PROMPT — Paste as One Block`
 - `03-RAW-Exact-Image-Slot-Geometry-63x4.csv`
 - `04-RAW-Machine-Exact-Layout-Spec.json`
+- `06 — RAW Full Page Critical Geometry + Typography — 4 Viewports`
 
 The RAW CSV and JSON were added specifically so the operator does not need to paste 252 geometry records into chat and so v0 has no reason to infer missing values.
 
+The `06` artifact was added after the first full-page audit correctly identified that the earlier machine package covered gallery slots and page metrics but did not provide sufficient non-gallery records for header/logo/navigation/title/footer/section/typography strict acceptance.
+
+### Incident lesson — 2026-09-30
+
+What went wrong:
+
+1. Gallery evidence became exact before the whole-page evidence package was complete.
+2. The operator then issued a whole-page strict QA prompt.
+3. v0 correctly reported `MISSING_REFERENCE` for non-gallery domains.
+4. We had to return to the fingerprint and generate additional full-page RAW evidence.
+
+Permanent prevention:
+
+`ACCEPTANCE SCOPE -> COVERAGE MATRIX -> FILL MISSING RAW -> PRE-FLIGHT PASS -> EXECUTION PROMPT -> QA`
+
+Never reverse that order.
+
 ## Reusable Operator Prompt Pattern
 
-When v0 requests the geometry again, answer in this form:
+When v0 requests geometry that is already present, answer in this form:
 
-> Open and use the RAW CSV/JSON from the TECH SPEC folder directly. Do not calculate geometry yourself. For every slot and every captured viewport, use literal x/y/width/height values. Client images are CONTENT ONLY and must be cropped inside those exact donor rectangles. Run automated geometry audit across all records and report max X/Y/WIDTH/HEIGHT deviation plus the worst slot for each metric. Do not publish.
+> Open and use the authoritative RAW artifacts from the TECH SPEC folder directly. Do not calculate geometry yourself. Use literal measured values for every accepted viewport. Client assets are CONTENT ONLY. Run automated audit against every required RAW record and report X/Y/WIDTH/HEIGHT deviations. If a required acceptance property has no authoritative RAW value, report MISSING_REFERENCE and stop for that property. Do not publish.
 
 ## Acceptance Boundary
 
@@ -246,6 +410,6 @@ Before Website Creator promotes a strict reconstruction to accepted production c
 
 ## Generalized Workflow
 
-`donor selection -> fingerprint -> TECH SPEC -> RAW machine geometry -> client content/link mapping -> v0 implementation -> automated geometry audit -> independent QA -> reusable Website Creator integration -> preview -> release`
+`donor selection -> fingerprint -> define acceptance scope -> measurement coverage matrix -> fill missing RAW evidence -> PRE-FLIGHT PASS -> TECH SPEC -> client content/link mapping -> one-block v0 implementation prompt -> automated geometry/style audit -> independent QA -> reusable Website Creator integration -> preview -> release`
 
 This is the preferred communication/implementation path for future strict donor reconstruction work with v0 until a stronger accepted automation replaces it.
