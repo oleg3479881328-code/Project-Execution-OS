@@ -15,6 +15,8 @@ Route Website Creator work to the smallest global reusable standard/capability r
 - find an existing reusable website capability / standard / production contract -> `SOURCE_REGISTRY.md`
 - tools / SaaS / libraries / frameworks / execution platforms / donors -> `TOOL_DONOR_REGISTRY.md`
 - Site Model / canonical site schema / Site Instance / platform-independent site state / renderer contract / adapter contract -> `SITE_MODEL_STANDARD.md`
+- Universal Website Translator / external-editor translation architecture -> `UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md`
+- **Showit direct adapter / page compiler / page JSON save / media upload / Canvas/text/image compilation -> `adapters/showit/README.md` then `adapters/showit/showit-page-compiler-v1.js`**
 - website design / visual direction / donor analysis / sections / UI / responsive / motion / design QA -> `../../blocks/design/BLOCK.md`
 - visual editor / image editor / CMS editor / safe client editing / crop / move / zoom / image resize / direct manipulation -> `EDITOR_CREATION_STANDARD.md` plus `engine/README.md` for implementation
 - research / entity dossier / evidence / existing-site audit -> `SOURCE_REGISTRY.md` Research & Evidence section
@@ -52,6 +54,8 @@ For any shared-engine code change, read `engine/README.md` and `engine/STATUS.md
 For any client-facing visual editor task, read `EDITOR_CREATION_STANDARD.md` before implementation.
 
 For any design task, use `../../blocks/design/BLOCK.md` as the design-process authority rather than reconstructing a second design pipeline inside Website Creator.
+
+For Showit adapter work, use `UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md` plus `adapters/showit/README.md`; do not fall back to ad-hoc per-client Showit scripts when the reusable adapter covers the operation.
 
 ## No Silent Platform Rule
 
