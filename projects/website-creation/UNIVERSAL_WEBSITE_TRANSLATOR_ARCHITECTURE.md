@@ -283,3 +283,80 @@ current authenticated Showit tab
 ```
 
 Until that write/readback gate passes, direct internal-API duplication is evidence-backed but not `LIVE-PROVEN`.
+
+## 2026-09-30 — Showit Direct API Duplicate — PROVEN LIVE
+
+Status: `LIVE-PROVEN / CURRENT ACCEPTED PROOF`.
+
+The previously defined write/readback gate passed in the owner's real authenticated Showit Chrome session through Dramaturg JS mode.
+
+Proof operation:
+
+```text
+semantic target: IRONLINE — PROCESS
+→ discover current design key and current page resource from the live app
+→ GET current page JSON from designs.showit.co
+→ read current ETag
+→ find exactly one Canvas by human-readable name
+→ deep-copy the Canvas locally
+→ generate a fresh 9-character block ID
+→ generate unique name/slug
+→ insert duplicate immediately after source block
+→ gzip the whole page payload
+→ read localStorage.authToken inside the authenticated Showit page
+→ POST api.showit.com/designs/<design-key> with Authorization: Bearer <authToken>
+→ server returns saved:true + new ETag
+→ GET page JSON again from S3
+→ durable readback verifies new block, exact name/slug, position and new ETag
+→ reload editor
+→ UI readback finds exactly one new Canvas
+```
+
+Accepted evidence from the live run:
+
+- target: `IRONLINE — PROCESS`;
+- created: `IRONLINE — PROCESS-1`;
+- source ID: `X1yYuF3c3`;
+- generated new block ID: `n_KQCJQ4K`;
+- page ID: `JmaXuE-zc`;
+- old ETag: `eee13e4fb46e6a060303b5f19fdb8457`;
+- new ETag: `59d65ae6c1ef5d366a45bd9f71d49860`;
+- durable readback passed on attempt 1;
+- stored index: 7;
+- total blocks after write: 11;
+- editor reloaded successfully;
+- UI exact-text count for the created Canvas: 1;
+- final marker: `SHOWIT DIRECT API DUPLICATE — PROOF COMPLETED`.
+
+Security rule:
+
+- `authToken` value itself is never copied into durable notes, generated fixtures or logs.
+- The adapter may read `localStorage.authToken` only inside the already-authenticated user session at execution time and send it as `Authorization: Bearer <token>` to Showit's own API.
+
+Architecture consequence:
+
+The Showit adapter is no longer limited to UI-click execution for this class of operation. For page-file mutations that can be expressed safely against the known page model, the preferred path is now:
+
+```text
+authenticated Showit tab
+→ LOAD page JSON + ETag
+→ transform whole page model locally
+→ one authenticated gzip POST
+→ durable S3 readback
+→ editor reload / visual QA
+```
+
+This is a whole-document save model, not an element-by-element save model. A future compiler may therefore build or transform many Canvas/elements in memory and commit the page in one save, subject to preserving Showit's data-model invariants and passing readback/visual QA.
+
+Next proof:
+
+```text
+create one new Canvas from scratch in memory
+→ include multiple text/graphic elements
+→ one whole-page authenticated save
+→ durable readback
+→ editor reload
+→ visual QA
+```
+
+Do not jump directly to full-page generation until the from-scratch Canvas proof passes. Media upload remains a separate unproven capability and must be investigated independently before a full Recipe → Showit page compiler is promoted.
