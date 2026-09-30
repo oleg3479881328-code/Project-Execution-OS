@@ -43,7 +43,9 @@ The following primitives have live proof in `../../proofs/`:
 
 `showit-page-compiler-v1.js`
 
-Installs:
+The module is the browser-page-context implementation. It must execute inside the already-authenticated `app.showit.com` page context. In Dramaturg JS mode, call/install it through `page.evaluate(...)`; do not assume Dramaturg's outer Playwright context exposes browser globals such as `location`, `localStorage`, `File`, or `CompressionStream`.
+
+When installed in the Showit page context it exposes:
 
 ```js
 globalThis.ShowitPageCompilerV1
@@ -129,12 +131,12 @@ Presigned S3 URLs are ephemeral runtime values and must not be promoted into can
 
 The individual primitives are live-proven.
 
-`showit-page-compiler-v1.js` is a newly assembled reusable module and remains `CANDIDATE` until the integrated module itself passes a live acceptance run using its public API.
+`showit-page-compiler-v1.js` is a newly assembled reusable module and remains `CANDIDATE` until the integrated module itself passes a live acceptance run using its public API from Dramaturg.
 
 Do not mark the module `PROVEN LIVE` merely because its underlying primitives are proven. The integrated acceptance gate is:
 
 ```text
-install module
+Dramaturg installs module into Showit page context
 → upload at least one fresh local image through module API
 → build multiple Canvas blocks with text + image through buildPage()
 → exactly one page save
