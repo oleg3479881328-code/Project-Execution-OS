@@ -5,7 +5,23 @@
 - Project: `Website Creator`
 - State: active
 - Phase: **first shared engine runtime verified; reusable component/editor workflow validation next**
-- Last updated: 2026-09-21
+- Last updated: 2026-09-30
+
+## 2026-09-30 — Car Service Garage Git-backed production release evidence
+
+- Git-backed CSG implementation is on `main`.
+- Donor-derived Vercel fallback is merged and passed GitHub Actions run `36650032362`.
+- Source commit: `6a11b649d8c3a8deab50d93c73cad9cacfb19656`.
+- Vercel deployment: `dpl_TFQX9dJGs5kBJCcm1VBP7UfqLnf8`.
+- Deployment state: `READY`; target: `production`.
+- Production alias: `https://car-service-garage-ohio.vercel.app`.
+- Deployment inventory: 4 total, consisting of 3 pre-existing deployments plus exactly 1 new CSG deployment.
+- `/` = 200; `/health` = 200 with `persistence=github`, `database=not-required`, `media=github-repository`.
+- `/assets/hero.webp` = 200 `image/webp`; public state readback = 200.
+- Desktop 1440 and mobile 390 read-only QA: PASS for render, required service cards, hero image and horizontal-overflow check.
+- `/editor` redirects to the CSG login gate = 200; authenticated editor round-trip remains unverified because the production password value is intentionally not recoverable into chat.
+- Live acceptance is `PARTIAL`: the deployed state still exposes three 5-star testimonial cards, which violates the no-invented-reviews rule; the oil-service image is also visibly pixelated in the deployed artifact.
+- No second deployment was created while recording this evidence.
 
 ## Architecture Decision
 
