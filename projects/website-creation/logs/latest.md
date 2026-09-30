@@ -1,5 +1,24 @@
 # Website Creator — latest log
 
+## 2026-09-30 — Car Service Garage Git-backed production release evidence
+
+Release evidence tuple:
+
+`source 6a11b649d8c3a8deab50d93c73cad9cacfb19656 → Vercel dpl_TFQX9dJGs5kBJCcm1VBP7UfqLnf8 → READY → https://car-service-garage-ohio.vercel.app`
+
+- Donor: Olga Polo PR #126, ported to PEOS in the CSG production fallback workflow.
+- GitHub Actions run `36650032362`: PASS.
+- Target: team `team_2eC69dsqCNN9P3if0ppakpN7`, project `prj_bfJqHLA7VRZtwAEWrOCP7mbmOqIf`.
+- Vercel Root Directory: `projects/website-creation/engine`.
+- Production inventory: 3 baseline deployments + 1 new READY deployment.
+- `/`, `/health`, `/assets/hero.webp`, and public CSG state readback: HTTP 200.
+- Desktop 1440/mobile 390: render and no-horizontal-overflow checks PASS.
+- `/editor`: login gate renders at HTTP 200; authenticated round-trip is not claimed because the production password is not printed or recoverable here.
+- QA exception: three 5-star testimonial cards remain in the deployed state despite the no-fake-reviews requirement, and the oil-service image is visibly pixelated.
+- No second deployment was created.
+
+Status: `PRODUCTION DEPLOYED / LIVE QA PARTIAL`.
+
 ## 2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE
 
 Owner-run proof target: https://venues.olgapoloweddings.com/
