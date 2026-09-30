@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c95704aa13830bae1339c7e8bbffa59cf1979989",
-  "generated_at": "2026-09-30T09:39:30-04:00",
+  "repository_commit": "6703def81f9b9da6c673c7acd754a69c436b61ad",
+  "generated_at": "2026-09-30T10:31:44-04:00",
   "artifact_count": 615,
   "artifacts": [
     {
@@ -12712,7 +12712,7 @@
       "domain": "website-creation",
       "status": "candidate / active research direction",
       "date": "2026-09-21",
-      "sha256": "7dfe59b6dc5eb4550feb31f19245963d5e72c3ee313599aeb522abbf3414ee26",
+      "sha256": "8b46cca1a07560c78cf9bb27b1cd4d542faef9effceea90ec1b5a47a2592a6fa",
       "headings": [
         "Universal Website Translator — Dramaturg + Stagecraft Architecture",
         "Purpose",
@@ -12729,7 +12729,8 @@
         "Next Proof",
         "Final Rule",
         "2026-09-21 — First Generated Universal Page Recipe",
-        "2026-09-30 — Showit Internal Save Path / HAR Proof"
+        "2026-09-30 — Showit Internal Save Path / HAR Proof",
+        "2026-09-30 — Showit Direct API Duplicate — PROVEN LIVE"
       ]
     },
     {
