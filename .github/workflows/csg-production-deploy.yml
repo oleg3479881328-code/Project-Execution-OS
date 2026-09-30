@@ -23,10 +23,6 @@ jobs:
       VERCEL_ORG_ID: team_2eC69dsqCNN9P3if0ppakpN7
       VERCEL_PROJECT_ID: prj_bfJqHLA7VRZtwAEWrOCP7mbmOqIf
 
-    defaults:
-      run:
-        working-directory: projects/website-creation/engine
-
     steps:
       - name: Resolve production SHA
         id: sha
@@ -50,6 +46,7 @@ jobs:
       - name: Deploy exact SHA via Vercel CLI
         if: env.VERCEL_DEPLOY_HOOK_URL == '' && env.VERCEL_TOKEN != ''
         shell: bash
+        working-directory: projects/website-creation/engine
         run: |
           mkdir -p .vercel
           cat > .vercel/project.json <<JSON
