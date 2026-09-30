@@ -1,0 +1,68 @@
+name: Car Service Garage Production Deploy Fallback
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "projects/website-creation/engine/**"
+      - ".github/workflows/csg-production-deploy.yml"
+
+concurrency:
+  group: csg-production-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: team_2eC69dsqCNN9P3if0ppakpN7
+      VERCEL_PROJECT_ID: prj_bfJqHLA7VRZtwAEWrOCP7mbmOqIf
+
+    defaults:
+      run:
+        working-directory: projects/website-creation/engine
+
+    steps:
+      - name: Resolve production SHA
+        id: sha
+        shell: bash
+        run: echo "sha=${GITHUB_SHA}" >> "${GITHUB_OUTPUT}"
+
+      - name: Trigger production via Deploy Hook
+        if: env.VERCEL_DEPLOY_HOOK_URL != ''
+        shell: bash
+        run: |
+          curl --fail --silent --show-error \
+            --request POST \
+            "${VERCEL_DEPLOY_HOOK_URL}"
+
+      - name: Checkout exact production SHA
+        if: env.VERCEL_DEPLOY_HOOK_URL == '' && env.VERCEL_TOKEN != ''
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.sha.outputs.sha }}
+
+      - name: Deploy exact SHA via Vercel CLI
+        if: env.VERCEL_DEPLOY_HOOK_URL == '' && env.VERCEL_TOKEN != ''
+        shell: bash
+        run: |
+          mkdir -p .vercel
+          cat > .vercel/project.json <<JSON
+          {"orgId":"${VERCEL_ORG_ID}","projectId":"${VERCEL_PROJECT_ID}"}
+          JSON
+          npx --yes vercel@61.0.0 pull --yes --environment=production
+          npx --yes vercel@61.0.0 build --prod
+          npx --yes vercel@61.0.0 deploy --prebuilt --prod
+
+      - name: Fail clearly if no Vercel credential is configured
+        if: env.VERCEL_DEPLOY_HOOK_URL == '' && env.VERCEL_TOKEN == ''
+        shell: bash
+        run: |
+          echo "::error::Automatic production deploy is configured, but neither VERCEL_DEPLOY_HOOK_URL nor VERCEL_TOKEN exists in GitHub Actions secrets."
+          echo "::error::Add either secret once; after that every qualifying main update deploys automatically."
+          exit 1
