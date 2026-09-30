@@ -1,6 +1,6 @@
 # Showit Adapter
 
-Status: `CANDIDATE IMPLEMENTATION / LIVE-PROVEN PRIMITIVES`
+Status: `INTEGRATED PIPELINE PROVEN LIVE / WRAPPER MODULE CANDIDATE`
 Date: 2026-09-30
 
 ## Purpose
@@ -37,7 +37,8 @@ The following primitives have live proof in `../../proofs/`:
 - existing asset → `graphic.content` binding;
 - local image upload through `POST /useruploads → presigned S3 PUT → /complete`;
 - local file → new Showit asset → Canvas binding;
-- durable S3/page readback and unchanged-old-state verification.
+- durable S3/page readback and unchanged-old-state verification;
+- integrated composition of the proven bricks: fresh local image upload + two brand-new Canvas blocks + text + image binding + exactly one page save + durable readback + editor reload + owner visual QA.
 
 ## Module
 
@@ -127,20 +128,64 @@ The adapter reads `localStorage.authToken` only at runtime inside the already-au
 
 Presigned S3 URLs are ephemeral runtime values and must not be promoted into canonical project state.
 
-## Current acceptance state
+## Integrated owner-run acceptance — PASS
 
-The individual primitives are live-proven.
+On 2026-09-30 the owner ran a direct Dramaturg JS acceptance composed only from already LIVE-PROVEN Showit bricks. The run did not use a new GitHub-loader transport layer.
 
-`showit-page-compiler-v1.js` is a newly assembled reusable module and remains `CANDIDATE` until the integrated module itself passes a live acceptance run using its public API from Dramaturg.
-
-Do not mark the module `PROVEN LIVE` merely because its underlying primitives are proven. The integrated acceptance gate is:
+Observed accepted result:
 
 ```text
-Dramaturg installs module into Showit page context
-→ upload at least one fresh local image through module API
-→ build multiple Canvas blocks with text + image through buildPage()
+fresh local image from computer
+→ direct Showit upload
+→ new Showit asset
+→ two brand-new Canvas blocks
+→ text + image graphic.content binding
 → exactly one page save
-→ durable readback PASS
+→ durable readback PASS on attempt 1
 → editor reload
-→ visual QA PASS
+→ both new Canvas entries visible exactly once
+→ selected local image visibly rendered in the new image Canvas
+```
+
+Owner-run output included:
+
+```text
+pageSaveCount: 1
+durableReadback: PASS
+readbackAttempt: 1
+ui.heroCount: 1
+ui.imageCount: 1
+finalStatus: PROVEN BRICKS COMPOSED — READY FOR VISUAL QA
+```
+
+The supplied owner screenshot then passed visual QA: the newly selected wedding image was visibly rendered inside the new `COMPILER ACCEPT — IMAGE — ...` Canvas.
+
+Therefore the **integrated Showit compiler pipeline is PROVEN LIVE**.
+
+## Important boundary
+
+`showit-page-compiler-v1.js` remains a reusable wrapper implementation around the proven mechanics. Do not claim the wrapper's public API surface itself is accepted merely from the integrated direct-bricks run.
+
+Current status split:
+
+```text
+underlying primitives                    = PROVEN LIVE
+integrated direct-bricks compiler path   = PROVEN LIVE
+showit-page-compiler-v1.js wrapper API   = CANDIDATE until separately owner-run through its public API
+```
+
+## Transport lesson / do not repeat
+
+Two experimental acceptance loaders that attempted to fetch/eval the compiler from GitHub inside Dramaturg did not reach the acceptance flow reliably. They are not production authority.
+
+Do not replace proven Showit mechanics with a new transport mechanism.
+
+Canonical rule remains:
+
+```text
+CURRENT CANONICAL STANDARD
+→ EXISTING LIVE-PROVEN BRICKS
+→ direct composition
+→ persisted readback
+→ owner visual QA
 ```
