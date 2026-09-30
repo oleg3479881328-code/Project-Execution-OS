@@ -51,6 +51,7 @@ jobs:
           cat > .vercel/project.json <<JSON
           {"orgId":"${VERCEL_ORG_ID}","projectId":"${VERCEL_PROJECT_ID}"}
           JSON
+          npm install --global pnpm@10.27.0
           npx --yes vercel@61.0.0 pull --yes --environment=production
           npx --yes vercel@61.0.0 build --prod
           npx --yes vercel@61.0.0 deploy --prebuilt --prod
