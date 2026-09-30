@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4c65a1be6d3f9254fa3450b73fac65c25bbcc97f",
-  "generated_at": "2026-09-30T12:11:42-04:00",
-  "artifact_count": 621,
+  "repository_commit": "61f0bcd068d27d097051c15e52d4df09b7a61edb",
+  "generated_at": "2026-09-30T12:12:47-04:00",
+  "artifact_count": 622,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12942,6 +12942,24 @@
         "What this does not yet prove",
         "Current architectural status",
         "Security rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/proofs/SHOWIT_PAGE_COMPILER_V1_ASSEMBLY_2026-09-30.md",
+      "title": "Showit Page Compiler v1 — Assembly Record",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "ASSEMBLED / INTEGRATED ACCEPTANCE NOT YET RUN",
+      "date": "2026-09-30",
+      "sha256": "b8370c53ac9344288fe3586e82ea8674250f0c1400ef30a7865ac31f7faa2b10",
+      "headings": [
+        "Showit Page Compiler v1 — Assembly Record",
+        "Decision",
+        "Included public capabilities",
+        "Safety boundaries",
+        "Execution boundary",
+        "Why this is not yet marked PROVEN LIVE",
+        "Next action"
       ]
     },
     {
