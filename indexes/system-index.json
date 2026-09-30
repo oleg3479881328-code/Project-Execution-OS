@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "446c12cdc8da9f860314a08e6904abd4ec2d9b53",
-  "generated_at": "2026-09-30T12:36:03-04:00",
-  "artifact_count": 622,
+  "repository_commit": "bebb3bf7e7b98bfd31201bcc711d34442e250ab5",
+  "generated_at": "2026-09-30T12:36:29-04:00",
+  "artifact_count": 623,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12853,6 +12853,26 @@
         "Current P0",
         "Core Principle",
         "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED"
+      ]
+    },
+    {
+      "path": "projects/website-creation/proofs/SHOWIT_COMPILER_PROVEN_BRICKS_INTEGRATED_ACCEPTANCE_2026-09-30.md",
+      "title": "Showit Compiler — Proven Bricks Integrated Acceptance",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "text",
+      "date": "2026-09-30",
+      "sha256": "5e89c99fe1867dbc2ad72495f21ceb856437caabd6cb50ab958dc007d2581cdd",
+      "headings": [
+        "Showit Compiler — Proven Bricks Integrated Acceptance",
+        "Scope",
+        "Owner-run chain",
+        "Acceptance output",
+        "Visual QA",
+        "Proven conclusion",
+        "Architecture consequence",
+        "Important boundary",
+        "Process lesson"
       ]
     },
     {
