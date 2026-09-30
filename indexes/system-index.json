@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "bc928fe4ba3602413b967ca00c067ec0f318d7dd",
-  "generated_at": "2026-09-30T14:51:58-04:00",
-  "artifact_count": 624,
+  "repository_commit": "298ed78a1862105733ef181c5611b793992525ca",
+  "generated_at": "2026-09-30T15:32:23-04:00",
+  "artifact_count": 625,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12896,6 +12896,26 @@
         "Current P0",
         "Core Principle",
         "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED"
+      ]
+    },
+    {
+      "path": "projects/website-creation/proofs/2026-09-30-showit-whole-new-page-from-any-point.md",
+      "title": "Showit Whole New Page From Any Point — PROVEN LIVE",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "LIVE-PROVEN / CURRENT ACCEPTED PROOF",
+      "date": "2026-09-30",
+      "sha256": "3eae3bfdd20b88405c4788ee7cba88cd90040ac348d584dfe52565a4ebc61d03",
+      "headings": [
+        "Showit Whole New Page From Any Point — PROVEN LIVE",
+        "Goal",
+        "Proven execution path",
+        "Accepted live result",
+        "What is now proven",
+        "Architecture consequence",
+        "Boundaries not yet proven",
+        "Next acceptance gate",
+        "Security rule"
       ]
     },
     {
