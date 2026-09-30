@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "82a76ad262160bb0c328dd6b9b255d87039d96d5",
-  "generated_at": "2026-09-30T12:27:14-04:00",
+  "repository_commit": "446c12cdc8da9f860314a08e6904abd4ec2d9b53",
+  "generated_at": "2026-09-30T12:36:03-04:00",
   "artifact_count": 622,
   "artifacts": [
     {
@@ -12738,9 +12738,9 @@
       "title": "Showit Adapter",
       "type": "project-artifact",
       "domain": "website-creation",
-      "status": "CANDIDATE IMPLEMENTATION / LIVE-PROVEN PRIMITIVES",
+      "status": "INTEGRATED PIPELINE PROVEN LIVE / WRAPPER MODULE CANDIDATE",
       "date": "2026-09-30",
-      "sha256": "70d8457a78da76f22ffafef5ee4d0551a79f47775ffce2b5764e01d70a01b3f8",
+      "sha256": "f84220be1b50e720f8025fca3e02e6f64ae808c9d153fd17c9af74ba6d3ba20e",
       "headings": [
         "Showit Adapter",
         "Purpose",
@@ -12749,7 +12749,9 @@
         "`buildPage` contract",
         "Media flow",
         "Security rule",
-        "Current acceptance state"
+        "Integrated owner-run acceptance — PASS",
+        "Important boundary",
+        "Transport lesson / do not repeat"
       ]
     },
     {
