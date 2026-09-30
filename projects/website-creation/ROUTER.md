@@ -16,7 +16,7 @@ Route Website Creator work to the smallest global reusable standard/capability r
 - tools / SaaS / libraries / frameworks / execution platforms / donors -> `TOOL_DONOR_REGISTRY.md`
 - Site Model / canonical site schema / Site Instance / platform-independent site state / renderer contract / adapter contract -> `SITE_MODEL_STANDARD.md`
 - Universal Website Translator / external-editor translation architecture -> `UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md`
-- **Showit direct adapter / page compiler / page JSON save / media upload / Canvas/text/image compilation -> `adapters/showit/README.md` then `adapters/showit/showit-page-compiler-v1.js`**
+- **Showit programmatic API / direct adapter / page compiler / page JSON save / media upload / Canvas-text-image compilation -> `adapters/showit/SHOWIT_PROGRAMMATIC_API_STANDARD.md`; then `adapters/showit/README.md`; inspect `adapters/showit/showit-page-compiler-v1.js` only when implementation detail is required**
 - website design / visual direction / donor analysis / sections / UI / responsive / motion / design QA -> `../../blocks/design/BLOCK.md`
 - visual editor / image editor / CMS editor / safe client editing / crop / move / zoom / image resize / direct manipulation -> `EDITOR_CREATION_STANDARD.md` plus `engine/README.md` for implementation
 - research / entity dossier / evidence / existing-site audit -> `SOURCE_REGISTRY.md` Research & Evidence section
@@ -55,7 +55,7 @@ For any client-facing visual editor task, read `EDITOR_CREATION_STANDARD.md` bef
 
 For any design task, use `../../blocks/design/BLOCK.md` as the design-process authority rather than reconstructing a second design pipeline inside Website Creator.
 
-For Showit adapter work, use `UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md` plus `adapters/showit/README.md`; do not fall back to ad-hoc per-client Showit scripts when the reusable adapter covers the operation.
+For Showit programmatic/API work, `adapters/showit/SHOWIT_PROGRAMMATIC_API_STANDARD.md` is the single operational entrypoint. Then read `adapters/showit/README.md` for current implementation status and inspect `adapters/showit/showit-page-compiler-v1.js` only when source-level detail is required. Use `UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md` only when the task also requires the upstream Universal Recipe / cross-editor translation boundary. Do not fall back to ad-hoc per-client Showit scripts when the reusable programmatic adapter covers the operation.
 
 ## No Silent Platform Rule
 
