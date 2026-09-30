@@ -232,3 +232,54 @@ https://docs.google.com/document/d/1yLWHj78strzY2eoetWczw1_AkynKSvLYImvTaqEET40/
 
 Architecture rule:
 the older direct fingerprint→Showit-plan translator remains a useful target-specific donor/compatibility route, but the preferred boundary is now `Fingerprint → Universal Page Recipe → Editor Adapter`.
+
+## 2026-09-30 — Showit Internal Save Path / HAR Proof
+
+Status: `CAPTURE PROVEN / DIRECT API REPLAY NOT YET LIVE-PROVEN`.
+
+A controlled HAR capture around Showit Canvas duplication plus inspection of the shipped Showit browser bundle established the current internal page-load/save model without relying on guessed selectors.
+
+Observed generalized path:
+
+```text
+Showit editor load
+→ authenticated site metadata GET through api.showit.com
+→ current page JSON GET from designs.showit.co/<design-key>/pages/<page-id>.json
+→ S3 response ETag becomes the page-file concurrency token
+→ Canvas duplication mutates page JSON locally in the browser
+→ page JSON is gzip-compressed with CompressionStream("gzip")
+→ POST api.showit.com/designs/<design-key>
+→ payload shape { data: <whole page JSON>, file: { isNew:false, eTag:<current ETag> } }
+→ server returns saved:true + next eTag
+```
+
+Important findings:
+
+- No separate `duplicateCanvas` HTTP endpoint was observed for the tested normal page Canvas path.
+- The browser-side handler duplicates the selected block locally, inserts the new block immediately after the source block, updates the page file, then saves the page file.
+- Showit's block-container logic uses a 9-character random ID generator backed by `crypto.getRandomValues` and the same URL-safe alphabet used by the shipped bundle.
+- Native name/slug collision handling appends `-1`, `-2`, etc. and slugifies the resulting name; the captured proof showed the next suffix chosen when an earlier suffix already existed.
+- For ordinary non-WordPress page blocks, native duplication strips `wp` properties from the cloned block/elements/states before insertion.
+- The current API client adds `Authorization: Bearer <token>` when a token is present; the app persists the token in localStorage. Do not copy real tokens into durable notes, generated code, logs or fixtures.
+- Modern Chrome HAR exports may redact sensitive Authorization values, so HAR is sufficient for structural discovery but should not be treated as a credential source.
+
+Mimic implication:
+
+- Mimic remains a useful external donor for HAR/cURL/API-client discovery, but for this Showit path its current HAR endpoint reduction keeps only the latest capture per `(method, path)`, which can discard sequential whole-document state transitions that are essential to understanding editor mutations.
+- Therefore the preferred next proof is a bounded in-session Showit adapter operation using the already authenticated browser context, not a Mimic-generated client.
+
+Next acceptance gate:
+
+```text
+current authenticated Showit tab
+→ discover current design/page resource without hard-coded IDs
+→ read current page JSON + ETag
+→ find exactly one Canvas by semantic name
+→ apply the native duplicate algorithm
+→ gzip + POST the whole page with current ETag
+→ receive saved:true + new ETag
+→ reload/read back page
+→ verify exactly one expected duplicate exists and unrelated page state is unchanged
+```
+
+Until that write/readback gate passes, direct internal-API duplication is evidence-backed but not `LIVE-PROVEN`.
