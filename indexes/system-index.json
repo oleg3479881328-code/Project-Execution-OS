@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "6703def81f9b9da6c673c7acd754a69c436b61ad",
-  "generated_at": "2026-09-30T10:31:44-04:00",
-  "artifact_count": 615,
+  "repository_commit": "49d4e6df54bf844d48bd679e80df0fab1c53626a",
+  "generated_at": "2026-09-30T10:43:33-04:00",
+  "artifact_count": 616,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12832,6 +12832,25 @@
         "Current P0",
         "Core Principle",
         "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED"
+      ]
+    },
+    {
+      "path": "projects/website-creation/proofs/SHOWIT_FROM_SCRATCH_CANVAS_PROOF_2026-09-30.md",
+      "title": "Showit From-Scratch Canvas API Proof — 2026-09-30",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "PROVEN LIVE / ACCEPTED EVIDENCE",
+      "date": null,
+      "sha256": "6f7e86ba0fe2be3cef494e2f70c9df1a3fe0f8eb1690dac7f64ff6fea029526e",
+      "headings": [
+        "Showit From-Scratch Canvas API Proof — 2026-09-30",
+        "Purpose",
+        "Live proof result",
+        "Accepted evidence",
+        "Visual evidence",
+        "Architecture consequence",
+        "Remaining unproven areas before full production promotion",
+        "Next proof"
       ]
     },
     {
