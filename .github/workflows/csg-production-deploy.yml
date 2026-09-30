@@ -46,7 +46,6 @@ jobs:
       - name: Deploy exact SHA via Vercel CLI
         if: env.VERCEL_DEPLOY_HOOK_URL == '' && env.VERCEL_TOKEN != ''
         shell: bash
-        working-directory: projects/website-creation/engine
         run: |
           mkdir -p .vercel
           cat > .vercel/project.json <<JSON
