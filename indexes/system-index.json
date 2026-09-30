@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7a3b2a6779b4301e7e11fb33afffb46ee4be9a93",
-  "generated_at": "2026-09-30T11:00:30-04:00",
-  "artifact_count": 618,
+  "repository_commit": "a80af3e44039822cbe4fad04963d382701277dc7",
+  "generated_at": "2026-09-30T11:23:02-04:00",
+  "artifact_count": 619,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12832,6 +12832,24 @@
         "Current P0",
         "Core Principle",
         "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED"
+      ]
+    },
+    {
+      "path": "projects/website-creation/proofs/SHOWIT_EXISTING_ASSET_BINDING_HAR_2026-09-30.md",
+      "title": "Showit Existing Asset Binding HAR Discovery — 2026-09-30",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "DISCOVERY PROVEN / DIRECT API BINDING NOT YET LIVE-PROVEN",
+      "date": null,
+      "sha256": "d398db753998807317c5e1f1227d5df273fe2388c27f8a67c557e2f3457f32cc",
+      "headings": [
+        "Showit Existing Asset Binding HAR Discovery — 2026-09-30",
+        "Purpose",
+        "Controlled capture",
+        "Exact graphic mutation discovered",
+        "Architecture consequence",
+        "Next acceptance gate",
+        "Security rule"
       ]
     },
     {
