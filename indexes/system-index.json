@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "298ed78a1862105733ef181c5611b793992525ca",
-  "generated_at": "2026-09-30T15:32:23-04:00",
-  "artifact_count": 625,
+  "repository_commit": "5fb57e1edecb60fe5e27076b524f310c2bc29190",
+  "generated_at": "2026-09-30T19:46:11-04:00",
+  "artifact_count": 626,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12731,6 +12731,38 @@
         "2026-09-21 — First Generated Universal Page Recipe",
         "2026-09-30 — Showit Internal Save Path / HAR Proof",
         "2026-09-30 — Showit Direct API Duplicate — PROVEN LIVE"
+      ]
+    },
+    {
+      "path": "projects/website-creation/V0_STRICT_DONOR_RECONSTRUCTION_STANDARD.md",
+      "title": "Website Creator — v0 Strict Donor Reconstruction Standard",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": null,
+      "date": null,
+      "sha256": "cdab8d63ed4a31fb7e83861d76d5b0d8af585e59a5c7f6560914968e4a38c89e",
+      "headings": [
+        "Website Creator — v0 Strict Donor Reconstruction Standard",
+        "Status",
+        "Purpose",
+        "Authority Split",
+        "Donor site provides only",
+        "Client site provides only",
+        "v0 role",
+        "Core Communication Pattern",
+        "What v0 Must Never Do In Strict 1:1 Mode",
+        "Important Failure Pattern: “Masonry” Is Too Ambiguous",
+        "Literal Geometry Playback Contract",
+        "Responsive Contract",
+        "Geometry QA Contract",
+        "Client-Link Preservation Rule",
+        "Olga Polo / The Family Lab Proof",
+        "Design donor",
+        "Client content source",
+        "TECH SPEC folder",
+        "Reusable Operator Prompt Pattern",
+        "Acceptance Boundary",
+        "Generalized Workflow"
       ]
     },
     {
