@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "a80af3e44039822cbe4fad04963d382701277dc7",
-  "generated_at": "2026-09-30T11:23:02-04:00",
-  "artifact_count": 619,
+  "repository_commit": "72e89015a610ee6ce9bc6c88ae85408b4037e512",
+  "generated_at": "2026-09-30T11:40:28-04:00",
+  "artifact_count": 620,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12884,6 +12884,23 @@
         "Result",
         "Architecture consequence",
         "Next proof"
+      ]
+    },
+    {
+      "path": "projects/website-creation/proofs/SHOWIT_MEDIA_UPLOAD_PIPELINE_DISCOVERY_2026-09-30.md",
+      "title": "Showit Media Upload Pipeline Discovery — 2026-09-30",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "CAPTURE PROVEN / DIRECT API REPLAY NOT YET LIVE-PROVEN",
+      "date": null,
+      "sha256": "da673879e7a611eaf63051af22eb4ef0be3a475a6ebc6399393d14cfee844bc8",
+      "headings": [
+        "Showit Media Upload Pipeline Discovery — 2026-09-30",
+        "What was captured",
+        "Observed upload pipeline",
+        "Architectural implication",
+        "Security note",
+        "Remaining acceptance test"
       ]
     },
     {
