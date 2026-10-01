@@ -39,6 +39,7 @@ def main() -> int:
     parser.add_argument("--repo-root", type=Path, default=DEFAULT_REPO_ROOT)
     parser.add_argument("--selected-route", default=DEFAULT_WORKSTATION_ROUTE)
     parser.add_argument("--timeout-seconds", type=float, default=DEFAULT_TIMEOUT_SECONDS)
+    parser.add_argument("--local-model", default=None, help="Override local Ollama model (e.g. qwen3:4b)")
     parser.add_argument("--debug-full-evidence", action="store_true")
     parser.add_argument("--no-launch-executor", action="store_true")
     args = parser.parse_args()
@@ -56,6 +57,7 @@ def main() -> int:
         include_full_evidence=args.debug_full_evidence,
         launch_executor=not args.no_launch_executor,
         repo_root=repo_root,
+        local_model=args.local_model,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0
