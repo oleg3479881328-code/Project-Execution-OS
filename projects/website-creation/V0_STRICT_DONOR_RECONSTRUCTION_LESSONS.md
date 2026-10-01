@@ -11,19 +11,15 @@
 
 This file is the durable incident/lesson log for strict donor reconstruction. It exists so proven mistakes are converted into permanent execution rules instead of being rediscovered in later chats.
 
-For any strict v0 donor reconstruction, read this file together with:
+Operating rule:
 
-- `projects/website-creation/V0_STRICT_DONOR_RECONSTRUCTION_STANDARD.md`
-
-The operating rule is:
-
-`OBSERVED FAILURE -> ROOT CAUSE -> PERMANENT RULE -> ACCEPTANCE GATE`
+`OBSERVED FAILURE -> ROOT CAUSE -> PERMANENT RULE -> PRE-FLIGHT/ACCEPTANCE GATE`
 
 No recurring mistake should remain only in chat history.
 
 ---
 
-## Permanent Rule: One Complete MASTER Execution Block
+## Permanent Rule — One Complete MASTER Execution Block
 
 When the operator must give v0 implementation instructions, provide one complete copy-paste MASTER block containing all currently required engineering constraints.
 
@@ -31,67 +27,114 @@ The MASTER block must include, when applicable:
 
 - authority/source order;
 - exact geometry sources;
-- typography sources and font-loading requirements;
+- typography sources and real font-verification requirements;
 - responsive contracts;
 - client/donor responsibility split;
 - image discovery scope;
 - image uniqueness rules;
 - photo-to-slot assignment rules;
-- crop/focal-point rules;
+- visual crop/focal-point rules;
 - link provenance rules;
 - QA/acceptance criteria;
 - no-publish/no-deploy boundary.
 
-Do not split mandatory instructions into a sequence such as:
-
-1. fix geometry;
-2. later fix fonts;
-3. later fix image uniqueness;
-4. later fix cropping.
-
-That pattern causes state drift and repeated rework.
-
-Mandatory instructions must not be added after the copy block as “also tell it this”. If the instruction is required for execution, it belongs inside the one MASTER block.
+Do not split mandatory instructions into a sequence of later patches such as geometry -> fonts -> uniqueness -> cropping. Mandatory instructions must not be added after the copy block as “also tell it this”.
 
 ---
 
-# Incident 2026-10-01 — Typography Looked Wrong After “Correct” CSS
+# Incident — Strict full-page QA requested before RAW evidence was complete
 
 ## Observed failure
 
-v0 reported typography changes but the rendered page still did not visually match the donor fonts.
+Gallery geometry was fully measured, but whole-page geometry/typography evidence was incomplete. A full-page numeric QA prompt was issued too early.
 
 ## Root cause
 
-A declared CSS `font-family` is not proof that the required font face is actually loaded and being rendered.
+Acceptance scope was broader than the available evidence package.
 
-`getComputedStyle(element).fontFamily` can still report the declared family while the browser falls back to another font.
+## Permanent rule
 
-Inherited font values from generic donor containers can also be incorrectly treated as visible-text typography.
+Before execution, produce a measurement coverage matrix for every required viewport and domain:
 
-## Permanent rules
+- page/body;
+- header;
+- logo/brand;
+- navigation;
+- title/key text;
+- gallery/content slots;
+- section boundaries;
+- footer;
+- responsive visibility/states;
+- typography/styles/colors required by acceptance.
 
-1. Visible text typography must come from explicit visible-text RAW mapping, not generic parent/container computed styles.
-2. For the Family Lab -> Olga Newborn proof, `07 — RAW Exact Typography Mapping — 4 Viewports` is the typography authority.
-3. Typography PASS requires actual font availability after `await document.fonts.ready`.
-4. Required face/weight/style combinations must be checked with `document.fonts.check(...)`.
-5. Do not silently substitute a fallback font.
-6. Do not copy or redistribute proprietary donor font binaries.
-7. If a required exact font cannot legitimately be loaded, status is `FONT BLOCKED`, and strict typography remains FAIL.
-8. After real fonts load, rerun geometry measurements because glyph metrics may shift width/height/line wrapping.
+Allowed coverage states:
+
+- `MEASURED`
+- `NOT_APPLICABLE`
+- `MISSING_REFERENCE`
+
+If any required acceptance property is `MISSING_REFERENCE`, do not issue the strict implementation prompt yet.
+
+Permanent order:
+
+`ACCEPTANCE SCOPE -> COVERAGE MATRIX -> FILL MISSING RAW -> PRE-FLIGHT PASS -> EXECUTION -> QA`
+
+---
+
+# Incident — Typography looked wrong after “correct” CSS
+
+## Observed failure
+
+v0 reported the expected `font-family`, but the rendered page still did not visually match the donor typography.
+
+## Root causes
+
+1. Declared `font-family` is not proof of the face actually rendered.
+2. `getComputedStyle(...).fontFamily` reports the declared family list and does not prove which fallback glyph face painted the text.
+3. Generic parent/container computed styles were being confused with visible-text typography.
+4. A previous process rule incorrectly treated `document.fonts.check(...) === true` as sufficient proof that a specific face exists and is loaded.
+
+## Important correction — `document.fonts.check()` is NOT proof of existence
+
+MDN documents that `FontFaceSet.check()` may return `true` even when the requested font is nonexistent, because the method answers whether rendering would require an unloaded font from the document `FontFaceSet`; it is not a reliable “does this exact font exist?” test.
+
+Therefore:
+
+**Never use `document.fonts.check()` alone as proof of exact font availability or exact font rendering.**
+
+## Permanent font verification contract
+
+For each required web font family/weight/style:
+
+1. Visible text properties come from the explicit visible-text RAW mapping, not generic container inheritance.
+2. Wait for `await document.fonts.ready`.
+3. Enumerate `document.fonts` and require a matching `FontFace` entry for the expected family.
+4. Require the matching face entry/entries to have `status === "loaded"`.
+5. Call `await document.fonts.load(spec, representativeText)` and require a **non-empty returned FontFace array** matching the expected family/weight/style for web fonts.
+6. Compare the actual element `getComputedStyle()` values to the RAW typography contract.
+7. Run geometry regression after font load because real glyph metrics can change widths, heights and wrapping.
+8. Perform visual comparison against donor evidence for typography-sensitive regions.
+
+For proprietary families such as `freight-display-pro`, `futura-pt`, and `baskerville-poster-pt`:
+
+- use only a legitimate configured/authorized font source already available to the project;
+- do not copy or redistribute donor font binaries;
+- if the exact face cannot legitimately be loaded, report `FONT BLOCKED: <family>` and keep strict typography FAIL.
 
 ## Acceptance gate
 
 Typography cannot be PASS unless:
 
-- expected visible-text RAW properties match;
-- required fonts actually load;
+- visible-text RAW properties match;
+- matching loaded FontFace evidence exists for required web fonts;
+- `document.fonts.load()` returns the expected matching face(s), not an empty fallback result;
 - no silent fallback is used;
-- post-font geometry remains within the geometry tolerance.
+- post-font geometry stays within tolerance;
+- visual typography comparison is acceptable.
 
 ---
 
-# Incident 2026-10-01 — False `INSUFFICIENT UNIQUE CLIENT IMAGES: 26/63`
+# Incident — False `INSUFFICIENT UNIQUE CLIENT IMAGES: 26/63`
 
 ## Observed failure
 
@@ -101,42 +144,28 @@ v0 scanned only the Olga Newborn landing page and concluded that only 26 unique 
 
 The inventory scope was too narrow. The landing page was treated as the entire client photo corpus even though additional Olga-owned newborn photography exists in the site’s Lifestyle Newborn category and individual posts.
 
-## Permanent rules
+## Permanent discovery rule
 
-Before declaring an image shortage, define and exhaust the full authorized client-image corpus.
+Before declaring shortage, define and exhaust the authorized client-image corpus.
 
 For the current proof, discovery scope includes:
 
 1. `https://www.olgapolophotography.com/newborn`
 2. `https://www.olgapolophotography.com/blog-1/categories/lifestyle-newborn`
 3. all accessible pagination pages in that category;
-4. the individual Lifestyle Newborn posts;
+4. individual Lifestyle Newborn posts;
 5. actual article photographs inside those posts, not just category thumbnails.
 
 Stop discovery only when either:
 
 - at least the required number of verified unique client photographs has been found; or
-- the entire defined authorized corpus has been exhausted.
-
-Never report `INSUFFICIENT UNIQUE CLIENT IMAGES` after scanning only one landing page when the task explicitly permits additional client-owned sources.
+- the entire authorized corpus has been exhausted.
 
 ## Wix normalization rule
 
-Different Wix transformation URLs of the same underlying original asset are one photograph, not multiple photographs.
+Different Wix transformation URLs of the same underlying original asset are one photograph, not multiple photographs. Normalize by original Wix media identity where available and ignore resize/crop/fit/quality/format/focal/derivative URL differences.
 
-Normalize using the underlying original Wix media identity where available.
-
-Strip/ignore transformation differences such as:
-
-- resize dimensions;
-- crop;
-- fit;
-- quality;
-- format;
-- focal point;
-- derivative URL variants.
-
-Different original Wix media IDs remain different candidates unless visual duplicate review proves they are the same photograph.
+Different original Wix media IDs remain separate candidates unless visual duplicate review proves they are the same photograph.
 
 ## Acceptance gate
 
@@ -144,15 +173,12 @@ Any image-shortage claim must include:
 
 - source pages scanned;
 - category pages scanned;
-- posts discovered;
-- posts opened;
+- posts discovered/opened;
 - raw image URLs discovered;
 - normalized unique assets;
 - duplicates removed;
 - non-photo assets removed;
 - final verified unique count.
-
-Without that evidence, shortage status is invalid.
 
 ---
 
@@ -160,23 +186,21 @@ Without that evidence, shortage status is invalid.
 
 For a gallery with N distinct donor slots, use N distinct underlying client photographs whenever at least N verified unique client photographs are available.
 
-For the current proof:
+Current proof:
 
-`63 distinct donor slots -> 63 distinct Olga photographs`
+`63 donor slots -> 63 distinct Olga photographs`
 
 Allowed:
 
-- the same assigned photo for the same slot across desktop/tablet/mobile.
+- same assigned photograph for the same slot across desktop/tablet/mobile.
 
 Not allowed:
 
-- the same underlying photo in two different slots;
-- the same original Wix asset reused through different transformed URLs;
-- different crops of the same source photo counted as unique.
+- same underlying photograph in two different slots;
+- same Wix original reused through different transformation URLs;
+- different crops of the same source photograph counted as unique.
 
-## Acceptance gate
-
-For the 63-slot proof:
+Acceptance for the current proof:
 
 - unique images used = 63;
 - duplicate slot assignments = 0;
@@ -184,59 +208,40 @@ For the 63-slot proof:
 
 ---
 
-# Incident 2026-10-01 — Geometry Correct, Photographs Cropped Badly
+# Incident — Geometry correct, photographs cropped badly
 
 ## Observed failure
 
-The donor slot geometry was numerically correct, but several Olga photographs were badly cut: faces/heads/people fell outside the visible slot because arbitrary photos were placed into fixed rectangles using `object-fit: cover` and generic center positioning.
+Donor slot geometry was numerically correct, but several Olga photographs were visibly damaged by crop: faces/heads/subjects fell outside fixed rectangles.
 
 ## Root cause
 
-`object-fit: cover` was treated as a complete photo-selection strategy.
+`object-fit: cover` and aspect-ratio matching were treated as sufficient photo-placement logic.
 
-It is not.
+They are not.
 
 Exact donor geometry and client-photo composition are separate concerns.
 
-## Permanent separation of authority
+## Permanent authority separation
 
 ### Donor controls
 
-- slot x;
-- slot y;
-- slot width;
-- slot height;
+- slot x/y/width/height;
 - spacing;
-- responsive slot geometry.
+- responsive geometry.
 
-### Client image assignment controls
+### Client-image assignment controls
 
-- which unique client photograph goes into which donor slot;
-- which focal region of that photograph is visible inside the fixed donor rectangle.
+- which unique client photograph goes into each fixed donor slot;
+- focal position inside that slot.
 
 The donor rectangle is authoritative.
 
-The donor photograph’s focal point is NOT automatically transferable to a different client photograph.
+The donor photograph’s original focal point is not transferable to unrelated client imagery.
 
-## Permanent rules for photo-to-slot matching
+## Aspect-ratio matching is only a ranking signal
 
-1. Do not assign arbitrary images to arbitrary slots.
-2. Build the unique client photo inventory first.
-3. For each slot compute slot aspect ratio.
-4. For each image compute intrinsic aspect ratio.
-5. Use aspect compatibility as an assignment signal before rendering.
-6. Prefer portrait source images for tall/narrow slots.
-7. Prefer landscape source images for wide/short slots.
-8. Treat assignment as a global matching problem, not a greedy one-slot-at-a-time patch.
-9. A photo that crops poorly in one slot may be ideal in another.
-10. Preserve visual variety when sufficient alternatives exist.
-11. Never change accepted donor slot dimensions to save a poor photo assignment.
-12. Never stretch/distort images.
-13. Never use `contain` with empty bands merely to avoid crop.
-
-## Crop-loss signal
-
-A useful engineering signal is:
+Use:
 
 ```text
 slotAspect = slotWidth / slotHeight
@@ -245,15 +250,44 @@ cropRetention = min(slotAspect / imageAspect, imageAspect / slotAspect)
 cropLoss = 1 - cropRetention
 ```
 
-Use this for ranking assignments, not as the sole decision.
+This is useful for candidate ranking only.
 
-Suggested operating thresholds:
+It cannot detect:
 
-- `cropLoss <= 0.25` — preferred;
-- `0.25 < cropLoss <= 0.35` — requires visual review;
-- `cropLoss > 0.35` — prefer a different image unless visual review proves the crop is composition-safe.
+- face position;
+- baby/head position;
+- multiple-person composition;
+- subject near an edge;
+- intentional negative space;
+- whether a narrow crop destroys the story.
 
-## Subject-safe crop rules
+Therefore `cropLoss <= threshold` is never sufficient by itself for crop PASS.
+
+Suggested prioritization only:
+
+- `cropLoss <= 0.25` — preferred candidate pool;
+- `0.25 < cropLoss <= 0.35` — high-priority visual review;
+- `cropLoss > 0.35` — normally reassign unless visual inspection proves safe.
+
+## New permanent rule — Visual crop QA is required for ALL slots
+
+Do not visually review only slots above a crop-loss threshold.
+
+**All 63 rendered slots must receive visual subject-safety review.**
+
+Reason: a low crop-loss image can still cut a face if the subject is near the source-image edge.
+
+Recommended workflow:
+
+1. Build a labeled contact sheet or equivalent overview of all rendered slots.
+2. Review every slot, not only high-cropLoss slots.
+3. Mark each slot `SUBJECT_SAFE PASS/FAIL`.
+4. For a FAIL slot, first search/reassign a better compatible unused image from the full client corpus.
+5. Use content-adaptive `object-position` only when the subject can genuinely be saved inside the fixed rectangle.
+6. Do not use focal shifting to rescue a fundamentally incompatible composition.
+7. Re-run uniqueness and geometry after reassignment.
+
+## Subject-safe rules
 
 A crop must not accidentally cut:
 
@@ -261,7 +295,7 @@ A crop must not accidentally cut:
 - baby face/head;
 - primary parent face;
 - important family members;
-- the intended detail/focal subject.
+- intended focal detail.
 
 If the original client image intentionally contains an artistic crop, preserve that intent where possible.
 
@@ -269,49 +303,40 @@ If the original client image intentionally contains an artistic crop, preserve t
 
 `object-fit: cover` remains the rendering mechanism.
 
-But `object-position: 50% 50%` is only a default starting point, not a universal contract for replacement client imagery.
+`object-position: 50% 50%` is only a default starting point for replacement client imagery.
 
-Content-adaptive `object-position` is allowed to preserve the client photo’s focal subject, while keeping the donor slot rectangle unchanged.
+Content-adaptive `object-position` is allowed to preserve the client photo’s focal subject while donor slot x/y/width/height remain frozen.
 
-Examples may include:
+Examples:
 
-- `50% 35%`;
-- `42% 50%`;
-- `65% 45%`.
-
-Only focal position may change for composition safety; accepted slot x/y/width/height remain frozen.
+- `50% 35%`
+- `42% 50%`
+- `65% 45%`
 
 ## Acceptance gate
 
-For every slot, crop QA should be able to report:
+For every slot record:
 
 - slot ID;
-- normalized client asset ID;
+- normalized asset ID;
 - source page/post;
-- intrinsic image width/height;
+- intrinsic image dimensions;
 - image aspect;
 - slot aspect;
 - crop-loss signal;
 - object-position;
-- subject-safe PASS/FAIL.
+- `subjectSafe: PASS/FAIL`.
 
-Photo crop quality is FAIL if:
-
-- a primary face/head is accidentally cut;
-- the important subject is pushed outside the frame;
-- a clearly better compatible unused photo exists;
-- a duplicate photo was reused.
+Photo crop quality remains FAIL if **any** slot is visually unsafe.
 
 ---
 
 # Permanent Rule — Geometry PASS Does Not Mean Visual/Content PASS
 
-A page may be numerically correct and still be unacceptable.
-
 Strict reconstruction has separate acceptance domains:
 
 1. geometry;
-2. typography + actual font loading;
+2. typography + verified real font faces;
 3. colors/styles;
 4. responsive states;
 5. client link provenance;
@@ -322,65 +347,7 @@ Strict reconstruction has separate acceptance domains:
 
 `PARTIAL` is not PASS for strict acceptance.
 
-A PASS in one domain does not authorize assumptions in another domain.
-
----
-
-# Updated MASTER Pre-Flight Coverage Matrix
-
-Before issuing the MASTER implementation block, verify coverage for:
-
-- PAGE / BODY geometry;
-- HEADER geometry;
-- LOGO / BRAND geometry;
-- NAVIGATION geometry + visible-text typography;
-- TITLE geometry + visible-text typography;
-- GALLERY 63×viewport slot geometry;
-- SECTION boundaries;
-- FOOTER geometry + typography;
-- RESPONSIVE visibility/states;
-- COLORS/backgrounds;
-- actual font-source/loadability status;
-- client image discovery scope;
-- client image uniqueness capacity;
-- photo-to-slot assignment strategy;
-- crop/focal safety criteria;
-- real client links;
-- final QA output requirements.
-
-If a required area is absent, status is:
-
-`PRE-FLIGHT COVERAGE: BLOCKED`
-
-Do not hand execution to v0 and wait for it to discover the missing engineering input later.
-
----
-
-# Updated Generalized Workflow
-
-Use this order:
-
-`donor selection`
-`-> fingerprint`
-`-> define acceptance scope`
-`-> measurement coverage matrix`
-`-> fill missing RAW evidence`
-`-> typography availability check`
-`-> authorized client-image corpus definition`
-`-> exhaustive/threshold image inventory`
-`-> unique-image normalization`
-`-> photo-to-slot composition plan`
-`-> PRE-FLIGHT PASS`
-`-> ONE MASTER EXECUTION BLOCK`
-`-> implementation`
-`-> geometry audit`
-`-> actual-font audit`
-`-> duplicate-image audit`
-`-> crop/focal safety audit`
-`-> link/provenance audit`
-`-> independent visual QA`
-`-> preview`
-`-> release only after owner authorization`
+A PASS in one domain does not authorize assumptions in another.
 
 ---
 
@@ -390,25 +357,81 @@ TECH SPEC folder:
 
 `https://drive.google.com/drive/folders/1Eh4O80ZBIgwWB7mb7fZ_qzx9OFaFS_vD`
 
-Current authoritative artifacts include:
+Current authority domains:
 
 - `03-RAW-Exact-Image-Slot-Geometry-63x4.csv` — gallery slot geometry;
 - `04-RAW-Machine-Exact-Layout-Spec.json` — machine/page contract;
-- `06 — RAW Full Page Critical Geometry + Typography — 4 Viewports` — non-gallery critical geometry/styles;
+- `06 — RAW Full Page Critical Geometry + Typography — 4 Viewports` — non-gallery geometry/styles;
 - `07 — RAW Exact Typography Mapping — 4 Viewports` — visible-text typography.
 
-The operator must treat these as separate authority domains rather than mixing inherited values across them.
+Do not mix authority domains or substitute inferred container values for explicit visible-element data.
+
+---
+
+# Updated MASTER Pre-Flight Coverage Matrix
+
+Before issuing a MASTER implementation block, verify coverage for:
+
+- page/body geometry;
+- header geometry;
+- logo/brand geometry;
+- navigation geometry + visible-text typography;
+- title geometry + visible-text typography;
+- gallery slot geometry;
+- section boundaries;
+- footer geometry + typography;
+- responsive visibility/states;
+- colors/backgrounds;
+- legitimate exact font-source/loadability status;
+- authorized client-image corpus;
+- client image uniqueness capacity;
+- photo-to-slot assignment strategy;
+- visual crop/focal safety for all slots;
+- real client links;
+- QA output requirements.
+
+If a required area is absent:
+
+`PRE-FLIGHT COVERAGE: BLOCKED`
+
+---
+
+# Updated Generalized Workflow
+
+`donor selection`
+`-> fingerprint`
+`-> define acceptance scope`
+`-> coverage matrix`
+`-> fill missing RAW`
+`-> exact font source/loadability proof`
+`-> authorized client-image corpus definition`
+`-> image inventory`
+`-> unique-image normalization`
+`-> global aspect-compatible photo assignment`
+`-> render all slots`
+`-> visual subject-safety review of ALL slots`
+`-> PRE-FLIGHT/implementation readiness`
+`-> ONE MASTER EXECUTION BLOCK`
+`-> implementation`
+`-> geometry audit`
+`-> real-font audit`
+`-> duplicate-image audit`
+`-> all-slot crop/focal audit`
+`-> link/provenance audit`
+`-> independent visual QA`
+`-> preview`
+`-> release only after owner authorization`
 
 ---
 
 # Operator Discipline
 
-When a new failure is observed during this proof or future proofs:
+When a new failure is observed:
 
-1. do not only patch the current v0 prompt;
+1. do not only patch the current prompt;
 2. identify the failure class;
-3. decide whether it generalizes;
+3. determine whether it generalizes;
 4. update this lesson log and/or the canonical strict standard;
 5. add a pre-flight or acceptance gate that prevents recurrence.
 
-The goal is cumulative system improvement: every confirmed failure should make the next project easier, not merely make the current page pass.
+Goal: every confirmed failure makes the next reconstruction easier and safer, rather than merely fixing the current page.
