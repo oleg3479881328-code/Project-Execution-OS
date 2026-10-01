@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "7c5279f8bd972c09415f6fa319f9847f37889a23",
-  "generated_at": "2026-09-30T21:49:11-04:00",
-  "artifact_count": 628,
+  "repository_commit": "946111fdb71828b5669f6b535c149cba411c63d2",
+  "generated_at": "2026-09-30T22:26:59-04:00",
+  "artifact_count": 629,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12471,6 +12471,29 @@
         "Minimum Acceptance Test",
         "Golden Reference Versioning Rule",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/NUMERIC_DONOR_LAYOUT_MODE.md",
+      "title": "Website Creator — Numeric Donor Layout Mode",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": null,
+      "date": null,
+      "sha256": "a74b7b7d6b1bf852ecc441f0a8fed97c74e80ab67160412eb6601a2f401d02fc",
+      "headings": [
+        "Website Creator — Numeric Donor Layout Mode",
+        "Status",
+        "Core rule",
+        "Why this mode exists",
+        "What remains numeric / donor-controlled",
+        "What becomes content-controlled",
+        "Natural-ratio rendering",
+        "Donor-rhythm matching without crop",
+        "Family Lab -> Olga Newborn numeric proof",
+        "Header / title authority",
+        "QA rule",
+        "Permanent acceptance principle"
       ]
     },
     {
