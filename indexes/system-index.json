@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2d214f382f8b6b3344e578c9232dbf3ee440a570",
-  "generated_at": "2026-09-30T21:15:53-04:00",
+  "repository_commit": "7c5279f8bd972c09415f6fa319f9847f37889a23",
+  "generated_at": "2026-09-30T21:49:11-04:00",
   "artifact_count": 628,
   "artifacts": [
     {
@@ -12740,7 +12740,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "9e5aaaeea823d838ef4d6bba9c209da0d28bc3f22910687d78adbae9f8e970b8",
+      "sha256": "c02bd78a63338eb06dca26d118570b21716d8eca483b833841334c320b3644e1",
       "headings": [
         "Website Creator — v0 Strict Donor Reconstruction Lessons",
         "Status",
@@ -12785,6 +12785,14 @@
         "Legitimate resolution paths for the current proof",
         "Adobe-hosted font ownership rule",
         "No donor-font extraction",
+        "Incident — Full-photo policy + fixed donor slot heights caused visual mismatch",
+        "Observed failure",
+        "Root causes",
+        "Permanent gallery modes",
+        "Mode A — STRICT GEOMETRY",
+        "Mode B — FULL-PHOTO / CONTENT-PRESERVING",
+        "Permanent single-photo-content rule",
+        "Permanent visual-diff gate",
         "Operator Discipline"
       ]
     },
