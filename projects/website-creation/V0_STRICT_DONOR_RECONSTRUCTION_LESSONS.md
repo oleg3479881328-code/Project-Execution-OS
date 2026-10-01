@@ -481,6 +481,83 @@ Never resolve this blocker by extracting, copying, self-hosting, or redistributi
 
 ---
 
+# Incident — Full-photo policy + fixed donor slot heights caused visual mismatch
+
+## Observed failure
+
+After destructive cropping was disallowed, the implementation kept the donor's fixed slot rectangles and switched images to `object-fit: contain`. The executor could truthfully report one source asset per slot and zero destructive crops, but the gallery still did not visually resemble the donor.
+
+A second failure appeared: some individual Wix/source assets were themselves precomposed diptychs/collages containing two photographs inside one file. The executor counted these as “one image” because they had one URL/asset ID, while the owner visually saw two photographs.
+
+## Root causes
+
+1. `FULL PHOTO` and `FIXED DONOR SLOT HEIGHT` are often incompatible requirements.
+2. Containing a natural-ratio photograph inside a fixed donor rectangle introduces letterboxing/unused space and changes gallery rhythm.
+3. “One asset ID” is not equivalent to “one photographic frame.” A single asset may be a collage/diptych.
+4. Executor self-report labels such as `PASS` are insufficient when no same-viewport donor/current visual comparison is shown.
+
+## Permanent gallery modes
+
+### Mode A — STRICT GEOMETRY
+
+Use when exact donor slot rectangles matter more than preserving full client photographs.
+
+- donor x/y/w/h are authoritative;
+- cropping may be required;
+- subject-safe crop QA is mandatory.
+
+### Mode B — FULL-PHOTO / CONTENT-PRESERVING
+
+Use when the owner prioritizes seeing the complete client photograph.
+
+In this mode:
+
+- preserve donor column count, column x positions/widths, gutters, gallery start position, and overall stagger/rhythm;
+- DO NOT preserve donor slot heights when they conflict with the client photo aspect ratio;
+- render each photograph at natural ratio: `width: 100%; height: auto`;
+- each column flows independently;
+- next item Y is previous rendered image bottom + donor-like vertical gap;
+- mobile uses one natural-ratio column with donor-like spacing;
+- no letterboxed fixed-height slot is required;
+- no crop is required;
+- page/gallery total height is allowed to change as a consequence of preserving full photographs.
+
+Do not mix Mode A acceptance metrics with Mode B implementation.
+
+## Permanent single-photo-content rule
+
+For a gallery intended to show one photograph per visual block:
+
+`one block = one source asset = one actual photographic frame`
+
+Reject candidate assets that are themselves:
+
+- diptychs;
+- triptychs;
+- collages;
+- stitched before/after composites;
+- screenshots containing multiple photos;
+- contact sheets;
+- precomposed multi-panel exports.
+
+A unique normalized asset ID is necessary for deduplication but is NOT sufficient to prove single-photo content. Add visual single-frame validation before assignment.
+
+## Permanent visual-diff gate
+
+A reconstruction may not be called visually matched from self-report alone.
+
+For each accepted viewport:
+
+1. capture the donor and current page at the SAME CSS viewport size;
+2. crop browser/editor chrome so only page pixels are compared;
+3. create side-by-side and/or 50% opacity overlay evidence;
+4. inspect macro regions: header/logo, nav, title, gallery start, column widths/gutters, gallery rhythm, footer;
+5. if the owner says the result does not approximately match, the state remains FAIL regardless of executor self-report.
+
+For approximate recreation, visual similarity outranks stale geometry metrics that belong to a different acceptance mode.
+
+---
+
 # Operator Discipline
 
 When a new failure is observed:
