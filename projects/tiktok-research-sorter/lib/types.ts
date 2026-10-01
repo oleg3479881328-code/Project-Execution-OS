@@ -1,4 +1,4 @@
-export const APP_VERSION = '0.5.0';
+export const APP_VERSION = '0.6.0';
 
 export type ScanStatus = 'idle' | 'scanning' | 'paused' | 'complete' | 'stopped' | 'blocked' | 'error';
 export type ScanMode = 'profile' | 'tag';
@@ -129,6 +129,14 @@ export interface ScanState {
   message?: string;
 }
 
+export interface DownloadQueueResponse {
+  ok: boolean;
+  jobId?: string;
+  title?: string;
+  status?: string;
+  error?: string;
+}
+
 export type RuntimeMessage =
   | { type: 'PING' }
   | { type: 'START_SCAN'; options: ScanOptions }
@@ -139,6 +147,7 @@ export type RuntimeMessage =
   | { type: 'CLEAR_TAG_RESEARCH'; tag: string }
   | { type: 'TOGGLE_FAVORITE'; video: VideoRecord }
   | { type: 'REMOVE_FAVORITES'; keys: string[] }
+  | { type: 'DOWNLOAD_VIDEO'; videoUrl: string }
   | { type: 'PROFILE_DATA'; profile: ProfileRecord }
   | { type: 'VIDEO_BATCH'; username: string; profileUrl: string; videos: VideoRecord[] }
   | { type: 'TAG_SCAN_BEGIN'; tag: string; tagUrl: string; options: ScanOptions }

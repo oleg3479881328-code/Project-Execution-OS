@@ -181,7 +181,7 @@ describe('favorites and channel snapshots', () => {
     expect(html).toContain('125 000');
     expect(html).toContain('MS4wLjABAAAA-test');
     expect(html).toContain('Коммерческий аккаунт');
-    expect(html).toContain('TikTok Research Sorter v0.5.0');
+    expect(html).toContain('TikTok Research Sorter v0.6.0');
   });
 
   it('escapes channel and video text and rejects non-http links and previews', () => {
