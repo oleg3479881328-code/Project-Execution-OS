@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "17569fec258f0dd99429c80f13055e6cf8c5fb72",
-  "generated_at": "2026-09-30T21:02:26-04:00",
-  "artifact_count": 627,
+  "repository_commit": "2d214f382f8b6b3344e578c9232dbf3ee440a570",
+  "generated_at": "2026-09-30T21:15:53-04:00",
+  "artifact_count": 628,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -13018,6 +13018,24 @@
         "Boundaries not yet proven",
         "Next acceptance gate",
         "Security rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/proofs/FAMILY_LAB_TO_OLGA_NEWBORN_V0_PROOF_STATUS_2026-10-01.md",
+      "title": "Family Lab -> Olga Newborn — v0 Proof Status",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": "EXECUTOR PASS / INDEPENDENT ACCEPTANCE STILL PENDING",
+      "date": "2026-10-01",
+      "sha256": "cbb2405b9377b87edc427d85fe3d084e64f5b7f7bdfa5f13459009a11db83f75",
+      "headings": [
+        "Family Lab -> Olga Newborn — v0 Proof Status",
+        "Scope",
+        "Current executor-reported result",
+        "Approved font-substitution policy",
+        "Permanent distinction: executor PASS vs independent acceptance",
+        "Lessons retained",
+        "Current boundary"
       ]
     },
     {
