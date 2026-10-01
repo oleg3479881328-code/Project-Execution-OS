@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "86dcbd6ec42c18ce9ffa887a7b5be48fa6b5bf35",
-  "generated_at": "2026-09-30T19:58:52-04:00",
-  "artifact_count": 626,
+  "repository_commit": "b449c151b0ee5b2430c48f825cb4c74438caf5ca",
+  "generated_at": "2026-09-30T20:44:33-04:00",
+  "artifact_count": 627,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12731,6 +12731,50 @@
         "2026-09-21 — First Generated Universal Page Recipe",
         "2026-09-30 — Showit Internal Save Path / HAR Proof",
         "2026-09-30 — Showit Direct API Duplicate — PROVEN LIVE"
+      ]
+    },
+    {
+      "path": "projects/website-creation/V0_STRICT_DONOR_RECONSTRUCTION_LESSONS.md",
+      "title": "Website Creator — v0 Strict Donor Reconstruction Lessons",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": null,
+      "date": null,
+      "sha256": "916157acebc84221770ae723962972bc2027b9a64035149fac3ffa864b385997",
+      "headings": [
+        "Website Creator — v0 Strict Donor Reconstruction Lessons",
+        "Status",
+        "Purpose",
+        "Permanent Rule: One Complete MASTER Execution Block",
+        "Incident 2026-10-01 — Typography Looked Wrong After “Correct” CSS",
+        "Observed failure",
+        "Root cause",
+        "Permanent rules",
+        "Acceptance gate",
+        "Incident 2026-10-01 — False `INSUFFICIENT UNIQUE CLIENT IMAGES: 26/63`",
+        "Observed failure",
+        "Root cause",
+        "Permanent rules",
+        "Wix normalization rule",
+        "Acceptance gate",
+        "Permanent Rule — One Distinct Photo Per Distinct Gallery Slot",
+        "Acceptance gate",
+        "Incident 2026-10-01 — Geometry Correct, Photographs Cropped Badly",
+        "Observed failure",
+        "Root cause",
+        "Permanent separation of authority",
+        "Donor controls",
+        "Client image assignment controls",
+        "Permanent rules for photo-to-slot matching",
+        "Crop-loss signal",
+        "Subject-safe crop rules",
+        "Object-position rule",
+        "Acceptance gate",
+        "Permanent Rule — Geometry PASS Does Not Mean Visual/Content PASS",
+        "Updated MASTER Pre-Flight Coverage Matrix",
+        "Updated Generalized Workflow",
+        "Current Family Lab -> Olga Newborn Required Artifacts",
+        "Operator Discipline"
       ]
     },
     {
