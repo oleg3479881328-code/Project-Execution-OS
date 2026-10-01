@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "588c610f46fd0eab6518fb7e052fa1f9c8e240f6",
-  "generated_at": "2026-09-30T20:49:21-04:00",
+  "repository_commit": "0366a0e8d779bb0b00a2f35a2620a852b3b58621",
+  "generated_at": "2026-09-30T20:56:47-04:00",
   "artifact_count": 627,
   "artifacts": [
     {
@@ -12740,7 +12740,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "c23ddb352007416cd4b67f74694758bbc50a1bb78a3f44e86683912d0389cb49",
+      "sha256": "9e5aaaeea823d838ef4d6bba9c209da0d28bc3f22910687d78adbae9f8e970b8",
       "headings": [
         "Website Creator — v0 Strict Donor Reconstruction Lessons",
         "Status",
@@ -12778,6 +12778,13 @@
         "Current Family Lab -> Olga Newborn Required Artifacts",
         "Updated MASTER Pre-Flight Coverage Matrix",
         "Updated Generalized Workflow",
+        "Incident — Executor crop QA passed; exact font sources are the remaining strict blocker",
+        "Observed result",
+        "Permanent lesson — executor visual PASS is not final acceptance",
+        "Permanent lesson — font-source availability is a pre-flight dependency",
+        "Legitimate resolution paths for the current proof",
+        "Adobe-hosted font ownership rule",
+        "No donor-font extraction",
         "Operator Discipline"
       ]
     },
