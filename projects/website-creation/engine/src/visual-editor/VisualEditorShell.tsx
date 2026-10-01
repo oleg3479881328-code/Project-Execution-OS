@@ -8,7 +8,7 @@ import type { VisualEditorSaveResult } from './adapter-types'
 
 type PuckProps = ComponentProps<typeof Puck>
 
-type Props = {
+export type VisualEditorShellProps = {
   config: PuckProps['config']
   initialData: Data
   title: string
@@ -44,7 +44,7 @@ export default function VisualEditorShell({
   viewports = DEFAULT_VIEWPORTS,
   onSaveDraft,
   onPublish,
-}: Props) {
+}: VisualEditorShellProps) {
   const [data, setData] = useState<Data>(initialData)
   const [status, setStatus] = useState(
     initialStatus ?? (durable ? 'Editor ready.' : 'Durable editor persistence is not configured.'),
