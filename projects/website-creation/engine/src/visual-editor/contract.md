@@ -1,1 +1,0 @@
-Visual editor adapter contract scaffolded on this branch.
