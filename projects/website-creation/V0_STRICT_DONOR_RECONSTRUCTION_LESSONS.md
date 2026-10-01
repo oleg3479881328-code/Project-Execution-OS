@@ -424,6 +424,63 @@ If a required area is absent:
 
 ---
 
+# Incident — Executor crop QA passed; exact font sources are the remaining strict blocker
+
+## Observed result
+
+The executor reported:
+
+- `239` verified unique Olga photo candidates;
+- `63` distinct slot assignments;
+- `0` duplicate assignments;
+- crop-review sheets for all four accepted viewports;
+- `252/252` rendered crop states reviewed with `0` unsafe states reported;
+- gallery geometry PASS;
+- non-gallery geometry PASS;
+- colors and responsive states PASS;
+- zero actual matching loaded `FontFace` entries for all four required families;
+- overall strict 1:1 FAIL because exact typography cannot yet be rendered from legitimate project font sources.
+
+## Permanent lesson — executor visual PASS is not final acceptance
+
+An executor-produced contact sheet and self-reported `PHOTO CROP QUALITY: PASS` are evidence, not owner/operator acceptance.
+
+Before release, independently inspect the rendered review sheets or equivalent viewport captures.
+
+## Permanent lesson — font-source availability is a pre-flight dependency
+
+Before strict execution begins, create a `FONT SOURCE MATRIX` for every required family/weight/style containing:
+
+- exact family/web name;
+- required weight;
+- required style;
+- page role(s);
+- provider/source;
+- licensing mode;
+- web-use mechanism;
+- project access available YES/NO;
+- expected browser proof method;
+- status `READY`, `NOT_APPLICABLE`, or `BLOCKED`.
+
+If any required row is `BLOCKED`, strict typography is blocked before implementation. Do not discover this only after geometry/content work is complete.
+
+## Legitimate resolution paths for the current proof
+
+- `Cormorant Garamond` has a legitimate Google Fonts / OFL path and can be integrated without copying donor-hosted files.
+- `Futura PT` is available through Adobe Fonts; for website use, use an Adobe Fonts Web Project/embed code or another separately licensed authorized webfont source.
+- Freight / `freight-display-pro` is available through Adobe Fonts; use an Adobe Fonts Web Project/embed code where the required face/weight is included, or another separately licensed authorized source.
+- `Baskerville Poster PT` is a commercial ParaType family with Webfont licensing available from authorized sellers such as MyFonts. Do not assume it is covered by another provider until verified.
+
+## Adobe-hosted font ownership rule
+
+For production client sites using Adobe Fonts, the durable production setup should use the client’s own qualifying Adobe/Creative Cloud subscription and Web Project/embed code. Do not make a client production site depend indefinitely on an unrelated operator’s Adobe account.
+
+## No donor-font extraction
+
+Never resolve this blocker by extracting, copying, self-hosting, or redistributing proprietary donor font binaries.
+
+---
+
 # Operator Discipline
 
 When a new failure is observed:
