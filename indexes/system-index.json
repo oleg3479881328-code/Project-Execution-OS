@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "0366a0e8d779bb0b00a2f35a2620a852b3b58621",
-  "generated_at": "2026-09-30T20:56:47-04:00",
+  "repository_commit": "17569fec258f0dd99429c80f13055e6cf8c5fb72",
+  "generated_at": "2026-09-30T21:02:26-04:00",
   "artifact_count": 627,
   "artifacts": [
     {
@@ -12795,7 +12795,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "cdf50acc881741527bdb96a3c3a7828282e7d77db33aadf3d2a7ecf360b8c41c",
+      "sha256": "0cc8ee175ab032c9544a1a48295fc37abc29dfd31ab70f4bff2642bad7112947",
       "headings": [
         "Website Creator — v0 Strict Donor Reconstruction Standard",
         "Status",
@@ -12804,6 +12804,12 @@
         "Donor site provides only",
         "Client site provides only",
         "v0 role",
+        "Owner Decision — Practical Fidelity Mode for Fonts",
+        "Font-resolution priority",
+        "Approved-substitute classification",
+        "Substitute-selection criteria",
+        "Metric-tuning rule",
+        "Acceptance rule",
         "ZERO-GUESS PRE-FLIGHT GATE — REQUIRED BEFORE ANY STRICT 1:1 EXECUTION",
         "Rule",
         "Coverage matrix status values",
