@@ -5,7 +5,7 @@
 - Scope: Website Creator donor-to-client redesign / reconstruction workflow
 - Tool: v0
 - State: ACTIVE / PROVEN FOR DESIGN TRANSLATION; STRICT 1:1 ACCEPTANCE STILL REQUIRES INDEPENDENT QA
-- Last updated: 2026-09-30
+- Last updated: 2026-10-01
 
 ## Purpose
 
@@ -44,6 +44,79 @@ The objective is:
 v0 is the implementation layer.
 
 It is not allowed to become design authority when exact donor evidence exists.
+
+## Owner Decision — Practical Fidelity Mode for Fonts
+
+As of 2026-10-01, the owner explicitly does **not** require exact proprietary font identity when a close legal substitute is readily available.
+
+The default production objective is therefore:
+
+`EXACT / MEASURED LAYOUT FIDELITY + CLOSE VISUAL TYPOGRAPHIC FIDELITY`
+
+rather than blocking the entire reconstruction on an exact commercial font face.
+
+### Font-resolution priority
+
+Use this order:
+
+1. exact font when it is already available, legal, easy to load, and does not add unnecessary operational friction;
+2. otherwise choose a close legal substitute with similar visual character and metrics;
+3. visually tune the substitute to preserve the donor feel;
+4. never extract or redistribute proprietary donor font binaries.
+
+### Approved-substitute classification
+
+When a substitute is intentionally used, do **not** report `EXACT FONT PASS`.
+
+Report:
+
+`TYPOGRAPHY: PASS WITH APPROVED SUBSTITUTE`
+
+and record:
+
+- donor font family;
+- substitute family;
+- reason for substitution;
+- affected roles/elements;
+- any metric adjustments made;
+- post-substitution visual/geometry QA result.
+
+### Substitute-selection criteria
+
+Prefer a substitute that is close in:
+
+- serif vs sans category;
+- overall construction and historical/geometric character;
+- stroke contrast;
+- width/condensation;
+- x-height/cap-height feel;
+- weight;
+- italic character when relevant;
+- uppercase spacing behavior;
+- perceived density.
+
+### Metric-tuning rule
+
+With an approved substitute, the donor typography values remain the starting reference, but small typography-only adjustments are allowed when necessary to recover the donor visual result:
+
+- font-size;
+- line-height;
+- letter-spacing;
+- font-weight within the substitute family.
+
+Do not change page/section/gallery geometry merely to compensate for a poor substitute choice. First choose a better substitute; only then make minimal typography tuning.
+
+### Acceptance rule
+
+In Practical Fidelity Mode, typography passes when:
+
+- the substitute is explicitly approved by project policy;
+- no unauthorized donor font extraction is used;
+- text visually matches the donor closely at accepted viewports;
+- typography does not create unacceptable wrapping/overflow/geometry drift;
+- owner/operator visual QA accepts the result.
+
+An exact proprietary font is **not** a blocker in this mode.
 
 ## ZERO-GUESS PRE-FLIGHT GATE — REQUIRED BEFORE ANY STRICT 1:1 EXECUTION
 
