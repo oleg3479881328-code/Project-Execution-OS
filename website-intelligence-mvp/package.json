@@ -1,0 +1,17 @@
+{
+  "name": "website-intelligence-mvp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "analyze": "node src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@axe-core/playwright": "latest",
+    "@mozilla/readability": "latest",
+    "cheerio": "latest",
+    "dembrandt": "latest",
+    "jsdom": "latest",
+    "playwright": "latest"
+  }
+}
