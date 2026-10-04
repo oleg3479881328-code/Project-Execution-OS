@@ -65,6 +65,37 @@ Examples:
 - SEC and state regulators for securities;
 - USPTO and Copyright Office for intellectual property.
 
+## Reusable Legal Document Template Donors
+
+### General Legal — Legal Templates
+
+- Repository: https://github.com/General-Legal/legal-templates
+- Publisher: https://general.legal/
+- Status: reviewed reusable donor; not a source of controlling law.
+- Scope: attorney-drafted templates for startups and technology companies.
+- Formats: LLM-optimized Markdown plus original DOCX files.
+- Customization markers: Markdown templates use `<mark>` tags for fields that must be adapted.
+- License: CC0 1.0 Universal. Reuse, modification, redistribution, and commercial use are permitted without legally required attribution; the publisher asks users to retain its credit footnote when practical.
+
+Current repository set includes:
+
+- Advisor Agreement;
+- Business Associate Agreement (BAA);
+- Cookie Notice;
+- Data Processing Addendum (U.S.);
+- Data Processing Addendum (Global);
+- California Exempt Employee Offer Letter;
+- Master Services Agreement (MSA);
+- Mutual NDA;
+- One-Way NDA;
+- Privacy Policy (U.S. Only);
+- Privacy Policy (GDPR Enhanced);
+- Terms of Use.
+
+Use this collection under `Existing Solution First` as a preferred donor when one of these document types is needed. Reuse or adapt the closest template before drafting from zero.
+
+Do not treat a template as legal authority or as automatically correct for a specific transaction, jurisdiction, business model, privacy stack, employment relationship, healthcare workflow, arbitration clause, or current-law environment. Verify applicable law and facts, update jurisdiction-sensitive provisions, and use attorney review when the stakes justify it.
+
 ## Final Rule
 
 Use this file to locate sources. Use `SOURCE_HIERARCHY.md` to decide which source controls.
