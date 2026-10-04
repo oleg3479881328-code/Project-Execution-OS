@@ -205,3 +205,28 @@ Cold-start rule for new chats:
 `START HERE → CURRENT PAGE LOCKED v0.2.0 → new fingerprint → new recipe/data only → execute`.
 
 Do not rediscover Showit endpoints, reconstruct the runner, ask for pageId, preserve "New Page", or require manual Ctrl+F5 for routine fresh-page builds.
+
+
+## 2026-10-04 — Showit compiler v0.2.5 layout-safety promoted
+
+Current compiler source:
+https://drive.google.com/file/d/1muUL3jODXJ1w_QGOc2b5IR9e34otWl5b/view
+
+v0.2.5 adds a universal Text Fit / Collision Guard before Showit execution.
+
+It:
+- estimates mapped-text height from width/font-size/line-height/letter-spacing;
+- expands text boxes when mapped copy wraps beyond donor box height;
+- repairs only newly introduced collisions;
+- preserves source-authorized overlaps;
+- treats nested ancestor/child text rectangles as sequential flow rather than intentional overlay;
+- shifts downstream conflicting elements deterministically while preserving source gaps where possible;
+- expands Canvas height when needed;
+- fails closed if required movement exceeds safe limits.
+
+This is compiler/recipe behavior. The LIVE-PROVEN CURRENT PAGE LOCKED v0.2.0 runner remains unchanged.
+
+Production route is now:
+`fingerprint → compiler v0.2.5 → layout-safe recipe → CURRENT PAGE LOCKED v0.2.0 → strict readback → visual QA`.
+
+Do not repair text overlap page-by-page in the runner.
