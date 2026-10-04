@@ -177,3 +177,31 @@ Mode separation:
 - UI/PW → specialized fallback for capabilities outside the programmatic core.
 
 The older Showit API folder `1u9mUlUgyPP4gndzv_VS2TqMlL3lcG2Pq` is legacy/mode-specific evidence and must not override the current Showit Universal API root for programmatic new-page work.
+
+
+## 2026-10-04 — CURRENT PAGE LOCKED v0.2.0 promoted
+
+Owner live proof promoted the Showit current-page execution shell to the default production route for fresh pages built from fingerprints.
+
+Canonical runner:
+https://docs.google.com/document/d/1XOJhSx-tsypF81bktmDrzpjhY-ej4t1lcSdPBEByiSI/edit
+
+Accepted behavior:
+- owner creates/opens a fresh Showit page;
+- no pageId is supplied manually;
+- runner performs self-refresh/preflight, so manual Ctrl+F5 is not a normal prerequisite;
+- runner dynamically resolves and hard-locks the currently open page;
+- only that page may be written;
+- runner auto-renames that same locked page from recipe.name/slug with collision-safe suffixing;
+- only the locked page's name/slug metadata may change in site manifest;
+- otherPageWrites=false;
+- publishWrites=false;
+- strict page + manifest metadata readback;
+- reload and same-page verification.
+
+Owner live result on 2026-10-04: automatic rename to `Home-2`, strict readback PASS, editor reload PASS.
+
+Cold-start rule for new chats:
+`START HERE → CURRENT PAGE LOCKED v0.2.0 → new fingerprint → new recipe/data only → execute`.
+
+Do not rediscover Showit endpoints, reconstruct the runner, ask for pageId, preserve "New Page", or require manual Ctrl+F5 for routine fresh-page builds.
