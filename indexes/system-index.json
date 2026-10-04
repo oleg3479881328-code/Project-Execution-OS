@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "946111fdb71828b5669f6b535c149cba411c63d2",
-  "generated_at": "2026-09-30T22:26:59-04:00",
+  "repository_commit": "4ee9196f6588990a37682950efd06bb113634f87",
+  "generated_at": "2026-10-04T13:12:53-04:00",
   "artifact_count": 629,
   "artifacts": [
     {
@@ -11924,7 +11924,7 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "ee0850027be66dc64f03224ce660d45be1e9e08ea83f2397b85961057c22eb15",
+      "sha256": "3e546a24f906b99850f109066e10922e653c1a54a98841545512d7520d9461b8",
       "headings": [
         "SOFT — PROJECT_STATE.md",
         "Status",
@@ -11937,7 +11937,8 @@
         "Universal Site Fingerprint ONE PASS V2.1 — 2026-09-21",
         "2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE",
         "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED",
-        "2026-09-25 — Archify — STRONG ARCHITECTURE-VISUALIZATION DONOR / CANDIDATE INTEGRATION"
+        "2026-09-25 — Archify — STRONG ARCHITECTURE-VISUALIZATION DONOR / CANDIDATE INTEGRATION",
+        "2026-10-04 — Showit Universal API canonicalization"
       ]
     },
     {
@@ -12551,7 +12552,7 @@
       "domain": "website-creation",
       "status": "- direction accepted;",
       "date": null,
-      "sha256": "09d8284c7bf78326520f3b5b92664e2253dceefed578614658d1f34f2228d9c4",
+      "sha256": "03e0706fc241740a5f595565c8b35903f233e219377bae8a474ad3dd8d07d280",
       "headings": [
         "Website Creator — PROJECT_STATE.md",
         "Status",
@@ -12580,7 +12581,8 @@
         "Showit Exact PW Route Binding — 2026-09-21",
         "2026-09-21 — Recorder-first / Inspector selector policy",
         "2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE",
-        "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED"
+        "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED",
+        "2026-10-04 — Showit programmatic core consolidated"
       ]
     },
     {
