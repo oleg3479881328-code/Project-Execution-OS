@@ -360,3 +360,51 @@ create one new Canvas from scratch in memory
 ```
 
 Do not jump directly to full-page generation until the from-scratch Canvas proof passes. Media upload remains a separate unproven capability and must be investigated independently before a full Recipe → Showit page compiler is promoted.
+
+
+## 2026-10-04 — Showit New-Page Programmatic Path Is Canonical
+
+The Showit adapter now has a proven programmatic NEW PAGE route beyond the earlier UI/PW execution model.
+
+Current accepted chain:
+
+```text
+Universal Site Fingerprint V2.3.1
+→ Fingerprint → Showit Compiler v0.2.4
+→ Universal Page Recipe
+→ frozen createPage runner template
+→ build whole page JSON in memory
+→ gzip whole-page save
+→ durable page ETag readback
+→ site-manifest registration + ETag readback
+→ reload/open
+→ visual QA
+```
+
+Canonical Showit root:
+https://drive.google.com/drive/folders/1EZvK_GobbYYFP87PmX8hXS3LVI7ZKg5f
+
+Deep inventory / authority map:
+https://docs.google.com/document/d/1b4mqutBnwYiOrrVUoAvmLruloFmCJNjZNwF-8G6u1As/edit
+
+Capability matrix:
+https://docs.google.com/document/d/19Jf2HKED6Ha6Uk0ex7kBUAckllqPuPiH2LvWCrwuKMU/edit
+
+Compiler v0.2.4 source:
+https://drive.google.com/file/d/1HdHPAd5kl1D5g06TI_1oNGIoQum07SIY/view
+
+### Mode boundary
+
+This does not eliminate the browser automation layer.
+
+Use:
+- NEW PAGE from an external fingerprint → programmatic createPage path.
+- EXISTING PAGE mutation → OPEN PAGE ONLY safeguards.
+- healthy native Showit template/page type → duplicate/reuse native structure, then mutate content.
+- UI/PW → specialized fallback when a required capability is outside the current programmatic core.
+
+### Speed consequence
+
+For routine new-page work, the production variable is the recipe/data, not the transport. The runner must not be reconstructed page by page. A one-block execution artifact is mechanically rendered from the frozen runner template plus the compiled recipe/invocation.
+
+This is the concrete realization of the earlier architecture goal: AI should primarily bind measured source intent into a proven adapter rather than rediscovering editor mechanics on each page.
