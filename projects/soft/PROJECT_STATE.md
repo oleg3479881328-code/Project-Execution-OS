@@ -141,3 +141,39 @@ https://docs.google.com/document/d/1me66NNjOsvO-0KXO7F8lgG490s-nKwWnUtMvVA-I-qk/
 - Candidate integration path: `repository -> Graphify/direct source evidence -> bounded architecture facts -> Archify -> validated HTML/export -> human visual review`.
 - Decision: strong donor, not yet globally adopted or installed. First acceptance step is a bounded pilot on one real PEOS/SOFT architecture/workflow and comparison against Mermaid-only output.
 - Privacy/ops note: packaged update awareness can perform a fixed outbound GET; use `ARCHIFY_UPDATE_CHECK_DISABLED=1` when zero-network execution is desired.
+
+
+## 2026-10-04 — Showit Universal API canonicalization
+
+Deep inventory confirmed that the Showit system is already largely implemented; the main defect was fragmented authority across several generations of "CURRENT" documents.
+
+Current canonical Showit root:
+https://drive.google.com/drive/folders/1EZvK_GobbYYFP87PmX8hXS3LVI7ZKg5f
+
+Current cold-start owner:
+https://docs.google.com/document/d/1ZJZ0pE123K7z2BcafSTqKh1lQric2VSEkgsJ-favOpg/edit
+
+Deep inventory / canonical core map:
+https://docs.google.com/document/d/1b4mqutBnwYiOrrVUoAvmLruloFmCJNjZNwF-8G6u1As/edit
+
+Current NEW PAGE production chain:
+Universal Site Fingerprint V2.3.1 → compiler v0.2.4 → Universal Page Recipe → frozen createPage runner → whole-page gzip save → page ETag readback → site-manifest registration/readback → reload/open → visual QA.
+
+Canonical compiler package:
+https://drive.google.com/file/d/1HdHPAd5kl1D5g06TI_1oNGIoQum07SIY/view
+
+Independent 2026-10-04 compiler test: PASS.
+
+Capability matrix:
+https://docs.google.com/document/d/19Jf2HKED6Ha6Uk0ex7kBUAckllqPuPiH2LvWCrwuKMU/edit
+
+Speed rule:
+For routine new-page work, the variable production unit is PAGE DATA / RECIPE. Do not rediscover endpoints, reconstruct the runner, or reopen legacy UI/PW mechanics unless a real capability gap is demonstrated.
+
+Mode separation:
+- NEW PAGE FROM FINGERPRINT → createPage.
+- EXISTING PAGE MUTATION → OPEN PAGE ONLY.
+- NATIVE TEMPLATE PAGE TYPE → duplicate/reuse a healthy native page/template, then mutate content.
+- UI/PW → specialized fallback for capabilities outside the programmatic core.
+
+The older Showit API folder `1u9mUlUgyPP4gndzv_VS2TqMlL3lcG2Pq` is legacy/mode-specific evidence and must not override the current Showit Universal API root for programmatic new-page work.
