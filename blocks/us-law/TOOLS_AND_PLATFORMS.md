@@ -118,6 +118,12 @@ Important rule:
 - preserve the source and date checked;
 - do not treat generated text as authority.
 
+## Reusable Legal Document Templates
+
+| Need | Default donor | Notes |
+|---|---|---|
+| Startup / technology company agreements and website-policy templates | https://github.com/General-Legal/legal-templates | Reviewed donor from General Legal. Includes NDA, MSA, DPA, privacy, cookie, terms, BAA, advisor and California offer-letter templates in Markdown and DOCX. Released under CC0 1.0. Use under `Existing Solution First`: adapt the closest template before drafting from zero. Treat it as a drafting donor, not legal authority; verify current law, jurisdiction, facts, and high-risk clauses before use. |
+
 ## Legal Aid And Lawyer Referral
 
 Use:
