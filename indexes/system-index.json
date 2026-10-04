@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "4ee9196f6588990a37682950efd06bb113634f87",
-  "generated_at": "2026-10-04T13:12:53-04:00",
+  "repository_commit": "301bba6523bdde011549f53ecb30f8bed5f61486",
+  "generated_at": "2026-10-04T13:13:49-04:00",
   "artifact_count": 629,
   "artifacts": [
     {
@@ -12737,7 +12737,7 @@
       "domain": "website-creation",
       "status": "candidate / active research direction",
       "date": "2026-09-21",
-      "sha256": "8b46cca1a07560c78cf9bb27b1cd4d542faef9effceea90ec1b5a47a2592a6fa",
+      "sha256": "eb2f8e01d0bc0ffe59b7b9c5612993c705aa7f0a366eab066b87d78e27d73e03",
       "headings": [
         "Universal Website Translator — Dramaturg + Stagecraft Architecture",
         "Purpose",
@@ -12755,7 +12755,10 @@
         "Final Rule",
         "2026-09-21 — First Generated Universal Page Recipe",
         "2026-09-30 — Showit Internal Save Path / HAR Proof",
-        "2026-09-30 — Showit Direct API Duplicate — PROVEN LIVE"
+        "2026-09-30 — Showit Direct API Duplicate — PROVEN LIVE",
+        "2026-10-04 — Showit New-Page Programmatic Path Is Canonical",
+        "Mode boundary",
+        "Speed consequence"
       ]
     },
     {
