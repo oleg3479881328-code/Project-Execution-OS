@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "2921263f9ff297bb1344fd3a13776d73a766f3d4",
-  "generated_at": "2026-10-04T16:27:48-04:00",
+  "repository_commit": "03ec183eddfe259fee2209963c7cd75ea417f055",
+  "generated_at": "2026-10-04T16:40:52-04:00",
   "artifact_count": 629,
   "artifacts": [
     {
@@ -11927,7 +11927,7 @@
       "domain": "soft",
       "status": null,
       "date": null,
-      "sha256": "0a8f2aad4d99e501897b7df8710d6b799ba10e7c555ae7ab7bc4516f59795523",
+      "sha256": "7b4521e27bc7dd41863c86406c65b400d8822ae8cc8b2520da8ee47a054da59f",
       "headings": [
         "SOFT — PROJECT_STATE.md",
         "Status",
@@ -11942,7 +11942,8 @@
         "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED",
         "2026-09-25 — Archify — STRONG ARCHITECTURE-VISUALIZATION DONOR / CANDIDATE INTEGRATION",
         "2026-10-04 — Showit Universal API canonicalization",
-        "2026-10-04 — CURRENT PAGE LOCKED v0.2.0 promoted"
+        "2026-10-04 — CURRENT PAGE LOCKED v0.2.0 promoted",
+        "2026-10-04 — Showit compiler v0.2.5 layout-safety promoted"
       ]
     },
     {
@@ -12556,7 +12557,7 @@
       "domain": "website-creation",
       "status": "- direction accepted;",
       "date": null,
-      "sha256": "be2268789baa81a4322442781dcbb58e1952791cddb6e0a3b4ed9758706f8a58",
+      "sha256": "161e4b1dd128301a38b4db54cf952c843ce53192e091068655aa05004660c76d",
       "headings": [
         "Website Creator — PROJECT_STATE.md",
         "Status",
@@ -12587,7 +12588,8 @@
         "2026-09-22 — Universal Site Fingerprint ONE PASS V2.2 — PROVEN LIVE",
         "2026-09-22 — Universal Site Fingerprint V2.3.1 Showit Asset Pack — CURRENT ACCEPTED",
         "2026-10-04 — Showit programmatic core consolidated",
-        "2026-10-04 — CURRENT PAGE LOCKED v0.2.0 promoted"
+        "2026-10-04 — CURRENT PAGE LOCKED v0.2.0 promoted",
+        "2026-10-04 — Showit compiler v0.2.5 layout-safety promoted"
       ]
     },
     {
