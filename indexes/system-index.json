@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "301bba6523bdde011549f53ecb30f8bed5f61486",
-  "generated_at": "2026-10-04T13:13:49-04:00",
+  "repository_commit": "286381c248aaca87421c7acaf7249722f1574f52",
+  "generated_at": "2026-10-04T15:13:36-04:00",
   "artifact_count": 629,
   "artifacts": [
     {
@@ -3548,7 +3548,7 @@
       "domain": "us-law",
       "status": null,
       "date": null,
-      "sha256": "3f674882019f7a066c9edd058c771c26b00cdf1ea5578390a286ba5a5329d8d2",
+      "sha256": "f17b9266c99f3b1cde58b18d161ee648808de765682ef5871e8165552ab923ef",
       "headings": [
         "US Law References",
         "Purpose",
@@ -3559,6 +3559,8 @@
         "Help And Escalation",
         "Paid Research Platforms",
         "Domain-Specific Official Sources",
+        "Reusable Legal Document Template Donors",
+        "General Legal — Legal Templates",
         "Final Rule"
       ]
     },
@@ -3625,7 +3627,7 @@
       "domain": "us-law",
       "status": null,
       "date": null,
-      "sha256": "11f2410e69ba458690f664510489edd1a32a86ce11d9b073838c6c1662c6745c",
+      "sha256": "6670a2891f75ef1317f194bf5c06c1c7b9e336d083dc6b4cf70a9729a82226c3",
       "headings": [
         "US Law Tools And Platforms",
         "Purpose",
@@ -3638,6 +3640,7 @@
         "GovInfo API",
         "CourtListener API",
         "Paid Research Platforms",
+        "Reusable Legal Document Templates",
         "Legal Aid And Lawyer Referral",
         "Domain-Specific Official Sources",
         "Final Rule"
