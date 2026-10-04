@@ -372,3 +372,33 @@ https://docs.google.com/document/d/1me66NNjOsvO-0KXO7F8lgG490s-nKwWnUtMvVA-I-qk/
 - Showit handoff files embedded: 00-SHOWIT-NEW-CHAT-START-HERE.md and showit/reconstruction-contract.json.
 - ZIP SHA-256: 5f9746326c3f4983079ae0f98a780acf0b5fa0ab28e1aff57cedd18f28a9913e.
 - V2.3.1 supersedes V2.2 as CURRENT Showit-first portable capture package. V2.2 remains historical PROVEN LIVE.
+
+
+## 2026-10-04 — Showit programmatic core consolidated
+
+The Showit translation path has moved beyond the earlier UI-route proof stage.
+
+Current accepted NEW PAGE path:
+`Universal Site Fingerprint V2.3.1 → Fingerprint→Showit Compiler v0.2.4 → Universal Page Recipe → frozen createPage runner → whole-page save → page ETag readback → site-manifest registration/readback → reload/open → visual QA`.
+
+Deep inventory:
+https://docs.google.com/document/d/1b4mqutBnwYiOrrVUoAvmLruloFmCJNjZNwF-8G6u1As/edit
+
+Canonical Showit root:
+https://drive.google.com/drive/folders/1EZvK_GobbYYFP87PmX8hXS3LVI7ZKg5f
+
+Compiler v0.2.4:
+https://drive.google.com/file/d/1HdHPAd5kl1D5g06TI_1oNGIoQum07SIY/view
+
+Independent compiler test on 2026-10-04: PASS.
+
+Current routing:
+- NEW PAGE from external fingerprint → current programmatic createPage path.
+- EXISTING PAGE mutation → OPEN PAGE ONLY safeguards.
+- page type with a healthy exact native Showit template → reuse/duplicate the healthy native page/template, then mutate.
+- Dramaturg/PW UI primitives → specialized fallback, not the default new-page construction route.
+
+Current speed contract:
+Do not regenerate transport/orchestration page by page. When the capability exists, change recipe/data only; a one-block execution artifact is mechanically rendered from the frozen runner template plus recipe/invocation.
+
+This supersedes the older project-state implication that the next Showit proof is still “create one Canvas from scratch.” Whole new pages from scratch, multiple Canvases/text elements, empty image placeholders, page/manifest ETag readback, reload/open, and repeated real page scaffolds have since been proven.
