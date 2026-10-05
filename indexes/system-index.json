@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "03ec183eddfe259fee2209963c7cd75ea417f055",
-  "generated_at": "2026-10-04T16:40:52-04:00",
-  "artifact_count": 629,
+  "repository_commit": "f6a1c4e411cf34c4f00734bf70f03f0c83b71b94",
+  "generated_at": "2026-10-05T09:13:08-04:00",
+  "artifact_count": 632,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -5312,6 +5312,59 @@
       ]
     },
     {
+      "path": "capabilities/web-capture-structure/BLOCK.md",
+      "title": "web.capture_structure",
+      "type": "domain-block-entrypoint",
+      "domain": "system",
+      "status": "candidate 0.1.0",
+      "date": null,
+      "sha256": "b14cd4ff2c2cb5ba413d96256dde7d945f6d8b717d562b987696f92514335b5a",
+      "headings": [
+        "web.capture_structure",
+        "Purpose",
+        "Existing Solution First",
+        "Block Contract",
+        "Explicit Non-Scope",
+        "Providers",
+        "`cdp-dom-snapshot` — preferred",
+        "`dom-evaluate-fallback`",
+        "Dramaturg Operator Adapter",
+        "Node / CLI Adapter",
+        "Acceptance",
+        "Safety / Permissions",
+        "Versioning"
+      ]
+    },
+    {
+      "path": "capabilities/web-capture-structure/CHANGELOG.md",
+      "title": "Changelog",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "ae4a9feded456cf00e18b7301897616a8d88501431cc57a18f85f2a0dea5f844",
+      "headings": [
+        "Changelog",
+        "0.1.0 — 2026-10-05"
+      ]
+    },
+    {
+      "path": "capabilities/web-capture-structure/VALIDATION.md",
+      "title": "Validation — web.capture_structure 0.1.0",
+      "type": "repository-artifact",
+      "domain": "system",
+      "status": null,
+      "date": null,
+      "sha256": "3c2e0f21360d7cb5fa0afca4b376a5b1eb30d441cf85cea68e4f97ae019e12d2",
+      "headings": [
+        "Validation — web.capture_structure 0.1.0",
+        "Current status",
+        "Local verification",
+        "Live validation gate",
+        "Promotion boundary"
+      ]
+    },
+    {
       "path": "capability-library/README.md",
       "title": "Capability Library",
       "type": "repository-artifact",
@@ -5334,7 +5387,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "8a6f60c80d9e2161c375747c1c7c9bbe26d59fdbb4882c76c2bc6ab8ddadc3d6",
+      "sha256": "83e2d14951c8e9c6a92ab62c01007a85a705422edcee13f1838464be5d924443",
       "headings": [
         "Capability Block Registry",
         "Purpose",
@@ -5342,6 +5395,7 @@
         "Registry",
         "Implementation Sequence",
         "Candidate Evidence — media.probe 0.1.0",
+        "Candidate Evidence — web.capture_structure 0.1.0",
         "Promotion Evidence",
         "Final Rule"
       ]
@@ -12647,7 +12701,7 @@
       "domain": "website-creation",
       "status": null,
       "date": null,
-      "sha256": "e8ee0d21220545405b5a1767936522b1dcf8f05d0147fdb436313db05ada0ab3",
+      "sha256": "1ae9653fe8bd93bbdf53b1e26f623819912db3e3f9e8391a8a793af328b262d2",
       "headings": [
         "Website Creator — SOURCE_REGISTRY.md",
         "Purpose",
