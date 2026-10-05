@@ -49,6 +49,7 @@ Related global PEOS standards:
 
 Existing internal capability family:
 - Website Intelligence / Site Baseline Scanner — existing-site inspection/qualification; canonical packaging still subject to normalization.
+- `web.capture_structure` — separate lightweight runtime structure capture block at `../../capabilities/web-capture-structure/`; current-page DOM/layout/computed-style JSON only, intentionally not the Universal Site Fingerprint package.
 
 ---
 

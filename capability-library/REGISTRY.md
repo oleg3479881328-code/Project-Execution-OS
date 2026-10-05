@@ -20,6 +20,7 @@ A row records architectural intent and implementation status. It must not imply 
 | Block ID | Status | Version | Implementation location | Initial providers | Inputs | Outputs | Validation targets | Known limitations |
 |---|---|---:|---|---|---|---|---|---|
 | `media.download` | idea | — | not created | yt-dlp, direct HTTP | authorized source descriptor | video/audio artifact | short-video workflow, QuizLight | rights and platform restrictions must remain explicit |
+| `web.capture_structure` | candidate | 0.1.0 | `capabilities/web-capture-structure/` | Chrome CDP DOMSnapshot; DOM evaluate fallback | live Playwright-compatible page | compact `peos.web_structure.v1` JSON | Dramaturg live page capture, then second independent site | current-viewport visual structure only by default; live Dramaturg acceptance still required; fallback cannot fully flatten cross-origin iframes/closed shadow roots |
 | `media.probe` | candidate | 0.1.0 | `capabilities/media-probe/` | ffprobe | one local media artifact | original artifact enriched with normalized probe metadata | short-video workflow, QuizLight | automated Windows and Block Studio integration passed; owner target-machine confirmation still required |
 | `media.extract_audio` | idea | — | not created | ffmpeg | video/audio artifact | normalized audio artifact | transcription workflows | codec and channel normalization policy not yet validated |
 | `media.transcribe` | idea | — | not created | whisper.cpp, faster-whisper, Whisper Transcribe AI connected SaaS, optional cloud adapter | audio/video artifact or supported media URL | transcript artifact with segments and timestamps | YouTube research, short-video workflow, QuizLight | executable block not yet created; connected Whisper Transcribe AI URL submission/result retrieval proven 2026-09-05, but first 558s YouTube test returned only about 60s of transcript, so full-length completeness remains unvalidated |
@@ -117,6 +118,38 @@ apps/block-studio/VALIDATION.md
 Promotion boundary:
 
 `media.probe` remains `candidate`, not `validated`, until the owner runs Block Studio on the target Windows computer with a real user-owned media file and confirms the result.
+
+## Candidate Evidence — web.capture_structure 0.1.0
+
+Implementation:
+
+```text
+capabilities/web-capture-structure/
+```
+
+Provider strategy:
+
+```text
+preferred: Playwright newCDPSession(page) -> Chrome DOMSnapshot.captureSnapshot
+fallback: page.evaluate() DOM walk
+```
+
+Local verification on 2026-10-05:
+
+```text
+Node.js 22.16.0
+4 tests passed
+0 failed
+generated Dramaturg one-block adapter
+```
+
+Boundary:
+
+`web.capture_structure` is deliberately separate from Universal Site Fingerprint. It captures runtime page structure/layout/style into one compact JSON and does not download assets, take screenshots, sample motion, crawl pages, or build a ZIP.
+
+Promotion boundary:
+
+Remain `candidate` until the owner runs the generated Dramaturg adapter on a real attached Chrome page and confirms JSON download + representative structure + unchanged target page.
 
 ## Promotion Evidence
 
