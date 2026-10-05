@@ -1,0 +1,19 @@
+block_id: web.capture_structure
+version: 0.1.0
+status: candidate
+runtime: node
+node: ">=20"
+entry_point: "@peos/web-capture-structure"
+inputs:
+  - live_playwright_page
+outputs:
+  - page_structure_json
+permissions:
+  network: existing-page-only
+  filesystem: adapter-dependent
+  browser_debugger: preferred
+  destructive: false
+providers:
+  - cdp-dom-snapshot
+  - dom-evaluate-fallback
+idempotent: true
