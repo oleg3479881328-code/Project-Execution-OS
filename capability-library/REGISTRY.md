@@ -20,7 +20,7 @@ A row records architectural intent and implementation status. It must not imply 
 | Block ID | Status | Version | Implementation location | Initial providers | Inputs | Outputs | Validation targets | Known limitations |
 |---|---|---:|---|---|---|---|---|---|
 | `media.download` | idea | — | not created | yt-dlp, direct HTTP | authorized source descriptor | video/audio artifact | short-video workflow, QuizLight | rights and platform restrictions must remain explicit |
-| `web.capture_structure` | candidate | 0.1.0 | `capabilities/web-capture-structure/` | Chrome CDP DOMSnapshot; DOM evaluate fallback | live Playwright-compatible page | compact `peos.web_structure.v1` JSON | Dramaturg live page capture, then second independent site | current-viewport visual structure only by default; live Dramaturg acceptance still required; fallback cannot fully flatten cross-origin iframes/closed shadow roots |
+| `web.capture_structure` | candidate | 0.1.0 | `capabilities/web-capture-structure/` | Chrome CDP DOMSnapshot; DOM evaluate fallback | live Playwright-compatible page | compact `peos.web_structure.v1` JSON | real Dramaturg capture passed on thefamilylab.com; owner unchanged-page confirmation remains; second independent site next | current-viewport visual structure only by default; fallback cannot fully flatten cross-origin iframes/closed shadow roots |
 | `media.probe` | candidate | 0.1.0 | `capabilities/media-probe/` | ffprobe | one local media artifact | original artifact enriched with normalized probe metadata | short-video workflow, QuizLight | automated Windows and Block Studio integration passed; owner target-machine confirmation still required |
 | `media.extract_audio` | idea | — | not created | ffmpeg | video/audio artifact | normalized audio artifact | transcription workflows | codec and channel normalization policy not yet validated |
 | `media.transcribe` | idea | — | not created | whisper.cpp, faster-whisper, Whisper Transcribe AI connected SaaS, optional cloud adapter | audio/video artifact or supported media URL | transcript artifact with segments and timestamps | YouTube research, short-video workflow, QuizLight | executable block not yet created; connected Whisper Transcribe AI URL submission/result retrieval proven 2026-09-05, but first 558s YouTube test returned only about 60s of transcript, so full-length completeness remains unvalidated |
@@ -149,7 +149,19 @@ Boundary:
 
 Promotion boundary:
 
-Remain `candidate` until the owner runs the generated Dramaturg adapter on a real attached Chrome page and confirms JSON download + representative structure + unchanged target page.
+Real Dramaturg execution evidence recorded on 2026-10-05 for `https://thefamilylab.com/`:
+
+```text
+provider: dom-evaluate-fallback
+artifact: page-structure-thefamilylab.com-1791206140733.json
+size: 159,192 bytes
+nodes: 214
+unique styles: 155
+missing parent refs: 0
+invalid style refs: 0
+```
+
+Artifact creation and representative structure checks pass. Remain `candidate` until the owner confirms the target page remained operational and visually unchanged after execution; then validate on a second independent site before any production-critical reconstruction dependency.
 
 ## Promotion Evidence
 
