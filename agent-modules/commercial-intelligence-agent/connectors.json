@@ -1,0 +1,44 @@
+{
+  "connectors": [
+    {
+      "name": "web_search",
+      "purpose": "Discover competitors, market language, customer voice, distribution channels, SEO opportunities, and public evidence.",
+      "required": true,
+      "access_assumption": "must_be_verified_at_runtime"
+    },
+    {
+      "name": "website_scraper_or_crawler",
+      "purpose": "Extract customer and competitor website content, metadata, links, CTAs, structured data, and page text.",
+      "required": true,
+      "access_assumption": "must_be_verified_at_runtime",
+      "candidate_tools": ["Firecrawl", "Tavily Extract/Crawl", "Apify Actors", "Playwright", "BeautifulSoup"]
+    },
+    {
+      "name": "browser_automation",
+      "purpose": "Inspect JavaScript-rendered pages, forms, search results, competitor pages, screenshots, and dynamic content when simple extraction is insufficient.",
+      "required": false,
+      "access_assumption": "must_be_verified_at_runtime",
+      "candidate_tools": ["Playwright", "Apify Actors", "Firecrawl Interact"]
+    },
+    {
+      "name": "structured_storage",
+      "purpose": "Store extracted customer, competitor, lead, source, and report evidence for repeatable runs and comparisons.",
+      "required": false,
+      "access_assumption": "must_be_verified_at_runtime",
+      "candidate_tools": ["SQLite", "PostgreSQL", "Google Sheets"]
+    },
+    {
+      "name": "report_export",
+      "purpose": "Export client-ready outputs as Markdown, HTML, PDF, CSV, or dashboard views.",
+      "required": false,
+      "access_assumption": "must_be_verified_at_runtime",
+      "candidate_tools": ["Markdown", "HTML", "PDF generator", "Google Sheets", "FastAPI dashboard"]
+    },
+    {
+      "name": "github",
+      "purpose": "Read or write versioned module artifacts and Codex handoff packets when authorized.",
+      "required": false,
+      "access_assumption": "must_be_verified_at_runtime"
+    }
+  ]
+}
