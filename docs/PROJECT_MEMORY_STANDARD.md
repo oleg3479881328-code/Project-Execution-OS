@@ -10,7 +10,7 @@ Its goal is to preserve complete recoverable project memory while allowing every
 
 Chat is a temporary execution surface.
 
-Durable project memory lives outside chat in explicit project artifacts and canonical connected sources.
+Durable project memory lives outside chat in explicit project artifacts and canonical connected sources. By owner decision of 2026-10-17, Google Drive is the central durable storage layer for project and cross-project knowledge, state, decisions, entrypoints, documents and assets. GitHub retains code/versioned engineering truth; Notion is an optional coordination/view layer.
 
 Model memory, conversation history, ChatGPT Project files, and assistant summaries may help with orientation, but they never override canonical durable project memory.
 
@@ -59,7 +59,7 @@ Routing follows `docs/FILE_ORGANIZATION_STANDARD.md`:
 
 - project-specific files -> that project's Google Drive folder tree;
 - cross-project or system-wide reusable artifacts -> global `System Artifacts` folder;
-- GitHub and Notion may remain canonical for code, structured text, decisions, and live documentation;
+- GitHub remains canonical for code and code-adjacent versioned technical evidence; project operational decisions and memory are centrally held in verified Google Drive records; Notion links or views must not duplicate that truth;
 - valuable file artifacts must not exist only in chat, `/mnt/data`, or another temporary runtime.
 
 ## Universal Memory Layers
@@ -76,8 +76,9 @@ The shortest reliable durable front door into the selected project.
 
 Canonical forms:
 
-- repository-first project -> `PROJECT.md`;
-- Notion-first project -> `Project Entrypoint` or `START HERE` page;
+- Drive-first project -> one verified Google Drive project entrypoint (Google Doc or existing equivalent);
+- engineering repository -> `PROJECT.md` for the code/technical scope;
+- legacy Notion-first project -> `Project Entrypoint` or `START HERE` page until deliberately migrated;
 - another durable workspace -> one clearly identified equivalent.
 
 L1 is reached through the global router tree. It routes; it does not contain the whole project.
@@ -95,7 +96,7 @@ PROJECT_STATE.md
 logs/latest.md
 ```
 
-For Notion-first projects, use equivalent current-state and work-log artifacts.
+For Drive-first projects, use the verified canonical Drive current-state and work-log artifacts. Legacy Notion-first projects may use equivalent Notion artifacts until migration is verified.
 
 L2 answers what is happening now, what was completed, what remains, blockers, do-not-repeat work, and the next safe action.
 
@@ -140,6 +141,10 @@ project
 or any hierarchy justified by the project's real structure.
 
 Create child navigation only when scale or ambiguity justifies it. Do not create empty hierarchy for hypothetical future needs.
+
+## Drive-First Project Rule
+
+For active durable projects, prefer an existing Google Drive project home with one verified project entrypoint, one current state and links to task-relevant knowledge/assets. Link directly to GitHub for code, commits, tests, PRs and technical documentation near code. Notion may provide useful task views but cannot override the canonical Drive project record. Do not select an arbitrary Drive clone or overwrite legacy sources before source reconciliation and acceptance.
 
 ## Notion-First Project Rule
 
@@ -235,7 +240,16 @@ PROJECT_STATE.md
 logs/latest.md
 ```
 
-### Active Notion-First Project
+### Active Drive-First Project
+
+```text
+Google Drive project entrypoint / START HERE
+Current State
+Current Work Log (when meaningful)
+linked task-relevant standards, knowledge and GitHub engineering evidence
+```
+
+### Active Legacy Notion-First Project
 
 ```text
 Project Entrypoint / START HERE
