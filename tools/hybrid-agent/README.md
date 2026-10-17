@@ -105,6 +105,82 @@ Explicit `cloud-only` is stricter:
 - it skips local preprocessing entirely;
 - it also skips Ollama availability probing, so a missing local runtime does not add latency to a forced cloud-only run.
 
+## Fallback Contract (Graceful Degradation)
+
+The local preprocessing stage is designed to fail gracefully without blocking the pipeline.
+
+Every failure mode is caught individually:
+
+| Failure Mode | Detection | Behaviour |
+|---|---|---|
+| Ollama call timeout | `call_failed: timed out` | Returns `None` → cloud receives raw evidence |
+| Response parse failure | `call_failed: <error>` | Returns `None` → cloud receives raw evidence |
+| JSON parse failure | `response_parse_failed` | Returns `None` → cloud receives raw evidence |
+| Schema validation failure | `schema_validation_failed` | Returns `None` → cloud receives raw evidence |
+| Reference validation failure | `reference_validation_failed` | Returns `None` → cloud receives raw evidence |
+
+Each failure is logged to the runtime JSONL with `status: "failed_fallback_to_cloud"` and a descriptive `notes` field.
+
+The caller (`run_hybrid_agent` / `run_workstation_hybrid_route`) checks for `None` return instead of catching exceptions:
+
+```python
+local_result = run_local_stage(config, input_payload, ...)
+if local_result is None:
+    # skip local, proceed with raw evidence
+```
+
+This means:
+- A slow or broken local model never crashes the pipeline.
+- Cloud stage always receives either the compact payload or the original raw evidence.
+- Failures are observable in logs for debugging.
+
+## Local Model Selection
+
+The hybrid agent supports any Ollama model installed on the workstation.
+
+### Default Recommendation
+
+Based on comparative benchmarking across 4 installed models, the recommended default is:
+
+**`llama3.2:3b`** — best balance of speed, reliability, and output quality.
+
+| Model | Success Rate | Avg Latency | Avg Compression | Hallucinated Paths |
+|---|---|---|---|---|
+| **llama3.2:3b** | 7/7 (100%) | ~27s | 0.22 | 0 |
+| qwen3:4b | 3/7 (43%) | ~403s | 0.33 | 0 |
+| qwen2.5-coder:7b | 4/7 (57%) | ~16s | 0.21 | 0 |
+| deepseek-coder:6.7b | 5/7 (71%) | ~59s | 0.24 | 0 |
+
+*Full benchmark results in `model_comparison_results.json`.*
+
+### Selecting a Model
+
+Explicit model selection via CLI:
+
+```powershell
+python tools/hybrid-agent/run_workstation_hybrid_route.py `
+  --local-model qwen2.5-coder:7b `
+  -Executor codex `
+  -Mode auto `
+  -Task "Analyze this bounded task." `
+  -LogPath tools/hybrid-agent/fixtures/synthetic_repetitive_log.txt
+```
+
+Or via environment variable:
+
+```powershell
+$env:HYBRID_AGENT_LOCAL_MODEL = "qwen2.5-coder:7b"
+```
+
+If no model is specified, the adapter defaults to `llama3.2:3b`.
+
+### Model Characteristics
+
+- **llama3.2:3b** (2.0 GB): Fast, reliable, good compression. Best default for most workloads.
+- **qwen3:4b** (2.5 GB): Slower but may offer better reasoning on complex evidence.
+- **qwen2.5-coder:7b** (4.7 GB): Code-optimized, larger context window. Good for code-heavy evidence.
+- **deepseek-coder:6.7b** (3.8 GB): Code-specialised, strong at structured output generation.
+
 ### Timeout Strategy
 
 Issue `#31` live validation showed that real local Ollama runs can exceed the base 60-second timeout on this workstation.
@@ -116,6 +192,15 @@ The workstation adapter therefore defaults to:
 ```
 
 This applies to normal workstation launcher use and can still be overridden explicitly.
+
+Different models may need different timeouts:
+
+| Model | Recommended Timeout |
+|---|---|
+| llama3.2:3b | 120s |
+| qwen3:4b | 600s |
+| qwen2.5-coder:7b | 120s |
+| deepseek-coder:6.7b | 120s |
 
 ## Configuration
 
