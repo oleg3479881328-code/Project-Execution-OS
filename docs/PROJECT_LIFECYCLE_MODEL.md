@@ -15,8 +15,8 @@ A project can use several layers, but it does not have to use all of them.
 | Chat | thinking, discussion, decisions, commands | always available; no durable-project assumption |
 | Local Git | minimum version-control bootstrap for a real project folder | when a real project folder is intentionally created |
 | GitHub | versioned execution, code, durable technical artifacts, Codex work | only when code, versioned files, technical documentation, or collaborative execution actually exists |
-| Notion | readable memory, status, project catalogue, coordination | when an idea or project must be remembered, managed, or revisited |
-| Google Drive | optional files/assets storage | only when the project has heavy or non-versioned source materials such as images, scans, audio, video, PDFs, or large exports |
+| Notion | optional workspace views, task coordination and linked management surfaces | when a project benefits from Notion workflows; do not create parallel truth |
+| Google Drive | central durable storage for projects, catalogue, entrypoints, state, decisions, knowledge, documents and assets | default central home whenever work becomes a durable project or system-wide reusable record |
 
 ## Idea Discussion vs Project Initialization
 
@@ -36,7 +36,7 @@ Do not automatically create files merely because a folder or Codex Desktop proje
 1. Not every thought becomes a project.
 2. Not every project needs GitHub.
 3. Not every project needs Notion.
-4. Not every project needs Google Drive.
+4. Not every discussion requires a new Drive project folder; durable project and system knowledge belongs in the central Google Drive storage layer.
 5. Every intentionally created real project folder gets local Git unless it already lives inside an existing Git repository.
 6. Internal subprojects inside an existing Git repository must not receive nested `git init` unless there is a separate explicit decision.
 7. `PROJECT.md` is the local front door for a project, but `START_HERE.md` remains the top-level system door.
@@ -52,11 +52,12 @@ That bootstrap creates only the minimum zero-state front door.
 Standalone external project folders already have local Git from bootstrap.
 Internal subprojects inherit the parent repository Git layer.
 
-Only after purpose and storage needs are confirmed should the project gain extra durable layers such as:
+For durable projects, use the existing Google Drive project home and registry as the default storage/management layer, without creating duplicate folders. Attach additional layers only when justified:
 
-- GitHub for versioned execution and shared review;
-- Notion for readable management;
-- Google Drive for heavy assets.
+- GitHub for code, versioned execution, technical documentation near the code and shared review;
+- Notion for optional coordination or views linked to canonical Drive/GitHub records.
+
+A project with a real local engineering folder still follows the appropriate local Git bootstrap. Creating only a Google Drive project folder does not itself require running `git init`.
 
 ## Minimal Routing
 
@@ -66,23 +67,25 @@ Thought or request
 → apply Existing Solution First when real research or technical work begins
 → when a real project is intentionally created, bootstrap it minimally
 → when execution becomes meaningful, add PROJECT_STATE.md and logs/latest.md
-→ attach GitHub only if versioned execution or shared review is required
-→ attach Notion only if readable project management is needed
-→ attach Google Drive only if heavy source files or assets are needed
+→ register/persist durable project state, decisions and knowledge in the existing Google Drive project home
+→ attach GitHub only if code, versioned execution or technical shared review is required
+→ attach Notion only if a connected coordination/view layer adds real value
 → place every durable artifact into the correct project folder or subfolder before continuing
 ```
 
 ## Source-of-Truth Rule
 
-There is no universal rule that GitHub is the source of truth for every project.
+Google Drive is the central durable storage and project-knowledge home by owner decision dated 2026-10-17. This includes project registry, entrypoints, operational status, decisions, documents, useful knowledge and assets.
 
-The source of truth depends on the project layer:
+Layer-specific sources of truth remain unambiguous:
 
-- project status, decisions, and readable coordination: Notion when the project has a Notion layer;
-- code, technical files, commits, pull requests, and Codex implementation: GitHub when the project has a GitHub layer;
-- local execution history before GitHub attachment: local Git and project files when the project has only a local folder;
-- heavy source assets: Google Drive when the project has a Drive layer;
-- current discussion: Chat only until a durable decision is written into the proper persistent layer.
+- project records, status, decisions and knowledge: the verified canonical Google Drive project/system documents;
+- code, commits, pull requests, tests and technical execution evidence: GitHub when that engineering layer exists;
+- optional Notion coordination: links or views into canonical records, not competing project truth;
+- local Git: local engineering history until committed or handed off;
+- current discussion: Chat only until a durable decision is recorded.
+
+During migration, already-canonical GitHub standards remain authoritative for their own text until promoted, linked and acceptance-checked in Drive. Never guess between Drive clones or declare a cutover solely because files were copied.
 
 A project entrypoint, when one exists, must state which layers exist and where each kind of truth lives.
 
