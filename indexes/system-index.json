@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "f6a1c4e411cf34c4f00734bf70f03f0c83b71b94",
-  "generated_at": "2026-10-05T09:13:08-04:00",
+  "repository_commit": "50ea570a37f36b1c6903ec5c932b5f2db932409d",
+  "generated_at": "2026-10-17T11:13:49-04:00",
   "artifact_count": 632,
   "artifacts": [
     {
@@ -5355,12 +5355,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "3c2e0f21360d7cb5fa0afca4b376a5b1eb30d441cf85cea68e4f97ae019e12d2",
+      "sha256": "c9d206cb13d70edb3b2645ab89160be9bd70f70285914e597634ef05aa5193e8",
       "headings": [
         "Validation — web.capture_structure 0.1.0",
         "Current status",
         "Local verification",
         "Live validation gate",
+        "Live run evidence — 2026-10-05",
         "Promotion boundary"
       ]
     },
@@ -5387,7 +5388,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "83e2d14951c8e9c6a92ab62c01007a85a705422edcee13f1838464be5d924443",
+      "sha256": "55a237117a89d44dfb848b475f8357fad1593ae08ce251366f3b1e8949e8d7e4",
       "headings": [
         "Capability Block Registry",
         "Purpose",
@@ -6609,12 +6610,13 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "8146467e2bd987cdb0caf7a4b504499dbe49290bdd6228517bdd38cf9ad90559",
+      "sha256": "eedee37dce3fed9278e48da813a6339efdd8ecb00519bc1704b8c2f60c9cd0fb",
       "headings": [
         "File Organization Standard",
         "Purpose",
         "Scope",
         "Core Rule",
+        "Central Storage Architecture — Owner Decision 2026-10-17",
         "Global Google Drive Persistence Rule",
         "Canonical Placement Rules",
         "Non-Project Work",
