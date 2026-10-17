@@ -32,6 +32,14 @@ Do not create persistent files in:
 
 Use the narrowest correct existing folder. If no suitable folder exists, create a logical subfolder inside the correct parent location before creating the file.
 
+## Central Storage Architecture — Owner Decision 2026-10-17
+
+Google Drive is the central durable storage and organizational home of Project Execution OS: project catalogue, project memory, project entrypoints, current state, decisions, reusable working knowledge, documents and assets. This is a system-wide owner decision, not an optional assets-only configuration.
+
+GitHub remains the canonical engineering layer for source code, commits, pull requests, tests, versioned technical execution and code-adjacent artifacts. Notion may remain a connected coordination/view layer but must not create an independent competing source of truth. Link canonical records instead of cloning them.
+
+Existing GitHub-resident standards and technical artifacts retain their current file-level authority until each is deliberately migrated, cross-linked and acceptance-checked. Central Drive storage does not authorize guessing which of several Drive copies is canonical. Preserve stable bootstrap access during migration.
+
 ## Global Google Drive Persistence Rule
 
 Chat, model memory, temporary runtime storage, and local session folders are not durable file storage.
