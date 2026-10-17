@@ -64,6 +64,17 @@ Smallest useful path:
 
 Do not load every file by default. Load the smallest path that fits the task.
 
+## Reusable visual UI builder — current owner decision (2026-10-17)
+
+For visual customization of the interfaces of multiple owner-controlled Chrome extensions, reuse **one shared capability** `ui.layout_editor` instead of implementing a separate editor in each extension. Dramaturg is the first pilot, not the owner of the shared package.
+
+- Canonical shared contract and acceptance: https://docs.google.com/document/d/18BFODWd5d93-yECF8p_quUmnO7HHhC3k9FJPxB78PdY/edit
+- Shared Drive folder: https://drive.google.com/drive/folders/1qPs5zq-knZ0w0QcLg2afMh1fzp4wQPtC
+- Capability registry: `capability-library/REGISTRY.md`, status `idea` until working code and minimum tests exist.
+- Use one versioned UI layout engine plus thin per-extension adapters with stable component IDs. Begin with SortableJS for reorder/hide and `chrome.storage.local` / JSON import-export; consider GridStack only if resize/full-page Studio is necessary.
+- An assistant cannot read a user's private `chrome.storage` directly. Drive visibility requires a deliberately implemented and authorized visible-file sync adapter; do not equate Chrome Sync with Drive connector access.
+- Never rewrite proven extension business logic to integrate an editor. Check real installed builds and host runtime before implementing and require owner-live QA.
+
 ## Typical Outputs
 
 - extension concept brief;
