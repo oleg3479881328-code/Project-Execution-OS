@@ -1,75 +1,113 @@
 # Latest Log — TikTok Research Sorter
 
 Date: 2026-07-14
-Version: `0.5.0`
-Issue: `#86`
-Pull request: `#87`
-Branch: `main`
-Status: integrated and validated
+Version: `0.6.0` validated draft
+Issue: none
+Pull request: `#88` draft
+Branch: `agent/tiktok-design-preview`
+Status: design preview and per-card local download integration implemented and automated validation green
 
-## Delivered
+## Delivered in the active branch
 
-- Expanded public channel parsing for user ID, `secUid`, display name, biography, avatar, verification, website, followers, following, friends, total profile likes, public video count, region, language, account flags, and account creation date.
-- Durable channel snapshot attached to every new favorite.
-- Backward-compatible migration of v0.4.0 favorites to partial channel snapshots.
-- Automatic refresh of favorite channel snapshots when richer public profile data is collected.
-- Same-origin public profile enrichment after adding a favorite without navigating the visible TikTok page.
-- Manual `Обновить канал` action in Favorites.
-- Favorites grouped by channel.
-- Complete channel cards in the extension with public counters, identifiers, flags, dates, data source, and locally calculated analytics.
-- Selected-only standalone HTML grouped by channel.
-- Complete channel card before each channel’s selected videos in HTML.
-- HTML includes channel and video links, avatars/previews, descriptions, dates, audio, hashtags, video metrics, channel metrics, source, and timestamps.
-- Missing public fields displayed as unavailable instead of being invented.
-- Versioned HTML filename and installation artifacts using `v0.5.0`.
+### Standalone design stand
 
-## Automated coverage added
+- Added `design/sidepanel-design-preview.html` as a self-contained browser page for visual iteration with Codex.
+- Reproduced profile analysis, hashtag research, and Favorites grouped by channel.
+- Added representative mock data, width presets, continuous width control, compact density, and layout outlines.
+- Kept the stand independent from WXT, React, Chrome APIs, npm runtime, network requests, and external assets.
 
-- complete public channel payload parsing;
-- identifiers, counters, flags, locale, website, and account date;
-- preservation of explicit false flags;
-- millisecond timestamp normalization;
-- unsafe profile website rejection;
-- legacy favorite migration to a partial channel snapshot;
-- rich channel snapshot creation from a scanned profile;
-- richer channel snapshot merging;
-- favorite grouping by case-insensitive channel identity;
-- selected-only channel-grouped HTML;
-- complete channel and video information in HTML;
-- channel and video markup escaping;
-- rejection of unsafe channel/video/avatar/preview URLs;
-- omission of unselected channels and videos.
+### Download button on every TikTok video card
 
-## Final verification
+- Added `↓ Скачать` to profile, hashtag, and Favorites cards through `VideoDownloadControls.tsx`.
+- Added visible states:
+  - `Отправляем…`;
+  - `✓ В очереди`;
+  - retry after a displayed error.
+- Kept controls attached across React rerenders by comparing both card identity and the current DOM mount slot.
+- Added `DOWNLOAD_VIDEO` to the typed runtime-message contract.
+- Added a background handler that delegates downloads to the existing local manager.
+- Added `lib/download-manager.ts` with strict direct-video URL validation.
+- Added the exact queue request used by the established manager:
 
-For PR #87 head `4d12189a5509c9ced21b397d1e5be0d16ed584ab`:
+```json
+{
+  "url": "https://www.tiktok.com/@creator/video/...",
+  "mode": "video",
+  "quality": "bestvideo*+bestaudio/best"
+}
+```
 
-- Project Execution OS integrity run `29339387056`: passed;
-- TikTok Research Sorter CI run `29339387139`: passed;
-- Linux reproducible install: passed;
-- strict TypeScript check: passed;
-- all unit and regression tests: passed;
-- production Chrome MV3 build: passed;
-- versioned packaging and artifact upload: passed;
-- Windows zero-side-effect updater dry run: passed;
-- Windows full local-source updater validation: passed;
-- generated manifest version check: passed.
+- Queue endpoint: `POST http://127.0.0.1:8000/api/jobs`.
+- Reused `oleg3479881328-code/Yt-Dlp-Download-Manager`; did not duplicate yt-dlp, ffmpeg, native-host binaries, settings, history, or download logic.
 
-PR #87 merged into `main` as commit `6a9817c923ed0e531ee7193b8e52ee986b5fe29d`.
+## Permission change
 
-## Artifacts
+Added only:
 
-- unpacked Chrome MV3 extension;
-- `tiktok-research-sorter-extension-v0.5.0.zip`;
-- `tiktok-sorter-auto-updater-setup-v0.5.0.zip`;
-- `tiktok-research-sorter-source-v0.5.0.zip`.
+```text
+http://127.0.0.1:8000/*
+```
 
-The installable extension ZIP was independently inspected: `manifest.json` is at the archive root, it declares version `0.5.0`, the archive contains 10 extension files, and permissions remain `storage`, `sidePanel`, `activeTab`, and `scripting` with TikTok-only host access.
+Reason: the MV3 background service worker must send the user-clicked public TikTok video URL to the owner’s local Download Manager queue.
 
-## Product boundary
+Not added:
 
-Only public fields TikTok actually provides are stored. TikTok can omit data, return a verification page, change its payloads, or expire external avatar/preview URLs. The extension does not bypass login, CAPTCHA, private accounts, paywalls, rate limits, or access controls.
+- `<all_urls>`;
+- localhost or LAN wildcards;
+- cloud endpoints;
+- remote executable code;
+- cookie, token, authorization-header, or browser-profile access.
 
-## Owner action
+## Tests added
 
-None for code implementation, testing, packaging, merge, or repository delivery. The owner only needs to install the provided versioned extension ZIP.
+`tests/download-manager.test.ts` covers:
+
+- a valid TikTok `/video/` URL and the exact local queue request;
+- rejection of non-TikTok and non-video URLs before network access;
+- propagation of Download Manager API error details;
+- actionable error text when the local manager is not running.
+
+The existing HTML-export regression was advanced from `v0.5.0` to `v0.6.0`.
+
+## Version and packaging
+
+- `APP_VERSION`: `0.6.0`.
+- WXT manifest version: `0.6.0`.
+- package version: `0.6.0`.
+- CI package and artifact names: `v0.6.0`.
+- Windows manifest validation expects `0.6.0`.
+
+## Validation result
+
+Validated runtime head: `1a916679fd35bb00de14ac4d8423102f2038b7b8`.
+
+- Project OS integrity run `29352113915`: passed.
+- TikTok Research Sorter CI run `29352115086`: passed.
+- Linux reproducible dependency install: passed.
+- strict TypeScript: passed.
+- all unit and regression tests: passed.
+- production Chrome MV3 build: passed.
+- v0.6.0 packaging: passed.
+- unpacked extension upload: passed.
+- packaged artifacts upload: passed.
+- Windows updater dry run: passed.
+- Windows full local-source validation: passed.
+- generated manifest version `0.6.0`: passed.
+
+Errors found and resolved during validation:
+
+1. `useRef` required an explicit initial value under the current React type definitions.
+2. The HTML-export regression still expected version `0.5.0` after the intentional version bump.
+
+Both fixes are included and the subsequent full validation is green.
+
+## Runtime boundary
+
+- The local Download Manager must be running at `http://127.0.0.1:8000` when the user clicks Download.
+- Only direct public HTTPS TikTok URLs containing `/video/` are accepted.
+- A failed local connection stays visible on the card and can be retried.
+- The research database and channel snapshots remain independent from downloaded media.
+
+## Remaining owner smoke test
+
+Install the v0.6.0 extension build, start the existing `Yt-Dlp-Download-Manager`, click `↓ Скачать` on profile, hashtag, and Favorites cards, and confirm that each creates the expected local queue job and downloaded file.
