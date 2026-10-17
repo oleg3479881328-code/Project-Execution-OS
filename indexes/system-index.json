@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "12fccb23bef16a7b1de34a2b08ad0299ebee3939",
-  "generated_at": "2026-10-17T11:15:13-04:00",
+  "repository_commit": "97f3895b9157e3588a9ac10821e6745674f8311f",
+  "generated_at": "2026-10-17T16:01:13-04:00",
   "artifact_count": 632,
   "artifacts": [
     {
@@ -584,7 +584,7 @@
       "domain": "chrome-extension",
       "status": null,
       "date": null,
-      "sha256": "e633b4e908685fef5269cb9df1fe4d6c40f3efef49cc0d60a1127b3fbb2c1ef9",
+      "sha256": "7b1afcd10a85735d6b73a95b82837d050247dd636c75bc2a804bc8a59fdacaf9",
       "headings": [
         "Chrome Extension Block",
         "Purpose",
@@ -593,6 +593,7 @@
         "When Not To Use",
         "Core Rule",
         "Required Reading Inside This Block",
+        "Reusable visual UI builder — current owner decision (2026-10-17)",
         "Typical Outputs",
         "Boundary",
         "Final Rule"
@@ -5388,7 +5389,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "55a237117a89d44dfb848b475f8357fad1593ae08ce251366f3b1e8949e8d7e4",
+      "sha256": "5f5997a7b853fd4238504fe01949a3d3473da4f957aec673939d94dd532d7830",
       "headings": [
         "Capability Block Registry",
         "Purpose",
