@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "622106340c758be831c14304c7c8056aed4ed967",
-  "generated_at": "2026-10-17T11:14:18-04:00",
+  "repository_commit": "42c4a0a8d199c1b14e802ec47e470afec9625873",
+  "generated_at": "2026-10-17T11:14:45-04:00",
   "artifact_count": 632,
   "artifacts": [
     {
@@ -7415,7 +7415,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "8f87986a98df2fe99ec5d06d7ece3251b4b0b266b9d3b1b756756013fc7fdcda",
+      "sha256": "5dfe7ec4ffe25459cd5874a15d381ae72fe7b6e2d8d8eb6d9c93835e9fb93c1f",
       "headings": [
         "Repository Memory Standard — Project Execution OS",
         "Purpose",
@@ -7441,8 +7441,8 @@
         "Memory Responsibilities",
         "`Project-Execution-OS` repository memory",
         "Separate GitHub-backed project memory",
-        "Notion-managed project memory",
-        "Google Drive asset storage",
+        "Google Drive — central project storage and memory",
+        "Notion — optional coordination layer",
         "Update Rules",
         "State Labels",
         "Conflict Resolution",
