@@ -31,15 +31,15 @@ Do not apply this standard as a reason to create GitHub for:
 - a non-technical project whose durable management layer is Notion;
 - heavy source files stored only in Google Drive.
 
-For projects without a GitHub layer, persistent truth belongs to the active layer defined by the project, usually Notion and, for heavy assets, optionally Google Drive.
+For projects without a GitHub layer, persistent project truth belongs in the verified canonical Google Drive project records. Notion can provide optional coordination views, linked to that truth.
 
 ## Core Principle
 
-For `Project-Execution-OS` itself, this repository is the committed source of truth for its standards, templates, skills and reusable technical artifacts.
+By owner decision of 2026-10-17, Google Drive is the central Project Execution OS storage and project-knowledge layer. This GitHub repository remains the committed source of truth for its currently repository-resident standards, templates, skills and technical artifacts until each is deliberately promoted to a verified canonical Drive record. This protects continuity while migrating and does not designate GitHub as the central project store.
 
 For another GitHub-backed project, its repository is the committed source of truth only for the technical/versioned material assigned to its GitHub layer.
 
-A repository does not override Notion for project status or management decisions unless the project's own entrypoint explicitly says so.
+A repository does not override verified canonical Google Drive project status, decisions or management records. Notion coordination is optional and must not create competing truth.
 
 Chat messages, generated plans and internal reasoning are not executed technical state unless supported by appropriate evidence: repository artifacts, commits, explicit tool output or user-confirmed execution.
 
@@ -178,7 +178,7 @@ Do not impose this repository's full internal structure on every GitHub-backed p
 
 Do not use repository memory as the default path.
 
-Use the project's active durable layer defined by `docs/PROJECT_LIFECYCLE_MODEL.md`, normally its Notion project state and linked files/assets when present.
+Use the canonical Google Drive project entrypoint, state and linked knowledge as defined by `docs/PROJECT_LIFECYCLE_MODEL.md`.
 
 ## Memory Responsibilities
 
@@ -201,21 +201,13 @@ Store only what is needed for that project's GitHub layer:
 - execution reports and validation evidence;
 - project-local technical lessons worth keeping near the code.
 
-### Notion-managed project memory
+### Google Drive — central project storage and memory
 
-For a project using Notion as its durable management layer, Notion stores:
-- readable project status;
-- high-level decisions;
-- project catalogue entry;
-- next action and coordination.
+Google Drive is the central store for the project catalogue, entrypoints, current state, operational decisions, reviewed reusable project knowledge, documents and assets. Each record needs one verified canonical location. Do not infer authority from one of several copies or mirrors.
 
-Do not force those management functions into GitHub just because a technical repository also exists.
+### Notion — optional coordination layer
 
-### Google Drive asset storage
-
-For a project using Google Drive as an optional assets layer, Google Drive stores heavy or non-versioned source files.
-
-Do not treat Google Drive as the project brain or as the source of operational decisions.
+When used, Notion supplies task views and collaboration, linked to canonical Google Drive project knowledge and GitHub engineering evidence. It must not silently create a second authoritative project catalogue or decision history.
 
 ## Update Rules
 
@@ -231,7 +223,7 @@ After a meaningful change to a separate GitHub-backed project, update that proje
 
 When a project uses `PROJECT_CHANGE_INDEX.md` or `agent-checkpoints/`, update them only after meaningful completed work that improves future re-entry.
 
-After a meaningful change to a Notion-managed project without GitHub, update Notion rather than inventing repository artifacts.
+After a meaningful change to a project without GitHub, update its canonical Google Drive project records; update any optional Notion views only as needed, without duplicating truth.
 
 When a context pack exists, refresh it only after the underlying canonical state has already been updated.
 
@@ -240,7 +232,7 @@ When a context pack exists, refresh it only after the underlying canonical state
 Always distinguish the state appropriate to the active layer:
 
 - `generated` = proposed but not written into a durable layer;
-- `recorded` = written into Notion or another appropriate durable management layer;
+- `recorded` = written into the canonical Google Drive project/system record or another specifically verified durable source;
 - `committed` = written to GitHub in a commit when a GitHub layer exists;
 - `reviewed` = checked through a review process;
 - `active` = approved for reuse;
@@ -256,7 +248,7 @@ For lifecycle or storage-layer conflicts, use:
 2. `START_HERE.md` as the routing entrypoint;
 3. `docs/PROJECT_LIFECYCLE_MODEL.md` for layer roles and source-of-truth boundaries;
 4. the specific project's own entrypoint or recorded decision;
-5. the relevant layer evidence: Notion status, GitHub commit/issue/PR, or Google Drive asset reference.
+5. the relevant layer evidence: canonical Google Drive project state/decision, GitHub commit/issue/PR for engineering, or linked Notion coordination view.
 
 For conflicts inside `Project-Execution-OS` technical repository artifacts, use:
 
@@ -273,6 +265,6 @@ If conflict remains, record a decision before expanding the system further.
 
 ## Final Rule
 
-Repository memory is a tool for projects that actually have a GitHub layer.
+Repository memory supports projects that actually have a GitHub engineering layer. Google Drive remains the central durable project storage and knowledge home.
 
-It is not a requirement that turns every thought, Notion-managed project or files/assets collection into a repository.
+This standard does not turn every thought, non-code project or file collection into a repository.
