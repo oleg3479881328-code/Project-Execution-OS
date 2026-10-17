@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "42c4a0a8d199c1b14e802ec47e470afec9625873",
-  "generated_at": "2026-10-17T11:14:45-04:00",
+  "repository_commit": "12fccb23bef16a7b1de34a2b08ad0299ebee3939",
+  "generated_at": "2026-10-17T11:15:13-04:00",
   "artifact_count": 632,
   "artifacts": [
     {
@@ -7301,7 +7301,7 @@
       "domain": "system",
       "status": null,
       "date": null,
-      "sha256": "fd2ab2740c240fbb793225c322f5639724cf068b8d79f0cfb1960b08fd9a5745",
+      "sha256": "f0ffa78535a01ce86006f159ff799c1d528531539305294f85bd98e1eb3dedb4",
       "headings": [
         "Project Memory Standard v3",
         "Purpose",
@@ -7316,6 +7316,7 @@
         "L3 — Durable Knowledge",
         "Canonical Re-Entry Sequence",
         "Recursive Collection Memory Rule",
+        "Drive-First Project Rule",
         "Notion-First Project Rule",
         "Repository-First Project Rule",
         "Source-Of-Truth Precedence",
@@ -7325,7 +7326,8 @@
         "Minimum Structures",
         "Zero-State Real Project",
         "Active Repository Project",
-        "Active Notion-First Project",
+        "Active Drive-First Project",
+        "Active Legacy Notion-First Project",
         "ChatGPT Project Interface",
         "Migration Snapshot Rule",
         "Anti-Bureaucracy Rule",
