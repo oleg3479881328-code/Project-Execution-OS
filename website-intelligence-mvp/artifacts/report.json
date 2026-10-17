@@ -1,0 +1,54 @@
+{
+  "url": "https://brittanybays.com/blog/romantic-pastel-tented-wedding-at-peterloon-estate",
+  "crawled_at": "2026-08-16T19:03:56.525Z",
+  "runtime": {
+    "node": "v24.13.0",
+    "playwright": "latest",
+    "dembrandt": "latest"
+  },
+  "raw": {
+    "http_status": 200,
+    "final_url": "https://brittanybays.com/blog/romantic-pastel-tented-wedding-at-peterloon-estate",
+    "image_count": 26,
+    "readability_chars": 580,
+    "readability_words": 85
+  },
+  "rendered": {
+    "final_url": "https://brittanybays.com/blog/romantic-pastel-tented-wedding-at-peterloon-estate",
+    "image_count": 26,
+    "readability_chars": 580,
+    "readability_words": 85,
+    "screenshot_path": "fullpage.png"
+  },
+  "machine": {
+    "aria_snapshot_path": "aria.yml",
+    "axe_violation_count": 2
+  },
+  "parity": {
+    "image_gain_ratio": 1,
+    "image_delta": 0,
+    "raw_content_coverage_ratio": 1,
+    "content_char_delta": 0,
+    "alt_coverage_ratio": 0.038461538461538464
+  },
+  "assumptions": [
+    "Raw HTML is used as the conservative view for crawlers that do not execute JavaScript; crawler capabilities vary."
+  ],
+  "errors": [
+    "console: yui: NOT loaded: squarespace-visitor_site_error_reporter",
+    "console: yui: NOT loaded: squarespace-cldr_resource_pack",
+    "console: yui: NOT loaded: squarespace-common_vendors_stable",
+    "console: yui: NOT loaded: squarespace-common_vendors",
+    "console: yui: NOT loaded: squarespace-performance",
+    "console: requestStorageAccess: Permission denied.",
+    "console: Access to XMLHttpRequest at 'https://static1.squarespace.com/static/custom-css/63b5b60cf467144384904f5d/63b5b60cf467144384904f77/48/custom.css' from origin 'https://brittanybays.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "console: Couldn't load preload assets:  ProgressEvent",
+    "console: Failed to load resource: net::ERR_FAILED",
+    "console: Access to XMLHttpRequest at 'https://static1.squarespace.com/static/versioned-site-css/63b5b60cf467144384904f5d/450/5c5a519771c10ba3470d8101/63b5b60cf467144384904f77/1816/site.css?nocustom=true' from origin 'https://brittanybays.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "console: Failed to load resource: net::ERR_FAILED",
+    "request: https://pictime1eus1public-pub-ese2a2hyhubtebgg.a02.azurefd.net/pictures/24/437/24437545/slideshows/63fbea5f28621205fcafed3f/images/brittanybays_catherine_ej_20220430_1612_pt(7118307949).jpg?rev=17 (net::ERR_BLOCKED_BY_ORB)",
+    "request: https://static1.squarespace.com/static/custom-css/63b5b60cf467144384904f5d/63b5b60cf467144384904f77/48/custom.css (net::ERR_FAILED)",
+    "request: https://static1.squarespace.com/static/versioned-site-css/63b5b60cf467144384904f5d/450/5c5a519771c10ba3470d8101/63b5b60cf467144384904f77/1816/site.css?nocustom=true (net::ERR_FAILED)"
+  ],
+  "hypothesis_result": "not_confirmed"
+}
