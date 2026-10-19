@@ -1,11 +1,12 @@
 'use client'
 
-import { Puck, type Data } from '@puckeditor/core'
-import { useMemo, useState } from 'react'
+import type { Data } from '@puckeditor/core'
 
 import { csgWebsiteEditorConfig } from '@/puck/editor-config.client'
 import { imageEditorPlugin } from '@/puck/image-editor/image-editor-plugin'
 import type { SiteInstanceV01 } from '@/site-model/types'
+import VisualEditorShell from '@/visual-editor/VisualEditorShell'
+import type { VisualEditorSaveResult } from '@/visual-editor/adapter-types'
 
 type Props = {
   initialSite: SiteInstanceV01
@@ -22,87 +23,74 @@ type ApiResult = {
 
 export default function CsgPuckEditor({ initialSite, durable }: Props) {
   const initialData = initialSite.pages[0]?.puckData as Data
-  const [data, setData] = useState<Data>(initialData)
-  const [status, setStatus] = useState(durable ? 'Loaded GitHub staging state.' : 'GitHub editor persistence is not configured.')
-  const [busy, setBusy] = useState(false)
 
-  const currentSite = useMemo<SiteInstanceV01>(() => ({
-    ...initialSite,
-    pages: initialSite.pages.map((page, index) => index === 0 ? { ...page, puckData: data as SiteInstanceV01['pages'][number]['puckData'] } : page),
-  }), [data, initialSite])
+  function withPageData(data: Data): SiteInstanceV01 {
+    return {
+      ...initialSite,
+      pages: initialSite.pages.map((page, index) => (
+        index === 0
+          ? { ...page, puckData: data as SiteInstanceV01['pages'][number]['puckData'] }
+          : page
+      )),
+    }
+  }
 
-  async function saveDraft(nextSite = currentSite) {
-    setBusy(true)
+  async function saveDraft(data: Data): Promise<VisualEditorSaveResult> {
     try {
       const response = await fetch('/api/csg/draft', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ state: nextSite }),
+        body: JSON.stringify({ state: withPageData(data) }),
       })
       const result = await response.json() as ApiResult
-      if (!response.ok) throw new Error(result.error || 'Draft save failed.')
-      setStatus(`Draft saved to ${result.branch || 'GitHub staging'}.`)
-      return true
+      if (!response.ok) return { ok: false, message: result.error || 'Draft save failed.' }
+
+      return {
+        ok: true,
+        message: `Draft saved to ${result.branch || 'GitHub staging'}.`,
+        version: result.commitSha?.slice(0, 7),
+      }
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Draft save failed.')
-      return false
-    } finally {
-      setBusy(false)
+      return { ok: false, message: error instanceof Error ? error.message : 'Draft save failed.' }
     }
   }
 
-  async function publish(nextData: Data) {
-    const nextSite: SiteInstanceV01 = {
-      ...initialSite,
-      pages: initialSite.pages.map((page, index) => index === 0 ? { ...page, puckData: nextData as SiteInstanceV01['pages'][number]['puckData'] } : page),
-    }
-    setData(nextData)
-    setBusy(true)
+  async function publish(data: Data): Promise<VisualEditorSaveResult> {
     try {
       const draftResponse = await fetch('/api/csg/draft', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ state: nextSite }),
+        body: JSON.stringify({ state: withPageData(data) }),
       })
       const draftResult = await draftResponse.json() as ApiResult
-      if (!draftResponse.ok) throw new Error(draftResult.error || 'Draft save failed.')
+      if (!draftResponse.ok) return { ok: false, message: draftResult.error || 'Draft save failed.' }
 
       const response = await fetch('/api/csg/publish', { method: 'POST' })
       const result = await response.json() as ApiResult
-      if (!response.ok) throw new Error(result.error || 'Publish failed.')
-      setStatus(`Published to GitHub/${result.branch || 'main'} · ${result.commitSha?.slice(0, 7) || 'commit'} · Vercel deployment follows Git.`)
+      if (!response.ok) return { ok: false, message: result.error || 'Publish failed.' }
+
+      const version = result.commitSha?.slice(0, 7)
+      return {
+        ok: true,
+        message: `Published to GitHub/${result.branch || 'main'}${version ? ` · ${version}` : ''} · Vercel deployment follows Git.`,
+        version,
+      }
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Publish failed.')
-    } finally {
-      setBusy(false)
+      return { ok: false, message: error instanceof Error ? error.message : 'Publish failed.' }
     }
   }
 
   return (
-    <div className="csg-editor-shell">
-      <div className="csg-editor-status" role="status" aria-live="polite">
-        <span>{status}</span>
-        <button type="button" onClick={() => void saveDraft()} disabled={busy || !durable}>
-          {busy ? 'Working…' : 'Save draft'}
-        </button>
-        <button type="button" onClick={() => void publish(data)} disabled={busy || !durable}>
-          Publish
-        </button>
-      </div>
-      <Puck
-        config={csgWebsiteEditorConfig}
-        data={data}
-        onChange={setData}
-        onPublish={publish}
-        plugins={[imageEditorPlugin]}
-        headerTitle="Car Service Garage"
-        headerPath="/"
-        viewports={[
-          { label: 'Desktop', width: 1440, height: 900, icon: 'Monitor' },
-          { label: 'Tablet', width: 768, height: 1024, icon: 'Tablet' },
-          { label: 'Mobile', width: 390, height: 844, icon: 'Smartphone' },
-        ]}
-      />
-    </div>
+    <VisualEditorShell
+      config={csgWebsiteEditorConfig}
+      initialData={initialData}
+      title="Car Service Garage"
+      publicPath="/"
+      durable={durable}
+      initialStatus={durable ? 'Loaded GitHub staging state.' : 'GitHub editor persistence is not configured.'}
+      plugins={[imageEditorPlugin]}
+      onSaveDraft={saveDraft}
+      onPublish={publish}
+    />
   )
 }
