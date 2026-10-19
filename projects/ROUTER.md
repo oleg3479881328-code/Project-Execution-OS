@@ -29,6 +29,7 @@ A project may route onward through its own routers, registries, indexes, collect
 - Personal Secretary OS / personal secretary / secretary / assistant mode -> `personal-secretary-os/PROJECT.md`
 - Reels Factory MVP -> `reels-factory-mvp/PROJECT.md`
 - SOFT / software umbrella -> `soft/PROJECT.md`
+- Showit / Showit API / Showit Universal API -> [canonical Drive project entrypoint](https://docs.google.com/document/d/1ZJZ0pE123K7z2BcafSTqKh1lQric2VSEkgsJ-favOpg/edit) (project storage: [Showit API Drive root](https://drive.google.com/drive/folders/1EZvK_GobbYYFP87PmX8hXS3LVI7ZKg5f))
 - SOLANA / Crypto-Web3 umbrella -> `https://github.com/oleg3479881328-code/SOLANA/blob/main/PROJECT.md`
 - TikTok Research Sorter -> `tiktok-research-sorter/PROJECT.md`
 - Tusia / Tasha Hurley Weddings -> `tusia-tasha-hurley/PROJECT.md`
