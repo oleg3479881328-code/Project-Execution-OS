@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import '../../../public/site.css'
 import '../../../public/image-editor.css'
+import '../../../public/visual-editor.css'
 import '../../../public/theme-light-minimal.css'
 import '@puckeditor/core/dist/index.css'
 
