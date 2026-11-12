@@ -37,6 +37,7 @@ A project may route onward through its own routers, registries, indexes, collect
 - TikTok Research Sorter -> `tiktok-research-sorter/PROJECT.md`
 - Tusia / Tasha Hurley Weddings -> `tusia-tasha-hurley/PROJECT.md`
 - Website Creator / website creation / website production / site building / создание сайтов / проект создания сайтов -> `website-creation/PROJECT.md`
+- WIX STUDIO TWO / Wix Studio 2 / Origami / native Wix Studio Two production -> [универсальный учебник и проектный START HERE](https://docs.google.com/document/d/1ferA035z1_Lc7kPr-qNozCJEN2zpItLOylYs196OAmI/edit) (папка проекта: https://drive.google.com/drive/folders/19xduM5ml7zGyoVrCllJU7_OM8lhuurXC)
 - Циолковский / Есенин / Лермонтов archival research -> `tsiolkovsky-yesenin-lermontov-research/PROJECT.md`
 - Visitor Analytics Control Plane -> `visitor-analytics-control-plane/PROJECT.md`
 
