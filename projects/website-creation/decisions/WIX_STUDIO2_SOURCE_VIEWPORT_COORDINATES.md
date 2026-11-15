@@ -65,3 +65,23 @@ This is a tested instance of the general geometric acceptance procedure, not a p
 ### Reusable acceptance distinction
 
 A section can pass **LOCAL_GEOMETRY** (relative X/Y/W/H, z-order, independent breakpoint) while failing **PAGE_GEOMETRY** (absolute Y because earlier section heights differ). Record them as separate statuses. Never move individual children to compensate for a parent section's wrong page Y. Compare same viewport, browser client width, zoom and scroll state, and use real computed DOM geometry after Wix import as well as before it.
+
+
+## Wix Studio 2 native test page `/blank` — resolved Aria responsive scaling (2026-11-15)
+
+**Test context:** My Site 33, Wix page `/blank` (page ID `v9wbz`), independently editable Image elements `comp-mwia7xuh` and `comp-mwia7xvg`. This was a narrower geometry-only test, with two original Vesper image assets reused from Wix Media Manager. Wix Studio AI Aria had made image widths `28.13%` and `21.88%` with `align-self:end`, `justify-self:end`, responsive margins and aspect ratios; at 1920 browser width these produced 416.81×616.28 and 535.88×855.91 instead of 280×414 and 360×575.
+
+**Accepted native layout fix:** exported site fresh (not the stale Home-only working copy), modified only the existing `pages/blank/layout.css` and `structure.jsx`, kept page and component IDs and existing mobile breakpoint, and imported via official `wix origami import-site`.
+
+- Section remains 729px high on Desktop.
+- Back Martin/texture (`comp-mwia7xuh`): `width:360px;height:575px;grid-row:1/2;grid-column:1/2;align-self:start;justify-self:start;margin-left:calc(50% + 123px);margin-top:66px;margin-right:0;margin-bottom:0;position:relative`.
+- Foreground Nosara/couple (`comp-mwia7xvg`): `width:280px;height:414px;grid-row:1/2;grid-column:1/2;align-self:start;justify-self:start;margin-left:calc(50% + 29px);margin-top:144px;margin-right:0;margin-bottom:0;position:relative`.
+- Both use the same already-uploaded Wix media images as the donor capture, not placeholders; `displayMode='fill'`.
+- DOM image order places foreground last; actual Chromium overlap hit-test confirms foreground wins at both widths.
+- Exact browser readback after import using existing Origami renderer: at 1280px, section height=729, back `X=763,localY=66,W=360,H=575`; foreground `X=669,localY=144,W=280,H=414`. At 1920px, section height=729, back `X=1083,localY=66,W=360,H=575`; foreground `X=989,localY=144,W=280,H=414`. This corresponds to source centered geometry for document width 1920. Real-browser document content width must be measured; if it is 1905, the desired X values are 1075.5 and 981.5 (−7.5 from these measurements), automatically following `50%` center alignment.
+- At 390px, the **existing** separate mobile layout remains, not yet donor-matched. No mobile acceptance claim is made.
+- Both local lint and TypeScript passed; actual Wix import succeeded to editor/site revision **25**. Official re-export confirmed exact fixed pixel rules survived and original media IDs remained. `pages/(home)` was explicitly `unchanged`. Site was not published.
+- Important: Wix exported `Image` contract requires `image.url`; obtain it from the same site’s current `media.getCroppedImageUrl` pattern and keep its `width/height` media metadata consistent with url's origin size. These are source-asset metadata and are **not** the on-canvas CSS frame dimensions. Incorrect mismatch triggers `origami(data-values)`.
+- For full acceptance, distinguish editor readback, local Origami renderer DOM checks, and the published site; this test confirms editor source persistence plus renderer DOM, not that unpublished draft is live on the public domain.
+
+**Root-cause fix:** percentage-based image widths and bottom-anchored CSS layout are not acceptable substitutes for fixed-size donor geometry on Desktop. Use verified px frame rules and center-relative coordinates, then actual readback at both widths.
