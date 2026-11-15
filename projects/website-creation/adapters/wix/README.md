@@ -1,5 +1,7 @@
 # LocalDesign → Wix Studio Two — Geometry Adapter
 
+**Главная техническая инструкция для нового чата:** [NATIVE_GEOMETRY_TRANSFER_STANDARD.md](NATIVE_GEOMETRY_TRANSFER_STANDARD.md) — все доказанные формулы LocalDesign → Wix, native CSS/Image/WRichText, breakpoints, импорт, readback, DOM QA и запреты на повторное изобретение.
+
 **Status: CANDIDATE / LOCAL PILOT TESTED / LIVE BRIDGE NOT YET ACCEPTED.**
 Date: 2026-11-15. Part of existing Website Creator / Universal Website Translator, not a new product or alternate browser automation engine.
 
