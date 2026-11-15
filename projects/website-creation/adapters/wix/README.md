@@ -15,6 +15,8 @@ Target: **Wix Studio Two native editor**, using only the already-proven **offici
 
 - [localdesign_wix.py](localdesign_wix.py) — stdlib pilot converter; source Fingerprint ZIP → normalized geometry recipe → native editable Wix Image/WRichText layout in an explicitly named test page.
 - [Vesper test recipe](fixtures/vesper-experience.recipe.json) — real six-element donor measurements: 2 photos, 4 text fields.
+- [run_wix_pipeline.sh](run_wix_pipeline.sh) — authorized official Wix export/import/readback sequence; not a new browser runtime.
+- [verify_geometry.mjs](verify_geometry.mjs) — existing Playwright geometry acceptance and explicit PASS/FAIL with measured deltas.
 - [Verified geometric acceptance record](../../decisions/WIX_STUDIO2_SOURCE_VIEWPORT_COORDINATES.md) — Wix rev. 25 images, rev. 28 native text; 1280/1920 DOM readbacks.
 
 ### Current tested invocation shape
