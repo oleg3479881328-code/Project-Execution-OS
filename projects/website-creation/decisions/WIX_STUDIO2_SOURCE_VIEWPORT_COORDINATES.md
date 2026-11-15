@@ -128,3 +128,21 @@ Local adapter bundle: Python 5/5 pilot tests passed (geometry transform, exact a
 Current statuses: `CAPTURED=PASS`, `NORMALIZED=PASS (experience only)`, `LOCAL_TESTS=PASS`, `AUTHENTICATED_ADAPTER_EXECUTION=BLOCKED`, `AUTOMATED_WIX_IMPORT=NOT_PROVEN`, `AUTOMATED_READBACK_QA=NOT_PROVEN`, `FULL_SITE=NOT_PROVEN`. Next gate: run the saved official export/patch/import/readback pipeline only through an allowed authenticated execution route, then broaden native type/section coverage and audit mobile/pixel results.
 
 The desired final deliverable is an **execution workflow**, not just a JSON generator. It must not be called DONE until actual native Wix editor import and browser acceptance have succeeded for each required target page and viewport.
+
+
+## Vesper Geometry Lab — new Wix Studio Two experiment page (2026-11-15)
+
+Owner explicitly created a new empty Wix page and requested the experiment be carried out **on that page only**. Official fresh Wix Studio Two export confirmed page `c5u95`, route `/blank-1`, title originally `Новая страница1`, alongside existing Home (`c1dmp`) and previous `/blank` (`v9wbz`).
+
+**Verified implementation:**
+1. Reused existing donor-derived native Vesper Home as a *baseline*, cloning its 13 Sections, 27 Image components and 69 WRichText components onto existing owner-created `/blank-1`, with 208 local page identifiers remapped so the original site components are untouched.
+2. Set the page title to `Vesper Geometry Lab`, kept its real page ID `c5u95` and existing route `blank-1`, did not add navigation, and used only original already-uploaded site Media Manager assets (no generated substitutes).
+3. Applied section **fixed CSS-pixel height baselines** derived from donor geometry, separately by breakpoint: Desktop `[911,1251,729,400,782,635,180,704,651,1540,709,700,35]`; Mobile `[560.63,1039.59,865.31,363.19,1031.06,616.69,204.75,649.59,636.19,1707.47,587.44,789.75,71.91]`. Those heights are input measurements, not proof of actual full-page visual matching.
+4. Wix Origami lint PASS, TypeScript PASS, production build PASS. Import via official fresh-export native Wix Studio Two succeeded: `updated: ["pages/blank-1"]`, `unchanged: ["pages/(home)","pages/blank",globals...]`, `deleted: []`, site revision **30 → 31**, no publishing.
+5. Official fresh re-export from Wix **revision 31**: page `c5u95`, title `Vesper Geometry Lab`; all **13 sections, 27 native images, 69 native text fields** and all 13 Desktop CSS height baselines were present; Home and old blank remained present.
+
+**Acceptance states:** `PAGE_CREATED/PAGE_IMPORTED/EDITOR_READBACK=PASS`; `SECTION_DESKTOP_HEIGHT_IN_SOURCE=PASS`; `FULL_PAGE_LOCAL_ELEMENT_GEOMETRY=NOT_YET_CHECKED`; `MOBILE_ELEMENT_GEOMETRY=NOT_YET_CHECKED`; `PIXEL_VISUAL_QA=NOT_YET_CHECKED`; `PUBLISHED=NO`. This first pass was cloned from an existing donor-derived Wix structure and heights were calibrated from Fingerprint. **It was not generated end-to-end by the new LocalDesign converter** and should not be reported as automatic full-site acceptance.
+
+**QA blocker:** existing remote dev preview URL showed HTTP 200 for `/` but HTTP **404** for `/blank-1` even after Wix editor import/re-export; thus that stale preview cannot validate the new page's browser rectangles. Do not invent a working preview URL or silently publish to test; use the Wix editor's page preview or refresh the official preview through supported Wix Studio Two mechanisms, then run donor-vs-Wix local geometry QA at 1280/1920 and 390 independently.
+
+**Source of truth:** new page is editable in [My Site 33 Wix Editor](https://manage.wix.com/editor/83b1f529-47e8-4537-8d70-0168eef64789), with route `/blank-1`. Original Home and earlier geometry experiment `/blank` are preserved. Next slice: verify rendered element boxes for each section on this isolated page, then apply normalized Fingerprint→native Wix converter to repair only mismatches.
