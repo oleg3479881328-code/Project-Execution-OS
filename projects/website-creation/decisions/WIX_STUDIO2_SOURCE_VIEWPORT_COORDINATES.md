@@ -85,3 +85,24 @@ A section can pass **LOCAL_GEOMETRY** (relative X/Y/W/H, z-order, independent br
 - For full acceptance, distinguish editor readback, local Origami renderer DOM checks, and the published site; this test confirms editor source persistence plus renderer DOM, not that unpublished draft is live on the public domain.
 
 **Root-cause fix:** percentage-based image widths and bottom-anchored CSS layout are not acceptable substitutes for fixed-size donor geometry on Desktop. Use verified px frame rules and center-relative coordinates, then actual readback at both widths.
+
+
+## Wix `/blank` native editable text-field geometry acceptance (2026-11-15)
+
+Scope: exactly two new native `WRichText` text fields on test page `/blank` (page ID `v9wbz`) of My Site 33, in the same 729px Wedding Experience section as two previously accepted photos. No changes to `/home` and no publishing.
+
+Donor measured at desktop viewport 1280 CSS px:
+- Heading **WEDDING EXPERIENCE**: section X=169, section Y=148, frame W=405, H=129.
+- Paragraph beginning **Heirloom schlitz synth...**: section X=167, section Y=287, frame W=386, H=185.
+- Content copied from the pre-existing Vesper-related native Wix Home section. Typography is deliberately **not** part of this acceptance gate.
+
+Implementation reused the installed Wix native `WRichText` component; fixed Desktop `width/height` in px, `grid-row:1/2`, `grid-column:1/2`, `align-self:start`, `justify-self:start`, section-local Y from `margin-top`, X from `calc(50% - 471px)` and `calc(50% - 473px)`, respectively. Existing original media and image geometry were untouched. Mobile layout got separate responsive rules; mobile donor parity not assessed.
+
+Acceptance: Wix Origami lint = PASS; `yarn tsc` = PASS; local official build = PASS; Wix editor import succeeded **site revision 28** (only `pages/blank` updated, `pages/(home)` unchanged). Fresh official re-export showed native text fields assigned live IDs **comp-mwib8la0** and **comp-mwib8lah**; exported CSS retained exact coordinates and dimensions. Chromium readback from the official renderer built from *this fresh saved-editor export* confirmed:
+- **1280**: heading (169,148,405,129), paragraph (167,287,386,185) relative to section.
+- **1920**: heading (489,148,405,129), paragraph (487,287,386,185) relative to section.
+- Section height=729 at both widths; preserved image positions and sizes: texture (1280 x763 y66 360x575; 1920 x1083 y66 360x575); couple (1280 x669 y144 280x414; 1920 x989 y144 280x414); no horizontal overflow.
+- Both text boxes preserve identical geometry across editor base and 1920 widths; only center-relative X changes.
+- **Status: LOCAL_TEXT_FRAME_GEOMETRY=PASS and IMAGE_REGRESSION=PASS.** This does not assert font/text glyph pixel parity, exact content clipping fidelity, Mobile parity, editor GUI panel readback, or public-published revision parity.
+
+Wix import may rename generated IDs (e.g., `ld-test-heading` → `comp-mwib8la0`). When verifying, re-export live editor and match content and geometry by selectors instead of assuming submitted IDs survive.
