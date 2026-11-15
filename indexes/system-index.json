@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "86a852edfa3f2764403611ee8569eba43f5ed8fc",
-  "generated_at": "2026-11-15T16:38:39-05:00",
+  "repository_commit": "c296dacff06044f9f630029d6e6b4ec1fb81799e",
+  "generated_at": "2026-11-15T17:00:00-05:00",
   "artifact_count": 634,
   "artifacts": [
     {
@@ -13030,7 +13030,7 @@
       "domain": "website-creation",
       "status": "Verified for the Vesper donor capture and My Site 33 native editable page (2026-11-15). This is a reusable mapping method, **not** a claim that every source site uses 15 px scrollbars.",
       "date": null,
-      "sha256": "96ac8cdd8b55c9bdfcc6fc0e05d1e629ca513713bc0730640aae404441df6456",
+      "sha256": "3774aab3550fb03c2fae2203ec0f2180d171ee2d24495e629a45c54633cd9336",
       "headings": [
         "Wix Studio 2 — mapping source viewport coordinates to editor canvas",
         "Scope and evidence",
@@ -13042,7 +13042,8 @@
         "Reusable acceptance distinction",
         "Wix Studio 2 native test page `/blank` — resolved Aria responsive scaling (2026-11-15)",
         "Wix `/blank` native editable text-field geometry acceptance (2026-11-15)",
-        "Fingerprint → native Wix automation bridge pilot (2026-11-15)"
+        "Fingerprint → native Wix automation bridge pilot (2026-11-15)",
+        "Vesper Geometry Lab — new Wix Studio Two experiment page (2026-11-15)"
       ]
     },
     {
