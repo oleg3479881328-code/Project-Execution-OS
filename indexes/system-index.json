@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "9eac55c2528da353b33da2ff26458722e0526e1a",
-  "generated_at": "2026-11-15T16:25:14-05:00",
-  "artifact_count": 633,
+  "repository_commit": "4106e063109ee532cd8817f319b2cf87d4ebff74",
+  "generated_at": "2026-11-15T16:29:19-05:00",
+  "artifact_count": 634,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12999,6 +12999,28 @@
         "22. Acceptance Definition",
         "23. Authoritative References",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/adapters/wix/README.md",
+      "title": "LocalDesign → Wix Studio Two — Geometry Adapter",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": null,
+      "date": "2026-11-15. Part of existing Website Creator / Universal Website Translator, not a new product or alternate browser automation engine.",
+      "sha256": "eb80cbaf00f032e744785cfda88b7dd22bab4eefc2ffffec8ab14925ce43884a",
+      "headings": [
+        "LocalDesign → Wix Studio Two — Geometry Adapter",
+        "Existing canonical route",
+        "Code and fixture",
+        "Current tested invocation shape",
+        "Use the current official Wix authenticated environment.",
+        "Preflight: ensure ONLY pages/blank changed, NOT pages/(home).",
+        "Fresh re-export, build, inspect native DOM x/y/w/h at 1280 and 1920.",
+        "Confirmed source sample",
+        "Explicit blocker / current end-to-end gap",
+        "Scope boundaries",
+        "No-duplicate-system decision"
       ]
     },
     {
