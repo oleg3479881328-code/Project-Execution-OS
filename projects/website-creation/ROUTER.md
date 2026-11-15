@@ -15,6 +15,7 @@ Route Website Creator work to the smallest global reusable standard/capability r
 - find an existing reusable website capability / standard / production contract -> `SOURCE_REGISTRY.md`
 - tools / SaaS / libraries / frameworks / execution platforms / donors -> `TOOL_DONOR_REGISTRY.md`
 - Site Model / canonical site schema / Site Instance / platform-independent site state / renderer contract / adapter contract -> `SITE_MODEL_STANDARD.md`
+- LocalDesign fingerprint geometry → Wix Studio Two native editable elements / measured section-relative coordinates / centered fixed-px sizing / 1280 & 1920 readback / native Image and WRichText / responsive geometry / new chat technical continuation -> `adapters/wix/NATIVE_GEOMETRY_TRANSFER_STANDARD.md`; then `adapters/wix/README.md` for implementation status and `decisions/WIX_STUDIO2_SOURCE_VIEWPORT_COORDINATES.md` for accepted measurement evidence.
 - Universal Website Translator / external-editor translation architecture -> `UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md`
 - **Showit programmatic API / direct adapter / page compiler / page JSON save / media upload / Canvas-text-image compilation -> `adapters/showit/SHOWIT_PROGRAMMATIC_API_STANDARD.md`; then `adapters/showit/README.md`; inspect `adapters/showit/showit-page-compiler-v1.js` only when implementation detail is required**
 - website design / visual direction / donor analysis / sections / UI / responsive / motion / design QA -> `../../blocks/design/BLOCK.md`
