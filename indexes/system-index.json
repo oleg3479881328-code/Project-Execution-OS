@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "0ef2575f50fa2e8ef98745ff0bb39d77f87fa01d",
-  "generated_at": "2026-11-15T14:34:23-05:00",
+  "repository_commit": "88664c68dd661e0f474e646fe8998082640901f2",
+  "generated_at": "2026-11-15T15:08:15-05:00",
   "artifact_count": 633,
   "artifacts": [
     {
@@ -13008,14 +13008,16 @@
       "domain": "website-creation",
       "status": "Verified for the Vesper donor capture and My Site 33 native editable page (2026-11-15). This is a reusable mapping method, **not** a claim that every source site uses 15 px scrollbars.",
       "date": null,
-      "sha256": "6097f8dd1d086a672a66d05d35dff90b06f6e7087060c3579f2d52f020258be7",
+      "sha256": "5380d699cd2ab8c295e5a9024240cf73c704292c98e45388fe8edfccf94fecec",
       "headings": [
         "Wix Studio 2 — mapping source viewport coordinates to editor canvas",
         "Scope and evidence",
         "Accepted desktop transformation (for this capture only)",
         "Important separate coordinate systems",
         "QA / acceptance",
-        "Implementation / source of truth"
+        "Implementation / source of truth",
+        "Verified Wedding Experience calibration (2026-11-15)",
+        "Reusable acceptance distinction"
       ]
     },
     {
