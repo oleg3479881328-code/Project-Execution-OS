@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "c296dacff06044f9f630029d6e6b4ec1fb81799e",
-  "generated_at": "2026-11-15T17:00:00-05:00",
-  "artifact_count": 634,
+  "repository_commit": "d39ae01bc4b581ced9ce56bb5fbfdb2974e8884f",
+  "generated_at": "2026-11-15T17:35:51-05:00",
+  "artifact_count": 635,
   "artifacts": [
     {
       "path": "AGENTS.md",
@@ -12999,6 +12999,36 @@
         "22. Acceptance Definition",
         "23. Authoritative References",
         "Final Rule"
+      ]
+    },
+    {
+      "path": "projects/website-creation/adapters/wix/NATIVE_GEOMETRY_TRANSFER_STANDARD.md",
+      "title": "LOCALDESIGN → WIX STUDIO TWO — NATIVE GEOMETRY TRANSFER",
+      "type": "project-artifact",
+      "domain": "website-creation",
+      "status": null,
+      "date": "2026-11-15. This is **reusable technical knowledge**, not a migration of one ZIP, donor page or Wix instance. The owner supplies a new fingerprint and target page separately. Source of proof: [native Wix geometry readback evidence](../../decisions/WIX_STUDIO2_SOURCE_VIEWPORT_COORDINATES.md).",
+      "sha256": "34053a12d68035b6d048c6f435054a256fed8a9cf3c7ad3201534b75ca1de2f8",
+      "headings": [
+        "LOCALDESIGN → WIX STUDIO TWO — NATIVE GEOMETRY TRANSFER",
+        "HARD TECHNICAL STANDARD — NEW CHAT KNOWLEDGE START HERE",
+        "1. Canonical startup",
+        "2. Input data contract — read, do not guess",
+        "3. Core geometry transformation: SOURCE SECTION → WIX NATIVE SECTION",
+        "4. Scrollbars: 1280 viewport may contain 1265 content pixels",
+        "5. Section heights vs children positions — two separate QA gates",
+        "6. Wix Studio Two native component contract",
+        "Image-specific mandatory distinction",
+        "Grid and mobile import validation",
+        "7. Responsive conversion is independent",
+        "8. Overlaps and z-order",
+        "9. Text frame geometry is NOT font pixel parity",
+        "10. Accepted execution sequence: no new technology",
+        "11. Mechanical browser QA algorithm",
+        "12. Demonstrated reference numbers (ONLY an example, not a new source to use)",
+        "13. Known pitfalls to prevent repeating the entire project",
+        "14. Existing durable files: knowledge vs implementation status",
+        "15. New chat direct execution instruction"
       ]
     },
     {
