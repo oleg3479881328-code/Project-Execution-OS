@@ -106,3 +106,25 @@ Acceptance: Wix Origami lint = PASS; `yarn tsc` = PASS; local official build = P
 - **Status: LOCAL_TEXT_FRAME_GEOMETRY=PASS and IMAGE_REGRESSION=PASS.** This does not assert font/text glyph pixel parity, exact content clipping fidelity, Mobile parity, editor GUI panel readback, or public-published revision parity.
 
 Wix import may rename generated IDs (e.g., `ld-test-heading` → `comp-mwib8la0`). When verifying, re-export live editor and match content and geometry by selectors instead of assuming submitted IDs survive.
+
+
+## Fingerprint → native Wix automation bridge pilot (2026-11-15)
+
+Clarified owner objective: **not one literal button**, but a reproducible sequence that automatically (1) consumes the existing LocalDesign Site Fingerprint, (2) normalizes section-local positions, fixed sizes and layering, (3) compiles native editable Wix Studio Two images and text boxes, (4) imports via the official authenticated Origami adapter, and (5) verifies the saved state and browser geometry. Do not invent another Chrome extension, browser engine or Wix renderer.
+
+Durable implementation pilot:
+- [Canonical adapter entry](../adapters/wix/README.md)
+- [Converter](../adapters/wix/localdesign_wix.py)
+- [Vesper 6-element recipe fixture](../adapters/wix/fixtures/vesper-experience.recipe.json)
+- [Official CLI orchestration](../adapters/wix/run_wix_pipeline.sh)
+- [Read-only browser geometry QA](../adapters/wix/verify_geometry.mjs)
+
+The local converter was exercised on real LocalDesign v2.4 ZIP data for the Vesper `div#experience` section. It successfully produced six normalized image/text entries (two images, four texts). In the actual capture, original image URLs were available in observed mobile data but missing from desktop lazy-computed backgrounds; exact DOM selector matching recovered source URLs without guessing, while independent Desktop geometry remained authoritative.
+
+Local adapter bundle: Python 5/5 pilot tests passed (geometry transform, exact asset URL matching, invalid-schema fail-closed, synthetic Wix native patch, Home protection). Existing LocalDesign v2.4 regression tests passed. The source Fingerprint coverage pilot discovered 13 main donor sections; 7 passed the strict mixed image/text extractor, 6 were explicitly blocked by image-only/text-only/unsupported evidence assumptions. This is **not** 13-section QA/acceptance.
+
+**Execution blocker:** an attempted Wix dev-machine execution of newly stored GitHub adapter code was denied by the tool's security controls. No live import occurred as part of that attempted bridge; do not bypass the control. The manually verified preexisting Wix image/text edits (revisions 25/28) remain independent accepted evidence, not proof of this automated importer.
+
+Current statuses: `CAPTURED=PASS`, `NORMALIZED=PASS (experience only)`, `LOCAL_TESTS=PASS`, `AUTHENTICATED_ADAPTER_EXECUTION=BLOCKED`, `AUTOMATED_WIX_IMPORT=NOT_PROVEN`, `AUTOMATED_READBACK_QA=NOT_PROVEN`, `FULL_SITE=NOT_PROVEN`. Next gate: run the saved official export/patch/import/readback pipeline only through an allowed authenticated execution route, then broaden native type/section coverage and audit mobile/pixel results.
+
+The desired final deliverable is an **execution workflow**, not just a JSON generator. It must not be called DONE until actual native Wix editor import and browser acceptance have succeeded for each required target page and viewport.
