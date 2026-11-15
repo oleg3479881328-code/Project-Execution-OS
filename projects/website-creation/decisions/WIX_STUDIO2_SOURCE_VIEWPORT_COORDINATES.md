@@ -49,3 +49,19 @@ Example native Wix Desktop 1280 browser geometry:
 ## Implementation / source of truth
 
 Project-specific instance: Wix Studio 2 site `83b1f529-47e8-4537-8d70-0168eef64789`, page `c1dmp` ('My Site 33'), Vesper donor. Current native geometry is centered already; do not move those five elements in X merely to match unnormalized source screenshot X.
+
+## Verified Wedding Experience calibration (2026-11-15)
+
+This is a tested instance of the general geometric acceptance procedure, not a pixel-perfect typography claim.
+
+- Donor at browser viewport 1280×911: `#experience` section Y=2163, height 729 px. Foreground couple/Nosara: X=669 Y=2307 W=280 H=414. Background Martin/texture: X=763 Y=2229 W=360 H=575.
+- Wix native preview at the same viewport after applying fixed-pixel Desktop rules: section Y=2162 height=729 px; foreground X=669 Y=2306 W=280 H=414; background X=763 Y=2228 W=360 H=575. All photo dimensions and X positions match exactly; all observed page Y values differ by -1 px from the donor due to the upstream cumulative section position.
+- Four source text-field boxes (relative to screen at 1280) were `(x,y,w,h)`: `the=(171,2308,138,47)`, headline `(169,2311,405,129)`, paragraph `(167,2450,386,185)`, link/button `(167,2679,183,18)`. Wix native text boxes now have exactly matching X/W/H, with page Y -1 px. Font shapes/text internal line-breaks are explicitly outside this geometry gate.
+- Foreground couple overlaps background texture and is above it in Wix's actual browser hit-test; photos are separately editable Wix Image components and use the donor asset images.
+- Desktop CSS implementation: keep fixed measured width/height in px, express X as `margin-left: calc(50% + centerOffsetPx)`, section-local top as a fixed px offset, and set section height to measured 729px. For this section, texture/photo-back offset = `+123px` from center, Y=66; couple/photo-front offset = `+29px`, Y=144. The mobile breakpoint retains its own existing geometry and is not inferred from Desktop.
+- Additional probe at 1920px after correction: section height=729; both photos have accurate local geometry (foreground x=989 y=section+144, back x=1083 y=section+66), but section page Y is **2716.81** in Wix vs **2163** at the donor. Therefore **full-page absolute vertical parity at 1920 is NOT accepted**: earlier sections still accumulate responsive scaling differences.
+- Wix native editor import succeeded as **site revision 19**, site `83b1f529-47e8-4537-8d70-0168eef64789`, unpublished. Wix lint passed. Legacy TypeScript type errors for Image `id` fields remain a separate, known import warning. Editor GUI field readback was not automated; the implementation was validated via native source + real preview DOM.
+
+### Reusable acceptance distinction
+
+A section can pass **LOCAL_GEOMETRY** (relative X/Y/W/H, z-order, independent breakpoint) while failing **PAGE_GEOMETRY** (absolute Y because earlier section heights differ). Record them as separate statuses. Never move individual children to compensate for a parent section's wrong page Y. Compare same viewport, browser client width, zoom and scroll state, and use real computed DOM geometry after Wix import as well as before it.
