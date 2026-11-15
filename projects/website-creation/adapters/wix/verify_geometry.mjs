@@ -3,6 +3,8 @@
    Usage: node verify_geometry.mjs RECIPE.json PREVIEW_URL [1280,1920]
    Only LOCAL_GEOMETRY is assessed; this is not a publish operation.
 */
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 const fs=require('node:fs');
 const [recipeFile,url,widthSpec='1280,1920']=process.argv.slice(2);
 if(!recipeFile||!/^https?:\/\//.test(url||'')){
@@ -53,12 +55,16 @@ const widths=widthSpec.split(',').map(Number);
           if(!section){rows.push({found:false,reason:'no section'});continue}
           const a=rect(element),b=rect(section);
           rows.push({found:true,elementId:element.id,
-            frame:{centerX:a.x-b.x-b.w/2,y:a.y-b.y,w:a.w,h:a.h},
+            frame:{x:a.x-b.x,centerX:a.x-b.x-b.w/2,y:a.y-b.y,w:a.w,h:a.h},
             sectionHeight:b.h});
         }
         return {rows,clientWidth:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth};
       },recipe.elements);
       let pass=response.status()===200&&errors.length===0;
+      const expectedHeight=width===390?recipe.mobileHeight:recipe.desktopHeight;
+      const measuredHeights=observed.rows.filter(r=>r.found).map(r=>r.sectionHeight);
+      const sectionHeightPass=measuredHeights.length>0 && measuredHeights.every(h=>Math.abs(h-expectedHeight)<=1);
+      if(!sectionHeightPass) pass=false;
       const rows=[];
       for(let i=0;i<recipe.elements.length;i++){
         const item=recipe.elements[i],actual=observed.rows[i];
@@ -67,7 +73,7 @@ const widths=widthSpec.split(',').map(Number);
         if(!actual.found){rows.push({i,status:'MISSING',reason:actual.reason});pass=false;continue}
         const delta={};
         for(const key of Object.keys(expected)){
-          const val=key==='x'?actual.frame.centerX+observed.clientWidth/2:actual.frame[key];
+          const val=actual.frame[key];
           delta[key]=Math.round((val-expected[key])*100)/100;
         }
         const ok=Object.values(delta).every(n=>Math.abs(n)<=1);
@@ -75,7 +81,7 @@ const widths=widthSpec.split(',').map(Number);
         rows.push({i,type:item.type,id:actual.elementId,status:ok?'PASS':'FAIL',delta,frame:actual.frame});
       }
       findings.push({width,status:pass?'LOCAL_GEOMETRY_PASS':'LOCAL_GEOMETRY_FAIL',
-        http:response.status(),clientWidth:observed.clientWidth,errors,rows});
+        http:response.status(),clientWidth:observed.clientWidth,expectedHeight,measuredHeights,sectionHeightPass,errors,rows});
       await page.close();
     }
   }finally{await browser.close()}
