@@ -1,0 +1,133 @@
+{
+  "schema": "localdesign.wix-geometry-recipe.v1",
+  "source": "https://vesper.tonicsiteshop.com/",
+  "section": "div#experience",
+  "desktopHeight": 729,
+  "mobileHeight": 865.31,
+  "elements": [
+    {
+      "type": "image",
+      "selector": "div#experience > div > div > div:nth-of-type(1) > div > div",
+      "tag": "div",
+      "text": "",
+      "asset": "https://static.showit.co/400/xdl77zqmQA2W_xsB-ixy4g/shared/pexels-martin-de-arriba-10356099.jpg",
+      "assetEvidence": "mobile-390:exact-selector",
+      "desktop": {
+        "centerX": 123,
+        "y": 66,
+        "w": 360,
+        "h": 575
+      },
+      "mobile": {
+        "x": 119.44,
+        "y": 19.5,
+        "w": 242.53,
+        "h": 383.91
+      }
+    },
+    {
+      "type": "image",
+      "selector": "div#experience > div > div > div:nth-of-type(2) > div > div",
+      "tag": "div",
+      "text": "",
+      "asset": "https://static.showit.co/400/gNft1AqvRYG81qP2USHy5w/shared/nosara-costa-rica-film-destination-wedding-photography-at-la-luna_0108.jpg",
+      "assetEvidence": "mobile-390:exact-selector",
+      "desktop": {
+        "centerX": 29,
+        "y": 144,
+        "w": 280,
+        "h": 414
+      },
+      "mobile": {
+        "x": 52.41,
+        "y": 63.37,
+        "w": 220.59,
+        "h": 296.16
+      }
+    },
+    {
+      "type": "text",
+      "selector": "div#experience > div > div > div:nth-of-type(3) > p",
+      "tag": "p",
+      "text": "the",
+      "asset": null,
+      "desktop": {
+        "centerX": -469,
+        "y": 145,
+        "w": 138,
+        "h": 47
+      },
+      "mobile": {
+        "x": 39,
+        "y": 452.16,
+        "w": 86.53,
+        "h": 43.88
+      }
+    },
+    {
+      "type": "text",
+      "selector": "div#experience > div > div > div:nth-of-type(4) > div > h2",
+      "tag": "h2",
+      "text": "WEDDING EXPERIENCE",
+      "asset": null,
+      "desktop": {
+        "centerX": -471,
+        "y": 148,
+        "w": 405,
+        "h": 129
+      },
+      "mobile": {
+        "x": 54.84,
+        "y": 447.28,
+        "w": 390,
+        "h": 74.34
+      }
+    },
+    {
+      "type": "text",
+      "selector": "div#experience > div > div > div:nth-of-type(5) > p",
+      "tag": "p",
+      "text": "Heirloom schlitz synth, humblebrag scenester tumblr plaid narwhal offal tofu authentic hell of umami. Williamsburg sartorial put a bird on it craft beer YOLO. Quinoa austin woke, celiac iceland portland raw denim. Next level iPhone organic chillwave readymade snackwave health got",
+      "asset": null,
+      "desktop": {
+        "centerX": -473,
+        "y": 287,
+        "w": 386,
+        "h": 185
+      },
+      "mobile": {
+        "x": 54.84,
+        "y": 546,
+        "w": 290.06,
+        "h": 205.97
+      }
+    },
+    {
+      "type": "text",
+      "selector": "div#experience > div > div > div:nth-of-type(7) > a > p",
+      "tag": "p",
+      "text": "learn more",
+      "asset": null,
+      "desktop": {
+        "centerX": -473,
+        "y": 516,
+        "w": 183,
+        "h": 18
+      },
+      "mobile": {
+        "x": 45.09,
+        "y": 798.28,
+        "w": 184.03,
+        "h": 21.94
+      }
+    }
+  ],
+  "captureEvidence": {
+    "sourceFormat": "localdesign.site-fingerprint.v2.4",
+    "viewports": [
+      "desktop-1280",
+      "mobile-390"
+    ],
+    "notes": "Exact LocalDesign capture. Desktop missing image URL due CSS lazy loading; mobile selector supplies exact source asset. No media substituted."
+  }
+}
