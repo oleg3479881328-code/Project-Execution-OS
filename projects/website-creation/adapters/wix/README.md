@@ -75,3 +75,53 @@ The known accepted *manual* (not fully automated) geometrical import from Wix re
 ## No-duplicate-system decision
 
 Continue to use LocalDesign as capture, the canonical Universal Page Recipe boundary as normalization, official Wix Studio Two Origami native import as execution and existing Playwright QA. Do not invent a second browser automation engine, Wix clone, new Chrome extension or proprietary remote credential route.
+
+
+## Full-page reusable capability — current code, 2026-11-15
+
+**Canonical procedure / status authority:** [NATIVE_GEOMETRY_TRANSFER_STANDARD.md §16](NATIVE_GEOMETRY_TRANSFER_STANDARD.md).
+**Open final acceptance issue:** [#171](https://github.com/oleg3479881328-code/Project-Execution-OS/issues/171).
+
+Do not use the one-section `localdesign_wix.py apply` as though it already builds whole pages.
+
+Existing adapter now includes two **new bounded modules**, not a second scanner/editor stack:
+
+- [`full_page_recipe.py`](full_page_recipe.py) — ZIP v2.4 → whole page normalized Recipe; records individual source element selectors, sections, per-breakpoint frames, paint candidates, exact source image URLs, mobile-only sections, and top-level detached layers such as `footer_0`.
+- [`compile_full_page.py`](compile_full_page.py) — recipe → **workspace-only native page patch** in an already exported Wix site; requires explicit existing target page **folder and page ID** and `--allow-replace-page`; preserves the current Page wrapper, global header/footer/theme and other page files. Includes `finalize-media` step after official Wix CLI source-media upload.
+- Existing [`verify_geometry.mjs`](verify_geometry.mjs) is still **single-section pilot QA**. It does not prove full-page browser acceptance. Full-page source-coverage + browser QA remains Issue #171.
+
+### General workflow to run in any chat/agent
+
+```bash
+# From Website Creator Wix adapter; owner provides exact ZIP and target page.
+python3 full_page_recipe.py --fingerprint SOURCE.zip --out recipe.json
+
+# In an authorized official Wix dev environment, with fresh site export.
+wix origami export-site --site SITE_ID -d wix-export --json
+python3 compile_full_page.py compile --recipe recipe.json --export wix-export \
+  --page TARGET_FOLDER --page-id TARGET_PAGE_ID --allow-replace-page
+
+# Critical official Wix Media Manager step (original source URLs, no placeholders).
+wix origami upload-media --site SITE_ID -d wix-export --json
+python3 compile_full_page.py finalize-media --export wix-export --page TARGET_FOLDER
+
+cd wix-export
+yarn lint && yarn tsc && yarn build
+wix origami import-site --site SITE_ID -d . --json
+
+# Mandatory separate readback into a fresh directory; no publish.
+wix origami export-site --site SITE_ID -d ../readback --json
+# Then inspect all section/image/text/media/paint counts, run same-viewport Playwright
+# LOCAL/PAGE geometry + visual/stack/mobile/interactions QA per standard §16.
+```
+
+**Stop rules:** never treat a generated recipe or imported site as full visual acceptance. `compile` is a **candidate** on a copied Wix export, not yet a proven no-touch deployment to an unrelated site. Exact original source assets only, no mutation of Home/shared globals. If style/background layering or media is ambiguous, stop rather than silently approximate. No publish without authorization.
+
+### Current measurable evidence
+
+- Vesper `/about` v2.4 latest donor ZIP: full-page normalizer **12 sections (separate mobile+desktop menus), 80 source elements, 18 exact images**, including `div#bio` original photo and 6 detached `div#footer_0` photos. Older v2.4 ZIP yielded 79 elements because its observed source DOM differed. **This reveals a real gap in previously reported Wix 17-image import**; source coverage not yet PASS.
+- Compiler synthetic/local mock: **12 sections / 80 elements / 18 images** written to selected mock page.
+- Compiler on a copied real Studio Two Origami export: wrote **11 sections / 79 elements / 17 images** using the earlier saved recipe; native lint preflight was interrupted by a **Wix dev machine loss during yarn install**, therefore full compiler acceptance remains BLOCKED.
+- Earlier manual native full-page import + readback (rev42) and native Background colors (rev45) are proven separately; neither constitutes one-command fully automated universal browser QA.
+
+Use this README to run, and the single existing canonical standard for knowledge. When the real full-page acceptance gates pass on two different donor pages/targets, promote only this same adapter; do not create one-off builders.
