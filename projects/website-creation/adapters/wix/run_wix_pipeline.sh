@@ -31,11 +31,31 @@ PY
   # Source completeness is independent of correct element coordinates.
   # An uncaptured donor video/canvas/iframe must block import instead of
   # generating a misleading GEOMETRY_ASSETS_PASS on an incomplete page.
-  node "$HERE/audit_source_layers.mjs" "$WORK/recipe.json" "$WORK/source-layer-audit.json"
+  node "$HERE/audit_source_layers.mjs" "$WORK/recipe.json" "$WORK/source-layer-audit.json" "$WORK/enriched-recipe.json"
+  mv "$WORK/enriched-recipe.json" "$WORK/recipe.json"
+  # Native Video MP4 is imported by the official Wix Media Manager API, not
+  # Origami upload-media (which only scans image props in this CLI version).
+  # Readback-ready file descriptors must match the donor's *exact* source URL.
+  python3 - "$WORK/recipe.json" "${WIX_VIDEO_MEDIA_MANIFEST:-}" <<'PY'
+import json,sys
+r=json.load(open(sys.argv[1]))
+videos=[l['sourceUrl'] for s in r['sections'] for l in s.get('dynamicLayers',[]) if l['type']=='video']
+if videos:
+  if not sys.argv[2]:
+    raise SystemExit('BLOCKED: original source videos require WIX_VIDEO_MEDIA_MANIFEST with official READY Media Manager descriptors')
+  m=json.load(open(sys.argv[2]))
+  f=[x.get('file',x) for x in m.get('files',[])]
+  for source in videos:
+    matches=[x for x in f if x.get('sourceUrl')==source and x.get('operationStatus')=='READY' and x.get('mediaType')=='VIDEO']
+    if len(matches)!=1:raise SystemExit('BLOCKED: exact source video not READY or ambiguous '+source)
+print('SOURCE_VIDEO_MEDIA_VERIFIED',len(videos))
+PY
+  VIDEO_MEDIA_ARGS=()
+  [[ -n "${WIX_VIDEO_MEDIA_MANIFEST:-}" ]] && VIDEO_MEDIA_ARGS+=(--video-media-manifest "$WIX_VIDEO_MEDIA_MANIFEST")
   wix origami export-site --site "$WIX_SITE_ID" -d "$WORK/wix-site" --json | tee "$WORK/export-result.json"
   python3 "$HERE/compile_full_page.py" compile --recipe "$WORK/recipe.json" \
     --export "$WORK/wix-site" --page "$WIX_TARGET_PAGE" \
-    --page-id "$WIX_TARGET_PAGE_ID" --allow-replace-page
+    --page-id "$WIX_TARGET_PAGE_ID" --allow-replace-page "${VIDEO_MEDIA_ARGS[@]}"
   # Official upload-media resolves Image wrapper definition.ts from installed
   # dependencies. Without yarn install it silently detects zero images.
   (cd "$WORK/wix-site" && yarn install)
