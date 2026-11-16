@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "298a687142f5fd4e9401594f0953edb395bfb781",
-  "generated_at": "2026-11-15T19:42:24-05:00",
+  "repository_commit": "8c7fd2980b7d545094a85f5d3713a0d21d18112d",
+  "generated_at": "2026-11-15T19:43:11-05:00",
   "artifact_count": 635,
   "artifacts": [
     {
@@ -13044,7 +13044,7 @@
       "domain": "website-creation",
       "status": null,
       "date": "2026-11-15. Part of existing Website Creator / Universal Website Translator, not a new product or alternate browser automation engine.",
-      "sha256": "82362451d38023bb055411e0c5175f7a7362ce518ef075006cca811abf66f996",
+      "sha256": "1f54439b47113fd18481c5808eb8e84502b4157412a17dd10a532288fae4c2ce",
       "headings": [
         "LocalDesign → Wix Studio Two — Geometry Adapter",
         "Existing canonical route",
@@ -13066,7 +13066,8 @@
         "Then inspect all section/image/text/media/paint counts, run same-viewport Playwright",
         "LOCAL/PAGE geometry + visual/stack/mobile/interactions QA per standard §16.",
         "Current measurable evidence",
-        "Single-command full-page mode (candidate; native Wix workspace required)"
+        "Single-command full-page mode (candidate; native Wix workspace required)",
+        "2026-11-15 — Unified full-page runner + regression gate"
       ]
     },
     {
