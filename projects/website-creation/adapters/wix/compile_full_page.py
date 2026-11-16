@@ -60,7 +60,7 @@ def css_element(cid, geo, bp):
 
 
 def paint(section, bp):
-    source = section['desktopBackground' if bp == 1280 else 'mobileBackground']
+    source = section['desktopBackground' if bp != 390 else 'mobileBackground']
     vals = {(x.get('color'), x.get('image')) for x in source.get('candidates', [])}
     if source['status'] == 'AMBIGUOUS' or len(vals) > 1:
         raise Blocked('Ambiguous section background '+section['sourceSelector'])
@@ -143,7 +143,7 @@ def video_background_props(section, video_files, bp):
     payload = native_video_payload(layer, video_files)
     js = json.dumps(payload,ensure_ascii=False)
     opts = ' videoMedia={'+js+'} autoplay={'+json.dumps(bool(observed['autoplay']))+'} loop={'+json.dumps(bool(observed['loop']))+'} muted={'+json.dumps(bool(observed['muted']))+'} fittingType="fill" showControls={false}'
-    bp_layer = layer.get('desktop' if bp==1280 else 'mobile')
+    bp_layer = layer.get('desktop' if bp != 390 else 'mobile')
     opacity = float(bp_layer['opacity']) if bp_layer is not None else 0.0
     if opacity < 0 or opacity > 1:
         raise Blocked('Invalid captured video opacity')
@@ -209,6 +209,12 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
         raise Blocked('No source sections')
     if not allow_replace:
         raise Blocked('Explicit --allow-replace-page required; existing page content will be replaced')
+    desktop_width = recipe.get('desktopWidth', 1280)
+    if desktop_width not in (1280, 1920):
+        raise Blocked('Unsupported source desktopWidth: '+str(desktop_width))
+    expected_view = 'desktop-'+str(desktop_width)
+    if recipe.get('viewports') and (expected_view not in recipe['viewports'] or 'mobile-390' not in recipe['viewports']):
+        raise Blocked('Recipe is missing observed source desktop/mobile viewports')
     folder = get_page(root, page)
     strpath = folder / 'structure.jsx'
     s = strpath.read_text()
@@ -244,9 +250,17 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
     background = re.search(r'backgroundLayer=\{\[<Background\s+id="([^"]+)"', first)
     if not background:
         raise Blocked('Missing native Page background')
-    media = re.search(r'@media\s*\(--variants-[^)]+\)\s*\{', layout)
-    if not media:
-        raise Blocked('Missing current Wix mobile breakpoint')
+    media_blocks = list(re.finditer(r'@media\\s*\\(--variants-[^)]+\\)\\s*\\{', layout))
+    if len(media_blocks) != 1:
+        raise Blocked('Require exactly one mobile page layout media rule; avoid silently collapsing additional Wix breakpoints')
+    media = media_blocks[0]
+    media_name = re.search(r'--variants-[a-zA-Z0-9_-]+', media.group(0)).group(0)
+    theme_file = Path(root) / 'packages/site-app/src/global/themes/theme.css'
+    if not theme_file.is_file():
+        raise Blocked('Fresh Wix theme CSS missing')
+    media_max = re.search(r'@custom-media\\s+'+re.escape(media_name)+r'\\s+\\(max-width:\\s*(\\d+)px\\)', theme_file.read_text())
+    if not media_max or not (390 <= int(media_max.group(1)) < desktop_width):
+        raise Blocked('Selected page breakpoint is not a verified Wix mobile max-width')
     desktop, mobile = layout[:media.start()], layout[media.end():]
     keep = {expected_id, header.group(1), footer.group(1), background.group(1)}
     desktop = retain_exported_rules(desktop, keep)
@@ -264,7 +278,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
             ids.append(cid)
             originals.append({'sourceSelector': e['sourceSelector'], 'targetProvisionalId': cid,
                               'sourceSection': sec['sourceSelector'], 'type': e['type'], 'asset': e.get('asset')})
-            dr.append(css_element(cid, e.get('desktop'), 1280))
+            dr.append(css_element(cid, e.get('desktop'), desktop_width))
             mr.append(css_element(cid, e.get('mobile'), 390))
             if e['type'] == 'image':
                 asset = e.get('asset')
@@ -297,7 +311,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                 sty += f'\n.{cid} {{ color:{color}; text-align:{st.get("textAlign") or "left"}; }}\n'
             else:
                 raise Blocked('Unsupported source type '+str(e['type']))
-        video_props, video_opacity_desktop = video_background_props(sec, video_files, 1280)
+        video_props, video_opacity_desktop = video_background_props(sec, video_files, desktop_width)
         _, video_opacity_mobile = video_background_props(sec, video_files, 390)
         sec_js.append(f'''        <Section id="{sid}" className="{sid}">
             <InternalContainer id="{ic}" className="{ic}" backgroundLayer={{[<Background id="{bg}" className="{bg}"{video_props} />]}}>
@@ -307,13 +321,13 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
         if video_props:
             sty += f'\n.{bg} {{ --backgroundMediaOpacity:{num(video_opacity_desktop)}; }}\n'
             sty += '\n'+media.group(0)+'\n'+f'.{bg} {{ --backgroundMediaOpacity:{num(video_opacity_mobile)}; }}'+'\n}\n'
-        dr.append(css_section(sid, ic, bg, hd, row, 1280))
+        dr.append(css_section(sid, ic, bg, hd, row, desktop_width))
         mr.append(css_section(sid, ic, bg, hm, row, 390))
-        for bp in (1280, 390):
+        for bp in (desktop_width, 390):
             color = paint(sec, bp)
             if color:
                 rule = f'.{bg} {{ --backgroundImage:none; --backgroundColor:{color}; --backgroundColorOpacity:1; }}'
-                if bp == 1280:
+                if bp != 390:
                     sty += '\n' + rule + '\n'
                 else:
                     sty += '\n' + media.group(0) + '\n' + rule + '\n}\n'
