@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "8bcb81362d83c1cba257c0ad43a5fe4d953142c2",
-  "generated_at": "2026-11-16T14:02:04-05:00",
+  "repository_commit": "3bfafa40add4a7fce223c964ca5cdcf7519d0a22",
+  "generated_at": "2026-11-16T14:05:28-05:00",
   "artifact_count": 635,
   "artifacts": [
     {
@@ -13008,7 +13008,7 @@
       "domain": "website-creation",
       "status": null,
       "date": "2026-11-15. This is **reusable technical knowledge**, not a migration of one ZIP, donor page or Wix instance. The owner supplies a new fingerprint and target page separately. Source of proof: [native Wix geometry readback evidence](../../decisions/WIX_STUDIO2_SOURCE_VIEWPORT_COORDINATES.md).",
-      "sha256": "da38622f6149cd805273748e407768565120104e76261403759147fcb2e7536c",
+      "sha256": "d5eb1c298cc2204a2dfcf92add9a974a18337330eb45762ee74f8005f380a1f2",
       "headings": [
         "LOCALDESIGN → WIX STUDIO TWO — NATIVE GEOMETRY TRANSFER",
         "HARD TECHNICAL STANDARD — NEW CHAT KNOWLEDGE START HERE",
@@ -13034,7 +13034,8 @@
         "Universal operator input and exact target scope",
         "One algorithm, executed without per-page scripts",
         "Scanner delta policy (extend existing LocalDesign, never rewrite)",
-        "Minimum repeatable acceptance fixtures"
+        "Minimum repeatable acceptance fixtures",
+        "Viewport-contract rule (observed Desktop 1920 / Mobile 390)"
       ]
     },
     {
