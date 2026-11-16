@@ -124,14 +124,60 @@ class FullPageNormalizerTests(unittest.TestCase):
         fp["_origamiSourceContract"]={"schema":"localdesign.origami-source-contract.v1",
             "pages":[{"byViewport":{
                 "desktop-1280":{"sectionCandidates":[
-                    {"sourceSelector":"div#alpha"},{"sourceSelector":"div#beta"}]},
-                "mobile-390":{"sectionCandidates":[]}}}]}
+                    {"sourceSelector":"div#alpha"},{"sourceSelector":"div#beta"}],
+                    "measuredNodes":len(views["desktop-1280"]["data"]["nodes"])},
+                "mobile-390":{"sectionCandidates":[],
+                    "measuredNodes":len(views["mobile-390"]["data"]["nodes"])}}}]}
         recipe=mod.normalize(fp,views,None)
         self.assertEqual([s["sourceSelector"] for s in recipe["sections"]],
                          ["div#alpha","div#beta"])
+        self.assertTrue(any(x["reason"]=="SOURCE_OBJECT_LEDGER_MISSING_RECAPTURE_V2_5_4"
+                            for x in recipe["unsupported"]))
         fp["_origamiSourceContract"]["pages"][0]["byViewport"]["desktop-1280"]["sectionCandidates"].append({"sourceSelector":"div#missing"})
         with self.assertRaises(mod.Blocked):
             mod.normalize(fp,views,None)
+
+    def test_strict_object_ledger_unmapped_link_vector_fail_closed(self):
+        fp,views=fixture()
+        width=lambda view:len(views[view]["data"]["nodes"])
+        ledger=[]
+        for view in ("desktop-1280","mobile-390"):
+            for name in ("div#alpha > p","div#beta > div > img",
+                         "div#footer_0 > div > img"):
+                ledger.append({"view":view,"sourceSelector":name,
+                   "ownerKind":"flow-section",
+                   "status":"SOURCE_CAPTURED_TARGET_MAPPING_REQUIRED",
+                   "reason":None,"href":None})
+        contract={"schema":"localdesign.origami-source-contract.v1",
+          "pages":[{"byViewport":{
+            "desktop-1280":{"sectionCandidates":[
+              {"sourceSelector":"div#alpha"},{"sourceSelector":"div#beta"}],
+              "measuredNodes":width("desktop-1280")},
+            "mobile-390":{"sectionCandidates":[],
+              "measuredNodes":width("mobile-390")}},
+            "objectLedger":ledger,"coverage":{"mandatoryObjects":len(ledger)}}]}
+        fp["_origamiSourceContract"]=contract
+        clean=mod.normalize(fp,views,None)
+        self.assertEqual(clean["unsupported"],[])
+        self.assertEqual(clean["sourceObjectCoverage"]["mandatoryObjects"],6)
+        # A native text element without a verified target link remains blocked.
+        ledger[0]["href"]="https://example.org/contact"
+        links=mod.normalize(fp,views,None)
+        self.assertTrue(any(x["reason"]=="NATIVE_LINK_MAPPING_UNVERIFIED"
+                            for x in links["unsupported"]))
+        ledger[0]["href"]=None
+        # Original SVG does not prove native Wix SvgImage upload/readback.
+        svg=node("div#alpha > svg",tag="svg",x=10,y=25,w=40,h=35)
+        views["desktop-1280"]["data"]["nodes"].append(svg)
+        contract["pages"][0]["byViewport"]["desktop-1280"]["measuredNodes"]=width("desktop-1280")
+        ledger.append({"view":"desktop-1280","sourceSelector":"div#alpha > svg",
+           "ownerKind":"flow-section","status":"BLOCKED_TARGET_CAPABILITY",
+           "reason":"SVG_NATIVE_VECTORART_UPLOAD_REQUIRED","href":None})
+        contract["pages"][0]["coverage"]["mandatoryObjects"]=len(ledger)
+        blocked=mod.normalize(fp,views,None)
+        reasons={x["reason"] for x in blocked["unsupported"]}
+        self.assertIn("SVG_NATIVE_VECTORART_UPLOAD_REQUIRED",reasons)
+        self.assertIn("SOURCE_OBJECT_NOT_MAPPED_TO_NATIVE",reasons)
 
     @unittest.skipUnless(os.getenv("LOCALDESIGN_VESPER_ZIP"),
                          "set LOCALDESIGN_VESPER_ZIP to rerun actual owner-file regression")
