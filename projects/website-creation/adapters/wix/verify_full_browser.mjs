@@ -24,7 +24,9 @@ const mappings=recipe.sections.map((section,i)=>{
  if(found.length!==section.elements.length)throw Error('Section '+i+' element coverage mismatch');
  return {wixId:sections[i][1],items:found.map((m,j)=>{
   const id=m[2].match(/\bid="([^"]+)"/);if(!id)throw Error('Native element ID missing');
-  return {wixId:id[1],source:section.elements[j]};
+  const uri=m[2].match(/\\buri:\\s*['"]([^'"]+)['"]/);
+  return {wixId:id[1],source:section.elements[j],
+    mediaUri:m[1]==='Image'?uri?.[1]||null:null};
  })};
 });
 const round=n=>Math.round(n*100)/100;
@@ -71,7 +73,8 @@ const round=n=>Math.round(n*100)/100;
       const e=rect(el),cs=getComputedStyle(el),img=el.querySelector('img');
       items.push({missing:false,visible:cs.visibility!=='hidden'&&e.w>.1&&e.h>.1,
        local:{centerX:e.x-s.x-s.w/2,x:e.x-s.x,y:e.y-s.y,w:e.w,h:e.h},
-       imageURL:img?.currentSrc||img?.src||null});
+       imageURL:img?.currentSrc||img?.src||null,
+       naturalImageWidth:img?.naturalWidth||0});
      }
      rows.push({missing:false,section:s,items});
     }
@@ -99,8 +102,13 @@ const round=n=>Math.round(n*100)/100;
       if(Math.abs(delta[k])>1)localPass=false;
      }
      if(e.type==='image'){
-      const basename=decodeURIComponent(new URL(e.asset).pathname.split('/').pop()).toLowerCase();
-      if(!got.imageURL||!got.imageURL.toLowerCase().includes(basename))assetsPass=false;
+      // Wix serves some media (notably GIFs) by internal ID without the
+      // original filename. The readback verifier independently checked
+      // the source filename, so compare the actual Wix Media URI here.
+      const mediaUri=mappings[i].items[j].mediaUri;
+      if(!mediaUri||!got.imageURL||
+         !decodeURIComponent(got.imageURL).includes(mediaUri)||
+         !got.naturalImageWidth)assetsPass=false;
      }
      items.push({j,delta});
     }
