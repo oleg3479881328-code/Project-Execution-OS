@@ -2,6 +2,79 @@
 # Execute only in authenticated official Wix Studio Two/Origami environment.
 # LocalDesign Fingerprint -> native test Wix page -> official readback QA.
 set -euo pipefail
+# Reuse the existing pipeline: whole page is an opt-in mode; old one-section mode remains.
+if [[ "${WIX_MODE:-section}" == "full-page" ]]; then
+  : "${WIX_SITE_ID:?Set existing Wix site ID}"
+  : "${FINGERPRINT_ZIP:?Set LocalDesign Fingerprint ZIP}"
+  : "${WIX_TARGET_PAGE:?Set exact existing Wix page folder}"
+  : "${WIX_TARGET_PAGE_ID:?Set page ID from current export}"
+  [[ "${APPROVED_REPLACE_PAGE:-}" == "YES" ]] || { echo "BLOCKED: require APPROVED_REPLACE_PAGE=YES" >&2; exit 3; }
+  [[ "$WIX_TARGET_PAGE" =~ ^[a-z0-9-]+$ && "$WIX_TARGET_PAGE" != home ]] || { echo "BLOCKED: explicit non-home target required" >&2; exit 3; }
+  HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  WORK="${WIX_WORK_DIR:-$(mktemp -d)}"
+  mkdir -p "$WORK"
+  trap 'printf "QA workspace: %s\n" "$WORK"' EXIT
+  RECIPE_ARGS=(--fingerprint "$FINGERPRINT_ZIP" --out "$WORK/recipe.json")
+  [[ -n "${WIX_SOURCE_SECTIONS:-}" ]] && RECIPE_ARGS+=(--sections "$WIX_SOURCE_SECTIONS")
+  python3 "$HERE/full_page_recipe.py" "${RECIPE_ARGS[@]}"
+  python3 - "$WORK/recipe.json" <<'PY'
+import json,sys
+r=json.load(open(sys.argv[1]))
+if r.get('unsupported'):
+  raise SystemExit('BLOCKED: unsupported source layers '+json.dumps(r['unsupported'][:3]))
+images=[e['asset'] for s in r['sections'] for e in s['elements'] if e['type']=='image']
+if not images or any(not url.startswith(('https://','http://')) for url in images):
+  raise SystemExit('BLOCKED: exact source image evidence incomplete')
+print('SOURCE_VERIFIED',len(r['sections']),'sections',sum(len(s['elements']) for s in r['sections']),'elements',len(images),'images')
+PY
+  wix origami export-site --site "$WIX_SITE_ID" -d "$WORK/wix-site" --json | tee "$WORK/export-result.json"
+  python3 "$HERE/compile_full_page.py" compile --recipe "$WORK/recipe.json" \
+    --export "$WORK/wix-site" --page "$WIX_TARGET_PAGE" \
+    --page-id "$WIX_TARGET_PAGE_ID" --allow-replace-page
+  wix origami upload-media --site "$WIX_SITE_ID" -d "$WORK/wix-site" --json | tee "$WORK/media-result.json"
+  python3 - "$WORK/media-result.json" "$WORK/recipe.json" <<'PY'
+import json,sys
+m=json.load(open(sys.argv[1]));r=json.load(open(sys.argv[2]))
+expected=sum(e['type']=='image' for s in r['sections'] for e in s['elements'])
+if m.get('failed') or len(m.get('uploaded',[]))!=expected:
+  raise SystemExit('BLOCKED: source media incomplete '+str({'expected':expected,'uploaded':len(m.get('uploaded',[])),'failed':m.get('failed')}))
+print('EXACT_MEDIA_PASS',expected)
+PY
+  python3 "$HERE/compile_full_page.py" finalize-media --export "$WORK/wix-site" --page "$WIX_TARGET_PAGE"
+  cd "$WORK/wix-site"
+  yarn install
+  yarn lint && yarn tsc && yarn build
+  python3 - "$WIX_TARGET_PAGE" <<'PY'
+import subprocess,sys
+target='packages/site-app/src/pages/'+sys.argv[1]+'/'
+s=subprocess.run(['git','status','--porcelain'],text=True,capture_output=True,check=True).stdout
+files=[line[3:] for line in s.splitlines() if line.strip()]
+bad=[x for x in files if not x.startswith(target)]
+if bad or not files:raise SystemExit('BLOCKED: scope changed outside page or empty '+repr(bad))
+print('TARGET_SCOPE_PASS',len(files))
+PY
+  wix origami import-site --site "$WIX_SITE_ID" -d "$WORK/wix-site" --json | tee "$WORK/import-result.json"
+  python3 - "$WORK/import-result.json" "$WIX_TARGET_PAGE" <<'PY'
+import json,sys
+v=json.load(open(sys.argv[1]));expected='pages/'+sys.argv[2]
+if v.get('updated')!=[expected] or v.get('deleted') or v.get('renamed'):
+  raise SystemExit('BLOCKED: import scope unexpected '+repr({k:v.get(k) for k in ('updated','deleted','renamed')}))
+print('WIX_IMPORTED',v.get('siteRevisions'))
+PY
+  wix origami export-site --site "$WIX_SITE_ID" -d "$WORK/wix-readback" --json | tee "$WORK/readback-result.json"
+  python3 "$HERE/verify_full_page.py" --recipe "$WORK/recipe.json" \
+    --readback "$WORK/wix-readback" --page "$WIX_TARGET_PAGE" --out "$WORK/readback-qa.json"
+  if [[ -n "${PREVIEW_URL:-}" ]]; then
+    WIX_TARGET_PAGE="$WIX_TARGET_PAGE" node "$HERE/verify_full_browser.mjs" \
+      "$WORK/recipe.json" "$PREVIEW_URL" "$WORK/wix-readback" "$WORK/screenshots" |
+      tee "$WORK/browser-qa.json"
+  else
+    echo 'BROWSER_QA_BLOCKED: official PREVIEW_URL is required; do not publish to bypass.' >&2
+  fi
+  echo 'No publication. Browser screenshot pixel parity and interaction gates require separate QA.'
+  exit 0
+fi
+
 : "${WIX_SITE_ID:?Set WIX_SITE_ID}"
 : "${FINGERPRINT_ZIP:?Set FINGERPRINT_ZIP}"
 : "${SOURCE_SECTION:?Set SOURCE_SECTION, e.g. div#experience}"
