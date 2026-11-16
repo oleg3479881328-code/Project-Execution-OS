@@ -13,6 +13,8 @@ if(!recipePath||!/^https?:\/\//.test(url||'')||!exportRoot||!shotDir){
 let pw;
 try{pw=require('playwright')}catch{try{pw=require('/usr/local/lib/node_modules/playwright')}catch{console.error('BLOCKED: Playwright unavailable');process.exit(2)}}
 const recipe=JSON.parse(fs.readFileSync(recipePath,'utf8'));
+const desktopWidth=recipe.desktopWidth||1280;
+if(![1280,1920].includes(desktopWidth)||!recipe.viewports?.['desktop-'+desktopWidth]?.viewport||!recipe.viewports?.['mobile-390']?.viewport)throw Error('Missing observed target viewports');
 if(recipe.schema!=='localdesign.wix-page-recipe.v1')throw Error('Wrong recipe schema');
 const target=process.env.WIX_TARGET_PAGE;
 if(!target)throw Error('Set WIX_TARGET_PAGE');
@@ -37,8 +39,8 @@ const round=n=>Math.round(n*100)/100;
  const browser=await pw.chromium.launch({headless:true,args:['--no-sandbox']});
  const views=[];
  try{
-  for(const [label,width] of [['desktop-1280',1280],['mobile-390',390]]){
-   const page=await browser.newPage({viewport:{width,height:911},deviceScaleFactor:1});
+  for(const [label,width] of [['desktop-'+desktopWidth,desktopWidth],['mobile-390',390]]){
+   const page=await browser.newPage({viewport:{width,height:recipe.viewports[label].viewport.height},deviceScaleFactor:recipe.viewports[label].viewport.dpr||1});
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForTimeout(1500);
@@ -47,7 +49,7 @@ const round=n=>Math.round(n*100)/100;
    // image using the actual browser before the native DOM/asset QA.
    for (const group of mappings) {
     for (const item of group.items) {
-     const expected=item.source[label==='desktop-1280'?'desktop':'mobile'];
+     const expected=item.source[label==='mobile-390'?'mobile':'desktop'];
      if (item.source.type!=='image'||!expected) continue;
      const frame=page.locator('[id="'+item.wixId+'"]');
      if (await frame.count()!==1) continue;
