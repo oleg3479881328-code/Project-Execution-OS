@@ -274,7 +274,7 @@ def normalize(fp, views, section_selectors):
                         p = urlsplit(url)
                         return (p.scheme, p.netloc, re.sub(r'^/[0-9]+/', '/', p.path), p.query)
                     if len(desktop_assets) != 1 or len(mobile_assets) != 1 or len(assets) != 2 or source_identity(assets[0]) != source_identity(assets[1]):
-                        unsupported.append({'selector': name, 'reason': 'multiple unmatched source asset URLs', 'assets': assets})
+                        unsupported.append({'selector': name, 'reason': 'multiple source asset URLs (unmatched)', 'assets': assets})
                         continue
                 asset = desktop_assets[0] if desktop_assets else assets[0]
                 if not (asset.startswith('https://') or asset.startswith('http://')):
