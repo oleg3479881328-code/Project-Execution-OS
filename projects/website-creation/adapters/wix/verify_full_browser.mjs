@@ -24,7 +24,7 @@ const mappings=recipe.sections.map((section,i)=>{
  if(found.length!==section.elements.length)throw Error('Section '+i+' element coverage mismatch');
  return {wixId:sections[i][1],items:found.map((m,j)=>{
   const id=m[2].match(/\bid="([^"]+)"/);if(!id)throw Error('Native element ID missing');
-  const uri=m[2].match(/\\buri:\\s*['"]([^'"]+)['"]/);
+  const uri=m[2].match(/\buri:\s*['"]([^'"]+)['"]/);
   return {wixId:id[1],source:section.elements[j],
     mediaUri:m[1]==='Image'?uri?.[1]||null:null};
  })};
