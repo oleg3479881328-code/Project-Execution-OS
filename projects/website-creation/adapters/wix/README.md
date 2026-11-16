@@ -125,3 +125,23 @@ wix origami export-site --site SITE_ID -d ../readback --json
 - Earlier manual native full-page import + readback (rev42) and native Background colors (rev45) are proven separately; neither constitutes one-command fully automated universal browser QA.
 
 Use this README to run, and the single existing canonical standard for knowledge. When the real full-page acceptance gates pass on two different donor pages/targets, promote only this same adapter; do not create one-off builders.
+
+
+### Single-command full-page mode (candidate; native Wix workspace required)
+
+The **existing** [run_wix_pipeline.sh](run_wix_pipeline.sh) now has an opt-in `WIX_MODE=full-page`, retaining its original one-section route by default. It orchestrates the modules listed here and uses official Wix Origami for all site mutations:
+
+```bash
+WIX_MODE=full-page \
+WIX_SITE_ID="<existing site ID>" \
+FINGERPRINT_ZIP="<source LocalDesign v2.4 ZIP>" \
+WIX_TARGET_PAGE="<existing page folder>" \
+WIX_TARGET_PAGE_ID="<verified page ID>" \
+APPROVED_REPLACE_PAGE=YES \
+PREVIEW_URL="<verified official draft/public preview URL>" \
+bash run_wix_pipeline.sh
+```
+
+Optional `WIX_SOURCE_SECTIONS` points to a JSON array of source selectors only if section ordering is ambiguous; normal automatic discovery must be tried first. Optional `WIX_WORK_DIR` keeps the reproducible evidence directory. Omit `PREVIEW_URL` only to stop at `READBACK` with **Browser QA BLOCKED**, never call the page `DONE`. This mode **REPLACES authored content on the authorized page**; do not run it on another existing page without explicit user approval. No publish operation is included.
+
+The source-coverage gates are implemented in [verify_full_page.py](verify_full_page.py), and actual Playwright DOM/asset gates in [verify_full_browser.mjs](verify_full_browser.mjs). Browser scripts write screenshots but do **not** claim automated screenshot pixel-diff parity or interaction validation. **These full-page modules have not yet passed complete real-Wix importer/readback/browser acceptance; status: CANDIDATE, not production one-click proven.** Track acceptance in [#171](https://github.com/oleg3479881328-code/Project-Execution-OS/issues/171).
