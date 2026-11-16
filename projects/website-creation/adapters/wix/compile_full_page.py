@@ -191,7 +191,7 @@ def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allo
             raise Blocked('Page root layout rule missing')
         # Wix often inherits Page rows on mobile without repeating Page CSS.
         # Add only a page-local override inside the already verified mobile rule.
-        css = f'.{page_id} {{ grid-template-rows: {rows}; }}\n' + css
+        css = f'.{page_id} {{ grid-template-columns: minmax(0px, 1fr); grid-template-rows: {rows}; }}\n' + css
     def replace_footer(m):
         block=m.group()
         block, c=re.subn(r'grid-row:\s*\d+\s*/\s*\d+', 'grid-row: '+str(len(heights)+2)+' / '+str(len(heights)+3), block, count=1)
