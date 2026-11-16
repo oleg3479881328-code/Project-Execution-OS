@@ -43,7 +43,10 @@ def read_zip(file):
     if len(pages) != 1:
         raise Blocked('Exactly one source page required per recipe')
     views = pages[0].get('views', {})
-    for required in ('desktop-1280', 'mobile-390'):
+    desktop_keys = [key for key in ('desktop-1280', 'desktop-1920') if key in views]
+    if len(desktop_keys) != 1:
+        raise Blocked('Require exactly one supported observed desktop view: desktop-1280 or desktop-1920')
+    for required in (desktop_keys[0], 'mobile-390'):
         v = views.get(required)
         if not v or v.get('status') != 'observed' or v.get('data', {}).get('truncated'):
             raise Blocked('Missing complete observed ' + required)
@@ -63,7 +66,7 @@ def direct_sections(views, requested):
     """Conservatively detect broad top-level DOM sections, including mobile-only menu.
     An ambiguous layout must provide explicit source selector order, never guesses.
     """
-    desktop = views['desktop-1280']['data']
+    desktop = views[next(key for key in ('desktop-1280', 'desktop-1920') if key in views)]['data']
     nodes = desktop['nodes']
     by_selector = {n['selector']: n for n in nodes}
     if len(by_selector) != len(nodes):
@@ -156,7 +159,8 @@ def capture_geometry(node, sec, desktop):
 
 def normalize(fp, views, section_selectors):
     selectors = direct_sections(views, section_selectors)
-    dn = views['desktop-1280']['data']['nodes']
+    desktop_key = next(key for key in ('desktop-1280', 'desktop-1920') if key in views)
+    dn = views[desktop_key]['data']['nodes']
     mn = views['mobile-390']['data']['nodes']
     dmap = {x['selector']: x for x in dn}
     mmap = {x['selector']: x for x in mn}
@@ -203,7 +207,9 @@ def normalize(fp, views, section_selectors):
             if not visible(d) and not visible(m):
                 continue
             src = d if visible(d) else m
-            assets = list(dict.fromkeys((d or {}).get('assets', []) + (m or {}).get('assets', [])))
+            desktop_assets = list(dict.fromkeys((d or {}).get('assets', [])))
+            mobile_assets = list(dict.fromkeys((m or {}).get('assets', [])))
+            assets = list(dict.fromkeys(desktop_assets + mobile_assets))
             children = [x for x in candidate if is_descendant(x, name) and ((dmap.get(x) or mmap.get(x) or {}).get('text') or '').strip()]
             text = (src.get('text') or '').strip()
             typ = 'text' if src.get('tag') in TEXT_TAGS and text and not children else 'image' if assets else None
@@ -212,9 +218,18 @@ def normalize(fp, views, section_selectors):
             asset = None
             if typ == 'image':
                 if len(assets) > 1:
-                    unsupported.append({'selector': name, 'reason': 'multiple source asset URLs', 'assets': assets})
-                    continue
-                asset = assets[0]
+                    # Same Showit media identity may have observed size-qualified URLs
+                    # such as /1600/HASH/shared/name.jpg and /800/HASH/shared/name.jpg.
+                    # Only collapse a proven same stable source identity; retain exact
+                    # observed URLs separately for media provenance and visual QA.
+                    from urllib.parse import urlsplit
+                    def source_identity(url):
+                        p = urlsplit(url)
+                        return (p.scheme, p.netloc, re.sub(r'^/\\d+/', '/', p.path), p.query)
+                    if len(desktop_assets) != 1 or len(mobile_assets) != 1 or len(assets) != 2 or source_identity(assets[0]) != source_identity(assets[1]):
+                        unsupported.append({'selector': name, 'reason': 'multiple unmatched source asset URLs', 'assets': assets})
+                        continue
+                asset = desktop_assets[0] if desktop_assets else assets[0]
                 if not (asset.startswith('https://') or asset.startswith('http://')):
                     unsupported.append({'selector': name, 'reason': 'source asset URL not HTTP(S)'})
                     continue
@@ -223,6 +238,8 @@ def normalize(fp, views, section_selectors):
                     'objectFit', 'objectPosition', 'zIndex', 'position', 'transform')
             elements.append({'sourceSelector': name, 'type': typ, 'tag': src.get('tag'),
                              'text': text if typ == 'text' else None, 'asset': asset,
+                             'mobileAsset': mobile_assets[0] if typ == 'image' and len(mobile_assets) == 1 else None,
+                             'assetVariants': assets if typ == 'image' else [],
                              'desktop': capture_geometry(d, sd, True),
                              'mobile': capture_geometry(m, sm, False),
                              'desktopStyle': {k: d['styles'].get(k) for k in keys if d and k in d['styles']},
@@ -235,6 +252,7 @@ def normalize(fp, views, section_selectors):
     viewsinfo = {k: {'viewport': v['data'].get('viewport'), 'capturedAt': v['data'].get('capturedAt'),
                      'nodeCount': len(v['data']['nodes'])} for k,v in views.items() if v.get('status') == 'observed'}
     result = {'schema': SCHEMA, 'source': source, 'sourceSchema': CAPTURE,
+              'desktopWidth': int(views[desktop_key]['data']['viewport']['width']),
               'viewports': viewsinfo, 'sections': out, 'unsupported': unsupported,
               'acceptance': 'RECIPE_ONLY_NOT_WIX_IMPORTED'}
     canonical = json.dumps(result, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
