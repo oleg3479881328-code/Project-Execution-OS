@@ -37,6 +37,27 @@ def get_page(root, page):
     return p
 
 
+def source_text_style_css(style):
+    """Observed LocalDesign native text styling; reject non-CSS source markup."""
+    props = {
+        'fontFamily': 'font-family', 'fontSize': 'font-size',
+        'lineHeight': 'line-height', 'letterSpacing': 'letter-spacing',
+        'fontWeight': 'font-weight', 'fontStyle': 'font-style',
+        'textTransform': 'text-transform', 'textAlign': 'text-align',
+        'color': 'color',
+    }
+    rules = []
+    for source_key, css_key in props.items():
+        value = (style or {}).get(source_key)
+        if value is None or value == '':
+            continue
+        value = str(value)
+        if not re.fullmatch(r"""[a-zA-Z0-9 _'"#.,()%/+-]+""", value):
+            raise Blocked('Invalid observed source text CSS property ' + source_key)
+        rules.append(css_key + ':' + value)
+    return '; '.join(rules)
+
+
 def css_section(id, ic, bg, height, row, bp):
     d = f'--spx-ref-width:{bp}; --spx-resolver-type:fixed;'
     vis = 'visible' if float(height) > 0 else 'hidden'
@@ -323,9 +344,15 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                 tag = tag if tag in ('p', 'h1', 'h2', 'h3', 'h4') else 'p'
                 content = f'<{tag}>{html.escape(e.get("text") or "", quote=False)}</{tag}>'
                 children.append(f'                <WRichText id="{cid}" className="{cid}" richText={{{{ id: "data-{cid}", type: "Builder.RichText", html: {json.dumps(content, ensure_ascii=False)} }}}} />')
-                st = e.get('desktopStyle') or {}
-                color = st.get('color') or 'rgb(0,0,0)'
-                sty += f'\n.{cid} {{ color:{color}; text-align:{st.get("textAlign") or "left"}; }}\n'
+                for style_key, is_mobile in (('desktopStyle', False), ('mobileStyle', True)):
+                    css = source_text_style_css(e.get(style_key) or {})
+                    if not css:
+                        continue
+                    rule = f'.{cid} {{ {css}; }}'
+                    if is_mobile:
+                        sty += '\n' + mobile_at_rule + '\n' + rule + '\n}\n'
+                    else:
+                        sty += '\n' + rule + '\n'
             else:
                 raise Blocked('Unsupported source type '+str(e['type']))
         video_props, video_opacity_desktop = video_background_props(sec, video_files, desktop_width)
