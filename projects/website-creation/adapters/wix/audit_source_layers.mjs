@@ -22,6 +22,8 @@ try{pw=require('playwright')}catch{
  try{pw=require('/usr/local/lib/node_modules/playwright')}
  catch{console.error('BLOCKED: Existing Playwright not available');process.exit(2)}
 }
+const desktopWidth=recipe.desktopWidth||1280;
+if(![1280,1920].includes(desktopWidth)||!recipe.viewports?.['desktop-'+desktopWidth]?.viewport||!recipe.viewports?.['mobile-390']?.viewport)throw Error('Recipe desktop/mobile viewport evidence missing');
 const normalizedUrl=value=>{
  if(!value)return null;
  try{return new URL(value,recipe.source).href}catch{return null}
@@ -30,7 +32,7 @@ const normalizedUrl=value=>{
  const browser=await pw.chromium.launch({headless:true,args:['--no-sandbox']});
  const views=[];
  try{
-  for(const [view,width,height] of [['desktop-1280',1280,911],['mobile-390',390,844]]){
+  for(const [view,width,height] of [['desktop-'+desktopWidth,desktopWidth,recipe.viewports['desktop-'+desktopWidth].viewport.height],['mobile-390',390,recipe.viewports['mobile-390'].viewport.height]]){
    const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});
    const response=await page.goto(recipe.source,{waitUntil:'domcontentloaded',timeout:45000});
    if(!response||response.status()!==200)throw Error('Donor unavailable: '+view+' '+response?.status());
@@ -118,7 +120,7 @@ const normalizedUrl=value=>{
       autoplay:v.autoplay,loop:v.loop,muted:v.muted,controls:v.controls,
       poster:v.poster||null,fallbackPoster:v.fallbackPoster||null}:null;};
      sec.dynamicLayers=[...(sec.dynamicLayers||[]).filter(x=>x.type!=='video'),
-      {type:'video',sourceUrl:src,desktop:byView('desktop-1280'),mobile:byView('mobile-390'),
+      {type:'video',sourceUrl:src,desktop:byView('desktop-'+desktopWidth),mobile:byView('mobile-390'),
        provenance:'DONOR_BROWSER_OBSERVED'}];
     }
    }
