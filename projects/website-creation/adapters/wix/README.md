@@ -200,3 +200,12 @@ node audit_source_layers.mjs /path/to/normalized.recipe.json /path/to/source-lay
 ```
 
 **Current acceptance:** Full static geometry and media on saved `blank-2` revision 47 = PASS on 1280/390; missing video means complete visual 1:1 = BLOCKED. No additional editor changes or publishing were made by this audit.
+
+
+## LocalDesign v2.5.1 Origami-ready source contract (draft adapter compatibility)
+
+Companion Chrome extension PR: https://github.com/oleg3479881328-code/LocalDesign/pull/3 . This extends the **existing** scanner's original ZIP with `wix-origami/origami-source-contract.json`, but never pretends to create importable Wix page code or target-specific Site Styles outside the Wix site.
+
+The existing `full_page_recipe.py` accepts the optional `localdesign.origami-source-contract.v1` file and verifies measured desktop section selectors before using candidate order. For existing v2.4 ZIPs without this contract it continues source geometry discovery, now excluding same-frame nested painted background views. It also attaches original MP4 to native-ready recipe `sections[].dynamicLayers` from a visible `video` and zero-size nested `source` when available (or from new `videoEvidence`). It never treats the MP4 as Image. The existing `compile_full_page.py` still requires the official READY Wix Media Manager video descriptor and source video QA; no default replacement or guessed native video URI. Per-site Theme/Site Styles are still resolved against a fresh target export and require explicit shared-global modification authorization.
+
+**Verified:** 7 passing PEOS regression cases (1 separately gated real owner ZIP test skipped); LocalDesign full `npm test` succeeds in its companion branch. **Not accepted:** new Vesper Chrome recapture → native target Wix Page import/readback/browser visual and video QA. This draft adapter is not a proof of fully automated full-site parity. Do not publish or overwrite any owner target page without exact authorized IDs and scope. Acceptance tracked in issue #171 and PEOS PR #172.
