@@ -225,7 +225,7 @@ def normalize(fp, views, section_selectors):
                     from urllib.parse import urlsplit
                     def source_identity(url):
                         p = urlsplit(url)
-                        return (p.scheme, p.netloc, re.sub(r'^/\\d+/', '/', p.path), p.query)
+                        return (p.scheme, p.netloc, re.sub(r'^/[0-9]+/', '/', p.path), p.query)
                     if len(desktop_assets) != 1 or len(mobile_assets) != 1 or len(assets) != 2 or source_identity(assets[0]) != source_identity(assets[1]):
                         unsupported.append({'selector': name, 'reason': 'multiple unmatched source asset URLs', 'assets': assets})
                         continue
