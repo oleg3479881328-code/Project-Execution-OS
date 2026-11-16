@@ -359,6 +359,15 @@ def normalize(fp, views, section_selectors):
             declared = (by_view.get(view_key) or {}).get('measuredNodes')
             if declared != expected_count:
                 raise Blocked('Origami contract node count differs from observed '+view_key)
+        # Navigation roots themselves may have no text/media and thus no
+        # ledger row. They still require a native Menu/Header contract.
+        for view_key in expected_views:
+            for nav in (by_view.get(view_key) or {}).get('navigationCandidates') or []:
+                unsupported.append({'selector':nav.get('sourceSelector'),
+                                    'view':view_key,'reason':'DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED'})
+            for overlay in (by_view.get(view_key) or {}).get('overlayCandidates') or []:
+                unsupported.append({'selector':overlay.get('sourceSelector'),
+                                    'view':view_key,'reason':'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'})
         ledger = cp.get('objectLedger')
         if not isinstance(ledger, list):
             unsupported.append({'selector':'SOURCE_CONTRACT',
@@ -392,6 +401,15 @@ def normalize(fp, views, section_selectors):
             if not row.get('ownerKind'):
                 unsupported.append({'selector':selector,'view':view,
                                     'reason':'SOURCE_OBJECT_OWNER_MISSING'})
+            # The existing full-page writer preserves the target's shared
+            # Header/Footer and does NOT implement donor Menu/Nav. Explicitly
+            # block these scopes before Origami import instead of claiming
+            # that preserving existing target chrome transfers donor chrome.
+            scope = row.get('ownerScope')
+            if scope in ('navigation','overlay'):
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':'DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED'
+                                      if scope=='navigation' else 'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'})
             if row.get('href'):
                 unsupported.append({'selector':selector,'view':view,
                                     'reason':'NATIVE_LINK_MAPPING_UNVERIFIED'})
