@@ -195,8 +195,12 @@ def compile_page(recipe, root, page, expected_id, allow_replace):
     newlayout = (desktop + '\n' + page_rule(ds) + ''.join(dr) + '\n' + media.group(0)
                  + mobile.rsplit('}', 1)[0] + '\n' + page_rule(ms) + ''.join(mr) + '\n}\n')
     unmapped = json.loads((folder/'unmapped.json').read_text())
-    if unmapped.get('components'):
-        raise Blocked('Target page has unmapped components; cannot destructively rewrite without mapping')
+    removed_section_ids = set(re.findall(r'<Section\\s+id="([^"]+)"', s[a:b]))
+    for component_id, data in list((unmapped.get('components') or {}).items()):
+        if component_id not in removed_section_ids or set(data) != {'anchors'}:
+            raise Blocked('Unknown unmapped component data: ' + component_id)
+        del unmapped['components'][component_id]
+    (folder/'unmapped.json').write_text(json.dumps(unmapped, indent=2))
     (folder/'structure.jsx').write_text(newjsx)
     (folder/'layout.css').write_text(newlayout)
     (folder/'style.css').write_text(sty)
