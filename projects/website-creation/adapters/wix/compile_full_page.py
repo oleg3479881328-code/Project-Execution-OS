@@ -84,7 +84,7 @@ def retain_exported_rules(css, identifiers):
     Preserve nested Wix @origami-target blocks using balanced braces.
     """
     blocks = []
-    pattern = re.compile(r'(?m)^\\s*\\.([a-zA-Z0-9_-]+)\\s*\\{')
+    pattern = re.compile(r'(?m)^\s*\.([a-zA-Z0-9_-]+)\s*\{')
     pos = 0
     while True:
         found = pattern.search(css, pos)
@@ -102,27 +102,27 @@ def retain_exported_rules(css, identifiers):
         if found.group(1) in identifiers:
             blocks.append(css[found.start():i])
         pos = i
-    return '\\n'.join(blocks)+'\\n'
+    return '\n'.join(blocks)+'\n'
 
 
 def update_page_grid(css, page_id, footer_id, heights):
     rows = '0px ' + ' '.join(num(h)+'px' for h in heights) + ' 0px'
     def replace_page(m):
         block = m.group()
-        block, count = re.subn(r'grid-template-rows:\\s*[^;\\n}]+', 'grid-template-rows: '+rows, block, count=1)
+        block, count = re.subn(r'grid-template-rows:\s*[^;\n}]+', 'grid-template-rows: '+rows, block, count=1)
         if count != 1:
             raise Blocked('Page grid-template-rows missing from real Wix export')
         return block
-    css, count = re.subn(r'\\.'+re.escape(page_id)+r'\\s*\\{[^{}]*\\}', replace_page, css, count=1)
+    css, count = re.subn(r'\.'+re.escape(page_id)+r'\s*\{[^{}]*\}', replace_page, css, count=1)
     if count != 1:
         raise Blocked('Page root layout rule missing')
     def replace_footer(m):
         block=m.group()
-        block, c=re.subn(r'grid-row:\\s*\\d+\\s*/\\s*\\d+', 'grid-row: '+str(len(heights)+2)+' / '+str(len(heights)+3), block, count=1)
+        block, c=re.subn(r'grid-row:\s*\d+\s*/\s*\d+', 'grid-row: '+str(len(heights)+2)+' / '+str(len(heights)+3), block, count=1)
         if c != 1:
             raise Blocked('Footer grid-row missing')
         return block
-    css,count = re.subn(r'\\.'+re.escape(footer_id)+r'\\s*\\{[^{}]*\\}', replace_footer, css, count=1)
+    css,count = re.subn(r'\.'+re.escape(footer_id)+r'\s*\{[^{}]*\}', replace_footer, css, count=1)
     if count != 1:
         raise Blocked('Shared Footer placement rule missing')
     return css
