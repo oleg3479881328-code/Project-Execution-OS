@@ -258,9 +258,22 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
     theme_file = Path(root) / 'packages/site-app/src/global/themes/theme.css'
     if not theme_file.is_file():
         raise Blocked('Fresh Wix theme CSS missing')
-    media_max = re.search(r'@custom-media\s+'+re.escape(media_name)+r'\s+\(max-width:\s*(\d+)px\)', theme_file.read_text())
-    if not media_max or not (390 <= int(media_max.group(1)) < desktop_width):
-        raise Blocked('Selected page breakpoint is not a verified Wix mobile max-width')
+    theme_css = theme_file.read_text()
+    media_definitions = {name: int(width) for name, width in re.findall(
+        r'@custom-media\s+(--variants-[a-zA-Z0-9_-]+)\s+\(max-width:\s*([0-9]+)px\)', theme_css)}
+    actual_mobile_max = media_definitions.get(media_name, -1)
+    if actual_mobile_max >= 390 and actual_mobile_max <= 1023:
+        target_mobile_name = media_name
+    else:
+        # The Wix 390 design breakpoint may be declared as max-width:389px;
+        # at exactly 390 CSS px it never applies. Select an already exported,
+        # narrower-than-desktop named breakpoint that includes captured 390.
+        candidates = sorted((width, name) for name, width in media_definitions.items()
+                            if 390 <= width <= 1023 and width < desktop_width)
+        if not candidates:
+            raise Blocked('No existing named Wix breakpoint covers observed mobile-390')
+        target_mobile_name = candidates[0][1]
+    mobile_at_rule = media.group(0).replace(media_name, target_mobile_name)
     desktop, mobile = layout[:media.start()], layout[media.end():]
     keep = {expected_id, header.group(1), footer.group(1), background.group(1)}
     desktop = retain_exported_rules(desktop, keep)
@@ -334,7 +347,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
     newjsx = first + '\n'.join(sec_js) + '\n' + last
     desktop = update_page_grid(desktop, expected_id, footer.group(1), ds)
     mobile = update_page_grid(mobile, expected_id, footer.group(1), ms, require_footer=False)
-    newlayout = (desktop + '\n' + ''.join(dr) + '\n' + media.group(0)
+    newlayout = (desktop + '\n' + ''.join(dr) + '\n' + mobile_at_rule
                  + mobile + '\n' + ''.join(mr) + '\n}\n')
     unmapped = json.loads((folder/'unmapped.json').read_text())
     removed_section_ids = set(re.findall(r'<Section\s+id="([^"]+)"', s[a:b]))
