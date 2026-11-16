@@ -362,12 +362,23 @@ def normalize(fp, views, section_selectors):
         # Navigation roots themselves may have no text/media and thus no
         # ledger row. They still require a native Menu/Header contract.
         for view_key in expected_views:
-            for nav in (by_view.get(view_key) or {}).get('navigationCandidates') or []:
-                unsupported.append({'selector':nav.get('sourceSelector'),
-                                    'view':view_key,'reason':'DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED'})
-            for overlay in (by_view.get(view_key) or {}).get('overlayCandidates') or []:
-                unsupported.append({'selector':overlay.get('sourceSelector'),
-                                    'view':view_key,'reason':'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'})
+            source_nodes={n['selector'] for n in views[view_key]['data']['nodes']}
+            nav_rows=(by_view.get(view_key) or {}).get('navigationCandidates') or []
+            overlay_rows=(by_view.get(view_key) or {}).get('overlayCandidates') or []
+            nav_ids={x.get('sourceSelector') for x in nav_rows}
+            if None in nav_ids or not nav_ids.issubset(source_nodes):
+                raise Blocked('Donor menu selector missing from captured DOM '+view_key)
+            overlay_ids={x.get('sourceSelector') for x in overlay_rows}
+            if None in overlay_ids or not overlay_ids.issubset(source_nodes):
+                raise Blocked('Donor overlay selector missing from captured DOM '+view_key)
+            for sel in sorted(nav_ids):
+                unsupported.append({'selector':sel,'view':view_key,
+                                    'reason':'DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED'})
+            # Navigation may itself be fixed (slide-out menu). Keep one
+            # native Menu blocker, not an unrelated second Overlay component.
+            for sel in sorted(overlay_ids-nav_ids):
+                unsupported.append({'selector':sel,'view':view_key,
+                                    'reason':'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'})
         ledger = cp.get('objectLedger')
         if not isinstance(ledger, list):
             unsupported.append({'selector':'SOURCE_CONTRACT',
