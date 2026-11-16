@@ -9,7 +9,7 @@
 import fs from 'node:fs';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
-const [recipeFile,reportFile]=process.argv.slice(2);
+const [recipeFile,reportFile,enrichedRecipeFile]=process.argv.slice(2);
 if(!recipeFile||!reportFile){
  console.error('Usage: node audit_source_layers.mjs RECIPE.json OUTPUT.json');process.exit(2);
 }
@@ -93,9 +93,53 @@ const normalizedUrl=value=>{
    missing.push({...layer,view:view.view,reason:'DYNAMIC_LAYER_NOT_IN_FINGERPRINT_RECIPE'});
   }
  }
+ // Existing donor audit may enrich the existing Universal Page Recipe.
+ // This is additive: the LocalDesign v2.4 source ZIP is preserved verbatim.
+ // Unsupported iframe/canvas, multiple overlapping videos, inaccessible
+ // video URLs, and ambiguous section identities must fail closed.
+ if(enrichedRecipeFile){
+  const cloned=JSON.parse(JSON.stringify(recipe));
+  for(const sec of cloned.sections){
+   const layers=observed.filter(v=>v.section===sec.sourceSelector);
+   const videos=layers.filter(v=>v.kind==='video'&&v.src);
+   const other=layers.filter(v=>v.kind!=='video'||!v.src);
+   if(other.length)missing.push(...other.map(v=>({...v,reason:'UNSUPPORTED_OR_UNRESOLVED_DYNAMIC_LAYER'})));
+   const unique=[...new Set(videos.map(v=>v.src))];
+   if(unique.length>1)missing.push({section:sec.sourceSelector,reason:'MULTIPLE_BACKGROUND_VIDEOS',sources:unique});
+   if(unique.length===1){
+    const src=unique[0];
+    const old=(sec.dynamicLayers||[]).filter(x=>x.type==='video');
+    if(old.length&&old.some(x=>x.sourceUrl!==src)){
+     missing.push({section:sec.sourceSelector,reason:'VIDEO_SOURCE_CONFLICT',sources:unique});
+    }else{
+     const byView=(key)=>{const v=videos.find(x=>x.view===key&&x.src===src);return v?{
+      rect:v.rect,opacity:Number(v.layerOpacity??v.opacity??1),
+      objectFit:v.objectFit,clippingParent:v.clippingParent,
+      autoplay:v.autoplay,loop:v.loop,muted:v.muted,controls:v.controls,
+      poster:v.poster||null,fallbackPoster:v.fallbackPoster||null}:null;};
+     sec.dynamicLayers=[...(sec.dynamicLayers||[]).filter(x=>x.type!=='video'),
+      {type:'video',sourceUrl:src,desktop:byView('desktop-1280'),mobile:byView('mobile-390'),
+       provenance:'DONOR_BROWSER_OBSERVED'}];
+    }
+   }
+  }
+  // An observed and unambiguous source video is now captured in the recipe;
+  // the compiler still requires independently VERIFIED Wix Media metadata.
+  const unresolved=missing.filter(x=>x.reason!=='DYNAMIC_LAYER_NOT_IN_FINGERPRINT_RECIPE');
+  missing.length=0;missing.push(...unresolved);
+  if(!missing.length){
+   cloned.acceptance='SOURCE_DYNAMIC_LAYERS_ENRICHED_NOT_IMPORTED';
+   // Do not silently reuse the old hash after adding new source evidence.
+   const {createHash}=await import('node:crypto');
+   const hashed=JSON.parse(JSON.stringify(cloned));delete hashed.sha256;
+   cloned.sha256=createHash('sha256').update(JSON.stringify(hashed)).digest('hex');
+   fs.writeFileSync(enrichedRecipeFile,JSON.stringify(cloned,null,2));
+  }
+ }
  const result={schema:'localdesign.source-dynamic-layer-audit.v1',source:recipe.source,
   status:missing.length?'BLOCKED_MISSING_SOURCE_LAYERS':'SOURCE_DYNAMIC_LAYERS_COVERED',
-  observed:observed.length,missing,views};
+  observed:observed.length,missing,views,
+  enrichedRecipe:enrichedRecipeFile&&missing.length===0?enrichedRecipeFile:null};
  fs.writeFileSync(reportFile,JSON.stringify(result,null,2));
  console.log(JSON.stringify({status:result.status,observed:result.observed,missing:missing.length,
   missingDetails:missing.slice(0,12),report:reportFile}));
