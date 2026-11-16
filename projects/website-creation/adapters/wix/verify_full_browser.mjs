@@ -38,6 +38,26 @@ const round=n=>Math.round(n*100)/100;
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:45000});
    await page.waitForTimeout(1500);
+   // Wix wow-image lazy-loads below-fold sources. A missing currentSrc
+   // before scrolling is NOT an asset failure; load each captured source
+   // image using the actual browser before the native DOM/asset QA.
+   for (const group of mappings) {
+    for (const item of group.items) {
+     const expected=item.source[label==='desktop-1280'?'desktop':'mobile'];
+     if (item.source.type!=='image'||!expected) continue;
+     const frame=page.locator('[id="'+item.wixId+'"]');
+     if (await frame.count()!==1) continue;
+     try {
+      await frame.scrollIntoViewIfNeeded({timeout:8000});
+      await page.waitForFunction(id=>{
+       const img=document.getElementById(id)?.querySelector('img');
+       return Boolean(img?.currentSrc&&img.naturalWidth>0);
+      },item.wixId,{timeout:11000});
+     } catch { /* The asset gate below records missing/broken images. */ }
+    }
+   }
+   await page.evaluate(()=>window.scrollTo(0,0));
+   await page.waitForTimeout(300);
    const results=await page.evaluate(groups=>{
     const rect=el=>{const x=el.getBoundingClientRect();return {x:x.left,y:x.top,w:x.width,h:x.height}};
     const rows=[];
