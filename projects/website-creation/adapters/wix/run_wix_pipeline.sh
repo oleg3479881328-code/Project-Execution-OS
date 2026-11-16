@@ -28,6 +28,10 @@ if not images or any(not url.startswith(('https://','http://')) for url in image
   raise SystemExit('BLOCKED: exact source image evidence incomplete')
 print('SOURCE_VERIFIED',len(r['sections']),'sections',sum(len(s['elements']) for s in r['sections']),'elements',len(images),'images')
 PY
+  # Source completeness is independent of correct element coordinates.
+  # An uncaptured donor video/canvas/iframe must block import instead of
+  # generating a misleading GEOMETRY_ASSETS_PASS on an incomplete page.
+  node "$HERE/audit_source_layers.mjs" "$WORK/recipe.json" "$WORK/source-layer-audit.json"
   wix origami export-site --site "$WIX_SITE_ID" -d "$WORK/wix-site" --json | tee "$WORK/export-result.json"
   python3 "$HERE/compile_full_page.py" compile --recipe "$WORK/recipe.json" \
     --export "$WORK/wix-site" --page "$WIX_TARGET_PAGE" \
