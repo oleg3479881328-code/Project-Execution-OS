@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "repository": "oleg3479881328-code/Project-Execution-OS",
-  "repository_commit": "05ca3b6c2ecaa5bd66b413f0b1b747e0bafce185",
-  "generated_at": "2026-11-15T19:15:26-05:00",
+  "repository_commit": "21850844314e077efa0741fd168d6b63ee0440f3",
+  "generated_at": "2026-11-15T19:17:02-05:00",
   "artifact_count": 635,
   "artifacts": [
     {
@@ -13044,7 +13044,7 @@
       "domain": "website-creation",
       "status": null,
       "date": "2026-11-15. Part of existing Website Creator / Universal Website Translator, not a new product or alternate browser automation engine.",
-      "sha256": "978962000b62f33834477dfbd53b17dc8d767b983521cf148b03aa4d00609645",
+      "sha256": "107128746910842f653c8bdd2db2e35953db7e6086992d1330db47d70537699f",
       "headings": [
         "LocalDesign → Wix Studio Two — Geometry Adapter",
         "Existing canonical route",
@@ -13056,7 +13056,16 @@
         "Confirmed source sample",
         "Explicit blocker / current end-to-end gap",
         "Scope boundaries",
-        "No-duplicate-system decision"
+        "No-duplicate-system decision",
+        "Full-page reusable capability — current code, 2026-11-15",
+        "General workflow to run in any chat/agent",
+        "From Website Creator Wix adapter; owner provides exact ZIP and target page.",
+        "In an authorized official Wix dev environment, with fresh site export.",
+        "Critical official Wix Media Manager step (original source URLs, no placeholders).",
+        "Mandatory separate readback into a fresh directory; no publish.",
+        "Then inspect all section/image/text/media/paint counts, run same-viewport Playwright",
+        "LOCAL/PAGE geometry + visual/stack/mobile/interactions QA per standard §16.",
+        "Current measurable evidence"
       ]
     },
     {
