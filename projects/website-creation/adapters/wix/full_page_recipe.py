@@ -37,6 +37,11 @@ def read_zip(file):
         if 'site-fingerprint.json' not in z.namelist():
             raise Blocked('Missing site-fingerprint.json')
         fingerprint = json.loads(z.read('site-fingerprint.json'))
+        if 'wix-origami/origami-source-contract.json' in z.namelist():
+            contract = json.loads(z.read('wix-origami/origami-source-contract.json'))
+            if contract.get('schema') != 'localdesign.origami-source-contract.v1':
+                raise Blocked('Unsupported Origami source contract')
+            fingerprint['_origamiSourceContract'] = contract
     if fingerprint.get('schema') != CAPTURE:
         raise Blocked('Expected ' + CAPTURE)
     pages = fingerprint.get('pages', [])
@@ -62,7 +67,7 @@ def visible(n):
     return r['width'] > .1 and r['height'] > .1
 
 
-def direct_sections(views, requested):
+def direct_sections(views, requested, origami_contract=None):
     """Conservatively detect broad top-level DOM sections, including mobile-only menu.
     An ambiguous layout must provide explicit source selector order, never guesses.
     """
@@ -78,6 +83,28 @@ def direct_sections(views, requested):
         return requested
     vw = float(desktop['viewport']['width'])
     raw = []
+    # Prefer source scanner's explicit native-ready section candidates, but
+    # validate every selector against the actual observed DOM. It is a hint,
+    # never a target import instruction.
+    if origami_contract:
+        pages = origami_contract.get('pages', [])
+        if len(pages) != 1:
+            raise Blocked('Origami source contract must describe exactly one page')
+        origin = pages[0].get('byViewport', {}).get('desktop-'+str(int(vw)), {})
+        suggested = origin.get('sectionCandidates', [])
+        names = [x.get('sourceSelector') for x in suggested]
+        if len(names) != len(set(names)) or any(not isinstance(x, str) or x not in by_selector for x in names):
+            raise Blocked('Origami source section candidates do not match measured DOM')
+        if len(names) >= 2:
+            # Mobile-only menu, where measured, is a separate responsive layer.
+            mobile_names = [x.get('sourceSelector') for x in
+                pages[0].get('byViewport', {}).get('mobile-390', {}).get('sectionCandidates', [])
+                if x.get('sourceSelector') not in names]
+            mobile_nodes = {n['selector']: n for n in views['mobile-390']['data']['nodes']}
+            mobile_names = [x for x in mobile_names if x in by_selector and x in mobile_nodes
+                and visible(mobile_nodes[x]) and not visible(by_selector[x])
+                and rect(mobile_nodes[x])['y'] <= 1.0]
+            return mobile_names + names
     for n in nodes:
         sel = n.get('selector', '')
         if not re.fullmatch(r'(div|section|header|footer|main)#[A-Za-z0-9_-]+', sel):
@@ -88,6 +115,22 @@ def direct_sections(views, requested):
         if r['width'] < vw * .70 or r['height'] < .75:
             continue
         raw.append((sel, r))
+    # Reject same-frame nested background / painted view layers as sections.
+    # They remain available to painted_background() and source-layer checks.
+    candidates = {name: bounds for name, bounds in raw}
+    def nested_same_frame(name, bounds):
+        node = by_selector[name]
+        parent = (node.get('relations') or {}).get('parentSelector')
+        visited = set()
+        while parent and parent not in visited:
+            visited.add(parent)
+            if parent in candidates:
+                outer = candidates[parent]
+                if all(abs(bounds[k]-outer[k]) <= 2 for k in ('x','y','width','height')):
+                    return True
+            parent = (by_selector.get(parent, {}).get('relations') or {}).get('parentSelector')
+        return False
+    raw = [(name,bounds) for name,bounds in raw if not nested_same_frame(name,bounds)]
     raw.sort(key=lambda p: (p[1]['y'], -p[1]['width'], p[0]))
     tall = max((r['height'] for _, r in raw), default=0)
     filtered = [(s, r) for s, r in raw if r['height'] <= tall * .8]
@@ -158,7 +201,7 @@ def capture_geometry(node, sec, desktop):
 
 
 def normalize(fp, views, section_selectors):
-    selectors = direct_sections(views, section_selectors)
+    selectors = direct_sections(views, section_selectors, fp.get('_origamiSourceContract'))
     desktop_key = next(key for key in ('desktop-1280', 'desktop-1920') if key in views)
     dn = views[desktop_key]['data']['nodes']
     mn = views['mobile-390']['data']['nodes']
@@ -207,6 +250,10 @@ def normalize(fp, views, section_selectors):
             if not visible(d) and not visible(m):
                 continue
             src = d if visible(d) else m
+            # Native video is a dynamic background/foreground layer, never a
+            # static Wix Image or a zero-size <source> component.
+            if src.get('tag') == 'video':
+                continue
             desktop_assets = list(dict.fromkeys((d or {}).get('assets', [])))
             mobile_assets = list(dict.fromkeys((m or {}).get('assets', [])))
             assets = list(dict.fromkeys(desktop_assets + mobile_assets))
@@ -244,11 +291,56 @@ def normalize(fp, views, section_selectors):
                              'mobile': capture_geometry(m, sm, False),
                              'desktopStyle': {k: d['styles'].get(k) for k in keys if d and k in d['styles']},
                              'mobileStyle': {k: m['styles'].get(k) for k in keys if m and k in m['styles']}})
+        # Recover the original MP4 from a visible <video>, including old v2.5
+        # captures where its only URL sits in a 0x0 child <source>.
+        video_selectors = [name for name in candidate
+                           if ((dmap.get(name) or mmap.get(name) or {}).get('tag') == 'video')
+                           and (visible(dmap.get(name)) or visible(mmap.get(name)))]
+        dynamic = []
+        for name in video_selectors:
+            def observed_video(node, nodes, section):
+                if not visible(node):
+                    return None, None
+                evidence = node.get('videoEvidence') or {}
+                found = [evidence.get('sourceUrl')] if evidence.get('sourceUrl') else []
+                found += [a for a in node.get('assets', []) if a.endswith(('.mp4','.webm'))]
+                found += [a for child in nodes
+                          if is_descendant(child['selector'], name)
+                          and child.get('tag') == 'source'
+                          for a in child.get('assets', []) if a.endswith(('.mp4','.webm'))]
+                urls = list(dict.fromkeys(found))
+                if len(urls) != 1:
+                    raise Blocked('Video has zero/multiple distinct sources: '+name)
+                style = node.get('styles') or {}
+                old_evidence = node.get('imageEvidence') or {}
+                layer = node.get('layerEvidence') or {}
+                opacity = float(layer.get('parentOpacity') or style.get('opacity') or 1)
+                if not 0 <= opacity <= 1:
+                    raise Blocked('Invalid video opacity for '+name)
+                nr, sr = rect(node), rect(section)
+                state = {'rect': {'x':normalize_float(nr['x']-sr['x']),
+                    'y':normalize_float(nr['y']-sr['y']),
+                    'w':normalize_float(nr['width']), 'h':normalize_float(nr['height'])},
+                    'opacity':opacity,
+                    'objectFit':evidence.get('objectFit') or style.get('objectFit'),
+                    'autoplay':bool(evidence.get('autoplay',old_evidence.get('autoplay'))),
+                    'loop':bool(evidence.get('loop',old_evidence.get('loop'))),
+                    'muted':bool(evidence.get('muted',old_evidence.get('muted')))}
+                return urls[0], state
+            url_d, state_d = observed_video(dmap.get(name), dn, sd)
+            url_m, state_m = observed_video(mmap.get(name), mn, sm)
+            if url_d and url_m and url_d != url_m:
+                raise Blocked('Responsive video asset identity differs for '+name)
+            dynamic.append({'type':'video','sourceUrl':url_d or url_m,
+                            'desktop':state_d,'mobile':state_m,
+                            'provenance':'LOCALDESIGN_CAPTURED_VIDEO_SOURCE'})
+        if len(dynamic) > 1:
+            unsupported.append({'selector':sel,'reason':'multiple dynamic videos in section not proven native'})
         out.append({'sourceSelector': sel, 'desktopSection': rect(sd), 'mobileSection': rect(sm),
                     'attachedVisualLayers': attached[sel],
                     'desktopBackground': painted_background(sd, dn),
                     'mobileBackground': painted_background(sm, mn),
-                    'elements': elements})
+                    'elements': elements, 'dynamicLayers':dynamic})
     viewsinfo = {k: {'viewport': v['data'].get('viewport'), 'capturedAt': v['data'].get('capturedAt'),
                      'nodeCount': len(v['data']['nodes'])} for k,v in views.items() if v.get('status') == 'observed'}
     result = {'schema': SCHEMA, 'source': source, 'sourceSchema': CAPTURE,
