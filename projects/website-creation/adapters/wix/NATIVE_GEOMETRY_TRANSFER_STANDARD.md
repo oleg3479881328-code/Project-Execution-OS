@@ -251,3 +251,69 @@ Root cause of the first failed Wix Aria result: widths 28.13% and 21.88%, bottom
 ### 15. New chat direct execution instruction
 
 Read global PEOS START_HERE and this technical guide before touching Wix. Geometry algorithm is **already proven**. Take the new Fingerprint and target page supplied by the owner, apply fixed frame/section center-offset mapping and independent responsive captures, import native Wix components using the existing Origami adapter, run fresh readback and real browser QA. No Aria, HTML substitute, new capture system, invented media or one-off build scripts. Separate confirmed local-geometry capability from still-unproven full-page automated acceptance. No publish without explicit authorization.
+
+
+## 16. Full-page transfer — verified Vesper About evidence (2026-11-15)
+
+This section **extends**, not replaces, §§1–15. It closes the earlier knowledge gap about native full-page *manual execution* and gives every new chat an exact, single route. This is the same canonical textbook; do not create another competing cookbook.
+
+### Observed end-to-end evidence, with distinct acceptance scopes
+
+Source: LocalDesign v2.4 for `https://vesper.tonicsiteshop.com/about`; desktop-1280 and mobile-390 observations. Target: already existing Wix Studio Two `blank-2` / page ID `dswnf` on My Site 33.
+
+- Complete page: 11 Wix native sections counting the menu/header-like local section, 17 Image, 62 WRichText. The initial `intro` reused its previously imported native elements. Exact source images and GIFs, without substitutions.
+- Official Wix server `import-site`: 41 → 42, exactly `pages/blank-2` updated; three other pages and global components unchanged; no publish.
+- Fresh official Wix editor re-export confirmed 11 / 17 / 62 native sections/images/texts and real Wix media IDs.
+- A source-to-reexport **CSS rule** comparison for the 71 elements newly added after `intro` checked fixed W/H, source section-local Y, centered desktop offsetX, independent mobile X/Y/W/H and section heights; 71/71 passed. The 8 previously proven `intro` elements were preserved.
+- Source-measured Background colors for five sections were saved by official Wix import 44 → 45 and re-export confirmed exact colors, including mobile overrides:
+  - `bio` #F7F5F2, `our-values` #F7F5F2, `at-at-glance` #958773;
+  - `freebie` desktop #F7F5F2/mobile #F1ECE7;
+  - `footer` desktop #FBFAF9/mobile #F7F5F2.
+- Browser comparison before the Background correction found painted section differences; **no complete refreshed visual screenshot PASS** was recorded afterward.
+- Geometry-only evidence and source-content readback **must not** be promoted to full page pixel-perfect acceptance or an automatically proven reusable full-page program.
+
+**Full-page manual native transfer with import/readback = LOCAL-PROVEN. One-command portable scanner→Wix full-page automation = IMPLEMENTATION GAP / NOT ACCEPTED YET. Full visual typography, image crop, interactions and mobile parity = separate open gates.**
+
+### Universal operator input and exact target scope
+
+Required from owner: (1) source URL or an already captured LocalDesign ZIP; (2) target Wix Studio Two **site ID/editor URL**; (3) exact authorized **target existing page** (route or page ID); (4) explicit authorization for target-page draft mutation. Do not guess the target from the site homepage or create a page unless separately requested. Reuse the existing fingerprint; no repeat capture unless missing measured evidence is demonstrably required.
+
+Verify fingerprint `schema=localdesign.site-fingerprint.v2.4`, `source`, `pages[].views` capture status, non-truncated node arrays, exact viewports/DPR, screenshots, asset URLs, source page lengths and section order. Fail closed on different URLs, missing viewports, unobservable assets or unverified interactive layers. Screenshot only does not prove editable element geometry.
+
+### One algorithm, executed without per-page scripts
+
+1. **PEOS route** → this standard → existing `localdesign_wix.py`/adapter → existing reusable `run_wix_pipeline.sh`/QA candidates; first check capability status. No second scanner, browser controller, adapter or one-off page builder.
+2. **Capture once** with existing LocalDesign v2.4 at source donor viewport(s); ZIP contains `site-fingerprint.json`, screenshots, technical report, QA manifest. If source does not expose full visual evidence for a required layer, report specific scanner delta (below), not an invented value.
+3. **Normalize the whole page** into **one** source-agnostic Universal Page Recipe: canonical ordered sections, original section rect/height per viewport, element selector/type/text/URL/visibility/style/stack, source-to-target manifest stable identities; mobile-only elements and cross-breakpoint asset links by source selector. Include nested/subsequent footer content without assigning the wrong section. Store section paint from measured descendant/layer (source section outer `backgroundColor` can be transparent even if a child fills the section). Explicitly preserve unsupported video/vector/masks/interactions; no silent skips.
+4. **Geometry rule** per viewport: source section local X/Y and W/H; centered offsetX for source-proven desktop fixed frames; **independent** mobile measured local X/Y/W/H. All native elements belong to their exact source section. Correct total page grid rows and original cumulative section heights **per breakpoint**, not just local child positions.
+5. **Fresh Origami export** from exact owner-authorized Wix site; identify real target page ID/route, native page/header/footer/theme, breakpoint name, component contracts and media state. Assert git/file scope only target page before every import. Preserve all other pages, globals and shared headers.
+6. **Native assembly**: one Section + InternalContainer + Background per source section, Image and WRichText for compatible items, ordered stacking. Use measured source page paints/opacity and exact text, not default white or arbitrary 10px placeholders. External original image/GIF URLs are only *source identities*; use official Wix Media Manager importer to create internal `uri`.
+7. **Media known-good** from the 2026-11-15 live run: official `wix origami upload-media` scanned **zero** when new `Image` data was authored as a single line. Reformating those Image objects to the exact multiline form used by Wix's current exporter allowed official upload; 14/14 external source media succeeded, 0 failures. This is a *known version-specific parser behavior*, not license to implement a second uploader. After upload Wix rewrote `image.uri`; then TypeScript required removing unsupported newly generated `image.id` fields **and** adding native `image.url = media.getCroppedImageUrl('wix:image://v1/<uri>/<filename>#originWidth=<assetW>&originHeight=<assetH>', 0,0,0,0, assetW,assetH, {name,autoEncode:true,devicePixelRatio:1})` with matching real metadata. Consult the fresh export/current Wix version; server import is final authority. Do not set a mismatched URL/source-dimension pair.
+8. **Official preflight** `yarn lint`, `yarn tsc`, `yarn build` and semantic scope/media/element counts. Import only after all pass. `wix origami import-site` must report only expected page updated, no pages deleted, non-target pages/globals unchanged and saved new revision. No publication.
+9. **Fresh re-export** and read back all native components, exact measured CSS, source media IDs, section backgrounds, page grid rows, mobile breakpoint. Wix regenerates IDs: join using stable source selector + section/order/type/text/URL manifest; do not rely on submitted component IDs or unique text matching.
+10. **Playwright QA** at every captured viewport on supported draft/editor renderer, screenshots compared to source. `LOCAL_GEOMETRY`: each element's offset from section center or mobile left, section-local Y and frame W/H; `PAGE_GEOMETRY`: actual source/Wix section starts and entire scroll height/flow; `ASSETS`: URL origin identity, cover/fit/crop, original media and animated GIF; `PAINT`: background/image/font/color/opacity/borders; `STACK`: hit-test + visual overlaps; `MOBILE`: independent display/hide/clip/overflow; `INTERACTIONS`: captured evidence and native functionality; `VISUAL`: screenshots excluding only explicitly deferred typography. Gate by gate, measured <=1 CSS px for supported static frames.
+11. **Host chrome normalization**: observed Wix free-site `#WIX_ADS` top banner = 30px, donor `intro` began at Y=1, Wix section at Y=30. Compare source/Wix **content roots** in a common coordinate space. Do not offset all children by -29px or edit global Header to hide external Wix chrome. The distinct 15px scrollbar may change section width: normalize centered X with measured actual section width/left, never fixed +/-7.5.
+12. **Accept or stop**: save machine-readable signed-off acceptance matrix and source/re-export/screenshot evidence, with exact failures classified by root cause. If an unsupported feature remains, report `PARTIAL / BLOCKED`, never `DONE`. User requested draft page mutation, **not automatic publish**.
+
+### Scanner delta policy (extend existing LocalDesign, never rewrite)
+
+Current v2.4 already supplies measured section/node rects, computed styles (including background colors/images, opacity, position, transform and text styles), original asset URLs, links, fontFaces and both screenshots. The **remaining missing evidence** for universal 1:1 must be confirmed per donor and added **additively** to the existing scanner only when absent:
+
+- stable element/component identity across responsive snapshots and nested parent/section provenance; distinguish decorative descendants from actual independent visible layers and detect duplicated text;
+- effective painted/background layer per section (including covering descendants and pseudo-elements), alpha, background crop/position and image/video sources;
+- explicit hit-test/stacking context and clipping/masks/pseudo-element provenance where overlaps exist;
+- interaction-state sampling (hover/click/menu/scroll/sticky/animation timeline) and non-static media, instead of assuming static DOM screenshot represents every state;
+- intrinsic image dimensions alongside **on-canvas** CSS frame/crop and source URL;
+- section order, page root/document geometry, viewport + scrollbar/clientWidth + platform banner/chrome, source font metadata;
+- capture completeness flags and unsupported-feature inventory (do not silently drop).
+  
+Use a backwards-compatible v2.4 optional enrichment if compatible; otherwise version schema deliberately with regression fixtures. Never mutate the scanner from inferred requirements without inspecting its actual implementation and repository owner. ZIP content alone cannot identify a checked-out scanner source file.
+
+### Minimum repeatable acceptance fixtures
+
+- **Fixture A** Vesper `/about` desktop-1280 and mobile-390 ZIP → existing Wix Studio Two `blank-2`: 11 sections, original 17 images, 62 texts, 5 painted sections, no non-target updates; native readback geometry and independent breakpoint QA.
+- **Fixture B** 1280→1920 desktop regression: centered offsetX remains invariant for proven fixed frames despite scrollbar/content-width difference, no unexpected section height scaling.
+- **Fixture C** duplicate text, mobile-only image, external GIF, lazy-load URL, transparent parent with colored descendant, overlap and external Wix banner. Must fail closed on ambiguous mapping/unsupported dynamics.
+- **Fixture D** second unrelated donor page + different Wix target/site: needed before promoting the **universal automated full-page implementation** from candidate to locally accepted.
+
+**New-chat ready command:** “Read PEOS START_HERE → Website Creator ROUTER → this canonical native transfer standard; locate the current LocalDesign Fingerprint ZIP and exact target Wix page; execute the already-proven full-page Origami native route, validate source/target/media/readback/browser QA, report separate gates. Do not create a parallel scanner/adapter, edit other pages, invent media or publish.” 
