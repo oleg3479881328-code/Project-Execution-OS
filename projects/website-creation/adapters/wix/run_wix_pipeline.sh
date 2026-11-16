@@ -8,6 +8,7 @@ if [[ "${WIX_MODE:-section}" == "full-page" ]]; then
   : "${FINGERPRINT_ZIP:?Set LocalDesign Fingerprint ZIP}"
   : "${WIX_TARGET_PAGE:?Set exact existing Wix page folder}"
   : "${WIX_TARGET_PAGE_ID:?Set page ID from current export}"
+  : "${PREVIEW_URL:?Set an official Wix draft/preview URL before target mutation; browser QA is mandatory}"
   [[ "${APPROVED_REPLACE_PAGE:-}" == "YES" ]] || { echo "BLOCKED: require APPROVED_REPLACE_PAGE=YES" >&2; exit 3; }
   [[ "$WIX_TARGET_PAGE" =~ ^[a-z0-9-]+$ && "$WIX_TARGET_PAGE" != home ]] || { echo "BLOCKED: explicit non-home target required" >&2; exit 3; }
   HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -36,9 +37,11 @@ PY
 import json,sys
 m=json.load(open(sys.argv[1]));r=json.load(open(sys.argv[2]))
 expected=sum(e['type']=='image' for s in r['sections'] for e in s['elements'])
-if m.get('failed') or len(m.get('uploaded',[]))!=expected:
-  raise SystemExit('BLOCKED: source media incomplete '+str({'expected':expected,'uploaded':len(m.get('uploaded',[])),'failed':m.get('failed')}))
-print('EXACT_MEDIA_PASS',expected)
+if m.get('failed'):
+  raise SystemExit('BLOCKED: Wix official upload-media failed '+str(m['failed']))
+# Previously imported files can be skipped by Wix: do NOT demand a 1:1
+# upload count. finalize-media validates a real Wix URI for EVERY image.
+print('MEDIA_UPLOAD_SCAN_PASS',{'sourceImageInstances':expected,'newUploads':len(m.get('uploaded',[]))})
 PY
   python3 "$HERE/compile_full_page.py" finalize-media --export "$WORK/wix-site" --page "$WIX_TARGET_PAGE"
   cd "$WORK/wix-site"
@@ -64,14 +67,20 @@ PY
   wix origami export-site --site "$WIX_SITE_ID" -d "$WORK/wix-readback" --json | tee "$WORK/readback-result.json"
   python3 "$HERE/verify_full_page.py" --recipe "$WORK/recipe.json" \
     --readback "$WORK/wix-readback" --page "$WIX_TARGET_PAGE" --out "$WORK/readback-qa.json"
-  if [[ -n "${PREVIEW_URL:-}" ]]; then
-    WIX_TARGET_PAGE="$WIX_TARGET_PAGE" node "$HERE/verify_full_browser.mjs" \
-      "$WORK/recipe.json" "$PREVIEW_URL" "$WORK/wix-readback" "$WORK/screenshots" |
-      tee "$WORK/browser-qa.json"
-  else
-    echo 'BROWSER_QA_BLOCKED: official PREVIEW_URL is required; do not publish to bypass.' >&2
-  fi
-  echo 'No publication. Browser screenshot pixel parity and interaction gates require separate QA.'
+  WIX_TARGET_PAGE="$WIX_TARGET_PAGE" node "$HERE/verify_full_browser.mjs" \
+    "$WORK/recipe.json" "$PREVIEW_URL" "$WORK/wix-readback" "$WORK/screenshots" |
+    tee "$WORK/browser-qa.json"
+  python3 - "$WORK/browser-qa.json" <<'PY'
+import json,sys
+result=json.load(open(sys.argv[1]))
+if result.get('status')!='GEOMETRY_ASSETS_PASS':
+  raise SystemExit('BLOCKED: actual browser geometry and assets did not pass')
+if result.get('visualPixelParity')!='PASS' or any(v.get('interactions')!='PASS' for v in result['views']):
+  print('PARTIAL_ACCEPTANCE: Native geometry/assets passed; visual pixel and interaction QA NOT ACCEPTED.')
+else:
+  print('FULL_ACCEPTANCE: Visual and interaction gates passed.')
+PY
+  echo 'No publication. Do not mark one-to-one DONE without screenshot and interaction acceptance.'
   exit 0
 fi
 
