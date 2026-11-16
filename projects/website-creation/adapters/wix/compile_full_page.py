@@ -364,7 +364,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
         </Section>''')
         if video_props:
             sty += f'\n.{bg} {{ --backgroundMediaOpacity:{num(video_opacity_desktop)}; }}\n'
-            sty += '\n'+media.group(0)+'\n'+f'.{bg} {{ --backgroundMediaOpacity:{num(video_opacity_mobile)}; }}'+'\n}\n'
+            sty += '\n'+mobile_at_rule+'\n'+f'.{bg} {{ --backgroundMediaOpacity:{num(video_opacity_mobile)}; }}'+'\n}\n'
         dr.append(css_section(sid, ic, bg, hd, row, desktop_width))
         mr.append(css_section(sid, ic, bg, hm, row, 390))
         for bp in (desktop_width, 390):
@@ -374,7 +374,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                 if bp != 390:
                     sty += '\n' + rule + '\n'
                 else:
-                    sty += '\n' + media.group(0) + '\n' + rule + '\n}\n'
+                    sty += '\n' + mobile_at_rule + '\n' + rule + '\n}\n'
     newjsx = first + '\n'.join(sec_js) + '\n' + last
     desktop = update_page_grid(desktop, expected_id, footer.group(1), ds)
     mobile = update_page_grid(mobile, expected_id, footer.group(1), ms, require_footer=False, allow_missing_page=True)
