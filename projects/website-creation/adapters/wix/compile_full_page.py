@@ -105,7 +105,7 @@ def retain_exported_rules(css, identifiers):
     return '\n'.join(blocks)+'\n'
 
 
-def update_page_grid(css, page_id, footer_id, heights):
+def update_page_grid(css, page_id, footer_id, heights, require_footer=True):
     rows = '0px ' + ' '.join(num(h)+'px' for h in heights) + ' 0px'
     def replace_page(m):
         block = m.group()
@@ -123,7 +123,7 @@ def update_page_grid(css, page_id, footer_id, heights):
             raise Blocked('Footer grid-row missing')
         return block
     css,count = re.subn(r'\.'+re.escape(footer_id)+r'\s*\{[^{}]*\}', replace_footer, css, count=1)
-    if count != 1:
+    if count != 1 and require_footer:
         raise Blocked('Shared Footer placement rule missing')
     return css
 
@@ -242,7 +242,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace):
                     sty += '\n' + media.group(0) + '\n' + rule + '\n}\n'
     newjsx = first + '\n'.join(sec_js) + '\n' + last
     desktop = update_page_grid(desktop, expected_id, footer.group(1), ds)
-    mobile = update_page_grid(mobile, expected_id, footer.group(1), ms)
+    mobile = update_page_grid(mobile, expected_id, footer.group(1), ms, require_footer=False)
     newlayout = (desktop + '\n' + ''.join(dr) + '\n' + media.group(0)
                  + mobile + '\n' + ''.join(mr) + '\n}\n')
     unmapped = json.loads((folder/'unmapped.json').read_text())
