@@ -181,3 +181,22 @@ LOCALDESIGN_VESPER_ZIP='/absolute/path/vesper-current.zip' \
 Measured owner ZIP regression: current original Vesper /about capture yielded 12 selected source sections, 80 meaningful native candidates and **18 distinct image instances** (including the previously omitted Bio photo and six detached footer gallery images); an older capture yielded 12, 79 and 17 respectively. Do not hardcode these fixture-specific counts for other donors. Full-page counts must be generated and verified **per capture**.
 
 Execution / acceptance backlog is tracked in [PEOS Issue #171](https://github.com/oleg3479881328-code/Project-Execution-OS/issues/171).
+
+
+## Source dynamic media completeness gate (2026-11-15, verified)
+
+The single existing full-page runner now executes `audit_source_layers.mjs` after LocalDesign recipe normalization and **before Wix export/media upload/page mutation**. This extends the existing acceptance workflow, **not** the original Chrome fingerprint scanner. It checks the live original donor using the existing Playwright capability and reports missing native video/iframe/canvas layers. A missing layer is `BLOCKED_MISSING_SOURCE_LAYERS`; a geometry-only pass cannot override it.
+
+Verified on the actual Vesper `/about` source on Desktop 1280: `div#at-at-glance` contains a native Showit `<video>` inside a clipped background layer, source `https://static.showit.co/file/n86F2GdvRo6G8NIpT6hCXw/shared/pexels-anna-nekrashevich-7946210_n1xmcir9.mp4`, `autoplay=true`, `loop=true`, `muted=true`, `objectFit=cover`, parent-layer opacity `0.4`, poster fallback `pexels-maria-orlova-4946388.jpg`. The v2.4 ZIP recipe contains **no video element**, and older 12/80/18 geometry QA therefore produced a false overall impression of visual completeness.
+
+The official installed Wix Studio Two component catalog has `wixSystemElements.Background.videoMedia` with native `autoplay`, `loop`, `muted`, `fittingType`, and `posterEffect` props. **Do not guess a Video media object schema or silently substitute a JPG**: actual MP4 import + native Background binding + opacity/crop/render QA must be accepted using a fresh export and the official Wix Media API before declaring this video's visual gate PASS.
+
+Scanner source status: LocalDesign v2.4 Chrome scanner implementation has not been located in the PEOS repo; historically distributed as an extension ZIP. Therefore this change is a verified **safety/coverage gate in the existing adapter**; it is not a claim that the scanner extension itself was edited. Next accepted extension-schema improvement is additive `backgroundVideo[]` per observed viewport with `sourceUrl`, `posterUrl`, `autoplay`, `muted`, `loop`, `opacity`, `objectFit`, actual layer/frame rect, clip owner and source section identity; then compile via native Wix `Background.videoMedia` and re-export/Playwright acceptance. Preserve v2.4 fields and default to fail-closed on unobserved dynamic layers.
+
+Run coverage only, no Wix mutation:
+
+```bash
+node audit_source_layers.mjs /path/to/normalized.recipe.json /path/to/source-layer-audit.json
+```
+
+**Current acceptance:** Full static geometry and media on saved `blank-2` revision 47 = PASS on 1280/390; missing video means complete visual 1:1 = BLOCKED. No additional editor changes or publishing were made by this audit.
