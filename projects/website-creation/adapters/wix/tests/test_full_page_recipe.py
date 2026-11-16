@@ -181,14 +181,22 @@ class FullPageNormalizerTests(unittest.TestCase):
 
     def test_donor_navigation_and_overlay_are_not_silently_omitted(self):
         fp,views=fixture()
+        views["desktop-1280"]["data"]["nodes"].extend([
+            node("div#menu",y=0,h=48),
+            node("div#sticky-banner",y=30,h=30),
+            node("div#slide-out-menu",y=0,h=48)])
+        views["mobile-390"]["data"]["nodes"].append(
+            node("div#mobile-menu",y=0,w=390,h=48))
         ledger=[]
         contract={"schema":"localdesign.origami-source-contract.v1",
           "pages":[{"byViewport":{
             "desktop-1280":{"sectionCandidates":[{"sourceSelector":"div#alpha"},
                              {"sourceSelector":"div#beta"}],
                              "measuredNodes":len(views["desktop-1280"]["data"]["nodes"]),
-                             "navigationCandidates":[{"sourceSelector":"div#menu"}],
-                             "overlayCandidates":[{"sourceSelector":"div#sticky-banner"}]},
+                             "navigationCandidates":[{"sourceSelector":"div#menu"},
+                                                     {"sourceSelector":"div#slide-out-menu"}],
+                             "overlayCandidates":[{"sourceSelector":"div#sticky-banner"},
+                                                  {"sourceSelector":"div#slide-out-menu"}]},
             "mobile-390":{"sectionCandidates":[],
                           "measuredNodes":len(views["mobile-390"]["data"]["nodes"]),
                           "navigationCandidates":[{"sourceSelector":"div#mobile-menu"}]}},
@@ -199,6 +207,8 @@ class FullPageNormalizerTests(unittest.TestCase):
         self.assertIn(("div#menu","DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED"),blockers)
         self.assertIn(("div#mobile-menu","DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED"),blockers)
         self.assertIn(("div#sticky-banner","DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED"),blockers)
+        self.assertIn(("div#slide-out-menu","DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED"),blockers)
+        self.assertNotIn(("div#slide-out-menu","DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED"),blockers)
         self.assertNotEqual(recipe["acceptance"],"WIX_IMPORTED")
 
     @unittest.skipUnless(os.getenv("LOCALDESIGN_VESPER_ZIP"),
