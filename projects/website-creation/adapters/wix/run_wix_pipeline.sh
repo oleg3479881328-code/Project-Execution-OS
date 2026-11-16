@@ -32,6 +32,9 @@ PY
   python3 "$HERE/compile_full_page.py" compile --recipe "$WORK/recipe.json" \
     --export "$WORK/wix-site" --page "$WIX_TARGET_PAGE" \
     --page-id "$WIX_TARGET_PAGE_ID" --allow-replace-page
+  # Official upload-media resolves Image wrapper definition.ts from installed
+  # dependencies. Without yarn install it silently detects zero images.
+  (cd "$WORK/wix-site" && yarn install)
   wix origami upload-media --site "$WIX_SITE_ID" -d "$WORK/wix-site" --json | tee "$WORK/media-result.json"
   python3 - "$WORK/media-result.json" "$WORK/recipe.json" <<'PY'
 import json,sys
