@@ -177,7 +177,7 @@ def retain_exported_rules(css, identifiers):
     return '\n'.join(blocks)+'\n'
 
 
-def update_page_grid(css, page_id, footer_id, heights, require_footer=True):
+def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allow_missing_page=False):
     rows = '0px ' + ' '.join(num(h)+'px' for h in heights) + ' 0px'
     def replace_page(m):
         block = m.group()
@@ -187,7 +187,11 @@ def update_page_grid(css, page_id, footer_id, heights, require_footer=True):
         return block
     css, count = re.subn(r'\.'+re.escape(page_id)+r'\s*\{[^{}]*\}', replace_page, css, count=1)
     if count != 1:
-        raise Blocked('Page root layout rule missing')
+        if not allow_missing_page:
+            raise Blocked('Page root layout rule missing')
+        # Wix often inherits Page rows on mobile without repeating Page CSS.
+        # Add only a page-local override inside the already verified mobile rule.
+        css = f'.{page_id} {{ grid-template-rows: {rows}; }}\n' + css
     def replace_footer(m):
         block=m.group()
         block, c=re.subn(r'grid-row:\s*\d+\s*/\s*\d+', 'grid-row: '+str(len(heights)+2)+' / '+str(len(heights)+3), block, count=1)
@@ -346,7 +350,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                     sty += '\n' + media.group(0) + '\n' + rule + '\n}\n'
     newjsx = first + '\n'.join(sec_js) + '\n' + last
     desktop = update_page_grid(desktop, expected_id, footer.group(1), ds)
-    mobile = update_page_grid(mobile, expected_id, footer.group(1), ms, require_footer=False)
+    mobile = update_page_grid(mobile, expected_id, footer.group(1), ms, require_footer=False, allow_missing_page=True)
     newlayout = (desktop + '\n' + ''.join(dr) + '\n' + mobile_at_rule
                  + mobile + '\n' + ''.join(mr) + '\n}\n')
     unmapped = json.loads((folder/'unmapped.json').read_text())
