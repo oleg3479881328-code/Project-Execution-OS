@@ -145,3 +145,39 @@ bash run_wix_pipeline.sh
 Optional `WIX_SOURCE_SECTIONS` points to a JSON array of source selectors only if section ordering is ambiguous; normal automatic discovery must be tried first. Optional `WIX_WORK_DIR` keeps the reproducible evidence directory. Omit `PREVIEW_URL` only to stop at `READBACK` with **Browser QA BLOCKED**, never call the page `DONE`. This mode **REPLACES authored content on the authorized page**; do not run it on another existing page without explicit user approval. No publish operation is included.
 
 The source-coverage gates are implemented in [verify_full_page.py](verify_full_page.py), and actual Playwright DOM/asset gates in [verify_full_browser.mjs](verify_full_browser.mjs). Browser scripts write screenshots but do **not** claim automated screenshot pixel-diff parity or interaction validation. **These full-page modules have not yet passed complete real-Wix importer/readback/browser acceptance; status: CANDIDATE, not production one-click proven.** Track acceptance in [#171](https://github.com/oleg3479881328-code/Project-Execution-OS/issues/171).
+
+
+## 2026-11-15 — Unified full-page runner + regression gate
+
+The existing `run_wix_pipeline.sh` has a guarded `WIX_MODE=full-page` branch, reusing `full_page_recipe.py`, `compile_full_page.py`, `verify_full_page.py`, and `verify_full_browser.mjs`. It is the **single orchestration entrypoint**; do not create a second per-page runner.
+
+Sample owner invocation (authenticated official Wix Origami environment; explicit site/page authority required):
+
+```bash
+WIX_MODE=full-page \
+WIX_SITE_ID='<exact site ID>' \
+FINGERPRINT_ZIP='/absolute/path/localdesign.zip' \
+WIX_TARGET_PAGE='<existing exported page folder>' \
+WIX_TARGET_PAGE_ID='<real page id in fresh export>' \
+APPROVED_REPLACE_PAGE=YES \
+PREVIEW_URL='<verified official Wix draft URL pointing at that target page>' \
+bash run_wix_pipeline.sh
+```
+
+**Operational safeguards:**
+- `PREVIEW_URL` is **mandatory before any mutation**. Never let an imported page count as accepted if browser QA has not run.
+- Wix official `upload-media` may upload fewer files than source image instances, because images may already exist or repeat. Zero uploaded is not automatically an error; any uploader failure is an error. The per-image native URI and current `media.getCroppedImageUrl` are verified in `finalize-media`, and all images are rechecked after import.
+- The pipeline requires the exact target page ID, explicit `APPROVED_REPLACE_PAGE=YES`, target-only Git diff, exact import scope, and fresh readback. It does not publish.
+- Browser geometry and asset gate success is **not** `VISUAL=PASS`: screenshots/pixel differences, typography, overlaps, motion and interactions remain independently evaluated, never silently promoted.
+- The full-page native Wix **manual proof** is real; this automatic one-command variant is still CANDIDATE until real accepted runs on two unrelated donors/targets demonstrate full import/readback/browser/visual QA.
+
+**Repeatable regression suite:** `tests/test_full_page_recipe.py` runs synthetic source identity, detached footer-gallery, color paint, mobile-geometry and ambiguity tests. For owner's actual Vesper v2.4 ZIP:
+
+```bash
+LOCALDESIGN_VESPER_ZIP='/absolute/path/vesper-current.zip' \
+  python3 -m unittest discover -s tests -v
+```
+
+Measured owner ZIP regression: current original Vesper /about capture yielded 12 selected source sections, 80 meaningful native candidates and **18 distinct image instances** (including the previously omitted Bio photo and six detached footer gallery images); an older capture yielded 12, 79 and 17 respectively. Do not hardcode these fixture-specific counts for other donors. Full-page counts must be generated and verified **per capture**.
+
+Execution / acceptance backlog is tracked in [PEOS Issue #171](https://github.com/oleg3479881328-code/Project-Execution-OS/issues/171).
