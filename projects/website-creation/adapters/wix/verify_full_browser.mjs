@@ -70,7 +70,7 @@ const round=n=>Math.round(n*100)/100;
     const sec=page.locator('[id="'+group.wixId+'"]');
     try{
      await sec.scrollIntoViewIfNeeded({timeout:8000});
-     const active=dynamic[0]?.[label==='desktop-1280'?'desktop':'mobile'];
+     const active=dynamic[0]?.[label==='mobile-390'?'mobile':'desktop'];
      if(active)await page.waitForFunction(id=>{
       const v=document.getElementById(id)?.querySelector('video');
       return Boolean(v&&v.readyState>=2&&v.videoWidth>0);
