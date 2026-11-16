@@ -250,7 +250,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
     background = re.search(r'backgroundLayer=\{\[<Background\s+id="([^"]+)"', first)
     if not background:
         raise Blocked('Missing native Page background')
-    media_blocks = list(re.finditer(r'@media\\s*\\(--variants-[^)]+\\)\\s*\\{', layout))
+    media_blocks = list(re.finditer(r'@media\s*\(--variants-[^)]+\)\s*\{', layout))
     if len(media_blocks) != 1:
         raise Blocked('Require exactly one mobile page layout media rule; avoid silently collapsing additional Wix breakpoints')
     media = media_blocks[0]
@@ -258,7 +258,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
     theme_file = Path(root) / 'packages/site-app/src/global/themes/theme.css'
     if not theme_file.is_file():
         raise Blocked('Fresh Wix theme CSS missing')
-    media_max = re.search(r'@custom-media\\s+'+re.escape(media_name)+r'\\s+\\(max-width:\\s*(\\d+)px\\)', theme_file.read_text())
+    media_max = re.search(r'@custom-media\s+'+re.escape(media_name)+r'\s+\(max-width:\s*(\d+)px\)', theme_file.read_text())
     if not media_max or not (390 <= int(media_max.group(1)) < desktop_width):
         raise Blocked('Selected page breakpoint is not a verified Wix mobile max-width')
     desktop, mobile = layout[:media.start()], layout[media.end():]
