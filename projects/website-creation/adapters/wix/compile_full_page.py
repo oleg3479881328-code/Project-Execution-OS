@@ -78,6 +78,78 @@ def paint(section, bp):
     return color
 
 
+
+def native_video_payload(layer, video_files):
+    """Construct Wix's verified native Background.videoMedia value from READY
+    official Media Manager get-file-descriptor responses, not guessed links.
+    """
+    source = layer.get('sourceUrl')
+    if layer.get('type') != 'video' or not source or not source.startswith('https://'):
+        raise Blocked('Invalid source video layer')
+    matches = [x.get('file', x) for x in (video_files or [])
+               if x.get('file', x).get('sourceUrl') == source]
+    if len(matches) != 1:
+        raise Blocked('Require exactly one official Wix video Media descriptor for '+source)
+    file = matches[0]
+    if file.get('operationStatus') != 'READY' or file.get('mediaType') != 'VIDEO':
+        raise Blocked('Wix video not READY for '+source)
+    media_id = file.get('id')
+    video = (file.get('media') or {}).get('video') or {}
+    if not media_id or video.get('id') != media_id:
+        raise Blocked('Wix video media ID mismatch for '+source)
+    resolutions = []
+    for rendition in video.get('resolutions', []):
+        quality = rendition.get('quality')
+        uri = rendition.get('url') or ''
+        if rendition.get('format') != 'mp4' or quality not in ('1080p','720p','480p','360p'):
+            continue
+        path = urlsplit(uri)
+        if path.scheme != 'https' or path.netloc != 'video.wixstatic.com' or not path.path.startswith('/video/'+media_id+'/'):
+            raise Blocked('Unexpected Wix source rendition URL '+uri)
+        resolutions.append({'quality':quality,'width':int(rendition['width']),'height':int(rendition['height']),
+                            'types':[{'format':'mp4','uri':path.path.lstrip('/'),'url':uri}]})
+    if not resolutions:
+        raise Blocked('READY Wix source video has no native MP4 rendition')
+    fps_str = ((file.get('additionalProperties') or {}).get('video') or {}).get('fps','30/1')
+    try:
+        x = fps_str.split('/')
+        fps = float(x[0]) / float(x[1]) if len(x)==2 else float(fps_str)
+    except (ValueError, ZeroDivisionError):
+        raise Blocked('Invalid Wix video fps from official descriptor')
+    if not 0 < fps <= 240:
+        raise Blocked('Out-of-range Wix video fps')
+    audio_bitrate = ((file.get('additionalProperties') or {}).get('video') or {}).get('audioBitrate',-1)
+    return {'uri':'wix:video://v1/'+media_id+'/'+file['displayName'],
+            'name':file['displayName'],'sources':resolutions,
+            'adaptiveSources':[],'hasAudio':bool(isinstance(audio_bitrate,(int,float)) and audio_bitrate>0),
+            'fps':fps}
+
+
+def video_background_props(section, video_files, bp):
+    layers = section.get('dynamicLayers') or []
+    if not layers:
+        return '', None
+    if len(layers) != 1 or layers[0].get('type') != 'video':
+        raise Blocked('Unsupported multiple/non-video native background layers in '+section['sourceSelector'])
+    layer = layers[0]
+    observed = layer.get('desktop') or layer.get('mobile')
+    if not observed:
+        raise Blocked('Video layer without source viewport evidence')
+    for key in ('autoplay','loop','muted','objectFit'):
+        if key not in observed:
+            raise Blocked('Video layer missing '+key+' source evidence')
+    if observed['objectFit'] != 'cover':
+        raise Blocked('Video background fit not yet supported: '+str(observed['objectFit']))
+    payload = native_video_payload(layer, video_files)
+    js = json.dumps(payload,ensure_ascii=False)
+    opts = ' videoMedia={'+js+'} autoplay={'+json.dumps(bool(observed['autoplay']))+'} loop={'+json.dumps(bool(observed['loop']))+'} muted={'+json.dumps(bool(observed['muted']))+'} fittingType="fill" showControls={false}'
+    bp_layer = layer.get('desktop' if bp==1280 else 'mobile')
+    opacity = float(bp_layer['opacity']) if bp_layer is not None else 0.0
+    if opacity < 0 or opacity > 1:
+        raise Blocked('Invalid captured video opacity')
+    return opts, opacity
+
+
 def retain_exported_rules(css, identifiers):
     """Keep only real Page wrapper/header/footer/background rules; discard old
     components when their corresponding authored Sections are replaced.
@@ -128,7 +200,7 @@ def update_page_grid(css, page_id, footer_id, heights, require_footer=True):
     return css
 
 
-def compile_page(recipe, root, page, expected_id, allow_replace):
+def compile_page(recipe, root, page, expected_id, allow_replace, video_files=None):
     if recipe.get('schema') != PAGE:
         raise Blocked('Wrong full-page normalized recipe')
     if recipe.get('unsupported'):
@@ -225,11 +297,16 @@ def compile_page(recipe, root, page, expected_id, allow_replace):
                 sty += f'\n.{cid} {{ color:{color}; text-align:{st.get("textAlign") or "left"}; }}\n'
             else:
                 raise Blocked('Unsupported source type '+str(e['type']))
+        video_props, video_opacity_desktop = video_background_props(sec, video_files, 1280)
+        _, video_opacity_mobile = video_background_props(sec, video_files, 390)
         sec_js.append(f'''        <Section id="{sid}" className="{sid}">
-            <InternalContainer id="{ic}" className="{ic}" backgroundLayer={{[<Background id="{bg}" className="{bg}" />]}}>
+            <InternalContainer id="{ic}" className="{ic}" backgroundLayer={{[<Background id="{bg}" className="{bg}"{video_props} />]}}>
 {chr(10).join(children)}
             </InternalContainer>
         </Section>''')
+        if video_props:
+            sty += f'\n.{bg} {{ --backgroundMediaOpacity:{num(video_opacity_desktop)}; }}\n'
+            sty += '\n'+media.group(0)+'\n'+f'.{bg} {{ --backgroundMediaOpacity:{num(video_opacity_mobile)}; }}'+'\n}\n'
         dr.append(css_section(sid, ic, bg, hd, row, 1280))
         mr.append(css_section(sid, ic, bg, hm, row, 390))
         for bp in (1280, 390):
@@ -302,13 +379,18 @@ def main():
     parser.add_argument('--page', required=True)
     parser.add_argument('--page-id')
     parser.add_argument('--allow-replace-page', action='store_true')
+    parser.add_argument('--video-media-manifest', help='JSON {files:[official READY Wix file descriptors]}')
     args = parser.parse_args()
     try:
         if args.action == 'compile':
             if not args.recipe or not args.page_id:
                 raise Blocked('Require --recipe and --page-id')
+            manifest = json.loads(Path(args.video_media_manifest).read_text()) if args.video_media_manifest else {}
+            if manifest and (not isinstance(manifest,dict) or not isinstance(manifest.get('files'),list)):
+                raise Blocked('Video media manifest must contain files[]')
             compile_page(json.loads(Path(args.recipe).read_text()),
-                         args.export, args.page, args.page_id, args.allow_replace_page)
+                         args.export, args.page, args.page_id, args.allow_replace_page,
+                         manifest.get('files',[]))
         else:
             finalize_media(args.export, args.page)
     except (Blocked, KeyError, TypeError, ValueError) as e:
