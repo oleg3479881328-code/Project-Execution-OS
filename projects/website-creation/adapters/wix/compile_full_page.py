@@ -204,7 +204,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace):
     (folder/'structure.jsx').write_text(newjsx)
     (folder/'layout.css').write_text(newlayout)
     (folder/'style.css').write_text(sty)
-    (folder/'localdesign-transfer-manifest.json').write_text(json.dumps({
+    (Path(root).parent/(page+'-localdesign-transfer-manifest.json')).write_text(json.dumps({
         'source': recipe['source'], 'sha256': recipe['sha256'],
         'pageId': expected_id, 'items': originals
     }, indent=2))
