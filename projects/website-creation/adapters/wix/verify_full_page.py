@@ -61,6 +61,7 @@ def verify(recipe, export, page):
     folder = Path(export)/'packages/site-app/src/pages'/page
     structure = (folder/'structure.jsx').read_text()
     layout = (folder/'layout.css').read_text()
+    style = (folder/'style.css').read_text()
     media = re.search(r'@media\s*\(--variants-[^)]+\)\s*\{', layout)
     if not media:
         raise Blocked('Readback Wix mobile breakpoint missing')
@@ -80,6 +81,26 @@ def verify(recipe, export, page):
             break
         sid = actual[si].group(1)
         section = actual[si].group()
+        # Dynamic layers are explicitly normalized separately from the
+        # geometrically fixed Image/WRichText children.
+        dynamic = src.get('dynamicLayers') or []
+        if dynamic:
+            if len(dynamic) != 1 or dynamic[0].get('type') != 'video':
+                err(f'{sid}: unsupported native dynamic layer count/type')
+            else:
+                bg = re.search(r'<Background\s+id="([^"]+)"([^>]*)/>', section)
+                if not bg or 'videoMedia=' not in bg.group(2):
+                    err(f'{sid}: missing native Background.videoMedia')
+                else:
+                    name = unquote(urlsplit(dynamic[0]['sourceUrl']).path.rsplit('/',1)[-1])
+                    if name not in bg.group(2) or 'wix:video://v1/' not in bg.group(2):
+                        err(f'{sid}: native video Wix Media source name/id mismatch')
+                    for bp, media_opacity in ((1280, dynamic[0].get('desktop')), (390, dynamic[0].get('mobile'))):
+                        expected_opacity = float(media_opacity['opacity']) if media_opacity else 0.0
+                        selector = bg.group(1)
+                        matches = re.findall(r'\.'+re.escape(selector)+r'\s*\{[^{}]*--backgroundMediaOpacity:\s*(\d+(?:\.\d+)?)',style)
+                        if not any(abs(float(got)-expected_opacity)<.002 for got in matches):
+                            err(f'{sid}: missing saved {bp} native video opacity {expected_opacity}')
         components = block_elements(section)
         expected = src['elements']
         if len(components) != len(expected):
