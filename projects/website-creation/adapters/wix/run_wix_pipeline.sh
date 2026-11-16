@@ -18,6 +18,16 @@ if [[ "${WIX_MODE:-section}" == "full-page" ]]; then
   RECIPE_ARGS=(--fingerprint "$FINGERPRINT_ZIP" --out "$WORK/recipe.json")
   [[ -n "${WIX_SOURCE_SECTIONS:-}" ]] && RECIPE_ARGS+=(--sections "$WIX_SOURCE_SECTIONS")
   python3 "$HERE/full_page_recipe.py" "${RECIPE_ARGS[@]}"
+  # The observed desktop width, not a fixed legacy 1280, is the build and QA contract.
+  python3 - "$WORK/recipe.json" <<'PY'
+import json,sys
+r=json.load(open(sys.argv[1]));w=r.get('desktopWidth',1280)
+if w not in (1280,1920) or 'desktop-'+str(w) not in r.get('viewports',{}):
+    raise SystemExit('BLOCKED: source desktop width is not an observed supported viewport')
+if 'mobile-390' not in r.get('viewports',{}):
+    raise SystemExit('BLOCKED: mobile-390 viewport missing')
+print('SOURCE_VIEWPORTS_VERIFIED',w,390)
+PY
   python3 - "$WORK/recipe.json" <<'PY'
 import json,sys
 r=json.load(open(sys.argv[1]))
