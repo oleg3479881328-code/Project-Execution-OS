@@ -42,7 +42,7 @@ def css_section(id, ic, bg, height, row, bp):
     vis = 'visible' if float(height) > 0 else 'hidden'
     return (
         f'.{id} {{ {d} visibility:{vis}; width:auto; height:{num(height)}px; min-height:{num(height)}px; grid-row:{row}/{row+1}; grid-column:1/2; position:relative; align-self:stretch; justify-self:stretch; }}\n'
-        + f'.{ic} {{ {d} width:100%; min-height:{num(height)}px; @origami-target internal-container-content-wrapper {{ position:relative; display:grid; grid-template-columns:minmax(0px,1fr); grid-template-rows:{num(height)}px; padding:0px; }} }}\n'
+        + f'.{ic} {{ {d} width:100%; min-height:{num(height)}px; @origami-target internal-container-content-wrapper {{ position:relative; display:grid; grid-template-columns:minmax(0px,1fr); grid-template-rows:{num(height)}px; padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; }} }}\n'
         + f'.{bg} {{ {d} grid-row:1/-1; grid-column:1/-1; align-self:stretch; justify-self:stretch; visibility:{vis}; }}\n'
     )
 
@@ -50,7 +50,7 @@ def css_section(id, ic, bg, height, row, bp):
 def css_element(cid, geo, bp):
     d = f'--spx-ref-width:{bp}; --spx-resolver-type:fixed;'
     if geo is None:
-        return f'.{cid} {{ {d} visibility:hidden; width:0px; height:0px; grid-row:1/2; grid-column:1/2; margin:0px; }}\n'
+        return f'.{cid} {{ {d} visibility:hidden; width:0px; height:0px; grid-row:1/2; grid-column:1/2; margin-left:0px; margin-top:0px; margin-right:0px; margin-bottom:0px; }}\n'
     if bp == 390:
         x = num(geo['x'])+'px'
     else:
@@ -76,6 +76,56 @@ def paint(section, bp):
         if len(ns) == 3:
             color = '#' + ''.join(f'{int(x):02X}' for x in ns)
     return color
+
+
+def retain_exported_rules(css, identifiers):
+    """Keep only real Page wrapper/header/footer/background rules; discard old
+    components when their corresponding authored Sections are replaced.
+    Preserve nested Wix @origami-target blocks using balanced braces.
+    """
+    blocks = []
+    pattern = re.compile(r'(?m)^\\s*\\.([a-zA-Z0-9_-]+)\\s*\\{')
+    pos = 0
+    while True:
+        found = pattern.search(css, pos)
+        if not found:
+            break
+        depth, i = 1, found.end()
+        while i < len(css) and depth:
+            if css[i] == '{':
+                depth += 1
+            elif css[i] == '}':
+                depth -= 1
+            i += 1
+        if depth:
+            raise Blocked('Unbalanced native Wix CSS block')
+        if found.group(1) in identifiers:
+            blocks.append(css[found.start():i])
+        pos = i
+    return '\\n'.join(blocks)+'\\n'
+
+
+def update_page_grid(css, page_id, footer_id, heights):
+    rows = '0px ' + ' '.join(num(h)+'px' for h in heights) + ' 0px'
+    def replace_page(m):
+        block = m.group()
+        block, count = re.subn(r'grid-template-rows:\\s*[^;\\n}]+', 'grid-template-rows: '+rows, block, count=1)
+        if count != 1:
+            raise Blocked('Page grid-template-rows missing from real Wix export')
+        return block
+    css, count = re.subn(r'\\.'+re.escape(page_id)+r'\\s*\\{[^{}]*\\}', replace_page, css, count=1)
+    if count != 1:
+        raise Blocked('Page root layout rule missing')
+    def replace_footer(m):
+        block=m.group()
+        block, c=re.subn(r'grid-row:\\s*\\d+\\s*/\\s*\\d+', 'grid-row: '+str(len(heights)+2)+' / '+str(len(heights)+3), block, count=1)
+        if c != 1:
+            raise Blocked('Footer grid-row missing')
+        return block
+    css,count = re.subn(r'\\.'+re.escape(footer_id)+r'\\s*\\{[^{}]*\\}', replace_footer, css, count=1)
+    if count != 1:
+        raise Blocked('Shared Footer placement rule missing')
+    return css
 
 
 def compile_page(recipe, root, page, expected_id, allow_replace):
@@ -126,6 +176,10 @@ def compile_page(recipe, root, page, expected_id, allow_replace):
     if not media:
         raise Blocked('Missing current Wix mobile breakpoint')
     desktop, mobile = layout[:media.start()], layout[media.end():]
+    keep = {expected_id, header.group(1), footer.group(1), background.group(1)}
+    desktop = retain_exported_rules(desktop, keep)
+    mobile = retain_exported_rules(mobile.rsplit('}', 1)[0], keep)
+    sty = retain_exported_rules(sty, keep)
     sec_js, dr, mr, ds, ms, ids, originals = [], [], [], [], [], [], []
     for idx, sec in enumerate(recipe['sections']):
         sid, ic, bg = f'ldv-s{idx:03d}', f'ldv-c{idx:03d}', f'ldv-b{idx:03d}'
@@ -187,13 +241,10 @@ def compile_page(recipe, root, page, expected_id, allow_replace):
                 else:
                     sty += '\n' + media.group(0) + '\n' + rule + '\n}\n'
     newjsx = first + '\n'.join(sec_js) + '\n' + last
-    rows = lambda seq: '0px ' + ' '.join(num(h)+'px' for h in seq) + ' 0px'
-    pgid, ftr = expected_id, footer.group(1)
-    def page_rule(heights):
-        return (f'.{pgid} {{ --spx-resolver-type:fixed; grid-template-columns:minmax(0px,1fr); grid-template-rows:{rows(heights)}; }}\n'
-                + f'.{ftr} {{ grid-row:{len(recipe["sections"])+2}/{len(recipe["sections"])+3}; grid-column:1/2; }}\n')
-    newlayout = (desktop + '\n' + page_rule(ds) + ''.join(dr) + '\n' + media.group(0)
-                 + mobile.rsplit('}', 1)[0] + '\n' + page_rule(ms) + ''.join(mr) + '\n}\n')
+    desktop = update_page_grid(desktop, expected_id, footer.group(1), ds)
+    mobile = update_page_grid(mobile, expected_id, footer.group(1), ms)
+    newlayout = (desktop + '\n' + ''.join(dr) + '\n' + media.group(0)
+                 + mobile + '\n' + ''.join(mr) + '\n}\n')
     unmapped = json.loads((folder/'unmapped.json').read_text())
     removed_section_ids = set(re.findall(r'<Section\s+id="([^"]+)"', s[a:b]))
     for component_id, data in list((unmapped.get('components') or {}).items()):
