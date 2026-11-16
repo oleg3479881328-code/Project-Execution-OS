@@ -90,6 +90,49 @@ class FullPageNormalizerTests(unittest.TestCase):
         result=mod.normalize(fp,views,None)
         self.assertTrue(any("multiple source asset" in e["reason"] for e in result["unsupported"]))
 
+    def test_nested_background_is_not_its_own_section(self):
+        fp,views=fixture()
+        parent=views["desktop-1280"]["data"]["nodes"][1]
+        bg=node("div#alpha_canvas-background-photo",y=0,h=500)
+        bg["relations"]={"parentSelector":"div#alpha"}
+        views["desktop-1280"]["data"]["nodes"].insert(2,bg)
+        recipe=mod.normalize(fp,views,None)
+        self.assertEqual([s["sourceSelector"] for s in recipe["sections"]],
+                         ["div#alpha","div#beta"])
+
+    def test_visible_video_inherits_mp4_from_invisible_source_child(self):
+        fp,views=fixture()
+        video=node("div#beta > video",tag="video",x=0,y=550,w=1265,h=300)
+        video["styles"]["objectFit"]="cover"
+        video["imageEvidence"]={"autoplay":True,"loop":True,"muted":True}
+        src=node("div#beta > video > source",tag="source",
+                 assets=["https://example.org/real.mp4"],x=0,y=0,w=0,h=0,
+                 visible=False)
+        views["desktop-1280"]["data"]["nodes"].extend([video,src])
+        recipe=mod.normalize(fp,views,None)
+        layer=recipe["sections"][1]["dynamicLayers"][0]
+        self.assertEqual(layer["sourceUrl"],"https://example.org/real.mp4")
+        self.assertTrue(layer["desktop"]["autoplay"])
+        self.assertTrue(layer["desktop"]["loop"])
+        self.assertTrue(layer["desktop"]["muted"])
+        self.assertIsNone(layer["mobile"])
+        self.assertFalse(any(e["asset"]=="https://example.org/real.mp4"
+                             for s in recipe["sections"] for e in s["elements"]))
+
+    def test_origami_source_contract_candidate_validation(self):
+        fp,views=fixture()
+        fp["_origamiSourceContract"]={"schema":"localdesign.origami-source-contract.v1",
+            "pages":[{"byViewport":{
+                "desktop-1280":{"sectionCandidates":[
+                    {"sourceSelector":"div#alpha"},{"sourceSelector":"div#beta"}]},
+                "mobile-390":{"sectionCandidates":[]}}}]}
+        recipe=mod.normalize(fp,views,None)
+        self.assertEqual([s["sourceSelector"] for s in recipe["sections"]],
+                         ["div#alpha","div#beta"])
+        fp["_origamiSourceContract"]["pages"][0]["byViewport"]["desktop-1280"]["sectionCandidates"].append({"sourceSelector":"div#missing"})
+        with self.assertRaises(mod.Blocked):
+            mod.normalize(fp,views,None)
+
     @unittest.skipUnless(os.getenv("LOCALDESIGN_VESPER_ZIP"),
                          "set LOCALDESIGN_VESPER_ZIP to rerun actual owner-file regression")
     def test_actual_vesper_bio_missing_asset_regression(self):
