@@ -22,7 +22,9 @@ if(sections.length!==recipe.sections.length)throw Error('Section coverage mismat
 const mappings=recipe.sections.map((section,i)=>{
  const found=[...sections[i][0].matchAll(/<(Image|WRichText)\b([\s\S]*?)\/>/g)];
  if(found.length!==section.elements.length)throw Error('Section '+i+' element coverage mismatch');
- return {wixId:sections[i][1],items:found.map((m,j)=>{
+ const bkg=sections[i][0].match(/<Background\s+id="([^"]+)"/);
+ const videoId=sections[i][0].match(/wix:video:\/\/v1\/([A-Za-z0-9_-]+)\//);
+ return {wixId:sections[i][1],backgroundId:bkg?.[1]||null,videoMediaId:videoId?.[1]||null,items:found.map((m,j)=>{
   const id=m[2].match(/\bid="([^"]+)"/);if(!id)throw Error('Native element ID missing');
   const uri=m[2].match(/\buri:\s*['"]([^'"]+)['"]/);
   return {wixId:id[1],source:section.elements[j],
@@ -58,6 +60,21 @@ const round=n=>Math.round(n*100)/100;
      } catch { /* The asset gate below records missing/broken images. */ }
     }
    }
+   // Source background video is lazy in the native Wix renderer. Render
+   // the actual video-bearing section before reading readyState/currentSrc.
+   for(const [si,group] of mappings.entries()){
+    const dynamic=recipe.sections[si].dynamicLayers||[];
+    if(!dynamic.length)continue;
+    const sec=page.locator('[id="'+group.wixId+'"]');
+    try{
+     await sec.scrollIntoViewIfNeeded({timeout:8000});
+     const active=dynamic[0]?.[label==='desktop-1280'?'desktop':'mobile'];
+     if(active)await page.waitForFunction(id=>{
+      const v=document.getElementById(id)?.querySelector('video');
+      return Boolean(v&&v.readyState>=2&&v.videoWidth>0);
+     },group.backgroundId,{timeout:16000});
+    }catch{ /* precise dynamic gate below marks the failure */ }
+   }
    await page.evaluate(()=>window.scrollTo(0,0));
    await page.waitForTimeout(300);
    const results=await page.evaluate(groups=>{
@@ -76,12 +93,19 @@ const round=n=>Math.round(n*100)/100;
        imageURL:img?.currentSrc||img?.src||null,
        naturalImageWidth:img?.naturalWidth||0});
      }
-     rows.push({missing:false,section:s,items});
+     const bkg=g.backgroundId?document.getElementById(g.backgroundId):null;
+     const video=bkg?.querySelector('video')||null;
+     const mediaLayer=bkg?.querySelector('[data-motion-part^="BG_MEDIA"]');
+     const videoData={present:!!video,url:video?.currentSrc||null,readyState:video?.readyState||0,
+       videoWidth:video?.videoWidth||0,muted:video?.muted,loop:video?.loop,autoplay:video?.autoplay,
+       paused:video?.paused,mediaOpacity:Number(getComputedStyle(mediaLayer||bkg).opacity),
+       sourceId:g.videoMediaId||null};
+     rows.push({missing:false,section:s,items,video:videoData});
     }
     return {rows,clientWidth:document.documentElement.clientWidth,
      bannerHeight:document.getElementById('WIX_ADS')?.getBoundingClientRect().height||0};
    },mappings);
-   let localPass=response?.status()===200&&errors.length===0,pagePass=true,assetsPass=true;
+   let localPass=response?.status()===200&&errors.length===0,pagePass=true,assetsPass=true,dynamicPass=true;
    let previousBottom=null;const details=[];
    for(let i=0;i<recipe.sections.length;i++){
     const sec=recipe.sections[i],act=results.rows[i],bp=width===390?'mobile':'desktop';
@@ -92,6 +116,23 @@ const round=n=>Math.round(n*100)/100;
     if(previousBottom!==null&&Math.abs(act.section.y-previousBottom)>1)pagePass=false;
     previousBottom=act.section.y+act.section.h;
     const items=[];
+    const dynamics=sec.dynamicLayers||[];
+    if(dynamics.length){
+     if(dynamics.length!==1||dynamics[0].type!=='video')dynamicPass=false;
+     else{
+      const expectedVideo=dynamics[0][bp];
+      const actual=act.video||{};
+      if(!actual.present||!actual.sourceId||!actual.url||!actual.url.includes(actual.sourceId)){
+       dynamicPass=false;
+      }else if(expectedVideo){
+       if(actual.readyState<2||!actual.videoWidth||actual.paused||
+          actual.muted!==Boolean(expectedVideo.muted)||
+          actual.loop!==Boolean(expectedVideo.loop)||
+          actual.autoplay!==Boolean(expectedVideo.autoplay)||
+          Math.abs(actual.mediaOpacity-Number(expectedVideo.opacity))>.015)dynamicPass=false;
+      }else if(Math.abs(actual.mediaOpacity)>0.015)dynamicPass=false;
+     }
+    }
     for(let j=0;j<sec.elements.length;j++){
      const e=sec.elements[j],got=act.items[j],expected=e[bp];
      if(!expected){if(got?.visible){localPass=false;items.push({j,error:'should be hidden'})}continue}
@@ -119,11 +160,12 @@ const round=n=>Math.round(n*100)/100;
    views.push({label,width,http:response?.status(),clientWidth:results.clientWidth,
     platformBannerPx:results.bannerHeight,localGeometry:localPass?'PASS':'FAIL',
     pageGeometry:pagePass?'PASS':'FAIL',assets:assetsPass?'PASS':'FAIL',
+    dynamicMedia:dynamicPass?'PASS':'FAIL',
     errors,details,screenshot,visual:'NOT_ASSESSED',interactions:'NOT_ASSESSED'});
    await page.close();
   }
  }finally{await browser.close()}
- const pass=views.every(v=>v.localGeometry==='PASS'&&v.pageGeometry==='PASS'&&v.assets==='PASS');
+ const pass=views.every(v=>v.localGeometry==='PASS'&&v.pageGeometry==='PASS'&&v.assets==='PASS'&&v.dynamicMedia==='PASS');
  console.log(JSON.stringify({schema:'localdesign.wix-full-browser-qa.v1',source:recipe.source,url,
   status:pass?'GEOMETRY_ASSETS_PASS':'BROWSER_QA_FAIL',views,
   visualPixelParity:'NOT_ASSESSED',published:false},null,2));
