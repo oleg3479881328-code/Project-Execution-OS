@@ -62,7 +62,10 @@ def verify(recipe, export, page):
     structure = (folder/'structure.jsx').read_text()
     layout = (folder/'layout.css').read_text()
     style = (folder/'style.css').read_text()
-    media = re.search(r'@media\s*\(--variants-[^)]+\)\s*\{', layout)
+    desktop_width = recipe.get('desktopWidth', 1280)
+    if desktop_width not in (1280, 1920):
+        raise Blocked('Unsupported source desktopWidth: '+str(desktop_width))
+    media = re.search(r'@media\\s*\\(--variants-[^)]+\\)\\s*\\{', layout)
     if not media:
         raise Blocked('Readback Wix mobile breakpoint missing')
     desktop, mobile = layout[:media.start()], layout[media.end():]
@@ -95,7 +98,7 @@ def verify(recipe, export, page):
                     name = unquote(urlsplit(dynamic[0]['sourceUrl']).path.rsplit('/',1)[-1])
                     if name not in bg.group(2) or 'wix:video://v1/' not in bg.group(2):
                         err(f'{sid}: native video Wix Media source name/id mismatch')
-                    for bp, media_opacity in ((1280, dynamic[0].get('desktop')), (390, dynamic[0].get('mobile'))):
+                    for bp, media_opacity in ((desktop_width, dynamic[0].get('desktop')), (390, dynamic[0].get('mobile'))):
                         expected_opacity = float(media_opacity['opacity']) if media_opacity else 0.0
                         selector = bg.group(1)
                         matches = re.findall(r'\.'+re.escape(selector)+r'\s*\{[^{}]*--backgroundMediaOpacity:\s*(\d+(?:\.\d+)?)',style)
@@ -105,12 +108,12 @@ def verify(recipe, export, page):
         expected = src['elements']
         if len(components) != len(expected):
             err(f'{src["sourceSelector"]}: expected {len(expected)} elements got {len(components)}')
-        for bp, css in ((1280, desktop), (390, mobile)):
+        for bp, css in ((desktop_width, desktop), (390, mobile)):
             sr = rule(css, sid)
             if not sr:
                 err(f'{sid}: missing section CSS {bp}')
                 continue
-            near(px(sr.get('height')), src['desktopSection' if bp == 1280 else 'mobileSection']['height'],
+            near(px(sr.get('height')), src['desktopSection' if bp != 390 else 'mobileSection']['height'],
                  f'{sid} section height {bp}')
         for ei, e in enumerate(expected):
             if ei >= len(components):
@@ -130,7 +133,7 @@ def verify(recipe, export, page):
                 if source_text != target_text:
                     err(f'{sid} element {ei} text differs')
                 texts += 1
-            for bp, css, key in ((1280, desktop, 'desktop'), (390, mobile, 'mobile')):
+            for bp, css, key in ((desktop_width, desktop, 'desktop'), (390, mobile, 'mobile')):
                 gr = e.get(key)
                 r = rule(css, comp['id'])
                 if not r:
