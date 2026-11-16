@@ -331,7 +331,7 @@ def normalize(fp, views, section_selectors):
             url_m, state_m = observed_video(mmap.get(name), mn, sm)
             if url_d and url_m and url_d != url_m:
                 raise Blocked('Responsive video asset identity differs for '+name)
-            dynamic.append({'type':'video','sourceUrl':url_d or url_m,
+            dynamic.append({'type':'video','sourceSelector':name,'sourceUrl':url_d or url_m,
                             'desktop':state_d,'mobile':state_m,
                             'provenance':'LOCALDESIGN_CAPTURED_VIDEO_SOURCE'})
         if len(dynamic) > 1:
@@ -341,11 +341,73 @@ def normalize(fp, views, section_selectors):
                     'desktopBackground': painted_background(sd, dn),
                     'mobileBackground': painted_background(sm, mn),
                     'elements': elements, 'dynamicLayers':dynamic})
+    # Fail-closed source coverage: the upstream scanner has the authoritative
+    # visual-object ledger, but only the *target* adapter can prove every Wix
+    # native component, media descriptor, style token and link. Never let an
+    # explicit source blocker or a silently omitted object reach import-site.
+    contract = fp.get('_origamiSourceContract')
+    source_ledger_coverage = None
+    if contract:
+        if len(contract.get('pages', [])) != 1:
+            raise Blocked('Origami contract must contain one source page')
+        cp = contract['pages'][0]
+        by_view = cp.get('byViewport') or {}
+        source_width = int(views[desktop_key]['data']['viewport']['width'])
+        expected_views = ('desktop-'+str(source_width), 'mobile-390')
+        for view_key in expected_views:
+            expected_count = len(views[view_key]['data']['nodes'])
+            declared = (by_view.get(view_key) or {}).get('measuredNodes')
+            if declared != expected_count:
+                raise Blocked('Origami contract node count differs from observed '+view_key)
+        ledger = cp.get('objectLedger')
+        if not isinstance(ledger, list):
+            unsupported.append({'selector':'SOURCE_CONTRACT',
+                                'reason':'SOURCE_OBJECT_LEDGER_MISSING_RECAPTURE_V2_5_4'})
+            ledger = []
+        declared_count = (cp.get('coverage') or {}).get('mandatoryObjects')
+        if declared_count is not None and declared_count != len(ledger):
+            raise Blocked('Origami contract mandatoryObjects count differs from ledger')
+        accepted_status = 'SOURCE_CAPTURED_TARGET_MAPPING_REQUIRED'
+        represented = {e['sourceSelector'] for sec in out for e in sec['elements']}
+        for sec in out:
+            for dynamic in sec.get('dynamicLayers') or []:
+                if dynamic.get('sourceSelector'):
+                    represented.add(dynamic['sourceSelector'])
+        seen = set()
+        for row in ledger:
+            if not isinstance(row, dict):
+                raise Blocked('Invalid Origami object ledger row')
+            selector = row.get('sourceSelector')
+            view = row.get('view')
+            if not selector or view not in expected_views or (view,selector) in seen:
+                raise Blocked('Invalid/duplicate Origami object identity')
+            seen.add((view,selector))
+            nodes = views[view]['data']['nodes']
+            node = next((n for n in nodes if n.get('selector') == selector),None)
+            if not node or not visible(node):
+                raise Blocked('Origami ledger refers to missing/invisible DOM object: '+selector)
+            if row.get('status') != accepted_status:
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':row.get('reason') or 'SOURCE_OBJECT_BLOCKED'})
+            if not row.get('ownerKind'):
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':'SOURCE_OBJECT_OWNER_MISSING'})
+            if row.get('href'):
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':'NATIVE_LINK_MAPPING_UNVERIFIED'})
+            if selector not in represented:
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':'SOURCE_OBJECT_NOT_MAPPED_TO_NATIVE'})
+        source_ledger_coverage = {'mandatoryObjects':len(ledger),
+                                  'representedSourceSelectors':len(represented),
+                                  'blockedMappings':len(unsupported),
+                                  'acceptance':'SOURCE_COVERAGE_BLOCKED' if unsupported else 'SOURCE_MAPPED_TARGET_QA_PENDING'}
     viewsinfo = {k: {'viewport': v['data'].get('viewport'), 'capturedAt': v['data'].get('capturedAt'),
                      'nodeCount': len(v['data']['nodes'])} for k,v in views.items() if v.get('status') == 'observed'}
     result = {'schema': SCHEMA, 'source': source, 'sourceSchema': CAPTURE,
               'desktopWidth': int(views[desktop_key]['data']['viewport']['width']),
               'viewports': viewsinfo, 'sections': out, 'unsupported': unsupported,
+              'sourceObjectCoverage':source_ledger_coverage,
               'acceptance': 'RECIPE_ONLY_NOT_WIX_IMPORTED'}
     canonical = json.dumps(result, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
     result['sha256'] = hashlib.sha256(canonical.encode()).hexdigest()
