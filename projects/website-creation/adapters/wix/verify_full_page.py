@@ -65,7 +65,7 @@ def verify(recipe, export, page):
     desktop_width = recipe.get('desktopWidth', 1280)
     if desktop_width not in (1280, 1920):
         raise Blocked('Unsupported source desktopWidth: '+str(desktop_width))
-    media = re.search(r'@media\\s*\\(--variants-[^)]+\\)\\s*\\{', layout)
+    media = re.search(r'@media\s*\(--variants-[^)]+\)\s*\{', layout)
     if not media:
         raise Blocked('Readback Wix mobile breakpoint missing')
     desktop, mobile = layout[:media.start()], layout[media.end():]
