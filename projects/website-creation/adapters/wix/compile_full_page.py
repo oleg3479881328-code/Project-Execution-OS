@@ -336,14 +336,14 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                         x.get('sourceUrl')==asset and
                         x.get('operationStatus')=='READY' and
                         x.get('mediaType')=='VECTOR' and
-                        re.fullmatch(r'[^:/\\s]+[.]svg',x.get('id') or '')]
+                        re.fullmatch(r'[^:/\s]+[.]svg',x.get('id') or '')]
                     if len(matching)!=1:
                         raise Blocked('Original SVG media not uniquely READY in Wix: '+asset)
                     media_id=matching[0]['id']
                     if "import { SvgImage }" not in first:
-                        first="import { SvgImage } from '@origami-wrappers/wixEditorElements/svgimage'\\n"+first
+                        first="import { SvgImage } from '@origami-wrappers/wixEditorElements/svgimage'\n"+first
                     if "import { svg }" not in first:
-                        first="import { svg } from '@wix/origami-runtime'\\n"+first
+                        first="import { svg } from '@wix/origami-runtime'\n"+first
                     children.append('                <SvgImage id="{id}" className="{id}" displayMode="fit" svgId={{svg(media.getShapeUrl(\'wix:image://v1/{mid}\').url, \'{mid}\')}} />'.format(id=cid,mid=media_id))
                     continue
                 if not name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp')):
