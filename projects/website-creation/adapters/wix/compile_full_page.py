@@ -27,9 +27,14 @@ def num(v):
     return str(int(x)) if x.is_integer() else str(x)
 
 
-def get_page(root, page):
-    if not re.fullmatch('[a-z0-9-]+', page) or page in ('home', '(home)'):
-        raise Blocked('Require an explicit existing non-home target page folder')
+def get_page(root, page, allow_home=False):
+    # Wix Origami names Home '(home)' in the official export.
+    # The default remains fail-closed for destructive Home replacements.
+    if page == '(home)':
+        if not allow_home:
+            raise Blocked('Home replacement requires explicit --allow-home-target')
+    elif not re.fullmatch('[a-z0-9-]+', page) or page == 'home':
+        raise Blocked('Require an exact existing Wix page folder; Home is (home)')
     p = Path(root) / 'packages/site-app/src/pages' / page
     paths = [p / x for x in ('structure.jsx', 'layout.css', 'style.css', 'unmapped.json')]
     if not all(x.is_file() for x in paths):
@@ -225,7 +230,7 @@ def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allo
     return css
 
 
-def compile_page(recipe, root, page, expected_id, allow_replace, video_files=None):
+def compile_page(recipe, root, page, expected_id, allow_replace, video_files=None, allow_home=False):
     if recipe.get('schema') != PAGE:
         raise Blocked('Wrong full-page normalized recipe')
     if recipe.get('unsupported'):
@@ -240,7 +245,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
     expected_view = 'desktop-'+str(desktop_width)
     if recipe.get('viewports') and (expected_view not in recipe['viewports'] or 'mobile-390' not in recipe['viewports']):
         raise Blocked('Recipe is missing observed source desktop/mobile viewports')
-    folder = get_page(root, page)
+    folder = get_page(root, page, allow_home=allow_home)
     strpath = folder / 'structure.jsx'
     s = strpath.read_text()
     layout = (folder/'layout.css').read_text()
@@ -399,8 +404,8 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                       'images': sum(e['type']=='image' for x in recipe['sections'] for e in x['elements'])}))
 
 
-def finalize_media(root, page):
-    p = get_page(root, page) / 'structure.jsx'
+def finalize_media(root, page, allow_home=False):
+    p = get_page(root, page, allow_home=allow_home) / 'structure.jsx'
     s = p.read_text()
     pat = r'(<Image\s[\s\S]*?\bimage=\{\{)([\s\S]*?)(\}\}\s*/>)'
     count = 0
@@ -437,6 +442,7 @@ def main():
     parser.add_argument('--page', required=True)
     parser.add_argument('--page-id')
     parser.add_argument('--allow-replace-page', action='store_true')
+    parser.add_argument('--allow-home-target', action='store_true', help='Only for an explicitly approved existing Wix Home page')
     parser.add_argument('--video-media-manifest', help='JSON {files:[official READY Wix file descriptors]}')
     args = parser.parse_args()
     try:
@@ -448,9 +454,9 @@ def main():
                 raise Blocked('Video media manifest must contain files[]')
             compile_page(json.loads(Path(args.recipe).read_text()),
                          args.export, args.page, args.page_id, args.allow_replace_page,
-                         manifest.get('files',[]))
+                         manifest.get('files',[]), allow_home=args.allow_home_target)
         else:
-            finalize_media(args.export, args.page)
+            finalize_media(args.export, args.page, allow_home=args.allow_home_target)
     except (Blocked, KeyError, TypeError, ValueError) as e:
         parser.exit(2, 'BLOCKED: '+str(e)+'\n')
 
