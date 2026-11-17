@@ -414,19 +414,36 @@ def normalize(fp, views, section_selectors):
                     if not isinstance(label,str) or not label.strip():
                         unsupported.append({'selector':sel,'view':view_key,
                           'reason':'DONOR_CHROME_LINK_LABEL_UNRESOLVED'})
+                    # A donor Menu may include logo/social/CTA links that are
+                    # NOT the actual nav items. Only an observed nested <nav>
+                    # descendant proves this is a nav item; preserve the rest
+                    # separately, never discard or guess from visible labels.
+                    has_nav_child = any(n.get('tag')=='nav'
+                      and is_descendant(n.get('selector',''),sel)
+                      for n in source_nodes.values())
                     link_rows.append({'sourceSelector':sel,'label':label,
-                      'href':href,'visible':bool(link.get('visible'))})
+                      'href':href,'visible':bool(link.get('visible')),
+                      'isNavigationItem':bool(role=='menu' and has_nav_child)})
                 verified.append({'sourceSelector':root,'role':role,
                   'visible':bool(entry.get('visible')),
                   'display':entry.get('display'),
                   'position':entry.get('position'),
                   'rect':entry.get('rect'),
-                  'links':link_rows})
+                  'links':link_rows,
+                  'menuItems':[x for x in link_rows if x['isNavigationItem']],
+                  'supplementalLinks':[x for x in link_rows
+                    if role=='menu' and not x['isNavigationItem']]})
                 unsupported.append({'selector':root,'view':view_key,
                   'reason':{'header':'DONOR_HEADER_NATIVE_MAPPING_REQUIRED',
                    'footer':'DONOR_FOOTER_NATIVE_MAPPING_REQUIRED',
                    'menu':'DONOR_MENU_NATIVE_MAPPING_REQUIRED'}[role]})
             source_chrome[view_key]=verified
+            # Every source Menu item must be a demonstrable route/link, never
+            # an inferred destination in a new Wix project.
+            for root in verified:
+                for item in root['menuItems']:
+                    unsupported.append({'selector':item['sourceSelector'],'view':view_key,
+                                        'reason':'DONOR_MENU_TARGET_ROUTE_UNVERIFIED'})
             # Fixed slide-out menu is ONE native navigation component, not
             # another unrelated Overlay with duplicate dimensions.
             for sel in sorted(nav_ids - seen_roots):
@@ -435,6 +452,19 @@ def normalize(fp, views, section_selectors):
             for sel in sorted(overlay_ids-nav_ids):
                 unsupported.append({'selector':sel,'view':view_key,
                                     'reason':'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'})
+        # The same named donor navigation state must have the same exact
+        # ordered labels+URLs in independent captured Desktop/Mobile widths.
+        # Any discrepancy is evidence, not a reason to fabricate menu links.
+        menu_signatures = {}
+        for view_key, roots in source_chrome.items():
+            for root in roots:
+                if not root['menuItems']:
+                    continue
+                key=root['sourceSelector']
+                sig=[(x['label'],x['href']) for x in root['menuItems']]
+                old=menu_signatures.setdefault(key,sig)
+                if old!=sig:
+                    raise Blocked('Responsive donor Menu link identity/order differs: '+key)
         ledger = cp.get('objectLedger')
         if not isinstance(ledger, list):
             unsupported.append({'selector':'SOURCE_CONTRACT',
