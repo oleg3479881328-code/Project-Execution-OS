@@ -89,7 +89,27 @@ def paint(section, bp):
     source = section['desktopBackground' if bp != 390 else 'mobileBackground']
     vals = {(x.get('color'), x.get('image')) for x in source.get('candidates', [])}
     if source['status'] == 'AMBIGUOUS' or len(vals) > 1:
-        raise Blocked('Ambiguous section background '+section['sourceSelector'])
+        # Showit can paint an opaque section base below a separately measured
+        # native image element. Keep the base color only when the transparent
+        # cover image is ALREADY represented by the exact source selector and
+        # the exact captured viewport geometry; never drop an unknown layer.
+        candidates = source.get('candidates', [])
+        bases = [x for x in candidates if x.get('image') in ('none', None)
+                 and x.get('color') not in ('transparent', 'rgba(0, 0, 0, 0)', None)]
+        covers = [x for x in candidates if x.get('image') == 'SOURCE_IMAGE_URLS_SEPARATE'
+                  and x.get('color') in ('transparent', 'rgba(0, 0, 0, 0)', None)]
+        observed_key = 'mobile' if bp == 390 else 'desktop'
+        if len(bases) == 1 and len(covers) == len(candidates)-1 and covers:
+            for cover in covers:
+                linked = [e for e in section['elements'] if
+                          e.get('type') == 'image' and
+                          e.get('sourceSelector') == cover.get('selector') and
+                          e.get('asset') and e.get(observed_key)]
+                if len(linked) != 1:
+                    raise Blocked('Painted image layer lacks exact native image '+str(cover.get('selector')))
+            vals = {(bases[0]['color'], bases[0].get('image'))}
+        else:
+            raise Blocked('Ambiguous section background '+section['sourceSelector'])
     if not vals:
         return None
     color, image = next(iter(vals))
