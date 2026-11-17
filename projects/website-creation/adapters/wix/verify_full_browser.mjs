@@ -175,19 +175,23 @@ const round=n=>Math.round(n*100)/100;
       delta[k]=round(got.local[k]-expected[k]);
       if(Math.abs(delta[k])>1)localPass=false;
      }
+     let mediaError=null;
      if(e.type==='image'){
-      // Wix serves some media (notably GIFs) by internal ID without the
-      // original filename. The readback verifier independently checked
-      // the source filename, so compare the actual Wix Media URI here.
+      // Verify native photo/GIF/Vector exact Wix ID after browser lazy load.
       const mediaUri=mappings[i].items[j].mediaUri;
-      if(mappings[i].items[j].nativeType==='SvgImage'){
-       if(!mediaUri||(!got.vectorPresent&&
-         !(got.imageURL&&decodeURIComponent(got.imageURL).includes(mediaUri))))assetsPass=false;
-      }else if(!mediaUri||!got.imageURL||
-         !decodeURIComponent(got.imageURL).includes(mediaUri)||
-         !got.naturalImageWidth)assetsPass=false;
+      const valid=mappings[i].items[j].nativeType==='SvgImage'
+       ? Boolean(mediaUri&&(got.vectorPresent||
+         (got.imageURL&&decodeURIComponent(got.imageURL).includes(mediaUri))))
+       : Boolean(mediaUri&&got.imageURL&&
+          decodeURIComponent(got.imageURL).includes(mediaUri)&&got.naturalImageWidth);
+      if(!valid){
+       assetsPass=false;
+       mediaError={expectedMediaId:mediaUri,actualUrl:got.imageURL,
+         naturalWidth:got.naturalImageWidth,vectorPresent:got.vectorPresent,
+         nativeType:mappings[i].items[j].nativeType,sourceAsset:e.asset};
+      }
      }
-     items.push({j,delta});
+     items.push({j,delta,...(mediaError?{mediaError}:{})});
     }
     const vectorErrors=[];
     for(let vi=0;vi<mappings[i].vectors.length;vi++){
