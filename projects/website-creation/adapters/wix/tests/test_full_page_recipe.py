@@ -221,10 +221,12 @@ class FullPageNormalizerTests(unittest.TestCase):
             menu_a=node("div#open-menu > div > a",tag="a",visible=False,
                         x=0,y=0,w=0,h=0)
             menu_a["semantics"]={"href":"https://vesper.example/about"}
+            menu_label=node("div#open-menu > div > a > nav",tag="nav",
+                            text="About",visible=False,x=0,y=0,w=0,h=0)
             footer=node("div#footer",y=1100,w=1280 if view=="desktop-1280" else 390,h=100)
             footer_a=node("div#footer > a",tag="a",x=30,y=1110,w=120,h=20)
             footer_a["semantics"]={"href":"https://vesper.example/contact"}
-            n.extend([hidden,menu_a,footer,footer_a])
+            n.extend([hidden,menu_a,menu_label,footer,footer_a])
             by_view[view]={
               "measuredNodes":len(n),
               "sectionCandidates":[{"sourceSelector":"div#alpha"},
@@ -250,10 +252,13 @@ class FullPageNormalizerTests(unittest.TestCase):
             self.assertEqual([x["role"] for x in recipe["sourceChrome"][view]],
                              ["menu","footer"])
             self.assertEqual(recipe["sourceChrome"][view][0]["links"][0]["label"],"About")
+            self.assertEqual(len(recipe["sourceChrome"][view][0]["menuItems"]),1)
+            self.assertTrue(recipe["sourceChrome"][view][0]["menuItems"][0]["isNavigationItem"])
             self.assertFalse(recipe["sourceChrome"][view][0]["visible"])
         reasons={x["reason"] for x in recipe["unsupported"]}
         self.assertIn("DONOR_MENU_NATIVE_MAPPING_REQUIRED",reasons)
         self.assertIn("DONOR_FOOTER_NATIVE_MAPPING_REQUIRED",reasons)
+        self.assertIn("DONOR_MENU_TARGET_ROUTE_UNVERIFIED",reasons)
         self.assertNotEqual(recipe["acceptance"],"WIX_IMPORTED")
         fp["_origamiSourceContract"]["pages"][0]["byViewport"]["desktop-1280"]["chromeCandidates"][0]["links"][0]["href"]="https://wrong.example/"
         with self.assertRaises(mod.Blocked):
