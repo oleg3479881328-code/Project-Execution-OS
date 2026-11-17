@@ -230,7 +230,7 @@ def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allo
     return css
 
 
-def compile_page(recipe, root, page, expected_id, allow_replace, video_files=None, allow_home=False):
+def compile_page(recipe, root, page, expected_id, allow_replace, video_files=None, allow_home=False, vector_files=None):
     if recipe.get('schema') != PAGE:
         raise Blocked('Wrong full-page normalized recipe')
     if recipe.get('unsupported'):
@@ -328,6 +328,24 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                 if not asset or not asset.startswith(('http://', 'https://')):
                     raise Blocked('Exact original image URL absent '+e['sourceSelector'])
                 name = unquote(urlsplit(asset).path.rsplit('/', 1)[-1])
+                if name.lower().endswith('.svg'):
+                    # An original SVG media image is native Wix SvgImage, not a
+                    # fabricated PNG or a custom element. Media Manager must
+                    # report its exact source URL as a READY VECTOR.
+                    matching=[x for x in (vector_files or []) if
+                        x.get('sourceUrl')==asset and
+                        x.get('operationStatus')=='READY' and
+                        x.get('mediaType')=='VECTOR' and
+                        re.fullmatch(r'[^:/\\s]+[.]svg',x.get('id') or '')]
+                    if len(matching)!=1:
+                        raise Blocked('Original SVG media not uniquely READY in Wix: '+asset)
+                    media_id=matching[0]['id']
+                    if "import { SvgImage }" not in first:
+                        first="import { SvgImage } from '@origami-wrappers/wixEditorElements/svgimage'\\n"+first
+                    if "import { svg }" not in first:
+                        first="import { svg } from '@wix/origami-runtime'\\n"+first
+                    children.append('                <SvgImage id="{id}" className="{id}" displayMode="fit" svgId={{svg(media.getShapeUrl(\'wix:image://v1/{mid}\').url, \'{mid}\')}} />'.format(id=cid,mid=media_id))
+                    continue
                 if not name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp')):
                     raise Blocked('Unsupported source image type '+name)
                 # Official upload-media scanner needs exported-compatible multiline Image.
@@ -444,6 +462,7 @@ def main():
     parser.add_argument('--allow-replace-page', action='store_true')
     parser.add_argument('--allow-home-target', action='store_true', help='Only for an explicitly approved existing Wix Home page')
     parser.add_argument('--video-media-manifest', help='JSON {files:[official READY Wix file descriptors]}')
+    parser.add_argument('--vector-media-manifest', help='JSON {files:[sourceUrl, id, operationStatus READY, mediaType VECTOR]}')
     args = parser.parse_args()
     try:
         if args.action == 'compile':
@@ -452,9 +471,13 @@ def main():
             manifest = json.loads(Path(args.video_media_manifest).read_text()) if args.video_media_manifest else {}
             if manifest and (not isinstance(manifest,dict) or not isinstance(manifest.get('files'),list)):
                 raise Blocked('Video media manifest must contain files[]')
+            vector_manifest = json.loads(Path(args.vector_media_manifest).read_text()) if args.vector_media_manifest else {}
+            if vector_manifest and (not isinstance(vector_manifest,dict) or not isinstance(vector_manifest.get('files'),list)):
+                raise Blocked('Vector media manifest must contain files[]')
             compile_page(json.loads(Path(args.recipe).read_text()),
                          args.export, args.page, args.page_id, args.allow_replace_page,
-                         manifest.get('files',[]), allow_home=args.allow_home_target)
+                         manifest.get('files',[]), allow_home=args.allow_home_target,
+                         vector_files=vector_manifest.get('files',[]))
         else:
             finalize_media(args.export, args.page, allow_home=args.allow_home_target)
     except (Blocked, KeyError, TypeError, ValueError) as e:
