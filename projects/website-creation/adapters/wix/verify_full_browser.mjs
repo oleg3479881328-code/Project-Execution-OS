@@ -22,15 +22,17 @@ const structure=fs.readFileSync(path.join(exportRoot,'packages/site-app/src/page
 const sections=[...structure.matchAll(/<Section\s+id="([^"]+)"[\s\S]*?<\/Section>/g)];
 if(sections.length!==recipe.sections.length)throw Error('Section coverage mismatch '+sections.length+'/'+recipe.sections.length);
 const mappings=recipe.sections.map((section,i)=>{
- const found=[...sections[i][0].matchAll(/<(Image|WRichText)\b([\s\S]*?)\/>/g)];
+ const found=[...sections[i][0].matchAll(/<(Image|SvgImage|WRichText)\b([\s\S]*?)\/>/g)];
  if(found.length!==section.elements.length)throw Error('Section '+i+' element coverage mismatch');
  const bkg=sections[i][0].match(/<Background\s+id="([^"]+)"/);
  const videoId=sections[i][0].match(/wix:video:\/\/v1\/([A-Za-z0-9_-]+)\//);
  return {wixId:sections[i][1],backgroundId:bkg?.[1]||null,videoMediaId:videoId?.[1]||null,items:found.map((m,j)=>{
   const id=m[2].match(/\bid="([^"]+)"/);if(!id)throw Error('Native element ID missing');
   const uri=m[2].match(/\buri:\s*['"]([^'"]+)['"]/);
-  return {wixId:id[1],source:section.elements[j],
-    mediaUri:m[1]==='Image'?uri?.[1]||null:null};
+  const vector=m[2].match(/wix:image:\/\/v1\/([^'"]+\.svg)/);
+  return {wixId:id[1],source:section.elements[j],nativeType:m[1],
+    mediaUri:m[1]==='Image'?uri?.[1]||null:
+      m[1]==='SvgImage'?vector?.[1]||null:null};
  })};
 });
 const round=n=>Math.round(n*100)/100;
@@ -50,7 +52,7 @@ const round=n=>Math.round(n*100)/100;
    for (const group of mappings) {
     for (const item of group.items) {
      const expected=item.source[label==='mobile-390'?'mobile':'desktop'];
-     if (item.source.type!=='image'||!expected) continue;
+     if (item.source.type!=='image'||item.nativeType==='SvgImage'||!expected) continue;
      const frame=page.locator('[id="'+item.wixId+'"]');
      if (await frame.count()!==1) continue;
      try {
@@ -92,7 +94,7 @@ const round=n=>Math.round(n*100)/100;
       const e=rect(el),cs=getComputedStyle(el),img=el.querySelector('img');
       items.push({missing:false,visible:cs.visibility!=='hidden'&&e.w>.1&&e.h>.1,
        local:{centerX:e.x-s.x-s.w/2,x:e.x-s.x,y:e.y-s.y,w:e.w,h:e.h},
-       imageURL:img?.currentSrc||img?.src||null,
+       imageURL:img?.currentSrc||img?.src||null,vectorPresent:!!el.querySelector('svg'),
        naturalImageWidth:img?.naturalWidth||0});
      }
      const bkg=g.backgroundId?document.getElementById(g.backgroundId):null;
@@ -149,7 +151,10 @@ const round=n=>Math.round(n*100)/100;
       // original filename. The readback verifier independently checked
       // the source filename, so compare the actual Wix Media URI here.
       const mediaUri=mappings[i].items[j].mediaUri;
-      if(!mediaUri||!got.imageURL||
+      if(mappings[i].items[j].nativeType==='SvgImage'){
+       if(!mediaUri||(!got.vectorPresent&&
+         !(got.imageURL&&decodeURIComponent(got.imageURL).includes(mediaUri))))assetsPass=false;
+      }else if(!mediaUri||!got.imageURL||
          !decodeURIComponent(got.imageURL).includes(mediaUri)||
          !got.naturalImageWidth)assetsPass=false;
      }
