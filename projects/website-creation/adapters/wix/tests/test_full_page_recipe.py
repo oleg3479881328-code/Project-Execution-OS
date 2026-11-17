@@ -204,12 +204,60 @@ class FullPageNormalizerTests(unittest.TestCase):
         fp["_origamiSourceContract"]=contract
         recipe=mod.normalize(fp,views,None)
         blockers={(x.get("selector"),x["reason"]) for x in recipe["unsupported"]}
-        self.assertIn(("div#menu","DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED"),blockers)
-        self.assertIn(("div#mobile-menu","DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED"),blockers)
+        self.assertIn(("div#menu","DONOR_MENU_NATIVE_MAPPING_REQUIRED"),blockers)
+        self.assertIn(("div#mobile-menu","DONOR_MENU_NATIVE_MAPPING_REQUIRED"),blockers)
         self.assertIn(("div#sticky-banner","DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED"),blockers)
-        self.assertIn(("div#slide-out-menu","DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED"),blockers)
+        self.assertIn(("div#slide-out-menu","DONOR_MENU_NATIVE_MAPPING_REQUIRED"),blockers)
         self.assertNotIn(("div#slide-out-menu","DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED"),blockers)
         self.assertNotEqual(recipe["acceptance"],"WIX_IMPORTED")
+
+    def test_hidden_menu_and_native_footer_chrome_contract_fail_closed(self):
+        fp,views=fixture()
+        by_view={}
+        for view in ("desktop-1280","mobile-390"):
+            n=views[view]["data"]["nodes"]
+            hidden=node("div#open-menu",visible=False,x=0,y=0,w=0,h=0)
+            hidden["styles"]["display"]="none"
+            menu_a=node("div#open-menu > div > a",tag="a",visible=False,
+                        x=0,y=0,w=0,h=0)
+            menu_a["semantics"]={"href":"https://vesper.example/about"}
+            footer=node("div#footer",y=1100,w=1280 if view=="desktop-1280" else 390,h=100)
+            footer_a=node("div#footer > a",tag="a",x=30,y=1110,w=120,h=20)
+            footer_a["semantics"]={"href":"https://vesper.example/contact"}
+            n.extend([hidden,menu_a,footer,footer_a])
+            by_view[view]={
+              "measuredNodes":len(n),
+              "sectionCandidates":[{"sourceSelector":"div#alpha"},
+                                   {"sourceSelector":"div#beta"}] if view=="desktop-1280" else [],
+              "navigationCandidates":[],
+              "overlayCandidates":[],
+              "chromeCandidates":[
+                {"sourceSelector":"div#open-menu","role":"menu","visible":False,
+                 "display":"none","position":"fixed","rect":hidden["rect"],
+                 "links":[{"sourceSelector":menu_a["selector"],"label":"About",
+                           "href":"https://vesper.example/about","visible":False}]},
+                {"sourceSelector":"div#footer","role":"footer","visible":True,
+                 "display":"block","position":"relative","rect":footer["rect"],
+                 "links":[{"sourceSelector":footer_a["selector"],"label":"Contact",
+                           "href":"https://vesper.example/contact","visible":True}]}
+              ]
+            }
+        fp["_origamiSourceContract"]={"schema":"localdesign.origami-source-contract.v1",
+            "pages":[{"byViewport":by_view,
+                      "coverage":{"mandatoryObjects":0},"objectLedger":[]}]}
+        recipe=mod.normalize(fp,views,None)
+        for view in ("desktop-1280","mobile-390"):
+            self.assertEqual([x["role"] for x in recipe["sourceChrome"][view]],
+                             ["menu","footer"])
+            self.assertEqual(recipe["sourceChrome"][view][0]["links"][0]["label"],"About")
+            self.assertFalse(recipe["sourceChrome"][view][0]["visible"])
+        reasons={x["reason"] for x in recipe["unsupported"]}
+        self.assertIn("DONOR_MENU_NATIVE_MAPPING_REQUIRED",reasons)
+        self.assertIn("DONOR_FOOTER_NATIVE_MAPPING_REQUIRED",reasons)
+        self.assertNotEqual(recipe["acceptance"],"WIX_IMPORTED")
+        fp["_origamiSourceContract"]["pages"][0]["byViewport"]["desktop-1280"]["chromeCandidates"][0]["links"][0]["href"]="https://wrong.example/"
+        with self.assertRaises(mod.Blocked):
+            mod.normalize(fp,views,None)
 
     @unittest.skipUnless(os.getenv("LOCALDESIGN_VESPER_ZIP"),
                          "set LOCALDESIGN_VESPER_ZIP to rerun actual owner-file regression")
