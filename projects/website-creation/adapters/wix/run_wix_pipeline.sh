@@ -157,7 +157,7 @@ print('WIX_IMPORTED',v.get('siteRevisions'))
 PY
   wix origami export-site --site "$WIX_SITE_ID" -d "$WORK/wix-readback" --json | tee "$WORK/readback-result.json"
   python3 "$HERE/verify_full_page.py" --recipe "$WORK/recipe.json" \
-    --readback "$WORK/wix-readback" --page "$WIX_TARGET_PAGE" --out "$WORK/readback-qa.json" "${PARTIAL_NATIVE_ARGS[@]}"
+    --readback "$WORK/wix-readback" --page "$WIX_TARGET_PAGE" --out "$WORK/readback-qa.json" "${PARTIAL_NATIVE_ARGS[@]}" "${VECTOR_MEDIA_ARGS[@]}"
   WIX_TARGET_PAGE="$WIX_TARGET_PAGE" node "$HERE/verify_full_browser.mjs" \
     "$WORK/recipe.json" "$PREVIEW_URL" "$WORK/wix-readback" "$WORK/screenshots" |
     tee "$WORK/browser-qa.json"
