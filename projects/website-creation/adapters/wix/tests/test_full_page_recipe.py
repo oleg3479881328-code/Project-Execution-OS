@@ -170,14 +170,32 @@ class FullPageNormalizerTests(unittest.TestCase):
         svg=node("div#alpha > svg",tag="svg",x=10,y=25,w=40,h=35)
         views["desktop-1280"]["data"]["nodes"].append(svg)
         contract["pages"][0]["byViewport"]["desktop-1280"]["measuredNodes"]=width("desktop-1280")
+        source_svg_name="wix-origami/vector-assets/desktop-1280/test.svg"
+        fp["_origamiVectorAssets"]={source_svg_name:'<svg xmlns="http://www.w3.org/2000/svg"><circle r="5"/></svg>'}
         ledger.append({"view":"desktop-1280","sourceSelector":"div#alpha > svg",
-           "ownerKind":"flow-section","status":"BLOCKED_TARGET_CAPABILITY",
+           "ownerKind":"flow-section","ownerScope":"page-flow",
+           "vectorAsset":source_svg_name,
+           "status":"BLOCKED_TARGET_CAPABILITY",
            "reason":"SVG_NATIVE_VECTORART_UPLOAD_REQUIRED","href":None})
         contract["pages"][0]["coverage"]["mandatoryObjects"]=len(ledger)
         blocked=mod.normalize(fp,views,None)
         reasons={x["reason"] for x in blocked["unsupported"]}
         self.assertIn("SVG_NATIVE_VECTORART_UPLOAD_REQUIRED",reasons)
         self.assertIn("SOURCE_OBJECT_NOT_MAPPED_TO_NATIVE",reasons)
+        self.assertEqual(blocked["sourceVectors"][0]["nativeComponent"],"SvgImage")
+
+    def test_original_showit_line_is_native_line_not_svg_image(self):
+        line=('<svg xmlns="http://www.w3.org/2000/svg" class="se-line" '
+              'style="width: 1006px; height: 1px;"><line '
+              'data-d-linestyle="solid" data-d-rotation="0" x1="0" y1="0" '
+              'x2="100%" y2="0" style="stroke-width: 1px;"/></svg>')
+        self.assertEqual(mod.native_vector_classification(line),"Line")
+        self.assertEqual(mod.native_vector_classification(
+            '<svg xmlns="http://www.w3.org/2000/svg"><path d="M0 0"/></svg>'),"SvgImage")
+        with self.assertRaises(mod.Blocked):
+            mod.native_vector_classification('<svg><script/></svg>')
+        with self.assertRaises(mod.Blocked):
+            mod.native_vector_classification('<svg class="se-line"><line data-d-linestyle="dotted"/></svg>')
 
     def test_donor_navigation_and_overlay_are_not_silently_omitted(self):
         fp,views=fixture()
