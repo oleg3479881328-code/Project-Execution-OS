@@ -347,6 +347,7 @@ def normalize(fp, views, section_selectors):
     # explicit source blocker or a silently omitted object reach import-site.
     contract = fp.get('_origamiSourceContract')
     source_ledger_coverage = None
+    source_chrome = {}
     if contract:
         if len(contract.get('pages', [])) != 1:
             raise Blocked('Origami contract must contain one source page')
@@ -359,23 +360,78 @@ def normalize(fp, views, section_selectors):
             declared = (by_view.get(view_key) or {}).get('measuredNodes')
             if declared != expected_count:
                 raise Blocked('Origami contract node count differs from observed '+view_key)
-        # Navigation roots themselves may have no text/media and thus no
-        # ledger row. They still require a native Menu/Header contract.
+        # Chrome (Header, Menu states and Footer) is *not* an ordinary Page
+        # Section. Source roots include hidden interactive drawer states.
+        # Preserve their exact anchors/labels/hrefs; destination route choice
+        # remains a separate verified native Wix mapping step.
+        source_chrome = {}
         for view_key in expected_views:
-            source_nodes={n['selector'] for n in views[view_key]['data']['nodes']}
-            nav_rows=(by_view.get(view_key) or {}).get('navigationCandidates') or []
-            overlay_rows=(by_view.get(view_key) or {}).get('overlayCandidates') or []
-            nav_ids={x.get('sourceSelector') for x in nav_rows}
+            source_nodes = {n['selector']:n for n in views[view_key]['data']['nodes']}
+            capture = by_view.get(view_key) or {}
+            nav_rows = capture.get('navigationCandidates') or []
+            overlay_rows = capture.get('overlayCandidates') or []
+            nav_ids = {x.get('sourceSelector') for x in nav_rows}
             if None in nav_ids or not nav_ids.issubset(source_nodes):
                 raise Blocked('Donor menu selector missing from captured DOM '+view_key)
-            overlay_ids={x.get('sourceSelector') for x in overlay_rows}
+            overlay_ids = {x.get('sourceSelector') for x in overlay_rows}
             if None in overlay_ids or not overlay_ids.issubset(source_nodes):
                 raise Blocked('Donor overlay selector missing from captured DOM '+view_key)
-            for sel in sorted(nav_ids):
+            chrome = capture.get('chromeCandidates')
+            if chrome is None:
+                unsupported.append({'selector':'SOURCE_CHROME','view':view_key,
+                  'reason':'SOURCE_CHROME_CONTRACT_MISSING_RECAPTURE_V2_5_6'})
+                chrome = []
+            if not isinstance(chrome,list):
+                raise Blocked('Invalid Chrome source candidates '+view_key)
+            seen_roots,verified = set(),[]
+            for entry in chrome:
+                if not isinstance(entry,dict):
+                    raise Blocked('Invalid Chrome candidate row '+view_key)
+                root,role = entry.get('sourceSelector'),entry.get('role')
+                if not root or root in seen_roots or root not in source_nodes:
+                    raise Blocked('Invalid/duplicate donor Chrome root '+str(root))
+                if role not in ('header','menu','footer'):
+                    raise Blocked('Unsupported donor Chrome role '+str(role))
+                seen_roots.add(root)
+                anchor_rows=entry.get('links')
+                if not isinstance(anchor_rows,list):
+                    raise Blocked('Missing donor Chrome link inventory '+root)
+                link_rows=[]
+                for link in anchor_rows:
+                    if not isinstance(link,dict):
+                        raise Blocked('Invalid donor Chrome link inventory '+root)
+                    sel=link.get('sourceSelector')
+                    node=source_nodes.get(sel)
+                    if not sel or not node or node.get('tag')!='a':
+                        raise Blocked('Missing actual donor Chrome anchor '+str(sel))
+                    href=(node.get('semantics') or {}).get('href')
+                    if href!=link.get('href'):
+                        raise Blocked('Donor Chrome href does not match observed DOM '+sel)
+                    label=link.get('label')
+                    if not href:
+                        unsupported.append({'selector':sel,'view':view_key,
+                          'reason':'DONOR_CHROME_LINK_HREF_UNRESOLVED'})
+                    if not isinstance(label,str) or not label.strip():
+                        unsupported.append({'selector':sel,'view':view_key,
+                          'reason':'DONOR_CHROME_LINK_LABEL_UNRESOLVED'})
+                    link_rows.append({'sourceSelector':sel,'label':label,
+                      'href':href,'visible':bool(link.get('visible'))})
+                verified.append({'sourceSelector':root,'role':role,
+                  'visible':bool(entry.get('visible')),
+                  'display':entry.get('display'),
+                  'position':entry.get('position'),
+                  'rect':entry.get('rect'),
+                  'links':link_rows})
+                unsupported.append({'selector':root,'view':view_key,
+                  'reason':{'header':'DONOR_HEADER_NATIVE_MAPPING_REQUIRED',
+                   'footer':'DONOR_FOOTER_NATIVE_MAPPING_REQUIRED',
+                   'menu':'DONOR_MENU_NATIVE_MAPPING_REQUIRED'}[role]})
+            source_chrome[view_key]=verified
+            # Fixed slide-out menu is ONE native navigation component, not
+            # another unrelated Overlay with duplicate dimensions.
+            for sel in sorted(nav_ids - seen_roots):
                 unsupported.append({'selector':sel,'view':view_key,
-                                    'reason':'DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED'})
-            # Navigation may itself be fixed (slide-out menu). Keep one
-            # native Menu blocker, not an unrelated second Overlay component.
+                                    'reason':'DONOR_MENU_NATIVE_MAPPING_REQUIRED'})
             for sel in sorted(overlay_ids-nav_ids):
                 unsupported.append({'selector':sel,'view':view_key,
                                     'reason':'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'})
@@ -417,10 +473,13 @@ def normalize(fp, views, section_selectors):
             # block these scopes before Origami import instead of claiming
             # that preserving existing target chrome transfers donor chrome.
             scope = row.get('ownerScope')
-            if scope in ('navigation','overlay'):
+            if scope in ('header','footer','navigation','overlay'):
                 unsupported.append({'selector':selector,'view':view,
-                                    'reason':'DONOR_NAVIGATION_NATIVE_MAPPING_REQUIRED'
-                                      if scope=='navigation' else 'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'})
+                                    'reason':{
+                                      'header':'DONOR_HEADER_NATIVE_MAPPING_REQUIRED',
+                                      'footer':'DONOR_FOOTER_NATIVE_MAPPING_REQUIRED',
+                                      'navigation':'DONOR_MENU_NATIVE_MAPPING_REQUIRED',
+                                      'overlay':'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'}[scope]})
             if row.get('href'):
                 unsupported.append({'selector':selector,'view':view,
                                     'reason':'NATIVE_LINK_MAPPING_UNVERIFIED'})
@@ -437,6 +496,7 @@ def normalize(fp, views, section_selectors):
               'desktopWidth': int(views[desktop_key]['data']['viewport']['width']),
               'viewports': viewsinfo, 'sections': out, 'unsupported': unsupported,
               'sourceObjectCoverage':source_ledger_coverage,
+              'sourceChrome':source_chrome,
               'acceptance': 'RECIPE_ONLY_NOT_WIX_IMPORTED'}
     canonical = json.dumps(result, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
     result['sha256'] = hashlib.sha256(canonical.encode()).hexdigest()
