@@ -22,11 +22,21 @@ const structure=fs.readFileSync(path.join(exportRoot,'packages/site-app/src/page
 const sections=[...structure.matchAll(/<Section\s+id="([^"]+)"[\s\S]*?<\/Section>/g)];
 if(sections.length!==recipe.sections.length)throw Error('Section coverage mismatch '+sections.length+'/'+recipe.sections.length);
 const mappings=recipe.sections.map((section,i)=>{
- const found=[...sections[i][0].matchAll(/<(Image|SvgImage|WRichText)\b([\s\S]*?)\/>/g)];
+ const found=[...sections[i][0].matchAll(/<(Image|SvgImage|WRichText)\b([\s\S]*?)\/>/g)]
+  .filter(m=>/\bid="ldv-e\d{3}-\d{3}"/.test(m[2]));
  if(found.length!==section.elements.length)throw Error('Section '+i+' element coverage mismatch');
+ const expectedVectors=(recipe.sourceVectors||[]).filter(x=>
+  x.ownerScope==='page-flow'&&x.ownerSection===section.sourceSelector);
+ const vectorMarkup=[...sections[i][0].matchAll(/<(SvgImage|Line)\b([^>]*\bid="ldv-v\d{3}-\d{3}"[^>]*)\/>/g)];
+ if(vectorMarkup.length!==expectedVectors.length)throw Error('Section '+i+' native vector coverage mismatch');
+ const vectors=vectorMarkup.map((m,j)=>{
+  const id=m[2].match(/\bid="([^"]+)"/);
+  if(!id||m[1]!==expectedVectors[j].nativeComponent)throw Error('Section '+i+' native vector type mismatch');
+  return {wixId:id[1],source:expectedVectors[j],type:m[1]};
+ });
  const bkg=sections[i][0].match(/<Background\s+id="([^"]+)"/);
  const videoId=sections[i][0].match(/wix:video:\/\/v1\/([A-Za-z0-9_-]+)\//);
- return {wixId:sections[i][1],backgroundId:bkg?.[1]||null,videoMediaId:videoId?.[1]||null,items:found.map((m,j)=>{
+ return {wixId:sections[i][1],backgroundId:bkg?.[1]||null,videoMediaId:videoId?.[1]||null,vectors,items:found.map((m,j)=>{
   const id=m[2].match(/\bid="([^"]+)"/);if(!id)throw Error('Native element ID missing');
   const uri=m[2].match(/\buri:\s*['"]([^'"]+)['"]/);
   const vector=m[2].match(/wix:image:\/\/v1\/([^'"]+\.svg)/);
@@ -107,6 +117,13 @@ const round=n=>Math.round(n*100)/100;
        imageURL:img?.currentSrc||img?.src||null,vectorPresent:!!el.querySelector('svg'),
        naturalImageWidth:img?.naturalWidth||0});
      }
+     const vectors=g.vectors.map(it=>{
+      const el=document.getElementById(it.wixId);
+      if(!el)return {missing:true};
+      const e=rect(el),cs=getComputedStyle(el);
+      return {missing:false,visible:cs.visibility!=='hidden'&&e.w>.1&&e.h>.1,
+       local:{centerX:e.x-s.x-s.w/2,x:e.x-s.x,y:e.y-s.y,w:e.w,h:e.h}};
+     });
      const bkg=g.backgroundId?document.getElementById(g.backgroundId):null;
      const video=bkg?.querySelector('video')||null;
      const mediaLayer=bkg?.querySelector('[data-motion-part^="BG_MEDIA"]');
@@ -114,7 +131,7 @@ const round=n=>Math.round(n*100)/100;
        videoWidth:video?.videoWidth||0,muted:video?.muted,loop:video?.loop,autoplay:video?.autoplay,
        paused:video?.paused,mediaOpacity:Number(getComputedStyle(mediaLayer||bkg).opacity),
        sourceId:g.videoMediaId||null};
-     rows.push({missing:false,section:s,items,video:videoData});
+     rows.push({missing:false,section:s,items,vectors,video:videoData});
     }
     return {rows,clientWidth:document.documentElement.clientWidth,
      bannerHeight:document.getElementById('WIX_ADS')?.getBoundingClientRect().height||0};
@@ -172,7 +189,29 @@ const round=n=>Math.round(n*100)/100;
      }
      items.push({j,delta});
     }
-    details.push({section:sec.sourceSelector,sectionHeightDelta:round(hdiff),items,
+    const vectorErrors=[];
+    for(let vi=0;vi<mappings[i].vectors.length;vi++){
+     const v=mappings[i].vectors[vi],got=act.vectors[vi];
+     const active=v.source.view===label;
+     if(!active){if(got?.visible){localPass=false;vectorErrors.push({vi,error:'viewport-hidden vector visible'})}continue}
+     if(!got||got.missing||!got.visible){
+      localPass=false;vectorErrors.push({vi,error:'native vector missing or hidden'});continue;
+     }
+     const sectionGeo=sec[bp==='desktop'?'desktopSection':'mobileSection'];
+     const sourceRect=v.source.rect;
+     const expectedVector={
+       centerX:sourceRect.x-sectionGeo.x-sectionGeo.width/2,
+       x:sourceRect.x-sectionGeo.x,y:sourceRect.y-sectionGeo.y,
+       w:sourceRect.width,h:sourceRect.height
+     };
+     const delta={};
+     for(const dim of ['y','w','h',bp==='desktop'?'centerX':'x']){
+      delta[dim]=round(got.local[dim]-expectedVector[dim]);
+      if(Math.abs(delta[dim])>1)localPass=false;
+     }
+     vectorErrors.push({vi,delta});
+    }
+    details.push({section:sec.sourceSelector,sectionHeightDelta:round(hdiff),items,vectors:vectorErrors,
       ...(dynamics.length?{videoObserved:act.video,
         videoWhenVisible:videoWhenVisible[mappings[i].backgroundId]||null,
         videoSource:dynamics[0]}:{})});
