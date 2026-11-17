@@ -138,6 +138,27 @@ PY
   cd "$WORK/wix-site"
   yarn install
   yarn lint && yarn tsc && yarn build
+  # Wix build may regenerate CSS import lines in global _generated JSX even
+  # when we never authored that global component. Revert ONLY proven CSS-import
+  # additions, never real Header/Footer source changes or unknown generated code.
+  python3 - <<'PY'
+import subprocess,re
+status=subprocess.run(['git','status','--porcelain'],text=True,capture_output=True,check=True).stdout
+for row in status.splitlines():
+  if len(row)<4 or not row[3:].startswith('packages/site-app/src/global/'):
+    continue
+  p=row[3:]
+  if not re.fullmatch(r'packages/site-app/src/global/components/[A-Za-z0-9_-]+/_generated/[A-Za-z0-9_-]+\.jsx',p):
+    raise SystemExit('BLOCKED: unrelated global component modified '+p)
+  diff=subprocess.run(['git','diff','--unified=0','--',p],
+        text=True,capture_output=True,check=True).stdout.splitlines()
+  edits=[line for line in diff if line.startswith(('+','-'))
+         and not line.startswith(('+++','---'))]
+  if not edits or not all(re.fullmatch(r"\+import '[^']+/css'",line) for line in edits):
+    raise SystemExit('BLOCKED: generated Wix global component has non-CSS-import changes '+p)
+  subprocess.run(['git','restore','--',p],check=True)
+  print('WIX_GENERATED_CSS_IMPORT_SIDE_EFFECT_RESTORED',p)
+PY
   python3 - "$WIX_TARGET_PAGE" <<'PY'
 import subprocess,sys
 target='packages/site-app/src/pages/'+sys.argv[1]+'/'
