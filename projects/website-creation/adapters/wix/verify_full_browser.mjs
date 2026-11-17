@@ -160,7 +160,8 @@ const round=n=>Math.round(n*100)/100;
      }
      items.push({j,delta});
     }
-    details.push({section:sec.sourceSelector,sectionHeightDelta:round(hdiff),items});
+    details.push({section:sec.sourceSelector,sectionHeightDelta:round(hdiff),items,
+      ...(dynamics.length?{videoObserved:act.video,videoSource:dynamics[0]}:{})});
    }
    const screenshot=path.join(shotDir,label+'.png');
    await page.screenshot({path:screenshot,fullPage:true});
