@@ -398,6 +398,58 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                         sty += '\n' + rule + '\n'
             else:
                 raise Blocked('Unsupported source type '+str(e['type']))
+        # Static source vector overlays are native Wix Line or SvgImage.
+        # Each captured viewport is independent: two Wix nodes may represent
+        # one donor selector when Desktop/Mobile geometry differs. Native
+        # readback must verify each one; no resize/URL or position guesses.
+        source_vectors=[v for v in recipe.get('sourceVectors',[]) if
+                        v.get('ownerScope')=='page-flow' and
+                        v.get('ownerSection')==sec['sourceSelector']]
+        for vi,vector in enumerate(source_vectors):
+            view=vector.get('view')
+            if view not in (expected_view,'mobile-390'):
+                raise Blocked('Unobserved vector viewport '+str(view))
+            rect=vector.get('rect')
+            if not isinstance(rect,dict) or not all(
+                 isinstance(rect.get(n),(int,float)) for n in ('x','y','width','height')):
+                raise Blocked('Missing measured original SVG geometry '+str(vector.get('sourceSelector')))
+            source_section=sec['desktopSection' if view==expected_view else 'mobileSection']
+            gx=rect['x']-source_section['x']
+            gy=rect['y']-source_section['y']
+            if view==expected_view:
+                geometry={'centerX':gx-source_section['width']/2,
+                          'y':gy,'w':rect['width'],'h':rect['height']}
+                vector_desktop,vector_mobile=geometry,None
+            else:
+                geometry={'x':gx,'y':gy,'w':rect['width'],'h':rect['height']}
+                vector_desktop,vector_mobile=None,geometry
+            cid=f'ldv-v{idx:03d}-{vi:03d}'
+            dr.append(css_element(cid,vector_desktop,desktop_width))
+            mr.append(css_element(cid,vector_mobile,390))
+            component=vector.get('nativeComponent')
+            if component=='SvgImage':
+                matching=[x for x in (vector_files or []) if
+                    x.get('assetSha256')==vector.get('assetSha256') and
+                    x.get('mediaType')=='VECTOR' and
+                    x.get('operationStatus')=='READY' and
+                    re.fullmatch(r'[^:/\s]+[.]svg',x.get('id') or '')]
+                if len(matching)!=1:
+                    raise Blocked('Original inline SVG media missing or ambiguous '+str(vector.get('sourceSelector')))
+                media_id=matching[0]['id']
+                if "import { SvgImage }" not in first:
+                    first="import { SvgImage } from '@origami-wrappers/wixEditorElements/svgimage'\n"+first
+                if "import { svg }" not in first:
+                    first="import { svg } from '@wix/origami-runtime'\n"+first
+                children.append('                <SvgImage id="{id}" className="{id}" displayMode="fit" svgId={{svg(media.getShapeUrl(\'wix:image://v1/{mid}\').url, \'{mid}\')}} />'.format(id=cid,mid=media_id))
+            elif component=='Line':
+                if "import { Line }" not in first:
+                    first="import { Line } from '@origami-wrappers/wixEditorElements/line'\n"+first
+                children.append(f'                <Line id="{cid}" className="{cid}" />')
+                # Source se-line XML is a 1 px solid black line. Wix Line
+                # takes width/height from source measured geometry above.
+                sty += f'\n.{cid} {{ --preset:horizontal; --lineColor:#000000; --lineSize:1px; --type:Solid; }}\n'
+            else:
+                raise Blocked('No native Wix component for source vector '+str(component))
         video_props, video_opacity_desktop = video_background_props(sec, video_files, desktop_width)
         _, video_opacity_mobile = video_background_props(sec, video_files, 390)
         sec_js.append(f'''        <Section id="{sid}" className="{sid}">
