@@ -381,3 +381,24 @@ The existing Wix Origami export uses `pages/(home)` for its actual Home route; t
 **Fonts remain a separate strict gate.** `Made Canvas Light`, `Tenderness`, `Commuter Sans Regular`, and `Newsreader Display Extra Light Italic` were in captured donor CSS but not available as loaded font faces on the target; official Wix font catalog returned no exact matches. Displayed CSS font names are not proof of available font files. Use licensed originals only through existing official Wix font/theme support, or mark visual parity BLOCKED rather than substituting fonts silently. Before finalizing a migrated site, check actual browser FontFaceSet, rendered geometry, background imagery, Header/Menu/Footer and captured screenshot comparisons at every source viewport.
 
 **Site QA recorded:** Owner-approved experimental `Origami 261116 1511` only (Wix Site ID `7969ecbf-2525-43fd-9493-5670c637f351`). Original hero photos and six Footer gallery images were imported into the native Wix editor; official post-import re-export confirmed both hero asset IDs, all six Footer media IDs and nonzero responsive Footer grid. Real browser at 1920/390: all six footer images load with `naturalWidth>0`, scroll reaches Footer, and no page JS errors. This is improvement with verified source layers, **not full visual parity acceptance**.
+
+
+### 2026-11-17 — Owner-approved native Wix defaults for unsupported visual effects and unavailable fonts
+
+**Owner decision:** A missing/non-Wix-supported visual effect or absent original font must **NOT interrupt the automatic native page build or experimental editor import**. The owner's desired deliverable is a complete editable native Wix baseline from measured fingerprint geometry, with remaining polish done manually. Do not replace measured content or coordinates with artistic guesses.
+
+**Deterministic Wix fallback order (soft, never creative):**
+
+1. Preserve original text, original image/video URL and Wix Media Manager asset identity, section, independent captured breakpoint X/Y/W/H, ordering and component type whenever mapped natively.
+2. If an original font family is not present in the actual Wix font catalog/installed site theme, use the existing **Wix site theme's default native Text style/font** for that text element. Do not pretend that `font-family: UnknownOriginal` is a successful transfer; do not infer a similar-looking typeface or make arbitrary typography edits. Preserve original font name, weight, line metrics and source selector in the fallback ledger, while leaving the actual Wix text element editable.
+3. If a source visual effect or interaction has no supported/verified native Wix counterpart (e.g., unsupported animation, hover effect, parallax, custom mask), emit the corresponding static native Wix element with the **default Wix behavior (no unsupported effect)**. Preserve original static frame, asset, opacity/stack/clip when natively supported, and record the unsupported effect and donor state in the fallback ledger.
+4. If no verified source image/video/media URL exists, never fabricate another photograph or claim it is original. Where the official native Wix component supports an unset/default media state, use that editable default and mark its source selector `DEFAULT_MEDIA_PENDING`. Otherwise record a specific technical limitation.
+5. A required source object must remain accounted for in a mapping ledger as `NATIVE_EXACT`, `NATIVE_WIX_DEFAULT`, or `TECHNICAL_BLOCKER`. There is **no silent deletion** and no mutation of another site or page.
+
+**Two independent outcome axes:**
+- `BUILD_AND_IMPORT`: may be `PASS_WITH_WIX_DEFAULTS` even when effects/fonts are missing, provided native Wix lint/tsc/build, target-site safety, official import, readback and functioning editability pass.
+- `SOURCE_VISUAL_PARITY`: must be `PARTIAL` whenever any `NATIVE_WIX_DEFAULT` is used. Never present this as pixel-perfect source reproduction.
+
+The user does **not** need to manually confirm each fallback or test each element. Existing PEOS normalizer/adapter and automated QA should apply defaults and produce a compact list of elements to refine after import. Stop only for actual execution/safety impossibility (wrong target Wix site or page, invalid source ZIP, schema/type mismatch preventing native compilation/import, unauthorized mutation, or unrecoverable missing required component); continue with Wix defaults for unsupported nonessential visual details.
+
+**Implementation boundary:** This is an approved change to the existing PEOS Wix standard, **not** a claim that current `full_page_recipe.py`, `compile_full_page.py` and `run_wix_pipeline.sh` already implement soft fallbacks. They still contain fail-closed source unsupported gates. Route future code modifications through the existing adapter and regression suite; do not disable safety preflight or label an unsupported source as `NATIVE_EXACT`.
