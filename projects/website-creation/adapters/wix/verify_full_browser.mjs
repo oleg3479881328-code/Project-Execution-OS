@@ -64,8 +64,10 @@ const round=n=>Math.round(n*100)/100;
      } catch { /* The asset gate below records missing/broken images. */ }
     }
    }
-   // Source background video is lazy in the native Wix renderer. Render
-   // the actual video-bearing section before reading readyState/currentSrc.
+   // Source background video is lazy in native Wix. Verify playback
+   // WHILE the section is visible: Wix intentionally pauses offscreen video.
+   // A pause after returning to page top is not an autoplay failure.
+   const videoWhenVisible={};
    for(const [si,group] of mappings.entries()){
     const dynamic=recipe.sections[si].dynamicLayers||[];
     if(!dynamic.length)continue;
@@ -73,10 +75,18 @@ const round=n=>Math.round(n*100)/100;
     try{
      await sec.scrollIntoViewIfNeeded({timeout:8000});
      const active=dynamic[0]?.[label==='mobile-390'?'mobile':'desktop'];
-     if(active)await page.waitForFunction(id=>{
-      const v=document.getElementById(id)?.querySelector('video');
-      return Boolean(v&&v.readyState>=2&&v.videoWidth>0);
-     },group.backgroundId,{timeout:16000});
+     if(active){
+      await page.waitForFunction(id=>{
+       const v=document.getElementById(id)?.querySelector('video');
+       return Boolean(v&&v.readyState>=2&&v.videoWidth>0);
+      },group.backgroundId,{timeout:16000});
+      await page.waitForTimeout(500);
+      videoWhenVisible[group.backgroundId]=await page.evaluate(id=>{
+       const v=document.getElementById(id)?.querySelector('video');
+       return v?{paused:v.paused,readyState:v.readyState,muted:v.muted,
+          loop:v.loop,autoplay:v.autoplay,currentTime:v.currentTime}:null;
+      },group.backgroundId);
+     }
     }catch{ /* precise dynamic gate below marks the failure */ }
    }
    await page.evaluate(()=>window.scrollTo(0,0));
@@ -129,7 +139,9 @@ const round=n=>Math.round(n*100)/100;
       if(!actual.present||!actual.sourceId||!actual.url||!actual.url.includes(actual.sourceId)){
        dynamicPass=false;
       }else if(expectedVideo){
-       if(actual.readyState<2||!actual.videoWidth||actual.paused||
+       if(actual.readyState<2||!actual.videoWidth||
+          !videoWhenVisible[group.backgroundId]||
+          videoWhenVisible[group.backgroundId].paused||
           actual.muted!==Boolean(expectedVideo.muted)||
           actual.loop!==Boolean(expectedVideo.loop)||
           actual.autoplay!==Boolean(expectedVideo.autoplay)||
@@ -161,7 +173,9 @@ const round=n=>Math.round(n*100)/100;
      items.push({j,delta});
     }
     details.push({section:sec.sourceSelector,sectionHeightDelta:round(hdiff),items,
-      ...(dynamics.length?{videoObserved:act.video,videoSource:dynamics[0]}:{})});
+      ...(dynamics.length?{videoObserved:act.video,
+        videoWhenVisible:videoWhenVisible[mappings[i].backgroundId]||null,
+        videoSource:dynamics[0]}:{})});
    }
    const screenshot=path.join(shotDir,label+'.png');
    await page.screenshot({path:screenshot,fullPage:true});
