@@ -152,9 +152,9 @@ class FullPageNormalizerTests(unittest.TestCase):
           "pages":[{"byViewport":{
             "desktop-1280":{"sectionCandidates":[
               {"sourceSelector":"div#alpha"},{"sourceSelector":"div#beta"}],
-              "measuredNodes":width("desktop-1280")},
+              "measuredNodes":width("desktop-1280"),"chromeCandidates":[]},
             "mobile-390":{"sectionCandidates":[],
-              "measuredNodes":width("mobile-390")}},
+              "measuredNodes":width("mobile-390"),"chromeCandidates":[]}},
             "objectLedger":ledger,"coverage":{"mandatoryObjects":len(ledger)}}]}
         fp["_origamiSourceContract"]=contract
         clean=mod.normalize(fp,views,None)
