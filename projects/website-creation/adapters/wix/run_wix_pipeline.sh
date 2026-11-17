@@ -10,7 +10,17 @@ if [[ "${WIX_MODE:-section}" == "full-page" ]]; then
   : "${WIX_TARGET_PAGE_ID:?Set page ID from current export}"
   : "${PREVIEW_URL:?Set an official Wix draft/preview URL before target mutation; browser QA is mandatory}"
   [[ "${APPROVED_REPLACE_PAGE:-}" == "YES" ]] || { echo "BLOCKED: require APPROVED_REPLACE_PAGE=YES" >&2; exit 3; }
-  [[ "$WIX_TARGET_PAGE" =~ ^[a-z0-9-]+$ && "$WIX_TARGET_PAGE" != home ]] || { echo "BLOCKED: explicit non-home target required" >&2; exit 3; }
+  HOME_PAGE_ARGS=()
+  if [[ "$WIX_TARGET_PAGE" == "(home)" ]]; then
+    [[ "${APPROVED_REPLACE_HOME:-}" == "YES" &&
+       "${WIX_HOME_APPROVED_SITE_ID:-}" == "$WIX_SITE_ID" ]] ||
+      { echo "BLOCKED: Home requires APPROVED_REPLACE_HOME=YES and exact WIX_HOME_APPROVED_SITE_ID" >&2; exit 3; }
+    HOME_PAGE_ARGS+=(--allow-home-target)
+    [[ "$WIX_TARGET_PAGE_ID" != "" ]] || { echo "BLOCKED: Home Page ID required" >&2; exit 3; }
+  else
+    [[ "$WIX_TARGET_PAGE" =~ ^[a-z0-9-]+$ && "$WIX_TARGET_PAGE" != home ]] ||
+      { echo "BLOCKED: invalid page folder, use (home) for explicit approved Home" >&2; exit 3; }
+  fi
   HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   WORK="${WIX_WORK_DIR:-$(mktemp -d)}"
   mkdir -p "$WORK"
@@ -65,7 +75,7 @@ PY
   wix origami export-site --site "$WIX_SITE_ID" -d "$WORK/wix-site" --json | tee "$WORK/export-result.json"
   python3 "$HERE/compile_full_page.py" compile --recipe "$WORK/recipe.json" \
     --export "$WORK/wix-site" --page "$WIX_TARGET_PAGE" \
-    --page-id "$WIX_TARGET_PAGE_ID" --allow-replace-page "${VIDEO_MEDIA_ARGS[@]}"
+    --page-id "$WIX_TARGET_PAGE_ID" --allow-replace-page "${HOME_PAGE_ARGS[@]}" "${VIDEO_MEDIA_ARGS[@]}"
   # Official upload-media resolves Image wrapper definition.ts from installed
   # dependencies. Without yarn install it silently detects zero images.
   (cd "$WORK/wix-site" && yarn install)
@@ -80,7 +90,7 @@ if m.get('failed'):
 # upload count. finalize-media validates a real Wix URI for EVERY image.
 print('MEDIA_UPLOAD_SCAN_PASS',{'sourceImageInstances':expected,'newUploads':len(m.get('uploaded',[]))})
 PY
-  python3 "$HERE/compile_full_page.py" finalize-media --export "$WORK/wix-site" --page "$WIX_TARGET_PAGE"
+  python3 "$HERE/compile_full_page.py" finalize-media --export "$WORK/wix-site" --page "$WIX_TARGET_PAGE" "${HOME_PAGE_ARGS[@]}"
   cd "$WORK/wix-site"
   yarn install
   yarn lint && yarn tsc && yarn build
