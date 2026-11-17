@@ -271,11 +271,14 @@ def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allo
     return css
 
 
-def compile_page(recipe, root, page, expected_id, allow_replace, video_files=None, allow_home=False, vector_files=None):
+def compile_page(recipe, root, page, expected_id, allow_replace, video_files=None, allow_home=False, vector_files=None, allow_partial_native_draft=False):
     if recipe.get('schema') != PAGE:
         raise Blocked('Wrong full-page normalized recipe')
-    if recipe.get('unsupported'):
+    if recipe.get('unsupported') and not allow_partial_native_draft:
         raise Blocked('Source unsupported elements: '+str(recipe['unsupported'][:3]))
+    # Explicit experimental partial mode does NOT erase recipe.unsupported.
+    # The companion native-default report preserves every missing source row;
+    # final visual parity can never be inferred from native build success.
     if not recipe.get('sections'):
         raise Blocked('No source sections')
     if not allow_replace:
@@ -561,6 +564,7 @@ def main():
     parser.add_argument('--page-id')
     parser.add_argument('--allow-replace-page', action='store_true')
     parser.add_argument('--allow-home-target', action='store_true', help='Only for an explicitly approved existing Wix Home page')
+    parser.add_argument('--allow-partial-native-draft', action='store_true', help='Only for authorized editable partial Wix builds; source-unmapped ledger must be retained')
     parser.add_argument('--video-media-manifest', help='JSON {files:[official READY Wix file descriptors]}')
     parser.add_argument('--vector-media-manifest', help='JSON {files:[sourceUrl, id, operationStatus READY, mediaType VECTOR]}')
     args = parser.parse_args()
@@ -577,7 +581,8 @@ def main():
             compile_page(json.loads(Path(args.recipe).read_text()),
                          args.export, args.page, args.page_id, args.allow_replace_page,
                          manifest.get('files',[]), allow_home=args.allow_home_target,
-                         vector_files=vector_manifest.get('files',[]))
+                         vector_files=vector_manifest.get('files',[]),
+                         allow_partial_native_draft=args.allow_partial_native_draft)
         else:
             finalize_media(args.export, args.page, allow_home=args.allow_home_target)
     except (Blocked, KeyError, TypeError, ValueError) as e:
