@@ -223,8 +223,29 @@ def retain_exported_rules(css, identifiers):
     return '\n'.join(blocks)+'\n'
 
 
-def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allow_missing_page=False):
-    rows = '0px ' + ' '.join(num(h)+'px' for h in heights) + ' 0px'
+def measured_footer_height(recipe, viewport):
+    """Existing source Chrome contract: keep the native Footer in page flow.
+    A captured Footer must never be given a zero-height Wix grid track.
+    """
+    chrome=recipe.get('sourceChrome')
+    if not chrome:
+        return None  # Legacy recipes have no Footer source evidence.
+    if viewport not in chrome:
+        raise Blocked('Missing source Chrome evidence for '+viewport)
+    footers=[c for c in chrome[viewport] if c.get('role')=='footer']
+    if len(footers)!=1:
+        raise Blocked('Expected exactly one measured donor Footer for '+viewport)
+    r=footers[0].get('rect') or {}
+    height=r.get('height')
+    if not isinstance(height,(int,float)) or height<=0:
+        raise Blocked('Invalid captured donor Footer height for '+viewport)
+    return height
+
+
+def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allow_missing_page=False, footer_height=None):
+    if footer_height is not None and (not isinstance(footer_height,(int,float)) or footer_height<=0):
+        raise Blocked('Measured source Footer requires positive grid height')
+    rows = '0px ' + ' '.join(num(h)+'px' for h in heights) + ' ' + (num(footer_height)+'px' if footer_height is not None else '0px')
     def replace_page(m):
         block = m.group()
         block, count = re.subn(r'grid-template-rows:\s*[^;\n}]+', 'grid-template-rows: '+rows, block, count=1)
@@ -471,8 +492,11 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                 else:
                     sty += '\n' + mobile_at_rule + '\n' + rule + '\n}\n'
     newjsx = first + '\n'.join(sec_js) + '\n' + last
-    desktop = update_page_grid(desktop, expected_id, footer.group(1), ds)
-    mobile = update_page_grid(mobile, expected_id, footer.group(1), ms, require_footer=False, allow_missing_page=True)
+    desktop = update_page_grid(desktop, expected_id, footer.group(1), ds,
+                               footer_height=measured_footer_height(recipe, expected_view))
+    mobile = update_page_grid(mobile, expected_id, footer.group(1), ms,
+                              require_footer=False, allow_missing_page=True,
+                              footer_height=measured_footer_height(recipe, 'mobile-390'))
     newlayout = (desktop + '\n' + ''.join(dr) + '\n' + mobile_at_rule
                  + mobile + '\n' + ''.join(mr) + '\n}\n')
     unmapped = json.loads((folder/'unmapped.json').read_text())
