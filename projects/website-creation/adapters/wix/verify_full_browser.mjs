@@ -140,8 +140,8 @@ const round=n=>Math.round(n*100)/100;
        dynamicPass=false;
       }else if(expectedVideo){
        if(actual.readyState<2||!actual.videoWidth||
-          !videoWhenVisible[group.backgroundId]||
-          videoWhenVisible[group.backgroundId].paused||
+          !videoWhenVisible[mappings[i].backgroundId]||
+          videoWhenVisible[mappings[i].backgroundId].paused||
           actual.muted!==Boolean(expectedVideo.muted)||
           actual.loop!==Boolean(expectedVideo.loop)||
           actual.autoplay!==Boolean(expectedVideo.autoplay)||
