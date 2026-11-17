@@ -426,8 +426,12 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
     unmapped = json.loads((folder/'unmapped.json').read_text())
     removed_section_ids = set(re.findall(r'<Section\s+id="([^"]+)"', s[a:b]))
     for component_id, data in list((unmapped.get('components') or {}).items()):
-        if component_id not in removed_section_ids or set(data) != {'anchors'}:
-            raise Blocked('Unknown unmapped component data: ' + component_id)
+        if component_id not in removed_section_ids:
+            # Existing Wix Page/Header/Footer/global metadata are not part of
+            # the deleted section set. Preserve verbatim.
+            continue
+        if not isinstance(data,dict) or set(data) != {'anchors'}:
+            raise Blocked('Unknown unmapped data on removed Section: ' + component_id)
         del unmapped['components'][component_id]
     (folder/'unmapped.json').write_text(json.dumps(unmapped, indent=2))
     (folder/'structure.jsx').write_text(newjsx)
