@@ -9,6 +9,7 @@ import hashlib
 import json
 import re
 import zipfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 SCHEMA = 'localdesign.wix-page-recipe.v1'
@@ -42,6 +43,10 @@ def read_zip(file):
             if contract.get('schema') != 'localdesign.origami-source-contract.v1':
                 raise Blocked('Unsupported Origami source contract')
             fingerprint['_origamiSourceContract'] = contract
+            fingerprint['_origamiVectorAssets'] = {
+                n: z.read(n).decode('utf-8') for n in z.namelist()
+                if n.startswith('wix-origami/vector-assets/') and n.endswith('.svg')
+            }
     if fingerprint.get('schema') != CAPTURE:
         raise Blocked('Expected ' + CAPTURE)
     pages = fingerprint.get('pages', [])
@@ -200,6 +205,29 @@ def capture_geometry(node, sec, desktop):
     return base
 
 
+def native_vector_classification(xml_text):
+    """Use the original source XML, not visual guesses: Showit se-line is a
+    Wix native Line; all other static SVGs remain native SvgImage.
+    This is a source capability plan, NOT a Wix acceptance claim.
+    """
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError as e:
+        raise Blocked('Malformed original source SVG: '+str(e))
+    if root.tag.rsplit('}',1)[-1] != 'svg':
+        raise Blocked('Non-SVG XML in source vector inventory')
+    tags=[c.tag.rsplit('}',1)[-1] for c in root.iter() if c is not root]
+    if ('se-line' in root.attrib.get('class','').split() and len(tags)==1
+            and tags[0]=='line'):
+        line=list(root)[0]
+        if line.attrib.get('data-d-linestyle')!='solid' or line.attrib.get('data-d-rotation') not in ('0','0.0',None):
+            raise Blocked('Unsupported donor line variation requires native QA')
+        return 'Line'
+    if any(tag in ('script','foreignObject','iframe','animate','set') for tag in tags):
+        raise Blocked('SVG contains unsupported active content')
+    return 'SvgImage'
+
+
 def normalize(fp, views, section_selectors):
     selectors = direct_sections(views, section_selectors, fp.get('_origamiSourceContract'))
     desktop_key = next(key for key in ('desktop-1280', 'desktop-1920') if key in views)
@@ -348,6 +376,7 @@ def normalize(fp, views, section_selectors):
     contract = fp.get('_origamiSourceContract')
     source_ledger_coverage = None
     source_chrome = {}
+    source_vectors = []
     if contract:
         if len(contract.get('pages', [])) != 1:
             raise Blocked('Origami contract must contain one source page')
@@ -473,6 +502,7 @@ def normalize(fp, views, section_selectors):
         declared_count = (cp.get('coverage') or {}).get('mandatoryObjects')
         if declared_count is not None and declared_count != len(ledger):
             raise Blocked('Origami contract mandatoryObjects count differs from ledger')
+        source_vectors = []
         accepted_status = 'SOURCE_CAPTURED_TARGET_MAPPING_REQUIRED'
         represented = {e['sourceSelector'] for sec in out for e in sec['elements']}
         for sec in out:
@@ -498,6 +528,22 @@ def normalize(fp, views, section_selectors):
             if not row.get('ownerKind'):
                 unsupported.append({'selector':selector,'view':view,
                                     'reason':'SOURCE_OBJECT_OWNER_MISSING'})
+            if row.get('vectorAsset'):
+                filename=row['vectorAsset']
+                xml=(fp.get('_origamiVectorAssets') or {}).get(filename)
+                if not xml:
+                    raise Blocked('Original source SVG missing from fingerprint ZIP: '+filename)
+                native_type=native_vector_classification(xml)
+                source_vectors.append({
+                    'sourceSelector':selector,'view':view,
+                    'ownerScope':row.get('ownerScope'),
+                    'ownerSection':row.get('ownerSection'),
+                    'rect':row.get('rect'),
+                    'vectorAsset':filename,
+                    'assetSha256':hashlib.sha256(xml.encode('utf-8')).hexdigest(),
+                    'nativeComponent':native_type,
+                    'mappingStatus':'SOURCE_CLASSIFIED_NATIVE_TARGET_UNVERIFIED'
+                })
             # The existing full-page writer preserves the target's shared
             # Header/Footer and does NOT implement donor Menu/Nav. Explicitly
             # block these scopes before Origami import instead of claiming
@@ -527,6 +573,7 @@ def normalize(fp, views, section_selectors):
               'viewports': viewsinfo, 'sections': out, 'unsupported': unsupported,
               'sourceObjectCoverage':source_ledger_coverage,
               'sourceChrome':source_chrome,
+              'sourceVectors':source_vectors,
               'acceptance': 'RECIPE_ONLY_NOT_WIX_IMPORTED'}
     canonical = json.dumps(result, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
     result['sha256'] = hashlib.sha256(canonical.encode()).hexdigest()
