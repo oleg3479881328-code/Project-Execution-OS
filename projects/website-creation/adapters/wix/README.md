@@ -5,6 +5,12 @@
 **Status: CANDIDATE / LOCAL PILOT TESTED / LIVE BRIDGE NOT YET ACCEPTED.**
 Date: 2026-11-15. Part of existing Website Creator / Universal Website Translator, not a new product or alternate browser automation engine.
 
+## 2026-11-17 — Owner-approved native Wix defaults (implemented; scoped)
+
+The **existing** `run_wix_pipeline.sh` now automatically invokes [apply_wix_native_defaults.py](apply_wix_native_defaults.py) after the native compiler and before official Wix lint, with `WIX_NATIVE_DEFAULTS=YES` by default (set `NO` only for comparative strict-font QA). It uses the current target Wix Theme default font when an original family is absent and logs a native static fallback for nondefault source animation/filter/transform on mapped core elements. Measured geometry, source content and media remain unchanged. No additional Chrome extension/scanner changes are needed for these captured properties.
+
+**Do not confuse Wix-defaults success with full source parity:** `PASS_WITH_WIX_DEFAULTS` means native editability is achieved; `SOURCE_VISUAL_PARITY=PARTIAL`. The normalizer's mandatory unmapped components still block the standard pipeline; the original Vesper 2.5.7 ZIP has 413 such records. Full evidence, CI/official lint and QA results: [NATIVE_DEFAULTS_QA_2026-11-17.md](NATIVE_DEFAULTS_QA_2026-11-17.md). The canonical safety/provenance standard remains [NATIVE_GEOMETRY_TRANSFER_STANDARD.md](NATIVE_GEOMETRY_TRANSFER_STANDARD.md).
+
 ## Existing canonical route
 
 Global `START_HERE.md` → `docs/ROUTER.md` → `projects/website-creation/ROUTER.md` → `UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md` → this adapter.
