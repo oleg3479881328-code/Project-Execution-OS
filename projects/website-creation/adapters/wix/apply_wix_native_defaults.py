@@ -59,7 +59,7 @@ def measured_effects(node):
     return effects
 
 
-def apply_native_defaults(recipe, fingerprint_zip, export_root, page):
+def apply_native_defaults(recipe, fingerprint_zip, export_root, page, allow_partial_draft=False):
     if recipe.get('schema') != SCHEMA or not recipe.get('sections'):
         raise NativeDefaultsBlocked('Complete native recipe required')
     if page == 'home' or not re.fullmatch(r'[a-z0-9-]+|\(home\)', page):
@@ -149,11 +149,15 @@ def apply_native_defaults(recipe, fingerprint_zip, export_root, page):
                         'reason': 'UNSUPPORTED_VISUAL_EFFECT_NATIVE_STATIC',
                         'original': effect, 'nativeBehavior': 'WIX_STATIC_DEFAULT',
                     })
-    # Cross-source coverage and safety: never convert missing mandatory
-    # native elements, URL or Owner mappings into harmless font warnings.
-    # The original recipe.unsupported remains intact, in the full-page runner.
-    if recipe.get('unsupported'):
-        raise NativeDefaultsBlocked('Mandatory source-native mappings still unresolved; defaults cover fonts and effects only')
+    # This optional experimental mode never claims that an omitted source
+    # object was built by Wix. The exact original unsupported ledger travels
+    # with the editable native draft for manual follow-up.
+    source_unmapped=list(recipe.get('unsupported') or [])
+    if source_unmapped and not allow_partial_draft:
+        raise NativeDefaultsBlocked(
+            'Mandatory source-native mappings still unresolved; '
+            'pass --allow-partial-native-draft only for an explicitly '
+            'authorized experimental partial build')
     stylefile.write_text(css)
     report = {
         'schema': 'peos.wix-native-defaults.v1',
@@ -161,10 +165,15 @@ def apply_native_defaults(recipe, fingerprint_zip, export_root, page):
         'textElementsInspected': text_count,
         'nativeDefaults': entries,
         'nativeDefaultCount': len(entries),
-        'nativeBuildStatus': 'PASS_WITH_WIX_DEFAULTS' if entries else 'NO_DEFAULTS_REQUIRED',
-        'sourceVisualParity': 'PARTIAL' if entries else 'NOT_ASSESSED',
-        'remainingMandatoryBlockers': len(recipe.get('unsupported',[])),
-        'policy': 'Original measured geometry and native media unchanged',
+        'nativeBuildStatus': ('DRAFT_WITH_UNMAPPED_SOURCE' if source_unmapped else
+                              'PASS_WITH_WIX_DEFAULTS' if entries else
+                              'NO_DEFAULTS_REQUIRED'),
+        'sourceVisualParity': 'PARTIAL' if entries or source_unmapped else 'NOT_ASSESSED',
+        'remainingMandatoryBlockers': len(source_unmapped),
+        'sourceUnmapped': source_unmapped,
+        'sourceObjectCoverage': recipe.get('sourceObjectCoverage'),
+        'manualRefinementRequired': bool(entries or source_unmapped),
+        'policy': 'Exact native geometry/media preserved; unmapped source not claimed built',
     }
     outfile = root.parent / (page.replace('(', '').replace(')', '') +
                               '-wix-native-defaults-report.json')
@@ -179,16 +188,20 @@ def main():
     p.add_argument('--export',required=True)
     p.add_argument('--page',required=True)
     p.add_argument('--out')
+    p.add_argument('--allow-partial-native-draft', action='store_true',
+                   help='Authorized experimental import only; all unmapped source objects remain in report')
     args=p.parse_args()
     result=apply_native_defaults(
         json.loads(Path(args.recipe).read_text()),
-        args.fingerprint, args.export, args.page)
+        args.fingerprint, args.export, args.page,
+        allow_partial_draft=args.allow_partial_native_draft)
     if args.out:
         Path(args.out).write_text(json.dumps(result,indent=2,ensure_ascii=False))
     print(json.dumps({
         'nativeDefaults': result['nativeDefaultCount'],
         'nativeBuildStatus':result['nativeBuildStatus'],
         'sourceVisualParity':result['sourceVisualParity'],
+        'remainingMandatoryBlockers':result['remainingMandatoryBlockers'],
     }))
 
 
