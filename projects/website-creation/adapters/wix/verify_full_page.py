@@ -34,11 +34,20 @@ def px(v):
 
 def block_elements(section):
     found = []
-    for m in re.finditer(r'<(Image|WRichText)\b([\s\S]*?)/>', section):
+    for m in re.finditer(r'<(Image|SvgImage|WRichText)\b([\s\S]*?)/>', section):
         head = m.group(2)
         idm = re.search(r'\bid="([^"]+)"', head)
         if not idm:
             raise Blocked('Native element without ID')
+        if not re.fullmatch(r'ldv-e\d{3}-\d{3}', idm.group(1)):
+            continue  # Vector overlays belong to sourceVectors, not core elements.
+        if m.group(1) == 'SvgImage':
+            ref = re.search(r'wix:image://v1/([^\'"]+\.svg)', head)
+            if not ref:
+                raise Blocked('Native SvgImage lacks original Wix vector media ID: '+idm.group(1))
+            found.append({'kind':'image','id':idm.group(1),
+                          'payload':ref.group(1),'nativeType':'SvgImage'})
+            continue
         if m.group(1) == 'Image':
             asset = re.search(r'\bname:\s*[\'"]([^\'"]+)[\'"]', head)
             kind = 'image'
@@ -53,10 +62,10 @@ def block_elements(section):
     return found
 
 
-def verify(recipe, export, page):
+def verify(recipe, export, page, allow_partial_native_draft=False, vector_files=None):
     if recipe.get('schema') != 'localdesign.wix-page-recipe.v1':
         raise Blocked('Wrong source recipe schema')
-    if recipe.get('unsupported'):
+    if recipe.get('unsupported') and not allow_partial_native_draft:
         raise Blocked('Unmapped source feature(s) exist')
     folder = Path(export)/'packages/site-app/src/pages'/page
     structure = (folder/'structure.jsx').read_text()
@@ -124,7 +133,15 @@ def verify(recipe, export, page):
                 continue
             if comp['kind'] == 'image':
                 want = unquote(urlsplit(e['asset']).path.rsplit('/', 1)[-1])
-                if comp['payload'].lower() != want.lower():
+                if comp.get('nativeType') == 'SvgImage':
+                    matches=[v for v in (vector_files or []) if
+                        v.get('sourceUrl')==e['asset'] and
+                        v.get('id')==comp['payload'] and
+                        v.get('operationStatus')=='READY' and
+                        v.get('mediaType')=='VECTOR']
+                    if len(matches)!=1:
+                        err(f'{sid} element {ei} original SVG Wix media identity not proven')
+                elif comp['payload'].lower() != want.lower():
                     err(f'{sid} element {ei} original media name mismatch {want}/{comp["payload"]}')
                 images += 1
             else:
@@ -155,7 +172,10 @@ def verify(recipe, export, page):
                         near(float(m.group(2))*(1 if m.group(1)=='+' else -1),
                              gr['centerX'], f'{comp["id"]} offsetX')
             matched += 1
-    return {'status': 'READBACK_CSS_PASS' if not issues else 'READBACK_CSS_FAIL',
+    return {'status': ('READBACK_NATIVE_DRAFT_PASS' if recipe.get('unsupported') else
+                       'READBACK_CSS_PASS') if not issues else 'READBACK_CSS_FAIL',
+            'unmappedSourceCount': len(recipe.get('unsupported') or []),
+            'sourceVisualParity': 'PARTIAL' if recipe.get('unsupported') else 'NOT_ASSESSED',
             'sourceSections': len(recipe['sections']), 'readbackSections': len(actual),
             'sourceElements': sum(len(s['elements']) for s in recipe['sections']),
             'matchedElements': matched, 'nativeImages': images, 'nativeTexts': texts,
@@ -168,13 +188,20 @@ def main():
     parser.add_argument('--readback', required=True)
     parser.add_argument('--page', required=True)
     parser.add_argument('--out')
+    parser.add_argument('--allow-partial-native-draft', action='store_true')
+    parser.add_argument('--vector-media-manifest')
     args = parser.parse_args()
     try:
-        data = verify(json.load(open(args.recipe)), args.readback, args.page)
+        vector_manifest=json.loads(Path(args.vector_media_manifest).read_text()) if args.vector_media_manifest else {}
+        if vector_manifest and (not isinstance(vector_manifest,dict) or not isinstance(vector_manifest.get('files'),list)):
+            raise Blocked('Invalid vector Wix Media Manager manifest')
+        data = verify(json.load(open(args.recipe)), args.readback, args.page,
+                      allow_partial_native_draft=args.allow_partial_native_draft,
+                      vector_files=vector_manifest.get('files',[]))
         if args.out:
             Path(args.out).write_text(json.dumps(data, indent=2))
         print(json.dumps(data, indent=2))
-        if data['status'] != 'READBACK_CSS_PASS':
+        if data['status'] not in ('READBACK_CSS_PASS','READBACK_NATIVE_DRAFT_PASS'):
             raise SystemExit(1)
     except (Blocked, OSError, ValueError, KeyError) as e:
         parser.exit(2, 'BLOCKED: '+str(e)+'\n')

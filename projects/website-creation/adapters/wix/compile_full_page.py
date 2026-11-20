@@ -27,9 +27,14 @@ def num(v):
     return str(int(x)) if x.is_integer() else str(x)
 
 
-def get_page(root, page):
-    if not re.fullmatch('[a-z0-9-]+', page) or page in ('home', '(home)'):
-        raise Blocked('Require an explicit existing non-home target page folder')
+def get_page(root, page, allow_home=False):
+    # Wix Origami names Home '(home)' in the official export.
+    # The default remains fail-closed for destructive Home replacements.
+    if page == '(home)':
+        if not allow_home:
+            raise Blocked('Home replacement requires explicit --allow-home-target')
+    elif not re.fullmatch('[a-z0-9-]+', page) or page == 'home':
+        raise Blocked('Require an exact existing Wix page folder; Home is (home)')
     p = Path(root) / 'packages/site-app/src/pages' / page
     paths = [p / x for x in ('structure.jsx', 'layout.css', 'style.css', 'unmapped.json')]
     if not all(x.is_file() for x in paths):
@@ -84,7 +89,27 @@ def paint(section, bp):
     source = section['desktopBackground' if bp != 390 else 'mobileBackground']
     vals = {(x.get('color'), x.get('image')) for x in source.get('candidates', [])}
     if source['status'] == 'AMBIGUOUS' or len(vals) > 1:
-        raise Blocked('Ambiguous section background '+section['sourceSelector'])
+        # Showit can paint an opaque section base below a separately measured
+        # native image element. Keep the base color only when the transparent
+        # cover image is ALREADY represented by the exact source selector and
+        # the exact captured viewport geometry; never drop an unknown layer.
+        candidates = source.get('candidates', [])
+        bases = [x for x in candidates if x.get('image') in ('none', None)
+                 and x.get('color') not in ('transparent', 'rgba(0, 0, 0, 0)', None)]
+        covers = [x for x in candidates if x.get('image') == 'SOURCE_IMAGE_URLS_SEPARATE'
+                  and x.get('color') in ('transparent', 'rgba(0, 0, 0, 0)', None)]
+        observed_key = 'mobile' if bp == 390 else 'desktop'
+        if len(bases) == 1 and len(covers) == len(candidates)-1 and covers:
+            for cover in covers:
+                linked = [e for e in section['elements'] if
+                          e.get('type') == 'image' and
+                          e.get('sourceSelector') == cover.get('selector') and
+                          e.get('asset') and e.get(observed_key)]
+                if len(linked) != 1:
+                    raise Blocked('Painted image layer lacks exact native image '+str(cover.get('selector')))
+            vals = {(bases[0]['color'], bases[0].get('image'))}
+        else:
+            raise Blocked('Ambiguous section background '+section['sourceSelector'])
     if not vals:
         return None
     color, image = next(iter(vals))
@@ -198,8 +223,29 @@ def retain_exported_rules(css, identifiers):
     return '\n'.join(blocks)+'\n'
 
 
-def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allow_missing_page=False):
-    rows = '0px ' + ' '.join(num(h)+'px' for h in heights) + ' 0px'
+def measured_footer_height(recipe, viewport):
+    """Existing source Chrome contract: keep the native Footer in page flow.
+    A captured Footer must never be given a zero-height Wix grid track.
+    """
+    chrome=recipe.get('sourceChrome')
+    if not chrome:
+        return None  # Legacy recipes have no Footer source evidence.
+    if viewport not in chrome:
+        raise Blocked('Missing source Chrome evidence for '+viewport)
+    footers=[c for c in chrome[viewport] if c.get('role')=='footer']
+    if len(footers)!=1:
+        raise Blocked('Expected exactly one measured donor Footer for '+viewport)
+    r=footers[0].get('rect') or {}
+    height=r.get('height')
+    if not isinstance(height,(int,float)) or height<=0:
+        raise Blocked('Invalid captured donor Footer height for '+viewport)
+    return height
+
+
+def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allow_missing_page=False, footer_height=None):
+    if footer_height is not None and (not isinstance(footer_height,(int,float)) or footer_height<=0):
+        raise Blocked('Measured source Footer requires positive grid height')
+    rows = '0px ' + ' '.join(num(h)+'px' for h in heights) + ' ' + (num(footer_height)+'px' if footer_height is not None else '0px')
     def replace_page(m):
         block = m.group()
         block, count = re.subn(r'grid-template-rows:\s*[^;\n}]+', 'grid-template-rows: '+rows, block, count=1)
@@ -225,11 +271,14 @@ def update_page_grid(css, page_id, footer_id, heights, require_footer=True, allo
     return css
 
 
-def compile_page(recipe, root, page, expected_id, allow_replace, video_files=None):
+def compile_page(recipe, root, page, expected_id, allow_replace, video_files=None, allow_home=False, vector_files=None, allow_partial_native_draft=False):
     if recipe.get('schema') != PAGE:
         raise Blocked('Wrong full-page normalized recipe')
-    if recipe.get('unsupported'):
+    if recipe.get('unsupported') and not allow_partial_native_draft:
         raise Blocked('Source unsupported elements: '+str(recipe['unsupported'][:3]))
+    # Explicit experimental partial mode does NOT erase recipe.unsupported.
+    # The companion native-default report preserves every missing source row;
+    # final visual parity can never be inferred from native build success.
     if not recipe.get('sections'):
         raise Blocked('No source sections')
     if not allow_replace:
@@ -240,7 +289,7 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
     expected_view = 'desktop-'+str(desktop_width)
     if recipe.get('viewports') and (expected_view not in recipe['viewports'] or 'mobile-390' not in recipe['viewports']):
         raise Blocked('Recipe is missing observed source desktop/mobile viewports')
-    folder = get_page(root, page)
+    folder = get_page(root, page, allow_home=allow_home)
     strpath = folder / 'structure.jsx'
     s = strpath.read_text()
     layout = (folder/'layout.css').read_text()
@@ -323,6 +372,24 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                 if not asset or not asset.startswith(('http://', 'https://')):
                     raise Blocked('Exact original image URL absent '+e['sourceSelector'])
                 name = unquote(urlsplit(asset).path.rsplit('/', 1)[-1])
+                if name.lower().endswith('.svg'):
+                    # An original SVG media image is native Wix SvgImage, not a
+                    # fabricated PNG or a custom element. Media Manager must
+                    # report its exact source URL as a READY VECTOR.
+                    matching=[x for x in (vector_files or []) if
+                        x.get('sourceUrl')==asset and
+                        x.get('operationStatus')=='READY' and
+                        x.get('mediaType')=='VECTOR' and
+                        re.fullmatch(r'[^:/\s]+[.]svg',x.get('id') or '')]
+                    if len(matching)!=1:
+                        raise Blocked('Original SVG media not uniquely READY in Wix: '+asset)
+                    media_id=matching[0]['id']
+                    if "import { SvgImage }" not in first:
+                        first="import { SvgImage } from '@origami-wrappers/wixEditorElements/svgimage'\n"+first
+                    if "import { svg }" not in first:
+                        first="import { svg } from '@wix/origami-runtime'\n"+first
+                    children.append('                <SvgImage id="{id}" className="{id}" displayMode="fit" svgId={{svg(media.getShapeUrl(\'wix:image://v1/{mid}\').url, \'{mid}\')}} />'.format(id=cid,mid=media_id))
+                    continue
                 if not name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.webp')):
                     raise Blocked('Unsupported source image type '+name)
                 # Official upload-media scanner needs exported-compatible multiline Image.
@@ -355,6 +422,58 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                         sty += '\n' + rule + '\n'
             else:
                 raise Blocked('Unsupported source type '+str(e['type']))
+        # Static source vector overlays are native Wix Line or SvgImage.
+        # Each captured viewport is independent: two Wix nodes may represent
+        # one donor selector when Desktop/Mobile geometry differs. Native
+        # readback must verify each one; no resize/URL or position guesses.
+        source_vectors=[v for v in recipe.get('sourceVectors',[]) if
+                        v.get('ownerScope')=='page-flow' and
+                        v.get('ownerSection')==sec['sourceSelector']]
+        for vi,vector in enumerate(source_vectors):
+            view=vector.get('view')
+            if view not in (expected_view,'mobile-390'):
+                raise Blocked('Unobserved vector viewport '+str(view))
+            rect=vector.get('rect')
+            if not isinstance(rect,dict) or not all(
+                 isinstance(rect.get(n),(int,float)) for n in ('x','y','width','height')):
+                raise Blocked('Missing measured original SVG geometry '+str(vector.get('sourceSelector')))
+            source_section=sec['desktopSection' if view==expected_view else 'mobileSection']
+            gx=rect['x']-source_section['x']
+            gy=rect['y']-source_section['y']
+            if view==expected_view:
+                geometry={'centerX':gx-source_section['width']/2,
+                          'y':gy,'w':rect['width'],'h':rect['height']}
+                vector_desktop,vector_mobile=geometry,None
+            else:
+                geometry={'x':gx,'y':gy,'w':rect['width'],'h':rect['height']}
+                vector_desktop,vector_mobile=None,geometry
+            cid=f'ldv-v{idx:03d}-{vi:03d}'
+            dr.append(css_element(cid,vector_desktop,desktop_width))
+            mr.append(css_element(cid,vector_mobile,390))
+            component=vector.get('nativeComponent')
+            if component=='SvgImage':
+                matching=[x for x in (vector_files or []) if
+                    x.get('assetSha256')==vector.get('assetSha256') and
+                    x.get('mediaType')=='VECTOR' and
+                    x.get('operationStatus')=='READY' and
+                    re.fullmatch(r'[^:/\s]+[.]svg',x.get('id') or '')]
+                if len(matching)!=1:
+                    raise Blocked('Original inline SVG media missing or ambiguous '+str(vector.get('sourceSelector')))
+                media_id=matching[0]['id']
+                if "import { SvgImage }" not in first:
+                    first="import { SvgImage } from '@origami-wrappers/wixEditorElements/svgimage'\n"+first
+                if "import { svg }" not in first:
+                    first="import { svg } from '@wix/origami-runtime'\n"+first
+                children.append('                <SvgImage id="{id}" className="{id}" displayMode="fit" svgId={{svg(media.getShapeUrl(\'wix:image://v1/{mid}\').url, \'{mid}\')}} />'.format(id=cid,mid=media_id))
+            elif component=='Line':
+                if "import { Line }" not in first:
+                    first="import { Line } from '@origami-wrappers/wixEditorElements/line'\n"+first
+                children.append(f'                <Line id="{cid}" className="{cid}" />')
+                # Source se-line XML is a 1 px solid black line. Wix Line
+                # takes width/height from source measured geometry above.
+                sty += f'\n.{cid} {{ --preset:horizontal; --lineColor:#000000; --lineSize:1px; --type:Solid; }}\n'
+            else:
+                raise Blocked('No native Wix component for source vector '+str(component))
         video_props, video_opacity_desktop = video_background_props(sec, video_files, desktop_width)
         _, video_opacity_mobile = video_background_props(sec, video_files, 390)
         sec_js.append(f'''        <Section id="{sid}" className="{sid}">
@@ -376,15 +495,22 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                 else:
                     sty += '\n' + mobile_at_rule + '\n' + rule + '\n}\n'
     newjsx = first + '\n'.join(sec_js) + '\n' + last
-    desktop = update_page_grid(desktop, expected_id, footer.group(1), ds)
-    mobile = update_page_grid(mobile, expected_id, footer.group(1), ms, require_footer=False, allow_missing_page=True)
+    desktop = update_page_grid(desktop, expected_id, footer.group(1), ds,
+                               footer_height=measured_footer_height(recipe, expected_view))
+    mobile = update_page_grid(mobile, expected_id, footer.group(1), ms,
+                              require_footer=False, allow_missing_page=True,
+                              footer_height=measured_footer_height(recipe, 'mobile-390'))
     newlayout = (desktop + '\n' + ''.join(dr) + '\n' + mobile_at_rule
                  + mobile + '\n' + ''.join(mr) + '\n}\n')
     unmapped = json.loads((folder/'unmapped.json').read_text())
     removed_section_ids = set(re.findall(r'<Section\s+id="([^"]+)"', s[a:b]))
     for component_id, data in list((unmapped.get('components') or {}).items()):
-        if component_id not in removed_section_ids or set(data) != {'anchors'}:
-            raise Blocked('Unknown unmapped component data: ' + component_id)
+        if component_id not in removed_section_ids:
+            # Existing Wix Page/Header/Footer/global metadata are not part of
+            # the deleted section set. Preserve verbatim.
+            continue
+        if not isinstance(data,dict) or set(data) != {'anchors'}:
+            raise Blocked('Unknown unmapped data on removed Section: ' + component_id)
         del unmapped['components'][component_id]
     (folder/'unmapped.json').write_text(json.dumps(unmapped, indent=2))
     (folder/'structure.jsx').write_text(newjsx)
@@ -399,8 +525,8 @@ def compile_page(recipe, root, page, expected_id, allow_replace, video_files=Non
                       'images': sum(e['type']=='image' for x in recipe['sections'] for e in x['elements'])}))
 
 
-def finalize_media(root, page):
-    p = get_page(root, page) / 'structure.jsx'
+def finalize_media(root, page, allow_home=False):
+    p = get_page(root, page, allow_home=allow_home) / 'structure.jsx'
     s = p.read_text()
     pat = r'(<Image\s[\s\S]*?\bimage=\{\{)([\s\S]*?)(\}\}\s*/>)'
     count = 0
@@ -437,7 +563,10 @@ def main():
     parser.add_argument('--page', required=True)
     parser.add_argument('--page-id')
     parser.add_argument('--allow-replace-page', action='store_true')
+    parser.add_argument('--allow-home-target', action='store_true', help='Only for an explicitly approved existing Wix Home page')
+    parser.add_argument('--allow-partial-native-draft', action='store_true', help='Only for authorized editable partial Wix builds; source-unmapped ledger must be retained')
     parser.add_argument('--video-media-manifest', help='JSON {files:[official READY Wix file descriptors]}')
+    parser.add_argument('--vector-media-manifest', help='JSON {files:[sourceUrl, id, operationStatus READY, mediaType VECTOR]}')
     args = parser.parse_args()
     try:
         if args.action == 'compile':
@@ -446,11 +575,16 @@ def main():
             manifest = json.loads(Path(args.video_media_manifest).read_text()) if args.video_media_manifest else {}
             if manifest and (not isinstance(manifest,dict) or not isinstance(manifest.get('files'),list)):
                 raise Blocked('Video media manifest must contain files[]')
+            vector_manifest = json.loads(Path(args.vector_media_manifest).read_text()) if args.vector_media_manifest else {}
+            if vector_manifest and (not isinstance(vector_manifest,dict) or not isinstance(vector_manifest.get('files'),list)):
+                raise Blocked('Vector media manifest must contain files[]')
             compile_page(json.loads(Path(args.recipe).read_text()),
                          args.export, args.page, args.page_id, args.allow_replace_page,
-                         manifest.get('files',[]))
+                         manifest.get('files',[]), allow_home=args.allow_home_target,
+                         vector_files=vector_manifest.get('files',[]),
+                         allow_partial_native_draft=args.allow_partial_native_draft)
         else:
-            finalize_media(args.export, args.page)
+            finalize_media(args.export, args.page, allow_home=args.allow_home_target)
     except (Blocked, KeyError, TypeError, ValueError) as e:
         parser.exit(2, 'BLOCKED: '+str(e)+'\n')
 

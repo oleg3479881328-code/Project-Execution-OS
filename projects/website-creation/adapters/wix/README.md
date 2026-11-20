@@ -5,6 +5,12 @@
 **Status: CANDIDATE / LOCAL PILOT TESTED / LIVE BRIDGE NOT YET ACCEPTED.**
 Date: 2026-11-15. Part of existing Website Creator / Universal Website Translator, not a new product or alternate browser automation engine.
 
+## 2026-11-17 — Owner-approved native Wix defaults (implemented; scoped)
+
+The **existing** `run_wix_pipeline.sh` now automatically invokes [apply_wix_native_defaults.py](apply_wix_native_defaults.py) after the native compiler and before official Wix lint, with `WIX_NATIVE_DEFAULTS=YES` by default (set `NO` only for comparative strict-font QA). It uses the current target Wix Theme default font when an original family is absent and logs a native static fallback for nondefault source animation/filter/transform on mapped core elements. Measured geometry, source content and media remain unchanged. No additional Chrome extension/scanner changes are needed for these captured properties.
+
+**Do not confuse Wix-defaults success with full source parity:** `PASS_WITH_WIX_DEFAULTS` means native editability is achieved; `SOURCE_VISUAL_PARITY=PARTIAL`. The normalizer's mandatory unmapped components still block the standard pipeline; the original Vesper 2.5.7 ZIP has 413 such records. Full evidence, CI/official lint and QA results: [NATIVE_DEFAULTS_QA_2026-11-17.md](NATIVE_DEFAULTS_QA_2026-11-17.md). The canonical safety/provenance standard remains [NATIVE_GEOMETRY_TRANSFER_STANDARD.md](NATIVE_GEOMETRY_TRANSFER_STANDARD.md).
+
 ## Existing canonical route
 
 Global `START_HERE.md` → `docs/ROUTER.md` → `projects/website-creation/ROUTER.md` → `UNIVERSAL_WEBSITE_TRANSLATOR_ARCHITECTURE.md` → this adapter.
@@ -200,3 +206,45 @@ node audit_source_layers.mjs /path/to/normalized.recipe.json /path/to/source-lay
 ```
 
 **Current acceptance:** Full static geometry and media on saved `blank-2` revision 47 = PASS on 1280/390; missing video means complete visual 1:1 = BLOCKED. No additional editor changes or publishing were made by this audit.
+
+
+## LocalDesign v2.5.1 Origami-ready source contract (draft adapter compatibility)
+
+Companion Chrome extension PR: https://github.com/oleg3479881328-code/LocalDesign/pull/3 . This extends the **existing** scanner's original ZIP with `wix-origami/origami-source-contract.json`, but never pretends to create importable Wix page code or target-specific Site Styles outside the Wix site.
+
+The existing `full_page_recipe.py` accepts the optional `localdesign.origami-source-contract.v1` file and verifies measured desktop section selectors before using candidate order. For existing v2.4 ZIPs without this contract it continues source geometry discovery, now excluding same-frame nested painted background views. It also attaches original MP4 to native-ready recipe `sections[].dynamicLayers` from a visible `video` and zero-size nested `source` when available (or from new `videoEvidence`). It never treats the MP4 as Image. The existing `compile_full_page.py` still requires the official READY Wix Media Manager video descriptor and source video QA; no default replacement or guessed native video URI. Per-site Theme/Site Styles are still resolved against a fresh target export and require explicit shared-global modification authorization.
+
+**Verified:** 7 passing PEOS regression cases (1 separately gated real owner ZIP test skipped); LocalDesign full `npm test` succeeds in its companion branch. **Not accepted:** new Vesper Chrome recapture → native target Wix Page import/readback/browser visual and video QA. This draft adapter is not a proof of fully automated full-site parity. Do not publish or overwrite any owner target page without exact authorized IDs and scope. Acceptance tracked in issue #171 and PEOS PR #172.
+
+
+## Strict source-object admission gate — LocalDesign v2.5.4 (draft, issue #171)
+
+The **existing** `full_page_recipe.py` now reads and validates `wix-origami/origami-source-contract.json` (when present) before the current native writer can run. For the captured desktop/mobile widths it compares `measuredNodes` against the original `site-fingerprint.json` nodes, requires a complete per-viewport `objectLedger`, validates each unique visible source selector, checks section/layer ownership, and verifies each significant object has a corresponding normalized native recipe selector or explicit dynamic layer. A source link with no proven native Wix link prop, or a source SVG with no verified official `SvgImage` upload/readback, is added to `recipe.unsupported` with a machine-readable reason. The existing pipeline and `compile_full_page.py` already stop on any such reason **before importing a Wix site**.
+
+The scanner's new `wix-origami/vector-assets/<viewport>/<node-id>.svg` files contain the exact original bounded static inline SVG XML. Official Origami supports `SvgImage` / `svgId: prop.vectorArt()`, and `wix origami upload-media` can ingest a `public/` SVG URL. This capability requires a verified current export, native mapping and original Media Manager descriptor: do not substitute a raster image or a custom HTML widget, do not claim SVG parity based only on a source file. Exact source hrefs are carried but **must not** be counted as native clickable links until target props and route behavior are checked.
+
+**Regressions:** `python3 -m unittest discover -s tests -v` = 8 PASS, 1 source ZIP dependent SKIP. `LocalDesign npm test` PASS (including ZIP vector asset and partial capture). **Real 2.5.4 Chrome source recapture and destination Wix import/readback/visual QA remain NOT RUN.** The original owner Vesper 2.5.2 ZIP lacks the strict ledger and correctly gets `SOURCE_OBJECT_LEDGER_MISSING_RECAPTURE_V2_5_4`; do not silently promote old capture evidence to a new source schema.
+
+This extends the same PEOS Issue #171 full-page runner, not a new architecture or alternate pipeline.
+
+
+## Header/Menu/Footer native source intake (LocalDesign 2.5.7, candidate)
+
+**Current target capability is NOT automatically equivalent to donor parity:** `compile_full_page.py` preserves existing Wix shared Header/Footer wrappers, not their donor content. Wix Studio Two officially supports native Header, Footer, Menu (desktop and hamburger), `SvgImage` with `svgId: vectorArt`, and native link objects. These are existing components, not permission to fabricate page routes, fonts, images or links.
+
+### Deterministic observed source evidence
+
+Existing LocalDesign scanner emits `byViewport[].chromeCandidates` with role Header/Menu/Footer, state `visible/display/position`, exact source anchor selectors, labels and hrefs, including hidden menu content; `footer` is not one of ordinary `sectionCandidates`. `full_page_recipe.py` validates each Chrome root against measured DOM, every anchor identity and exact href, and records `sourceChrome[viewport]`. Native menu item candidates are selected **only** when the source anchor has an actual descendant `<nav>`; all other logo/CTA/social links remain captured as supplementary links, never guessed as menu items. Across observed widths, the same named root must preserve exact menu item order, label and href.
+
+All donor Header/Menu/Footer roots and source Menu link destinations remain blocked as `DONOR_HEADER_NATIVE_MAPPING_REQUIRED`, `DONOR_MENU_NATIVE_MAPPING_REQUIRED`, `DONOR_FOOTER_NATIVE_MAPPING_REQUIRED`, `DONOR_MENU_TARGET_ROUTE_UNVERIFIED` until native Wix target mapping and readback. Fixed slide-out navigation is not duplicated as a separate overlay root. The existing `run_wix_pipeline.sh` refuses unsupported recipes **before Wix mutation**.
+
+### Exact owner Vesper source and route blockers
+
+- Owner 2.5.4 fingerprint can be deterministically replayed using **the existing scanner's exact source contract implementation** in LocalDesign 2.5.7; original capture version, screenshots, media and 23 SVG files remain unchanged and are SHA-256 tracked. This is `SOURCE_REPLAY_QA_ONLY`, not recaptured proof or Wix import.
+- The replayed original source has **12 ordinary page sections**, one separate footer source component, and a hidden open-menu state with 14 original anchor elements; **8** are actual navigation items identified by nested source `<nav>`.
+- Inspected official native Wix target export has existing Header/Footer/Menu, but **only Home route /**. Donor Menu refers to seven additional internal paths: `/about`, `/portfolio`, `/information`, `/experience`, `/education`, `/contact`, `/blog-demo-delete`. Their correct native Wix destination is not established; do not direct them back to the donor, create unauthorized pages or guess redirects.
+- The Footer has 14 source anchors, **4 without observed href**, requiring explicit native behavior resolution. No target Wix site or production page has been changed by this research/test pass.
+
+**QA evidence:** LocalDesign 2.5.7 full existing `npm test` PASS and GitHub Actions SUCCESS (versioned `LocalDesign-v2.5.7.zip` artifact). Existing PEOS full_page_recipe.py unit tests **10 PASS, 1 optional owner ZIP SKIP** on restored official Wix dev machine. Actual target Wix native Menu/Header/Footer authoring, routes, media descriptors, interaction readback, Desktop/Mobile screenshot parity and import remain **BLOCKED / NOT RUN**.
+
+Do not mistake a successful donor ZIP, source replay, exported Wix component catalog or existing target global wrappers for a completed native donor page.

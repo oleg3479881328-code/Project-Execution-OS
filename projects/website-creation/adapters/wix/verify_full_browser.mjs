@@ -22,15 +22,27 @@ const structure=fs.readFileSync(path.join(exportRoot,'packages/site-app/src/page
 const sections=[...structure.matchAll(/<Section\s+id="([^"]+)"[\s\S]*?<\/Section>/g)];
 if(sections.length!==recipe.sections.length)throw Error('Section coverage mismatch '+sections.length+'/'+recipe.sections.length);
 const mappings=recipe.sections.map((section,i)=>{
- const found=[...sections[i][0].matchAll(/<(Image|WRichText)\b([\s\S]*?)\/>/g)];
+ const found=[...sections[i][0].matchAll(/<(Image|SvgImage|WRichText)\b([\s\S]*?)\/>/g)]
+  .filter(m=>/\bid="ldv-e\d{3}-\d{3}"/.test(m[2]));
  if(found.length!==section.elements.length)throw Error('Section '+i+' element coverage mismatch');
+ const expectedVectors=(recipe.sourceVectors||[]).filter(x=>
+  x.ownerScope==='page-flow'&&x.ownerSection===section.sourceSelector);
+ const vectorMarkup=[...sections[i][0].matchAll(/<(SvgImage|Line)\b([^>]*\bid="ldv-v\d{3}-\d{3}"[^>]*)\/>/g)];
+ if(vectorMarkup.length!==expectedVectors.length)throw Error('Section '+i+' native vector coverage mismatch');
+ const vectors=vectorMarkup.map((m,j)=>{
+  const id=m[2].match(/\bid="([^"]+)"/);
+  if(!id||m[1]!==expectedVectors[j].nativeComponent)throw Error('Section '+i+' native vector type mismatch');
+  return {wixId:id[1],source:expectedVectors[j],type:m[1]};
+ });
  const bkg=sections[i][0].match(/<Background\s+id="([^"]+)"/);
  const videoId=sections[i][0].match(/wix:video:\/\/v1\/([A-Za-z0-9_-]+)\//);
- return {wixId:sections[i][1],backgroundId:bkg?.[1]||null,videoMediaId:videoId?.[1]||null,items:found.map((m,j)=>{
+ return {wixId:sections[i][1],backgroundId:bkg?.[1]||null,videoMediaId:videoId?.[1]||null,vectors,items:found.map((m,j)=>{
   const id=m[2].match(/\bid="([^"]+)"/);if(!id)throw Error('Native element ID missing');
   const uri=m[2].match(/\buri:\s*['"]([^'"]+)['"]/);
-  return {wixId:id[1],source:section.elements[j],
-    mediaUri:m[1]==='Image'?uri?.[1]||null:null};
+  const vector=m[2].match(/wix:image:\/\/v1\/([^'"]+\.svg)/);
+  return {wixId:id[1],source:section.elements[j],nativeType:m[1],
+    mediaUri:m[1]==='Image'?uri?.[1]||null:
+      m[1]==='SvgImage'?vector?.[1]||null:null};
  })};
 });
 const round=n=>Math.round(n*100)/100;
@@ -50,7 +62,7 @@ const round=n=>Math.round(n*100)/100;
    for (const group of mappings) {
     for (const item of group.items) {
      const expected=item.source[label==='mobile-390'?'mobile':'desktop'];
-     if (item.source.type!=='image'||!expected) continue;
+     if (item.source.type!=='image'||item.nativeType==='SvgImage'||!expected) continue;
      const frame=page.locator('[id="'+item.wixId+'"]');
      if (await frame.count()!==1) continue;
      try {
@@ -62,8 +74,10 @@ const round=n=>Math.round(n*100)/100;
      } catch { /* The asset gate below records missing/broken images. */ }
     }
    }
-   // Source background video is lazy in the native Wix renderer. Render
-   // the actual video-bearing section before reading readyState/currentSrc.
+   // Source background video is lazy in native Wix. Verify playback
+   // WHILE the section is visible: Wix intentionally pauses offscreen video.
+   // A pause after returning to page top is not an autoplay failure.
+   const videoWhenVisible={};
    for(const [si,group] of mappings.entries()){
     const dynamic=recipe.sections[si].dynamicLayers||[];
     if(!dynamic.length)continue;
@@ -71,10 +85,18 @@ const round=n=>Math.round(n*100)/100;
     try{
      await sec.scrollIntoViewIfNeeded({timeout:8000});
      const active=dynamic[0]?.[label==='mobile-390'?'mobile':'desktop'];
-     if(active)await page.waitForFunction(id=>{
-      const v=document.getElementById(id)?.querySelector('video');
-      return Boolean(v&&v.readyState>=2&&v.videoWidth>0);
-     },group.backgroundId,{timeout:16000});
+     if(active){
+      await page.waitForFunction(id=>{
+       const v=document.getElementById(id)?.querySelector('video');
+       return Boolean(v&&v.readyState>=2&&v.videoWidth>0);
+      },group.backgroundId,{timeout:16000});
+      await page.waitForTimeout(500);
+      videoWhenVisible[group.backgroundId]=await page.evaluate(id=>{
+       const v=document.getElementById(id)?.querySelector('video');
+       return v?{paused:v.paused,readyState:v.readyState,muted:v.muted,
+          loop:v.loop,autoplay:v.autoplay,currentTime:v.currentTime}:null;
+      },group.backgroundId);
+     }
     }catch{ /* precise dynamic gate below marks the failure */ }
    }
    await page.evaluate(()=>window.scrollTo(0,0));
@@ -92,9 +114,16 @@ const round=n=>Math.round(n*100)/100;
       const e=rect(el),cs=getComputedStyle(el),img=el.querySelector('img');
       items.push({missing:false,visible:cs.visibility!=='hidden'&&e.w>.1&&e.h>.1,
        local:{centerX:e.x-s.x-s.w/2,x:e.x-s.x,y:e.y-s.y,w:e.w,h:e.h},
-       imageURL:img?.currentSrc||img?.src||null,
+       imageURL:img?.currentSrc||img?.src||null,vectorPresent:!!el.querySelector('svg'),
        naturalImageWidth:img?.naturalWidth||0});
      }
+     const vectors=g.vectors.map(it=>{
+      const el=document.getElementById(it.wixId);
+      if(!el)return {missing:true};
+      const e=rect(el),cs=getComputedStyle(el);
+      return {missing:false,visible:cs.visibility!=='hidden'&&e.w>.1&&e.h>.1,
+       local:{centerX:e.x-s.x-s.w/2,x:e.x-s.x,y:e.y-s.y,w:e.w,h:e.h}};
+     });
      const bkg=g.backgroundId?document.getElementById(g.backgroundId):null;
      const video=bkg?.querySelector('video')||null;
      const mediaLayer=bkg?.querySelector('[data-motion-part^="BG_MEDIA"]');
@@ -102,7 +131,7 @@ const round=n=>Math.round(n*100)/100;
        videoWidth:video?.videoWidth||0,muted:video?.muted,loop:video?.loop,autoplay:video?.autoplay,
        paused:video?.paused,mediaOpacity:Number(getComputedStyle(mediaLayer||bkg).opacity),
        sourceId:g.videoMediaId||null};
-     rows.push({missing:false,section:s,items,video:videoData});
+     rows.push({missing:false,section:s,items,vectors,video:videoData});
     }
     return {rows,clientWidth:document.documentElement.clientWidth,
      bannerHeight:document.getElementById('WIX_ADS')?.getBoundingClientRect().height||0};
@@ -127,7 +156,9 @@ const round=n=>Math.round(n*100)/100;
       if(!actual.present||!actual.sourceId||!actual.url||!actual.url.includes(actual.sourceId)){
        dynamicPass=false;
       }else if(expectedVideo){
-       if(actual.readyState<2||!actual.videoWidth||actual.paused||
+       if(actual.readyState<2||!actual.videoWidth||
+          !videoWhenVisible[mappings[i].backgroundId]||
+          videoWhenVisible[mappings[i].backgroundId].paused||
           actual.muted!==Boolean(expectedVideo.muted)||
           actual.loop!==Boolean(expectedVideo.loop)||
           actual.autoplay!==Boolean(expectedVideo.autoplay)||
@@ -144,18 +175,50 @@ const round=n=>Math.round(n*100)/100;
       delta[k]=round(got.local[k]-expected[k]);
       if(Math.abs(delta[k])>1)localPass=false;
      }
+     let mediaError=null;
      if(e.type==='image'){
-      // Wix serves some media (notably GIFs) by internal ID without the
-      // original filename. The readback verifier independently checked
-      // the source filename, so compare the actual Wix Media URI here.
+      // Verify native photo/GIF/Vector exact Wix ID after browser lazy load.
       const mediaUri=mappings[i].items[j].mediaUri;
-      if(!mediaUri||!got.imageURL||
-         !decodeURIComponent(got.imageURL).includes(mediaUri)||
-         !got.naturalImageWidth)assetsPass=false;
+      const valid=mappings[i].items[j].nativeType==='SvgImage'
+       ? Boolean(mediaUri&&(got.vectorPresent||
+         (got.imageURL&&decodeURIComponent(got.imageURL).includes(mediaUri))))
+       : Boolean(mediaUri&&got.imageURL&&
+          decodeURIComponent(got.imageURL).includes(mediaUri)&&got.naturalImageWidth);
+      if(!valid){
+       assetsPass=false;
+       mediaError={expectedMediaId:mediaUri,actualUrl:got.imageURL,
+         naturalWidth:got.naturalImageWidth,vectorPresent:got.vectorPresent,
+         nativeType:mappings[i].items[j].nativeType,sourceAsset:e.asset};
+      }
      }
-     items.push({j,delta});
+     items.push({j,delta,...(mediaError?{mediaError}:{})});
     }
-    details.push({section:sec.sourceSelector,sectionHeightDelta:round(hdiff),items});
+    const vectorErrors=[];
+    for(let vi=0;vi<mappings[i].vectors.length;vi++){
+     const v=mappings[i].vectors[vi],got=act.vectors[vi];
+     const active=v.source.view===label;
+     if(!active){if(got?.visible){localPass=false;vectorErrors.push({vi,error:'viewport-hidden vector visible'})}continue}
+     if(!got||got.missing||!got.visible){
+      localPass=false;vectorErrors.push({vi,error:'native vector missing or hidden'});continue;
+     }
+     const sectionGeo=sec[bp==='desktop'?'desktopSection':'mobileSection'];
+     const sourceRect=v.source.rect;
+     const expectedVector={
+       centerX:sourceRect.x-sectionGeo.x-sectionGeo.width/2,
+       x:sourceRect.x-sectionGeo.x,y:sourceRect.y-sectionGeo.y,
+       w:sourceRect.width,h:sourceRect.height
+     };
+     const delta={};
+     for(const dim of ['y','w','h',bp==='desktop'?'centerX':'x']){
+      delta[dim]=round(got.local[dim]-expectedVector[dim]);
+      if(Math.abs(delta[dim])>1)localPass=false;
+     }
+     vectorErrors.push({vi,delta});
+    }
+    details.push({section:sec.sourceSelector,sectionHeightDelta:round(hdiff),items,vectors:vectorErrors,
+      ...(dynamics.length?{videoObserved:act.video,
+        videoWhenVisible:videoWhenVisible[mappings[i].backgroundId]||null,
+        videoSource:dynamics[0]}:{})});
    }
    const screenshot=path.join(shotDir,label+'.png');
    await page.screenshot({path:screenshot,fullPage:true});

@@ -9,6 +9,7 @@ import hashlib
 import json
 import re
 import zipfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 SCHEMA = 'localdesign.wix-page-recipe.v1'
@@ -37,6 +38,15 @@ def read_zip(file):
         if 'site-fingerprint.json' not in z.namelist():
             raise Blocked('Missing site-fingerprint.json')
         fingerprint = json.loads(z.read('site-fingerprint.json'))
+        if 'wix-origami/origami-source-contract.json' in z.namelist():
+            contract = json.loads(z.read('wix-origami/origami-source-contract.json'))
+            if contract.get('schema') != 'localdesign.origami-source-contract.v1':
+                raise Blocked('Unsupported Origami source contract')
+            fingerprint['_origamiSourceContract'] = contract
+            fingerprint['_origamiVectorAssets'] = {
+                n: z.read(n).decode('utf-8') for n in z.namelist()
+                if n.startswith('wix-origami/vector-assets/') and n.endswith('.svg')
+            }
     if fingerprint.get('schema') != CAPTURE:
         raise Blocked('Expected ' + CAPTURE)
     pages = fingerprint.get('pages', [])
@@ -62,7 +72,7 @@ def visible(n):
     return r['width'] > .1 and r['height'] > .1
 
 
-def direct_sections(views, requested):
+def direct_sections(views, requested, origami_contract=None):
     """Conservatively detect broad top-level DOM sections, including mobile-only menu.
     An ambiguous layout must provide explicit source selector order, never guesses.
     """
@@ -78,6 +88,28 @@ def direct_sections(views, requested):
         return requested
     vw = float(desktop['viewport']['width'])
     raw = []
+    # Prefer source scanner's explicit native-ready section candidates, but
+    # validate every selector against the actual observed DOM. It is a hint,
+    # never a target import instruction.
+    if origami_contract:
+        pages = origami_contract.get('pages', [])
+        if len(pages) != 1:
+            raise Blocked('Origami source contract must describe exactly one page')
+        origin = pages[0].get('byViewport', {}).get('desktop-'+str(int(vw)), {})
+        suggested = origin.get('sectionCandidates', [])
+        names = [x.get('sourceSelector') for x in suggested]
+        if len(names) != len(set(names)) or any(not isinstance(x, str) or x not in by_selector for x in names):
+            raise Blocked('Origami source section candidates do not match measured DOM')
+        if len(names) >= 2:
+            # Mobile-only menu, where measured, is a separate responsive layer.
+            mobile_names = [x.get('sourceSelector') for x in
+                pages[0].get('byViewport', {}).get('mobile-390', {}).get('sectionCandidates', [])
+                if x.get('sourceSelector') not in names]
+            mobile_nodes = {n['selector']: n for n in views['mobile-390']['data']['nodes']}
+            mobile_names = [x for x in mobile_names if x in by_selector and x in mobile_nodes
+                and visible(mobile_nodes[x]) and not visible(by_selector[x])
+                and rect(mobile_nodes[x])['y'] <= 1.0]
+            return mobile_names + names
     for n in nodes:
         sel = n.get('selector', '')
         if not re.fullmatch(r'(div|section|header|footer|main)#[A-Za-z0-9_-]+', sel):
@@ -88,6 +120,22 @@ def direct_sections(views, requested):
         if r['width'] < vw * .70 or r['height'] < .75:
             continue
         raw.append((sel, r))
+    # Reject same-frame nested background / painted view layers as sections.
+    # They remain available to painted_background() and source-layer checks.
+    candidates = {name: bounds for name, bounds in raw}
+    def nested_same_frame(name, bounds):
+        node = by_selector[name]
+        parent = (node.get('relations') or {}).get('parentSelector')
+        visited = set()
+        while parent and parent not in visited:
+            visited.add(parent)
+            if parent in candidates:
+                outer = candidates[parent]
+                if all(abs(bounds[k]-outer[k]) <= 2 for k in ('x','y','width','height')):
+                    return True
+            parent = (by_selector.get(parent, {}).get('relations') or {}).get('parentSelector')
+        return False
+    raw = [(name,bounds) for name,bounds in raw if not nested_same_frame(name,bounds)]
     raw.sort(key=lambda p: (p[1]['y'], -p[1]['width'], p[0]))
     tall = max((r['height'] for _, r in raw), default=0)
     filtered = [(s, r) for s, r in raw if r['height'] <= tall * .8]
@@ -157,8 +205,31 @@ def capture_geometry(node, sec, desktop):
     return base
 
 
+def native_vector_classification(xml_text):
+    """Use the original source XML, not visual guesses: Showit se-line is a
+    Wix native Line; all other static SVGs remain native SvgImage.
+    This is a source capability plan, NOT a Wix acceptance claim.
+    """
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError as e:
+        raise Blocked('Malformed original source SVG: '+str(e))
+    if root.tag.rsplit('}',1)[-1] != 'svg':
+        raise Blocked('Non-SVG XML in source vector inventory')
+    tags=[c.tag.rsplit('}',1)[-1] for c in root.iter() if c is not root]
+    if ('se-line' in root.attrib.get('class','').split() and len(tags)==1
+            and tags[0]=='line'):
+        line=list(root)[0]
+        if line.attrib.get('data-d-linestyle')!='solid' or line.attrib.get('data-d-rotation') not in ('0','0.0',None):
+            raise Blocked('Unsupported donor line variation requires native QA')
+        return 'Line'
+    if any(tag in ('script','foreignObject','iframe','animate','set') for tag in tags):
+        raise Blocked('SVG contains unsupported active content')
+    return 'SvgImage'
+
+
 def normalize(fp, views, section_selectors):
-    selectors = direct_sections(views, section_selectors)
+    selectors = direct_sections(views, section_selectors, fp.get('_origamiSourceContract'))
     desktop_key = next(key for key in ('desktop-1280', 'desktop-1920') if key in views)
     dn = views[desktop_key]['data']['nodes']
     mn = views['mobile-390']['data']['nodes']
@@ -207,6 +278,10 @@ def normalize(fp, views, section_selectors):
             if not visible(d) and not visible(m):
                 continue
             src = d if visible(d) else m
+            # Native video is a dynamic background/foreground layer, never a
+            # static Wix Image or a zero-size <source> component.
+            if src.get('tag') == 'video':
+                continue
             desktop_assets = list(dict.fromkeys((d or {}).get('assets', [])))
             mobile_assets = list(dict.fromkeys((m or {}).get('assets', [])))
             assets = list(dict.fromkeys(desktop_assets + mobile_assets))
@@ -227,7 +302,7 @@ def normalize(fp, views, section_selectors):
                         p = urlsplit(url)
                         return (p.scheme, p.netloc, re.sub(r'^/[0-9]+/', '/', p.path), p.query)
                     if len(desktop_assets) != 1 or len(mobile_assets) != 1 or len(assets) != 2 or source_identity(assets[0]) != source_identity(assets[1]):
-                        unsupported.append({'selector': name, 'reason': 'multiple unmatched source asset URLs', 'assets': assets})
+                        unsupported.append({'selector': name, 'reason': 'multiple source asset URLs (unmatched)', 'assets': assets})
                         continue
                 asset = desktop_assets[0] if desktop_assets else assets[0]
                 if not (asset.startswith('https://') or asset.startswith('http://')):
@@ -244,16 +319,261 @@ def normalize(fp, views, section_selectors):
                              'mobile': capture_geometry(m, sm, False),
                              'desktopStyle': {k: d['styles'].get(k) for k in keys if d and k in d['styles']},
                              'mobileStyle': {k: m['styles'].get(k) for k in keys if m and k in m['styles']}})
+        # Recover the original MP4 from a visible <video>, including old v2.5
+        # captures where its only URL sits in a 0x0 child <source>.
+        video_selectors = [name for name in candidate
+                           if ((dmap.get(name) or mmap.get(name) or {}).get('tag') == 'video')
+                           and (visible(dmap.get(name)) or visible(mmap.get(name)))]
+        dynamic = []
+        for name in video_selectors:
+            def observed_video(node, nodes, section):
+                if not visible(node):
+                    return None, None
+                evidence = node.get('videoEvidence') or {}
+                found = [evidence.get('sourceUrl')] if evidence.get('sourceUrl') else []
+                found += [a for a in node.get('assets', []) if a.endswith(('.mp4','.webm'))]
+                found += [a for child in nodes
+                          if is_descendant(child['selector'], name)
+                          and child.get('tag') == 'source'
+                          for a in child.get('assets', []) if a.endswith(('.mp4','.webm'))]
+                urls = list(dict.fromkeys(found))
+                if len(urls) != 1:
+                    raise Blocked('Video has zero/multiple distinct sources: '+name)
+                style = node.get('styles') or {}
+                old_evidence = node.get('imageEvidence') or {}
+                layer = node.get('layerEvidence') or {}
+                opacity = float(layer.get('parentOpacity') or style.get('opacity') or 1)
+                if not 0 <= opacity <= 1:
+                    raise Blocked('Invalid video opacity for '+name)
+                nr, sr = rect(node), rect(section)
+                state = {'rect': {'x':normalize_float(nr['x']-sr['x']),
+                    'y':normalize_float(nr['y']-sr['y']),
+                    'w':normalize_float(nr['width']), 'h':normalize_float(nr['height'])},
+                    'opacity':opacity,
+                    'objectFit':evidence.get('objectFit') or style.get('objectFit'),
+                    'autoplay':bool(evidence.get('autoplay',old_evidence.get('autoplay'))),
+                    'loop':bool(evidence.get('loop',old_evidence.get('loop'))),
+                    'muted':bool(evidence.get('muted',old_evidence.get('muted')))}
+                return urls[0], state
+            url_d, state_d = observed_video(dmap.get(name), dn, sd)
+            url_m, state_m = observed_video(mmap.get(name), mn, sm)
+            if url_d and url_m and url_d != url_m:
+                raise Blocked('Responsive video asset identity differs for '+name)
+            dynamic.append({'type':'video','sourceSelector':name,'sourceUrl':url_d or url_m,
+                            'desktop':state_d,'mobile':state_m,
+                            'provenance':'LOCALDESIGN_CAPTURED_VIDEO_SOURCE'})
+        if len(dynamic) > 1:
+            unsupported.append({'selector':sel,'reason':'multiple dynamic videos in section not proven native'})
         out.append({'sourceSelector': sel, 'desktopSection': rect(sd), 'mobileSection': rect(sm),
                     'attachedVisualLayers': attached[sel],
                     'desktopBackground': painted_background(sd, dn),
                     'mobileBackground': painted_background(sm, mn),
-                    'elements': elements})
+                    'elements': elements, 'dynamicLayers':dynamic})
+    # Fail-closed source coverage: the upstream scanner has the authoritative
+    # visual-object ledger, but only the *target* adapter can prove every Wix
+    # native component, media descriptor, style token and link. Never let an
+    # explicit source blocker or a silently omitted object reach import-site.
+    contract = fp.get('_origamiSourceContract')
+    source_ledger_coverage = None
+    source_chrome = {}
+    source_vectors = []
+    if contract:
+        if len(contract.get('pages', [])) != 1:
+            raise Blocked('Origami contract must contain one source page')
+        cp = contract['pages'][0]
+        by_view = cp.get('byViewport') or {}
+        source_width = int(views[desktop_key]['data']['viewport']['width'])
+        expected_views = ('desktop-'+str(source_width), 'mobile-390')
+        for view_key in expected_views:
+            expected_count = len(views[view_key]['data']['nodes'])
+            declared = (by_view.get(view_key) or {}).get('measuredNodes')
+            if declared != expected_count:
+                raise Blocked('Origami contract node count differs from observed '+view_key)
+        # Chrome (Header, Menu states and Footer) is *not* an ordinary Page
+        # Section. Source roots include hidden interactive drawer states.
+        # Preserve their exact anchors/labels/hrefs; destination route choice
+        # remains a separate verified native Wix mapping step.
+        source_chrome = {}
+        for view_key in expected_views:
+            source_nodes = {n['selector']:n for n in views[view_key]['data']['nodes']}
+            capture = by_view.get(view_key) or {}
+            nav_rows = capture.get('navigationCandidates') or []
+            overlay_rows = capture.get('overlayCandidates') or []
+            nav_ids = {x.get('sourceSelector') for x in nav_rows}
+            if None in nav_ids or not nav_ids.issubset(source_nodes):
+                raise Blocked('Donor menu selector missing from captured DOM '+view_key)
+            overlay_ids = {x.get('sourceSelector') for x in overlay_rows}
+            if None in overlay_ids or not overlay_ids.issubset(source_nodes):
+                raise Blocked('Donor overlay selector missing from captured DOM '+view_key)
+            chrome = capture.get('chromeCandidates')
+            if chrome is None:
+                unsupported.append({'selector':'SOURCE_CHROME','view':view_key,
+                  'reason':'SOURCE_CHROME_CONTRACT_MISSING_RECAPTURE_V2_5_6'})
+                chrome = []
+            if not isinstance(chrome,list):
+                raise Blocked('Invalid Chrome source candidates '+view_key)
+            seen_roots,verified = set(),[]
+            for entry in chrome:
+                if not isinstance(entry,dict):
+                    raise Blocked('Invalid Chrome candidate row '+view_key)
+                root,role = entry.get('sourceSelector'),entry.get('role')
+                if not root or root in seen_roots or root not in source_nodes:
+                    raise Blocked('Invalid/duplicate donor Chrome root '+str(root))
+                if role not in ('header','menu','footer'):
+                    raise Blocked('Unsupported donor Chrome role '+str(role))
+                seen_roots.add(root)
+                anchor_rows=entry.get('links')
+                if not isinstance(anchor_rows,list):
+                    raise Blocked('Missing donor Chrome link inventory '+root)
+                link_rows=[]
+                for link in anchor_rows:
+                    if not isinstance(link,dict):
+                        raise Blocked('Invalid donor Chrome link inventory '+root)
+                    sel=link.get('sourceSelector')
+                    node=source_nodes.get(sel)
+                    if not sel or not node or node.get('tag')!='a':
+                        raise Blocked('Missing actual donor Chrome anchor '+str(sel))
+                    href=(node.get('semantics') or {}).get('href')
+                    if href!=link.get('href'):
+                        raise Blocked('Donor Chrome href does not match observed DOM '+sel)
+                    label=link.get('label')
+                    if not href:
+                        unsupported.append({'selector':sel,'view':view_key,
+                          'reason':'DONOR_CHROME_LINK_HREF_UNRESOLVED'})
+                    if not isinstance(label,str) or not label.strip():
+                        unsupported.append({'selector':sel,'view':view_key,
+                          'reason':'DONOR_CHROME_LINK_LABEL_UNRESOLVED'})
+                    # A donor Menu may include logo/social/CTA links that are
+                    # NOT the actual nav items. Only an observed nested <nav>
+                    # descendant proves this is a nav item; preserve the rest
+                    # separately, never discard or guess from visible labels.
+                    has_nav_child = any(n.get('tag')=='nav'
+                      and is_descendant(n.get('selector',''),sel)
+                      for n in source_nodes.values())
+                    link_rows.append({'sourceSelector':sel,'label':label,
+                      'href':href,'visible':bool(link.get('visible')),
+                      'isNavigationItem':bool(role=='menu' and has_nav_child)})
+                verified.append({'sourceSelector':root,'role':role,
+                  'visible':bool(entry.get('visible')),
+                  'display':entry.get('display'),
+                  'position':entry.get('position'),
+                  'rect':entry.get('rect'),
+                  'links':link_rows,
+                  'menuItems':[x for x in link_rows if x['isNavigationItem']],
+                  'supplementalLinks':[x for x in link_rows
+                    if role=='menu' and not x['isNavigationItem']]})
+                unsupported.append({'selector':root,'view':view_key,
+                  'reason':{'header':'DONOR_HEADER_NATIVE_MAPPING_REQUIRED',
+                   'footer':'DONOR_FOOTER_NATIVE_MAPPING_REQUIRED',
+                   'menu':'DONOR_MENU_NATIVE_MAPPING_REQUIRED'}[role]})
+            source_chrome[view_key]=verified
+            # Every source Menu item must be a demonstrable route/link, never
+            # an inferred destination in a new Wix project.
+            for root in verified:
+                for item in root['menuItems']:
+                    unsupported.append({'selector':item['sourceSelector'],'view':view_key,
+                                        'reason':'DONOR_MENU_TARGET_ROUTE_UNVERIFIED'})
+            # Fixed slide-out menu is ONE native navigation component, not
+            # another unrelated Overlay with duplicate dimensions.
+            for sel in sorted(nav_ids - seen_roots):
+                unsupported.append({'selector':sel,'view':view_key,
+                                    'reason':'DONOR_MENU_NATIVE_MAPPING_REQUIRED'})
+            for sel in sorted(overlay_ids-nav_ids):
+                unsupported.append({'selector':sel,'view':view_key,
+                                    'reason':'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'})
+        # The same named donor navigation state must have the same exact
+        # ordered labels+URLs in independent captured Desktop/Mobile widths.
+        # Any discrepancy is evidence, not a reason to fabricate menu links.
+        menu_signatures = {}
+        for view_key, roots in source_chrome.items():
+            for root in roots:
+                if not root['menuItems']:
+                    continue
+                key=root['sourceSelector']
+                sig=[(x['label'],x['href']) for x in root['menuItems']]
+                old=menu_signatures.setdefault(key,sig)
+                if old!=sig:
+                    raise Blocked('Responsive donor Menu link identity/order differs: '+key)
+        ledger = cp.get('objectLedger')
+        if not isinstance(ledger, list):
+            unsupported.append({'selector':'SOURCE_CONTRACT',
+                                'reason':'SOURCE_OBJECT_LEDGER_MISSING_RECAPTURE_V2_5_4'})
+            ledger = []
+        declared_count = (cp.get('coverage') or {}).get('mandatoryObjects')
+        if declared_count is not None and declared_count != len(ledger):
+            raise Blocked('Origami contract mandatoryObjects count differs from ledger')
+        source_vectors = []
+        accepted_status = 'SOURCE_CAPTURED_TARGET_MAPPING_REQUIRED'
+        represented = {e['sourceSelector'] for sec in out for e in sec['elements']}
+        for sec in out:
+            for dynamic in sec.get('dynamicLayers') or []:
+                if dynamic.get('sourceSelector'):
+                    represented.add(dynamic['sourceSelector'])
+        seen = set()
+        for row in ledger:
+            if not isinstance(row, dict):
+                raise Blocked('Invalid Origami object ledger row')
+            selector = row.get('sourceSelector')
+            view = row.get('view')
+            if not selector or view not in expected_views or (view,selector) in seen:
+                raise Blocked('Invalid/duplicate Origami object identity')
+            seen.add((view,selector))
+            nodes = views[view]['data']['nodes']
+            node = next((n for n in nodes if n.get('selector') == selector),None)
+            if not node or not visible(node):
+                raise Blocked('Origami ledger refers to missing/invisible DOM object: '+selector)
+            if row.get('status') != accepted_status:
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':row.get('reason') or 'SOURCE_OBJECT_BLOCKED'})
+            if not row.get('ownerKind'):
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':'SOURCE_OBJECT_OWNER_MISSING'})
+            if row.get('vectorAsset'):
+                filename=row['vectorAsset']
+                xml=(fp.get('_origamiVectorAssets') or {}).get(filename)
+                if not xml:
+                    raise Blocked('Original source SVG missing from fingerprint ZIP: '+filename)
+                native_type=native_vector_classification(xml)
+                source_vectors.append({
+                    'sourceSelector':selector,'view':view,
+                    'ownerScope':row.get('ownerScope'),
+                    'ownerSection':row.get('ownerSection'),
+                    'rect':row.get('rect'),
+                    'vectorAsset':filename,
+                    'assetSha256':hashlib.sha256(xml.encode('utf-8')).hexdigest(),
+                    'nativeComponent':native_type,
+                    'mappingStatus':'SOURCE_CLASSIFIED_NATIVE_TARGET_UNVERIFIED'
+                })
+            # The existing full-page writer preserves the target's shared
+            # Header/Footer and does NOT implement donor Menu/Nav. Explicitly
+            # block these scopes before Origami import instead of claiming
+            # that preserving existing target chrome transfers donor chrome.
+            scope = row.get('ownerScope')
+            if scope in ('header','footer','navigation','overlay'):
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':{
+                                      'header':'DONOR_HEADER_NATIVE_MAPPING_REQUIRED',
+                                      'footer':'DONOR_FOOTER_NATIVE_MAPPING_REQUIRED',
+                                      'navigation':'DONOR_MENU_NATIVE_MAPPING_REQUIRED',
+                                      'overlay':'DONOR_OVERLAY_NATIVE_MAPPING_REQUIRED'}[scope]})
+            if row.get('href'):
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':'NATIVE_LINK_MAPPING_UNVERIFIED'})
+            if selector not in represented:
+                unsupported.append({'selector':selector,'view':view,
+                                    'reason':'SOURCE_OBJECT_NOT_MAPPED_TO_NATIVE'})
+        source_ledger_coverage = {'mandatoryObjects':len(ledger),
+                                  'representedSourceSelectors':len(represented),
+                                  'blockedMappings':len(unsupported),
+                                  'acceptance':'SOURCE_COVERAGE_BLOCKED' if unsupported else 'SOURCE_MAPPED_TARGET_QA_PENDING'}
     viewsinfo = {k: {'viewport': v['data'].get('viewport'), 'capturedAt': v['data'].get('capturedAt'),
                      'nodeCount': len(v['data']['nodes'])} for k,v in views.items() if v.get('status') == 'observed'}
     result = {'schema': SCHEMA, 'source': source, 'sourceSchema': CAPTURE,
               'desktopWidth': int(views[desktop_key]['data']['viewport']['width']),
               'viewports': viewsinfo, 'sections': out, 'unsupported': unsupported,
+              'sourceObjectCoverage':source_ledger_coverage,
+              'sourceChrome':source_chrome,
+              'sourceVectors':source_vectors,
               'acceptance': 'RECIPE_ONLY_NOT_WIX_IMPORTED'}
     canonical = json.dumps(result, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
     result['sha256'] = hashlib.sha256(canonical.encode()).hexdigest()
