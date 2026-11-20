@@ -28,6 +28,7 @@ A project may route onward through its own routers, registries, indexes, collect
 - Design Picker -> `design-picker/PROJECT.md`
 - LocalDesign / Local Design Inspector / быстрый fingerprint 1280+390 или 1920+390 / выделение и копирование элементов -> [canonical LocalDesign PROJECT.md](https://github.com/oleg3479881328-code/LocalDesign/blob/main/PROJECT.md)
 - DRAMATURG / Dramaturg / Universal Adapter / Chrome Extension / Fingerprint → Wix Studio -> [канонический START HERE проекта](https://docs.google.com/document/d/1FQl_32MxJRe6wGb_QWQA6bwaligmIBA1Inra5b0L5QQ/edit) (учебник готовых модулей: https://docs.google.com/document/d/1CT4eNiPzVMVllLmc5awTy8u3HrktwomSii-3Gp2JBOI/edit ; project folder: https://drive.google.com/drive/folders/1V7ryP0vVoarQkYQ4Uv18agXgNx8-0YuF)
+- F12 / browser F12 / DevTools Network — independent project (scope not yet confirmed) -> [F12 PROJECT.md](https://github.com/oleg3479881328-code/F12/blob/main/PROJECT.md)
 - FLOW / Google Flow / cinematic AI video productions and creative worlds -> [canonical Drive project entrypoint](https://docs.google.com/document/d/1Mu9CYKvVDS3NFAWOIdGTpDLfKfK63X0_CHuSdqe3NBE/edit) (project folder: [FLOW](https://drive.google.com/drive/folders/1646t32g4ADEZQbU6CcY2CRGvcCpkZIgn))
 - Olga Polo / Olga Polo Weddings / Olga Polo Weddings Web -> `https://github.com/oleg3479881328-code/olga-polo-weddings-web/blob/main/PROJECT.md`
 - Personal Secretary OS / personal secretary / secretary / assistant mode -> `personal-secretary-os/PROJECT.md`
